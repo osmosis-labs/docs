@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: check out code 🛎
         uses: actions/checkout@v2
-      # when scraping the site, inject secrets as environment variables
+      # inject secrets as environment variables
       # then pass their values into the Docker container using "-e" syntax
       # and inject config.json contents as another variable
       - name: scrape the site 🧽
