@@ -55,6 +55,16 @@ The guides on this page will explain the process of developing on Osmosis.
      Currently supported assets on Osmosis with their corresponding channels and IBC denoms
     </div>
   </a>
+
+  <a href="structure/transaction.md" class="card">
+    <img src="/img/asset.svg" class="filter-icon"/>
+    <div class="title">
+     Transaction Structure 
+    </div>
+    <div class="text">
+     Understanding the structure of a transaction on the Osmosis blockchain
+    </div>
+  </a>
  </div>
 
 
