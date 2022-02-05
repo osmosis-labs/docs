@@ -559,66 +559,66 @@ composes and sends the single message in the `tx` field.
 Let's look at the `tx` in the above transaction:
 
 ```json
-    "@type": "/cosmos.tx.v1beta1.Tx",
-    "body": {
-      "messages": [
+"@type": "/cosmos.tx.v1beta1.Tx",
+"body": {
+  "messages": [
+    {
+      "@type": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
+      "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
+      "routes": [
         {
-          "@type": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
-          "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
-          "routes": [
-            {
-              "poolId": "604",
-              "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-            },
-            {
-              "poolId": "611",
-              "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-            },
-            {
-              "poolId": "1",
-              "tokenOutDenom": "uosmo"
-            }
-          ],
-          "tokenIn": {
-            "denom": "uosmo",
-            "amount": "15000000"
-          },
-          "tokenOutMinAmount": "15000000"
+          "poolId": "604",
+          "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+        },
+        {
+          "poolId": "611",
+          "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+        },
+        {
+          "poolId": "1",
+          "tokenOutDenom": "uosmo"
         }
       ],
-      "memo": "",
-      "timeout_height": "0",
-      "extension_options": [],
-      "non_critical_extension_options": []
-    },
-    "auth_info": {
-      "signer_infos": [
-        {
-          "public_key": {
-            "@type": "/cosmos.crypto.secp256k1.PubKey",
-            "key": "ArVxHYy0VZ22LI7+o5HJwli+G4SoXVb2GjCejYUU//XX"
-          },
-          "mode_info": {
-            "single": {
-              "mode": "SIGN_MODE_DIRECT"
-            }
-          },
-          "sequence": "63948"
+      "tokenIn": {
+        "denom": "uosmo",
+        "amount": "15000000"
+      },
+      "tokenOutMinAmount": "15000000"
+    }
+  ],
+  "memo": "",
+  "timeout_height": "0",
+  "extension_options": [],
+  "non_critical_extension_options": []
+},
+"auth_info": {
+  "signer_infos": [
+    {
+      "public_key": {
+        "@type": "/cosmos.crypto.secp256k1.PubKey",
+        "key": "ArVxHYy0VZ22LI7+o5HJwli+G4SoXVb2GjCejYUU//XX"
+      },
+      "mode_info": {
+        "single": {
+          "mode": "SIGN_MODE_DIRECT"
         }
-      ],
-      "fee": {
-        "amount": [
-          {
-            "denom": "uosmo",
-            "amount": "0"
-          }
-        ],
-        "gas_limit": "2000000",
-        "payer": "",
-        "granter": ""
+      },
+      "sequence": "63948"
+    }
+  ],
+  "fee": {
+    "amount": [
+      {
+        "denom": "uosmo",
+        "amount": "0"
       }
-    },
-    "signatures": []
+    ],
+    "gas_limit": "2000000",
+    "payer": "",
+    "granter": ""
+  }
+},
+"signatures": []
 ```
 
 Exploring the fields:
@@ -643,29 +643,29 @@ for the transaction to succeed, i.e. a transaction. Most of the transactions are
 Looking at our example transaction, we see a single message, whose contents are:
 
 ```json
-        {
-          "@type": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
-          "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
-          "routes": [
-            {
-              "poolId": "604",
-              "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-            },
-            {
-              "poolId": "611",
-              "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-            },
-            {
-              "poolId": "1",
-              "tokenOutDenom": "uosmo"
-            }
-          ],
-          "tokenIn": {
-            "denom": "uosmo",
-            "amount": "15000000"
-          },
-          "tokenOutMinAmount": "15000000"
-        }
+{
+  "@type": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
+  "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
+  "routes": [
+    {
+      "poolId": "604",
+      "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "poolId": "611",
+      "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "poolId": "1",
+      "tokenOutDenom": "uosmo"
+    }
+  ],
+  "tokenIn": {
+    "denom": "uosmo",
+    "amount": "15000000"
+  },
+  "tokenOutMinAmount": "15000000"
+}
 ```
 
 This message has a `@type` as well, defined by the application itself, i.e. not the Cosmos SDK, but the
@@ -692,38 +692,38 @@ The properties of the message are those of the `MsgSwapExactAmountIn` struct.
 `sender` is the account that is sending tokens in to swap:
 
 ```json
-          "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
+  "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
 ```
 
 `tokenIn` is the amount of tokens being sent in to swap, in this case 15000000 uosmo:
 
 ```json
-          "tokenIn": {
-            "denom": "uosmo",
-            "amount": "15000000"
-          },
+"tokenIn": {
+  "denom": "uosmo",
+  "amount": "15000000"
+},
 ```
 `tokenOutMinAmount` is the minimal amount of tokens expected out, in this case 15000000:
 
 ```json
-          "tokenOutMinAmount": "15000000"
+"tokenOutMinAmount": "15000000"
 ```
 
 Finally, `routes` describes the pool(s) to be used to swap tokens:
 
 ```json
-            {
-              "poolId": "604",
-              "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-            },
-            {
-              "poolId": "611",
-              "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-            },
-            {
-              "poolId": "1",
-              "tokenOutDenom": "uosmo"
-            }
+{
+  "poolId": "604",
+  "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+},
+{
+  "poolId": "611",
+  "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+},
+{
+  "poolId": "1",
+  "tokenOutDenom": "uosmo"
+}
 ```
 
 The pools, in this case, are [pool 1](https://app.osmosis.zone/pool/1) ATOM/OSMO, [pool 604](https://app.osmosis.zone/pool/604) STARS/OSMO,
@@ -753,16 +753,16 @@ Each entry in `events` has just two properties:
 The `type` is a simple string, which has meaning only in the context of the application, for example:
 
 ```json
-              "type": "coin_received",
+"type": "coin_received",
 ```
 
 The `attributes` are an array of key-value structures, with just two keys: `key` and `value`. For example:
 
 ```json
-                {
-                  "key": "receiver",
-                  "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-                },
+{
+  "key": "receiver",
+  "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+},
 ```
 
 Putting it together, our example transaction, with a single client-sent message of type `"/osmosis.gamm.v1beta1.MsgSwapExactAmountIn"`,
@@ -773,59 +773,59 @@ has the following events.
 The first event is `coin_received`:
 
 ```json
-            {
-              "type": "coin_received",
-              "attributes": [
-                {
-                  "key": "receiver",
-                  "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-                },
-                {
-                  "key": "amount",
-                  "value": "15000000uosmo"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-                },
-                {
-                  "key": "amount",
-                  "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
-                },
-                {
-                  "key": "amount",
-                  "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-                },
-                {
-                  "key": "amount",
-                  "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
-                },
-                {
-                  "key": "amount",
-                  "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-                },
-                {
-                  "key": "amount",
-                  "value": "15003605uosmo"
-                }
-              ]
-            },
+{
+  "type": "coin_received",
+  "attributes": [
+    {
+      "key": "receiver",
+      "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+    },
+    {
+      "key": "amount",
+      "value": "15000000uosmo"
+    },
+    {
+      "key": "receiver",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "receiver",
+      "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "receiver",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "receiver",
+      "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "receiver",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "15003605uosmo"
+    }
+  ]
+},
 ```
 
 There are 12 attributes to the event. Each comes in pairs, with the first attribute pair indicating who received the coin,
@@ -834,22 +834,22 @@ and the second indicating the amount, including coin.
 For example:
 
 ```json
-                {
-                  "key": "receiver",
-                  "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-                },
-                {
-                  "key": "amount",
-                  "value": "15000000uosmo"
-                },
-                {
-                  "key": "receiver",
-                  "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-                },
-                {
-                  "key": "amount",
-                  "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-                },
+{
+  "key": "receiver",
+  "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+},
+{
+  "key": "amount",
+  "value": "15000000uosmo"
+},
+{
+  "key": "receiver",
+  "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+},
+{
+  "key": "amount",
+  "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+},
 ```
 
 Account `osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93` received `15000000uosmo`, while
@@ -860,59 +860,59 @@ account `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` received `289236271ibc/987
 The second event is of type `coin_spent`:
 
 ```json
-          {
-            "type": "coin_spent",
-            "attributes": [
-              {
-                "key": "spender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "15000000uosmo"
-              },
-              {
-                "key": "spender",
-                "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-              },
-              {
-                "key": "amount",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "spender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "spender",
-                "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
-              },
-              {
-                "key": "amount",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "spender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "spender",
-                "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
-              },
-              {
-                "key": "amount",
-                "value": "15003605uosmo"
-              }
-            ]
-          },
+{
+  "type": "coin_spent",
+  "attributes": [
+    {
+      "key": "spender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "15000000uosmo"
+    },
+    {
+      "key": "spender",
+      "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "spender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "spender",
+      "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "spender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "spender",
+      "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
+    },
+    {
+      "key": "amount",
+      "value": "15003605uosmo"
+    }
+  ]
+},
 ```
 
 The structure of the attributes here is similar to that of `coin_received`, except that the `key` is not `receiver`, but
@@ -925,47 +925,47 @@ Notice that there are exactly 6 `spender`s, which aligns with exactly 6 `receive
 The third event is simply of type `message`, indicating the message that is sent:
 
 ```json
-          {
-            "type": "message",
-            "attributes": [
-              {
-                "key": "action",
-                "value": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
-              },
-              {
-                "key": "module",
-                "value": "gamm"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              }
-            ]
-          },
+{
+  "type": "message",
+  "attributes": [
+    {
+      "key": "action",
+      "value": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
+    },
+    {
+      "key": "module",
+      "value": "gamm"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    }
+  ]
+},
 ```
 
 #### Fourth Event
@@ -974,161 +974,161 @@ The fourth event is `tokens_swapped`. It summarizes the actual swaps that took p
 attribute pairs goes together:
 
 ```json
-          {
-            "type": "token_swapped",
-            "attributes": [
-              {
-                "key": "module",
-                "value": "gamm"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "pool_id",
-                "value": "604"
-              },
-              {
-                "key": "tokens_in",
-                "value": "15000000uosmo"
-              },
-              {
-                "key": "tokens_out",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "module",
-                "value": "gamm"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "pool_id",
-                "value": "611"
-              },
-              {
-                "key": "tokens_in",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "tokens_out",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "module",
-                "value": "gamm"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "pool_id",
-                "value": "1"
-              },
-              {
-                "key": "tokens_in",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "tokens_out",
-                "value": "15003605uosmo"
-              }
-            ]
-          },
+{
+  "type": "token_swapped",
+  "attributes": [
+    {
+      "key": "module",
+      "value": "gamm"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "pool_id",
+      "value": "604"
+    },
+    {
+      "key": "tokens_in",
+      "value": "15000000uosmo"
+    },
+    {
+      "key": "tokens_out",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "module",
+      "value": "gamm"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "pool_id",
+      "value": "611"
+    },
+    {
+      "key": "tokens_in",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "tokens_out",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "module",
+      "value": "gamm"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "pool_id",
+      "value": "1"
+    },
+    {
+      "key": "tokens_in",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "tokens_out",
+      "value": "15003605uosmo"
+    }
+  ]
+},
 ```
 
 The 3 groupings are:
 
 1. The module `gamm` executed `15000000uosmo` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 604` in exchange for `289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4`
-1. The module `gamm` executed `289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 611` in exchange for `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`
-1. The module `gamm` executed `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 1` in exchange for `15003605uosmo`
+2. The module `gamm` executed `289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 611` in exchange for `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`
+3. The module `gamm` executed `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 1` in exchange for `15003605uosmo`
 
 #### Fifth Event
 
 The fifth - and final - event is `transfer`, with each tuple representing transfers from one account to another of a specified amount.
 
 ```json
-          {
-            "type": "transfer",
-            "attributes": [
-              {
-                "key": "recipient",
-                "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "15000000uosmo"
-              },
-              {
-                "key": "recipient",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
-              },
-              {
-                "key": "amount",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "recipient",
-                "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-              },
-              {
-                "key": "recipient",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
-              },
-              {
-                "key": "amount",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "recipient",
-                "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "amount",
-                "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-              },
-              {
-                "key": "recipient",
-                "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
-              },
-              {
-                "key": "sender",
-                "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
-              },
-              {
-                "key": "amount",
-                "value": "15003605uosmo"
-              }
-            ]
-          }
+{
+  "type": "transfer",
+  "attributes": [
+    {
+      "key": "recipient",
+      "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "15000000uosmo"
+    },
+    {
+      "key": "recipient",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "recipient",
+      "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+    },
+    {
+      "key": "recipient",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1ejaswj8lcyh0zgnes8zt45e0w7tqm4mrxr74sfwgpdh72shp58ms4fdqsk"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "recipient",
+      "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "amount",
+      "value": "3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
+    },
+    {
+      "key": "recipient",
+      "value": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89"
+    },
+    {
+      "key": "sender",
+      "value": "osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t"
+    },
+    {
+      "key": "amount",
+      "value": "15003605uosmo"
+    }
+  ]
+}
 ```
 
 With 18 entires, each group of 3 makes 6 transfers, which aligns perfectly with the 6 `coin_spent` and 6 `coin_received` pairs.
