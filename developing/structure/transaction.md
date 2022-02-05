@@ -742,7 +742,7 @@ each will have an incremented `msg_index`. The 0th index may be optional.
 Each message in `logs` has just 3 properties:
 
 * `msg_index`: increments from 0 for messages within the transaction
-* `log`: often blank **TBD: I have no idea what this is for**
+* `log`: often blank
 * `events`: events emitted by the application
 
 Each entry in `events` has just two properties:
