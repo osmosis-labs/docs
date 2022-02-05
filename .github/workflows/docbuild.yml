@@ -10,6 +10,9 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+      - name: Download Latest Awesome repo README
+        run: curl https://raw.githubusercontent.com/osmosis-labs/awesome/main/README.md > awesome/README.md
+
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
           npm install

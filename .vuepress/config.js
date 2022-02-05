@@ -275,6 +275,7 @@ module.exports = {
           title: "Overview",
           children: [
             "/history-and-changes",
+            "/awesome/",
           ],
           collapsable: false,
         },
