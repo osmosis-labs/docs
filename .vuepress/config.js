@@ -221,6 +221,13 @@ module.exports = {
         collapsable: true,
         },
         {
+          title: 'Transaction Structure',
+          children: [
+            "/developing/structure/transaction",
+          ],
+          collapsable: true,
+          },
+        {
           title: 'Web Developer Guide',
           children: [
             '/developing/web-dev-guide'

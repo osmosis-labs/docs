@@ -39,7 +39,7 @@ The guides on this page will explain the process of developing on Osmosis.
   <a href="modules/" class="card">
     <img src="/img/lego.svg" class="filter-icon"/>
     <div class="title">
-     Modules 
+     Modules
     </div>
     <div class="text">
       Osmosis modules and their respective CLI commands
@@ -49,17 +49,17 @@ The guides on this page will explain the process of developing on Osmosis.
   <a href="assets/asset-info" class="card">
     <img src="/img/asset.svg" class="filter-icon"/>
     <div class="title">
-     Assets 
+     Assets
     </div>
     <div class="text">
      Currently supported assets on Osmosis with their corresponding channels and IBC denoms
     </div>
   </a>
 
-  <a href="structure/transaction.md" class="card">
-    <img src="/img/asset.svg" class="filter-icon"/>
+  <a href="structure/transaction" class="card">
+    <img src="/img/structure.svg" class="filter-icon"/>
     <div class="title">
-     Transaction Structure 
+     Transaction Structure
     </div>
     <div class="text">
      Understanding the structure of a transaction on the Osmosis blockchain

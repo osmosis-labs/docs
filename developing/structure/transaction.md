@@ -12,8 +12,7 @@ You can retrieve a single block by any one of:
 
 * using the RPC API
 * using the REST API
-* running a full node
-* using `osmosisd`
+* running a full node (using `osmosisd`)
 
 For our examples, we use `osmosisd` to retrieve a single block:
 
@@ -29,7 +28,7 @@ osmosisd query block 2836990 | jq '.'
 ```
 
 The result is a large json file. To keep this document readable, we will not reproduce the whole thing here,
-only its structure. The entire file is available at [block-2836990.json](./block-2836990.json).
+only its structure. The entire file is available at [block-2836990.json](./block-2836990.md).
 
 The main outline is as follows:
 
@@ -146,8 +145,8 @@ $ osmosisd query block 2836990 | jq -r '.block.data.txs | length'
 Each transaction is base64-encoded data. For example, the first two are:
 
 ```json
-          "Cp0CCpoCCiovb3Ntb3Npcy5nYW1tLnYxYmV0YTEuTXNnU3dhcEV4YWN0QW1vdW50SW4S6wEKK29zbW8xZTBkbXpkeGRtcnd5ZjQ2bmNtNXNxY2xrZGFuM21hcTVrNWp2ZHgSSQjcBBJEaWJjLzk4N0MxN0IxMUFCQzJCMjAwMTkxNzhBQ0U2MjkyOUZFOTg0MDIwMkNFNzk0OThFMjlGRThFNUNCMDJCN0MwQTQSSQjjBBJEaWJjLzI3Mzk0RkIwOTJEMkVDQ0Q1NjEyM0M3NEYzNkU0QzFGOTI2MDAxQ0VBREE5Q0E5N0VBNjIyQjI1RjQxRTVFQjISCQgBEgV1b3NtbxoRCgV1b3NtbxIIMTUwMDAwMDAiCDE1MDAwMDAwEmYKUgpGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQI3Vc8hzNbQdpBrbHj8hELzzBskwVqQrad15VgsFn1RtBIECgIIARi+9AMSEAoKCgV1b3NtbxIBMBCAiXoaQD9uPzOcom2NJGzrHEkgytg585ybULi93PnLNKMsECGCNH5gH46Cmiv504ULlyMsTfiyYInMGo39jYIahbDcDLk=",
-          "Cp0CCpoCCiovb3Ntb3Npcy5nYW1tLnYxYmV0YTEuTXNnU3dhcEV4YWN0QW1vdW50SW4S6wEKK29zbW8xbDR1NTZsN2N2eDhuMG42Yzd3NjUwazAydno2N3F1ZGpsY3V0ODkSSQjcBBJEaWJjLzk4N0MxN0IxMUFCQzJCMjAwMTkxNzhBQ0U2MjkyOUZFOTg0MDIwMkNFNzk0OThFMjlGRThFNUNCMDJCN0MwQTQSSQjjBBJEaWJjLzI3Mzk0RkIwOTJEMkVDQ0Q1NjEyM0M3NEYzNkU0QzFGOTI2MDAxQ0VBREE5Q0E5N0VBNjIyQjI1RjQxRTVFQjISCQgBEgV1b3NtbxoRCgV1b3NtbxIIMTUwMDAwMDAiCDE1MDAwMDAwEmYKUgpGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQK1cR2MtFWdtiyO/qORycJYvhuEqF1W9howno2FFP/11xIECgIIARjM8wMSEAoKCgV1b3NtbxIBMBCAiXoaQHCrHmPW89D7BdROgVeDs0Uz4jz95MW/abhLOrsOT/fdS6UQ+Qvzj+htQe7TtKYGRfuK9UsyjcV6gIN7I8K0fbQ=",
+"Cp0CCpoCCiovb3Ntb3Npcy5nYW1tLnYxYmV0YTEuTXNnU3dhcEV4YWN0QW1vdW50SW4S6wEKK29zbW8xZTBkbXpkeGRtcnd5ZjQ2bmNtNXNxY2xrZGFuM21hcTVrNWp2ZHgSSQjcBBJEaWJjLzk4N0MxN0IxMUFCQzJCMjAwMTkxNzhBQ0U2MjkyOUZFOTg0MDIwMkNFNzk0OThFMjlGRThFNUNCMDJCN0MwQTQSSQjjBBJEaWJjLzI3Mzk0RkIwOTJEMkVDQ0Q1NjEyM0M3NEYzNkU0QzFGOTI2MDAxQ0VBREE5Q0E5N0VBNjIyQjI1RjQxRTVFQjISCQgBEgV1b3NtbxoRCgV1b3NtbxIIMTUwMDAwMDAiCDE1MDAwMDAwEmYKUgpGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQI3Vc8hzNbQdpBrbHj8hELzzBskwVqQrad15VgsFn1RtBIECgIIARi+9AMSEAoKCgV1b3NtbxIBMBCAiXoaQD9uPzOcom2NJGzrHEkgytg585ybULi93PnLNKMsECGCNH5gH46Cmiv504ULlyMsTfiyYInMGo39jYIahbDcDLk=",
+"Cp0CCpoCCiovb3Ntb3Npcy5nYW1tLnYxYmV0YTEuTXNnU3dhcEV4YWN0QW1vdW50SW4S6wEKK29zbW8xbDR1NTZsN2N2eDhuMG42Yzd3NjUwazAydno2N3F1ZGpsY3V0ODkSSQjcBBJEaWJjLzk4N0MxN0IxMUFCQzJCMjAwMTkxNzhBQ0U2MjkyOUZFOTg0MDIwMkNFNzk0OThFMjlGRThFNUNCMDJCN0MwQTQSSQjjBBJEaWJjLzI3Mzk0RkIwOTJEMkVDQ0Q1NjEyM0M3NEYzNkU0QzFGOTI2MDAxQ0VBREE5Q0E5N0VBNjIyQjI1RjQxRTVFQjISCQgBEgV1b3NtbxoRCgV1b3NtbxIIMTUwMDAwMDAiCDE1MDAwMDAwEmYKUgpGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQK1cR2MtFWdtiyO/qORycJYvhuEqF1W9howno2FFP/11xIECgIIARjM8wMSEAoKCgV1b3NtbxIBMBCAiXoaQHCrHmPW89D7BdROgVeDs0Uz4jz95MW/abhLOrsOT/fdS6UQ+Qvzj+htQe7TtKYGRfuK9UsyjcV6gIN7I8K0fbQ=",
 ```
 
 We can decode these by passing them through a base64 decoder. The correct arguments depend on your
@@ -205,7 +204,7 @@ For convenience, we also will pass it through `jq` for formatting, and save the 
 osmosisd query txs --height 2836990 --events 'tx.height=2836990' -o json --limit 64 | jq '.' > outfile.json
 ```
 
-The entire block's transactions is available at [txs-block-2836990.json](./txs-block-2836990.json).
+The entire block's transactions is available at [txs-block-2836990.json](./txs-block-2836990.md).
 
 We now have the ability to look at transactions:
 
@@ -546,7 +545,7 @@ Each transaction is structured of the following key elements. The more complex o
 
 Let's explore the parts that require more detail.
 
-### tx
+## tx
 
 The `tx` field contains the original transaction that was sent to the blockchain that triggered the
 rest of the messages.
@@ -554,7 +553,7 @@ rest of the messages.
 This `tx` could be something simple - transfer 10osmo from account A to account B - or something more
 complex, like swapping tokens via a liquidity pool or bonding.
 
-When you use the [Osmosis Web app](https://app.osmosis.zone/) or `osmosisd` to send a transaction, it
+When you use the [Osmosis Web App](https://app.osmosis.zone/) or `osmosisd` to send a transaction, it
 composes and sends the single message in the `tx` field.
 
 Let's look at the `tx` in the above transaction:
@@ -628,7 +627,7 @@ Exploring the fields:
 * `body`: the core body of the transaction.
 * `auth_info`: who signed this message when it was sent to the chain?
 
-#### Signer
+### signer
 
 The `auth_info` field contains the signer. In the case of the above message, it was signed by a Cosmos public key,
 signfied by `auth_info.signer_infos[0].public_key.@type`, specifically the public key
@@ -636,7 +635,7 @@ signfied by `auth_info.signer_infos[0].public_key.@type`, specifically the publi
 
 This public key should match the sender of the messages in the `body`, and is checked by the chain upon submission.
 
-#### body
+### body
 
 The `body` contains the original transaction. It contains one or more `messages`, all of which must succeed
 for the transaction to succeed, i.e. a transaction. Most of the transactions are likely to have a single message, but more can exist.
@@ -733,7 +732,7 @@ and [pool 611](https://app.osmosis.zone/pool/611) ATOM/STARS.
 When the Osmosis app, and specifically the target module `gamm` receives the message, it in turn does internal activities, including
 sending various messages that comprise the fulfillment of the requested transaction. These are recorded in the `logs`.
 
-#### logs
+### logs
 
 The `logs` represent the various emitted messages that describe the internal components of fulfillment of the requested transaction.
 
@@ -769,7 +768,7 @@ The `attributes` are an array of key-value structures, with just two keys: `key`
 Putting it together, our example transaction, with a single client-sent message of type `"/osmosis.gamm.v1beta1.MsgSwapExactAmountIn"`,
 has the following events.
 
-##### First Event
+#### First Event
 
 The first event is `coin_received`:
 
@@ -856,7 +855,7 @@ For example:
 Account `osmo1thscstwxp87g0ygh7le3h92f9ff4sel9y9d2eysa25p43yf43rysk7jp93` received `15000000uosmo`, while
 account `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` received `289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4`.
 
-##### Second Event
+#### Second Event
 
 The second event is of type `coin_spent`:
 
@@ -921,7 +920,7 @@ rather `spender`.
 
 Notice that there are exactly 6 `spender`s, which aligns with exactly 6 `receiver`s.
 
-##### Third Event
+#### Third Event
 
 The third event is simply of type `message`, indicating the message that is sent:
 
@@ -969,7 +968,7 @@ The third event is simply of type `message`, indicating the message that is sent
           },
 ```
 
-##### Fourth Event
+#### Fourth Event
 
 The fourth event is `tokens_swapped`. It summarizes the actual swaps that took place. Each set of 4 consecutive
 attribute pairs goes together:
@@ -1048,7 +1047,7 @@ The 3 groupings are:
 1. The module `gamm` executed `289236271ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 611` in exchange for `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`
 1. The module `gamm` executed `3802225ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2` from `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` swapped into `pool_id 1` in exchange for `15003605uosmo`
 
-##### Fifth Event
+#### Fifth Event
 
 The fifth - and final - event is `transfer`, with each tuple representing transfers from one account to another of a specified amount.
 
@@ -1148,5 +1147,3 @@ The result was 6 transfers, represented by the 6 `coin_received` and 6 `coin_spe
 | `osmo1mw0ac6rwlp5r8wapwk3zs6g29h8fcscxqakdzw9emkne6c8wjp9q0t3v8t` | `osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89` | `15003605uosmo` |
 
 These align precisely with the `coin_spent` and `coin_received` entries.
-
-**TBD:** What is the value of this? it looks like the original account traded 15000000uosmo for 289236271ibc, 289236271ibc for 3802225ibc, and then 3802225ibc for 15003605uosmo. What kind of transaction is this?
