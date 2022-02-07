@@ -56,7 +56,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="structure/transaction.md" class="card">
+  <a href="structure/transaction.html" class="card">
     <img src="/img/structure.svg" class="filter-icon"/>
     <div class="title">
      Transaction Structure
