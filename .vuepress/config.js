@@ -114,7 +114,7 @@ module.exports = {
     editLinks: true,
     editLinkText: "Edit this page on GitHub",
     docsBranch: 'main',
-    docsDir: "docs",
+    docsDir: "",
     algolia: {
       apiKey: "a95b2bd527cd60164d4e6e26c15fc4d1", //TODO GET KEY
       indexName: "Docs",
