@@ -16,7 +16,7 @@ jobs:
       # and inject config.json contents as another variable
 
       - name: Sleep for 10 min to allow site to be published.
-        - run: sleep 10m
+        run: sleep 10m
 
       - name: Scrape the Site 🧽
         env:
