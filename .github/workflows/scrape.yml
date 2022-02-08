@@ -1,5 +1,9 @@
-name: scrape
-on: push
+name: Scrape Docs Site
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   scrape:
     runs-on: ubuntu-latest
