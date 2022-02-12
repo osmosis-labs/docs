@@ -221,6 +221,15 @@ module.exports = {
         collapsable: true,
         },
         {
+        title: 'Key Management',
+        children: [
+          "/developing/keys/",
+          "/developing/keys/keys-cli",
+          "/developing/keys/multisig",
+        ],
+        collapsable: true,
+        },
+        {
           title: 'Transaction Structure',
           children: [
             "/developing/structure/transaction",

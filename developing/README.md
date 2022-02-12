@@ -56,6 +56,16 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
+  <a href="keys/" class="card">
+    <img src="/img/key.svg" class="filter-icon"/>
+    <div class="title">
+     Key Management
+    </div>
+    <div class="text">
+     Managing keys via CLI and advanced operations such as multisig wallets
+    </div>
+  </a>
+
   <a href="structure/transaction.html" class="card">
     <img src="/img/structure.svg" class="filter-icon"/>
     <div class="title">
@@ -82,5 +92,5 @@ The guides on this page will explain the process of developing on the Osmosis fr
       Running Osmosis front-end on a development environment
     </div>
   </a>
- 
+
  </div>
