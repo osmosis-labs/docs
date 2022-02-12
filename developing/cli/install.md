@@ -38,13 +38,13 @@ After installed, open new terminal to properly load go
 
 ## Install Osmosis Binary
 
-Clone the osmosis repo, checkout and install v6.2.0:
+Clone the osmosis repo, checkout and install v6.3.0:
 
 ```bash
 cd $HOME
 git clone https://github.com/osmosis-labs/osmosis
 cd osmosis
-git checkout v6.2.0
+git checkout v6.3.0
 make install
 ```
 ::: tip

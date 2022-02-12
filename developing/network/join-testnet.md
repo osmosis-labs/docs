@@ -92,7 +92,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 6.2.0
+These two command should both output 6.3.0
 
 Reset private validator file to genesis state:
 
