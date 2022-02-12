@@ -65,6 +65,16 @@ The guides on this page will explain the process of developing on Osmosis.
      Understanding the structure of a transaction on the Osmosis blockchain
     </div>
   </a>
+
+  <a href="performance/main.html" class="card">
+    <img src="/img/time.svg" class="filter-icon"/>
+    <div class="title">
+     Performance & Profiling
+    </div>
+    <div class="text">
+     Learn how to measure performance and profile your node
+    </div>
+  </a>
  </div>
 
 
