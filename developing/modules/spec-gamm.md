@@ -46,7 +46,7 @@ The GAMM module also has a **PoolCreationFee** parameter, which currently is set
 
 
 ### create-pool
-Create a new liquidity pool and provide initial liquidity to it. 
+Create a new liquidity pool and provide initial liquidity to it.
 
 ```
 osmosisd tx gamm create-pool [config-file] --from --chain-id
@@ -61,7 +61,7 @@ The JSON [config-file] must specify the following parameters:
 	"initial-deposit": [list of denoms with initial deposit amount],
 	"swap-fee": [swap fee in percentage],
 	"exit-fee": [exit fee in percentage],
-	"future_pool_governor": [see options in pool parameters section above]
+	"future-governor": [see options in pool parameters section above]
 }
 ```
 
@@ -79,7 +79,7 @@ The configuration json file contains the following parameters:
 	"initial-deposit": "499404ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4,500000uosmo",
 	"swap-fee": "0.01",
 	"exit-fee": "0.01",
-	"future_pool_governor": ""
+	"future-governor": ""
 }
 ```
 :::
@@ -213,7 +213,7 @@ osmosisd tx gamm exit-swap-share-amount-in uosmo 14563185400026723131 298548 --p
 
 ### swap-exact-amount-in
 
-Swap an **exact** amount of tokens for a **minimum** of another token, similar to swapping a token on the trade screen GUI. 
+Swap an **exact** amount of tokens for a **minimum** of another token, similar to swapping a token on the trade screen GUI.
 
 
 ```
@@ -258,7 +258,7 @@ osmosisd tx gamm swap-exact-amount-out 140530uosmo 407239 --swap-route-pool-ids 
 
 ### estimate-swap-exact-amount-in
 
-Query the estimated result of the [swap-exact-amount-in](#swap-exact-amount-in) transaction. 
+Query the estimated result of the [swap-exact-amount-in](#swap-exact-amount-in) transaction.
 
 ```
 osmosisd query gamm estimate-swap-exact-amount-in [poolID] [sender] [tokenIn] --swap-route-pool-ids --swap-route-denoms
@@ -269,7 +269,7 @@ osmosisd query gamm estimate-swap-exact-amount-in [poolID] [sender] [tokenIn] --
 Query the amount of ATOM (or `ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`) the `sender` would receive for swapping `1 OSMO` in `pool 1`.
 
 ```sh
-osmosisd query gamm estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000uosmo --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 
+osmosisd query gamm estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000uosmo --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
 ```
 :::
 
@@ -277,7 +277,7 @@ osmosisd query gamm estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570un
 
 ### estimate-swap-exact-amount-out
 
-Query the estimated result of the [swap-exact-amount-out](#swap-exact-amount-out) transaction. 
+Query the estimated result of the [swap-exact-amount-out](#swap-exact-amount-out) transaction.
 
 ```
 osmosisd query gamm estimate-swap-exact-amount-out [poolID] [sender] [tokenOut] --swap-route-pool-ids --swap-route-denoms
@@ -329,7 +329,7 @@ Which outputs:
     swap_fee: "0.003000000000000000"
     exit_fee: "0.000000000000000000"
     smooth_weight_change_params: null
-  future_pool_governor: 24h
+  future-governor: 24h
   total_weight: "1000000.000000000000000000"
   total_shares:
     denom: gamm/pool/1
