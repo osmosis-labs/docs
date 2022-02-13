@@ -9,7 +9,7 @@ After tokens have been added to a specific pool and turned into LP shares throug
 
 ## Overview 
 
-There are currently three incentivize lockup periods; `1 day` (86400s), `1 week` (604800s), and `2 weeks` (1209600s). When locking tokens in the 2 week period, the liquidity provider is effectively earning rewards for a combination of the 1 day, 1 week, and 2 week bonding periods. The 2 week period refers to how long it takes to unbond the LP shares. The liquidity provider can keep their LP shares bonded to the 2 week lockup period indefinitely. Unbonding is only required when the liquidity provider desires access to the underlying assets.
+There are currently three incentivize lockup periods; `1 day` (24h), `1 week` (168h), and `2 weeks` (336h). When locking tokens in the 2 week period, the liquidity provider is effectively earning rewards for a combination of the 1 day, 1 week, and 2 week bonding periods. The 2 week period refers to how long it takes to unbond the LP shares. The liquidity provider can keep their LP shares bonded to the 2 week lockup period indefinitely. Unbonding is only required when the liquidity provider desires access to the underlying assets.
 
 If the liquidity provider begins the unbonding process for their 2 week bonded LP shares, they will earn rewards for all three bonding periods during the first day of unbonding. After the first day passes, they will only receive rewards for the 1 day and 1 week lockup periods. After seven days pass, they will only receive the 1 day rewards until the 2 weeks is complete and their LP shares are unlocked. The below chart is a visual example of what was just explained.
 
@@ -36,19 +36,19 @@ osmosisd tx lockup lock-tokens [tokens] --duration --from --chain-id
 To lockup `15.527546134174465309gamm/pool/3` tokens for a `one day` bonding period from `WALLET_NAME` on the osmosis mainnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 15527546134174465309gamm/pool/3 --duration="86400s" --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx lockup lock-tokens 15527546134174465309gamm/pool/3 --duration="24h" --from WALLET_NAME --chain-id osmosis-1
 ```
 
 To lockup `25.527546134174465309gamm/pool/13` tokens for a `one week` bonding period from `WALLET_NAME` on the osmosis testnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 25527546134174465309gamm/pool/13 --duration="604800s" --from WALLET_NAME --chain-id osmo-testnet-1
+osmosisd tx lockup lock-tokens 25527546134174465309gamm/pool/13 --duration="168h" --from WALLET_NAME --chain-id osmo-testnet-1
 ```
 
 To lockup `35.527546134174465309 gamm/pool/197` tokens for a `two week` bonding period from `WALLET_NAME` on the osmosis mainnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="1209600s" --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="336h" --from WALLET_NAME --chain-id osmosis-1
 ```
 :::
 
@@ -117,7 +117,7 @@ locks:
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
-  duration: 86400s
+  duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
   owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
@@ -143,7 +143,7 @@ locks:
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
-  duration: 86400s
+  duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
   owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
@@ -202,7 +202,7 @@ osmosisd query lockup account-locked-longer-duration [address] [duration]
 Here is an example of querying an `ADDRESS` for all `1 day` or greater bonding periods:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 86400s
+osmosisd query lockup account-locked-longer-duration osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
 ```
 
 An example output:
@@ -220,7 +220,7 @@ locks:
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
-  duration: 86400s
+  duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
   owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
@@ -240,7 +240,7 @@ osmosisd query lockup account-locked-longer-duration-denom [address] [duration] 
 Here is an example of an `ADDRESS` that is locked in both the `1 day` and `1 week` for both the gamm/pool/3 and gamm/pool/1, then queries the `ADDRESS` for all bonding periods equal to or greater than `1 day` for just the gamm/pool/3:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration-denom osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 86400s gamm/pool/3
+osmosisd query lockup account-locked-longer-duration-denom osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h gamm/pool/3
 ```
 
 An example output:
@@ -251,7 +251,7 @@ locks:
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
-  duration: 86400s
+  duration: 24h
   end_time: "0001-01-01T00:00:00Z"
   owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 - ID: "572027"
@@ -280,7 +280,7 @@ osmosisd query lockup account-locked-longer-duration-not-unlocking [address] [du
 Here is an example of an `ADDRESS` that is locked in both the `1 day` and `1 week` gamm/pool/3, begins unlocking process for the `1 day` bond, and queries the `ADDRESS` for all bonding periods equal to or greater than `1 day` that are not unbonding:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration-not-unlocking osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 86400s
+osmosisd query lockup account-locked-longer-duration-not-unlocking osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
 ```
 
 An example output:
@@ -459,7 +459,7 @@ lock:
   coins:
   - amount: "2449472670508255020346507"
     denom: gamm/pool/2
-  duration: 1209600s
+  duration: 336h
   end_time: "0001-01-01T00:00:00Z"
   owner: osmo16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82
 ```
@@ -615,7 +615,7 @@ osmosisd query lockup total-locked-of-denom [denom] --min-duration
 This example command outputs the amount of `gamm/pool/2` LP shares that locked in the `2 week` bonding period:
 
 ```bash
-osmosisd query lockup total-locked-of-denom gamm/pool/2 --min-duration "1209600s"
+osmosisd query lockup total-locked-of-denom gamm/pool/2 --min-duration "336h"
 ```
 
 Which, at the time of this writing outputs `14106985399822075248947045` which is equivalent to `14106985.3998 gamm/pool/2`
