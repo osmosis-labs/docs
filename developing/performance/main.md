@@ -11,6 +11,31 @@
    * ensure that your ISP or firewall is not blocking the file transfer
 3. Run a web server and open up a browser`go tool pprof -http=localhost:8080 <filename>`
    * `graphviz` must be installed
+### Memory
+
+#### Causes
+The following cause memory issues in Go
+– Creating substrings and subslices.
+– Wrong use of the defer statement.
+– Unclosed HTTP response bodies (or unclosed resources in general).
+– Orphaned hanging go routines.
+– Global variables.
+
+#### Interpreting Output
+– `inuse_space`: Means pprof is showing the amount of memory allocated
+and not yet released.
+– `inuse_objects`: Means pprof is showing the amount of objects allocated
+and not yet released.
+– `alloc_space`: Means pprof is showing the amount of memory allocated,
+regardless if it was released or not.
+– `alloc_objects`: Means pprof is showing the amount of objects allocated,
+regardless if they were released or not.
+
+– `flat`: Represents the memory allocated by a function and still held by that
+function.
+– `cum`: Represents the memory allocated by a function or any other function
+that is called down the stack.
+
 
 ### Useful links
 - [Pprof Doc](https://pkg.go.dev/net/http/pprof)
@@ -18,6 +43,8 @@
 - [Using SCP](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/)
 - [Advanced Go Profiling Talk (YouTube)](https://www.youtube.com/watch?v=xxDZuPEgbBU)
 - [Notes from the talk above](https://github.com/bradfitz/talk-yapc-asia-2015/blob/master/talk.md)
+- [Memory Leaking Scenarios](https://go101.org/article/memory-leaking.html)
+- [Great blogpost about profiling heap](https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/)
 
 ## Benchmarking
 
