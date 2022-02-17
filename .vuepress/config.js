@@ -237,6 +237,13 @@ module.exports = {
           collapsable: true,
           },
         {
+          title: 'Performance & Profiling',
+          children: [
+              '/developing/performance/main',
+         ],
+          collapsable: true,
+        },
+        {
           title: 'Web Developer Guide',
           children: [
             '/developing/web-dev-guide'
