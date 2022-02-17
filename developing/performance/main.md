@@ -1,4 +1,6 @@
-# Profiling with pprof
+# Performance & Profilinf
+
+## Profiling with pprof
 
 1. Query the pprof cpu endpoint on the node host: 
    * **CPU**: `curl -X GET localhost:6060/debug/pprof/profile?seconds=<number> > <filename>`
@@ -10,17 +12,16 @@
 3. Run a web server and open up a browser`go tool pprof -http=localhost:8080 <filename>`
    * `graphviz` must be installed
 
-#### Useful links:
+### Useful links
 - [Pprof Doc](https://pkg.go.dev/net/http/pprof)
 - [Graphviz Download](https://graphviz.org/download/)
 - [Using SCP](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/)
 - [Advanced Go Profiling Talk (YouTube)](https://www.youtube.com/watch?v=xxDZuPEgbBU)
 - [Notes from the talk above](https://github.com/bradfitz/talk-yapc-asia-2015/blob/master/talk.md)
 
-# Benchmarking
+## Benchmarking
 
-#### Best practices
-
+### Best practices
 
 - Running the benchmarks on an idle machine not running on battery
 - Use `-benchmem` to also get stats on allocated objects and space
@@ -42,7 +43,7 @@ For benchstat specifically:
 
 Adding -run='$^' or -run=- to each go test command to avoid running the tests too
 
-#### Example
+### Example
 Let's assume that we are working on branch `osmosis/string` and added some performance improvements to `tree.String()`.
 
 As a result, we would like to bench test like in [the following](https://github.com/osmosis-labs/iavl/blob/141d98dba805ca1960160b1ec98c6f243792e25c/nodedb_test.go#L33-L46) in iavl.
@@ -71,6 +72,6 @@ benchstat bench_string_old.txt bench_string_new.txt
 4. Evaluate the output and attach to your PR, if needed
 
 
-#### Useful links:
+### Useful links:
 - [Benchstat Doc](https://pkg.go.dev/golang.org/x/perf/cmd/benchstat)
 - [Tips for Newcomers](https://github.com/golang/go/issues/23471)
