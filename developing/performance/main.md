@@ -1,4 +1,4 @@
-# Performance & Profilinf
+# Performance & Profiling
 
 ## Profiling with pprof
 
