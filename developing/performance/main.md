@@ -14,6 +14,8 @@
 - [Pprof Doc](https://pkg.go.dev/net/http/pprof)
 - [Graphviz Download](https://graphviz.org/download/)
 - [Using SCP](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/)
+- [Advanced Go Profiling Talk (YouTube)](https://www.youtube.com/watch?v=xxDZuPEgbBU)
+- [Notes from the talk above](https://github.com/bradfitz/talk-yapc-asia-2015/blob/master/talk.md)
 
 # Benchmarking
 
