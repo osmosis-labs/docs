@@ -58,7 +58,7 @@ osmosisd tx staking create-validator \
 --pubkey=$(osmosisd tendermint show-validator)  \
 --moniker="Wosmongton" \
 --security-contact="wosmongton@osmosis.labs" \
---chain-id="osmo-testnet-1" \
+--chain-id="osmo-test-3" \
 --commission-rate="0.1" \
 --commission-max-rate="0.2" \
 --commission-max-change-rate="0.05" \
@@ -111,11 +111,11 @@ osmosisd tendermint show-validator
 Use your validators public key queried above:
 
 ```bash
-osmosisd query slashing signing-info [validator-pubkey] --chain-id osmo-testnet-1
+osmosisd query slashing signing-info [validator-pubkey] --chain-id osmo-test-3
 ```
 
 Example:
 
 ```bash
-osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}' --chain-id osmo-testnet-1
+osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}' --chain-id osmo-test-3
 ```

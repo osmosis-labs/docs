@@ -9,7 +9,7 @@ Make sure you have [installed the Osmosis Binary (CLI).](../cli/install)
 Use osmosisd to initialize your node (replace the ```NODE_NAME``` with a name of your choosing):
 
 ```bash
-osmosisd init NODE_NAME --chain-id=osmo-testnet-1
+osmosisd init NODE_NAME --chain-id=osmo-test-3
 ```
 
 Open the config.toml to edit the seeds and persistent peers:
@@ -22,13 +22,13 @@ nano config.toml
 Use page down or arrow keys to get to the line that says seeds = "" and replace it with the following:
 
 ```bash
-seeds = "f5051996db0e0df69c55c36977407a9b8f94edb4@159.203.100.232:26656"
+seeds = "0f9a9c694c46bd28ad9ad6126e923993fc6c56b1@137.184.181.105:26656"
 ```
 
 Next, add persistent peers:
 
 ```bash
-persistent_peers = "edd2b4968f012148641205b8ddd29f1beae8ab09@68.183.153.16:26656,e159391f00e8127d8e6ec1319b04633ffc33ed1a@165.227.122.46:26656"
+persistent_peers = "4ab030b7fd75ed895c48bcc899b99c17a396736b@137.184.190.127:26656,3dbffa30baab16cc8597df02945dcee0aa0a4581@143.198.139.33:26656"
 ```
 
 Then press ```Ctrl+O``` then enter to save, then ```Ctrl+X``` to exit
@@ -75,7 +75,7 @@ Download and replace the genesis file:
 
 ```bash
 cd $HOME/.osmosisd/config
-wget https://github.com/osmosis-labs/networks/raw/adam/v2testnet/osmo-testnet-1/genesis.tar.bz2
+wget https://github.com/osmosis-labs/networks/raw/adam/osmo-test-3/osmo-test-3/genesis.tar.bz2
 tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
 ```
 
@@ -92,7 +92,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 6.3.0
+These two command should both output 6.3.1
 
 Reset private validator file to genesis state:
 
