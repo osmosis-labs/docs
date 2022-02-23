@@ -92,7 +92,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 6.3.1
+These two command should both output 6.4.0
 
 Reset private validator file to genesis state:
 
@@ -121,7 +121,7 @@ Download the chain data:
 :::::: tab Pruned
 
 ``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-1-pruned")|select (.mirror=="Netherlands")|.url'`
+URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-3-pruned")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
@@ -131,7 +131,7 @@ wget -O - $URL | lz4 -d | tar -xvf -
 :::::: tab Archive
 
 ``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-1-archive")|select (.mirror=="Netherlands")|.url'`
+URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-3-archive")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
