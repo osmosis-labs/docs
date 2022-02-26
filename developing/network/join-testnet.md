@@ -9,7 +9,7 @@ Make sure you have [installed the Osmosis Binary (CLI).](../cli/install)
 Use osmosisd to initialize your node (replace the ```NODE_NAME``` with a name of your choosing):
 
 ```bash
-osmosisd init NODE_NAME --chain-id=osmo-test-3
+osmosisd init NODE_NAME --chain-id=osmo-test-4
 ```
 
 Open the config.toml to edit the seeds and persistent peers:
@@ -75,7 +75,7 @@ Download and replace the genesis file:
 
 ```bash
 cd $HOME/.osmosisd/config
-wget https://github.com/osmosis-labs/networks/raw/adam/osmo-test-3/osmo-test-3/genesis.tar.bz2
+wget wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-4/genesis.tar.bz2
 tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
 ```
 
@@ -204,7 +204,7 @@ If you want osmosisd to upgrade automatically from V6 to V7, do the following st
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
 cd $HOME/osmosis
 git pull
-git checkout v7.0.0-rc0
+git checkout v7.0.1
 make build
 systemctl stop cosmovisor.service
 cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin

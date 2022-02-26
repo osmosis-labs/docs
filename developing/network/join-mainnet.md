@@ -220,3 +220,19 @@ To see live logs of the service:
 ```bash
 journalctl -u cosmovisor -f
 ```
+
+## Update Cosmovisor to V7
+
+If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3401000):
+
+```bash
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
+cd $HOME/osmosis
+git pull
+git checkout v7.0.1
+make build
+systemctl stop cosmovisor.service
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin
+systemctl start cosmovisor.service
+cd $HOME
+```
