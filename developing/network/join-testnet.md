@@ -198,7 +198,7 @@ journalctl -u cosmovisor -f
 
 ## Update Cosmovisor to V7
 
-If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3298000):
+If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3215657):
 
 ```bash
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
