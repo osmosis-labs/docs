@@ -38,13 +38,7 @@ Then press ```Ctrl+O``` then enter to save, then ```Ctrl+X``` to exit
 Set up cosmovisor to ensure future upgrades happen flawlessly. To install Cosmovisor:
 
 ```bash
-cd $HOME
-git clone https://github.com/cosmos/cosmos-sdk
-cd cosmos-sdk
-git checkout v0.44.0
-make cosmovisor
-cp cosmovisor/cosmovisor $GOPATH/bin/cosmovisor
-cd $HOME
+go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
 ```
 
 Create the required directories:
@@ -92,7 +86,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 6.4.0
+These two command should both output 7.0.1
 
 Reset private validator file to genesis state:
 
@@ -121,7 +115,7 @@ Download the chain data:
 :::::: tab Pruned
 
 ``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-3-pruned")|select (.mirror=="Netherlands")|.url'`
+URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-4-pruned")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
@@ -131,7 +125,7 @@ wget -O - $URL | lz4 -d | tar -xvf -
 :::::: tab Archive
 
 ``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-3-archive")|select (.mirror=="Netherlands")|.url'`
+URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-4-archive")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
@@ -199,6 +193,8 @@ journalctl -u cosmovisor -f
 ## Update Cosmovisor to V7
 
 If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3215657):
+
+This step is only needed if syncing from genesis and haven't passed block 3215657 yet.
 
 ```bash
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin

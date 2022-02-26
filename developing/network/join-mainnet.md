@@ -23,13 +23,7 @@ wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks
 Set up cosmovisor to ensure any future upgrades happen flawlessly. To install Cosmovisor:
 
 ```bash
-cd $HOME
-git clone https://github.com/cosmos/cosmos-sdk
-cd cosmos-sdk
-git checkout v0.44.0
-make cosmovisor
-cp cosmovisor/cosmovisor $GOPATH/bin/cosmovisor
-cd $HOME
+go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
 ```
 
 Create the required directories:
