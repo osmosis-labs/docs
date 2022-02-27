@@ -86,7 +86,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 7.0.1
+These two command should both output 7.0.2
 
 Reset private validator file to genesis state:
 
@@ -200,7 +200,7 @@ This step is only needed if syncing from genesis and haven't passed block 321565
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
 cd $HOME/osmosis
 git pull
-git checkout v7.0.1
+git checkout v7.0.2
 make build
 systemctl stop cosmovisor.service
 cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin

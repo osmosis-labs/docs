@@ -223,7 +223,7 @@ If you want osmosisd to upgrade automatically from V6 to V7, do the following st
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
 cd $HOME/osmosis
 git pull
-git checkout v7.0.1
+git checkout v7.0.2
 make build
 systemctl stop cosmovisor.service
 cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin
