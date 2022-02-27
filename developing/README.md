@@ -35,6 +35,16 @@ The guides on this page will explain the process of developing on Osmosis.
       Set up a node on the Osmosis mainnet
     </div>
   </a>
+  
+  <a href="ide-guide.html" class="card">
+      <img src="/img/ide.svg" class="filter-icon"/>
+      <div class="title">
+       IDE Setup
+      </div>
+      <div class="text">
+      Recommended IDE setup for developing on Osmosis in Go.
+      </div>
+  </a>
 
   <a href="modules/" class="card">
     <img src="/img/lego.svg" class="filter-icon"/>
