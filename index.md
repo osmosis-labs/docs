@@ -22,7 +22,7 @@ Welcome to the official documentation for Osmosis, an advanced automated market 
       Develop
     </div>
     <div class="text">
-      Learn about the Osmosis Daemon, CLI, Modules, and create a node to join the testnet or mainnet 
+      Learn about the Osmosis Daemon, CLI, Modules, and create a node to join the testnet or mainnet
     </div>
   </a>
 
@@ -69,7 +69,7 @@ Welcome to the official documentation for Osmosis, an advanced automated market 
       Chat with the Osmosis community on Discord
     </div>
   </a>
-  <a href="https://github.com/osmosis-labs/osmosis" class="card lg" target="_blank">
+  <a href="https://github.com/osmosis-labs/docs" class="card lg" target="_blank">
     <img src="img/github.svg">
     <div class="title">
     Found an Issue?
