@@ -62,7 +62,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 6.4.0
+These two command should both output 7.0.2
 
 ## Download Chain Data
 
