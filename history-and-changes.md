@@ -2,7 +2,37 @@
 
 This is a history of changes to the Osmosis repository.
 
-## v6.0.0 (Carbon) - Dec 16, 2021 - Height 2464000
+## v7.0.2 (Carbon) - Feb 28, 2022 - Height 3401000
+
+The Carbon upgrade is a notable feature release to Osmosis. It introduces two new modules, `[Superfluid](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid)`, and `[Permissioned CosmWasm](https://github.com/CosmWasm/wasmd/)`. It furthermore introduces a large amount of improvements to the lockup module.
+
+A brief description of each of the changes and how they impact folks:
+
+### Permissioned Cosmwasm
+
+[Cosmwasm](https://docs.cosmwasm.com/docs/1.0/) contracts can now be deployed onto Osmosis if approved by governance! This is a huge change, bringing a VM for allowing more applications to deploy onto Osmosis rapidly. See the [example scripts]() for guidance on how to make the txs.
+The huge advantages of a VM also bring a few temporary limitations. State Sync for full nodes and builds on ARM chip architectures will temporarily not work, until further upstream software patches are in.
+
+### Superfluid Staking
+
+In the superfluid module, you can stake LP shares for specific governance-approved pools. This is a large change to proof of stake, allowing useful DeFi assets with native asset backing to help secure the network. All existing staking queries work as before, but staking rewards queries will not include rewards for superfluid'd assets. Superfluid reward distribution works like LP rewards, where they happen at epoch time and go to accounts directly. You have to use superfluid queries.
+
+See [here](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid) for an example of how superfluid staking works.
+
+### IAVL improvements
+
+This release brings in the significant IAVL speedups developed within v6.3.0 and v6.4.0. Check the changelogs for those releases for more details. At a high level view, it immensely (~8x) speeds up performance of state reads, and iteration. (And therefore queries and state execution) It adds a relatively marginal increased cost to state writing at the end of each block.
+
+### Lockup module updates
+
+This release brings with it several UX improvements for the `x/lockup` module. It allows partial unlockings of bonded assets that are not superfluidly staked, and it combines lockups that had durations that were very slightly off from one of the 'rewardable durations'. (1 day, 7 day, 14 day)
+
+Integrators that track things by lockup ID will notice the lockup ID's change, and that an address will now only maintain 1 lockup per (denom, duration) pair.
+
+See more in the [changelog](https://github.com/osmosis-labs/osmosis/blob/v7.0.2/CHANGELOG.md)
+
+
+## v6.0.0 (Boron-11) - Dec 16, 2021 - Height 2464000
 
 This upgrade fixes a bug in the v5.0.0 upgrade's app.go, which prevents new IBC channels from being created. All existing IBC channels are believed to be fine.
 
