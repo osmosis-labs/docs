@@ -179,9 +179,9 @@ In proposal 16, the 'min_deposit' value on the proposal was set to 500osmo and n
 Due to this parameter change, a sufficient governance deposit to enter on-chain voting must be in Osmo, which is a denomination that does not exist on chain. Thus no new governance proposals can enter a voting period and get decided on chain.
 
 
-## v3.0.0 (Lithium) - Aug 6, 2021 - Height 712000
+## v3.0.0 (Lithium) - Aug 6, 2021
 
-This upgrade is meant as a patch that must be hard forked in, due to a bug in proposal 16 breaking on-chain governance of Osmosis. It prevents governance proposals from moving into voting period. Details of the bug are at the bottom. This is the version that should be used, not `v2.0.0`. 
+This upgrade is meant as a patch that must be hard forked in, due to a bug in proposal 16 breaking on-chain governance of Osmosis. It prevents governance proposals from moving into voting period. Details of the bug are at the bottom. This is the version that should be used, not `v2.0.0`.
 
 This upgrade includes:
 * Update to Cosmos-SDK v0.42.9, which fixes state syncing.
