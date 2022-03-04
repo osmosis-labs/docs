@@ -282,6 +282,7 @@ module.exports = {
           children: [
             '/integrate/token-listings',
             '/integrate/airdrops',
+            '/integrate/lbp',
           ],
           collapsable: true,
         },

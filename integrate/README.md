@@ -26,6 +26,15 @@ The guides on this page will explain the process of integrating with Osmosis.
       Export specific Osmosis addresses to airdrop to
     </div>
   </a>
+  <a href="lbp.html" class="card">
+    <img src="/img/pool.svg" class="filter-icon"/>
+    <div class="title">
+     Liquidity Bootstrapping Pools
+    </div>
+    <div class="text">
+      Learn how to create a LBP on Osmosis
+    </div>
+  </a>
 
 </div>
 
