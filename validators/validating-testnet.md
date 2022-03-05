@@ -80,6 +80,25 @@ If you need further explanation for each of these command flags:
 - the `min-self-delegation` is the lowest amount of personal funds the validator is required to have in their own validator to stay bonded (in the example above, 500osmo)
 - the `gas-prices` is the amount of gas used to send this create-validator transaction
 
+### Troubleshooting
+
+If you inspect your `create-validator` transaction in the explorer, and see the following error:
+```
+out of gas in location: WritePerByte; gasWanted: 177140, gasUsed: 177979: out of gas
+```
+
+Please try subsituting:
+```
+--gas="auto" \
+--gas-prices="0.0025uosmo"
+```
+
+with 
+
+```
+--gas=<value significantly larger than gasUsed value from the error>
+```
+
 ## Track Validator Active Set
 
 To see the current validator active set:
