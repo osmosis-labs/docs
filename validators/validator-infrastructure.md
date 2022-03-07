@@ -18,18 +18,11 @@ Our organization now occupies a four-story office building but the server infras
 
 We are designing fixed purpose validators that are about the size of a raspberry pie and have the necessary disc band with to validate even an active chain like osmosis with confidence. It is my personal opinion that a full validation set up which includes machines for relaying and back up power has as well as Internet redundancy, should be able to fit in a closet, a small closet even, produced minimal noise, and be approximately as reliable as validating for the data center. But this is not a natural state of affairs. Data centers have extreme redundancy with respect to electricity and internet.
 
-This guide will not help you to get data centigrade electricity, that is outside the scope of this guide.  With that said, we recently purchased a very nice UPS system that uses lead acid batteries and will provide us with 2 to 4 hours of back up power. In our location, we never have more than about 15 minutes of electricity loss.
+This guide will not help you to get datacenter grade electricity, that is outside the scope of this guide.  With that said, we recently purchased a very nice UPS system that uses lead acid batteries and will provide us with 2 to 4 hours of back up power. In our location, we never have more than about 15 minutes of electricity loss.
 
 **Electricity**
 
 You need 500w or so for two validator’s. Please note that modern CPUs use more and less electricity dependent on load and so what you want to do is exaggerates this number, you want to say that you want two kilowatts.
-
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.jpg). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image2.jpg "image_tooltip")
 
 
 That box there is our back up power system. It cost $1000 and it can deliver two kilowatts for two hours.
