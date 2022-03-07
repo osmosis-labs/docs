@@ -214,6 +214,14 @@ module.exports = {
           collapsable: true,
         },
         {
+          title: 'Relaying',
+          children: [
+            "/developing/relaying/",
+            "/developing/relaying/relay"
+          ],
+          collapsable: true,
+        },
+        {
         title: 'Asset Info',
         children: [
           "/developing/assets/asset-info",
