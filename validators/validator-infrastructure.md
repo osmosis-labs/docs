@@ -1,14 +1,16 @@
-Notional's Validator Infrastructure Guide
+
+
+### Validation Guide
+
 Revised: March 6, 2022
 
+**Purpose**
 
-Purpose
 This guide is for the numerous individuals and groups that have contacted me in the past few months to try to learn the validation craft. I genuinely think that it is possible for anyone who is sufficiently motivated to validate from almost any place, very reliably.
 
 By the end of this guide, you will have constructed a system that can fit in less than one cubic meter and satisfies the best practices that we at notional have discovered along the way.  This means that your validator should exceed 99.9% uptime, have redundant Internet, and Require minimal service. This guide treats the validator as a closed system, which we will reduce in physical size and electrical consumption over the course of time.
 
-History
-
+**History**
 
 Validating at home is how we started but that’s not what we are today. Originally, at Notional we had about 85% uptime and we were based in a very small 2.6 m wide apartment in a wonderful neighborhood with great hamburgers.
 
@@ -18,10 +20,16 @@ We are designing fixed purpose validators that are about the size of a raspberry
 
 This guide will not help you to get data centigrade electricity, that is outside the scope of this guide.  With that said, we recently purchased a very nice UPS system that uses lead acid batteries and will provide us with 2 to 4 hours of back up power. In our location, we never have more than about 15 minutes of electricity loss.
 
-Electricity
+**Electricity**
 
 You need 500w or so for two validator’s. Please note that modern CPUs use more and less electricity dependent on load and so what you want to do is exaggerates this number, you want to say that you want two kilowatts.
 
+
+
+<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.jpg). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+
+
+![alt_text](images/image2.jpg "image_tooltip")
 
 
 That box there is our back up power system. It cost $1000 and it can deliver two kilowatts for two hours.
@@ -30,39 +38,48 @@ If your electricity goes out for longer than 15 minutes at a time, please get so
 
 Whenever possible I do recommend that you do your back up power from a battery. Again,for two hours of battery power, no matter what the load on your system is so if you have 500 watts of load, you want to look for a device that can deliver at least one kilowatt for two hours. There are many many types of these giant batteries, which are called uninterruptible power supplies and they are frankly not very expensive so, that is the section on electricity and here is a brief summary:
 
-If your electricity goes out for longer than 15m at a time consider a gas generator
-Keep in mind that these devices can kill you and lower your overall reliability if they are installed incorrectly.
-Tesla power wall seems an attractive option
-Always over spec your electricity
-We have 10x our current load, for 2 hours
-Your HVAC should not be on backup power 
-Your Internet should be on back up power
 
 
-Internet access
+* If your electricity goes out for longer than 15m at a time consider a gas generator
+    * Keep in mind that these devices can kill you and lower your overall reliability if they are installed incorrectly.
+* Tesla power wall seems an attractive option
+* Always over spec your electricity
+    * We have 10x our current load, for 2 hours
+* Your HVAC should not be on backup power 
+* Your Internet should be on back up power
+
+
+## Internet access
+
 Our biggest financial mistake so far has been the purchase of three business grade Internet lines, which proved to be no better than residential grade lines, which we had the option of using but chose to get the fancy business grade lines.  In our case, and I suspect in many areas and from many providers, there is no difference.
 
 You want a reliable 100 Mbps and that should be able to service 20+ chains.  At our office we have three 500 Mb lines. When they work correctly, we really only need one of them but they do not always work correctly and Vietnam has some undersea cable issues, and from a practical standpoint what that means is that we use a fancy router to prevent Internet downtime. Fancy does not mean expensive, however. Just go to Alibaba, and look for routers that have Intel CPU‘s and make sure that you get one that is compatible with open MPTCP router, and then the case of the ones with Intel CPU‘s, that’s pretty much all of them.
 
 We currently have installed:
 
-4 4g dongles with year long unlimited data plans purchased with cash.  The “with cash” part is a censorship avoidance mechanism.
-Three 500 Mb per second fiber optic lines, at a cost about $1000 per month each, however it is our teams universal observation that we could have purchased internet at 1/10th the cost.  Don’t over-spend.
-When the subscriptions expire, we will change these lines to the residential version, because neither has a service level agreement, and both go down at the same time for the same reasons and seem to deliver the same bandwith
+
+
+* 4 4g dongles with year long unlimited data plans purchased with cash.  The “with cash” part is a censorship avoidance mechanism.
+* Three 500 Mb per second fiber optic lines, at a cost about $1000 per month each, however it is our teams universal observation that we could have purchased internet at 1/10th the cost.  Don’t over-spend.
+    * When the subscriptions expire, we will change these lines to the residential version, because neither has a service level agreement, and both go down at the same time for the same reasons and seem to deliver the same bandwith
 
 We plan to install:
 
-Starlink 
-We have paid our deposit for a star link system and should receive it in the next year. This is especially attractive because it can consume back up power and even in the event of a grid failure, we will continue to sign
 
 
-Internal network configuration
+* Starlink 
+    * We have paid our deposit for a star link system and should receive it in the next year. This is especially attractive because it can consume back up power and even in the event of a grid failure, we will continue to sign
+
+
+## Internal network configuration
 
 Unless you are incredibly confident about your Internet service provider, you will also want to have multiple connections. I usually advise people that they get as many different types of Internet as possible. You will then use openmptcprouter to bond the connections together.
 
-Intel atom router
-Openmptcprouter.org
-A vps with at least 1gbps
+
+
+* Intel atom router
+* Openmptcprouter.org
+* A vps with at least 1gbps
 
 You can put OMR on the router using a USB stick.
 
@@ -70,15 +87,17 @@ After that, you will want to install a different OMR distribution on a VPS or ba
 
 Normally we are on one 500mbps line.  This is best in terms of speed.  If there are issues, the aggregator comes into play.  While we have had difficulty with various aspects of our network operations, we have always been able to solve our problems with aggregation and the only reason that we recently moved offsite was the Covid virus. We are currently moving all of our systems back to our site in Hanoi.
 
-Network summary
+**Network summary**
+* A single fast 4g dongle is sufficient for validation of a single chain
+* Fiber is best
+* Cable and adsl ought to be fine, too
 
-A single fast 4g dongle is sufficient for validation of a single chain
-Fiber is best
-Cable and adsl ought to be fine, too
 
-Computing hardware
+## Computing hardware
 
-This is the spec of Notional’s osmosis validator.  It has consistently been the fastest validator on the osmosis network.  
+This is the spec of Notional’s osmosis validator.  It has consistently been the fastest validator on the osmosis network, as measured by time to process tyhe epoch block.  
+
+
 
 The configuration above has worked out so well that I recommend you just copy it. I don’t recommend any modifications to this, except possibly to use a faster disk, with the stern warning that in our experience these Samsung drives are very reliable. None of our Samsung drives have failed.  The CPU above is nvme 5.0 compatible but as of now no nvme 5.0 drives have come to market.
 
@@ -86,40 +105,53 @@ We have had failures with nvme products from seagate and western digital.
 
 We will soon test an Intel P5800x.
 
-NB: the 1.6tb Intel P5800x cost us just shy of $5000 and I do not recommend using one in “my first validator”.  You can run an osmosis validator with no issues on just about any pcie 4.0 or 5.0 four lane nvme drive.
+**NB: **the 1.6tb Intel P5800x cost us just shy of $5000 and I do not recommend using one in “my first validator”.  You can run an osmosis validator with no issues on just about any pcie 4.0 or 5.0 four lane nvme drive.
 
 You do not need to use an anti static bracelet when building the validator.
 
-Cost
+
+## Cost
+
 Because of regional price differences, cost is almost certain to vary, but in order to get started with a reliable setup, here is the cost breakdown, with hardware tailored to Osmosis.
 
 One time costs:
-$1000 - computer
-$1000 - backup power
-$200 - Intel atom openmptcp router
-$200 - four 4g dongles
 
+
+
+* $1000 - computer
+* $1000 - backup power
+* $200 - Intel atom openmptcp router
+* $200 - four 4g dongles
 
 Monthly costs:
-$200 - internet: four 4g dongles
-$200 - internet: fiber 
-$100 - hosting: aggregation
+
+
+
+* $200 - internet: four 4g dongles
+* $200 - internet: fiber 
+* $100 - hosting: aggregation
 
 All told this amounts to about $2900.
 
 Please note that scaling this across additional chains is less expensive than the initial setup.  I recommend one separate computer per chain.
 
-Income
+
+## Income
+
 Validator income can be calculated like:
 
 (total inflation distributed to validators daily)*(votepower)*(commission) = daily income
 
-Your mileage will vary by:
-Price of coin
-VotePower
-Inflation parameters 
+**<span style="text-decoration:underline;">Your mileage will vary by:</span>**
 
-Software
+
+
+* Price of coin
+* VotePower
+* Inflation parameters 
+
+
+## Software
 
 I recommend anarchy Linux, which is an arch distribution that has an installer. I find it to be extremely reliable. 
 
@@ -137,8 +169,8 @@ See the red ones?  You will replace them.  Yesterday, March 5, 53 osmosis valida
 
 
 
-delegators can reduce epoch time to less than 200 seconds by delegating only to validators in the left-hand white colored region.
 
+_delegators can reduce epoch time to less than 200 seconds by delegating only to validators in the left-hand white colored region._
 
 I do not think that it will prove to be terribly difficult for you to offer better services and join the active set.
 
@@ -148,30 +180,35 @@ When your validator isn’t on a network that you personally built, under your t
 
 It is, for example, possible to configure your node so that it only makes outgoing connections, or use proxies to redirect its traffic.  We have done both at Notional and run validators like this:
 
-100 outbound p2p connections
-Private peers with other validators over a software network
+
+
+* 100 outbound p2p connections
+* Private peers with other validators over a software network
 
 You will lose all of the performance benefits of your validator if your sentry nodes are slower than your validator.  Equal spec sentries add very little delay to time sensitive events like osmosis daily epoch.  Lower spec sentries will slow down your validator, and this is specifically a cause of difficulty for the majority of osmo team red.  They are running slow sentry nodes.
 
 
-Secrets
+## Secrets
 
 Each validator has exactly two secrets that you must not lose:
 
-priv-validator.json for infrastructure
-Validators sign blocks with this key
-seed phrase for chain transactions
-The seed phrase is an entropic seed that can be used to create limitless addresses. It is used to generate a private key, which yields a public key, which yeilds an address
+
+
+* priv-validator.json for infrastructure
+    * Validators sign blocks with this key
+* seed phrase for chain transactions
+    * The seed phrase is an entropic seed that can be used to create limitless addresses. It is used to generate a private key, which yields a public key, which yeilds an address
 
 You must protect both of these. The key file can be backed up onto an encrypted USB device.  The seed phrase should be handled per your personal preferences.
 
 priv_validator_key.json == block signatures
+
 seed phrase == signing tx to interact with the chain like sending money 
 
 
-Ethics
+# Ethics
 
-As a Validator, pretty much the only time that you must not be transparent with your delegator‘s and the wider user community is when there is a security problem with the chain. When there is a security problem, you should only speak with the developers about that.
+As a Validator, pretty much the only time that you **must not** be transparent with your delegator‘s and the wider user community is when there is a security problem with the chain. When there is a security problem, you should only speak with the developers about that.
 
 At all other times, I recommend that you practice radical transparency and accountability, meaning that if you experience a failure in any of your systems, you announce that failure to the community and describe its mitigation.  This is a practice that has enabled Notional to improve rapidly because it forces us to communicate with users and consider how to ensure that issues do not re-occur.
 
