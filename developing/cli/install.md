@@ -4,13 +4,11 @@
 
 The minimum recommended specs for running a full osmosisd node is as follows:
 - 8-core (4 physical core), x86_64 architecture processor
-- 32 GB RAM (or equivalent swap file set up); 16 GB also works
+- 32 GB RAM (or equivalent swap file set up)
 - 1 TB of storage space
 
 You can check if you have enough memory to run osmosisd here: https://quicksync.io/networks/osmosis.html. 
 
-
-For most devices, not having the above specs is perfectly fine. Only around 65GB is required to pruned-sync a fullnode and testing has been done succesfully with a 16GB RAM Macbook Pro. 
 
 ## Quick Start
 
@@ -44,6 +42,8 @@ Run this on default ports:
 
 Choose default pruning settings:
 ![prunesettings](https://i.ibb.co/27tyDBv/Osmo9.png)
+
+You may have to reboot your terminal for osmosisd to become available.
 
 After choosing to download the snapshot from ChainLayer, choose the pruned sync-type:
 ![synctype](https://i.ibb.co/WfMfmxX/Osmo11.png)
