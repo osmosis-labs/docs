@@ -12,12 +12,16 @@ You can check if you have enough memory to run osmosisd here: https://quicksync.
 
 ## Quick Start
 
-Go to https://get.osmosis.zone/; pull up your terminal and copy and paste in the command
+### Go to https://get.osmosis.zone/
+
+Pull up your terminal and copy and paste in the command
 ```
 curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 ```
 
 The terminal screen should then look like this:
+
+
 ![initialscreen](https://i.ibb.co/VmdJ6tn/Osmo1.png)
 
 
@@ -25,27 +29,40 @@ Running a full node is easy and contributes to network decentralization! For eas
 
 
 You will then be asked whether if you want to run a mainnet or testnet node. 
+
+
 ![networkselection](https://i.ibb.co/bN3dJsy/Osmo6.png)
 
 If you're running below the recommended specs, a warning will show up. Simply ignore it by pressing 1.
 
+
 ![ignorewarning](https://i.ibb.co/zmJxnZq/Osmo7.png)
 
 Then select the default location: 
+
+
 ![defaultlocation](https://i.ibb.co/f2X0bhc/Osmo3.png)
 
 Input your node name:
+
+
 ![networkname](https://i.ibb.co/NrSf79q/Osmo4.png)
 
 Run this on default ports:
+
+
 ![portsettings](https://i.ibb.co/VtSJzns/Osmo8.png)
 
 Choose default pruning settings:
+
+
 ![prunesettings](https://i.ibb.co/27tyDBv/Osmo9.png)
 
 You may have to reboot your terminal for osmosisd to become available.
 
 After choosing to download the snapshot from ChainLayer, choose the pruned sync-type:
+
+
 ![synctype](https://i.ibb.co/WfMfmxX/Osmo11.png)
 
 The download will then start! Osmosisd will also be available as a terminal command after the download for further configuration.

@@ -6,9 +6,7 @@ Frontend React app for Osmosis AMM.
 ## Install global dependencies
 To run or build the app, first, need to install `Node.js` and `Yarn` globally;
 
-First Install Node (recommend 14.x.x LTS version) from;
-
-https://nodejs.org/
+First Install Node from https://nodejs.org/;
 
 Then install Yarn;
 ```bash
@@ -44,10 +42,25 @@ yarn dev
 ```
 The app should be live at http://localhost:8081
 
-
 ## License
 
 This work is dual-licensed under Apache 2.0 and MIT.
 You can choose between one of them if you use this work.
 
 `SPDX-License-Identifier: Apache-2.0 OR MIT`
+
+## Core Functionalities
+### Modules
+Osmosis' key backend functions are maintained through modules, located under the "x" folder of https://github.com/osmosis-labs/osmosis. Each module manages distinct states but can call on each other's functions. To know more specifics about each module and how they work on Osmosis mainnet, check out https://docs.osmosis.zone/developing/modules/#module-accounts.
+
+### Pages 
+Contains 
+
+### Components
+Contains tools for connecting account (ConnectAccountButton) and for token swapping / token pair selecting.
+
+### Hooks
+Osmosis' hooks currently provide max gas-fees settings solutions (FakeFeeConfig), account connection/disconnection logic(BasicAmountConfig / useAccountCreation), and pool financial data(usePoolFinancialData).
+### Configs
+
+### Dialogs
