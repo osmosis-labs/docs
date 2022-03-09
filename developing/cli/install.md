@@ -2,7 +2,7 @@
 
 ## Minimum Requirements
 
-The minimum recommended specs for running a full osmosisd node is as follows:
+The minimum recommended specs for running osmosisd is as follows:
 - 8-core (4 physical core), x86_64 architecture processor
 - 32 GB RAM (or equivalent swap file set up)
 - 1 TB of storage space
@@ -35,7 +35,7 @@ sudo apt update
 sudo apt upgrade --yes
 ```
 
-### Install Build Requirements
+## Install Build Requirements
 
 Install make and gcc.
 ```bash
@@ -50,7 +50,7 @@ wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.17.2
 
 After installed, open new terminal to properly load go
 
-### Install Osmosis Binary
+## Install Osmosis Binary
 
 Clone the osmosis repo, checkout and install v7.0.3:
 

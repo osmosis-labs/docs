@@ -42,7 +42,7 @@ The guides on this page will explain the process of developing on Osmosis.
        IDE Setup
       </div>
       <div class="text">
-      Recommended IDE setup for developing on Osmosis in Go.
+      Recommended IDE setup for developing on Osmosis in Go
       </div>
   </a>
 
@@ -53,6 +53,16 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
     <div class="text">
       Osmosis modules and their respective CLI commands
+    </div>
+  </a>
+
+  <a href="relaying/" class="card">
+    <img src="/img/relay.svg" class="filter-icon"/>
+    <div class="title">
+     Relaying
+    </div>
+    <div class="text">
+      Relay IBC packets between Osmosis and other chains
     </div>
   </a>
 
