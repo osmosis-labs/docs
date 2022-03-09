@@ -175,7 +175,7 @@ Now, start your osmosis validator on the validator node:
 osmosisd start
 ```
 
-You TMKMS node will now show logs like the following:
+Your TMKMS node will now show logs like the following:
 
 ```
 2022-03-08T23:46:06.208451Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
