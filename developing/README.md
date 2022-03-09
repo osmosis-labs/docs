@@ -35,7 +35,7 @@ The guides on this page will explain the process of developing on Osmosis.
       Set up a node on the Osmosis mainnet
     </div>
   </a>
-  
+
   <a href="ide-guide.html" class="card">
       <img src="/img/ide.svg" class="filter-icon"/>
       <div class="title">

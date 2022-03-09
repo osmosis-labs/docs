@@ -2,7 +2,9 @@
 
 ## Install Osmosis Binary
 
-Make sure you have [installed the Osmosis Binary (CLI).](../cli/install)
+Make sure you have [installed the Osmosis Binary (CLI)](../cli/install#manual-installation) prior to following the below instructions.
+
+You may also [use the Osmosis installer](../cli/install#quick-start) if you want everything to be done automatically.
 
 ## Initialize Osmosis Node
 
