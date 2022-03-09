@@ -231,9 +231,9 @@ module.exports = {
         {
         title: 'Key Management',
         children: [
-          "/developing/keys/",
           "/developing/keys/keys-cli",
           "/developing/keys/multisig",
+          "/developing/keys/tmkms",
         ],
         collapsable: true,
         },
