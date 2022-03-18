@@ -553,9 +553,9 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Purpose
 
-Projects can permissionlessly add external incentive gauges for bonded LP positions. When a pool is created using the GAMM module, the pool-incentives module automatically creates individual gauges in the incentives module for every lock duration that exists in that pool. 
+Projects can permissionlessly add external incentive gauges for bonded LP positions. When a pool is created using the GAMM module, the pool-incentives module automatically creates only the internal perpetual gauges in the incentives module for every lock duration that exists in that pool, and not external gauges. External intentive gauges are manually created with custom allocation, and timeframe, and would have a different gauge number. To add an external incentive gauge, the process is [here](https://docs.osmosis.zone/developing/modules/spec-pool-incentives.html#transactions)
 
-This procedure instructs how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool. 
+This procedure shows how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool. 
 
 ![image](https://user-images.githubusercontent.com/95667791/157994437-a2a90c29-1f88-475f-afff-7c64b9060e54.png)
 
