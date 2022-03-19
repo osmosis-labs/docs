@@ -54,7 +54,7 @@ Here is the same command but with example values:
 ```bash
 osmosisd tx staking create-validator \
 --from=wallet1 \
---amount=500000000uosmo \
+--amount=400000000uosmo \
 --pubkey=osmovalconspub1zcjduepqrevtrgcntyz04w9yzwvpy2ddf2h5pyu2tczgf9dssmywty0tzqzs0gwu0r  \
 --moniker="Wosmongton" \
 --security-contact="wosmongton@osmosis.labs" \
@@ -62,16 +62,14 @@ osmosisd tx staking create-validator \
 --commission-rate="0.1" \
 --commission-max-rate="0.2" \
 --commission-max-change-rate="0.05" \
---min-self-delegation="500000000" \
---gas="auto" \
---gas-prices="0.0025uosmo" \
+--min-self-delegation="400000000" \
 ```
 
 If you need further explanation for each of these command flags:
 - the `from` flag is the KEY_NAME you created when initializing the key on your keyring
 - the `amount` flag is the amount you will place in your own validator in uosmo (in the example, 500000000uosmo is 500osmo)
 - the `pubkey` is the validator public key found earlier
-- the `moniker` is a human readable name you choose for your validator 
+- the `moniker` is a human readable name you choose for your validator
 - the `security-contact` is an email your delegates are able to contact you at
 - the `chain-id` is whatever chain-id you are working with (in the osmosis mainnet case it is osmosis-1)
 - the `commission-rate` is the rate you will charge your delegates (in the example above, 10 percent)
@@ -85,16 +83,16 @@ If you need further explanation for each of these command flags:
 To see the current validator active set:
 
 ```bash
-osmosisd query staking validators --limit 300 -o json | jq -r '.validators[] | 
-[.operator_address, .status, (.tokens|tonumber / pow(10; 6)), 
+osmosisd query staking validators --limit 300 -o json | jq -r '.validators[] |
+[.operator_address, .status, (.tokens|tonumber / pow(10; 6)),
 .commission.update_time[0:19], .description.moniker] | @csv' | column -t -s","
 ```
 
 You can search for your specific moniker by adding grep MONIKER at the end:
 
 ```bash
-osmosisd query staking validators -o --limit 300 json | jq -r '.validators[] | 
-[.operator_address, .status, (.tokens|tonumber / pow(10; 6)), 
+osmosisd query staking validators -o --limit 300 json | jq -r '.validators[] |
+[.operator_address, .status, (.tokens|tonumber / pow(10; 6)),
 .commission.update_time[0:19], .description.moniker] | @csv' | column -t -s"," | grep Wosmongton
 ```
 
