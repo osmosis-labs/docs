@@ -29,7 +29,7 @@ osmosisd tendermint show-validator
 
 ## Create Validator Command
 
-Ensure you have a small amount of OSMO on the wallet address you are using on your keyring in order to successfully send a transaction. Once you have have a balance on the address on your keyring, you can now send the create-validator transaction. If you need testnet OSMO, join the osmosis discord, ask for the validator role, and then utilize the faucet bot in the faucet channel.
+Ensure you have a small amount of OSMO on the wallet address you are using on your keyring in order to successfully send a transaction. Once you have have a balance on the address on your keyring, you can now send the create-validator transaction. If you need testnet OSMO, join the osmosis discord, get the testnet role [here](https://canary.discord.com/channels/798583171548840026/842529004955500555), and then utilize the faucet bot [in the faucet channel](https://canary.discord.com/channels/798583171548840026/911309363464007741).
 
 Here is the empty command:
 
