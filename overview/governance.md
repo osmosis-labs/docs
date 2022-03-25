@@ -6,6 +6,11 @@ Staked OSMO holders are eligible to vote on governance proposals. Browse the ava
 
 ![](../assets/voting.png)
 
+### Voting Power
+Your voting power is determined by:
+- Amount of "free" OSMO in your wallet
+- Amount of OSMO staked by your wallet (this ***currently*** does not include Superfluid staking, that voting power is delegated to your validator)
+
 ## Creating a Proposal
 
 Governance proposals can be added through CLI.
