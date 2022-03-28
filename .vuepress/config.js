@@ -291,6 +291,8 @@ module.exports = {
             '/integrate/token-listings',
             '/integrate/airdrops',
             '/integrate/lbp',
+            '/integrate/frontend',
+            '/integrate/registration',
           ],
           collapsable: true,
         },

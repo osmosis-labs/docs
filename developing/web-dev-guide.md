@@ -54,16 +54,28 @@ If you want to build off of Osmosis, here are a few key components to check out!
 ### Modules
 Osmosis' key backend functions are maintained through modules, located under the "x" folder of https://github.com/osmosis-labs/osmosis. Each module manages distinct states but can call on each other's functions. To know more specifics about each module and how they work on Osmosis mainnet, check out https://docs.osmosis.zone/developing/modules/#module-accounts.
 
-### Pages 
+### src/pages 
 Handles the listing of various CW20 assets, all pools, and each of the pools' various metadata (chainStore, accountStore, poolId, etc.). The "Assets" folder handles all things related to the assets page, and the "Pools" folder handles all things related to the pools. Governance redirects to a separate staking UI on the keplr wallet. "Main" is responsible for the primary landing page where you can swap tokens.
 
-### Components
-Contains tools for connecting account (ConnectAccountButton) and for token swapping / token pair selecting. Pool detail pages, the superfluid staking UI on bonded LP tokens are also contained here.
+### src/components
+Contains tools for connecting account (ConnectAccountButton) and for token swapping / token pair selecting. Pool detail pages, liquidity mining logic, and the superfluid staking UI on bonded LP tokens are also contained here.
 
-### Hooks
+### src/hooks
 Osmosis' hooks currently provide max gas-fees settings solutions (FakeFeeConfig), account connection/disconnection logic(BasicAmountConfig / useAccountCreation), and pool financial data(usePoolFinancialData).
-### Configs.ts
-Configs contains various boolean values to hide certain buttons or to promote certain existing / in production pools.
 
-### Dialogs
-Dialogs contains components for creating new pools. For a more detailed documentation on the general pool creation UI, check out https://github.com/osmosis-labs/awesome/blob/main/guides/token-listing.md.
+### src/stores
+Root.ts handles logic relating to trade routing and token pricing. If a token does not have a Coingecko price feed, the price gets derived from its relevant price to Osmo. 
+
+### src/dialogs
+Dialogs contains components for joining and creating new pools. For a more detailed documentation on the general pool creation UI, check out https://github.com/osmosis-labs/awesome/blob/main/guides/token-listing.md. Specifically, `manage-liquidity.tsx` calculates share outputs given token inputs, with the following formula:
+
+- tokenInAmount = number of tokens of coin A
+- poolAsset.amount = total number of tokens of coin A in pool
+- totalShare = total gamm shares of pool (with exponent = 18)
+- shareOutAmount = tokenInAmount * totalShare / poolAsset.amount
+
+### public/assets
+The assets folder contains all graphical assets being currently used for frontend. 
+
+### Config.ts
+Config contains various boolean values to hide certain buttons or to promote certain existing / in production pools. It is also the place where external incentive gauges can be added to the Osmosis frontend. Each epoch for reward ditribution is defined here: a day. The channel info for each IBC asset is also handled here. 

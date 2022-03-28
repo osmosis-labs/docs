@@ -193,6 +193,8 @@ The Osmosis protocol's blockchain network where all transactions take place.
 
 A command line interface for connecting to a Osmosis node.
 
+## Superfluid Staking
+A process that yields additional APR based on the value of your share of the pool you have bonded liquidity for.
 
 ## Testnet
 
