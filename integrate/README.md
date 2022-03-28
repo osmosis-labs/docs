@@ -35,6 +35,24 @@ The guides on this page will explain the process of integrating with Osmosis.
       Learn how to create a LBP on Osmosis
     </div>
   </a>
+    <a href="frontend.html" class="card">
+    <img src="/img/frontend.svg" class="filter-icon"/>
+    <div class="title">
+     Frontend Integration Guide 
+    </div>
+    <div class="text">
+      In depth guide to adding assets to the frontend
+    </div>
+  </a>
+    <a href="registration.html" class="card">
+    <img src="/img/registration.svg" class="filter-icon"/>
+    <div class="title">
+     Chain Registration Guide
+    </div>
+    <div class="text">
+      Learn to register to the chain registry
+    </div>
+  </a>
 
 </div>
 
