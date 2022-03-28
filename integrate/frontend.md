@@ -553,91 +553,57 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Purpose
 
-Projects can permissionlessly add external incentive gauges for bonded LP positions. When a pool is created using the GAMM module, the pool-incentives module automatically creates only the internal perpetual gauges in the incentives module for every lock duration that exists in that pool, and not external gauges. External intentive gauges are manually created with custom allocation, and timeframe, and would have a different gauge number. To add an external incentive gauge, the process is [here](https://docs.osmosis.zone/developing/modules/spec-pool-incentives.html#transactions)
-
-This procedure shows how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool. 
+Projects can permissionlessly add external incentive gauges for bonded LP positions. This procedure instructs how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool.
 
 ![image](https://user-images.githubusercontent.com/95667791/157994437-a2a90c29-1f88-475f-afff-7c64b9060e54.png)
 
 ### Pre-requisites
 
 - Asset has been added to the Osmosis Zone Assets page
+	- See: [How to Add an Asset onto the Osmosis Assets page](...)
 - Pool has been created
-- Gauge(s) have been created
+	- See: [How to Create a Liquidity Pool](...)
+- External Incentive Gauge(s) have been created
+	- See: [How to Add an External Incentive Gauge to a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-incentives.html#overview)
 
 ### Requirements
 
-- Gauge IDs
-- IBC Denom
-- Pool ID
-
+- External Incentive Gauge(s) details:
+	- Gauge ID
+	- Destributed Token Denomination (e.g., 'ibc/...')
+	- Pool Number
 
 ### Steps
 
-1. Submit a pull request branch with necessary changes to the following:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+    1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
+2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
-        - Add a "true" value and your pool ID to LockupAbledPoolIds
-        - In ExtraGaugeInPool, add in your pool ID along with your various gauge IDs (changes per gauge) and IBC denom (stays same per gauge)
-        - See example below
+		- Add the Pool Number under `LockupAbledPoolIds` with a `true` value
+			- E.g., `'602': true,`
+			- This steps permits users to bond their GAMM of this pool for a bonding duration
+		- Add a container for the pool under `ExtraGaugeInPool`
+			- E.g., `'602': []`
+			- Within the pool container, add the External Incentive Gauges
+				- For each External Incentive Gaugue, include:
+					- Gauge ID, and
+					- Destributed Token Denomination
+						- (must be the 'ibc/...' denomination)
+					- E.g., `{ gaugeId: '2127', denom: 'ibc/7A08C6F11EF0F59EB841B9F788A87EC9F2361C7D9703157EC13D940DC53031FA', },`
+			- See example below
 
 ### Examples
 
-LockupAbledPoolIds adjustment:
+Example of Cheq External Incentives for pool #602, under config.ts::ExtraGaugeInPool:
 ```
-export const LockupAbledPoolIds: {
-	'498': true,
-	'547': true,
-	'548': true,
-	'553': true,
-	'555': true,
-	'557': true,
-	'558': true,
-	'571': true,
-```
-
-ExtraGaugeInPool adjustment:
-```
-const ExtraGaugeInPool: {
-
-    ...
-
-
-			denom: 'ibc/1DC495FCEFDA068A3820F903EDBD78B942FBD204D7E93D3BA2B432E9669D1A59',
+	'602': [
+		{
+			gaugeId: '2127',
+			denom: 'ibc/7A08C6F11EF0F59EB841B9F788A87EC9F2361C7D9703157EC13D940DC53031FA',
+		},
+		{
+			gaugeId: '2128',
+			denom: 'ibc/7A08C6F11EF0F59EB841B9F788A87EC9F2361C7D9703157EC13D940DC53031FA',
 		},
 	],
-	'553': [
-		{
-			gaugeId: '2257',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-		{
-			gaugeId: '2256',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-		{
-			gaugeId: '2255',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-	],
-	'555': [
-		{
-			gaugeId: '2254',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-		{
-			gaugeId: '2253',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-		{
-			gaugeId: '2252',
-			denom: 'ibc/9989AD6CCA39D1131523DB0617B50F6442081162294B4795E26746292467B525',
-		},
-	],
-	'557': [
-		{
-			gaugeId: '1736',
-
-    ...
-
-
 ```

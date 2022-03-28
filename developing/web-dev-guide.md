@@ -67,10 +67,15 @@ Osmosis' hooks currently provide max gas-fees settings solutions (FakeFeeConfig)
 Root.ts handles logic relating to trade routing and token pricing. If a token does not have a Coingecko price feed, the price gets derived from its relevant price to Osmo. 
 
 ### src/dialogs
-Dialogs contains components for creating new pools. For a more detailed documentation on the general pool creation UI, check out https://github.com/osmosis-labs/awesome/blob/main/guides/token-listing.md.
+Dialogs contains components for joining and creating new pools. For a more detailed documentation on the general pool creation UI, check out https://github.com/osmosis-labs/awesome/blob/main/guides/token-listing.md. Specifically, `manage-liquidity.tsx` calculates share outputs given token inputs, with the following formula:
+
+- tokenInAmount = number of tokens of coin A
+- poolAsset.amount = total number of tokens of coin A in pool
+- totalShare = total gamm shares of pool (with exponent = 18)
+- shareOutAmount = tokenInAmount * totalShare / poolAsset.amount
 
 ### public/assets
-The assets folder contains all graphics assets being currently used for frontend. 
+The assets folder contains all graphical assets being currently used for frontend. 
 
 ### Config.ts
 Config contains various boolean values to hide certain buttons or to promote certain existing / in production pools. It is also the place where external incentive gauges can be added to the Osmosis frontend. Each epoch for reward ditribution is defined here: a day. The channel info for each IBC asset is also handled here. 

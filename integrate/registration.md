@@ -119,3 +119,45 @@ CosmosSDK Chain addresses can be represented with a chain-specific string preced
 2. Submit a pull request with necessary changes to the following:
     - `slip-0173.md`:
         - Add the chain name (as a link to the website) and prefix(es) into the *Registered human-readable parts* table
+
+
+## How to Enlist an Asset onto CoinGecko
+
+### Purpose
+
+CoinGecko ([CoinGecko.com](coingecko.com)) is cryptocurrency price aggregator which can provide asset price data directly to Osmosis Zone via API. Check out their [FAQ](https://www.coingecko.com/en/faq) to learn more.
+
+Osmosis embraces CoinGecko price feeds and prioritizes CoinGecko prices over Osmosis pool spot prices on Osmosis Zone. If as asset is not yet registered on CoinGecko, it should aim to do so. This procedure will guide project administrators to register thier Asset onto CoinGecko.
+
+### Prerequisites
+
+- Chain mainnet is live
+
+From [coingecko.com/en/methodology](https://www.coingecko.com/en/methodology):
+- Working, functional website that has sufficient information on cryptoasset that is being listed. Websites with no information on purpose, team or social media profiles will be considered as invalid.
+    - Website must be owned by the project/maintaining team. Websites hosted on website builders (i.e Wix) will not be accepted.
+- Working block explorer
+- Listed on at least one (1) active exchanges where CoinGecko is integrated with.
+    - Note: Because Osmosis is integrated with CoinGecko, this will automatically be fullfilled once a Liquidity Pool containing the new Asset is created on Osmosis.
+    - See: [How to Add an Asset onto the Osmosis Assets Page](...)
+
+### Requirements
+
+- Asset data:
+    - Name (e.g., 'Cosmos Hub')
+    - ID (e.g., 'cosmos')
+    - Symbol (e.g., 'ATOM')
+    - Circulating Supply
+    - Total Supply
+    - Osmosis Address (i.e., the 'ibc/...' denom on Osmosis)
+
+### Steps
+
+1. Review CoinGecko's [Methodology page](https://www.coingecko.com/en/methodology)
+	1. Pay special attention to the following sections:
+        - 'Listings',
+        - 'Listing Criteria',
+        - 'Do's and Don'ts for Listing Submission', and
+        - 'Listing Process Flow'
+2. Fill in and submit a 'CoinGecko Request Form' (a current link can be found on their 'Methodology' page)
+
