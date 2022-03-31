@@ -4,10 +4,13 @@
 
 ### Purpose
 
-Add assets to the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of osmosis.zone](https://app.osmosis.zone/assets)
-![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
+Add assets to the [Frontier branch](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) of the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of osmosis.zone](https://app.osmosis.zone/assets).
 
-This procedure will also specify for Keplr wallet extension details to connect with the chain. 
+This procedure will also specify for Keplr wallet extension details to connect with the chain.
+
+Note that Osmosis will temporarily utilize an alternate front end interface for listing new and unverified assets: [frontier.osmosis.zone](https://frontier.osmosis.zone); only once a pool containing the asset has been onboarded into receiving Osmosis Liquidity Mining incentives, the Asset will then be added to the main [app.osmosis.zone](https://app.osmosis.zone/) site.
+
+![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
 
 ### Prerequisites
 
@@ -258,7 +261,7 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	1. `src/stores/root.ts`:
@@ -346,7 +349,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 ### Pre-requisites
 
 - Asset is in a Pool
-	- See: [How to create a Liquidity Pool](...)
+	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - Pool containing Asset is acceptable
 	- The criteria for 'acceptable' pools are *roughly* as follows:
 		- Contains only 2 tokens
@@ -368,7 +371,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/stores/root.ts`
@@ -495,7 +498,7 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
@@ -591,7 +594,7 @@ Projects can permissionlessly add external incentive gauges for bonded LP positi
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
