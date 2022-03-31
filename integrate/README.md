@@ -53,6 +53,15 @@ The guides on this page will explain the process of integrating with Osmosis.
       Learn to register to the chain registry
     </div>
   </a>
+      <a href="marketing.html" class="card">
+    <img src="/img/marketing.svg" class="filter-icon"/>
+    <div class="title">
+     Marketing Opportunities
+    </div>
+    <div class="text">
+      Collaboarate with the Osmosis Ministry of Marketing to spread awareness
+    </div>
+  </a>
 
 </div>
 
