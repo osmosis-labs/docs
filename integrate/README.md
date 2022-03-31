@@ -11,7 +11,7 @@ The guides on this page will explain the process of integrating with Osmosis.
   <a href="token-listings.html" class="card">
     <img src="/img/coin.svg" class="filter-icon"/>
     <div class="title">
-     Token Listing Process
+     Token Listing Process Overview
     </div>
     <div class="text">
       Learn about adding your token to Osmosis
@@ -23,7 +23,7 @@ The guides on this page will explain the process of integrating with Osmosis.
      Airdrop Guide
     </div>
     <div class="text">
-      Export specific Osmosis addresses to airdrop to
+      Export Osmosis addresses based on any criteria for your airdrop
     </div>
   </a>
   <a href="lbp.html" class="card">
@@ -38,10 +38,10 @@ The guides on this page will explain the process of integrating with Osmosis.
     <a href="frontend.html" class="card">
     <img src="/img/frontend.svg" class="filter-icon"/>
     <div class="title">
-     Frontend Integration Guide 
+     Front End Integration Guide 
     </div>
     <div class="text">
-      In depth guide to adding assets to the frontend
+      In-depth guide to adding assets to the Osmosis Zone front end
     </div>
   </a>
     <a href="registration.html" class="card">
@@ -50,7 +50,16 @@ The guides on this page will explain the process of integrating with Osmosis.
      Chain Registration Guide
     </div>
     <div class="text">
-      Learn to register to the chain registry
+      Register your chain and assets to various registries
+    </div>
+  </a>
+      <a href="marketing.html" class="card">
+    <img src="/img/marketing.svg" class="filter-icon"/>
+    <div class="title">
+     Marketing Opportunities
+    </div>
+    <div class="text">
+      Collaboarate with the Osmosis Ministry of Marketing to spread awareness
     </div>
   </a>
 

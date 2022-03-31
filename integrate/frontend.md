@@ -4,13 +4,17 @@
 
 ### Purpose
 
-Add assets to the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of osmosis.zone](https://app.osmosis.zone/assets) 
-![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
+Add assets to the [Frontier branch](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) of the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of osmosis.zone](https://app.osmosis.zone/assets).
 
+This procedure will also specify for Keplr wallet extension details to connect with the chain.
+
+Note that Osmosis will temporarily utilize an alternate front end interface for listing new and unverified assets: [frontier.osmosis.zone](https://frontier.osmosis.zone); only once a pool containing the asset has been onboarded into receiving Osmosis Liquidity Mining incentives, the Asset will then be added to the main [app.osmosis.zone](https://app.osmosis.zone/) site.
+
+![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
 
 ### Prerequisites
 
-- Chain and Asset registered onto the Cosmos Chain Registry
+- Chain and Asset(s) registered onto the Cosmos Chain Registry
     - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
 - Asset registered onto the Osmosis Assetlists Registry
     - See: [How to register an Asset onto the Osmosis Assetlists Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-an-asset-onto-the-osmosis-assetlists-registry)
@@ -22,6 +26,7 @@ Add assets to the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosi
 - Chain has a block explorer, either:
 	- Mintscan (preferred), or
     - Any other Block explorer, e.g., Big Dipper, Ping, or a chain-dedicated explorer
+- Functioning Bridge between Chains (if regular IBC transfers are not possible)
 - Assets listed on CoinGecko (optional)
     - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
 - An acceptable OSMO pool added to the Osmosis Trade page (co-requisite)
@@ -33,42 +38,54 @@ Add assets to the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosi
 ### Requirements
 
 - Chain data:
-    - chain id
     - RCP and REST APIs
-    - Coin type (slip44)
+    - Chain id
+    - BIP44 Coin type (slip44)
         - e.g., `coinType: 118,`
     - bech32 prefix
     - Cosmos SDK version
     	- Used to determine which 'features' must be specified
     - Gas prices
         - The low, average, and high gas prices so users can either save on fees or expedite transactions using Keplr wallet
+    - Currencies
+    	- Staking currency (Information on the staking token of the chain)
+    	- Fee currencies (List of fee tokens accepted by the chain's validator), and
+    	- Trading currencies (All currencies that can be trading on the chain)
 - Asset data:
     - Token Logo Image files (both .png and .svg is recommended)
         - Note: Currently, a .png is required to be able to render on info.osmosis.zone
         - Note: image files shall be title exactly with the token Symbol in lowercase. E.g., for 'ATOM', title the files `atom.png` and `atom.svg`
-    - coin minimal denomination
-        - For CW20 tokens:
-            - The minimal denomination is `cw20:<CONTRACT ADDRESS>`
-            - Include the ICS20 Contract Address
-       - For assets foreign to the registering chain:
-                - The minimal denomination is the 'ibc/...' denom on the registering chain
-                - Include the entire IBC Transfer Path with the original denomination
-    - Designate IBC Connection details:
-        - Source channel (Osmosis' channel to the registering chain)
-        - Destination channel (Registering chain's channel to Osmosis)
+    - Denominations
+    	- coin minimal denomination
+    		- For normal IBC tokens:
+    			- It looks like 'ibc/...'
+			- For CW20 tokens:
+				- The minimal denomination is `cw20:<CONTRACT ADDRESS>`
+				- Include the CW20<>ICS20 Contract Address
+			- For assets originally foreign to the registering chain:
+				- The minimal denomination is the 'ibc/...' denom on the registering chain
+				- Include the entire IBC Transfer Path with the original denomination
+			- Coin Minimal Denomination Alias (the denomination for the smallest, indivisible unit of the token (e.g., 'uatom'))
+		- Coin denomination (the denomination for a 'whole' token (e.g., 'ATOM'))
+    - Coin decimal places (e.g., 'ATOM' can be split into micro-ATOM, hence it has 6 decimal places--1 ATOM == 1,000,000 uatom)
     - Asset Price Oracle (optional), either:
     	- CoinGecko ID (optional, but should be included if and when one exists)
     		- Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list), or
         - `pool:<coin minimal denomination>` (default alternative, if no CoinGecko ID exists yet)
         	- The alternatives should only be used if there is an acceptable pool with the new asset
-- Enough OSMO for the pool creation fee and initial liquidity of an OSMO pool 
+    - Designate IBC Connection details:
+        - Source channel (Osmosis' channel to the registering chain)
+        - Destination channel (Registering chain's channel to Osmosis) 
+- Bridge URL (only if regular IBC transfers are not possible)
+- Enough OSMO for the pool creation fee (100 OSMO) and initial liquidity of an OSMO pool (USD $1000-worth)
 - Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
 
 1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
-2. Submit a pull request branch with necessary changes to the following:
+2. Review the [Keplr Docs for the Suggest Chain feature](https://docs.keplr.app/api/suggest-chain.html)
+3. Submit a pull request branch with necessary changes to the following:
     - `public/assets/tokens/`:
         - Add token logo images
     - `src/config.ts`:
@@ -129,6 +146,17 @@ Examples of config.ts::IBCAssetInfos:
         coinMinimalDenom: 'ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444',
         ibcTransferPathDenom: 'transfer/channel-38/gravity0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006',
     },
+```
+-INJ, the staking and fee token for Injective chain. Injective uses an external site to bridge tokens between Injective Chain and Osmosis, thus we specifiy a custom deposit and withdraw URL override:
+```
+{
+	counterpartyChainId: 'injective-1',
+	sourceChannelId: 'channel-122',
+	destChannelId: 'channel-8',
+	coinMinimalDenom: 'inj',
+	depositUrlOverride: 'https://hub.injective.network/bridge/?destination=osmosis&origin=injective&token=inj',
+	withdrawUrlOverride: 'https://hub.injective.network/bridge/?destination=injective&origin=osmosis&token=inj',
+},
 ```
 
 Example of config.ts::EmbedChainInfos: ChainInfoWithExplorer:
@@ -233,7 +261,7 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	1. `src/stores/root.ts`:
@@ -321,7 +349,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 ### Pre-requisites
 
 - Asset is in a Pool
-	- See: [How to create a Liquidity Pool](...)
+	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - Pool containing Asset is acceptable
 	- The criteria for 'acceptable' pools are *roughly* as follows:
 		- Contains only 2 tokens
@@ -343,7 +371,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/stores/root.ts`
@@ -470,7 +498,7 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
@@ -566,7 +594,7 @@ Projects can permissionlessly add external incentive gauges for bonded LP positi
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
