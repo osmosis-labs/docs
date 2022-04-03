@@ -8,6 +8,14 @@ When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth o
 
 - Add your own liquidity
 	- Simply buy at least USD $500-worth of OSMO (recommended), ATOM, and/or UST to pair with USD $500-worth of the new asset to create a 50/50 pool
+		- Accepable criteria for a new pool: 
+			- Contains only 2 tokens
+			- Contains a common Base Asset (i.e., OSMO, ATOM, or UST)
+			- 50/50 weighting
+			- 0% exit fee
+			- No future governor (set to blank (""))
+			- 0.2-0.3% swap fee
+			- Sufficient liquidity (at least USD $1000-worth) 
 	- Alternatively, it is possible to create an asymmetrically-weighted liquidity pool to reduce the requirement for the base asset (e.g., 80% FOO::20% OSMO). However, Osmosis Foundation now strongly recommends only creating 50/50 pools
 	- See: [GAMM Module: Create pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool) for the CLI command to create a pool
 	- If the asset has already been [added onto the Osmosis Zone Assets page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page), then a new pool can be creating using the [Osmosis Zone Pools page](https://app.osmosis.zone/pools)
