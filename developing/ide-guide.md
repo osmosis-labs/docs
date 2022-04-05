@@ -34,12 +34,19 @@ Add the following extensions to your VSCode:
 3. [Git Lens by GitKraken](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 4. [Tabnine AI by Tabnine](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode)
 
-## Automatic Testing
-To make your environment run tests automatically every time you save"  
+## Vscode configuration
+
+To make your environment run tests automatically every time you save"
 
 Go to: `VSCode -> Preferences -> settings -> Extensions -> Go`
 
-Then, scroll down to `Test on Save` and turn it on.
+* Set `Go: Lint tool` to `golint`. You can use `staticcheck` if you'd like, it can just take lots of computational resources.
+    * If you'd like to use the same configuration as osmosis code, use `golangci-lint` .
+    * You will likely be prompted to install the linter you choose, click the install button.
+* Set `Go: Format tool` to one of the following: `goreturns` or `gofumports`
+    * You will likely be prompted to install the formatter you choose, click the install button.
+* Check `Go: Test on Save`
+
 
 At this point, your environment should be ready to go!
 
