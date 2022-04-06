@@ -1,4 +1,4 @@
-# Osmosis Zone Front-End
+# Osmosis Zone Front End
 
 ## How to Add an Asset onto the Osmosis Assets Page
 

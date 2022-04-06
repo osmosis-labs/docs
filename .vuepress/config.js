@@ -290,9 +290,11 @@ module.exports = {
           children: [
             '/integrate/token-listings',
             '/integrate/airdrops',
-            '/integrate/lbp',
-            '/integrate/frontend',
             '/integrate/registration',
+            '/integrate/liquidity',
+            '/integrate/incentives',
+            '/integrate/frontend',
+            '/integrate/marketing',
           ],
           collapsable: true,
         },
