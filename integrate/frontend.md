@@ -38,7 +38,7 @@ Note that Osmosis will temporarily utilize an alternate front end interface for 
 ### Requirements
 
 - Chain data:
-    - RCP and REST APIs
+    - RPC and REST APIs
     - Chain id
     - BIP44 Coin type (slip44)
         - e.g., `coinType: 118,`
