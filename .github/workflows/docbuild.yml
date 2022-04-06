@@ -23,7 +23,7 @@ jobs:
         uses: amondnet/vercel-action@v20 #deploy
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          #github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
           vercel-args: '--prod' #Optional
           vercel-org-id: ${{ secrets.VERCEL_TEAM_ID}}  #Required
           vercel-project-id: ${{ secrets.VERCEL_DOCS_PROJECT_ID}} #Required 
