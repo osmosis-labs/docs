@@ -18,8 +18,32 @@ jobs:
         run: |
           npm install
           npm run build
-
-      - name: Deploy 🚀
+          
+      - name: Deploy to Vercel 
+        # You may pin to the exact commit or the version.
+        # uses: xmflsct/action-vercel-deployment@dfd18ea029d56a90ce06c154cb40de413840f151
+        uses: xmflsct/action-vercel-deployment@v0.5.3
+        with:
+          # Your token at Vercel. See https://vercel.com/account/tokens
+          vercelToken: ${{ secrets.VERCEL_TOKEN }}
+          # Your Organization ID at Vercel.
+          vercelOrgId: ${{ secrets.VERCEL_TEAM_ID }}
+          # Your Project ID at Vercel.
+          vercelProjectId: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
+          # Your token at GitHub. See https://github.com/settings/tokens
+          #githubToken: 
+          # If you would like to build through GitHub Actions inatead of Vercel.
+          #buildOption: # optional
+          # If building through GitHub Actions, a source directory may be supplied.
+          #buildSource: # optional, default is 
+          # If building through GitHub Actiosn, an output directory may be supplied.
+          #deploySource: # optional, default is 
+          # If this deployment is targeted as production.
+          #deployProduction: # optional
+          # You can assign a domain to this deployment. Please note that this domain must have been configured in the project.
+          #assignDomain: # optional
+          
+      - name: Deploy to Github Pages 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages # The branch the action should deploy to.
