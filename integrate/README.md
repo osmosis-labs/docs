@@ -26,15 +26,6 @@ The guides on this page will explain the process of integrating with Osmosis.
       Export Osmosis addresses based on any criteria for your airdrop
     </div>
   </a>
-  <a href="lbp.html" class="card">
-    <img src="/img/pool.svg" class="filter-icon"/>
-    <div class="title">
-     Liquidity Bootstrapping Pools
-    </div>
-    <div class="text">
-      Learn how to create a LBP on Osmosis
-    </div>
-  </a>
   <a href="registration.html" class="card">
     <img src="/img/registration.svg" class="filter-icon"/>
     <div class="title">
@@ -59,7 +50,7 @@ The guides on this page will explain the process of integrating with Osmosis.
      Liquidity Mining Incentives
     </div>
     <div class="text">
-      Learn how to create a LBP on Osmosis
+      Discover possibilies for liquidity mining incentives on Osmosis
     </div>
   </a>
   <a href="frontend.html" class="card">
