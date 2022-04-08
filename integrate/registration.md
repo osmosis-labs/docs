@@ -58,7 +58,10 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
     - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
 - Opened IBC connection between the source chain and Osmosis
     - Selected a sole desigate IBC connection between the registering chain and Osmosis for this asset
-        - All native assets from a chain should go through a single connection, but CW20 tokens can be sent through another connection  
+        - All native assets from a chain should go through a single connection, but CW20 tokens can be sent through another connection
+- There is a liquidity pool on Osmosis with sufficient liquidity.
+	- See: [Liquidity](https://docs.osmosis.zone/integrate/liquidity.html)
+	- See: [GAMM Module: Create pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool) for the CLI command to create a pool
 - Assets listed on CoinGecko (optional)
     - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
 
@@ -83,7 +86,7 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
     1. [README.md](https://github.com/osmosis-labs/assetlists/blob/main/README.md)
     2. [assetlist.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/assetlist.schema.json)
 2. Submit a pull request with necessary changes to the following:
-    - `osmosis-1/osmosis-1.assetlist.json`:
+    - `osmosis-1/osmosis-frontier.assetlist.json`:
         - Be sure to include the CoinGecko ID if one exists
     - `images/`
         - Add token logo images
