@@ -21,7 +21,8 @@ Note that Osmosis will temporarily utilize an alternate front end interface for 
 - Chain registered onto SLIP173
     - See: [How to Register onto SLIP173](https://docs.osmosis.zone/integrate/registration.html#how-to-register-a-bech32-prefix-onto-slip173)
 - Multiple relayers set up to relay packets between chains
-    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider (coming soon)](...) 
+    - To set up a relayer, see the [Relaying Guide](https://docs.osmosis.zone/developing/relaying/relay.html)
+    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider](https://docs.osmosis.zone/developing/relaying/relayers.html) 
 - IBC token transfer has been validated
 - Chain has a block explorer, either:
 	- Mintscan (preferred), or
