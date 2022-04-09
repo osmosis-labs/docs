@@ -239,9 +239,9 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 
 ### Prerequisites
 
-- All assets in pool have been added to the Osmosis Assets page
+- All assets in the pool(s) have been added to the Osmosis Assets page (or else a co-requisite)
 	- See: [How to Add Assets onto the Osmosis Assets Page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page)
--  Pool has been created
+- Pool has been created
 	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - Pool is acceptable
 	- The criteria for acceptable pools are *roughly* as follows:
