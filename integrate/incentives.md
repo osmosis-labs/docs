@@ -32,6 +32,22 @@ See [Osmosis Proposal #178: Match External Incentives for SWTH/OSMO](https://www
 
 Bonded Liquidity Gauges are mechanisms for distributing liquidity incentives to LP tokens that have been bonded for a minimum amount of time. 45% of the daily issuance of OSMO goes towards these liquidity incentives. When a new pool is onboarded to receive (internal) Osmosis Liquidity Mining incentives, it will be granted allocation points and recieve a portion of the 45% of daily OSMO issuance. See [Bonded Liquidity Gauges](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#bonded-liquidity-gauges).
 
+### Distribution Calcultions
+This 45% of daily issuance is split between approved pools according to the following calculation. For each pool, the APR from collected swap fees over the last 7 days is computed. We then define the concept of `subsidy` as the ratio of liquidity mining incentives APR, divided by swap fees APR. We can compute this value for pools individually to get a pool subsidy, as well as for all pools collectively to get an average subsidy.
+
+In general, each pool targets a particular subsidy level, with omso pools aiming for 1.5x average subsidy, and non-osmo pools aiming for 0.5x the average. This target is modified by external incentives matching and by outlier limiting.
+
+For pools with external incentives which are being matched, the equivlant subsidy level of the external incentives is added to the target (limited by what the normal level would be, ie 1.5x or 0.5x the average).
+
+Pools with excessively high swap fees collected may be the result of wash trading with the intent of incentives manipulation, so to limit this potential, we cap the fee APR used in the above calculation to be no more than 3x the average over all pools. This means that wash trading can be used to help a pool grow faster, but it cannot be used to create excessively high incentive APRs.
+
+To prevent excessive volatility in the incentives APRs, these incentive targets are adjusted towards over multiple weeks, with each adjustment being limited to no more than +25% or -25%. This is somewhat disrupted as a result of normalization though, so when there are large changes in other pools, some pools might see changes in the range of +/- 30%.
+
+This adjustment scale limiting, is also partially negated during the 4 week onboarding period, where pools are expected to grow quite quickly, and so incentives need to be able to adjust quickly as well to keep up. During this period, the setting for the pool is chosen to be a weighted average between the target level and the adjustment limited by the 25% scale, with the weighting between these shifting linearly from entirely target, to entirely scale limited adjustment over the onboarding period. (ie 100% target, 75% target/25% adjustment, 50/50, 25/75, 100% adjustment)
+
+The above calculation determines what share of incentives go to each pool, but these shares are then further split into 3 gauges for each pool. Under current parameters, the 1day gauge receives 50%, 7day 30%, and 14day 20%. This means in effect that 100% of the incentives are available to 14 day bonders, 80% available to 7 day bonders, and only 50% available for 1 day bonders. The actual difference in APRs between bonding lengths is not this simple though, as it is heavily dependent on what percentage of the liquidity in the pool is bonded to each durration, and therefore how much competition there is within each gauge.
+
+### Pool Onboarding
 Although pools must be voted in to be onboarded to recieve Osmosis Liquidity Mining Incentives, there are ways to increase the chances of a pool being accepted.
 - Propose an OSMO pool. OSMO pools have the highest chances of being onboarded. The community regularly expresses concern over incentivizing non-OSMO pools, so propsing only an OSMO pool has a better chance of being accepted. It is still somewhat common to onboard an ATOM or UST pool, as those or common base assets on Osmosis, but pools with unusual base asset probably have a low chance of being onboarded.
 - Add External incentives. Pools that already have a significant amount of external incentives means that incentives will stack, and also shows that the project is serious about the pool.
