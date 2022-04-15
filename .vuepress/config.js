@@ -217,7 +217,8 @@ module.exports = {
           title: 'Relaying',
           children: [
             "/developing/relaying/",
-            "/developing/relaying/relay"
+            "/developing/relaying/relay",
+            "/developing/relaying/relayers"
           ],
           collapsable: true,
         },
