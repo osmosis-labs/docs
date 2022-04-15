@@ -7,6 +7,16 @@ title: Developer Home
 The guides on this page will explain the process of developing on Osmosis.
 
 <div class="cards twoColumn">
+  <a href="get_started/" class="card">
+    <img src="/img/ide.svg" class="filter-icon"/>
+    <div class="title">
+     Getting Started
+    </div>
+    <div class="text">
+      Get started to contribute to Osmosis
+    </div>
+  </a>
+  
   <a href="cli/install" class="card">
     <img src="/img/terminal-solid.svg" class="filter-icon"/>
     <div class="title">
@@ -34,16 +44,6 @@ The guides on this page will explain the process of developing on Osmosis.
     <div class="text">
       Set up a node on the Osmosis mainnet
     </div>
-  </a>
-
-  <a href="ide-guide.html" class="card">
-      <img src="/img/ide.svg" class="filter-icon"/>
-      <div class="title">
-       IDE Setup
-      </div>
-      <div class="text">
-      Recommended IDE setup for developing on Osmosis in Go
-      </div>
   </a>
 
   <a href="modules/" class="card">
