@@ -1,5 +1,5 @@
 ---
-title: get_started
+title: get started
 ---
 
 # Getting Started
