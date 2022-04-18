@@ -5,7 +5,7 @@
   "main": "index.js",
   "authors": {
     "name": "Osmosis Labs",
-    "email": ""
+    "email": "" 
   },
   "repository": "/osmosis",
   "scripts": {
