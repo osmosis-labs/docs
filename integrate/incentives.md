@@ -37,7 +37,7 @@ This 45% of daily issuance is split between approved pools according to the foll
 
 In general, each pool targets a particular subsidy level, with omso pools aiming for 1.5x average subsidy, and non-osmo pools aiming for 0.5x the average. This target is modified by external incentives matching and by outlier limiting.
 
-For pools with external incentives which are being matched, the equivlant subsidy level of the external incentives is added to the target (limited by what the normal level would be, ie 1.5x or 0.5x the average).
+For pools with external incentives which are being matched, the equivalant subsidy level of the external incentives is added to the target (limited by what the normal level would be, i.e. 1.5x or 0.5x the average).
 
 Pools with excessively high swap fees collected may be the result of wash trading with the intent of incentives manipulation, so to limit this potential, we cap the fee APR used in the above calculation to be no more than 3x the average over all pools. This means that wash trading can be used to help a pool grow faster, but it cannot be used to create excessively high incentive APRs.
 
@@ -45,7 +45,7 @@ To prevent excessive volatility in the incentives APRs, these incentive targets 
 
 This adjustment scale limiting, is also partially negated during the 4 week onboarding period, where pools are expected to grow quite quickly, and so incentives need to be able to adjust quickly as well to keep up. During this period, the setting for the pool is chosen to be a weighted average between the target level and the adjustment limited by the 25% scale, with the weighting between these shifting linearly from entirely target, to entirely scale limited adjustment over the onboarding period. (ie 100% target, 75% target/25% adjustment, 50/50, 25/75, 100% adjustment)
 
-The above calculation determines what share of incentives go to each pool, but these shares are then further split into 3 gauges for each pool. Under current parameters, the 1day gauge receives 50%, 7day 30%, and 14day 20%. This means in effect that 100% of the incentives are available to 14 day bonders, 80% available to 7 day bonders, and only 50% available for 1 day bonders. The actual difference in APRs between bonding lengths is not this simple though, as it is heavily dependent on what percentage of the liquidity in the pool is bonded to each durration, and therefore how much competition there is within each gauge.
+The above calculation determines what share of incentives go to each pool, but these shares are then further split into 3 gauges for each pool. Under current parameters, the 1day gauge receives 50%, 7day 30%, and 14day 20%. This means in effect that 100% of the incentives are available to 14 day bonders, 80% available to 7 day bonders, and only 50% available for 1 day bonders. The actual difference in APRs between bonding lengths is not this simple though, as it is heavily dependent on what percentage of the liquidity in the pool is bonded to each duration, and therefore how much competition there is within each gauge.
 
 ### Pool Onboarding
 Although pools must be voted in to be onboarded to recieve Osmosis Liquidity Mining Incentives, there are ways to increase the chances of a pool being accepted.
