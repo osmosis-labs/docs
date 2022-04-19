@@ -210,7 +210,7 @@ module.exports = {
             "/developing/modules/spec-mint",
             "/developing/modules/spec-incentives",
             "/developing/modules/spec-pool-incentives",
-            "Superfluid Staking"
+            "/developing/modules/spec-superfluid"
           ],
           collapsable: true,
         },
