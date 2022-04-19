@@ -80,7 +80,19 @@ title: Modules
       On-chain governance which allows token holders to participate in a community led decision-making process
     </div>
   </a>
+
+  <a href="spec-superfluid.html" class="card">
+    <img src="/img/superfluid.svg" class="filter-icon" />
+    <div class="title">
+      Superfluid Staking
+    </div>
+    <div class="text">
+      Stakes user-bonded LP shares to earn rewards and provides an additional layer of consensus security
+    </div>
+  </a>
+
  </div>
+ 
 
 
 ## Module Accounts
@@ -184,6 +196,7 @@ All modules have their own module account. Think of this as a wallet that can on
 
 </td>
 <td>none</td></tr>
+
 </tbody></table>
 
 ## Module Flow
@@ -194,5 +207,6 @@ While module functions can be called in many different orders, here is a basic f
 2. (GAMM) Swap Exact Amount In
 3. (GAMM) Join Pool
 4. (lockup) Lock-tokens
-5. (lockup) Begin-unlock-tokens
-6. (GAMM) Exit Pool
+5. (superfluid) Calculate and delegate synthetic Osmo
+6. (lockup) Begin-unlock-tokens
+7. (GAMM) Exit Pool
