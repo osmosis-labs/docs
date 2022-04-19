@@ -125,19 +125,19 @@ Welcome to the official documentation for Osmosis, an advanced automated market 
      Pool & Token Statistics
     </div>
   </a>
-  <a href="https://api-osmosis.imperator.co/swagger" class="card lg" target="_blank">
-    <img src="img/swagger.png">
+  <a href="https://lcd-osmosis.blockapsis.com/swagger/" class="card lg" target="_blank">
+    <img src="img/tender-lcd.png">
     <div class="title">
-     REST
+     Osmosis LCD
     </div>
     <div class="text">
-     Hosted by Imperator.co (1317)
+     Hosted by Blockapsis (1317)
     </div>
   </a>
   <a href="https://rpc-osmosis.blockapsis.com/" class="card lg" target="_blank">
     <img src="img/tender-rpc.png">
     <div class="title">
-     Tendermint RPC
+     Osmosis RPC
     </div>
     <div class="text">
      Hosted by Blockapsis (26657)
@@ -153,6 +153,24 @@ Welcome to the official documentation for Osmosis, an advanced automated market 
     </div>
     <div class="text">
      Block Explorer
+    </div>
+  </a>
+  <a href="https://www.dexmos.app/" class="card lg" target="_blank">
+    <img src="img/dexmos.png">
+    <div class="title">
+     Dexmos
+    </div>
+    <div class="text">
+     Pool Info
+    </div>
+  </a>
+    <a href="https://api-osmosis.imperator.co/swagger" class="card lg" target="_blank">
+    <img src="img/swagger.png">
+    <div class="title">
+     REST
+    </div>
+    <div class="text">
+     Hosted by Imperator.co (1317)
     </div>
   </a>
 </div>

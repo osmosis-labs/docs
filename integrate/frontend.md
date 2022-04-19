@@ -1,82 +1,99 @@
-# Osmosis Zone Front-End
+# Osmosis Zone Front End
 
 ## How to Add an Asset onto the Osmosis Assets Page
 
 ### Purpose
 
-Add assets to the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of osmosis.zone](https://app.osmosis.zone/assets) 
-![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
+Add assets to the [Frontier branch](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) of the [Osmosis frontend repo](https://github.com/osmosis-labs/osmosis-frontend) to have the Asset appear on the [Assets page of frontier.osmosis.zone](https://frontier.osmosis.zone/assets).
 
+This procedure will also specify for Keplr wallet extension details to connect with the chain.
+
+Note that Osmosis will temporarily utilize an alternate front end interface for listing new and unverified assets: [frontier.osmosis.zone](https://frontier.osmosis.zone); once a pool containing the asset has been onboarded into receiving Osmosis Liquidity Mining incentives, the Asset will then be added to the main [app.osmosis.zone](https://app.osmosis.zone/) site.
+
+![image](https://i.ibb.co/1bhLSx3/Screen-Shot-2022-03-16-at-8-59-21-AM.png)
 
 ### Prerequisites
 
-- Chain and Asset registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](...)
+- Chain and Asset(s) registered onto the Cosmos Chain Registry
+    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
 - Asset registered onto the Osmosis Assetlists Registry
-    - See: [How to register an Asset onto the Osmosis Assetlists Registry](...)
+    - See: [How to register an Asset onto the Osmosis Assetlists Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-an-asset-onto-the-osmosis-assetlists-registry)
 - Chain registered onto SLIP173
-    - See: [How to Register onto SLIP173](...)
+    - See: [How to Register onto SLIP173](https://docs.osmosis.zone/integrate/registration.html#how-to-register-a-bech32-prefix-onto-slip173)
 - Multiple relayers set up to relay packets between chains
-    - See: [How to set up a Relayer](...)
-    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider](...) 
+    - To set up a relayer, see the [Relaying Guide](https://docs.osmosis.zone/developing/relaying/relay.html)
+    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider](https://docs.osmosis.zone/developing/relaying/relayers.html) 
 - IBC token transfer has been validated
-	- See: [How to validate IBC token transfers](...)
 - Chain has a block explorer, either:
-	- Mintscan (preferred)
-		- See: [How to add a chain to Mintscan](...), or
-    - Any other Block explorer, e.g., Big Dipper, Pings, or a chain-dedicated explorer
+	- Mintscan (preferred), or
+    - Any other Block explorer, e.g., Big Dipper, Ping, or a chain-dedicated explorer
+- Functioning Bridge between Chains (if regular IBC transfers are not possible)
 - Assets listed on CoinGecko (optional)
-    - See: [How to enlist assets onto CoinGecko](...)
+    - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
 - An acceptable OSMO pool added to the Osmosis Trade page (co-requisite)
-    - See: [How to Add a Pool to the Osmosis Trade Page](...)
+    - See: [How to Add a Pool to the Osmosis Trade Page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-a-pool-to-the-osmosis-trade-page)
 - Asset price oracle added to Osmosis Zone (co-requisite)
-    - See: [How to Specify Asset Price Oracle on Osmosis Zone (CoinGecko)](...)
-    - See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](...)
+    - See: [How to Specify Asset Price Oracle on Osmosis Zone (CoinGecko)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-coingecko)
+    - See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-liquidity-pool)
 
 ### Requirements
 
 - Chain data:
-    - chain id
-    - RCP and REST APIs
-    - Coin type (slip44)
+    - RPC and REST APIs
+    - Chain id
+    - BIP44 Coin type (slip44)
         - e.g., `coinType: 118,`
     - bech32 prefix
     - Cosmos SDK version
     	- Used to determine which 'features' must be specified
     - Gas prices
         - The low, average, and high gas prices so users can either save on fees or expedite transactions using Keplr wallet
+    - Currencies
+    	- Staking currency (Information on the staking token of the chain)
+    	- Fee currencies (List of fee tokens accepted by the chain's validator), and
+    	- Trading currencies (All currencies that can be trading on the chain)
 - Asset data:
     - Token Logo Image files (both .png and .svg is recommended)
         - Note: Currently, a .png is required to be able to render on info.osmosis.zone
-        - Note: image files shall be title exactly with the token Symbol in lowercase. E.g., for 'ATOM', title the files `atom.png` and `atom.svg`
-    - coin minimal denomination
-        - For CW20 tokens:
-            - The minimal denomination is `cw20:<CONTRACT ADDRESS>`
-            - Include the ICS20 Contract Address
-       - For assets foreign to the registering chain:
-                - The minimal denomination is the 'ibc/...' denom on the registering chain
-                - Include the entire IBC Transfer Path with the original denomination
-    - Designate IBC Connection details:
-        - Source channel (Osmosis' channel to the registering chain)
-        - Destination channel (Registering chain's channel to Osmosis)
-    - Asset Price Oracle (optional), either:
+        - Note: image files shall be titled exactly with the token Symbol in lowercase. E.g., for 'ATOM', title the files `atom.png` and `atom.svg`
+    - Denominations
+    	- coin minimal denomination
+    		- For normal IBC tokens:
+    			- It looks like 'ibc/...'
+			- For CW20 tokens:
+				- The minimal denomination is `cw20:<CONTRACT ADDRESS>`
+				- Will also need the CW20<>ICS20 contract address
+			- For assets originally foreign to the registering chain:
+				- The minimal denomination is the 'ibc/...' denom on the registering chain
+				- Will also need the entire IBC Transfer Path with the original denomination
+			- Coin Minimal Denomination Alias (the denomination for the smallest, indivisible unit of the token (e.g., 'uatom'))
+		- Coin denomination (the denomination for a 'whole' token (e.g., 'ATOM'))
+    - Coin decimal places (e.g., 'ATOM' can be split into micro-ATOM, hence it has 6 decimal places--1 ATOM == 1,000,000 uatom)
+    - Asset Price data, either:
     	- CoinGecko ID (optional, but should be included if and when one exists)
     		- Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list), or
         - `pool:<coin minimal denomination>` (default alternative, if no CoinGecko ID exists yet)
         	- The alternatives should only be used if there is an acceptable pool with the new asset
-- Enough OSMO for the pool creation fee and initial liquidity of an OSMO pool 
+        	- See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-liquidity-pool)
+    - Designate IBC Connection details:
+        - Source channel (Osmosis' channel to the registering chain)
+        - Destination channel (Registering chain's channel to Osmosis) 
+- Bridge URL (only if regular IBC transfers are not possible)
+- Enough OSMO for the pool creation fee (100 OSMO) and initial liquidity of an OSMO pool (USD $1000-worth)
 - Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
 
 1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
-2. Submit a pull request branch with necessary changes to the following:
+2. Review the [Keplr Docs for the Suggest Chain feature](https://docs.keplr.app/api/suggest-chain.html)
+3. Submit a pull request branch with necessary changes to the following:
     - `public/assets/tokens/`:
         - Add token logo images
     - `src/config.ts`:
         - Add Assets to `IBCAssetInfos`
-            - See examples below
+            - Be sure to include the external bridge URLs if an external site is required to bridge to assets to and from Osmosis
+	    - See examples below
         - Add Chains to `EmbedChainInfos: ChainInfoWithExplorer`
             - Include the optimal RPC and REST APIs
             - Be sure to include coin type
@@ -111,7 +128,7 @@ Examples of config.ts::IBCAssetInfos:
     },
 ```
 - NETA, a CW20 token from Juno:
-    - Note: channel-42 is Osmosis' channel to Juno for native Juno assets, but channel-169 is Osmosis' channel to this ICS20 contract on Juno, which currently accomodates NETA, and potentially other CW20 tokens in the future 
+    - Note: *channel-42* is Osmosis' channel to Juno for native Juno assets, but channel-169 is Osmosis' channel to this CW20<>ICS20 contract on Juno, which currently accomodates NETA, MARBLE, BLOCK, HOPE, RACOON, and potentially other CW20 tokens in the future 
 ```
     {
         counterpartyChainId: 'juno-1',
@@ -132,6 +149,17 @@ Examples of config.ts::IBCAssetInfos:
         coinMinimalDenom: 'ibc/A6E3AF63B3C906416A9AF7A556C59EA4BD50E617EFFE6299B99700CCB780E444',
         ibcTransferPathDenom: 'transfer/channel-38/gravity0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006',
     },
+```
+- INJ, the staking and fee token for Injective chain. Injective uses an external site to bridge tokens between Injective Chain and Osmosis, thus we specifiy a custom deposit and withdraw URL override:
+```
+{
+	counterpartyChainId: 'injective-1',
+	sourceChannelId: 'channel-122',
+	destChannelId: 'channel-8',
+	coinMinimalDenom: 'inj',
+	depositUrlOverride: 'https://hub.injective.network/bridge/?destination=osmosis&origin=injective&token=inj',
+	withdrawUrlOverride: 'https://hub.injective.network/bridge/?destination=injective&origin=osmosis&token=inj',
+},
 ```
 
 Example of config.ts::EmbedChainInfos: ChainInfoWithExplorer:
@@ -200,12 +228,6 @@ Example of config.ts::EmbedChainInfos: ChainInfoWithExplorer:
 },
 ```
 
-### Next Steps
-
-- See also:
-	- [How to Add Asset Price to Osmosis Zone](...)
-	- [How to Add a Pool to the Osmosis Trade Page](...)
-
 
 ## How to Add a Pool to the Osmosis Trade Page
 
@@ -217,10 +239,10 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 
 ### Prerequisites
 
-- All assets in pool have been added to the Osmosis Assets page
-	- See: [How to Add Assets onto the Osmosis Assets Page](...)
--  Pool has been created
-	- See: [How to create a Liquidity Pool](...)
+- All assets in the pool(s) have been added to the Osmosis Assets page (or else a co-requisite)
+	- See: [How to Add Assets onto the Osmosis Assets Page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page)
+- Pool has been created
+	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - Pool is acceptable
 	- The criteria for acceptable pools are *roughly* as follows:
 		- Contains only 2 tokens
@@ -230,7 +252,6 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 		- No future governor (set to blank (""))
 		- 0.2-0.3% swap fee
 		- Sufficient liquidity (at least USD $1000-worth)
-- Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
 
 ### Requirements
 
@@ -239,10 +260,11 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 	- Pool assets
 		- Asset minimal denomination
 		- Asset IBC transfer path
+- Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	1. `src/stores/root.ts`:
@@ -325,12 +347,12 @@ For example, Pool 562 LUNA/UST has high liquidity, but also incurs 0.535% swap f
 
 ### Purpose
 
-This procedure will set up the default asset pricing mechanism for an asset to show its price throughout Osmosis Zone. If a CoinGecko Price feed exists, opt to use that instead (See: [How to Specify Asset Price Oracle on Osmosis Zone (CoinGecko)](...)). This pricing mechanism works by fetching the current spot price of the asset from a pool with an Asset of a known price. For exampe, we might not know the price of Foo coin directly, but we can assume it's price of, say, $2.00 by seeing that it's trading at 1 FOO per 2 UST in the FOO/UST pool.
+This procedure will set up the default asset pricing mechanism for an asset to show its price throughout Osmosis Zone. If a CoinGecko Price feed exists, opt to use that instead (See: [How to Specify Asset Price Oracle on Osmosis Zone (CoinGecko)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-coingecko)). This pricing mechanism works by fetching the current spot price of the asset from a pool with an Asset of a known price. For exampe, we might not know the price of Foo coin directly, but we can assume it's price of, say, $2.00 by seeing that it's trading at 1 FOO per 2 UST in the FOO/UST pool.
 
 ### Pre-requisites
 
 - Asset is in a Pool
-	- See: [How to create a Liquidity Pool](...)
+	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - Pool containing Asset is acceptable
 	- The criteria for 'acceptable' pools are *roughly* as follows:
 		- Contains only 2 tokens
@@ -352,7 +374,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/stores/root.ts`
@@ -416,6 +438,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 Example of config.ts::EmbedChainInfos: ChainInfoWithExplorer:
 - Umee chain info:
 	- Note that `coinGeckoId: 'pool:uumee',` is specified three times, once under each listing of the currency
+	- Note: once UMEE gets a listing and live price feed on CoinGecko, the values here should then be replaced with the CoinGeckoID, e.g., `coingGeckoId: 'umee'`  
 ```
 {
 	rpc: 'https://rpc.aphrodite.main.network.umee.cc',
@@ -461,14 +484,14 @@ Example of config.ts::EmbedChainInfos: ChainInfoWithExplorer:
 
 ### Purpose
 
-This procedure will update the price oracle for the asset to instead use it's CoinGecko value for display on Osmosis Zone. This is preferred over the default price oracle mechanism. If there no CoinGecko price feed for the asset, we can still use the alternative method (See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](...)).
+This procedure will update the price oracle for the asset to instead use it's CoinGecko value for display on Osmosis Zone. This is preferred over the default price oracle mechanism. If there no CoinGecko price feed for the asset, we can still use the alternative method (See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-liquidity-pool)).
 
 ### Pre-requisites
 
 - Asset has been added to the Osmosis Assets page
-	- See: [How to Add Assets onto the Osmosis Assets Page](...)
+	- See: [How to Add Assets onto the Osmosis Assets Page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page)
 - Assets listed on CoinGecko (optional)
-    - See: [How to enlist assets onto CoinGecko](...)
+    - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
 - Asset has a working price feed on CoinGecko
 
 ### Requirements
@@ -479,7 +502,7 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/tree/frontier) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`
@@ -553,16 +576,18 @@ This procedure will update the price oracle for the asset to instead use it's Co
 
 ### Purpose
 
-Projects can permissionlessly add external incentive gauges for bonded LP positions. This procedure instructs how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool.
+Projects can permissionlessly add external incentive gauges for bonded LP positions. To learn more about external Liquidity Mining Incentives, see [Liquidity Mining Incentives: External Incentives](https://docs.osmosis.zone/integrate/incentives.html#external-incentives).
+
+This procedure instructs how to display those incentive gauges on a pool's page as extra rewards. Shown below is an example of external incentives added to the CHEQ / OSMO pool.
 
 ![image](https://user-images.githubusercontent.com/95667791/157994437-a2a90c29-1f88-475f-afff-7c64b9060e54.png)
 
 ### Pre-requisites
 
 - Asset has been added to the Osmosis Zone Assets page
-	- See: [How to Add an Asset onto the Osmosis Assets page](...)
+	- See: [How to Add an Asset onto the Osmosis Assets page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page)
 - Pool has been created
-	- See: [How to Create a Liquidity Pool](...)
+	- See: [How to Create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
 - External Incentive Gauge(s) have been created
 	- See: [How to Add an External Incentive Gauge to a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-incentives.html#overview)
 
@@ -572,10 +597,11 @@ Projects can permissionlessly add external incentive gauges for bonded LP positi
 	- Gauge ID
 	- Destributed Token Denomination (e.g., 'ibc/...')
 	- Pool Number
+- Basic understanding of GitHub, knowing how to fork, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
 
-1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
+1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend/) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
 	- `src/config.ts`

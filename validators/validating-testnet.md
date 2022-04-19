@@ -29,7 +29,7 @@ osmosisd tendermint show-validator
 
 ## Create Validator Command
 
-Ensure you have a small amount of OSMO on the wallet address you are using on your keyring in order to successfully send a transaction. Once you have have a balance on the address on your keyring, you can now send the create-validator transaction. If you need testnet OSMO, join the osmosis discord, ask for the validator role, and then utilize the faucet bot in the faucet channel.
+Ensure you have a small amount of OSMO on the wallet address you are using on your keyring in order to successfully send a transaction. Once you have have a balance on the address on your keyring, you can now send the create-validator transaction. If you need testnet OSMO, join the osmosis discord, get the testnet role [here](https://canary.discord.com/channels/798583171548840026/842529004955500555), and then utilize the faucet bot [in the faucet channel](https://canary.discord.com/channels/798583171548840026/911309363464007741).
 
 Here is the empty command:
 
@@ -45,8 +45,6 @@ osmosisd tx staking create-validator \
 --commission-max-rate="[maximum_commission_rate]" \
 --commission-max-change-rate="[maximum_rate_of_change_of_commission]" \
 --min-self-delegation="[min_self_delegation_amount]" \
---gas="auto" \
---gas-prices="[gas_price]" \
 ```
 
 Here is the same command but with example values:
@@ -54,7 +52,7 @@ Here is the same command but with example values:
 ```bash
 osmosisd tx staking create-validator \
 --from=wallet1 \
---amount=500000000uosmo \
+--amount=400000000uosmo \
 --pubkey=$(osmosisd tendermint show-validator)  \
 --moniker="Wosmongton" \
 --security-contact="wosmongton@osmosis.labs" \
@@ -62,9 +60,7 @@ osmosisd tx staking create-validator \
 --commission-rate="0.1" \
 --commission-max-rate="0.2" \
 --commission-max-change-rate="0.05" \
---min-self-delegation="500000000" \
---gas="auto" \
---gas-prices="0.0025uosmo" \
+--min-self-delegation="400000000" \
 ```
 
 If you need further explanation for each of these command flags:
@@ -93,7 +89,7 @@ Please try subsituting:
 --gas-prices="0.0025uosmo"
 ```
 
-with 
+with
 
 ```
 --gas=<value significantly larger than gasUsed value from the error>
