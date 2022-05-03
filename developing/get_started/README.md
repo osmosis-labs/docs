@@ -25,6 +25,17 @@ title: get started
       Recommended IDE setup for developing on Osmosis in Go
     </div>
   </a>
+
+  <a href="contributing.html" class="card">
+    <img src="/img/ide.svg" class="filter-icon" />
+    <div class="title">
+      Contributing
+    </div>
+    <div class="text">
+      A set of guidelines for contributing to the Osmosis chain dev repo.
+    </div>
+  </a>
+
  </div>
 
 

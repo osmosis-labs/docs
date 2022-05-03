@@ -164,7 +164,7 @@ Welcome to the official documentation for Osmosis, an advanced automated market 
      Pool Info
     </div>
   </a>
-    <a href="https://api-osmosis.imperator.co/swagger" class="card lg" target="_blank">
+    <a href="https://api-osmosis.imperator.co/swagger/" class="card lg" target="_blank">
     <img src="img/swagger.png">
     <div class="title">
      REST
