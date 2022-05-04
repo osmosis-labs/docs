@@ -1,23 +1,34 @@
----
-title: Developer Home
----
+
 
 # Chain Development
 
 The guides on this page will explain the process of developing on Osmosis.
 
+
+ ## Get Started
 <div class="cards twoColumn">
-  <a href="get_started/" class="card">
-    <img src="/img/ide.svg" class="filter-icon"/>
+<a href="build.html" class="card">
+    <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
-     Getting Started
+      Build and Test Osmosis Source Code
     </div>
     <div class="text">
-      Get started to contribute to Osmosis
+      Getting started with building and testing Osmosis codebase
+    </div>
+  </a>
+
+
+  <a href="ide-guide.html" class="card">
+    <img src="/img/ide.svg" class="filter-icon" />
+    <div class="title">
+      IDE Setup
+    </div>
+    <div class="text">
+      Recommended IDE setup for developing on Osmosis in Go
     </div>
   </a>
   
-  <a href="cli/install" class="card">
+  <a href="/developing/tools/osmosisd" class="card">
     <img src="/img/terminal-solid.svg" class="filter-icon"/>
     <div class="title">
      Osmosis Daemon
@@ -27,24 +38,6 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="network/join-testnet.html" class="card">
-    <img src="/img/flask-test.svg" class="filter-icon"/>
-    <div class="title">
-     Join Testnet
-    </div>
-    <div class="text">
-      Set up a node on the Osmosis testnet
-    </div>
-  </a>
-  <a href="network/join-mainnet.html" class="card">
-    <img src="/img/link.svg" class="filter-icon"/>
-    <div class="title">
-     Join Mainnet
-    </div>
-    <div class="text">
-      Set up a node on the Osmosis mainnet
-    </div>
-  </a>
 
   <a href="modules/" class="card">
     <img src="/img/lego.svg" class="filter-icon"/>
@@ -105,6 +98,52 @@ The guides on this page will explain the process of developing on Osmosis.
      Learn how to measure performance and profile your node
     </div>
   </a>
+ </div>
+
+
+ ## Networks
+ <div class="cards twoColumn" >
+
+  <a href="../dapps/tools/localosmosis" class="card">
+    <img src="/img/ide.svg" class="filter-icon"/>
+    <div class="title">
+     Local Osmosis
+    </div>
+    <div class="text">
+     Osmosis development environment
+    </div>
+  </a>
+
+  <a href="../network/join-edgenet" class="card">
+       <img src="/img/flask-test.svg" class="filter-icon"/>
+    <div class="title">
+     Joining Edgenet
+    </div>
+    <div class="text">
+     Set up a node on the Osmosis edgenet
+    </div>
+  </a> 
+  
+  <a href="../network/join-testnet" class="card">
+       <img src="/img/flask-test.svg" class="filter-icon"/>
+    <div class="title">
+     Joining Testnet
+    </div>
+    <div class="text">
+     Set up a node on the Osmosis testnet
+    </div>
+  </a> 
+
+  <a href="../network/join-mainnet" class="card">
+    <img src="/img/link.svg" class="filter-icon"/>
+    <div class="title">
+     Join Mainnet
+    </div>
+    <div class="text">
+      Set up a node on the Osmosis mainnet
+    </div>
+  </a>
+
  </div>
 
 
