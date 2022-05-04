@@ -170,19 +170,44 @@ module.exports = {
 
       '/developing': [
         {
-          title: 'Home',
+          title: 'Building dApps',
           children: [
-            '/developing/',
-          ],
-          collapsable: false,
-        },
-        {
-          title: 'Osmosis Daemon',
-          children: [
-            '/developing/cli/install',
+            '/developing/dapps/get_started/',
+            '/developing/dapps/get_started/quick-guide',
+            '/developing/dapps/get_started/in-depth-guide',
           ],
           collapsable: true,
         },
+        {
+          title: 'Tools',
+          children: [
+           
+            '/developing/tools/membrane',
+            '/developing/tools/localosmosis',
+            '/developing/tools/osmojs',
+            '/developing/tools/osmosisd',
+          ],
+          collapsable: true,
+        },
+        {
+          title: 'Osmosis Core',
+          children: [
+            '/developing/osmosis-core/',
+            '/developing/osmosis-core/build',
+            '/developing/osmosis-core/ide-guide',
+            '/developing/osmosis-core/performance',
+            "/developing/osmosis-core/modules/",
+            "/developing/osmosis-core/modules/spec-epochs",
+            "/developing/osmosis-core/modules/spec-gamm",
+            "/developing/osmosis-core/modules/spec-gov",
+            "/developing/osmosis-core/modules/spec-lockup",
+            "/developing/osmosis-core/modules/spec-mint",
+            "/developing/osmosis-core/modules/spec-incentives",
+            "/developing/osmosis-core/modules/spec-pool-incentives"
+          ],
+          collapsable: true,
+        },
+
         // {
         //   title: "osmosisd",
         //   children: [
@@ -194,25 +219,14 @@ module.exports = {
         {
           title: 'Networks',
           children: [
+            '/developing/tools/localosmosis',
+            '/developing/network/join-edgenet',
             '/developing/network/join-testnet',
             '/developing/network/join-mainnet',
           ],
           collapsable: true,
         },
-        {
-          title: 'Modules',
-          children: [
-            "/developing/modules/",
-            "/developing/modules/spec-epochs",
-            "/developing/modules/spec-gamm",
-            "/developing/modules/spec-gov",
-            "/developing/modules/spec-lockup",
-            "/developing/modules/spec-mint",
-            "/developing/modules/spec-incentives",
-            "/developing/modules/spec-pool-incentives"
-          ],
-          collapsable: true,
-        },
+
         {
           title: 'Relaying',
           children: [
@@ -239,26 +253,20 @@ module.exports = {
         collapsable: true,
         },
         {
-          title: 'Transaction Structure',
-          children: [
-            "/developing/structure/transaction",
-          ],
-          collapsable: true,
-          },
-        {
-          title: 'Performance & Profiling',
-          children: [
-              '/developing/performance/main',
-         ],
-          collapsable: true,
-        },
-        {
-          title: 'Web Developer Guide',
+          title: 'Osmosis Frontend',
           children: [
             '/developing/web-dev-guide'
           ],
           collapsable: true,
         },
+        {
+          title: 'Guides',
+          children: [
+            "/developing/guides/structure/transaction",
+          ],
+          collapsable: true,
+        },
+
       ],
       '/validators': [
         {
