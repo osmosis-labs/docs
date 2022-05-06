@@ -14,8 +14,14 @@ jobs:
       - name: Download Latest Awesome repo README
         run: curl https://raw.githubusercontent.com/osmosis-labs/awesome/main/README.md > awesome/README.md
 
+      - name: Download LocalOsmosis docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
+
       - name: Download chain docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/spec/README.md > developing/osmosis-core/modules/spec-superfluid.md
+
+
+
 
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
