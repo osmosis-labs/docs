@@ -1,11 +1,10 @@
 ---
 title: Developing in Osmosis
 ---
-# What do you want to develop? 
+# Get started developing with Osmosis
 
-##  Get started developing with Osmosis
 
-Osmosis offers a variaty of places for developers to contribute in the ecosystem. Get started building your own Cosmwasm dApps, contributing to the Osmosis core modules or creating utilities and dashboards. Get started by picking an option below. 
+Osmosis offers a variaty of places for developers to contribute in the ecosystem. Get started building your own Cosmwasm dApps, contributing to the Osmosis core modules or creating utilities and dashboards. 
 
 <div class="cards twoColumn" >
   <a href="/developing/dapps/get_started/" class="card">
