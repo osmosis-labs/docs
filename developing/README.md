@@ -45,7 +45,7 @@ Osmosis offers a variaty of places for developers to contribute in the ecosystem
      Osmosis Frontend
     </div>
     <div class="text">
-     Leanr about the Osmosis frontend site.
+     Learn about the Osmosis frontend site.
     </div>
   </a>
 
