@@ -3,5 +3,3 @@ node_modules/*
 ### macOS ###
 # General
 **/.DS_Store
-
-.vuepress/dist
