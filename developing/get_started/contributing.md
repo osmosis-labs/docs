@@ -72,7 +72,7 @@ Note that if you are doing things that are low-level / small, the overhead of cp
 
 People still need those versions for querying old versions of the chain, and syncing a node from genesis, so we keep these updated!
 
-For v6.x, and v4.x, most PRs to them should go to main and get a "backport" label. We typically use mergify for backporting. Backporting often takes place after a PR has been merged to main. 
+For v6.x, and v4.x, most PRs to them should go to main and get a "backport" label. We typically use mergify for backporting. Backporting often takes place after a PR has been merged to main
 
 ### How to build proto files. (rm -rf vendor/ && make build-reproducible once docker is installed)
 
