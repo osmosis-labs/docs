@@ -124,8 +124,8 @@ module.exports = {
     nav: [
 
       { text: 'Home', link: '/', },
-      { text: 'Overview', link: '/overview/',},
       { text: 'Develop', link: '/developing/',},
+      { text: 'Infra', link: '/infra/',},
       { text: 'Validate', link: '/validators/',},
       { text: 'Integrate', link: '/integrate/',},
       // { text: 'Chat', link: 'https://v2.vuepress.vuejs.org/',},
@@ -166,8 +166,6 @@ module.exports = {
           collapsable: true,
         },
       ],
-
-
       '/developing': [
         {
           title: 'Building dApps',
@@ -268,6 +266,16 @@ module.exports = {
         },
 
       ],
+
+      "/infra/": [
+        {
+          title: "Infrastructure",
+          children: [
+            '/infra/',
+          ],
+          collapsable: true,
+        }
+      ], 
       '/validators': [
         {
           title: 'Home',
