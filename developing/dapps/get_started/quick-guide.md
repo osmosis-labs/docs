@@ -113,26 +113,48 @@ nvm alias default <INSERT NODE VERSION HERE>
 ```
 :::
 
-### Install and run LocalOsmosis
+### Install and run LocalOsmosis 
 
-1. To download LocalOsmosis, run the following commands:
+There are two ways to install localOsmosis. 
+
+#### Manual download 
+ - Download LocalOsmosis, run the following commands:
 
    ```sh
+   cd ~/
    git clone --depth 1 https://github.com/osmosis-labs/localosmosis
    ```
-2. Start LocalOsmosis by running the following:
+   
+#### Or Automatic download with Osmosis daemon configuration.
+ - Uses the installer to configure the `osmosisd` daemon and automatically download localOsmosis
 
    ```sh
-   cd localOsmosis
+   curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
+   ```
+- Select option (3) and follow the prompts. 
+   ![](../../../assets/local-installer.png)
+
+#### Start LocalOsmosis by running the following:
+
+   ```sh
+   cd ~/localOsmosis
    docker-compose up
    ```
 
-3. You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOsmosis running while you perform the next steps in a new terminal window.
+You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOsmosis running while you perform the next steps in a new terminal window.
+![](../../../assets/localOsmosis.png)
+
+
 
 ::: tip 
 LocalOsmosis Accounts
 To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page](developing/tools/localosmosis.html#accounts). 
 For more configuration options, visit the [LocalOsmosis configuration page](/developing/tools/localosmosis.html#what-is-localosmosisd). 
+:::
+
+
+::: warning 
+The following sections are WIP. Just place holders. 
 :::
 
 ### Counter tutorial 
