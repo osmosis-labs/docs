@@ -71,9 +71,6 @@ LocalOsmosis is a development environment designed to make it easy for smart con
 LocalOsmosis may not work properly on machines with less than 16 GB of RAM. Please use the [Osmosis testnet](/developing/network/join-testnet.html) if your device does not meet this requirement.
 :::
 
-
-## Membrane with the testnet
-
 ## Membrane with LocalOsmosis
 
 ### Use Membrane with LocalOsmosis
@@ -152,31 +149,41 @@ To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts pa
 For more configuration options, visit the [LocalOsmosis configuration page](/developing/tools/localosmosis.html#what-is-localosmosisd). 
 :::
 
+### Configure Keplr with localOsmosis
+
+We added a small utility inside of localOsmosis to add your local chain to Keplr.
+
+Inside your localOsmosis repo run the following:
+
+```
+cd localKeplr
+npm start
+```
+
+Open your browser at [http://localhost:3000](http://localhost:3000) and allow it to add localOsmosis to your Keplr.
+
+![](../../../assets/localKeplr.png)
+
+### Load accounts from localOsmosis to Keplr
+
+LocalOsmosis provides a series of accounts in the genesis by defaults. [The seeds are available here](/developing/tools/localosmosis.html#accounts).
+
+Open your keplr wallet extension and import the account with one of the seeds provided. You should now see balance in your Keplr wallet. 
+
 
 ::: warning 
 The following sections are WIP. Just place holders. 
 :::
 
-### Counter tutorial 
+## Membrane with the testnet
 
-After installing LocalOsmosis, you are ready to use Membrane. This short tutorial walks you through setting up your project and creating a simple counter. 
+WIP
+
+### Sample App tutorial 
+
 
 #### 1. Scaffold your dApp
 
-With Membrane installed you can now scaffold your new application in a new terminal window:
-
-1. Create a new folder for your dApp:
-
-   ```sh
-   membrane new my-osmosis-dapp
-   ```
-
-2. Scaffold your dApp:
-
-   ```sh
-   cd my-osmosis-dapp
-   npm install
-   ```
 
 #### Project structure
 
@@ -184,15 +191,9 @@ The following structure shows your scaffolded project:
 
 ```
 .
-├── contracts              # The contracts' source code.
-│   ├── counter
-│   └── ...                # Add more contracts here.
-├── frontend               # The front-end application.
-├── lib                    # Predefined functions for task and console.
-├── tasks                  # Predefined tasks.
-├── keys.membrane.js        # Keys for signing transactions.
-├── config.membrane.json    # Config for connections and contract deployments.
-└── refs.membrane.json      # Deployed code and contract references.
+├── example              # example
+│   ├── example
+│   └── ...              # example
 ```
 
 #### 2. Deploy
@@ -200,52 +201,11 @@ The following structure shows your scaffolded project:
 To deploy the application, run the following command:
 
 ```sh
-membrane deploy counter --signer test1
+placeholder
 ```
-
-The deploy command performs the following steps automatically:
-
-* Builds the counter smart contract.
-* Optimizes the counter smart contract.
-* Uploads counter smart contract to LocalOsmosis.
-* Instantiates the deployed smart contract.
-
-::: details Increase Docker memory
-
-If you are running LocalOsmosis and the previous `deploy` command is not working, try increasing Docker's memory allowance by clicking on the Docker icon. Click **Preferences** and then **Resources**. Increase the memory to at least 4 gigs. Click **Apply & Restart**. Run the deploy command again. You can increase again to 6 gigs if you are still having trouble. 
-:::
 
 #### 3. Interact with the deployed contract
 
-The template comes with several predefined helpers in `lib/index.js`. Use them to start interacting with your smart contract:
-
-1. Run the following:
-
-   ```sh
-   membrane console
-   ```
-
-2. With the console open, increment the counter by running the following:
-
-   ```JavaScript
-   await lib.increment()
-   ```
-
-3. You can get the current count by using:
-
-   ```JavaScript
-   await lib.getCount()
-   ```
-
-4. After incrementing once, `await lib.getCount()` will return:
-
-   ```json
-   { count: 1 }
-   ```
-
-:::{tip}
-Before proceeding to the next section, kill the running command in your terminal by entering "Ctrl + C" . 
-:::
 
 #### 4. Front-end scaffolding
 
@@ -255,7 +215,7 @@ Membrane also scaffolds a very simple front-end:
 WIP, this integration with Keplr will need some work.
 ::::
 
-1. Open the [Osmosis Keplr extension](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en), click the gear icon, and switch the network to LocalOsmosis.
+1. Open the [Osmosis Keplr extension](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en), click the gear icon, and switch the network to LocalOsmosis. If you have not added localOsmosis to your keplr yet, follow the instrcutions [here](#configure-keplr-with-localosmosis)
 
 2. To use the front end, run the following commands in order. The `membrane sync-refs` command copies your deployed contract addresses to the front-end part of the codebase.
 
