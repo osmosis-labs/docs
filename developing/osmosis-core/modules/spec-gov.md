@@ -8,8 +8,6 @@ The ```gov``` module enables on-chain governance which allows Osmosis token hold
 - Deposit tokens and fund an active proposal
 - Vote for an active proposal
 
-[comment]: <> (Add Proposal Process page)
-
 </br>
 </br>
 
