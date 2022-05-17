@@ -1,14 +1,14 @@
 ---
-title: Building dApps on Osmosis
+title: Contratcs & dApps on Osmosis
 ---
 # Building dApps on Osmosis
 
 ## Getting Started
 <div class="cards twoColumn" >
-  <a href="quick-guide.html" class="card">
-    <img src="/img/ide.svg" class="filter-icon" />
+  <a href="cosmwasm-localosmosis.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-      Quick Start Guide
+     Cosmwasm with LocalOsmosis
     </div>
     <div class="text">
       Getting started with building dApps with Osmosis
@@ -16,32 +16,57 @@ title: Building dApps on Osmosis
   </a>
 
 
-  <a href="in-depth-guide.html" class="card">
-    <img src="/img/ide.svg" class="filter-icon" />
+  <a href="cosmwasm-testnet.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     In depth Guide
+     CosmWasm with Testnet
     </div>
     <div class="text">
-      Advanced guide about building dApps with Osmosis
+      Deploying contracts to testnet
     </div>
   </a>
+
+
+  <a href="#" class="card">
+    <img src="/img/dapps.svg" class="filter-icon" />
+    <div class="title">
+     Building Osmosis dApps
+    </div>
+    <div class="text">
+     Coming soon
+    </div>
+  </a>  
+  
+  <a href="https://docs.cosmwasm.com/docs/1.0/getting-started/intro" class="card" target="_blank">
+    <img src="/img/contract.svg" class="filter-icon" />
+    <div class="title">
+     Your first contract
+    </div>
+    <div class="text">
+     Official CosmWasm Documentation
+    </div>
+  </a>  
+  
+
+  
+  
  </div>
 
 ## Tools
  <div class="cards twoColumn" >
 
-  <a href="/developing/tools/membrane" class="card">
+  <a href="#" class="card">
     <img src="/img/ide.svg" class="filter-icon"/>
     <div class="title">
-     Membrane
+     Brane
     </div>
     <div class="text">
-     Osmosis development environment
+     Osmosis development environment. Coming soon.
     </div>
-  </a>
+  </a> 
   
   <a href="/developing/tools/localosmosis" class="card">
-    <img src="/img/terminal-solid.svg" class="filter-icon"/>
+    <img src="/img/localosmosis.svg" class="filter-icon"/>
     <div class="title">
      LocalOsmosis
     </div>
@@ -50,13 +75,13 @@ title: Building dApps on Osmosis
     </div>
   </a>
 
-  <a href="/developing/tools/osmojs" class="card">
-    <img src="/img/terminal-solid.svg" class="filter-icon"/>
+  <a href="https://www.npmjs.com/package/osmojs" class="card" target="_blank">
+    <img src="/img/osmojs.svg" class="filter-icon"/>
     <div class="title">
      OsmoJS
     </div>
     <div class="text">
-      Osmosis JavaScript SDK
+      Osmosis Stargate Client
     </div>
   </a>
 

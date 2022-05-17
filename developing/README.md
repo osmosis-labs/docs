@@ -10,10 +10,10 @@ Osmosis offers a variaty of places for developers to contribute in the ecosystem
   <a href="/developing/dapps/get_started/" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
-     Osmosis dApp Development
+     Osmosis CosmWasm Development
     </div>
     <div class="text">
-      Build dApps with Osmosis & Cosmwasm
+    Build contracts & dApps with Osmosis & Cosmwasm
     </div>
   </a>
 

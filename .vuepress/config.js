@@ -171,15 +171,15 @@ module.exports = {
           title: 'Building dApps',
           children: [
             '/developing/dapps/get_started/',
-            '/developing/dapps/get_started/quick-guide',
-            '/developing/dapps/get_started/in-depth-guide',
+            '/developing/dapps/get_started/cosmwasm-localosmosis',
+            '/developing/dapps/get_started/cosmwasm-testnet',
           ],
           collapsable: true,
         },
         {
           title: 'Tools',
           children: [
-           
+
             '/developing/tools/membrane',
             '/developing/tools/localosmosis',
             '/developing/tools/osmojs',
@@ -275,7 +275,7 @@ module.exports = {
           ],
           collapsable: true,
         }
-      ], 
+      ],
       '/validators': [
         {
           title: 'Home',
