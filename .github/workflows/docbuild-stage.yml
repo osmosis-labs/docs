@@ -1,0 +1,50 @@
+name: Build and Deploy Docs Stage Branch
+on:
+  push:
+    branches:
+      - stage
+  workflow_dispatch:
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Download Latest Awesome repo README
+        run: curl https://raw.githubusercontent.com/osmosis-labs/awesome/main/README.md > awesome/README.md
+
+      - name: Download LocalOsmosis docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
+
+      - name: Download superfluid docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/spec/README.md > developing/osmosis-core/modules/spec-superfluid.md
+
+      - name: Download pool incentives docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/pool-incentives/spec/README.md > developing/osmosis-core/modules/spec-pool-incentives.md
+
+      - name: Download mint docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/mint/spec/README.md > developing/osmosis-core/modules/spec-mint.md
+
+      - name: Download lockup docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/lockup/spec/README.md > developing/osmosis-core/modules/spec-lockup.md
+
+      - name: Download gamm docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/gamm/spec/README.md > developing/osmosis-core/modules/spec-gamm.md
+
+      - name: Download epochs docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/epochs/spec/README.md > developing/osmosis-core/modules/spec-epochs.md
+
+      - name: Download txfees docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/txfees/spec/README.md > developing/osmosis-core/modules/spec-txfees.md
+
+      - name: Install and Build 🔧 # This will create version inside the 'build' folder.
+        run: |
+          npm install
+          npm run build
+    
+      - name: Deploy to Stage Branch 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: stage-build # The branch the action should deploy to.
+          folder: .vuepress/dist
