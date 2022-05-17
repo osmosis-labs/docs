@@ -17,6 +17,10 @@ jobs:
       - name: Download chain docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/spec/README.md > developing/osmosis-core/modules/spec-superfluid.md
 
+      - name: Download localOsmosis docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
+
+
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
           npm install
