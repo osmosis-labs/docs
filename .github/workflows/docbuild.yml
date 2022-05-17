@@ -14,12 +14,6 @@ jobs:
       - name: Download Latest Awesome repo README
         run: curl https://raw.githubusercontent.com/osmosis-labs/awesome/main/README.md > awesome/README.md
 
-       - name: Download LocalOsmosis docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
-
-      - name: Download superfluid docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/spec/README.md > developing/osmosis-core/modules/spec-superfluid.md
-
       - name: Download pool incentives docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/pool-incentives/spec/README.md > developing/osmosis-core/modules/spec-pool-incentives.md
 
@@ -41,6 +35,12 @@ jobs:
       - name: Download tokenfactory docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/tokenfactory/spec/README.md > developing/osmosis-core/modules/spec-tokenfactory.md
 
+      - name: Download localOsmosis docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
+
+      - name: Download OsmoJS docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/telescope/master/packages/osmojs/README.md?token=GHSAT0AAAAAABMSBDDCWFJ62GT7W65TPKMGYUDDXUQ > developing/tools/osmojs.md
+
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
           npm install
@@ -51,3 +51,5 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: .vuepress/dist
+
+
