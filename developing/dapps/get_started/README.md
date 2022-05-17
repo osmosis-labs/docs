@@ -110,7 +110,7 @@ title: Contratcs & dApps on Osmosis
     </div>
   </a>
   
-  <a href="../../network/join-testnet" class="card">
+  <a href="/developing/network/join-testnet.html" class="card">
        <img src="/img/flask-test.svg" class="filter-icon"/>
     <div class="title">
      Joining Testnet
@@ -120,13 +120,23 @@ title: Contratcs & dApps on Osmosis
     </div>
   </a> 
 
-  <a href="../../network/join-mainnet" class="card">
+  <a href="/developing/network/join-mainnet.html" class="card">
     <img src="/img/link.svg" class="filter-icon"/>
     <div class="title">
      Join Mainnet
     </div>
     <div class="text">
       Set up a node on the Osmosis mainnet
+    </div>
+  </a>
+  
+  <a href="/developing/network/public-endpoints.html" class="card">
+    <img src="/img/link.svg" class="filter-icon"/>
+    <div class="title">
+    Public endpoints
+    </div>
+    <div class="text">
+      Official and third party API endpoints.
     </div>
   </a>
 
