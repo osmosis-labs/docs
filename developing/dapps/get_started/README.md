@@ -100,7 +100,7 @@ title: Contratcs & dApps on Osmosis
 ## Networks
  <div class="cards twoColumn" >
 
-  <a href="tools/localosmosis" class="card">
+  <a href="/developing/tools/localosmosis.html" class="card">
     <img src="/img/ide.svg" class="filter-icon"/>
     <div class="title">
      Local Osmosis
