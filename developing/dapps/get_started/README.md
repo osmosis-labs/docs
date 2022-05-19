@@ -3,6 +3,10 @@ title: Contratcs & dApps on Osmosis
 ---
 # Building dApps on Osmosis
 
+::: tip
+Please note that CosmWasm developer tools are coming!  In the meantime we are publishing guides on how to interact with the CLI and Javascript libraries which is  very important to understand core principals of CosmWasm development in Osmosis.
+:::
+
 ## Getting Started
 <div class="cards twoColumn" >
   <a href="cosmwasm-localosmosis.html" class="card">
@@ -14,7 +18,7 @@ title: Contratcs & dApps on Osmosis
       Getting started with building dApps with Osmosis
     </div>
   </a>
-
+  
 
   <a href="cosmwasm-testnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
@@ -25,17 +29,25 @@ title: Contratcs & dApps on Osmosis
       Deploying contracts to testnet
     </div>
   </a>
-
-
-  <a href="#" class="card">
-    <img src="/img/dapps.svg" class="filter-icon" />
+  
+  <a href="submit_wasm_proposal.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     Building Osmosis dApps
+    Submit a wasm Governance Proposal
     </div>
     <div class="text">
-     Coming soon
+      Example on how submit a wasm binary proposal.
     </div>
-  </a>  
+  </a>
+  <a href="cosmwasm_counter_tutorial.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    CosmWasm counter contract
+    </div>
+    <div class="text">
+     A simple counter contract based on the cw-template.
+    </div>
+  </a>
   
   <a href="https://docs.cosmwasm.com/docs/1.0/getting-started/intro" class="card" target="_blank">
     <img src="/img/contract.svg" class="filter-icon" />
@@ -46,11 +58,32 @@ title: Contratcs & dApps on Osmosis
      Official CosmWasm Documentation
     </div>
   </a>  
-  
-
-  
-  
  </div>
+ 
+ ## Front-end Development
+ 
+ <div class="cards twoColumn" >
+   <a href="javascript.html" class="card">
+     <img src="/img/cosmwasm.svg" class="filter-icon" />
+     <div class="title">
+      Cosmwasm & Javascript
+     </div>
+     <div class="text">
+      Interacting via JavaScript runtimes such as Node.js and the browser.
+     </div>
+   </a>
+ 
+   <a href="#" class="card">
+     <img src="/img/dapps.svg" class="filter-icon" />
+     <div class="title">
+      Building Osmosis dApps
+     </div>
+     <div class="text">
+      Coming soon
+     </div>
+   </a>  
+   
+  </div>
 
 ## Tools
  <div class="cards twoColumn" >
