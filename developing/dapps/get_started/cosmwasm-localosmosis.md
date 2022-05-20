@@ -1,19 +1,25 @@
-# Cosmwasm with LocalOsmosis
-## Deploying Cosmwasm Contracts in LocalOsmosis
-
+# CosmWasm & LocalOsmosis 
 The following is a quick guide that shows the basics of deploying a contract to a Osmosis local environment. It covers: 
 
-- Seting up LocalOsmosis with the Osmosis installer.
-    - osmosisd binary automatically configured to connect to your localOsmosis
-    - localOsmosis setup in yout $HOME directory (~/localosmosis)
+- Initial Setup
+    - Rust
+    - LocalOsmosis via Osmosis installer. 
+        - osmosisd binary automatically configured to connect to your localOsmosis
+        - localOsmosis setup in the $HOME directory (~/localosmosis)
 - Deploy a smart contract
-    - Download, compile, optimize 
-    - Initialise, Instantiate, Query Contract
-    
-::: tip
-Please note that Cosmwasm is permisionless by default. It's  permissioned in Osmosis mainnet. To learn more how to enable or disable permissioned Cosmwasm [click here ](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md)
-:::
-
+    - Clone a base template contract
+    - Compile contract
+    - Optimize  contract
+    - Create Local key
+    - Store contract
+    - Initialise
+    - Get contract address
+    - Query Contract
+     - Increment contract's count
+     - Reset contracts count
+     - Get contract's state
+     - Query contract info
+     - List all contracts
 
 
 ## Initial setup
@@ -74,38 +80,46 @@ You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOs
 To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page]([developing/tools/localosmosis.html#accounts](https://github.com/osmosis-labs/localosmosis#accounts)). 
 :::
 
-# Deploy a Smart Contract to Osmosis
-
-## Download
-
-```
-# get the code
-git clone https://github.com/CosmWasm/cosmwasm-examples
-cd cosmwasm-examples
-git fetch
-cd contracts/erc20
-```
-
-## Compile
+## Deploy a smart contract
+### Clone cw-tpl-osmosis 
+For this example we will use the cw-tpl-osmosis (CosmWasm Template Osmosis) repo that was created with the [cw-template](https://github.com/InterWasm/cw-template) repo.
 
 ```
-#compile the wasm contract
+git clone https://github.com/osmosis-labs/cw-tpl-osmosis
+```
+
+### Compile the wasm contract with stable toolchain
+```
 rustup default stable
 cargo wasm
 ```
 
-## Optimise it
+After this compiles, it should produce a file in `target/wasm32-unknown-unknown/release/cw_tpl_osmosis.wasm.` A quick ls -lh should show around 1.8MB. This is a release build, but not stripped of all unneeded code. To produce a much smaller version, you can run this which tells the compiler to strip all unused code out:
+
+```
+RUSTFLAGS='-C link-arg=-s' 
+cargo wasm 
+
+```
+
+This produces a file about 149kB. We will do further optimisation below.
+
+### Optimized Compilation
+
+To reduce gas costs, the binary size should be as small as possible. This will result in a less costly deployment, and lower fees on every interaction. Luckily, there is tooling to help with this. You can optimize production code using rust-optimizer. rust-optimizer produces reproducible builds of CosmWasm smart contracts. This means third parties can verify the contract is actually the claimed code.
+
 
 ```
 sudo docker run --rm -v "$(pwd)":/code \
     --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
     --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
     cosmwasm/rust-optimizer:0.12.6
+ 
 ```
 
-You now have a `cw_erc20.wasm` artifact inside the artifact directory. 
+Binary will be at artifacts/osmosis_cw_tpl.wasm folder and its size will be 138k
 
-## Created a local key 
+### Created a local key 
 Create a key using one of the seeds provided in localOsmosis. 
 
 ```
@@ -117,79 +131,72 @@ Example test1 key from [here](https://github.com/osmosis-labs/localosmosis#accou
 notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius
 ```
 
+### Store to your localOsmosis chain
 
-## Deploy to your localOsmosis chain
+You can deploy the contract to localOsmosis or a testnet.  In this example we will deploy to localOsmosis.
 
 ```
 cd artifacts
-osmosisd tx wasm store cw_erc20.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> \
-  --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y
+osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y
 ```
 
 `<unsafe-test-key-name>` = Name of your local key.
 `<chain-id>` = localosmosis
-    
-### Save code_id
-Save the code_id from the output of the command above.
-    
-or save it by running jq
+
+Replace `<unsafe-test-key-name>` with the key name from your local keys. `osmosisd keys list`
+Replace `<chain-id>` with localosmosis or osmo-test-4. 
+Save the CODE_ID from the output of the command above as a local variable `CODE_ID=XX`
+
+### Or Store CODE_ID 
+Instead of looking for the code_id the command above, you can also run the following command to set the CODE_ID as a variable.
     
 ```
-cd artifacts
-TX=$(osmosisd tx wasm store cw_erc20.wasm  --from <unsafe-test-key-name> --chain-id=localosmosis --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
-CODE_ID=$(osmosisd query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')   
+TX=$(osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
+CODE_ID=$(osmosisd query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')
+echo "Your contract code_id is $CODE_ID"
 ```
 
-```
-echo $CODE_ID 
-```
-If this is a brand new localOsmosis instante it should be `1`
+If this is a brand new localOsmosis instance it should be `1`
     
     
-# Initialise the Contract
-
-## Generate JSON
-Type node in the terminal and hit enter to access it. Copy and paste the following: 
-
-```
-const initHash = {
-  name: "Test Coin",
-  symbol: "TEST",
-  decimals: 6,
-  initial_balances: [
-    { address: "<validator-self-delegate-address>", amount: "12345678000"},
-  ]
-};
-```
-
-`<validator-self-delegate-address>` = Choose the test1 address
-    
-Then copy and paste this: 
-```
-JSON.stringify(initHash);
-```
-The output should be something like:
-    
-![](../../../assets/cosmwasm_artifact.png)
-
-## Instantiate the contract
+### Instantiate the contract
  
 ```
-osmosisd tx wasm instantiate $CODE_ID \
-    '{"name":"Test Coin","symbol":"TEST","decimals":6,"initial_balances":[{"address":"<validator-self-delegate-address>","amount":"12345678000"}]}' \
-    --amount 50000uosmo  --label "Testcoin erc20" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y
+INITIAL_STATE='{"count":100}'
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
 ```
-Replace
-    - `<validator-self-delegate-address>` : wallet address
-    - `<chain-id>` : localosmosis
-    - `<unsafe-test-key-name>` : Local  key name
-    
-### Lookup contract address
+
+Example
+```
+INITIAL_STATE='{"count":100}'
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from c1 --chain-id localosmosis --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+```
+
+### Get contract address
 
 ```
 CONTRACT_ADDR=$(osmosisd query wasm list-contract-by-code $CODE_ID --output json | jq -r '.contracts[0]')
 ```
-### Query contract
+
+## Query Contract
+
+### Increment contract's count
+`
+INCREMENT_MSG='{"increment":{}}'
+osmosisd tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from c1
+
+### Reset contracts count
+`
+RESET_MSG='{"reset":{"count":0}}'
+osmosisd tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from c1
+
+### Get contract's state
+```
+GET_STATE_MSG='{"get_count":{}}'
+osmosisd query wasm contract-state smart  $CONTRACT_ADDR "$GET_STATE_MSG"
+```
+
+### Query contract info
     
 ```
 osmosisd query wasm contract $CONTRACT_ADDR
@@ -200,9 +207,5 @@ osmosisd query wasm contract $CONTRACT_ADDR
 ```
 osmosisd query wasm list-code
 ```
-    
-::: warning
-This guide will be updated and published to the official docs soon. 
-To learn more about CosmWasm visit [https://cosmwasm.com/](https://cosmwasm.com/)
- :::  
 
+Good job! It's not time to learn how to actually develop contracts.  You can now visit the [official CosmWasm contracts](https://docs.cosmwasm.com/docs/1.0/getting-started/intro) and as you explore the docs you will understand how tio actually interact with the Osmosis Blockchain.
