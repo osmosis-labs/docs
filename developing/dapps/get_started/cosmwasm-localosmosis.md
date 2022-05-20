@@ -181,16 +181,21 @@ CONTRACT_ADDR=$(osmosisd query wasm list-contract-by-code $CODE_ID --output json
 ## Query Contract
 
 ### Increment contract's count
-`
+
+```
 INCREMENT_MSG='{"increment":{}}'
 osmosisd tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from c1
+```
 
 ### Reset contracts count
-`
+
+```
 RESET_MSG='{"reset":{"count":0}}'
 osmosisd tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from c1
+```
 
 ### Get contract's state
+
 ```
 GET_STATE_MSG='{"get_count":{}}'
 osmosisd query wasm contract-state smart  $CONTRACT_ADDR "$GET_STATE_MSG"
