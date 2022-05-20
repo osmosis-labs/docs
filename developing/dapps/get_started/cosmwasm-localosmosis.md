@@ -10,11 +10,11 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Clone a base template contract
     - Compile contract
     - Optimize  contract
-    - Create local key
+    - Create Local key
     - Store contract
     - Initialise
     - Get contract address
-    - Query contract
+    - Query Contract
      - Increment contract's count
      - Reset contracts count
      - Get contract's state

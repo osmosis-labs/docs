@@ -19,6 +19,17 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
     </div>
   </a>
   
+  <a href="submit_wasm_proposal.html" class="card">
+      <img src="/img/cosmwasm.svg" class="filter-icon" />
+      <div class="title">
+      Submit a wasm Governance Proposal
+      </div>
+      <div class="text">
+        Example on how submit a wasm binary proposal.
+      </div>
+  </a>
+
+
 
   <a href="cosmwasm-testnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
@@ -29,16 +40,7 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
       Deploying contracts to testnet
     </div>
   </a>
-  
-  <a href="submit_wasm_proposal.html" class="card">
-    <img src="/img/cosmwasm.svg" class="filter-icon" />
-    <div class="title">
-    Submit a wasm Governance Proposal
-    </div>
-    <div class="text">
-      Example on how submit a wasm binary proposal.
-    </div>
-  </a>
+
   
   <a href="https://docs.cosmwasm.com/docs/1.0/getting-started/intro" class="card" target="_blank">
     <img src="/img/contract.svg" class="filter-icon" />
@@ -49,32 +51,37 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
      Official CosmWasm Documentation
     </div>
   </a>  
+  
+
+  
+  
  </div>
+ 
  
  ## Front-end Development
  
- <div class="cards twoColumn" >
-   <a href="javascript.html" class="card">
-     <img src="/img/cosmwasm.svg" class="filter-icon" />
-     <div class="title">
-      Cosmwasm & Javascript
-     </div>
-     <div class="text">
-      Interacting via JavaScript runtimes such as Node.js and the browser.
-     </div>
-   </a>
+  <div class="cards twoColumn" >
+    <a href="javascript.html" class="card">
+      <img src="/img/cosmwasm.svg" class="filter-icon" />
+      <div class="title">
+       Cosmwasm & Javascript
+      </div>
+      <div class="text">
+       Interacting via JavaScript runtimes such as Node.js and the browser.
+      </div>
+    </a>
  
    <a href="#" class="card">
-     <img src="/img/dapps.svg" class="filter-icon" />
-     <div class="title">
-      Building Osmosis dApps
-     </div>
-     <div class="text">
-      Coming soon
-     </div>
-   </a>  
-   
-  </div>
+      <img src="/img/dapps.svg" class="filter-icon" />
+      <div class="title">
+       Building Osmosis dApps
+      </div>
+      <div class="text">
+       Coming soon
+      </div>
+    </a>  
+ 
+   </div>
 
 ## Tools
  <div class="cards twoColumn" >
