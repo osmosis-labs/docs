@@ -1,4 +1,4 @@
-# CosmWasm & LocalOsmosis Tutorial
+# CosmWasm & LocalOsmosis 
 The following is a quick guide that shows the basics of deploying a contract to a Osmosis local environment. It covers: 
 
 - Initial Setup
@@ -10,11 +10,11 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Clone a base template contract
     - Compile contract
     - Optimize  contract
-    - Create Local key
+    - Create local key
     - Store contract
     - Initialise
     - Get contract address
-    - Query Contract
+    - Query contract
      - Increment contract's count
      - Reset contracts count
      - Get contract's state
@@ -181,16 +181,21 @@ CONTRACT_ADDR=$(osmosisd query wasm list-contract-by-code $CODE_ID --output json
 ## Query Contract
 
 ### Increment contract's count
-`
+
+```
 INCREMENT_MSG='{"increment":{}}'
 osmosisd tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from c1
+```
 
 ### Reset contracts count
-`
+
+```
 RESET_MSG='{"reset":{"count":0}}'
 osmosisd tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from c1
+```
 
 ### Get contract's state
+
 ```
 GET_STATE_MSG='{"get_count":{}}'
 osmosisd query wasm contract-state smart  $CONTRACT_ADDR "$GET_STATE_MSG"
