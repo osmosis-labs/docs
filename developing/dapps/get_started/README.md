@@ -40,7 +40,16 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
       Deploying contracts to testnet
     </div>
   </a>
-
+  
+  <a href="https://github.com/osmosis-labs/contract-list" class="card" target="_blank">
+    <img src="/img/contract.svg" class="filter-icon" />
+    <div class="title">
+    Osmosis Contract List
+    </div>
+    <div class="text">
+    Repository contains a list of all approved code IDs to Osmosis
+    </div>
+  </a>  
   
   <a href="https://docs.cosmwasm.com/docs/1.0/getting-started/intro" class="card" target="_blank">
     <img src="/img/contract.svg" class="filter-icon" />
