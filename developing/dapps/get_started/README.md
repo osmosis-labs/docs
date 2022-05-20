@@ -15,7 +15,7 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
      Cosmwasm with LocalOsmosis
     </div>
     <div class="text">
-      Getting started with building dApps with Osmosis
+      Compile, upload and interact with a contract in the Osmosis blockchain.
     </div>
   </a>
   
@@ -37,15 +37,6 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
     </div>
     <div class="text">
       Example on how submit a wasm binary proposal.
-    </div>
-  </a>
-  <a href="cosmwasm_counter_tutorial.html" class="card">
-    <img src="/img/cosmwasm.svg" class="filter-icon" />
-    <div class="title">
-    CosmWasm counter contract
-    </div>
-    <div class="text">
-     A simple counter contract based on the cw-template.
     </div>
   </a>
   
