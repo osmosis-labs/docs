@@ -33,18 +33,44 @@ See [Osmosis Proposal #178: Match External Incentives for SWTH/OSMO](https://www
 Bonded Liquidity Gauges are mechanisms for distributing liquidity incentives to LP tokens that have been bonded for a minimum amount of time. 45% of the daily issuance of OSMO goes towards these liquidity incentives. When a new pool is onboarded to receive (internal) Osmosis Liquidity Mining incentives, it will be granted allocation points and recieve a portion of the 45% of daily OSMO issuance. See [Bonded Liquidity Gauges](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#bonded-liquidity-gauges).
 
 ### Distribution Calcultions
-This 45% of daily issuance is split between approved pools according to the following calculation. For each pool, the APR from collected swap fees over the last 7 days is computed. We then define the concept of `subsidy` as the ratio of liquidity mining incentives APR, divided by swap fees APR. We can compute this value for pools individually to get a pool subsidy, as well as for all pools collectively to get an average subsidy.
 
-In general, each pool targets a particular subsidy level, with omso pools aiming for 1.5x average subsidy, and non-osmo pools aiming for 0.5x the average. This target is modified by external incentives matching and by outlier limiting.
 
-For pools with external incentives which are being matched, the equivalant subsidy level of the external incentives is added to the target (limited by what the normal level would be, i.e. 1.5x or 0.5x the average).
+#### Category Model
 
-Pools with excessively high swap fees collected may be the result of wash trading with the intent of incentives manipulation, so to limit this potential, we cap the fee APR used in the above calculation to be no more than 3x the average over all pools. This means that wash trading can be used to help a pool grow faster, but it cannot be used to create excessively high incentive APRs.
+This model groups pools into a number of categories with fixed incentive shares, so that we can prioritize certain classes of liquidity directly.
 
+#### Target Share
+The share of incentives allocated to each category is then split according to the proportion of swap fees collected by each pool within the category. These values are limited by the `swap fee cap` (currently 3), such that pools will not benefit by having more than 3x the average fee APR of the category.
+
+We then recalculate shares using (capped) fees + external incentives collected by the pool. To limit the incentive increase caused by a match relative to the base incentives, we take the minimum of this `adjusted reveneue` share, and `(1 + matched_multiple_cap) * capped_fee_share`. We set `matched_multiple_cap` at 1, so that matches can be no more than the base incentives of a pool.
+
+### Minimum Share
+Pools can also have a minimum share set by governance, to incentivize liquidity ahead of observed trading volume. We set minimums of 25% of incentives on pools 1 and 560 as demonstration and to guarantee a large amount of incentives for osmo/atom and osmo/ust liquidity. These parameters would be set and changed by governance and should be used to prioritizes the growth of strategic liquidity.
+
+#### Major
+
+Qualification for `Major` status is determined by governance based on a combination of factors, namely:
+- Is the token market cap large relative to `Osmo`
+- Does the majority of the trade volume happen outside of Osmosis
+- Do we have a strategic interest in attracting more liquidity of this token
+
+Currently this means that there are 3 Major tokens: `Atom`, `Luna` and `Cro`
+
+#### Categories
+- Osmo/Major - 40%
+- Osmo/Stable - 30%
+- Osmo/Minor - 20%
+- Stable/Major - 5%
+- Stable/Stable - 0.01%
+- Others - 4.99% - Liquidity for Minor tokens paired with non-Osmo
+
+#### Scale Limited Adjustments
 To prevent excessive volatility in the incentives APRs, these incentive targets are adjusted towards over multiple weeks, with each adjustment being limited to no more than +25% or -25%. This is somewhat disrupted as a result of normalization though, so when there are large changes in other pools, some pools might see changes in the range of +/- 30%.
 
+#### Maturity
 This adjustment scale limiting, is also partially negated during the 4 week onboarding period, where pools are expected to grow quite quickly, and so incentives need to be able to adjust quickly as well to keep up. During this period, the setting for the pool is chosen to be a weighted average between the target level and the adjustment limited by the 25% scale, with the weighting between these shifting linearly from entirely target, to entirely scale limited adjustment over the onboarding period. (ie 100% target, 75% target/25% adjustment, 50/50, 25/75, 100% adjustment)
 
+#### Bond Duration
 The above calculation determines what share of incentives go to each pool, but these shares are then further split into 3 gauges for each pool. Under current parameters, the 1day gauge receives 50%, 7day 30%, and 14day 20%. This means in effect that 100% of the incentives are available to 14 day bonders, 80% available to 7 day bonders, and only 50% available for 1 day bonders. The actual difference in APRs between bonding lengths is not this simple though, as it is heavily dependent on what percentage of the liquidity in the pool is bonded to each duration, and therefore how much competition there is within each gauge.
 
 ### Pool Onboarding
