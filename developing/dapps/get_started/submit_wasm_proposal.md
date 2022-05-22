@@ -1,6 +1,6 @@
 # Submit a wasm Governance Proposal
 
-The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be sued with testnet.
+The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.
 
 ## Localosmosis
 The easiest way to setup your localOsmosis is by downloading the [automated installer](https://get.osmosis.zone/). You can learn more about localOsmosis by reading the [README](https://github.com/osmosis-labs/localosmosis) in the official repo. 
@@ -89,4 +89,4 @@ osmosisd query wasm list-code
 ```
 
 ### Learn more:
-https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md
+[https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md](/github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md)
