@@ -1,5 +1,5 @@
 ---
-title: Contratcs & dApps on Osmosis
+title: Contracts & dApps on Osmosis
 ---
 # Building dApps on Osmosis
 
