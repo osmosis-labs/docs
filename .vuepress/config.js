@@ -274,6 +274,7 @@ module.exports = {
           title: "Infrastructure",
           children: [
             '/infra/',
+            '/infra/do/loadbalanced-rpc',
           ],
           collapsable: true,
         }
