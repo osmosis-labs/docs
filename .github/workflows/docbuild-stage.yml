@@ -40,9 +40,10 @@ jobs:
 
 # Copy Infra docs
       - name: Download infra docs
-        - run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/loadbalanced-rpc/README.md > infra/do/loadbalanced-rpc
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/loadbalanced-rpc/README.md > infra/do/loadbalanced-rpc
+
       - name: Download infra docs
-          - run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > infra/do/single-rpc
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > infra/do/single-rpc
 
 
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
