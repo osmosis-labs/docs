@@ -12,7 +12,7 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Optimize  contract
     - Create local key
     - Store contract
-    - Initialise
+    - Initialize
     - Get contract address
     - Query contract
      - Increment contract's count
