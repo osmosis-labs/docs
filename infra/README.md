@@ -8,7 +8,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
  Our goal is to create Cloud Agnostic infrastructure, We are starting with DigitalOcean first as the it is the easiest way to get up and running.
  :::
  
- ## Infrastructure
+ ## Resources
  <div class="cards twoColumn" >
    <a href="https://github.com/osmosis-labs/infrastructure" class="card">
      <img src="/img/ide.svg" class="filter-icon" />
