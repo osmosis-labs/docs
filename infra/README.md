@@ -24,7 +24,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
 ## DigitalOcean Terraform Modules
 <div class="cards twoColumn" >
 
-  <a href="infra/do/single-rpc" class="card">
+  <a href="infra/do/single-rpc.md" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
     Single RPC node
@@ -33,7 +33,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
         Runs a single-rpc node with the latest osmosisd binary and automatically syncs the state from a pruned snapshot.
     </div>
   </a>
-  <a href="infra/do/loadbalanced-rpc" class="card">
+  <a href="infra/do/loadbalanced-rpc.md" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
     Load Balanced RPC node
