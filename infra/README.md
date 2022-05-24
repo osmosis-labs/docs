@@ -5,7 +5,7 @@ Please use the links below to reference architectures for common osmosis infrast
 The reference architecture is specified ad Infrastructure As Code (IAC) using [Terraform](https://www.terraform.io/) and can be used as a starting point to deploy blockchain nodes.
 
 ::: tip
- Our goal is to create Cloud Agnostic infrastructure, We are starting with DigitalOcean first as the it is the easiest way to get up and running.
+More Terraform infrastructure configurations will be open sourced soon, including configurations with other cloud providers. 
  :::
  
  ## Resources
