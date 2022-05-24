@@ -203,7 +203,8 @@ module.exports = {
             "/developing/osmosis-core/modules/spec-lockup",
             "/developing/osmosis-core/modules/spec-mint",
             "/developing/osmosis-core/modules/spec-incentives",
-            "/developing/osmosis-core/modules/spec-pool-incentives"
+            "/developing/osmosis-core/modules/spec-pool-incentives",
+            "/developing/osmosis-core/modules/spec-superfluid"
           ],
           collapsable: true,
         },
