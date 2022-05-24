@@ -203,7 +203,8 @@ module.exports = {
             "/developing/osmosis-core/modules/spec-lockup",
             "/developing/osmosis-core/modules/spec-mint",
             "/developing/osmosis-core/modules/spec-incentives",
-            "/developing/osmosis-core/modules/spec-pool-incentives"
+            "/developing/osmosis-core/modules/spec-pool-incentives",
+            "/developing/osmosis-core/modules/spec-superfluid"
           ],
           collapsable: true,
         },
@@ -276,7 +277,10 @@ module.exports = {
           children: [
             '/infra/',
             '/infra/do/single-rpc',
+            '/infra/do/single-rpc-with-floating-ip',
+            '/infra/do/single-rpc-with-monitor-alerts',
             '/infra/do/loadbalanced-rpc',
+            '/infra/do/loadbalanced-rpc-with-monitor-alerts',
           ],
           collapsable: true,
         }
