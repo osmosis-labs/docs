@@ -11,7 +11,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
  ## Resources
  <div class="cards twoColumn" >
    <a href="https://github.com/osmosis-labs/infrastructure" class="card">
-     <img src="/img/ide.svg" class="filter-icon" />
+     <img src="/img/infra.svg" class="filter-icon" />
      <div class="title">
      Infrastructure
      </div>
@@ -25,7 +25,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
 <div class="cards twoColumn" >
 
   <a href="do/single-rpc.html" class="card">
-    <img src="/img/ide.svg" class="filter-icon" />
+    <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Single RPC node
     </div>
@@ -33,13 +33,43 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
         Runs a single-rpc node with the latest osmosisd binary and automatically syncs the state from a pruned snapshot.
     </div>
   </a>
+  <a href="do/single-rpc-with-monitor-alerts.html" class="card">
+    <img src="/img/do.svg" class="filter-icon" />
+    <div class="title">
+    Single RPC node with Monitor Alerts
+    </div>
+    <div class="text">
+        Runs the latest osmosisd binary and automatically syncs the state from a pruned snapshot with monitor alerts.
+    </div>
+  </a>
+  
+  <a href="do/single-rpc-with-floating-ip.html" class="card">
+    <img src="/img/do.svg" class="filter-icon" />
+    <div class="title">
+    Single RPC with floating IP
+    </div>
+    <div class="text">
+        Runs the latest osmosisd binary and automatically with pruned snapshot syncs behind a floating IP.
+    </div>
+  </a>
+  
   <a href="do/loadbalanced-rpc.html" class="card">
-    <img src="/img/ide.svg" class="filter-icon" />
+    <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Load Balanced RPC node
     </div>
     <div class="text">
-        Runs the latest osmosisd binary and automatically syncs the state from a pruned snapshot.
+        Runs the latest osmosisd binary and automatically syncs the state from a pruned snapshot behind a load balancer.
+    </div>
+  </a>
+  
+  <a href="do/loadbalanced-rpc-with-monitor-alerts.html" class="card">
+    <img src="/img/do.svg" class="filter-icon" />
+    <div class="title">
+    Load Balanced RPC node with Monitor Alerts
+    </div>
+    <div class="text">
+        Runs the latest osmosisd binary and automatically syncs the state from a pruned snapshot behind a load balancer.
     </div>
   </a>
 
