@@ -42,12 +42,21 @@ jobs:
 
         run: curl https://raw.githubusercontent.com/osmosis-labs/telescope/master/packages/osmojs/README.md > developing/tools/osmojs.md
 
-# Copy Infra docs
+      # Copy Infra docs
+      - name: Download infra docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > infra/do/loadbalanced-rpc.md
+
+      - name: Download infra docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc-with-floating-ip/README.md > infra/do/single-rpc-with-floating-ip.md
+
+      - name: Download infra docs
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc-with-monitor-alerts/README.md > infra/do/single-rpc-with-monitor-alerts.md
+
       - name: Download infra docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/loadbalanced-rpc/README.md > infra/do/loadbalanced-rpc.md
 
       - name: Download infra docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > infra/do/single-rpc.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/loadbalanced-rpc-with-monitor-alerts/README.md > infra/do/loadbalanced-rpc-with-monitor-alerts.md
 
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |

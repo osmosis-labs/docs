@@ -276,7 +276,10 @@ module.exports = {
           children: [
             '/infra/',
             '/infra/do/single-rpc',
+            '/infra/do/single-rpc-with-floating-ip',
+            '/infra/do/single-rpc-with-monitor-alerts',
             '/infra/do/loadbalanced-rpc',
+            '/infra/do/loadbalanced-rpc-with-monitor-alerts',
           ],
           collapsable: true,
         }

@@ -24,7 +24,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
 ## DigitalOcean Terraform Modules
 <div class="cards twoColumn" >
 
-  <a href="do/single-rpc.html" class="card">
+  <a href="do/single-rpc" class="card">
     <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Single RPC node
@@ -33,7 +33,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
         Runs a single-rpc node with the latest osmosisd binary and automatically syncs the state from a pruned snapshot.
     </div>
   </a>
-  <a href="do/single-rpc-with-monitor-alerts.html" class="card">
+  <a href="do/single-rpc-with-monitor-alerts" class="card">
     <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Single RPC node with Monitor Alerts
@@ -43,7 +43,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
     </div>
   </a>
   
-  <a href="do/single-rpc-with-floating-ip.html" class="card">
+  <a href="do/single-rpc-with-floating-ip" class="card">
     <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Single RPC with floating IP
@@ -53,7 +53,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
     </div>
   </a>
   
-  <a href="do/loadbalanced-rpc.html" class="card">
+  <a href="do/loadbalanced-rpc" class="card">
     <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Load Balanced RPC node
@@ -63,7 +63,7 @@ The reference architecture is specified ad Infrastructure As Code (IAC) using [T
     </div>
   </a>
   
-  <a href="do/loadbalanced-rpc-with-monitor-alerts.html" class="card">
+  <a href="do/loadbalanced-rpc-with-monitor-alerts" class="card">
     <img src="/img/do.svg" class="filter-icon" />
     <div class="title">
     Load Balanced RPC node with Monitor Alerts
