@@ -246,6 +246,7 @@ module.exports = {
         {
         title: 'Key Management',
         children: [
+          "/developing/keys/",
           "/developing/keys/keys-cli",
           "/developing/keys/multisig",
           "/developing/keys/tmkms",
@@ -274,6 +275,8 @@ module.exports = {
           title: "Infrastructure",
           children: [
             '/infra/',
+            '/infra/do/single-rpc',
+            '/infra/do/loadbalanced-rpc',
           ],
           collapsable: true,
         }

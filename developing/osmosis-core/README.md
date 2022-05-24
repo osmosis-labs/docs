@@ -7,7 +7,7 @@ The guides on this page will explain the process of developing on Osmosis.
 
  ## Get Started
 <div class="cards twoColumn">
-<a href="build.html" class="card">
+<a href="/developing/osmosis-core/build" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
       Build and Test Osmosis Source Code
@@ -18,7 +18,7 @@ The guides on this page will explain the process of developing on Osmosis.
   </a>
 
 
-  <a href="ide-guide.html" class="card">
+  <a href="/developing/osmosis-core/ide-guide" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
       IDE Setup
@@ -39,7 +39,7 @@ The guides on this page will explain the process of developing on Osmosis.
   </a>
 
 
-  <a href="modules/" class="card">
+  <a href="/developing/osmosis-core/modules/" class="card">
     <img src="/img/lego.svg" class="filter-icon"/>
     <div class="title">
      Modules
@@ -49,7 +49,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="relaying/" class="card">
+  <a href="/developing/relaying/" class="card">
     <img src="/img/relay.svg" class="filter-icon"/>
     <div class="title">
      Relaying
@@ -59,7 +59,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="assets/asset-info" class="card">
+  <a href="/developing/assets/asset-info" class="card">
     <img src="/img/asset.svg" class="filter-icon"/>
     <div class="title">
      Assets
@@ -69,7 +69,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="keys/" class="card">
+  <a href="/developing/keys/" class="card">
     <img src="/img/key.svg" class="filter-icon"/>
     <div class="title">
      Key Management
@@ -79,7 +79,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="structure/transaction.html" class="card">
+  <a href="/developing/guides/structure/transaction" class="card">
     <img src="/img/structure.svg" class="filter-icon"/>
     <div class="title">
      Transaction Structure
@@ -89,7 +89,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="performance/main.html" class="card">
+  <a href="/developing/osmosis-core/performance" class="card">
     <img src="/img/time.svg" class="filter-icon"/>
     <div class="title">
      Performance & Profiling
@@ -104,7 +104,7 @@ The guides on this page will explain the process of developing on Osmosis.
  ## Networks
  <div class="cards twoColumn" >
 
-  <a href="../dapps/tools/localosmosis" class="card">
+  <a href="../tools/localosmosis" class="card">
     <img src="/img/ide.svg" class="filter-icon"/>
     <div class="title">
      Local Osmosis
@@ -152,7 +152,7 @@ The guides on this page will explain the process of developing on Osmosis.
 The guides on this page will explain the process of developing on the Osmosis front-end interface.
 
 <div class="cards twoColumn">
-  <a href="web-dev-guide.html" class="card">
+  <a href="../web-dev-guide" class="card">
     <img src="/img/book-solid.svg" class="filter-icon"/>
     <div class="title">
     Web Developer Guide
