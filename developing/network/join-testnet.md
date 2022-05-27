@@ -7,7 +7,7 @@ Make sure you have [installed the Osmosis Binary (CLI)](../cli/install#manual-in
 You may also [use the Osmosis installer](../cli/install#quick-start) if you want everything to be done automatically.
 
 ## Faucet 
-In order to get testnet tokens use  https://faucet.osmosis.zone/
+In order to get testnet tokens use  [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/)
 
 ## Initialize Osmosis Node
 
