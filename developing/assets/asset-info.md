@@ -73,7 +73,7 @@ The following are all the assets currently supported by the Osmosis frontend alo
 <td>ibc/3BCCC93AD5DF58D11A6F8A05FA8BC801CBA0BA61A981F57E91B8B598BF8061CB </td>
 <td>channel-82</td></tr>
 <tr><td>Bostrom (BOOT)</td>
-<td>ibc/E6931F78057F7CC5DA0FD6CEF82FF39373A6E0452BF1FD76910B93292CF356C1</td>
+<td>ibc/FE2CD1E6828EC0FAB8AF39BAC45BC25B965BA67CCBC50C13A14BD610B0D1E2C4</td>
 <td>channel-95</td></tr>
 <tr><td>Comdex (CMDX)</td>
 <td>ibc/FE2CD1E6828EC0FAB8AF39BAC45BC25B965BA67CCBC50C13A14BD610B0D1E2C4</td>
@@ -88,6 +88,6 @@ The following are all the assets currently supported by the Osmosis frontend alo
 <td>ibc/B9E0A1A524E98BB407D3CED8720EFEFD186002F90C1B1B7964811DD0CCC12228</td>
 <td>channel-113</td></tr>
 <tr><td>Lum Network (LUM)</td>
-<td></td>
+<td>ibc/8A34AF0C1943FD0DFCDE9ADBF0B2C9959C45E87E6088EA2FC6ADACD59261B8A2</td>
 <td>channel-115</td></tr>
 </tbody></table>

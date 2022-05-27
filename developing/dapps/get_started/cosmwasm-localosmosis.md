@@ -50,7 +50,7 @@ cargo install cargo-generate --features vendored-openssl
 cargo install cargo-run-script
 ```
 
-### Setup  Localosmosis
+### Setup  LocalOsmosis
 The easiest way to setup your localOsmosis is by downloading the [automated installer](https://get.osmosis.zone/). You can learn more about localOsmosis by reading the [README](https://github.com/osmosis-labs/localosmosis) in the official repo. 
 
 Run the following and choose option #3.

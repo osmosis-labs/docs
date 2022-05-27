@@ -3,7 +3,7 @@ This guide describes interacting with Osmosis Smart contracts via JavaScript run
 
 ## Prerequisites
 - npm and node.js
-- localosmosis - Not needed when connecting to mainnet)
+- localosmosis - (Not needed when connecting to mainnet)
 - Keplr browser not used on the guide yet
 
 Start a new project
@@ -113,7 +113,9 @@ moreExamples();
 
 # Querying Smart Contracts
 
+::: warning
 Before we query smart contracts in localOsmosis we must [deploy one by following this guide](https://docs.osmosis.zone/developing/dapps/get_started/cosmwasm-localosmosis.html). 
+:::
 
 Once you have deployed the smart contract you can get the `<CONTRACT-ID>` by running:
 
@@ -121,14 +123,19 @@ Once you have deployed the smart contract you can get the `<CONTRACT-ID>` by run
 osmosisd query wasm list-code
 ```
 
+![](../../../assets/contracts-list.png)
+In this particular example there are 7 contracts available. The latest one is 7.
+
 You can now get the contract address by running
 
 ```
 osmosisd query wasm list-contract-by-code <CONTRACT-ID>
 
 ```
+![](../../../assets/contract-details.png)
+That's the contract address `osmo1zlmaky7753d2fneyhduwz0rn3u9ns8rse3tudhze8rc2g54w9ysq725p3a` for code contract id 7.
 
-
+## Get contract 
 ```javascript
 import { CosmWasmClient } from "cosmwasm";
 
@@ -138,7 +145,7 @@ const rpcEndpoint = "http://localhost:26657/";
 async function queryContract() {
   const client = await CosmWasmClient.connect(rpcEndpoint);
  
-    const getContract = await client.getContract("CONTRACT_ADDRESS")
+    const getContract = await client.getContract("osmo1zlmaky7753d2fneyhduwz0rn3u9ns8rse3tudhze8rc2g54w9ysq725p3a")
     console.log(getContract);
 }
 
@@ -151,6 +158,38 @@ Run the code
 node index.js
 ```
 The output should look like this:
-![](https://hackmd.io/_uploads/r1MufGXw9.png)
+![](contract_details.png)
 
+## Get the count from the contract
+The contract we are interacting with has a few simple functions. 'get_count', 'increment' and 'reset'. These two functions can be called via by using the `queryContractSmart` method. 
 
+::: tip
+Please note there is a complete guide on how to upload the example contract on localOsmosis [here](cosmwasm-localosmosis.html).
+:::
+
+```javascript
+async function getCount() {
+    const client = await CosmWasmClient.connect(rpcEndpoint);
+
+    const getCount = await client.queryContractSmart("osmo1zlmaky7753d2fneyhduwz0rn3u9ns8rse3tudhze8rc2g54w9ysq725p3a",{ "get_count": {}})
+    console.log(getCount);
+}
+getCount();
+
+```
+
+## Increase the counter
+
+```javascript
+async function increaseCounter() {
+    const client = await CosmWasmClient.connect(rpcEndpoint);
+
+    const increaseCounter = await client.queryContractRaw("osmo1zlmaky7753d2fneyhduwz0rn3u9ns8rse3tudhze8rc2g54w9ysq725p3a","{\"increment\":{}}")
+    console.log(increaseCounter);
+}
+
+queryContract();
+
+``` 
+
+WIP
