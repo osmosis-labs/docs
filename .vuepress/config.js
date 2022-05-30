@@ -182,7 +182,7 @@ module.exports = {
           title: 'Tools',
           children: [
 
-            '/developing/tools/membrane',
+            '/developing/tools/beaker',
             '/developing/tools/localosmosis',
             '/developing/tools/osmojs',
             '/developing/tools/osmosisd',
