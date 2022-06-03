@@ -89,4 +89,4 @@ osmosisd query wasm list-code
 ```
 
 ### Learn more:
-[https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md](/github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md)
+[https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md)
