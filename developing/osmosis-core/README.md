@@ -99,7 +99,7 @@ The guides on this page will explain the process of developing on Osmosis.
     </div>
   </a>
 
-  <a href="/developing/osmosis-core/contributing.md" class="card">
+  <a href="/developing/osmosis-core/contributing" class="card">
     <img src="/img/ide.svg" class="filter-icon" />
     <div class="title">
       Contributing
