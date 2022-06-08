@@ -196,6 +196,7 @@ module.exports = {
             '/developing/osmosis-core/build',
             '/developing/osmosis-core/ide-guide',
             '/developing/osmosis-core/performance',
+            '/developing/osmosis-core/contributing',
             "/developing/osmosis-core/modules/",
             "/developing/osmosis-core/modules/spec-epochs",
             "/developing/osmosis-core/modules/spec-gamm",
