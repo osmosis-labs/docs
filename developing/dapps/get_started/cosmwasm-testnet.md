@@ -283,7 +283,6 @@ You can also instantiate the contract using intuitive GUI in [Osmo Contract Expl
 
 Let’s do it together
 
-::: warning ⚠️ The osmosis testnet contract explorer is currently down. (2022.06.07) :::
 
 ### Upload the code
 
