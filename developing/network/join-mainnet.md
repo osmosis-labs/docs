@@ -2,9 +2,9 @@
 
 ## Install Osmosis Binary
 
-Make sure you have [installed the Osmosis Binary (CLI)](../cli/install#manual-installation) prior to following the below instructions.
+Make sure you have [installed the Osmosis Binary (CLI)](../tools/osmosisd#manual-installation) prior to following the below instructions.
 
-You may also [use the Osmosis installer](../cli/install#quick-start) if you want everything to be done automatically.
+You may also [use the Osmosis installer](../tools/osmosisd#quick-start) if you want everything to be done automatically.
 
 ## Initialize Osmosis Node
 
@@ -20,7 +20,27 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
-## Set Up Cosmovisor
+## Latest Version (V10) Upgrade Info
+
+### Go Requirement
+
+You will need to be running go1.18 for this version of Osmosis. You can check if you are running go1.18 with the following command:
+
+```{.sh}
+go version
+```
+
+If this does not say go1.18, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go 1.18 on linux is as follows:
+
+```{.sh}
+wget -q -O - https://git.io/vQhTU | bash -s -- --remove
+wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.18
+```
+### Memory Requirements
+
+As always, we recommend having 64GB of memory. 
+
+### Set Up Cosmovisor
 
 Set up cosmovisor to ensure any future upgrades happen flawlessly. To install Cosmovisor:
 
@@ -63,8 +83,6 @@ To check your work, ensure the version of cosmovisor and osmosisd are the same:
 cosmovisor version
 osmosisd version
 ```
-
-These two command should both output 7.0.3
 
 ## Download Chain Data
 
@@ -217,18 +235,15 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V7
+## Update Cosmovisor to V10
 
-If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3401000):
+If you want osmosisd to upgrade automatically from V9 to V10, do the following steps prior to the upgrade height (4713065):
 
-```bash
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
+```{.sh}
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/v9/bin
 cd $HOME/osmosis
 git pull
-git checkout v7.0.3
+git checkout v10.0.0
 make build
-systemctl stop cosmovisor.service
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin
-systemctl start cosmovisor.service
-cd $HOME
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v9/bin
 ```
