@@ -10,10 +10,11 @@ Anyone can setup their node with endpoints to communicate with the Osmosis block
 
 ## Official endpoints 
 
-| Network| Chain ID  | endpoint | REST Docs | Faucet
-| -------- | -------- | -------- | -------- | -------- | 
-| Testnet | osmo-test-4  | rpc-test.osmosis.zone| [Swagger](https://lcd-test.osmosis.zone/swagger/) | [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/) | 
-| Mainnet | osmosis-1  | rpc.osmosis.zone     | [Swagger](https://lcd.osmosis.zone/swagger/) | None | 
+| Network| Chain ID | RPC endpoint | LCD endpoint | REST Docs | Faucet
+| -------- | -------- | -------- | -------- | -------- | -------- | 
+| Testnet | osmo-test-4 | testnet-rpc.osmosis.zone | testnet-rest.osmosis.zone | [Swagger](https://lcd-test.osmosis.zone/swagger/) | [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/) | 
+| Mainnet | osmosis-1 | rpc.osmosis.zone | lcd.osmosis.zone |  [Swagger](https://lcd.osmosis.zone/swagger/) | None | 
+
 
 ### URI over HTTP Example
 
