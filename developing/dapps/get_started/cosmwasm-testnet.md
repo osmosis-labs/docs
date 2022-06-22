@@ -1,4 +1,58 @@
 # Cosmwasm with Testnet
-## Deploying Cosmwasm Contracts to the testnet 
+## Deploying Cosmwasm Contracts to the testnet with Beaker
 
-This is work in progress, however you can follow the guide from [localOsmosis](cosmwasm-localosmosis.md) and adapt for the testnet. 
+The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permisonless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
+
+### Requirements
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) 
+
+### Install Beaker
+
+Beaker is available via [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) which is a rust toolchain. Once cargo is ready on your machine, run:
+
+
+```sh
+cargo install beaker
+```
+
+### Scaffolding your new dapp project
+
+In the directory you want your project to reside, run:
+
+```sh
+beaker new counter-dapp
+```
+
+For detailed information about Beaker [click here](https://github.com/osmosis-labs/beaker/edit/main/README.md).
+
+### Your first CosmWasm contract with Beaker
+
+After that we can create new contract (the command uses template from [cw-template](https://github.com/InterWasm/cw-template))
+
+```sh
+cd counter-dapp
+beaker wasm new counter
+```
+
+Now your new contract will be avaiable on `contracts/counter`.
+
+If you want to use other contract template, you can change the configuration, for example:
+
+```
+# Beaker.toml
+
+[wasm]
+template_repo = "https://github.com/osmosis-labs/cw-tpl-osmosis.git"
+```
+
+```sh
+beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-opt --raw '{ "count": 0 }' --label 'My first Beaker Contract'
+```
+
+Note how we added `--network testnet` to tell beaker to deploy to the testnet Osmosis chain. 
+
+::: tip
+You can remove `--network testnet` to deploy to localOsmosis instead as described on the official docs. 
+
+

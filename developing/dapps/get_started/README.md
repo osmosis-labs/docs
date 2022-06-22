@@ -34,12 +34,23 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
   <a href="cosmwasm-testnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     CosmWasm with Testnet
+    Deploy Cosmwasm Contracts to Testnet with Beaker
     </div>
     <div class="text">
-      Deploying contracts to testnet
+      Deploying contracts to testnet with Beaker
     </div>
   </a>
+
+  <!-- <a href="cosmwasm-mainnet.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Mainnet with Beaker
+    </div>
+    <div class="text">
+      Deploying contracts to mainnet with Beaker
+    </div>
+  </a> -->
+  
   
   <a href="https://github.com/osmosis-labs/contract-list" class="card" target="_blank">
     <img src="/img/contract.svg" class="filter-icon" />
