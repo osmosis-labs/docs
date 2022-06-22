@@ -98,6 +98,17 @@ The guides on this page will explain the process of developing on Osmosis.
      Learn how to measure performance and profile your node
     </div>
   </a>
+
+  <a href="/developing/osmosis-core/contributing" class="card">
+    <img src="/img/ide.svg" class="filter-icon" />
+    <div class="title">
+      Contributing
+    </div>
+    <div class="text">
+      Guidelines to contributing to Osmosis core development.
+    </div>
+  </a>
+
  </div>
 
 

@@ -24,7 +24,7 @@ To contribute a change proposal, use the following workflow:
 4. Create a branch and name it appropriately.
 5. Work on only one major change in one pull request.
 6. Make sure all tests are passing locally.
-7. Next, rince and repeat the following:
+7. Next, rinse and repeat the following:
 
     1. Commit your changes. Write a simple, straightforward commit message. To learn more, see [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/).
     2. Push your changes to your remote fork.
@@ -76,4 +76,4 @@ For v6.x, and v4.x, most PRs to them should go to main and get a "backport" labe
 
 ### How to build proto files. (rm -rf vendor/ && make build-reproducible once docker is installed)
 
-You can do rm -rf vendor and make build-reproducible to redownload all dependencies - this should pull the latest docker image of Osmo. You should also make sure to do make proto-all to auto-generate your protobuf files. Makes ure you have docker installed. If you get something like `W0503 22:16:30.068560     158 services.go:38] No HttpRule found for method: Msg.CreateBalancerPool` feel free to ignore that. Make sure to also do make all to run all the linting tests before you commit and push, as well as `gofmt`-ing the file you've modified or added to make sure everything still abides by the standards. 
+You can do rm -rf vendor and make build-reproducible to redownload all dependencies - this should pull the latest docker image of Osmo. You should also make sure to do make proto-all to auto-generate your protobuf files. Makes ure you have docker installed. If you get something like `W0503 22:16:30.068560 158 services.go:38] No HttpRule found for method: Msg.CreateBalancerPool` feel free to ignore that. Make sure to also do make all to run all the linting tests before you commit and push, as well as `gofmt`-ing the file you've modified or added to make sure everything still abides by the standards. 

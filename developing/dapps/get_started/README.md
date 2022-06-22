@@ -95,10 +95,10 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
 ## Tools
  <div class="cards twoColumn" >
 
-  <a href="#" class="card">
+  <a href="https://github.com/osmosis-labs/beaker" class="card">
     <img src="/img/ide.svg" class="filter-icon"/>
     <div class="title">
-     Brane
+     Beaker
     </div>
     <div class="text">
      Osmosis development environment. Coming soon.
