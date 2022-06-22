@@ -35,16 +35,7 @@ cd counter-dapp
 beaker wasm new counter
 ```
 
-Now your new contract will be avaiable on `contracts/counter`.
-
-If you want to use other contract template, you can change the configuration, for example:
-
-```
-# Beaker.toml
-
-[wasm]
-template_repo = "https://github.com/osmosis-labs/cw-tpl-osmosis.git"
-```
+### Deploy contract on Testnet
 
 ```sh
 beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-opt --raw '{ "count": 0 }' --label 'My first Beaker Contract'
