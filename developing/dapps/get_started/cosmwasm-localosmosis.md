@@ -2,6 +2,7 @@
 
 ::: tip  
 You can now deploy contracts to LocalOsmosis with [Beaker](https://github.com/osmosis-labs/beaker). The official tooling to deploy Osmosis Smartcontracts.
+:::
 
 The following is detailed guide that shows the basics of manually deploying a contract to a Osmosis local environment. It covers: 
 
