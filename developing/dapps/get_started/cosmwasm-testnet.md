@@ -111,10 +111,10 @@ osmosisd query bank balances $(osmosisd keys show -a wallet)
 ## Deploy a Smart Contract
 ### Clone cw-template
 
-For this example, we will use the [**cw-template**](https://github.com/InterWasm/cw-template) (CosmWasm Template) repo with counter example.
+For this example, we will use the [**cw-template**](https://github.com/osmosis-labs/cw-tpl-osmosis) repo with counter example.
 
 ```bash
-cargo generate --git https://github.com/CosmWasm/cw-template.git --name my-first-contract
+cargo generate --git https://github.com/osmosis-labs/cw-tpl-osmosis.git --name my-first-contract
 cd my-first-contract
 ```
 
