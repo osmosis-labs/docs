@@ -88,7 +88,7 @@ divert cliff issue spirit penalty chief improve neck enjoy pipe sing loop inheri
 
 You need some tokens named `OSMO`(`uosmo`) in your address to interact with the network.
 
-You must participate in the [Osmosis discode](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discode, you can request a testnet token by sending the following message on the `#faucet` channel:
+You must participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
 
 ```bash
 $request <address>
