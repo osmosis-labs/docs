@@ -195,7 +195,7 @@ sudo apt-get install jq
 brew install jq
 ```
 
- If you are using an operating system other than the one listed above, please refer to the [official document](https://stedolan.github.io/jq/download/).
+If you are using an operating system other than the one listed above, please refer to the [official document](https://stedolan.github.io/jq/download/).
 
 Run the following command to set the `CODE_ID` as a variable:
 
