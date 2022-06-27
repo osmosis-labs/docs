@@ -45,6 +45,10 @@ jobs:
 
         run: curl https://raw.githubusercontent.com/osmosis-labs/telescope/master/packages/osmojs/README.md > developing/tools/osmojs.md
 
+      - name: Download Beaker docs
+
+        run: curl https://raw.githubusercontent.com/osmosis-labs/beaker/main/README.md > developing/tools/beaker.md
+
 # Copy Infra docs
       - name: Download infra docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > infra/do/loadbalanced-rpc.md
