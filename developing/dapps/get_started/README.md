@@ -9,6 +9,7 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
 
 ## Getting Started
 <div class="cards twoColumn" >
+
   <a href="cosmwasm-localosmosis.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
@@ -29,9 +30,7 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
       </div>
   </a>
 
-
-
-  <a href="/developing/tools/beaker/" class="card">
+  <a href="cosmwasm-testnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
     Deploy Cosmwasm Contracts to Testnet with Beaker
@@ -117,15 +116,15 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
 ## Tools
  <div class="cards twoColumn" >
 
-  <a href="https://github.com/osmosis-labs/beaker" class="card">
-    <img src="/img/ide.svg" class="filter-icon"/>
+  <a href="/developing/tools/beaker/index.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     Beaker
+    Beaker
     </div>
     <div class="text">
-     Osmosis development environment. Coming soon.
+      Easy to scaffold a new cosmwasm app.
     </div>
-  </a> 
+  </a>
   
   <a href="/developing/tools/localosmosis" class="card">
     <img src="/img/localosmosis.svg" class="filter-icon"/>
