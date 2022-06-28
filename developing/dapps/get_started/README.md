@@ -31,7 +31,7 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
 
 
 
-  <a href="cosmwasm-testnet.html" class="card">
+  <a href="/developing/tools/beaker/" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
     Deploy Cosmwasm Contracts to Testnet with Beaker
@@ -40,6 +40,17 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
       Deploying contracts to testnet with Beaker
     </div>
   </a>
+
+  <a href="cosmwasm-verify-contract.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Verifying Smart Contracts
+    </div>
+    <div class="text">
+      Download contract and verify the hash.
+    </div>
+  </a>
+
 
   <!-- <a href="cosmwasm-mainnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
