@@ -47,7 +47,7 @@ jobs:
 
       - name: Download Beaker docs
 
-        run: curl https://raw.githubusercontent.com/osmosis-labs/beaker/main/README.md > developing/tools/beaker.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/beaker/main/README.md > developing/tools/beaker/README.md
 
 # Copy Infra docs
       - name: Download infra docs
