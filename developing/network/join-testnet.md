@@ -205,7 +205,7 @@ This step is only needed if syncing from genesis and haven't passed block 321565
 mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
 cd $HOME/osmosis
 git pull
-git checkout v7.0.3
+git checkout v10.0.1
 make build
 systemctl stop cosmovisor.service
 cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin
