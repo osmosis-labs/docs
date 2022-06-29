@@ -174,6 +174,7 @@ module.exports = {
             '/developing/dapps/get_started/cosmwasm-localosmosis',
             '/developing/dapps/get_started/cosmwasm-testnet',
             '/developing/dapps/get_started/submit_wasm_proposal',
+            '/developing/dapps/get_started/cosmwasm-verify-contract',
             '/developing/dapps/get_started/javascript',
           ],
           collapsable: true,
@@ -182,7 +183,7 @@ module.exports = {
           title: 'Tools',
           children: [
 
-            '/developing/tools/beaker',
+            '/developing/tools/beaker/',
             '/developing/tools/localosmosis',
             '/developing/tools/osmojs',
             '/developing/tools/osmosisd',
