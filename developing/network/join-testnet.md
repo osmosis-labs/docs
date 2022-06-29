@@ -74,7 +74,7 @@ Download and replace the genesis file:
 
 ```bash
 cd $HOME/.osmosisd/config
-wget wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-4/genesis.tar.bz2
+wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-4/genesis.tar.bz2
 tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
 ```
 
