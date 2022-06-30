@@ -104,13 +104,13 @@ Explore our guides and code examples to integrate and build with Osmosis.
      Block Explorer
     </div>
   </a>
-  <a href="https://bigdipper.testnet.osmo.mp20.net/" class="card lg" target="_blank">
+  <a href="https://osmosis.bigdipper.live/" class="card lg" target="_blank">
     <img src="img/big_dipper.png">
     <div class="title">
      Big Dipper V2
     </div>
     <div class="text">
-     Testnet Block Explorer
+     Beautiful Block Explorer
     </div>
   </a>
 </div>

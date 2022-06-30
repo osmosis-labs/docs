@@ -1,8 +1,9 @@
 <template>
   <footer class="page-edit">
     <div v-if="editLink" class="edit-link">
-      <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
-      <OutboundLink />
+      <a :href="editLink" target="_blank" rel="noopener noreferrer">
+      <img src="/img/github.svg" style="max-width:25px;vertical-align:middle;" > 
+      {{ editLinkText }}</a>
     </div>
 
     <div v-if="lastUpdated" class="last-updated">
@@ -107,7 +108,7 @@ export default {
   overflow: auto;
 
   .edit-link {
-    display: inline-block;
+
 
     a {
       color: lighten($textColor, 50%);

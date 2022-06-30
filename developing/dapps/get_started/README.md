@@ -3,9 +3,6 @@ title: Contracts & dApps on Osmosis
 ---
 # Building dApps on Osmosis
 
-::: tip
-Please note that CosmWasm developer tools are coming!  In the meantime we are publishing guides on how to interact with the CLI and Javascript libraries which is  very important to understand core principals of CosmWasm development in Osmosis.
-:::
 
 ## Getting Started
 <div class="cards twoColumn" >
