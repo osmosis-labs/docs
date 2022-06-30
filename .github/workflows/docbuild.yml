@@ -44,10 +44,12 @@ jobs:
       - name: Download OsmoJS docs
 
         run: curl https://raw.githubusercontent.com/osmosis-labs/telescope/master/packages/osmojs/README.md > developing/tools/osmojs.md
-      
+#Beaker docs
       - name: Download Beaker docs
-
         run: curl https://raw.githubusercontent.com/osmosis-labs/beaker/main/README.md > developing/tools/beaker/README.md
+        
+      - name: Change Beaker Logo to Absolute path
+        run:  sed -i 's/assets\/beaker.png/https:\/\/raw.githubusercontent.com\/osmosis-labs\/beaker\/main\/assets\/beaker.png/g' developing/tools/beaker/README.md
 
       # Copy Infra docs
       - name: Download infra docs
