@@ -131,7 +131,7 @@ module.exports = {
       // { text: 'Chat', link: 'https://v2.vuepress.vuejs.org/',},
       {
         text: "GitHub",
-        link: "https://github.com/osmosis-labs/osmosis",
+        link: "https://github.com/osmosis-labs/docs",
         icon: "/img/github.svg",
       },
     ],
