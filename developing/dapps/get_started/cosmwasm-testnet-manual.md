@@ -61,9 +61,6 @@ Run the following and choose option #2 (Client Node) and #2 (Testnet) in order.
 ```bash
 curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 ```
-![](https://user-images.githubusercontent.com/70956926/172289722-0254d766-45d8-4491-b958-6e165464bb21.png)
-![](https://user-images.githubusercontent.com/70956926/172292272-3e75acc7-3f2e-4e5c-94ef-cb46401a4174.png)
-![](https://user-images.githubusercontent.com/70956926/172292397-130a1467-928a-45e9-ad6c-7ac0a1b6f420.png)
 Now you have successfully completed setting up an Osmosis client node in Testnet. In order to use `osmosisd` from the cli, either reload your terminal or refresh your profile with : `‘source ~/.profile’`
 
 ### Setup the Client
@@ -95,7 +92,7 @@ You need some tokens named `OSMO`(`uosmo`) in your address to interact with the 
 ### faucet
 
 #### Official Faucet
-You can request tokens from the official faucet at https://faucet.osmosis.zone 
+You can request tokens from the official faucet at [faucet.osmosis.zone](https://faucet.osmosis.zone) 
 
 #### Discord Faucet
 Youcan also participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
@@ -141,7 +138,7 @@ cargo wasm
 ```
 
 - `toolchain` means the compiler of  Rust, and rust has three release channels: `stable`, `beta`, and `nightly`, of which the `stable` channel is the most recently released version. `rustup` helps you manage these different versions easily.
-- `cargo` is the *Rust package manager*. In the [.cargo/config](https://github.com/InterWasm/cw-template/blob/main/.cargo/config), you can view the wasm compilation options as follows:
+- `cargo` is the *Rust package manager*. In the [.cargo/config](https://github.com/InterWasm/cw-template/blob/main/.cargo/config), you can view the wasm compilation options as follows:
     
     ```bash
     wasm = "build --release --target wasm32-unknown-unknown"
