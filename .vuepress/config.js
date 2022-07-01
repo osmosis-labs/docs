@@ -223,9 +223,9 @@ module.exports = {
         {
           title: 'Networks',
           children: [
+            '/developing/network/explorers',
             '/developing/network/public-endpoints',
             '/developing/tools/localosmosis',
-            '/developing/network/join-edgenet',
             '/developing/network/join-testnet',
             '/developing/network/join-mainnet',
           ],
