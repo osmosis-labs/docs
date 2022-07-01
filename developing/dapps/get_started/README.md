@@ -16,6 +16,16 @@ title: Contracts & dApps on Osmosis
       Compile, upload and interact with a contract in the Osmosis blockchain.
     </div>
   </a>
+
+  <a href="cosmwasm-testnet-manual.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Testnet with osmosisd
+    </div>
+    <div class="text">
+      Deploying contracts to testnet with Beaker
+    </div>
+  </a>
   
   <a href="submit_wasm_proposal.html" class="card">
       <img src="/img/cosmwasm.svg" class="filter-icon" />
@@ -27,7 +37,7 @@ title: Contracts & dApps on Osmosis
       </div>
   </a>
 
-  <a href="cosmwasm-testnet-beaker.html" class="card">
+  <a href="cosmwasm-testnet.html" class="card"> 
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
     Deploy Cosmwasm Contracts to Testnet with Beaker
