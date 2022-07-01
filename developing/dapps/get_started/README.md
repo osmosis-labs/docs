@@ -27,7 +27,7 @@ title: Contracts & dApps on Osmosis
       </div>
   </a>
 
-  <a href="cosmwasm-testnet.html" class="card">
+  <a href="cosmwasm-testnet-beaker.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
     Deploy Cosmwasm Contracts to Testnet with Beaker
