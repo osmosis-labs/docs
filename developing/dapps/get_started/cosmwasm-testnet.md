@@ -1,4 +1,4 @@
-# Cosmwasm with Testnet
+# Cosmwasm with Testnet & Beaker
 ## Deploying Cosmwasm Contracts to the testnet with Beaker
 
 The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permisonless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
@@ -43,5 +43,4 @@ beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-op
 ```
 
 Note how we added `--network testnet` to tell beaker to deploy to the testnet Osmosis chain. 
-
 
