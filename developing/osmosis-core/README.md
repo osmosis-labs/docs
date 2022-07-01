@@ -154,7 +154,16 @@ The guides on this page will explain the process of developing on Osmosis.
       Set up a node on the Osmosis mainnet
     </div>
   </a>
-
+  
+  <a href="/developing/network/explorers.html" class="card">
+    <img src="/img/link.svg" class="filter-icon"/>
+    <div class="title">
+    Explorers
+    </div>
+    <div class="text">
+     Block and contract explorers
+    </div>
+  </a>
  </div>
 
 
