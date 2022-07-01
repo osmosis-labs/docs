@@ -23,8 +23,8 @@
 
 ## IBC Channels for Osmosis
 
-| source chain-id  | source channel  | destination | destination chain-id  | destinaion channel |
-| ---------------- | --------------- | ----------- | --------------------- | ------------------ |
+| source chain-id  | source channel  | destination | destination chain-id  | destination channel |
+| ---------------- | --------------- | ----------- | --------------------- | ------------------- |
 | osmosis-1 | channel-0 | cosmos | cosmoshub-4 | channel-141 |
 | osmosis-1 | channel-72 | terra | columbus-5 | channel-1 |
 | osmosis-1 | channel-5 | crypto.org | crypto-org-chain-mainnet-1 | channel-10 |
