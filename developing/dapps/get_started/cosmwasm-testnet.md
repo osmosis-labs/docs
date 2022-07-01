@@ -19,6 +19,10 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Upload the code
     - Execute the contract
 
+::: tip
+Please note this a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](cosmwasm-testnet-beaker.md) with a couple of commands. 
+:::
+
 
 ## Initial Setup
 
@@ -88,7 +92,13 @@ divert cliff issue spirit penalty chief improve neck enjoy pipe sing loop inheri
 
 You need some tokens named `OSMO`(`uosmo`) in your address to interact with the network.
 
-You must participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
+### faucet
+
+#### Official Faucet
+You can request tokens from the official faucet at https://faucet.osmosis.zone 
+
+#### Discord Faucet
+Youcan also participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
 
 ```bash
 $request <address>
