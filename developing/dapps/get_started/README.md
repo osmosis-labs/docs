@@ -3,19 +3,27 @@ title: Contracts & dApps on Osmosis
 ---
 # Building dApps on Osmosis
 
-::: tip
-Please note that CosmWasm developer tools are coming!  In the meantime we are publishing guides on how to interact with the CLI and Javascript libraries which is  very important to understand core principals of CosmWasm development in Osmosis.
-:::
 
 ## Getting Started
 <div class="cards twoColumn" >
+
   <a href="cosmwasm-localosmosis.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     Cosmwasm with LocalOsmosis
+     Cosmwasm with LocalOsmosis & osmosisd
     </div>
     <div class="text">
       Compile, upload and interact with a contract in the Osmosis blockchain.
+    </div>
+  </a>
+
+  <a href="cosmwasm-testnet.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Testnet with osmosisd
+    </div>
+    <div class="text">
+      Deploying contracts to testnet via osmosisd binary
     </div>
   </a>
   
@@ -29,17 +37,37 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
       </div>
   </a>
 
-
-
-  <a href="cosmwasm-testnet.html" class="card">
+  <a href="cosmwasm-testnet-beaker.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     CosmWasm with Testnet
+    Deploy Cosmwasm Contracts to Testnet with Beaker
     </div>
     <div class="text">
-      Deploying contracts to testnet
+      Deploying contracts to testnet with Beaker
     </div>
   </a>
+
+  <a href="cosmwasm-verify-contract.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Verifying Smart Contracts
+    </div>
+    <div class="text">
+      Download contract and verify the hash.
+    </div>
+  </a>
+
+
+  <!-- <a href="cosmwasm-mainnet.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Mainnet with Beaker
+    </div>
+    <div class="text">
+      Deploying contracts to mainnet with Beaker
+    </div>
+  </a> -->
+  
   
   <a href="https://github.com/osmosis-labs/contract-list" class="card" target="_blank">
     <img src="/img/contract.svg" class="filter-icon" />
@@ -95,15 +123,15 @@ Please note that CosmWasm developer tools are coming!  In the meantime we are pu
 ## Tools
  <div class="cards twoColumn" >
 
-  <a href="https://github.com/osmosis-labs/beaker" class="card">
-    <img src="/img/ide.svg" class="filter-icon"/>
+  <a href="/developing/tools/beaker/index.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     Beaker
+    Beaker
     </div>
     <div class="text">
-     Osmosis development environment. Coming soon.
+      Easy to scaffold a new cosmwasm app.
     </div>
-  </a> 
+  </a>
   
   <a href="/developing/tools/localosmosis" class="card">
     <img src="/img/localosmosis.svg" class="filter-icon"/>
