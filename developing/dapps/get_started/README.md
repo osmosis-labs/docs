@@ -10,10 +10,20 @@ title: Contracts & dApps on Osmosis
   <a href="cosmwasm-localosmosis.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
-     Cosmwasm with LocalOsmosis
+     Cosmwasm with LocalOsmosis & osmosisd
     </div>
     <div class="text">
       Compile, upload and interact with a contract in the Osmosis blockchain.
+    </div>
+  </a>
+
+  <a href="cosmwasm-testnet.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Testnet with osmosisd
+    </div>
+    <div class="text">
+      Deploying contracts to testnet via osmosisd binary
     </div>
   </a>
   
