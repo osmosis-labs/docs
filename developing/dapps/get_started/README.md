@@ -207,5 +207,15 @@ title: Contracts & dApps on Osmosis
       Official and third party API endpoints.
     </div>
   </a>
+  
+  <a href="/developing/network/explorers.html" class="card">
+    <img src="/img/link.svg" class="filter-icon"/>
+    <div class="title">
+    Explorers
+    </div>
+    <div class="text">
+     Block and contract explorers
+    </div>
+  </a>
 
  </div>
