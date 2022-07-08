@@ -44,3 +44,117 @@ beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-op
 
 Note how we added `--network testnet` to tell beaker to deploy to the testnet Osmosis chain. 
 
+### Deploy with an admin
+In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/main/packages/cli/src/framework/config.rs) file. 
+
+::: warning
+Please note that account test1 is publicaly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker will support local keyring in about 1-2 weeks. 
+:::
+
+```
+beaker wasm deploy counter --signer-account test1 --admin osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m --network testnet --no-wasm-opt --raw '{ "count": 0 }' --label 'My first Beaker Contract' 
+```
+![deploy-counter-admin](../../../assets/beaker-admin.png)  
+
+
+### Deploy contract via governance
+We can also deploy the contract via governance on the testnet before going to mainnet. There are a couple of steps as described in the manual process via CLI[here](https://docs.osmosis.zone/developing/dapps/get_started/submit_wasm_proposal.html), more details also available on the [official CosmWasm Docs](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md). 
+
+
+### Build contract
+This is required to create the compiled.wasm file that will be uploaded to the block chain.
+
+```
+beaker wasm build
+```
+
+
+### Submit proposal
+
+The proposal can be submitted with all the meta data in a yml file or toml file. Example file:
+
+```
+touch prop.yml
+nano prop.yml
+```
+Paste the following template
+
+```yml
+title: Proposal to allow DappName to be enabled in Osmosis
+description: |
+            A lengthy proposal description
+            goes here  
+            we expect this to be many lines...
+deposit: 500000000uosmo
+code:
+    repo:   https://github.com/osmosis-labs/beaker/
+    rust_flags: -C link-arg=-s
+    roptimizer: workspace-optimizer:0.12.6
+```
+
+```sh
+beaker wasm proposal store-code --proposal prop.yml --signer-account test1 --network testnet counter --gas 25000000uosmo --gas-limit 25000000
+```
+![store-proposal](../../../assets/store-prop.png)  
+
+
+### Query proposal
+
+There are four ways to query the proposal results
+
+1. Beaker command
+```
+beaker wasm proposal query store-code --network testnet counter
+```
+
+2. Osmosisd 
+```
+osmosisd query gov tally 196
+```
+
+2. Mintstan testnet explorer
+```
+https://testnet.mintscan.io/osmosis-testnet/proposals/196
+```
+
+3. LCD Proposal endpoint
+
+```
+https://lcd-test.osmosis.zone/cosmos/gov/v1beta1/proposals/196
+```
+
+Note how the min_deposit was `500000000uosmo` that's why our prop.yml had `500000000uosmo`. If the deposit requirement is not met, then additional funds need to be send to the proposal. 
+
+#### Proposal period 
+On the testnet the voting period is very short to allow developers to move quickly with their testing, as you can see in this case it's `3 minutes`. This means you must vote within the next 3 minutes for your proposal to pass. In mainet the voting period is usually several days. If you take longer than 3 minutes, then you will get an error letting you know that the voting period has passed. 
+
+```
+    ├── voting_start_time: 2022-07-06T18:45:06Z
+    └── voting_end_time: 2022-07-06T18:48:06Z
+```
+
+![store-proposal](../../../assets/proposal-query.png)  
+
+
+## Voting on proposal on testnet
+
+Run the following command to vote from beaker
+
+```
+beaker wasm proposal vote --option yes counter --signer-account test1 --network testnet
+```
+
+Even though the testnet is configured as permisionless, it's important to undertanding the voting process. We need validators to vote  for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
+
+Please visit: 
+
+[https://faucet.osmosis.zone/#/contracts](https://faucet.osmosis.zone/#/contracts)
+
+![store-proposal](../../../assets/faucet-vote.png) 
+
+Great! Your proposal should have passed now!
+
+
+....WIP 
+(need to simplify this)
+
