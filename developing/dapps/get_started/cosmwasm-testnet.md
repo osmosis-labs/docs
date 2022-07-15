@@ -155,6 +155,14 @@ Please visit:
 Great! Your proposal should have passed now!
 
 
-....WIP 
-(need to simplify this)
+### Signers
 
+In the examples above we used the test1 account to sign transactions. However, Bekaer supports 3 options for signing transactions as shown on the official [README](https://github.com/osmosis-labs/beaker#Signers).
+
+- `--signer-account` input of this option refer to the accounts defined in the [config file](./docs/config/global.md), which is not encrypted, so it should be used only for testing
+- `--signer-mnemonic` input of this option is the raw mnemonic string to construct a signer
+- `--signer-private-key` input of this option is the same as `--signer-mnemonic` except it expects base64 encoded private key
+- `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](./docs/commands/beaker_key.md).
+
+
+This document is constantly being updated and improved, please let us know on Github if you have any questions!
