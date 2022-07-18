@@ -21,7 +21,7 @@ jobs:
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/pool-incentives/spec/README.md > developing/osmosis-core/modules/spec-pool-incentives.md
 
       - name: Download mint docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/mint/spec/README.md > developing/osmosis-core/modules/spec-mint.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/mint/README.md > developing/osmosis-core/modules/spec-mint.md
 
       - name: Download lockup docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/lockup/spec/README.md > developing/osmosis-core/modules/spec-lockup.md
