@@ -24,7 +24,7 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 ![](../../assets/installer.png)
 
-If you are running on an Apple M1 Chip:
+If you are running on an Apple M1 Chip and are running into issues with osmosisd not being a recognized command: 
 
 ```
 git clone https://github.com/osmosis-labs/osmosis.git
