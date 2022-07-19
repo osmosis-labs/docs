@@ -36,20 +36,20 @@ Bonded Liquidity Gauges are mechanisms for distributing liquidity incentives to 
 #### Category Model
 
 This model groups pools into a number of categories with fixed incentive shares, so that we can prioritize certain classes of liquidity directly.
+The model is maintained in the [OsmoIncentives](https://github.com/OsmosisIncentivesCommittee/OsmoIncentives) repo and produces a new proposal to adjust incentive allocations weekly. These are also viewable as csv outputs which are auto imported into [Current Proposal](https://docs.google.com/spreadsheets/d/1ydQfgEDot0AC9xuT2txc39VBfuum_I1gU_1-GrmrWx4/edit?usp=sharing) and [Prospective Proposal](https://docs.google.com/spreadsheets/d/1oEn8JtrIU1mze_3Fw4DbbxWBq6yPUM-yAoaOPxG6Y1k/edit?usp=sharing) spreadsheets.
 
 #### Target Share
 The share of incentives allocated to each category is then split according to the proportion of swap fees collected by each pool within the category. These values are limited by the `swap fee cap` (currently 3), such that pools will not benefit by having more than 3x the average fee APR of the category.
 
 We then recalculate shares using (capped) fees + external incentives collected by the pool. To limit the incentive increase caused by a match relative to the base incentives, we take the minimum of this `adjusted reveneue` share, and `(1 + matched_multiple_cap) * capped_fee_share`. We set `matched_multiple_cap` at 1, so that matches can be no more than the base incentives of a pool.
 
-### Minimum Share
+#### Minimum Share
 Pools can also have a minimum share set by governance, to incentivize liquidity ahead of observed trading volume. Minimum shares have currently been set for the OSMO/ATOM, OSMO/WETH, OSMO/WBTC, OSMO/CRO and OSMO/USDC pools.  These parameters are set and changed by governance and should be used to prioritizes the growth of strategic liquidity.
 
-### Maximum Share
+#### Maximum Share
 Pools can also have a maximum share set by governance, to prevent too many incentives being allocated to any one pool and ensuring a diverse range of liquidity for trading.  Currently the OSMO/ATOM pool is the only pool with a maximum set.
 
 #### Major
-
 Qualification for `Major` status is determined by governance based on a combination of factors, namely:
 - Is the token market cap large relative to `Osmo`
 - Does the majority of the trade volume happen outside of Osmosis
