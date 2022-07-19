@@ -11,7 +11,7 @@ You can check if you have enough storage to run osmosisd [here](https://quicksyn
 
 ## Commands
 
-Go to [commands](commands) page to learn more.
+Go to [commands](https://docs.osmosis.zone/developing/tools/osmosisd.html#commands-2) to learn more.
 
 
 ## Quick Start
@@ -24,6 +24,13 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 ![](../../assets/installer.png)
 
+If you are running on an Apple M1 Chip:
+
+```
+git clone https://github.com/osmosis-labs/osmosis.git
+make build
+sudo cp build/osmosisd /usr/local/bin
+```
 
 ## Manual Installation
 ### Update System
