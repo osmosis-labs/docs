@@ -1,7 +1,7 @@
 # Liquidity Mining Incentives
 
 There are many ways pools on Osmosis can reward liquidity mining incentives. One way is through (internal) Osmosis Liquidity Mining; Osmosis allocates 45% of its inflation to incentivize users to bond their liquidity on Osmosis. In addition, Osmosis allows for the permissionless creation of (external) liquidity mining gauges, allowing projects to add thier own rewards to further incentivize users to provide liquidity into a pool.
-To learn more about the Liquidity Mining modules, see: [Osmosis Docs: Develop > Modules > Incentives](https://docs.osmosis.zone/developing/modules/spec-incentives.html)
+To learn more about the Liquidity Mining modules, see: [Osmosis Docs: Develop > Chain Development > Modules > Incentives](https://docs.osmosis.zone/developing/osmosis-core/modules/spec-incentives.html)
 
 ## External Incentives
 
@@ -9,7 +9,7 @@ External Incentives are an effective way to incentivize users to provide liquidi
 
 It is possible to add incentives to any combination of 1-day, 7-day, and 14-day gauges. Incentives allocated to the 1-day gauge will be split among all three gauges. Incentives allocated to the 7-day gauge will be split among only the 7-day and 14-day gauges, but not to the 1-day gauge. Incentives allocated to the 14-day gauge will only be distributed to the 14-day gauge.
 
-Currently, the only way to create an external incentive gauge is to run the [create-gauge command](https://docs.osmosis.zone/developing/modules/spec-incentives.html#create-gauge) using CLI.
+Currently, the only way to create an external incentive gauge is to run the [create-gauge command](https://docs.osmosis.zone/developing/osmosis-core/modules/spec-incentives.html#create-gauge) using CLI.
 
 Once external incentives have been added, note the gauge Id numbers and follow the procedure to [Add External Incentive Gauges onto the Osmosis Zone Pools page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-external-incentive-gauges-onto-the-osmosis-pools-page) to request to show the gauges on the [Osmosis Zone Pools page](https://app.osmosis.zone/pools).
 
@@ -20,11 +20,9 @@ To incentivize projects to add external incentives, Osmosis governance voted to 
 
 This has the potential to effectively double the incentive of a project's external incentives, although there are some restrictions to this:
 - There is an OSMO bias that can down-scale the value of the OSMO matching. If the pool is an OSMO pool, (e.g., FOO/OSMO,) then the value of the matching is 100%. But, if the pool is a non-OSMO pool, (e.g., FOO/ATOM,) then the value of the matching is scaled down to 50% of the value of the external incentives (subject to change if the OSMO bias changes).
-	- See: [Osmosis Proposal #128: Add a bias factor to external incentive matching](https://www.mintscan.io/osmosis/proposals/128)
+	- See: [Osmosis Proposal #264: External Incentive Matching reduction within non-OSMO categories](https://www.mintscan.io/osmosis/proposals/264)
 - There is also a cap on the value of the matching, which is no more than double the value of the standard OSMO incentives that the pool would receive from internal Osmosis Liquidity Mining.
 	- See: [Osmosis Proposal #133: Incentive Matching Fee Based and 1:1 Caps](https://www.mintscan.io/osmosis/proposals/133)
-
-Currently, it is implied that if a pool is to receive External Incentive matching, then it is also to be onboarded to receive internal Osmosis Liquidity Mining incentives.
 
 See [Osmosis Proposal #178: Match External Incentives for SWTH/OSMO](https://www.mintscan.io/osmosis/proposals/178) for an example of a successful proposal to match external incentives to a new pool. As always, don't forget to precede on-chain proposals with a forum post to give an opportunity for the community to provide feedback. See [Commonwealth post: Signalling proposal to match OSMO rewards to upcoming SWTH/OSMO pool](https://commonwealth.im/osmosis/discussion/4025-signalling-proposal-to-match-osmo-rewards-to-upcoming-swthosmo-pool).
 
@@ -45,7 +43,10 @@ The share of incentives allocated to each category is then split according to th
 We then recalculate shares using (capped) fees + external incentives collected by the pool. To limit the incentive increase caused by a match relative to the base incentives, we take the minimum of this `adjusted reveneue` share, and `(1 + matched_multiple_cap) * capped_fee_share`. We set `matched_multiple_cap` at 1, so that matches can be no more than the base incentives of a pool.
 
 ### Minimum Share
-Pools can also have a minimum share set by governance, to incentivize liquidity ahead of observed trading volume. We set minimums of 25% of incentives on pools 1 and 560 as demonstration and to guarantee a large amount of incentives for osmo/atom and osmo/ust liquidity. These parameters would be set and changed by governance and should be used to prioritizes the growth of strategic liquidity.
+Pools can also have a minimum share set by governance, to incentivize liquidity ahead of observed trading volume. Minimum shares have currently been set for the OSMO/ATOM, OSMO/WETH, OSMO/WBTC, OSMO/CRO and OSMO/USDC pools.  These parameters are set and changed by governance and should be used to prioritizes the growth of strategic liquidity.
+
+### Maximum Share
+Pools can also have a maximum share set by governance, to prevent too many incentives being allocated to any one pool and ensuring a diverse range of liquidity for trading.  Currently the OSMO/ATOM pool is the only pool with a maximum set.
 
 #### Major
 
@@ -54,15 +55,16 @@ Qualification for `Major` status is determined by governance based on a combinat
 - Does the majority of the trade volume happen outside of Osmosis
 - Do we have a strategic interest in attracting more liquidity of this token
 
-Currently this means that there are 3 Major tokens: `Atom`, `Luna` and `Cro`
+Currently this means that there are 4 Major tokens: `Atom`, `WETH`, `WBTC` and `Cro`
 
 #### Categories
-- Osmo/Major - 40%
+These determine the ratio of incentives that are allocated to each category
+- Osmo/Major - 45%
 - Osmo/Stable - 30%
-- Osmo/Minor - 20%
-- Stable/Major - 5%
-- Stable/Stable - 0.01%
-- Others - 4.99% - Liquidity for Minor tokens paired with non-Osmo
+- Osmo/Minor - 14%
+- Stable/Major - 0%
+- Stable/Stable - 0%
+- Others - 2% - Liquidity for Minor tokens paired with non-Osmo
 
 #### Scale Limited Adjustments
 To prevent excessive volatility in the incentives APRs, these incentive targets are adjusted towards over multiple weeks, with each adjustment being limited to no more than +25% or -25%. This is somewhat disrupted as a result of normalization though, so when there are large changes in other pools, some pools might see changes in the range of +/- 30%.
@@ -75,7 +77,7 @@ The above calculation determines what share of incentives go to each pool, but t
 
 ### Pool Onboarding
 Although pools must be voted in to be onboarded to recieve Osmosis Liquidity Mining Incentives, there are ways to increase the chances of a pool being accepted.
-- Propose an OSMO pool. OSMO pools have the highest chances of being onboarded. The community regularly expresses concern over incentivizing non-OSMO pools, so propsing only an OSMO pool has a better chance of being accepted. It is still somewhat common to onboard an ATOM or UST pool, as those or common base assets on Osmosis, but pools with uncommon base assets (e.g., JUNO) probably have a low chance of being onboarded.
+- Propose an OSMO pool. OSMO pools have the highest chances of being onboarded. The community regularly expresses concern over incentivizing non-OSMO pools, so proposing only an OSMO pool has a better chance of being accepted. It is still somewhat common to onboard an ATOM or USDC pool, as those are common base assets on Osmosis, but pools with uncommon base assets (e.g., JUNO) probably have a low chance of being onboarded.
 - Add External incentives. Pools that already have a significant amount of external incentives means that incentives will stack, and also shows that the project is serious about the pool.
 - Propose well designed pools. Pools with high swap fees, high exit fees, or with extremely asymmetrical weighting can discourage trading or providing liquidity. It is probably best to stick to a standard pool design (i.e., 50/50 weighting, 0% exit fee, and <= 0.3% swap fee)
 - Create a commonwealth post about the proposal before creating an on-chain proposal to give the community an opportunity to provide feedback and seek clarity. 
