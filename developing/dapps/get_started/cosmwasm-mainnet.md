@@ -1,4 +1,4 @@
-# Cosmwasm with Mainnet
+# Deploy Cosmwasm Contracts to Mainnet
 
 The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it.
 
@@ -61,6 +61,7 @@ First, define the chain you want to deploy on and the contract you want to propo
 ```
 CHAIN_ID=mainnet
 CONTRACT=replace_with_contract_name
+PROPOSAL=proposal_id_here
 ```
 
 Then, once you're satisfied with the state of your contracts (as per best practices recommendations), submit the proposal.
