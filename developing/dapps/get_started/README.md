@@ -58,7 +58,7 @@ title: Contracts & dApps on Osmosis
   </a>
 
 
-  <!-- <a href="cosmwasm-mainnet.html" class="card">
+ <a href="cosmwasm-mainnet.html" class="card">
     <img src="/img/cosmwasm.svg" class="filter-icon" />
     <div class="title">
     Deploy Cosmwasm Contracts to Mainnet with Beaker
@@ -66,7 +66,7 @@ title: Contracts & dApps on Osmosis
     <div class="text">
       Deploying contracts to mainnet with Beaker
     </div>
-  </a> -->
+  </a>
   
   
   <a href="https://github.com/osmosis-labs/contract-list" class="card" target="_blank">
