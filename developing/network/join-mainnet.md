@@ -2,9 +2,9 @@
 
 ## Install Osmosis Binary
 
-Make sure you have [installed the Osmosis Binary (CLI)](../tools/osmosisd#manual-installation) prior to following the below instructions.
+Make sure you have [installed the Osmosis Binary (CLI)](https://docs.osmosis.zone/developing/tools/osmosisd.html#minimum-requirements) prior to following the below instructions.
 
-You may also [use the Osmosis installer](../tools/osmosisd#quick-start) if you want everything to be done automatically.
+You may also [use the Osmosis installer](https://docs.osmosis.zone/developing/tools/osmosisd.html#quick-start) if you want everything to be done automatically.
 
 ## Initialize Osmosis Node
 
