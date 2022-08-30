@@ -15,28 +15,28 @@ jobs:
         run: curl https://raw.githubusercontent.com/osmosis-labs/awesome/main/README.md > awesome/README.md
 
       - name: Download superfluid docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/spec/README.md > developing/osmosis-core/modules/spec-superfluid.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/README.md > developing/osmosis-core/modules/spec-superfluid.md
 
       - name: Download pool incentives docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/pool-incentives/spec/README.md > developing/osmosis-core/modules/spec-pool-incentives.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/pool-incentives/README.md > developing/osmosis-core/modules/spec-pool-incentives.md
 
       - name: Download mint docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/mint/README.md > developing/osmosis-core/modules/spec-mint.md
 
       - name: Download lockup docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/lockup/spec/README.md > developing/osmosis-core/modules/spec-lockup.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/lockup/README.md > developing/osmosis-core/modules/spec-lockup.md
 
       - name: Download gamm docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/gamm/spec/README.md > developing/osmosis-core/modules/spec-gamm.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/gamm/README.md > developing/osmosis-core/modules/spec-gamm.md
 
       - name: Download epochs docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/epochs/spec/README.md > developing/osmosis-core/modules/spec-epochs.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/epochs/README.md > developing/osmosis-core/modules/spec-epochs.md
 
       - name: Download txfees docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/txfees/spec/README.md > developing/osmosis-core/modules/spec-txfees.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/txfees/README.md > developing/osmosis-core/modules/spec-txfees.md
 
       - name: Download incentives docs
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/incentives/spec/README.md > developing/osmosis-core/modules/spec-incentives.md
+        run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/incentives/README.md > developing/osmosis-core/modules/spec-incentives.md
 
       - name: Download localOsmosis docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > developing/tools/localosmosis.md
