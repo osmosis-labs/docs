@@ -55,9 +55,9 @@ jobs:
         run: curl https://raw.githubusercontent.com/osmosis-labs/osmosis-frontend/master/README.md > docs/developing/web-dev-guide.md
         
       - name: Clean up front-end title
-        run:  sed -i 's/Osmosis Frontend 👩‍🔬⚗️🧪/Osmosis Web Interface/g' developing/web-dev-guide.md
+        run:  sed -i 's/Osmosis Frontend 👩‍🔬⚗️🧪/Osmosis Web Interface/g' docs/developing/web-dev-guide.md
       - name: Removing all emojis from titles
-        run:  sed -i 's/🤠\|🚀\|👩‍🔬\|⚗️\|🧪\|👨‍💻\|💻/ /g' developing/web-dev-guide.md
+        run:  sed -i 's/🤠\|🚀\|👩‍🔬\|⚗️\|🧪\|👨‍💻\|💻/ /g' docs/developing/web-dev-guide.md
 # Copy Infra docs
       - name: Download infra docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/infrastructure/main/digitalocean/single-rpc/README.md > docs/infra/do/loadbalanced-rpc.md
