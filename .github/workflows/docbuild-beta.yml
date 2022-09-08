@@ -41,7 +41,7 @@ jobs:
       - name: Download localOsmosis docs
         run: curl https://raw.githubusercontent.com/osmosis-labs/LocalOsmosis/main/README.md > docs/developing/tools/localosmosis.md
 
-      - name: Download OsmoJS docs
+#      - name: Download OsmoJS docs
 
 #        run: curl https://raw.githubusercontent.com/osmosis-labs/osmojs/main/README.md > docs/developing/tools/osmojs.md
 #Beaker docs
