@@ -82,7 +82,7 @@ You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOs
 
 
 ::: tip  
-To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page]([developing/tools/localosmosis.html#accounts](https://github.com/osmosis-labs/localosmosis#accounts)). 
+To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page](https://github.com/osmosis-labs/localosmosis#accounts). 
 :::
 
 ## Deploy a smart contract

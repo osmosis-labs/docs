@@ -63,16 +63,9 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
-          },
           {to: '/docs/overview', label: 'Overview', position: 'left'},
-          {to: '/docs/developing', label: 'Develop', position: 'left'},
-        
-          {to: '/docs/integrate', label: 'Integrate', position: 'left'},
+          {to: '/docs/category/developers/', label: 'Develop', position: 'left'},
+          {to: '/docs/category/infrastructure/', label: 'Infrastructure', position: 'left'},
           
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -89,8 +82,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/',
+                label: 'Developers',
+                to: '/docs/category/developers/',
               },
             ],
           },

@@ -4,94 +4,30 @@ title: Modules
 
 # Modules
 
-<div class="cards twoColumn">
-  <a href="spec-epochs.html" class="card">
-    <img src="/img/time.svg" class="filter-icon" />
-    <div class="title">
-      Epochs
-    </div>
-    <div class="text">
+
+      - Epochs
       Allows other modules to be signaled once every period to run their desired function
-    </div>
-  </a>
 
-
-  <a href="spec-gamm.html" class="card">
-    <img src="/img/handshake.svg" class="filter-icon" />
-    <div class="title">
-      GAMM
-    </div>
-    <div class="text">
+      - GAMM
       Provides the logic to create and interact with liquidity pools on Osmosis
-    </div>
-  </a>
-
-
-  <a href="spec-incentives.html" class="card">
-    <img src="/img/incentives.svg" class="filter-icon" />
-    <div class="title">
-      Incentives
-    </div>
-    <div class="text">
+      
+      - Incentives
       Creates gauges to provide incentives to users who lock specified tokens for a certain period of time
-    </div>
-  </a>
 
-
-  <a href="spec-lockup.html" class="card">
-    <img src="/img/lock-bold.svg" class="filter-icon" />
-    <div class="title">
-      Lockup
-    </div>
-    <div class="text">
+      - Lockup
       Bonds LP shares for user-defined locking periods to earn rewards
-    </div>
-  </a>
 
-
-  <a href="spec-mint.html" class="card">
-    <img src="/img/mint.svg" class="filter-icon" />
-    <div class="title">
-      Mint
-    </div>
-    <div class="text">
+      - Mint
       Creates tokens to reward validators, incentivize liquidity, provide funds for governance, and pay developers
-    </div>
-  </a>
 
-
-  <a href="spec-pool-incentives.html" class="card">
-    <img src="/img/pool.svg" class="filter-icon" />
-    <div class="title">
-      Pool-Incentives
-    </div>
-    <div class="text">
+      - Pool-Incentives
       Creates individual gauges for every lock duration that exists in a pool
-    </div>
-  </a>
 
-
-  <a href="spec-gov.html" class="card">
-    <img src="/img/gov.svg" class="filter-icon" />
-    <div class="title">
-      Gov
-    </div>
-    <div class="text">
+      - Gov
       On-chain governance which allows token holders to participate in a community led decision-making process
-    </div>
-  </a>
 
-  <a href="spec-superfluid.html" class="card">
-    <img src="/img/superfluid.svg" class="filter-icon" />
-    <div class="title">
-      Superfluid Staking
-    </div>
-    <div class="text">
+     - Superfluid Staking
       Stakes user-bonded LP shares to earn rewards and provides an additional layer of consensus security
-    </div>
-  </a>
-
- </div>
  
 
 

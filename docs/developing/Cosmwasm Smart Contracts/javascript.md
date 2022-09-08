@@ -164,7 +164,7 @@ The output should look like this:
 The contract we are interacting with has a few simple functions. 'get_count', 'increment' and 'reset'. These two functions can be called via by using the `queryContractSmart` method. 
 
 ::: tip
-Please note there is a complete guide on how to upload the example contract on localOsmosis [here](cosmwasm-localosmosis.html).
+Please note there is a complete guide on how to upload the example contract on localOsmosis [here](cosmwasm-localosmosis).
 :::
 
 ```javascript

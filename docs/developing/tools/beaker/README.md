@@ -40,14 +40,14 @@
 
 ### Reference
 
-- [Command](./docs/commands)
-- [Config](./docs/config)
+- [Command](https://github.com/osmosis-labs/beaker/tree/main/docs/commands)
+- [Config](https://github.com/osmosis-labs/beaker/tree/main/docs/config)
 
 ---
 
 ## Getting Started
 
-This section is intended to give you an introduction to `Beaker`, for more detailed reference, you can find them [here](./docs/commands/README.md).
+This section is intended to give you an introduction to `Beaker`, for more detailed reference, you can find them [here](https://github.com/osmosis-labs/beaker/tree/main/docs/commands/README.md).
 
 
 
@@ -116,7 +116,7 @@ All the crates (rust packages) in contracts directory are included, with unified
 
 #### `Beaker.toml`
 
-This is our configuration file, you can find more information about it [here](./docs/config/README.md).
+This is our configuration file, you can find more information about it [here](https://github.com/osmosis-labs/beaker/tree/main/docs/config/README.md).
 
 #### `.beaker`
 
@@ -207,7 +207,7 @@ echo '{ "count": 0 }' > contracts/counter/instantiate-msgs/default.json
 beaker wasm deploy counter --signer-account test1 --no-wasm-opt
 ```
 
-You can find references for [`beaker wasm` subcommand here](./docs/commands/beaker_wasm.md).
+You can find references for [`beaker wasm` subcommand here](https://github.com/osmosis-labs/beaker/tree/main/docs/commands/beaker_wasm.md).
 
 ### Contract Upgrade
 
@@ -288,7 +288,7 @@ echo '{}' > contracts/counter/migrate-msgs/default.json
 beaker wasm upgrade counter --signer-account test1 --no-wasm-opt
 ```
 
-You can find more information about their options [here](./docs/commands/beaker_wasm.md).
+You can find more information about their options [here](https://github.com/osmosis-labs/beaker/tree/main/docs/commands/beaker_wasm.md).
 
 ### Execute Contract Messages
 
@@ -308,10 +308,10 @@ beaker wasm query counter --raw '{"get_count": {}}'
 
 Whenever you run command that requires signing transactions, there are 3 options you can reference your private keys:
 
-- `--signer-account` input of this option refer to the accounts defined in the [config file](./docs/config/global.md), which is not encrypted, so it should be used only for testing
+- `--signer-account` input of this option refer to the accounts defined in the [config file](https://github.com/osmosis-labs/beaker/tree/main/docs/config/global.md), which is not encrypted, so it should be used only for testing
 - `--signer-mnemonic` input of this option is the raw mnemonic string to construct a signer
 - `--signer-private-key` input of this option is the same as `--signer-mnemonic` except it expects base64 encoded private key
-- `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](./docs/commands/beaker_key.md).
+- `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](https://github.com/osmosis-labs/beaker/tree/main/docs/commands/beaker_key.md).
 
 ### Console
 
@@ -342,8 +342,8 @@ await contract.counter.query({ get_count: {} });
 
 You can find avaialable methods for the aforementioned instances here:
 
-- [Account](./ts/beaker-console/docs/classes//Account.md#methods-1)
-- [Contract](./ts/beaker-console/docs/classes//Contract.md#methods-1)
+- [Account](https://github.com/osmosis-labs/beaker/tree/main/ts/beaker-console/docs/classes//Account.md#methods-1)
+- [Contract](https://github.com/osmosis-labs/beaker/tree/main/docs/commands/ts/beaker-console/docs/classes//Contract.md#methods-1)
 
 You can remove `contract` and/or `account` namespace by changing config.
 
