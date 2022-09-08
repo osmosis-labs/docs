@@ -1,34 +1,27 @@
 ---
-title: Modules
+title: Introduction
 ---
 
 # Modules
 
-
-      - Epochs
-      Allows other modules to be signaled once every period to run their desired function
-
-      - GAMM
-      Provides the logic to create and interact with liquidity pools on Osmosis
-      
-      - Incentives
-      Creates gauges to provide incentives to users who lock specified tokens for a certain period of time
-
-      - Lockup
-      Bonds LP shares for user-defined locking periods to earn rewards
-
-      - Mint
-      Creates tokens to reward validators, incentivize liquidity, provide funds for governance, and pay developers
-
-      - Pool-Incentives
-      Creates individual gauges for every lock duration that exists in a pool
-
-      - Gov
-      On-chain governance which allows token holders to participate in a community led decision-making process
-
-     - Superfluid Staking
-      Stakes user-bonded LP shares to earn rewards and provides an additional layer of consensus security
- 
+* [Epochs](spec-epochs.md)
+  * Allows other modules to be signaled once every period to run their desired function
+* [GAMM](spec-gamm.md)
+  * Provides the logic to create and interact with liquidity pools on Osmosis
+* [Incentives](spec-incentives.md)
+  * Creates gauges to provide incentives to users who lock specified tokens for a certain period of time
+* [Lockup](spec-lockup.md)
+  * Bonds LP shares for user-defined locking periods to earn rewards
+* [Mint](spec-mint.md)
+  * Creates tokens to reward validators, incentivize liquidity, provide funds for governance, and pay developers
+* [Pool-Incentives](spec-pool-incentives.md)
+  * Creates individual gauges for every lock duration that exists in a pool
+* [Gov](spec-gov.md)
+  * On-chain governance which allows token holders to participate in a community led decision-making process
+* [Superfluid Staking](spec-superfluid.md)
+  * Stakes user-bonded LP shares to earn rewards and provides an additional layer of consensus security
+ * [Twap](spec-twap.md)
+   * The TWAP package is responsible for being able to serve TWAPs for every AMM pool.
 
 
 ## Module Accounts
