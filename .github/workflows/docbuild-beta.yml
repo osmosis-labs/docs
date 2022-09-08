@@ -1,4 +1,4 @@
-name: Build and Deploy Docs Stage Branch
+name: Build and Deploy Docs Beta Branch
 on:
   push:
     branches:
@@ -79,7 +79,7 @@ jobs:
           yarn install
           yarn build
 
-      - name: Deploy to Stage Branch 🚀
+      - name: Deploy to Beta Branch 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: beta-build # The branch the action should deploy to.
