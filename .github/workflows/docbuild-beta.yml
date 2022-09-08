@@ -43,7 +43,7 @@ jobs:
 
       - name: Download OsmoJS docs
 
-        run: curl https://raw.githubusercontent.com/osmosis-labs/osmojs/main/README.md > docs/developing/tools/osmojs.md
+#        run: curl https://raw.githubusercontent.com/osmosis-labs/osmojs/main/README.md > docs/developing/tools/osmojs.md
 #Beaker docs
 #      - name: Download Beaker docs
 #        run: curl https://raw.githubusercontent.com/osmosis-labs/beaker/main/README.md > docs/developing/tools/beaker/README.md
