@@ -82,5 +82,5 @@ jobs:
       - name: Deploy to Stage Branch 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          branch: stage-build # The branch the action should deploy to.
+          branch: beta-build # The branch the action should deploy to.
           folder: .vuepress/dist
