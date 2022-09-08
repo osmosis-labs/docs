@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/tools/localosmosis",
+  "id": "developing/tools/localosmosis",
+  "title": "LocalOsmosis",
+  "description": "Please note this is a place holder.",
+  "source": "@site/docs/developing/tools/localosmosis.md",
+  "sourceDirName": "developing/tools",
+  "slug": "/developing/tools/localosmosis",
+  "permalink": "/docs/developing/tools/localosmosis",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/tools/localosmosis.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Beaker",
+    "permalink": "/docs/developing/tools/beaker/"
+  },
+  "next": {
+    "title": "OsmoJS 🔭",
+    "permalink": "/docs/developing/tools/osmojs"
+  }
+}

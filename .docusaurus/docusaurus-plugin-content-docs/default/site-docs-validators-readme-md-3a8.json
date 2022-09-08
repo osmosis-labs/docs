@@ -1,0 +1,26 @@
+{
+  "unversionedId": "validators/README",
+  "id": "validators/README",
+  "title": "Validate Home",
+  "description": "Welcome to the validator documentation for Osmosis. Validators are nodes that participate in the security of a network and are responsible for committing new blocks in the blockchain. To learn more, select one of the options below.",
+  "source": "@site/docs/validators/README.md",
+  "sourceDirName": "validators",
+  "slug": "/validators/",
+  "permalink": "/docs/validators/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/validators/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Validate Home"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Staking",
+    "permalink": "/docs/staking/"
+  },
+  "next": {
+    "title": "Validating On Mainnet",
+    "permalink": "/docs/validators/validating-mainnet"
+  }
+}

@@ -1,0 +1,645 @@
+{
+  "pluginId": "default",
+  "version": "current",
+  "label": "Next",
+  "banner": null,
+  "badge": false,
+  "className": "docs-version-current",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "category",
+        "label": "Developers",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "category",
+            "label": "Chain Development",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "category",
+                "label": "Modules",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "link",
+                    "label": "Modules",
+                    "href": "/docs/developing/osmosis-core/modules/",
+                    "docId": "developing/osmosis-core/modules/README"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Epochs",
+                    "href": "/docs/developing/osmosis-core/modules/spec-epochs",
+                    "docId": "developing/osmosis-core/modules/spec-epochs"
+                  },
+                  {
+                    "type": "link",
+                    "label": "GAMM",
+                    "href": "/docs/developing/osmosis-core/modules/spec-gamm",
+                    "docId": "developing/osmosis-core/modules/spec-gamm"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Gov",
+                    "href": "/docs/developing/osmosis-core/modules/spec-gov",
+                    "docId": "developing/osmosis-core/modules/spec-gov"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Incentives",
+                    "href": "/docs/developing/osmosis-core/modules/spec-incentives",
+                    "docId": "developing/osmosis-core/modules/spec-incentives"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Lockup",
+                    "href": "/docs/developing/osmosis-core/modules/spec-lockup",
+                    "docId": "developing/osmosis-core/modules/spec-lockup"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Mint",
+                    "href": "/docs/developing/osmosis-core/modules/spec-mint",
+                    "docId": "developing/osmosis-core/modules/spec-mint"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Pool-incentives",
+                    "href": "/docs/developing/osmosis-core/modules/spec-pool-incentives",
+                    "docId": "developing/osmosis-core/modules/spec-pool-incentives"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Superfluid Staking",
+                    "href": "/docs/developing/osmosis-core/modules/spec-superfluid",
+                    "docId": "developing/osmosis-core/modules/spec-superfluid"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Tokenfactory",
+                    "href": "/docs/developing/osmosis-core/modules/spec-tokenfactory",
+                    "docId": "developing/osmosis-core/modules/spec-tokenfactory"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Txfees",
+                    "href": "/docs/developing/osmosis-core/modules/spec-twap",
+                    "docId": "developing/osmosis-core/modules/spec-twap"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Txfees",
+                    "href": "/docs/developing/osmosis-core/modules/spec-txfees",
+                    "docId": "developing/osmosis-core/modules/spec-txfees"
+                  }
+                ],
+                "href": "/docs/category/modules"
+              },
+              {
+                "type": "link",
+                "label": "Chain Development",
+                "href": "/docs/developing/osmosis-core/",
+                "docId": "developing/osmosis-core/README"
+              },
+              {
+                "type": "link",
+                "label": "Build and Test",
+                "href": "/docs/developing/osmosis-core/build",
+                "docId": "developing/osmosis-core/build"
+              },
+              {
+                "type": "link",
+                "label": "Contributing",
+                "href": "/docs/developing/osmosis-core/contributing",
+                "docId": "developing/osmosis-core/contributing"
+              },
+              {
+                "type": "link",
+                "label": "Osmosis IDE Setup",
+                "href": "/docs/developing/osmosis-core/ide-guide",
+                "docId": "developing/osmosis-core/ide-guide"
+              },
+              {
+                "type": "link",
+                "label": "osmosisd",
+                "href": "/docs/developing/osmosis-core/osmosisd",
+                "docId": "developing/osmosis-core/osmosisd"
+              },
+              {
+                "type": "link",
+                "label": "Performance & Profiling",
+                "href": "/docs/developing/osmosis-core/performance",
+                "docId": "developing/osmosis-core/performance"
+              }
+            ],
+            "href": "/docs/category/chain-development"
+          },
+          {
+            "type": "category",
+            "label": "CosmWasm Smart Contracts",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "link",
+                "label": "Cosmwasm & Beaker on testnet",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+                "docId": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings"
+              },
+              {
+                "type": "link",
+                "label": "CosmWasm & LocalOsmosis",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+                "docId": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis"
+              },
+              {
+                "type": "link",
+                "label": "CosmWasm with Testnet",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+                "docId": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual"
+              },
+              {
+                "type": "link",
+                "label": "Cosmwasm & Beaker on testnet",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+                "docId": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet"
+              },
+              {
+                "type": "link",
+                "label": "Verifying Smart Contracts",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+                "docId": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract"
+              },
+              {
+                "type": "link",
+                "label": "Javascript & Smart Contracts",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/javascript",
+                "docId": "developing/Cosmwasm Smart Contracts/javascript"
+              },
+              {
+                "type": "link",
+                "label": "Submit a Cosmwasm Governance Proposal",
+                "href": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+                "docId": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal"
+              }
+            ],
+            "href": "/docs/category/cosmwasm-smart-contracts"
+          }
+        ],
+        "href": "/docs/category/developers"
+      },
+      {
+        "type": "link",
+        "label": "Tutorial Intro",
+        "href": "/docs/intro",
+        "docId": "intro"
+      },
+      {
+        "type": "category",
+        "label": "Tutorial - Basics",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Create a Page",
+            "href": "/docs/tutorial-basics/create-a-page",
+            "docId": "tutorial-basics/create-a-page"
+          },
+          {
+            "type": "link",
+            "label": "Create a Document",
+            "href": "/docs/tutorial-basics/create-a-document",
+            "docId": "tutorial-basics/create-a-document"
+          },
+          {
+            "type": "link",
+            "label": "Create a Blog Post",
+            "href": "/docs/tutorial-basics/create-a-blog-post",
+            "docId": "tutorial-basics/create-a-blog-post"
+          },
+          {
+            "type": "link",
+            "label": "Markdown Features",
+            "href": "/docs/tutorial-basics/markdown-features",
+            "docId": "tutorial-basics/markdown-features"
+          },
+          {
+            "type": "link",
+            "label": "Deploy your site",
+            "href": "/docs/tutorial-basics/deploy-your-site",
+            "docId": "tutorial-basics/deploy-your-site"
+          },
+          {
+            "type": "link",
+            "label": "Congratulations!",
+            "href": "/docs/tutorial-basics/congratulations",
+            "docId": "tutorial-basics/congratulations"
+          }
+        ],
+        "href": "/docs/category/tutorial---basics"
+      },
+      {
+        "type": "category",
+        "label": "Tutorial - Extras",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Manage Docs Versions",
+            "href": "/docs/tutorial-extras/manage-docs-versions",
+            "docId": "tutorial-extras/manage-docs-versions"
+          },
+          {
+            "type": "link",
+            "label": "Translate your site",
+            "href": "/docs/tutorial-extras/translate-your-site",
+            "docId": "tutorial-extras/translate-your-site"
+          }
+        ],
+        "href": "/docs/category/tutorial---extras"
+      },
+      {
+        "type": "category",
+        "label": "Introduction",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Quickstart",
+            "href": "/docs/overview/getting-started",
+            "docId": "overview/getting-started"
+          },
+          {
+            "type": "link",
+            "label": "Governance",
+            "href": "/docs/overview/governance",
+            "docId": "overview/governance"
+          },
+          {
+            "type": "link",
+            "label": "OSMO",
+            "href": "/docs/overview/osmo",
+            "docId": "overview/osmo"
+          },
+          {
+            "type": "category",
+            "label": "Getting Started",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "link",
+                "label": "Learn More",
+                "href": "/docs/overview/osmosis-app/learn-more",
+                "docId": "overview/osmosis-app/learn-more"
+              }
+            ],
+            "href": "/docs/overview/osmosis-app/"
+          },
+          {
+            "type": "link",
+            "label": "Glossary",
+            "href": "/docs/overview/terminology",
+            "docId": "overview/terminology"
+          },
+          {
+            "type": "category",
+            "label": "Available Wallets",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "category",
+                "label": "Keplr",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "link",
+                    "label": "Create Keplr Wallet",
+                    "href": "/docs/overview/wallets/keplr/create-keplr-wallet",
+                    "docId": "overview/wallets/keplr/create-keplr-wallet"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Import a Keplr account",
+                    "href": "/docs/overview/wallets/keplr/import-account",
+                    "docId": "overview/wallets/keplr/import-account"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Import a Ledger account",
+                    "href": "/docs/overview/wallets/keplr/import-ledger-account",
+                    "docId": "overview/wallets/keplr/import-ledger-account"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Install Keplr",
+                    "href": "/docs/overview/wallets/keplr/install-keplr",
+                    "docId": "overview/wallets/keplr/install-keplr"
+                  }
+                ],
+                "href": "/docs/overview/wallets/keplr/"
+              }
+            ],
+            "href": "/docs/overview/wallets/"
+          }
+        ],
+        "href": "/docs/overview/"
+      }
+    ]
+  },
+  "docs": {
+    "developing/Cosmwasm Smart Contracts/cosmwasm-bindings": {
+      "id": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+      "title": "Cosmwasm & Beaker on testnet",
+      "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis": {
+      "id": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+      "title": "CosmWasm & LocalOsmosis",
+      "description": "You can now deploy contracts to LocalOsmosis with Beaker. The official tooling to deploy Osmosis Smartcontracts.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/cosmwasm-testnet": {
+      "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+      "title": "Cosmwasm & Beaker on testnet",
+      "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual": {
+      "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+      "title": "CosmWasm with Testnet",
+      "description": "The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (osmo-test-4). It covers:",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract": {
+      "id": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+      "title": "Verifying Smart Contracts",
+      "description": "The following are the steps needed to verify any contract from the chain. In this particular example a brand new contract uploaded to the testnet.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/javascript": {
+      "id": "developing/Cosmwasm Smart Contracts/javascript",
+      "title": "Javascript & Smart Contracts",
+      "description": "This guide describes interacting with Osmosis Smart contracts via JavaScript runtimes such as Node.js and the browser.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/Cosmwasm Smart Contracts/submit_wasm_proposal": {
+      "id": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+      "title": "Submit a Cosmwasm Governance Proposal",
+      "description": "The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/build": {
+      "id": "developing/osmosis-core/build",
+      "title": "Build and Test",
+      "description": "Install Go 1.18",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/contributing": {
+      "id": "developing/osmosis-core/contributing",
+      "title": "Contributing",
+      "description": "The following information provides a set of guidelines for contributing to the Osmo chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/ide-guide": {
+      "id": "developing/osmosis-core/ide-guide",
+      "title": "Osmosis IDE Setup",
+      "description": "Recommended IDE setup for developing on Osmosis in Go.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/README": {
+      "id": "developing/osmosis-core/modules/README",
+      "title": "Modules",
+      "description": "Epochs",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-epochs": {
+      "id": "developing/osmosis-core/modules/spec-epochs",
+      "title": "Epochs",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-gamm": {
+      "id": "developing/osmosis-core/modules/spec-gamm",
+      "title": "GAMM",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-gov": {
+      "id": "developing/osmosis-core/modules/spec-gov",
+      "title": "Gov",
+      "description": "The `gov` module enables on-chain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-incentives": {
+      "id": "developing/osmosis-core/modules/spec-incentives",
+      "title": "Incentives",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-lockup": {
+      "id": "developing/osmosis-core/modules/spec-lockup",
+      "title": "Lockup",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-mint": {
+      "id": "developing/osmosis-core/modules/spec-mint",
+      "title": "Mint",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-pool-incentives": {
+      "id": "developing/osmosis-core/modules/spec-pool-incentives",
+      "title": "Pool-incentives",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-superfluid": {
+      "id": "developing/osmosis-core/modules/spec-superfluid",
+      "title": "Superfluid Staking",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-tokenfactory": {
+      "id": "developing/osmosis-core/modules/spec-tokenfactory",
+      "title": "Tokenfactory",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-twap": {
+      "id": "developing/osmosis-core/modules/spec-twap",
+      "title": "Txfees",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/modules/spec-txfees": {
+      "id": "developing/osmosis-core/modules/spec-txfees",
+      "title": "Txfees",
+      "description": "Please note this is a place holder.",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/osmosisd": {
+      "id": "developing/osmosis-core/osmosisd",
+      "title": "osmosisd",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/performance": {
+      "id": "developing/osmosis-core/performance",
+      "title": "Performance & Profiling",
+      "description": "Profiling with pprof",
+      "sidebar": "tutorialSidebar"
+    },
+    "developing/osmosis-core/README": {
+      "id": "developing/osmosis-core/README",
+      "title": "Chain Development",
+      "description": "The guides on this page will explain the process of developing on Osmosis.",
+      "sidebar": "tutorialSidebar"
+    },
+    "intro": {
+      "id": "intro",
+      "title": "Tutorial Intro",
+      "description": "Let's discover Docusaurus in less than 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/getting-started": {
+      "id": "overview/getting-started",
+      "title": "Quickstart",
+      "description": "(Note: This repository is under active development. Architecture and implementation may change without documentation)",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/governance": {
+      "id": "overview/governance",
+      "title": "Governance",
+      "description": "Voting",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/osmo": {
+      "id": "overview/osmo",
+      "title": "OSMO",
+      "description": "Purpose",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/osmosis-app/learn-more": {
+      "id": "overview/osmosis-app/learn-more",
+      "title": "Learn More",
+      "description": "Liquidity Bootstrapping Pools",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/osmosis-app/README": {
+      "id": "overview/osmosis-app/README",
+      "title": "Getting Started",
+      "description": "Before opening the Osmosis AMM App, make sure to install the Keplr Wallet.",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/README": {
+      "id": "overview/README",
+      "title": "Introduction",
+      "description": "What is Osmosis?",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/terminology": {
+      "id": "overview/terminology",
+      "title": "Glossary",
+      "description": "Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/keplr/create-keplr-wallet": {
+      "id": "overview/wallets/keplr/create-keplr-wallet",
+      "title": "Create Keplr Wallet",
+      "description": "How to create a new Account via Manemonic/Seed Phrase",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/keplr/import-account": {
+      "id": "overview/wallets/keplr/import-account",
+      "title": "Import a Keplr account",
+      "description": "If you are setting up Keplr for the first time:",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/keplr/import-ledger-account": {
+      "id": "overview/wallets/keplr/import-ledger-account",
+      "title": "Import a Ledger account",
+      "description": "If you are setting up Keplr for the first time: In the initial pop-up window, choose Import Existing Account",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/keplr/install-keplr": {
+      "id": "overview/wallets/keplr/install-keplr",
+      "title": "Install Keplr",
+      "description": "Go to https://wallet.keplr.app/ and click  Install for Chrome",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/keplr/README": {
+      "id": "overview/wallets/keplr/README",
+      "title": "Keplr",
+      "description": "Introduction",
+      "sidebar": "tutorialSidebar"
+    },
+    "overview/wallets/README": {
+      "id": "overview/wallets/README",
+      "title": "Available Wallets",
+      "description": "Keplr",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/congratulations": {
+      "id": "tutorial-basics/congratulations",
+      "title": "Congratulations!",
+      "description": "You have just learned the basics of Docusaurus and made some changes to the initial template.",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/create-a-blog-post": {
+      "id": "tutorial-basics/create-a-blog-post",
+      "title": "Create a Blog Post",
+      "description": "Docusaurus creates a page for each blog post, but also a blog index page, a tag system, an RSS feed...",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/create-a-document": {
+      "id": "tutorial-basics/create-a-document",
+      "title": "Create a Document",
+      "description": "Documents are groups of pages connected through:",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/create-a-page": {
+      "id": "tutorial-basics/create-a-page",
+      "title": "Create a Page",
+      "description": "Add Markdown or React files to src/pages to create a standalone page:",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/deploy-your-site": {
+      "id": "tutorial-basics/deploy-your-site",
+      "title": "Deploy your site",
+      "description": "Docusaurus is a static-site-generator (also called Jamstack).",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-basics/markdown-features": {
+      "id": "tutorial-basics/markdown-features",
+      "title": "Markdown Features",
+      "description": "Docusaurus supports Markdown and a few additional features.",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-extras/manage-docs-versions": {
+      "id": "tutorial-extras/manage-docs-versions",
+      "title": "Manage Docs Versions",
+      "description": "Docusaurus can manage multiple versions of your docs.",
+      "sidebar": "tutorialSidebar"
+    },
+    "tutorial-extras/translate-your-site": {
+      "id": "tutorial-extras/translate-your-site",
+      "title": "Translate your site",
+      "description": "Let's translate docs/intro.md to French.",
+      "sidebar": "tutorialSidebar"
+    }
+  }
+}

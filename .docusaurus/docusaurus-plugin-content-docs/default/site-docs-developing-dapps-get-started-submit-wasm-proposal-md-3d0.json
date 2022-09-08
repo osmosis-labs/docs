@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/get_started/submit_wasm_proposal",
+  "id": "developing/dapps/get_started/submit_wasm_proposal",
+  "title": "Submit a Cosmwasm Governance Proposal",
+  "description": "The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.",
+  "source": "@site/docs/developing/dapps/get_started/submit_wasm_proposal.md",
+  "sourceDirName": "developing/dapps/get_started",
+  "slug": "/developing/dapps/get_started/submit_wasm_proposal",
+  "permalink": "/docs/developing/dapps/get_started/submit_wasm_proposal",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/get_started/submit_wasm_proposal.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Quick Guide",
+    "permalink": "/docs/developing/dapps/get_started/quick-guide_draft_after_tooling"
+  },
+  "next": {
+    "title": "get started",
+    "permalink": "/docs/developing/get_started/"
+  }
+}

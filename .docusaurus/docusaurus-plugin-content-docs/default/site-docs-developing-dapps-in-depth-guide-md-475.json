@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/in-depth-guide",
+  "id": "developing/dapps/in-depth-guide",
+  "title": "In Depth Guide",
+  "description": "Place holder",
+  "source": "@site/docs/developing/dapps/in-depth-guide.md",
+  "sourceDirName": "developing/dapps",
+  "slug": "/developing/dapps/in-depth-guide",
+  "permalink": "/docs/developing/dapps/in-depth-guide",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/in-depth-guide.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Verifying Smart Contracts",
+    "permalink": "/docs/developing/dapps/cosmwasm-verify-contract"
+  },
+  "next": {
+    "title": "Javascript & Smart Contracts",
+    "permalink": "/docs/developing/dapps/javascript"
+  }
+}

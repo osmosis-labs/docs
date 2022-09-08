@@ -1,0 +1,16 @@
+{
+  "title": "Smart Contracts",
+  "description": "5 minutes to learn the most important Docusaurus concepts.",
+  "slug": "/category/smart-contracts",
+  "permalink": "/docs/category/smart-contracts",
+  "navigation": {
+    "previous": {
+      "title": "Developers",
+      "permalink": "/docs/category/developers"
+    },
+    "next": {
+      "title": "Cosmwasm & Beaker on testnet",
+      "permalink": "/docs/developing/dapps/cosmwasm-bindings"
+    }
+  }
+}

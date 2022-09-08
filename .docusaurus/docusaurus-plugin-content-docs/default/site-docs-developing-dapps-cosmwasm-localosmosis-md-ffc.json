@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/cosmwasm-localosmosis",
+  "id": "developing/dapps/cosmwasm-localosmosis",
+  "title": "CosmWasm & LocalOsmosis",
+  "description": "You can now deploy contracts to LocalOsmosis with Beaker. The official tooling to deploy Osmosis Smartcontracts.",
+  "source": "@site/docs/developing/dapps/cosmwasm-localosmosis.md",
+  "sourceDirName": "developing/dapps",
+  "slug": "/developing/dapps/cosmwasm-localosmosis",
+  "permalink": "/docs/developing/dapps/cosmwasm-localosmosis",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/cosmwasm-localosmosis.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Cosmwasm & Beaker on testnet",
+    "permalink": "/docs/developing/dapps/cosmwasm-bindings"
+  },
+  "next": {
+    "title": "CosmWasm with Testnet",
+    "permalink": "/docs/developing/dapps/cosmwasm-testnet-manual"
+  }
+}

@@ -1,0 +1,115 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
+# Getting Started
+
+The following are a collection of guides on how to build and deploy CoswmWasm smart contracts on the Osmosis blockchain. Please note that a user can deploy contracts with tools such as Beaker or directly with the Osmosisd binary via CLI. 
+
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+  <a href="cosmwasm-localosmosis.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    CosmWasm on LocalOsmosis
+    </div>
+    <div class="text">
+      Compile, upload and interact with a contract with LocalOsmosis.
+    </div>
+  </a>
+    </div>
+    <div class="col col--6">
+  <a href="cosmwasm-testnet-manual.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Testnet
+    </div>
+    <div class="text">
+      Deploying contracts to testnet via osmosisd binary
+    </div>
+  </a>
+    </div>
+    <div class="col col--6">
+  <a href="submit_wasm_proposal.html" class="card">
+      <img src="/img/cosmwasm.svg" class="filter-icon" />
+      <div class="title">
+      Submit a CosmWasm Governance Proposal
+      </div>
+      <div class="text">
+        Example on how submit a CosmWasm binary proposal.
+      </div>
+  </a>
+    </div>
+    <div class="col col--6">
+  <a href="cosmwasm-testnet.html" class="card"> 
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Deploy Cosmwasm Contracts to Testnet with Beaker
+    </div>
+    <div class="text">
+      Deploying contracts to testnet with Beaker
+    </div>
+  </a>
+    </div>
+    <div class="col col--6">
+  <a href="cosmwasm-verify-contract.html" class="card">
+    <img src="/img/cosmwasm.svg" class="filter-icon" />
+    <div class="title">
+    Verifying Smart Contracts
+    </div>
+    <div class="text">
+      Download contract and verify the hash.
+    </div>
+  </a>
+    </div>
+    <div class="col col--6">
+  <a href="https://github.com/osmosis-labs/contract-list" class="card" target="_blank">
+    <img src="/img/contract.svg" class="filter-icon" />
+    <div class="title">
+    Osmosis Contract List
+    </div>
+    <div class="text">
+    Repository contains a list of all approved code IDs to Osmosis
+    </div>
+  </a>  
+    </div>
+    <div class="col col--6">
+  <a href="https://docs.cosmwasm.com/docs/1.0/getting-started/intro" class="card" target="_blank">
+    <img src="/img/contract.svg" class="filter-icon" />
+    <div class="title">
+     Your first contract
+    </div>
+    <div class="text">
+     Official CosmWasm Documentation
+    </div>
+  </a>  
+    </div>
+  </div>
+</div>
+
+<div class="cards twoColumn" >
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+ </div>

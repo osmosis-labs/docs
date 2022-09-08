@@ -1,0 +1,24 @@
+{
+  "unversionedId": "integrate/marketing",
+  "id": "integrate/marketing",
+  "title": "Marketing",
+  "description": "About",
+  "source": "@site/docs/integrate/marketing.md",
+  "sourceDirName": "integrate",
+  "slug": "/integrate/marketing",
+  "permalink": "/docs/integrate/marketing",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/integrate/marketing.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Liquidity",
+    "permalink": "/docs/integrate/liquidity"
+  },
+  "next": {
+    "title": "Registration",
+    "permalink": "/docs/integrate/registration"
+  }
+}

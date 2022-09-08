@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/cosmwasm-verify-contract",
+  "id": "developing/dapps/cosmwasm-verify-contract",
+  "title": "Verifying Smart Contracts",
+  "description": "The following are the steps needed to verify any contract from the chain. In this particular example a brand new contract uploaded to the testnet.",
+  "source": "@site/docs/developing/dapps/cosmwasm-verify-contract.md",
+  "sourceDirName": "developing/dapps",
+  "slug": "/developing/dapps/cosmwasm-verify-contract",
+  "permalink": "/docs/developing/dapps/cosmwasm-verify-contract",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/cosmwasm-verify-contract.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Cosmwasm & Beaker on testnet",
+    "permalink": "/docs/developing/dapps/cosmwasm-testnet"
+  },
+  "next": {
+    "title": "Javascript & Smart Contracts",
+    "permalink": "/docs/developing/dapps/javascript"
+  }
+}

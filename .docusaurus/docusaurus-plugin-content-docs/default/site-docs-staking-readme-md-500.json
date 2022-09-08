@@ -1,0 +1,24 @@
+{
+  "unversionedId": "staking/README",
+  "id": "staking/README",
+  "title": "Staking",
+  "description": "Staking OSMO",
+  "source": "@site/docs/staking/README.md",
+  "sourceDirName": "staking",
+  "slug": "/staking/",
+  "permalink": "/docs/staking/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/staking/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Install Keplr",
+    "permalink": "/docs/overview/wallets/keplr/install-keplr"
+  },
+  "next": {
+    "title": "Validate Home",
+    "permalink": "/docs/validators/"
+  }
+}

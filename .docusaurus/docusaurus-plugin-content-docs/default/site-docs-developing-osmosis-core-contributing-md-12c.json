@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/osmosis-core/contributing",
+  "id": "developing/osmosis-core/contributing",
+  "title": "Contributing",
+  "description": "The following information provides a set of guidelines for contributing to the Osmo chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.",
+  "source": "@site/docs/developing/osmosis-core/contributing.md",
+  "sourceDirName": "developing/osmosis-core",
+  "slug": "/developing/osmosis-core/contributing",
+  "permalink": "/docs/developing/osmosis-core/contributing",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/contributing.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Build and Test",
+    "permalink": "/docs/developing/osmosis-core/build"
+  },
+  "next": {
+    "title": "Osmosis IDE Setup",
+    "permalink": "/docs/developing/osmosis-core/ide-guide"
+  }
+}

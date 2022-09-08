@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/network/public-endpoints",
+  "id": "developing/network/public-endpoints",
+  "title": "Public endpoints",
+  "description": "Osmosis supports the following  RPC protocols:",
+  "source": "@site/docs/developing/network/public-endpoints.md",
+  "sourceDirName": "developing/network",
+  "slug": "/developing/network/public-endpoints",
+  "permalink": "/docs/developing/network/public-endpoints",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/network/public-endpoints.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Joining Testnet",
+    "permalink": "/docs/developing/network/join-testnet"
+  },
+  "next": {
+    "title": "Chain Development",
+    "permalink": "/docs/developing/osmosis-core/"
+  }
+}

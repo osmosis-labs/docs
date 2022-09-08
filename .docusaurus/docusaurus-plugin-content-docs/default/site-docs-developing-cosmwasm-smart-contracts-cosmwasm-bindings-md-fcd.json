@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+  "id": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+  "title": "Cosmwasm & Beaker on testnet",
+  "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+  "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings.md",
+  "sourceDirName": "developing/Cosmwasm Smart Contracts",
+  "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+  "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "CosmWasm Smart Contracts",
+    "permalink": "/docs/category/cosmwasm-smart-contracts"
+  },
+  "next": {
+    "title": "CosmWasm & LocalOsmosis",
+    "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis"
+  }
+}

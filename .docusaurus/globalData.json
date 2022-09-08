@@ -1,0 +1,293 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/docs",
+          "mainDocId": "developing/osmosis-core/modules/README",
+          "docs": [
+            {
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/javascript",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/javascript",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "path": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/build",
+              "path": "/docs/developing/osmosis-core/build",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/contributing",
+              "path": "/docs/developing/osmosis-core/contributing",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/ide-guide",
+              "path": "/docs/developing/osmosis-core/ide-guide",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/README",
+              "path": "/docs/developing/osmosis-core/modules/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-epochs",
+              "path": "/docs/developing/osmosis-core/modules/spec-epochs",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-gamm",
+              "path": "/docs/developing/osmosis-core/modules/spec-gamm",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-gov",
+              "path": "/docs/developing/osmosis-core/modules/spec-gov",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-incentives",
+              "path": "/docs/developing/osmosis-core/modules/spec-incentives",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-lockup",
+              "path": "/docs/developing/osmosis-core/modules/spec-lockup",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-mint",
+              "path": "/docs/developing/osmosis-core/modules/spec-mint",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-pool-incentives",
+              "path": "/docs/developing/osmosis-core/modules/spec-pool-incentives",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-superfluid",
+              "path": "/docs/developing/osmosis-core/modules/spec-superfluid",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-tokenfactory",
+              "path": "/docs/developing/osmosis-core/modules/spec-tokenfactory",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-twap",
+              "path": "/docs/developing/osmosis-core/modules/spec-twap",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/modules/spec-txfees",
+              "path": "/docs/developing/osmosis-core/modules/spec-txfees",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/osmosisd",
+              "path": "/docs/developing/osmosis-core/osmosisd",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/performance",
+              "path": "/docs/developing/osmosis-core/performance",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "developing/osmosis-core/README",
+              "path": "/docs/developing/osmosis-core/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/docs/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/getting-started",
+              "path": "/docs/overview/getting-started",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/governance",
+              "path": "/docs/overview/governance",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/osmo",
+              "path": "/docs/overview/osmo",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/osmosis-app/learn-more",
+              "path": "/docs/overview/osmosis-app/learn-more",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/osmosis-app/README",
+              "path": "/docs/overview/osmosis-app/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/README",
+              "path": "/docs/overview/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/terminology",
+              "path": "/docs/overview/terminology",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/keplr/create-keplr-wallet",
+              "path": "/docs/overview/wallets/keplr/create-keplr-wallet",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/keplr/import-account",
+              "path": "/docs/overview/wallets/keplr/import-account",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/keplr/import-ledger-account",
+              "path": "/docs/overview/wallets/keplr/import-ledger-account",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/keplr/install-keplr",
+              "path": "/docs/overview/wallets/keplr/install-keplr",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/keplr/README",
+              "path": "/docs/overview/wallets/keplr/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "overview/wallets/README",
+              "path": "/docs/overview/wallets/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/congratulations",
+              "path": "/docs/tutorial-basics/congratulations",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/create-a-blog-post",
+              "path": "/docs/tutorial-basics/create-a-blog-post",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/create-a-document",
+              "path": "/docs/tutorial-basics/create-a-document",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/create-a-page",
+              "path": "/docs/tutorial-basics/create-a-page",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/deploy-your-site",
+              "path": "/docs/tutorial-basics/deploy-your-site",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/markdown-features",
+              "path": "/docs/tutorial-basics/markdown-features",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-extras/manage-docs-versions",
+              "path": "/docs/tutorial-extras/manage-docs-versions",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-extras/translate-your-site",
+              "path": "/docs/tutorial-extras/translate-your-site",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/developers",
+              "path": "/docs/category/developers",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/chain-development",
+              "path": "/docs/category/chain-development",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/modules",
+              "path": "/docs/category/modules",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/cosmwasm-smart-contracts",
+              "path": "/docs/category/cosmwasm-smart-contracts",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/tutorial---basics",
+              "path": "/docs/category/tutorial---basics",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/tutorial---extras",
+              "path": "/docs/category/tutorial---extras",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/docs/category/developers",
+                "label": "Developers"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

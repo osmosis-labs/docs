@@ -1,0 +1,24 @@
+{
+  "unversionedId": "integrate/liquidity",
+  "id": "integrate/liquidity",
+  "title": "Liquidity",
+  "description": "Options for Intial Liquidity",
+  "source": "@site/docs/integrate/liquidity.md",
+  "sourceDirName": "integrate",
+  "slug": "/integrate/liquidity",
+  "permalink": "/docs/integrate/liquidity",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/integrate/liquidity.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Creating a LBP",
+    "permalink": "/docs/integrate/lbp"
+  },
+  "next": {
+    "title": "Marketing",
+    "permalink": "/docs/integrate/marketing"
+  }
+}

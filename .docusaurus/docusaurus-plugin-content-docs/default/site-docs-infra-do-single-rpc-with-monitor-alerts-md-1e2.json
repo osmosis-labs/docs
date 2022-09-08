@@ -1,0 +1,24 @@
+{
+  "unversionedId": "infra/do/single-rpc-with-monitor-alerts",
+  "id": "infra/do/single-rpc-with-monitor-alerts",
+  "title": "Single Node RPC setup with alerts",
+  "description": "Please note this is a place holder.",
+  "source": "@site/docs/infra/do/single-rpc-with-monitor-alerts.md",
+  "sourceDirName": "infra/do",
+  "slug": "/infra/do/single-rpc-with-monitor-alerts",
+  "permalink": "/docs/infra/do/single-rpc-with-monitor-alerts",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/infra/do/single-rpc-with-monitor-alerts.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Single Node RPC setup floating IP",
+    "permalink": "/docs/infra/do/single-rpc-with-floating-ip"
+  },
+  "next": {
+    "title": "Single Node RPC setup",
+    "permalink": "/docs/infra/do/single-rpc"
+  }
+}

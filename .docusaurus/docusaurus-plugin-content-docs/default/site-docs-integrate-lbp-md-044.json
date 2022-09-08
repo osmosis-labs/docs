@@ -1,0 +1,24 @@
+{
+  "unversionedId": "integrate/lbp",
+  "id": "integrate/lbp",
+  "title": "Creating a LBP",
+  "description": "The below is an example of the pool.json file for a liquidity bootstrapping pool.",
+  "source": "@site/docs/integrate/lbp.md",
+  "sourceDirName": "integrate",
+  "slug": "/integrate/lbp",
+  "permalink": "/docs/integrate/lbp",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/integrate/lbp.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Liquidity Mining Incentives",
+    "permalink": "/docs/integrate/incentives"
+  },
+  "next": {
+    "title": "Liquidity",
+    "permalink": "/docs/integrate/liquidity"
+  }
+}

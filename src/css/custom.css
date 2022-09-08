@@ -28,3 +28,31 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+
+.card {
+  flex-basis: calc(33% - 10px);
+    margin-bottom: 20px;
+    /* box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%); */
+    border-radius: 10px;
+    padding: 20px 20px 20px 70px;
+    box-sizing: border-box;
+    background: var(--border-color);
+    color: var(--primary-color);
+    font-weight: 400;
+    transition: .2s;
+    position: relative;
+}
+
+.card img {
+  width: 28px;
+  height: auto;
+  filter:invert(12%) sepia(88%) saturate(3754%) hue-rotate(243deg) brightness(107%) contrast(100%);
+
+}
+
+.card i, .card img {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}

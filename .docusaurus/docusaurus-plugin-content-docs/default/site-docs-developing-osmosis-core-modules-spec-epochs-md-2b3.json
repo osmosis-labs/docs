@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/osmosis-core/modules/spec-epochs",
+  "id": "developing/osmosis-core/modules/spec-epochs",
+  "title": "Epochs",
+  "description": "Please note this is a place holder.",
+  "source": "@site/docs/developing/osmosis-core/modules/spec-epochs.md",
+  "sourceDirName": "developing/osmosis-core/modules",
+  "slug": "/developing/osmosis-core/modules/spec-epochs",
+  "permalink": "/docs/developing/osmosis-core/modules/spec-epochs",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-epochs.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Modules",
+    "permalink": "/docs/developing/osmosis-core/modules/"
+  },
+  "next": {
+    "title": "GAMM",
+    "permalink": "/docs/developing/osmosis-core/modules/spec-gamm"
+  }
+}

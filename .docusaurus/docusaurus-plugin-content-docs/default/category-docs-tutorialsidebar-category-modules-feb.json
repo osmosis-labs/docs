@@ -1,0 +1,16 @@
+{
+  "title": "Modules",
+  "description": "Osmosis modules and their respective CLI commands",
+  "slug": "/category/modules",
+  "permalink": "/docs/category/modules",
+  "navigation": {
+    "previous": {
+      "title": "Chain Development",
+      "permalink": "/docs/category/chain-development"
+    },
+    "next": {
+      "title": "Modules",
+      "permalink": "/docs/developing/osmosis-core/modules/"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/get_started/javascript",
+  "id": "developing/dapps/get_started/javascript",
+  "title": "Javascript & Smart Contracts",
+  "description": "This guide describes interacting with Osmosis Smart contracts via JavaScript runtimes such as Node.js and the browser.",
+  "source": "@site/docs/developing/dapps/get_started/javascript.md",
+  "sourceDirName": "developing/dapps/get_started",
+  "slug": "/developing/dapps/get_started/javascript",
+  "permalink": "/docs/developing/dapps/get_started/javascript",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/get_started/javascript.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "In Depth Guide",
+    "permalink": "/docs/developing/dapps/get_started/in-depth-guide"
+  },
+  "next": {
+    "title": "Quick Guide",
+    "permalink": "/docs/developing/dapps/get_started/quick-guide_draft_after_tooling"
+  }
+}

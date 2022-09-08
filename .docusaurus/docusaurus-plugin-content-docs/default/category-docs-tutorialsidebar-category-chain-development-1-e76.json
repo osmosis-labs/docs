@@ -1,0 +1,16 @@
+{
+  "title": "Chain Development",
+  "description": "5 minutes to learn the most important Docusaurus concepts.",
+  "slug": "/category/chain-development-1",
+  "permalink": "/docs/category/chain-development-1",
+  "navigation": {
+    "previous": {
+      "title": "Chain Development",
+      "permalink": "/docs/category/chain-development"
+    },
+    "next": {
+      "title": "Modules",
+      "permalink": "/docs/developing/osmosis-core/modules/"
+    }
+  }
+}

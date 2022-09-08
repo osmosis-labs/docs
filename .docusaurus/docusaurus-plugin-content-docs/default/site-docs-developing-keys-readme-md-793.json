@@ -1,0 +1,26 @@
+{
+  "unversionedId": "developing/keys/README",
+  "id": "developing/keys/README",
+  "title": "Keys Home",
+  "description": "CLI Key Management",
+  "source": "@site/docs/developing/keys/README.md",
+  "sourceDirName": "developing/keys",
+  "slug": "/developing/keys/",
+  "permalink": "/docs/developing/keys/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/keys/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Keys Home"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "txs-block-2836990",
+    "permalink": "/docs/developing/guides/structure/txs-block-2836990"
+  },
+  "next": {
+    "title": "Basic Key Management",
+    "permalink": "/docs/developing/keys/keys-cli"
+  }
+}

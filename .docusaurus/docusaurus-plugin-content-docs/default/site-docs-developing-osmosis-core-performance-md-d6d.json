@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/osmosis-core/performance",
+  "id": "developing/osmosis-core/performance",
+  "title": "Performance & Profiling",
+  "description": "Profiling with pprof",
+  "source": "@site/docs/developing/osmosis-core/performance.md",
+  "sourceDirName": "developing/osmosis-core",
+  "slug": "/developing/osmosis-core/performance",
+  "permalink": "/docs/developing/osmosis-core/performance",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/performance.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "osmosisd",
+    "permalink": "/docs/developing/osmosis-core/osmosisd"
+  },
+  "next": {
+    "title": "CosmWasm Smart Contracts",
+    "permalink": "/docs/category/cosmwasm-smart-contracts"
+  }
+}

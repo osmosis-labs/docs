@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+  "id": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+  "title": "Submit a Cosmwasm Governance Proposal",
+  "description": "The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.",
+  "source": "@site/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal.md",
+  "sourceDirName": "developing/Cosmwasm Smart Contracts",
+  "slug": "/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+  "permalink": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Javascript & Smart Contracts",
+    "permalink": "/docs/developing/Cosmwasm Smart Contracts/javascript"
+  },
+  "next": {
+    "title": "Tutorial Intro",
+    "permalink": "/docs/intro"
+  }
+}

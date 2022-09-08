@@ -1,0 +1,24 @@
+{
+  "unversionedId": "integrate/registration",
+  "id": "integrate/registration",
+  "title": "Registration",
+  "description": "How to Register onto the Cosmos Chain Registry",
+  "source": "@site/docs/integrate/registration.md",
+  "sourceDirName": "integrate",
+  "slug": "/integrate/registration",
+  "permalink": "/docs/integrate/registration",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/integrate/registration.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Marketing",
+    "permalink": "/docs/integrate/marketing"
+  },
+  "next": {
+    "title": "Token Listings",
+    "permalink": "/docs/integrate/token-listings"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/osmosis-core/modules/spec-tokenfactory",
+  "id": "developing/osmosis-core/modules/spec-tokenfactory",
+  "title": "Tokenfactory",
+  "description": "Please note this is a place holder.",
+  "source": "@site/docs/developing/osmosis-core/modules/spec-tokenfactory.md",
+  "sourceDirName": "developing/osmosis-core/modules",
+  "slug": "/developing/osmosis-core/modules/spec-tokenfactory",
+  "permalink": "/docs/developing/osmosis-core/modules/spec-tokenfactory",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-tokenfactory.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Superfluid Staking",
+    "permalink": "/docs/developing/osmosis-core/modules/spec-superfluid"
+  },
+  "next": {
+    "title": "Txfees",
+    "permalink": "/docs/developing/osmosis-core/modules/spec-twap"
+  }
+}

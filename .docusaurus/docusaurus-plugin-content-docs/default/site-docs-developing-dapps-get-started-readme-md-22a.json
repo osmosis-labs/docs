@@ -1,0 +1,26 @@
+{
+  "unversionedId": "developing/dapps/get_started/README",
+  "id": "developing/dapps/get_started/README",
+  "title": "Building CosmWasm and Osmosis dApps",
+  "description": "The following are a collection of guides on how to build and deploy CoswmWasm smart contracts on the Osmosis blockchain. Please note that a user can deploy contracts with tools such as Beaker or directly with the Osmosisd binary via CLI.",
+  "source": "@site/docs/developing/dapps/get_started/README.md",
+  "sourceDirName": "developing/dapps/get_started",
+  "slug": "/developing/dapps/get_started/",
+  "permalink": "/docs/developing/dapps/get_started/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/get_started/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Building CosmWasm and Osmosis dApps"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Asset Info",
+    "permalink": "/docs/developing/assets/asset-info"
+  },
+  "next": {
+    "title": "Cosmwasm & Beaker on testnet",
+    "permalink": "/docs/developing/dapps/get_started/cosmwasm-bindings"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "unversionedId": "integrate/frontend",
+  "id": "integrate/frontend",
+  "title": "Osmosis Zone Front End",
+  "description": "How to Add an Asset onto the Osmosis Assets Page",
+  "source": "@site/docs/integrate/frontend.md",
+  "sourceDirName": "integrate",
+  "slug": "/integrate/frontend",
+  "permalink": "/docs/integrate/frontend",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/integrate/frontend.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Airdrop Guide",
+    "permalink": "/docs/integrate/airdrops"
+  },
+  "next": {
+    "title": "Liquidity Mining Incentives",
+    "permalink": "/docs/integrate/incentives"
+  }
+}

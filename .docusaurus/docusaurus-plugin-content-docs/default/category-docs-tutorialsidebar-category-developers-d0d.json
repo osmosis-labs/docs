@@ -1,0 +1,12 @@
+{
+  "title": "Developers",
+  "description": "5 minutes to learn the most important Docusaurus concepts.",
+  "slug": "/category/developers",
+  "permalink": "/docs/category/developers",
+  "navigation": {
+    "next": {
+      "title": "Chain Development",
+      "permalink": "/docs/category/chain-development"
+    }
+  }
+}

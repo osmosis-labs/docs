@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/rocksdb",
+  "id": "developing/rocksdb",
+  "title": "install rocksdb on ubuntu focal fossa",
+  "description": "update & install dependencies",
+  "source": "@site/docs/developing/rocksdb.md",
+  "sourceDirName": "developing",
+  "slug": "/developing/rocksdb",
+  "permalink": "/docs/developing/rocksdb",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/rocksdb.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Osmosis IBC Relayer List",
+    "permalink": "/docs/developing/relaying/relayers"
+  },
+  "next": {
+    "title": "Beaker",
+    "permalink": "/docs/developing/tools/beaker/"
+  }
+}

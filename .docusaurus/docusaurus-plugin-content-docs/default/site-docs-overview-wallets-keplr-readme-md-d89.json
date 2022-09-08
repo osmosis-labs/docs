@@ -1,0 +1,24 @@
+{
+  "unversionedId": "overview/wallets/keplr/README",
+  "id": "overview/wallets/keplr/README",
+  "title": "Keplr",
+  "description": "Introduction",
+  "source": "@site/docs/overview/wallets/keplr/README.md",
+  "sourceDirName": "overview/wallets/keplr",
+  "slug": "/overview/wallets/keplr/",
+  "permalink": "/docs/overview/wallets/keplr/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Available Wallets",
+    "permalink": "/docs/overview/wallets/"
+  },
+  "next": {
+    "title": "Create Keplr Wallet",
+    "permalink": "/docs/overview/wallets/keplr/create-keplr-wallet"
+  }
+}

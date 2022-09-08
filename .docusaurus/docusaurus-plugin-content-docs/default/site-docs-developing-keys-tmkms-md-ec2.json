@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/keys/tmkms",
+  "id": "developing/keys/tmkms",
+  "title": "Using TMKMS",
+  "description": "The Tendermint Key Management System (or TMKMS) should be used by any validator currently or intending to be in the active validator set. This application mitigates the risk of double-signing and provides high-availability to validator keys while keeping these keys on a separate physical host. While TMKMS can be used on the same machine as the validator, it is recommended to be on a separate host.",
+  "source": "@site/docs/developing/keys/tmkms.md",
+  "sourceDirName": "developing/keys",
+  "slug": "/developing/keys/tmkms",
+  "permalink": "/docs/developing/keys/tmkms",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/keys/tmkms.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Multisig",
+    "permalink": "/docs/developing/keys/multisig"
+  },
+  "next": {
+    "title": "Explorers",
+    "permalink": "/docs/developing/network/explorers"
+  }
+}

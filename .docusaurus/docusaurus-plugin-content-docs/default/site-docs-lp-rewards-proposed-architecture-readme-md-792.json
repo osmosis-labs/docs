@@ -1,0 +1,24 @@
+{
+  "unversionedId": "LP rewards/proposed_architecture/README",
+  "id": "LP rewards/proposed_architecture/README",
+  "title": "Generalized F1 for lockups",
+  "description": "Goal",
+  "source": "@site/docs/LP rewards/proposed_architecture/README.md",
+  "sourceDirName": "LP rewards/proposed_architecture",
+  "slug": "/LP rewards/proposed_architecture/",
+  "permalink": "/docs/LP rewards/proposed_architecture/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/LP rewards/proposed_architecture/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Translate your site",
+    "permalink": "/docs/tutorial-extras/translate-your-site"
+  },
+  "next": {
+    "title": "Awesome Repo",
+    "permalink": "/docs/awesome/"
+  }
+}

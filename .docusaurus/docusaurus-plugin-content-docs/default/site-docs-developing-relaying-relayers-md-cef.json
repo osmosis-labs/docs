@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/relaying/relayers",
+  "id": "developing/relaying/relayers",
+  "title": "Osmosis IBC Relayer List",
+  "description": "| Relayer | Contact | How to Support | Support for new relayers | Chains Relaying with Osmosis |",
+  "source": "@site/docs/developing/relaying/relayers.md",
+  "sourceDirName": "developing/relaying",
+  "slug": "/developing/relaying/relayers",
+  "permalink": "/docs/developing/relaying/relayers",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/relaying/relayers.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Relayer Guide",
+    "permalink": "/docs/developing/relaying/relay"
+  },
+  "next": {
+    "title": "install rocksdb on ubuntu focal fossa",
+    "permalink": "/docs/developing/rocksdb"
+  }
+}

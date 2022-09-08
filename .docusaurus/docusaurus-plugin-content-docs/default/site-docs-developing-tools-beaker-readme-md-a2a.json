@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/tools/beaker/README",
+  "id": "developing/tools/beaker/README",
+  "title": "Beaker",
+  "description": "Please note this is a place holder.",
+  "source": "@site/docs/developing/tools/beaker/README.md",
+  "sourceDirName": "developing/tools/beaker",
+  "slug": "/developing/tools/beaker/",
+  "permalink": "/docs/developing/tools/beaker/",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/tools/beaker/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "install rocksdb on ubuntu focal fossa",
+    "permalink": "/docs/developing/rocksdb"
+  },
+  "next": {
+    "title": "LocalOsmosis",
+    "permalink": "/docs/developing/tools/localosmosis"
+  }
+}

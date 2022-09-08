@@ -1,0 +1,1855 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "label": "Next",
+          "banner": null,
+          "badge": false,
+          "className": "docs-version-current",
+          "path": "/docs",
+          "tagsPath": "/docs/tags",
+          "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs",
+          "editUrlLocalized": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/i18n/en/docusaurus-plugin-content-docs/current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/Users/web/code/docs-beta/docs/sidebars.js",
+          "contentPath": "/Users/web/code/docs-beta/docs/docs",
+          "contentPathLocalized": "/Users/web/code/docs-beta/docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "docs": [
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "title": "Cosmwasm & Beaker on testnet",
+              "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "CosmWasm Smart Contracts",
+                "permalink": "/docs/category/cosmwasm-smart-contracts"
+              },
+              "next": {
+                "title": "CosmWasm & LocalOsmosis",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "title": "CosmWasm & LocalOsmosis",
+              "description": "You can now deploy contracts to LocalOsmosis with Beaker. The official tooling to deploy Osmosis Smartcontracts.",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Cosmwasm & Beaker on testnet",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-bindings"
+              },
+              "next": {
+                "title": "CosmWasm with Testnet",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "title": "Cosmwasm & Beaker on testnet",
+              "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "CosmWasm with Testnet",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual"
+              },
+              "next": {
+                "title": "Verifying Smart Contracts",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "title": "CosmWasm with Testnet",
+              "description": "The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (osmo-test-4). It covers:",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "CosmWasm & LocalOsmosis",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis"
+              },
+              "next": {
+                "title": "Cosmwasm & Beaker on testnet",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "id": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "title": "Verifying Smart Contracts",
+              "description": "The following are the steps needed to verify any contract from the chain. In this particular example a brand new contract uploaded to the testnet.",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Cosmwasm & Beaker on testnet",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-testnet"
+              },
+              "next": {
+                "title": "Javascript & Smart Contracts",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/javascript"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/javascript",
+              "id": "developing/Cosmwasm Smart Contracts/javascript",
+              "title": "Javascript & Smart Contracts",
+              "description": "This guide describes interacting with Osmosis Smart contracts via JavaScript runtimes such as Node.js and the browser.",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/javascript.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/javascript",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/javascript",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/javascript.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Verifying Smart Contracts",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract"
+              },
+              "next": {
+                "title": "Submit a Cosmwasm Governance Proposal",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal"
+              }
+            },
+            {
+              "unversionedId": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "id": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "title": "Submit a Cosmwasm Governance Proposal",
+              "description": "The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.",
+              "source": "@site/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal.md",
+              "sourceDirName": "developing/Cosmwasm Smart Contracts",
+              "slug": "/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "permalink": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Javascript & Smart Contracts",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/javascript"
+              },
+              "next": {
+                "title": "Tutorial Intro",
+                "permalink": "/docs/intro"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/build",
+              "id": "developing/osmosis-core/build",
+              "title": "Build and Test",
+              "description": "Install Go 1.18",
+              "source": "@site/docs/developing/osmosis-core/build.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/build",
+              "permalink": "/docs/developing/osmosis-core/build",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/build.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Build and Test"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Chain Development",
+                "permalink": "/docs/developing/osmosis-core/"
+              },
+              "next": {
+                "title": "Contributing",
+                "permalink": "/docs/developing/osmosis-core/contributing"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/contributing",
+              "id": "developing/osmosis-core/contributing",
+              "title": "Contributing",
+              "description": "The following information provides a set of guidelines for contributing to the Osmo chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.",
+              "source": "@site/docs/developing/osmosis-core/contributing.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/contributing",
+              "permalink": "/docs/developing/osmosis-core/contributing",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/contributing.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Build and Test",
+                "permalink": "/docs/developing/osmosis-core/build"
+              },
+              "next": {
+                "title": "Osmosis IDE Setup",
+                "permalink": "/docs/developing/osmosis-core/ide-guide"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/ide-guide",
+              "id": "developing/osmosis-core/ide-guide",
+              "title": "Osmosis IDE Setup",
+              "description": "Recommended IDE setup for developing on Osmosis in Go.",
+              "source": "@site/docs/developing/osmosis-core/ide-guide.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/ide-guide",
+              "permalink": "/docs/developing/osmosis-core/ide-guide",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/ide-guide.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Contributing",
+                "permalink": "/docs/developing/osmosis-core/contributing"
+              },
+              "next": {
+                "title": "osmosisd",
+                "permalink": "/docs/developing/osmosis-core/osmosisd"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/README",
+              "id": "developing/osmosis-core/modules/README",
+              "title": "Modules",
+              "description": "Epochs",
+              "source": "@site/docs/developing/osmosis-core/modules/README.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/",
+              "permalink": "/docs/developing/osmosis-core/modules/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Modules"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Modules",
+                "permalink": "/docs/category/modules"
+              },
+              "next": {
+                "title": "Epochs",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-epochs"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-epochs",
+              "id": "developing/osmosis-core/modules/spec-epochs",
+              "title": "Epochs",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-epochs.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-epochs",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-epochs",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-epochs.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Modules",
+                "permalink": "/docs/developing/osmosis-core/modules/"
+              },
+              "next": {
+                "title": "GAMM",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-gamm"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-gamm",
+              "id": "developing/osmosis-core/modules/spec-gamm",
+              "title": "GAMM",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-gamm.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-gamm",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-gamm",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-gamm.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Epochs",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-epochs"
+              },
+              "next": {
+                "title": "Gov",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-gov"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-gov",
+              "id": "developing/osmosis-core/modules/spec-gov",
+              "title": "Gov",
+              "description": "The `gov` module enables on-chain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-gov.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-gov",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-gov",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-gov.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "GAMM",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-gamm"
+              },
+              "next": {
+                "title": "Incentives",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-incentives"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-incentives",
+              "id": "developing/osmosis-core/modules/spec-incentives",
+              "title": "Incentives",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-incentives.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-incentives",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-incentives",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-incentives.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Gov",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-gov"
+              },
+              "next": {
+                "title": "Lockup",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-lockup"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-lockup",
+              "id": "developing/osmosis-core/modules/spec-lockup",
+              "title": "Lockup",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-lockup.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-lockup",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-lockup",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-lockup.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Incentives",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-incentives"
+              },
+              "next": {
+                "title": "Mint",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-mint"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-mint",
+              "id": "developing/osmosis-core/modules/spec-mint",
+              "title": "Mint",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-mint.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-mint",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-mint",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-mint.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Lockup",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-lockup"
+              },
+              "next": {
+                "title": "Pool-incentives",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-pool-incentives"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-pool-incentives",
+              "id": "developing/osmosis-core/modules/spec-pool-incentives",
+              "title": "Pool-incentives",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-pool-incentives.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-pool-incentives",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-pool-incentives",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-pool-incentives.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Mint",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-mint"
+              },
+              "next": {
+                "title": "Superfluid Staking",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-superfluid"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-superfluid",
+              "id": "developing/osmosis-core/modules/spec-superfluid",
+              "title": "Superfluid Staking",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-superfluid.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-superfluid",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-superfluid",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-superfluid.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Pool-incentives",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-pool-incentives"
+              },
+              "next": {
+                "title": "Tokenfactory",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-tokenfactory"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-tokenfactory",
+              "id": "developing/osmosis-core/modules/spec-tokenfactory",
+              "title": "Tokenfactory",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-tokenfactory.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-tokenfactory",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-tokenfactory",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-tokenfactory.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Superfluid Staking",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-superfluid"
+              },
+              "next": {
+                "title": "Txfees",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-twap"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-twap",
+              "id": "developing/osmosis-core/modules/spec-twap",
+              "title": "Txfees",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-twap.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-twap",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-twap",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-twap.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Tokenfactory",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-tokenfactory"
+              },
+              "next": {
+                "title": "Txfees",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-txfees"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/modules/spec-txfees",
+              "id": "developing/osmosis-core/modules/spec-txfees",
+              "title": "Txfees",
+              "description": "Please note this is a place holder.",
+              "source": "@site/docs/developing/osmosis-core/modules/spec-txfees.md",
+              "sourceDirName": "developing/osmosis-core/modules",
+              "slug": "/developing/osmosis-core/modules/spec-txfees",
+              "permalink": "/docs/developing/osmosis-core/modules/spec-txfees",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/modules/spec-txfees.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Txfees",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-twap"
+              },
+              "next": {
+                "title": "Chain Development",
+                "permalink": "/docs/developing/osmosis-core/"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/osmosisd",
+              "id": "developing/osmosis-core/osmosisd",
+              "title": "osmosisd",
+              "description": "",
+              "source": "@site/docs/developing/osmosis-core/osmosisd.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/osmosisd",
+              "permalink": "/docs/developing/osmosis-core/osmosisd",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/osmosisd.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Osmosis IDE Setup",
+                "permalink": "/docs/developing/osmosis-core/ide-guide"
+              },
+              "next": {
+                "title": "Performance & Profiling",
+                "permalink": "/docs/developing/osmosis-core/performance"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/performance",
+              "id": "developing/osmosis-core/performance",
+              "title": "Performance & Profiling",
+              "description": "Profiling with pprof",
+              "source": "@site/docs/developing/osmosis-core/performance.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/performance",
+              "permalink": "/docs/developing/osmosis-core/performance",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/performance.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "osmosisd",
+                "permalink": "/docs/developing/osmosis-core/osmosisd"
+              },
+              "next": {
+                "title": "CosmWasm Smart Contracts",
+                "permalink": "/docs/category/cosmwasm-smart-contracts"
+              }
+            },
+            {
+              "unversionedId": "developing/osmosis-core/README",
+              "id": "developing/osmosis-core/README",
+              "title": "Chain Development",
+              "description": "The guides on this page will explain the process of developing on Osmosis.",
+              "source": "@site/docs/developing/osmosis-core/README.md",
+              "sourceDirName": "developing/osmosis-core",
+              "slug": "/developing/osmosis-core/",
+              "permalink": "/docs/developing/osmosis-core/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/osmosis-core/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Txfees",
+                "permalink": "/docs/developing/osmosis-core/modules/spec-txfees"
+              },
+              "next": {
+                "title": "Build and Test",
+                "permalink": "/docs/developing/osmosis-core/build"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "Tutorial Intro",
+              "description": "Let's discover Docusaurus in less than 5 minutes.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/docs/intro",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Submit a Cosmwasm Governance Proposal",
+                "permalink": "/docs/developing/Cosmwasm Smart Contracts/submit_wasm_proposal"
+              },
+              "next": {
+                "title": "Tutorial - Basics",
+                "permalink": "/docs/category/tutorial---basics"
+              }
+            },
+            {
+              "unversionedId": "overview/getting-started",
+              "id": "overview/getting-started",
+              "title": "Quickstart",
+              "description": "(Note: This repository is under active development. Architecture and implementation may change without documentation)",
+              "source": "@site/docs/overview/getting-started.md",
+              "sourceDirName": "overview",
+              "slug": "/overview/getting-started",
+              "permalink": "/docs/overview/getting-started",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/getting-started.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Introduction",
+                "permalink": "/docs/overview/"
+              },
+              "next": {
+                "title": "Governance",
+                "permalink": "/docs/overview/governance"
+              }
+            },
+            {
+              "unversionedId": "overview/governance",
+              "id": "overview/governance",
+              "title": "Governance",
+              "description": "Voting",
+              "source": "@site/docs/overview/governance.md",
+              "sourceDirName": "overview",
+              "slug": "/overview/governance",
+              "permalink": "/docs/overview/governance",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/governance.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Quickstart",
+                "permalink": "/docs/overview/getting-started"
+              },
+              "next": {
+                "title": "OSMO",
+                "permalink": "/docs/overview/osmo"
+              }
+            },
+            {
+              "unversionedId": "overview/osmo",
+              "id": "overview/osmo",
+              "title": "OSMO",
+              "description": "Purpose",
+              "source": "@site/docs/overview/osmo.md",
+              "sourceDirName": "overview",
+              "slug": "/overview/osmo",
+              "permalink": "/docs/overview/osmo",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/osmo.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Governance",
+                "permalink": "/docs/overview/governance"
+              },
+              "next": {
+                "title": "Getting Started",
+                "permalink": "/docs/overview/osmosis-app/"
+              }
+            },
+            {
+              "unversionedId": "overview/osmosis-app/learn-more",
+              "id": "overview/osmosis-app/learn-more",
+              "title": "Learn More",
+              "description": "Liquidity Bootstrapping Pools",
+              "source": "@site/docs/overview/osmosis-app/learn-more.md",
+              "sourceDirName": "overview/osmosis-app",
+              "slug": "/overview/osmosis-app/learn-more",
+              "permalink": "/docs/overview/osmosis-app/learn-more",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/osmosis-app/learn-more.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Getting Started",
+                "permalink": "/docs/overview/osmosis-app/"
+              },
+              "next": {
+                "title": "Glossary",
+                "permalink": "/docs/overview/terminology"
+              }
+            },
+            {
+              "unversionedId": "overview/osmosis-app/README",
+              "id": "overview/osmosis-app/README",
+              "title": "Getting Started",
+              "description": "Before opening the Osmosis AMM App, make sure to install the Keplr Wallet.",
+              "source": "@site/docs/overview/osmosis-app/README.md",
+              "sourceDirName": "overview/osmosis-app",
+              "slug": "/overview/osmosis-app/",
+              "permalink": "/docs/overview/osmosis-app/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/osmosis-app/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "OSMO",
+                "permalink": "/docs/overview/osmo"
+              },
+              "next": {
+                "title": "Learn More",
+                "permalink": "/docs/overview/osmosis-app/learn-more"
+              }
+            },
+            {
+              "unversionedId": "overview/README",
+              "id": "overview/README",
+              "title": "Introduction",
+              "description": "What is Osmosis?",
+              "source": "@site/docs/overview/README.md",
+              "sourceDirName": "overview",
+              "slug": "/overview/",
+              "permalink": "/docs/overview/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Translate your site",
+                "permalink": "/docs/tutorial-extras/translate-your-site"
+              },
+              "next": {
+                "title": "Quickstart",
+                "permalink": "/docs/overview/getting-started"
+              }
+            },
+            {
+              "unversionedId": "overview/terminology",
+              "id": "overview/terminology",
+              "title": "Glossary",
+              "description": "Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.",
+              "source": "@site/docs/overview/terminology.md",
+              "sourceDirName": "overview",
+              "slug": "/overview/terminology",
+              "permalink": "/docs/overview/terminology",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/terminology.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Learn More",
+                "permalink": "/docs/overview/osmosis-app/learn-more"
+              },
+              "next": {
+                "title": "Available Wallets",
+                "permalink": "/docs/overview/wallets/"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/keplr/create-keplr-wallet",
+              "id": "overview/wallets/keplr/create-keplr-wallet",
+              "title": "Create Keplr Wallet",
+              "description": "How to create a new Account via Manemonic/Seed Phrase",
+              "source": "@site/docs/overview/wallets/keplr/create-keplr-wallet.md",
+              "sourceDirName": "overview/wallets/keplr",
+              "slug": "/overview/wallets/keplr/create-keplr-wallet",
+              "permalink": "/docs/overview/wallets/keplr/create-keplr-wallet",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/create-keplr-wallet.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Keplr",
+                "permalink": "/docs/overview/wallets/keplr/"
+              },
+              "next": {
+                "title": "Import a Keplr account",
+                "permalink": "/docs/overview/wallets/keplr/import-account"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/keplr/import-account",
+              "id": "overview/wallets/keplr/import-account",
+              "title": "Import a Keplr account",
+              "description": "If you are setting up Keplr for the first time:",
+              "source": "@site/docs/overview/wallets/keplr/import-account.md",
+              "sourceDirName": "overview/wallets/keplr",
+              "slug": "/overview/wallets/keplr/import-account",
+              "permalink": "/docs/overview/wallets/keplr/import-account",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/import-account.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create Keplr Wallet",
+                "permalink": "/docs/overview/wallets/keplr/create-keplr-wallet"
+              },
+              "next": {
+                "title": "Import a Ledger account",
+                "permalink": "/docs/overview/wallets/keplr/import-ledger-account"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/keplr/import-ledger-account",
+              "id": "overview/wallets/keplr/import-ledger-account",
+              "title": "Import a Ledger account",
+              "description": "If you are setting up Keplr for the first time: In the initial pop-up window, choose Import Existing Account",
+              "source": "@site/docs/overview/wallets/keplr/import-ledger-account.md",
+              "sourceDirName": "overview/wallets/keplr",
+              "slug": "/overview/wallets/keplr/import-ledger-account",
+              "permalink": "/docs/overview/wallets/keplr/import-ledger-account",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/import-ledger-account.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Import a Keplr account",
+                "permalink": "/docs/overview/wallets/keplr/import-account"
+              },
+              "next": {
+                "title": "Install Keplr",
+                "permalink": "/docs/overview/wallets/keplr/install-keplr"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/keplr/install-keplr",
+              "id": "overview/wallets/keplr/install-keplr",
+              "title": "Install Keplr",
+              "description": "Go to https://wallet.keplr.app/ and click  Install for Chrome",
+              "source": "@site/docs/overview/wallets/keplr/install-keplr.md",
+              "sourceDirName": "overview/wallets/keplr",
+              "slug": "/overview/wallets/keplr/install-keplr",
+              "permalink": "/docs/overview/wallets/keplr/install-keplr",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/install-keplr.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Import a Ledger account",
+                "permalink": "/docs/overview/wallets/keplr/import-ledger-account"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/keplr/README",
+              "id": "overview/wallets/keplr/README",
+              "title": "Keplr",
+              "description": "Introduction",
+              "source": "@site/docs/overview/wallets/keplr/README.md",
+              "sourceDirName": "overview/wallets/keplr",
+              "slug": "/overview/wallets/keplr/",
+              "permalink": "/docs/overview/wallets/keplr/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/keplr/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Available Wallets",
+                "permalink": "/docs/overview/wallets/"
+              },
+              "next": {
+                "title": "Create Keplr Wallet",
+                "permalink": "/docs/overview/wallets/keplr/create-keplr-wallet"
+              }
+            },
+            {
+              "unversionedId": "overview/wallets/README",
+              "id": "overview/wallets/README",
+              "title": "Available Wallets",
+              "description": "Keplr",
+              "source": "@site/docs/overview/wallets/README.md",
+              "sourceDirName": "overview/wallets",
+              "slug": "/overview/wallets/",
+              "permalink": "/docs/overview/wallets/",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/overview/wallets/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Glossary",
+                "permalink": "/docs/overview/terminology"
+              },
+              "next": {
+                "title": "Keplr",
+                "permalink": "/docs/overview/wallets/keplr/"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/congratulations",
+              "id": "tutorial-basics/congratulations",
+              "title": "Congratulations!",
+              "description": "You have just learned the basics of Docusaurus and made some changes to the initial template.",
+              "source": "@site/docs/tutorial-basics/congratulations.md",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/congratulations",
+              "permalink": "/docs/tutorial-basics/congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/congratulations.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 6,
+              "frontMatter": {
+                "sidebar_position": 6
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Deploy your site",
+                "permalink": "/docs/tutorial-basics/deploy-your-site"
+              },
+              "next": {
+                "title": "Tutorial - Extras",
+                "permalink": "/docs/category/tutorial---extras"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/create-a-blog-post",
+              "id": "tutorial-basics/create-a-blog-post",
+              "title": "Create a Blog Post",
+              "description": "Docusaurus creates a page for each blog post, but also a blog index page, a tag system, an RSS feed...",
+              "source": "@site/docs/tutorial-basics/create-a-blog-post.md",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/create-a-blog-post",
+              "permalink": "/docs/tutorial-basics/create-a-blog-post",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/create-a-blog-post.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create a Document",
+                "permalink": "/docs/tutorial-basics/create-a-document"
+              },
+              "next": {
+                "title": "Markdown Features",
+                "permalink": "/docs/tutorial-basics/markdown-features"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/create-a-document",
+              "id": "tutorial-basics/create-a-document",
+              "title": "Create a Document",
+              "description": "Documents are groups of pages connected through:",
+              "source": "@site/docs/tutorial-basics/create-a-document.md",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/create-a-document",
+              "permalink": "/docs/tutorial-basics/create-a-document",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/create-a-document.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create a Page",
+                "permalink": "/docs/tutorial-basics/create-a-page"
+              },
+              "next": {
+                "title": "Create a Blog Post",
+                "permalink": "/docs/tutorial-basics/create-a-blog-post"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/create-a-page",
+              "id": "tutorial-basics/create-a-page",
+              "title": "Create a Page",
+              "description": "Add Markdown or React files to src/pages to create a standalone page:",
+              "source": "@site/docs/tutorial-basics/create-a-page.md",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/create-a-page",
+              "permalink": "/docs/tutorial-basics/create-a-page",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/create-a-page.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Tutorial - Basics",
+                "permalink": "/docs/category/tutorial---basics"
+              },
+              "next": {
+                "title": "Create a Document",
+                "permalink": "/docs/tutorial-basics/create-a-document"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/deploy-your-site",
+              "id": "tutorial-basics/deploy-your-site",
+              "title": "Deploy your site",
+              "description": "Docusaurus is a static-site-generator (also called Jamstack).",
+              "source": "@site/docs/tutorial-basics/deploy-your-site.md",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/deploy-your-site",
+              "permalink": "/docs/tutorial-basics/deploy-your-site",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/deploy-your-site.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 5,
+              "frontMatter": {
+                "sidebar_position": 5
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Markdown Features",
+                "permalink": "/docs/tutorial-basics/markdown-features"
+              },
+              "next": {
+                "title": "Congratulations!",
+                "permalink": "/docs/tutorial-basics/congratulations"
+              }
+            },
+            {
+              "unversionedId": "tutorial-basics/markdown-features",
+              "id": "tutorial-basics/markdown-features",
+              "title": "Markdown Features",
+              "description": "Docusaurus supports Markdown and a few additional features.",
+              "source": "@site/docs/tutorial-basics/markdown-features.mdx",
+              "sourceDirName": "tutorial-basics",
+              "slug": "/tutorial-basics/markdown-features",
+              "permalink": "/docs/tutorial-basics/markdown-features",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-basics/markdown-features.mdx",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create a Blog Post",
+                "permalink": "/docs/tutorial-basics/create-a-blog-post"
+              },
+              "next": {
+                "title": "Deploy your site",
+                "permalink": "/docs/tutorial-basics/deploy-your-site"
+              }
+            },
+            {
+              "unversionedId": "tutorial-extras/manage-docs-versions",
+              "id": "tutorial-extras/manage-docs-versions",
+              "title": "Manage Docs Versions",
+              "description": "Docusaurus can manage multiple versions of your docs.",
+              "source": "@site/docs/tutorial-extras/manage-docs-versions.md",
+              "sourceDirName": "tutorial-extras",
+              "slug": "/tutorial-extras/manage-docs-versions",
+              "permalink": "/docs/tutorial-extras/manage-docs-versions",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-extras/manage-docs-versions.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Tutorial - Extras",
+                "permalink": "/docs/category/tutorial---extras"
+              },
+              "next": {
+                "title": "Translate your site",
+                "permalink": "/docs/tutorial-extras/translate-your-site"
+              }
+            },
+            {
+              "unversionedId": "tutorial-extras/translate-your-site",
+              "id": "tutorial-extras/translate-your-site",
+              "title": "Translate your site",
+              "description": "Let's translate docs/intro.md to French.",
+              "source": "@site/docs/tutorial-extras/translate-your-site.md",
+              "sourceDirName": "tutorial-extras",
+              "slug": "/tutorial-extras/translate-your-site",
+              "permalink": "/docs/tutorial-extras/translate-your-site",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-extras/translate-your-site.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Manage Docs Versions",
+                "permalink": "/docs/tutorial-extras/manage-docs-versions"
+              },
+              "next": {
+                "title": "Introduction",
+                "permalink": "/docs/overview/"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "category",
+                "label": "Developers",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "category",
+                    "label": "Chain Development",
+                    "collapsible": true,
+                    "collapsed": true,
+                    "items": [
+                      {
+                        "type": "category",
+                        "label": "Modules",
+                        "collapsible": true,
+                        "collapsed": true,
+                        "items": [
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/README"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-epochs"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-gamm"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-gov"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-incentives"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-lockup"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-mint"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-pool-incentives"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-superfluid"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-tokenfactory"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-twap"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "developing/osmosis-core/modules/spec-txfees"
+                          }
+                        ],
+                        "link": {
+                          "type": "generated-index",
+                          "description": "Osmosis modules and their respective CLI commands",
+                          "slug": "/category/modules",
+                          "permalink": "/docs/category/modules"
+                        }
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/README"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/build"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/contributing"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/ide-guide"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/osmosisd"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/osmosis-core/performance"
+                      }
+                    ],
+                    "link": {
+                      "type": "generated-index",
+                      "description": "5 minutes to learn the most important Docusaurus concepts.",
+                      "slug": "/category/chain-development",
+                      "permalink": "/docs/category/chain-development"
+                    }
+                  },
+                  {
+                    "type": "category",
+                    "label": "CosmWasm Smart Contracts",
+                    "collapsible": true,
+                    "collapsed": true,
+                    "items": [
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/cosmwasm-bindings"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/cosmwasm-localosmosis"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet-manual"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/cosmwasm-testnet"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/cosmwasm-verify-contract"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/javascript"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "developing/Cosmwasm Smart Contracts/submit_wasm_proposal"
+                      }
+                    ],
+                    "link": {
+                      "type": "generated-index",
+                      "description": "Get started developing Cosmwasm smart contracts in Osmosis.",
+                      "slug": "/category/cosmwasm-smart-contracts",
+                      "permalink": "/docs/category/cosmwasm-smart-contracts"
+                    }
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "5 minutes to learn the most important Docusaurus concepts.",
+                  "slug": "/category/developers",
+                  "permalink": "/docs/category/developers"
+                }
+              },
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "category",
+                "label": "Tutorial - Basics",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/create-a-page"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/create-a-document"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/create-a-blog-post"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/markdown-features"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/deploy-your-site"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-basics/congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "5 minutes to learn the most important Docusaurus concepts.",
+                  "slug": "/category/tutorial---basics",
+                  "permalink": "/docs/category/tutorial---basics"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Tutorial - Extras",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "tutorial-extras/manage-docs-versions"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-extras/translate-your-site"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "slug": "/category/tutorial---extras",
+                  "permalink": "/docs/category/tutorial---extras"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Introduction",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "overview/getting-started"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "overview/governance"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "overview/osmo"
+                  },
+                  {
+                    "type": "category",
+                    "label": "Getting Started",
+                    "collapsible": true,
+                    "collapsed": true,
+                    "items": [
+                      {
+                        "type": "doc",
+                        "id": "overview/osmosis-app/learn-more"
+                      }
+                    ],
+                    "link": {
+                      "type": "doc",
+                      "id": "overview/osmosis-app/README"
+                    }
+                  },
+                  {
+                    "type": "doc",
+                    "id": "overview/terminology"
+                  },
+                  {
+                    "type": "category",
+                    "label": "Available Wallets",
+                    "collapsible": true,
+                    "collapsed": true,
+                    "items": [
+                      {
+                        "type": "category",
+                        "label": "Keplr",
+                        "collapsible": true,
+                        "collapsed": true,
+                        "items": [
+                          {
+                            "type": "doc",
+                            "id": "overview/wallets/keplr/create-keplr-wallet"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "overview/wallets/keplr/import-account"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "overview/wallets/keplr/import-ledger-account"
+                          },
+                          {
+                            "type": "doc",
+                            "id": "overview/wallets/keplr/install-keplr"
+                          }
+                        ],
+                        "link": {
+                          "type": "doc",
+                          "id": "overview/wallets/keplr/README"
+                        }
+                      }
+                    ],
+                    "link": {
+                      "type": "doc",
+                      "id": "overview/wallets/README"
+                    }
+                  }
+                ],
+                "link": {
+                  "type": "doc",
+                  "id": "overview/README"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogSidebarTitle": "Recent posts",
+      "blogPosts": [
+        {
+          "id": "welcome",
+          "metadata": {
+            "permalink": "/blog/welcome",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2021-08-26-welcome/index.md",
+            "source": "@site/blog/2021-08-26-welcome/index.md",
+            "title": "Welcome",
+            "description": "Docusaurus blogging features are powered by the blog plugin.",
+            "date": "2021-08-26T00:00:00.000Z",
+            "formattedDate": "August 26, 2021",
+            "tags": [
+              {
+                "label": "facebook",
+                "permalink": "/blog/tags/facebook"
+              },
+              {
+                "label": "hello",
+                "permalink": "/blog/tags/hello"
+              },
+              {
+                "label": "docusaurus",
+                "permalink": "/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 0.405,
+            "hasTruncateMarker": false,
+            "authors": [
+              {
+                "name": "Sébastien Lorber",
+                "title": "Docusaurus maintainer",
+                "url": "https://sebastienlorber.com",
+                "imageURL": "https://github.com/slorber.png",
+                "key": "slorber"
+              },
+              {
+                "name": "Yangshun Tay",
+                "title": "Front End Engineer @ Facebook",
+                "url": "https://github.com/yangshun",
+                "imageURL": "https://github.com/yangshun.png",
+                "key": "yangshun"
+              }
+            ],
+            "frontMatter": {
+              "slug": "welcome",
+              "title": "Welcome",
+              "authors": [
+                "slorber",
+                "yangshun"
+              ],
+              "tags": [
+                "facebook",
+                "hello",
+                "docusaurus"
+              ]
+            },
+            "nextItem": {
+              "title": "MDX Blog Post",
+              "permalink": "/blog/mdx-blog-post"
+            }
+          },
+          "content": "[Docusaurus blogging features](https://docusaurus.io/docs/blog) are powered by the [blog plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog).\n\nSimply add Markdown files (or folders) to the `blog` directory.\n\nRegular blog authors can be added to `authors.yml`.\n\nThe blog post date can be extracted from filenames, such as:\n\n- `2019-05-30-welcome.md`\n- `2019-05-30-welcome/index.md`\n\nA blog post folder can be convenient to co-locate blog post images:\n\n![Docusaurus Plushie](./docusaurus-plushie-banner.jpeg)\n\nThe blog supports tags as well!\n\n**And if you don't want a blog**: just delete this directory, and use `blog: false` in your Docusaurus config."
+        },
+        {
+          "id": "mdx-blog-post",
+          "metadata": {
+            "permalink": "/blog/mdx-blog-post",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2021-08-01-mdx-blog-post.mdx",
+            "source": "@site/blog/2021-08-01-mdx-blog-post.mdx",
+            "title": "MDX Blog Post",
+            "description": "Blog posts support Docusaurus Markdown features, such as MDX.",
+            "date": "2021-08-01T00:00:00.000Z",
+            "formattedDate": "August 1, 2021",
+            "tags": [
+              {
+                "label": "docusaurus",
+                "permalink": "/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 0.175,
+            "hasTruncateMarker": false,
+            "authors": [
+              {
+                "name": "Sébastien Lorber",
+                "title": "Docusaurus maintainer",
+                "url": "https://sebastienlorber.com",
+                "imageURL": "https://github.com/slorber.png",
+                "key": "slorber"
+              }
+            ],
+            "frontMatter": {
+              "slug": "mdx-blog-post",
+              "title": "MDX Blog Post",
+              "authors": [
+                "slorber"
+              ],
+              "tags": [
+                "docusaurus"
+              ]
+            },
+            "prevItem": {
+              "title": "Welcome",
+              "permalink": "/blog/welcome"
+            },
+            "nextItem": {
+              "title": "Long Blog Post",
+              "permalink": "/blog/long-blog-post"
+            }
+          },
+          "content": "Blog posts support [Docusaurus Markdown features](https://docusaurus.io/docs/markdown-features), such as [MDX](https://mdxjs.com/).\n\n:::tip\n\nUse the power of React to create interactive blog posts.\n\n```js\n<button onClick={() => alert('button clicked!')}>Click me!</button>\n```\n\n<button onClick={() => alert('button clicked!')}>Click me!</button>\n\n:::"
+        },
+        {
+          "id": "long-blog-post",
+          "metadata": {
+            "permalink": "/blog/long-blog-post",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2019-05-29-long-blog-post.md",
+            "source": "@site/blog/2019-05-29-long-blog-post.md",
+            "title": "Long Blog Post",
+            "description": "This is the summary of a very long blog post,",
+            "date": "2019-05-29T00:00:00.000Z",
+            "formattedDate": "May 29, 2019",
+            "tags": [
+              {
+                "label": "hello",
+                "permalink": "/blog/tags/hello"
+              },
+              {
+                "label": "docusaurus",
+                "permalink": "/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 2.05,
+            "hasTruncateMarker": true,
+            "authors": [
+              {
+                "name": "Endilie Yacop Sucipto",
+                "title": "Maintainer of Docusaurus",
+                "url": "https://github.com/endiliey",
+                "imageURL": "https://github.com/endiliey.png",
+                "key": "endi"
+              }
+            ],
+            "frontMatter": {
+              "slug": "long-blog-post",
+              "title": "Long Blog Post",
+              "authors": "endi",
+              "tags": [
+                "hello",
+                "docusaurus"
+              ]
+            },
+            "prevItem": {
+              "title": "MDX Blog Post",
+              "permalink": "/blog/mdx-blog-post"
+            },
+            "nextItem": {
+              "title": "First Blog Post",
+              "permalink": "/blog/first-blog-post"
+            }
+          },
+          "content": "This is the summary of a very long blog post,\n\nUse a `<!--` `truncate` `-->` comment to limit blog post size in the list view.\n\n<!--truncate-->\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet"
+        },
+        {
+          "id": "first-blog-post",
+          "metadata": {
+            "permalink": "/blog/first-blog-post",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2019-05-28-first-blog-post.md",
+            "source": "@site/blog/2019-05-28-first-blog-post.md",
+            "title": "First Blog Post",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet",
+            "date": "2019-05-28T00:00:00.000Z",
+            "formattedDate": "May 28, 2019",
+            "tags": [
+              {
+                "label": "hola",
+                "permalink": "/blog/tags/hola"
+              },
+              {
+                "label": "docusaurus",
+                "permalink": "/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 0.12,
+            "hasTruncateMarker": false,
+            "authors": [
+              {
+                "name": "Gao Wei",
+                "title": "Docusaurus Core Team",
+                "url": "https://github.com/wgao19",
+                "image_url": "https://github.com/wgao19.png",
+                "imageURL": "https://github.com/wgao19.png"
+              }
+            ],
+            "frontMatter": {
+              "slug": "first-blog-post",
+              "title": "First Blog Post",
+              "authors": {
+                "name": "Gao Wei",
+                "title": "Docusaurus Core Team",
+                "url": "https://github.com/wgao19",
+                "image_url": "https://github.com/wgao19.png",
+                "imageURL": "https://github.com/wgao19.png"
+              },
+              "tags": [
+                "hola",
+                "docusaurus"
+              ]
+            },
+            "prevItem": {
+              "title": "Long Blog Post",
+              "permalink": "/blog/long-blog-post"
+            }
+          },
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet"
+        }
+      ],
+      "blogListPaginated": [
+        {
+          "items": [
+            "welcome",
+            "mdx-blog-post",
+            "long-blog-post",
+            "first-blog-post"
+          ],
+          "metadata": {
+            "permalink": "/blog",
+            "page": 1,
+            "postsPerPage": 10,
+            "totalPages": 1,
+            "totalCount": 4,
+            "blogDescription": "Blog",
+            "blogTitle": "Blog"
+          }
+        }
+      ],
+      "blogTags": {
+        "/blog/tags/facebook": {
+          "label": "facebook",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/blog/tags/facebook",
+          "pages": [
+            {
+              "items": [
+                "welcome"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/facebook",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/blog/tags/hello": {
+          "label": "hello",
+          "items": [
+            "welcome",
+            "long-blog-post"
+          ],
+          "permalink": "/blog/tags/hello",
+          "pages": [
+            {
+              "items": [
+                "welcome",
+                "long-blog-post"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/hello",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 2,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/blog/tags/docusaurus": {
+          "label": "docusaurus",
+          "items": [
+            "welcome",
+            "mdx-blog-post",
+            "long-blog-post",
+            "first-blog-post"
+          ],
+          "permalink": "/blog/tags/docusaurus",
+          "pages": [
+            {
+              "items": [
+                "welcome",
+                "mdx-blog-post",
+                "long-blog-post",
+                "first-blog-post"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/docusaurus",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 4,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/blog/tags/hola": {
+          "label": "hola",
+          "items": [
+            "first-blog-post"
+          ],
+          "permalink": "/blog/tags/hola",
+          "pages": [
+            {
+              "items": [
+                "first-blog-post"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/hola",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        }
+      },
+      "blogTagsListPath": "/blog/tags"
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/",
+        "source": "@site/src/pages/index.js"
+      },
+      {
+        "type": "mdx",
+        "permalink": "/markdown-page",
+        "source": "@site/src/pages/markdown-page.md",
+        "title": "Markdown page example",
+        "description": "You don't need React to write simple standalone pages.",
+        "frontMatter": {
+          "title": "Markdown page example"
+        }
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {},
+  "docusaurus-theme-classic": {},
+  "docusaurus-bootstrap-plugin": {},
+  "docusaurus-mdx-fallback-plugin": {}
+}

@@ -1,0 +1,24 @@
+{
+  "unversionedId": "developing/dapps/cosmwasm-testnet",
+  "id": "developing/dapps/cosmwasm-testnet",
+  "title": "Cosmwasm & Beaker on testnet",
+  "description": "Deploying Cosmwasm Contracts to the testnet with Beaker",
+  "source": "@site/docs/developing/dapps/cosmwasm-testnet.md",
+  "sourceDirName": "developing/dapps",
+  "slug": "/developing/dapps/cosmwasm-testnet",
+  "permalink": "/docs/developing/dapps/cosmwasm-testnet",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/developing/dapps/cosmwasm-testnet.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "CosmWasm with Testnet",
+    "permalink": "/docs/developing/dapps/cosmwasm-testnet-manual"
+  },
+  "next": {
+    "title": "Verifying Smart Contracts",
+    "permalink": "/docs/developing/dapps/cosmwasm-verify-contract"
+  }
+}
