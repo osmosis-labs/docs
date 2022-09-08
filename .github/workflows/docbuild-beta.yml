@@ -76,11 +76,11 @@ jobs:
 
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
-          npm install
-          npm run build
+          yarn install
+          yarn build
 
       - name: Deploy to Stage Branch 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: beta-build # The branch the action should deploy to.
-          folder: .vuepress/dist
+          folder: build
