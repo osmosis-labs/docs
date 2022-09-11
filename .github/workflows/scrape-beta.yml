@@ -14,8 +14,8 @@ jobs:
       # then pass their values into the Docker container using "-e" syntax
       # and inject config.json contents as another variable
 
-      - name: Sleep for 2 min to allow site to be published.
-        run: sleep 2m
+      # - name: Sleep for 2 min to allow site to be published.
+      #   run: sleep 2m
 
       - name: Scrape the Site 🧽
         env:
