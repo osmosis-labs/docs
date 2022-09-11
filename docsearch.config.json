@@ -1,5 +1,5 @@
 {
-  "index_name": "docs",
+  "index_name": "dev_beta_docs",
   "sitemap_urls": ["https://beta-docs.osmosis.zone/sitemap.xml"],
   "start_urls": [
     {

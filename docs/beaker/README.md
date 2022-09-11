@@ -40,14 +40,14 @@
 
 ### Reference
 
-- [Command](commands)
-- [Config](config)
+- [Command](./commands/README.md)
+- [Config](./config/README.md)
 
 ---
 
 ## Getting Started
 
-This section is intended to give you an introduction to `Beaker`, for more detailed reference, you can find them [here](commands/README.md).
+This section is intended to give you an introduction to `Beaker`, for more detailed reference, you can find them [here](./commands/README.md).
 
 
 
@@ -343,7 +343,7 @@ await contract.counter.query({ get_count: {} });
 You can find avaialable methods for the aforementioned instances here:
 
 - [Account](console/classes//Account.md#methods-1)
-- [Contract](./ts/beaker-console/docs/classes//Contract.md#methods-1)
+- [Contract](./console/classes//Contract.md#methods-1)
 
 You can remove `contract` and/or `account` namespace by changing config.
 
