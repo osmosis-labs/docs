@@ -20,5 +20,11 @@ export { default as RelayerIcon } from './RelayerIcon';
 export { default as AssetIcon } from './AssetIcon';
 export { default as KeysIcon } from './KeysIcon';
 
-
+export { default as OsmosisCore } from './OsmosisCore';
+export { default as LocalOsmosis } from './LocalOsmosis';
+export { default as Network } from './Network';
+export { default as Cosmwasm } from './Cosmwasm';
+export { default as Beaker } from './Beaker';
+export { default as Osmojs } from './Osmojs';
+export { default as Telescope } from './Telescope';
 

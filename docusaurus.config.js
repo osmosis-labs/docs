@@ -28,7 +28,7 @@ function defineSection(section, version = {}, options = {}) {
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
       breadcrumbs: false,
-      editUrl: 'https://github.com/dyte-in/docs/tree/main/',
+      editUrl: 'https://github.com/osmosis-labs/docs/tree/beta/',
       versions: version && {
         current: {
           label: version.label,
@@ -49,7 +49,7 @@ const latestVersions = {
   'osmojs': '12.x',
   'telescope': '12.x',
   'overview': '12.x',
-  'ui-kit': '1.x.x',
+
   'web-core': '0.38.x',
 };
 
@@ -99,7 +99,7 @@ const config = {
   title: 'Osmosis Docs',
   tagline: 'Swap, earn, and build on the leading decentralized Cosmos exchange. 🚀',
   // TODO: Update base url
-  url: 'https://docs.osmosis.zone',
+  url: 'https://beta-docs.osmosis.zone',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -295,7 +295,7 @@ const config = {
             ],
           },
         ],
-        copyright: 'Copyright © Dyte since 2020. All rights reserved.',
+        copyright: 'Copyright © Osmosis Labs since 2021. All rights reserved.',
       },
       prism: {
         theme: lightCodeTheme,
@@ -314,14 +314,14 @@ const config = {
         playgroundPosition: 'bottom',
       },
       algolia: {
-        appId: 'HL0HSV62RK',
-        apiKey: '72ebf02146698733b7114c7b36da0945',
-        indexName: 'docs',
+        appId: '2CBDVP21VK',
+        apiKey: 'd983fd8603756b134758592e0334d240',
+        indexName: 'dev_beta_docs',
         contextualSearch: true,
         searchParameters: {},
       },
       posthog: {
-        apiKey: 'c1X6knGkGuxT4WFysAWi6chjtoMmTzILKO7inv7hIgs',
+        apiKey: '00',
       },
     }),
 };

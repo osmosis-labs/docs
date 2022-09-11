@@ -1,12 +1,11 @@
 import {
-  ReactIcon,
-  UIKitIcon,
-  AngularIcon,
-  AndroidIcon,
-  AppleIcon,
-  FlutterIcon,
-  HTMLIcon,
-  VueIcon,
+  OsmosisCore,
+  LocalOsmosis,
+  Network,
+  Cosmwasm,
+  Beaker,
+  Osmojs,
+  Telescope,
 } from './icons';
 
 const SECTIONS = [
@@ -22,34 +21,34 @@ const SECTIONS = [
 
   // Core Development
   {
-    name: 'Osmosis Chain',
+    name: 'Osmosis Core',
     id: 'osmosis-core',
-    icon: UIKitIcon,
+    icon: OsmosisCore,
     section: 'core-sdk',
   },
   {
     name: 'Local Osmosis',
     id: 'localosmosis',
-    icon: UIKitIcon,
+    icon: LocalOsmosis,
     section: 'core-sdk',
   },
   {
     name: 'Networks',
     id: 'networks',
-    icon: UIKitIcon,
+    icon: Network,
     section: 'core-sdk',
   },
   //Cosmwasm
   {
     name: 'Cosmwasm',
     id: 'cosmwasm',
-    icon: ReactIcon,
+    icon: Cosmwasm,
     section: 'cosmwasm',
   },
   {
     name: 'Beaker',
     id: 'beaker',
-    icon: ReactIcon,
+    icon: Beaker,
     section: 'cosmwasm',
   },
 
@@ -57,13 +56,13 @@ const SECTIONS = [
   {
     name: 'OsmoJS',
     id: 'osmojs',
-    icon: HTMLIcon,
+    icon: Osmojs,
     section: 'ui-sdk',
   },
   {
     name: 'Telescope',
     id: 'telescope',
-    icon: HTMLIcon,
+    icon: Telescope,
     section: 'ui-sdk',
   },
 

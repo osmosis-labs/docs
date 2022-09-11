@@ -1,11 +1,5 @@
 # Public endpoints
 
-Osmosis supports the following  RPC protocols:
-
-- URI over HTTP
-- JSON-RPC 2.0 over HTTP
-- JSON-RPC 2.0 over websockets (might be deprecated in the future).
-
 Anyone can setup a node exposing endpoints to communicate with the Osmosis blockchain, for convenience there are also some public endpoints available for querying the chain. These are recommended for development and testing purposes. For maximun control and reliability it's recommended to run your own node. This can be easility accomplsihed by using the get.osmosis.zone installer. 
 
 ## Official endpoints 

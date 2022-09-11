@@ -1,69 +1,59 @@
 {
   "index_name": "docs",
-  "sitemap_urls": ["https://docs.dyte.io/sitemap.xml"],
+  "sitemap_urls": ["https://beta-docs.osmosis.zone/sitemap.xml"],
   "start_urls": [
     {
-      "url": "https://docs.dyte.io/guides",
+      "url": "https://beta-docs.osmosis.zone/guides",
       "tags": "guides",
       "selectors_key": "guides"
     },
     {
-      "url": "https://docs.dyte.io/react-ui-kit",
-      "tags": "react-ui-kit",
-      "selectors_key": "react-ui-kit"
+      "url": "https://beta-docs.osmosis.zone/osmosis-core",
+      "tags": "osmosis-core",
+      "selectors_key": "osmosis-core"
     },
     {
-      "url": "https://docs.dyte.io/ui-kit",
+      "url": "https://beta-docs.osmosis.zone/cosmwasm",
       "tags": "ui-kit",
       "selectors_key": "ui-kit"
     },
     {
-      "url": "https://docs.dyte.io/angular-ui-kit",
-      "tags": "angular-ui-kit",
-      "selectors_key": "angular-ui-kit"
+      "url": "https://beta-docs.osmosis.zone/cosmwasm",
+      "tags": "cosmwasm",
+      "selectors_key": "cosmwasm"
     },
     {
-      "url": "https://docs.dyte.io/vue-ui-kit",
-      "tags": "vue-ui-kit",
-      "selectors_key": "vue-ui-kit"
+      "url": "https://beta-docs.osmosis.zone/localosmosis",
+      "tags": "localosmosis",
+      "selectors_key": "localosmosis"
     },
     {
-      "url": "https://docs.dyte.io/web-core",
-      "tags": "web-core",
-      "selectors_key": "web-core"
+      "url": "https://beta-docs.osmosis.zone/networks",
+      "tags": "networks",
+      "selectors_key": "networks"
     },
     {
-      "url": "https://docs.dyte.io/react-native",
-      "tags": "react-native",
-      "selectors_key": "react-native"
+      "url": "https://beta-docs.osmosis.zone/beaker",
+      "tags": "beaker",
+      "selectors_key": "beaker"
     },
 
     {
-      "url": "https://docs.dyte.io/ios",
-      "tags": "ios",
-      "selectors_key": "ios"
+      "url": "https://beta-docs.osmosis.zone/telescope",
+      "tags": "telescope",
+      "selectors_key": "telescope"
     },
     {
-      "url": "https://docs.dyte.io/flutter",
-      "tags": "flutter",
-      "selectors_key": "flutter"
+      "url": "https://beta-docs.osmosis.zone/osmojs",
+      "tags": "osmojs",
+      "selectors_key": "osmojs"
     },
     {
-      "url": "https://docs.dyte.io/cli",
-      "tags": "cli",
-      "selectors_key": "cli"
+      "url": "https://beta-docs.osmosis.zone/overview",
+      "tags": "overview",
+      "selectors_key": "overview"
     },
-    {
-      "url": "https://docs.dyte.io/react",
-      "tags": "react",
-      "selectors_key": "react"
-    },
-    {
-      "url": "https://docs.dyte.io/javascript",
-      "tags": "javascript",
-      "selectors_key": "javascript"
-    },
-    "https://docs.dyte.io/"
+    "https://beta-docs.osmosis.zone/"
   ],
   "stop_urls": [],
 
@@ -138,7 +128,7 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "vue-ui-kit": {
+    "localosmosis": {
       "lvl0": {
         "selector": "",
         "global": true,
@@ -152,7 +142,7 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "web-core": {
+    "networks": {
       "lvl0": {
         "selector": "",
         "global": true,
@@ -166,7 +156,7 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "react-native": {
+    "beaker": {
       "lvl0": {
         "selector": "",
         "global": true,
@@ -194,11 +184,11 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "ios": {
+    "telescope": {
       "lvl0": {
         "selector": "",
         "global": true,
-        "default_value": "iOS"
+        "default_value": "telescope"
       },
       "lvl1": "article h1",
       "lvl2": "article h2",
@@ -208,11 +198,11 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "flutter": {
+    "osmojs": {
       "lvl0": {
         "selector": "",
         "global": true,
-        "default_value": "Flutter"
+        "default_value": "osmojs"
       },
       "lvl1": "article h1",
       "lvl2": "article h2",
@@ -222,11 +212,11 @@
       "lvl6": "article h6",
       "text": "article p, article li, article td:last-child"
     },
-    "cli": {
+    "overview": {
       "lvl0": {
         "selector": "",
         "global": true,
-        "default_value": "CLI"
+        "default_value": "overview"
       },
       "lvl1": "article h1",
       "lvl2": "article h2",

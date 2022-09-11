@@ -12,7 +12,7 @@ import RunInPostmanButton from '../components/RunInPostmanButton';
 
 const API_TOOLTIP_KEY = 'dyte-api-v2-tooltip-shown';
 
-function APIElement({ layout = 'sidebar', currentVersion = 'v1' }) {
+function APIElement({ layout = 'sidebar', currentVersion = 'RPC' }) {
   return (
     <BrowserOnly
       fallback={
@@ -53,7 +53,7 @@ export default function Home() {
     `https://docs.dyte.io${location.pathname}${location.search}`
   );
 
-  const currentVersion = url.searchParams.get('v') || 'v1';
+  const currentVersion = url.searchParams.get('v') || 'RPC';
 
   useEffect(() => {
     // show V2 tooltip only if user hasn't seen it yet
@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <Layout
       title="API Reference"
-      description="Dyte REST API Reference"
+      description="Osmosis REST API Reference"
       noFooter
       wrapperClassName="api-reference"
     >
@@ -75,13 +75,15 @@ export default function Home() {
         <link rel="stylesheet" href="/assets/css/elements.min.css" />
       </Head>
       <div className="header">
-        <h2>Dyte Backend API {currentVersion}</h2>
+        <h2>Osmosis {currentVersion} endpoints</h2>
         <div className="aside">
-          <RunInPostmanButton />
+          {/* <RunInPostmanButton /> */}
+          <a className="navbar__item navbar__link dev-portal-signup dev-postman-link"  target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis'>Open Postman Collection</a>
+
           <DyteTooltip
             placement="bottom"
             variant="primary"
-            label="Hey, we have v2 version for our APIs rolling out slowly, you can check them out here."
+            label="Please note there are multiple servers available such as mainnet, testnet, etc"
             open={showV2Tooltip}
             onDyteOpenChange={(open) => {
               if (!open) {
@@ -93,8 +95,8 @@ export default function Home() {
             <SectionsMenu
               defaultValue={currentVersion}
               values={[
-                { name: 'v1', id: 'v1' },
-                { name: 'v2', id: 'v2' },
+                { name: 'RPC', id: 'RPC' },
+                { name: 'LCD', id: 'LCD' },
               ]}
               onValueChange={(version) => {
                 if (showV2Tooltip) {

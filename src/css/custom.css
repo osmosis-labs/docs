@@ -38,8 +38,9 @@ body {
 
 /* Dyte Docs Tokens */
 :root {
-  --docs-color-primary: #2160fd;
-  --docs-color-primary-100: #1a90ff;
+  --docs-color-primary: #322DC2;
+  --docs-color-secondary: #db5224;
+  --docs-color-primary-100: #4540D8;
   --docs-color-primary-tint: rgba(33, 96, 253, 0.16);
   --docs-color-primary-tint-light: rgba(33 96 253/0.24);
 
@@ -90,13 +91,13 @@ body {
     Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   /* Theme colors */
-  --ifm-color-primary: #2160fd;
-  --ifm-color-primary-dark: #1959fc;
-  --ifm-color-primary-darker: #0f51f8;
-  --ifm-color-primary-darkest: #0042e7;
-  --ifm-color-primary-light: #3d72f8;
-  --ifm-color-primary-lighter: #477af8;
-  --ifm-color-primary-lightest: #6791fc;
+  --ifm-color-primary: #110D8B;
+  --ifm-color-primary-dark: #0A0674;
+  --ifm-color-primary-darker: #080559;
+  --ifm-color-primary-darkest: #02003F;
+  --ifm-color-primary-light: #1D18A8;
+  --ifm-color-primary-lighter: #2722BB;
+  --ifm-color-primary-lightest: #322DC2;
 
   --ifm-navbar-shadow: none;
   --ifm-toc-border-color: #dedede;
@@ -315,6 +316,13 @@ html[data-theme='dark'] .discord-icon::before {
 
 .dev-portal-link {
   background-color: var(--docs-color-primary);
+  border-radius: 4px;
+  margin-right: 12px;
+  transition-property: all;
+}
+
+.dev-postman-link {
+  background-color: var(--docs-color-secondary);
   border-radius: 4px;
   margin-right: 12px;
   transition-property: all;
