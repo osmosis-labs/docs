@@ -316,7 +316,7 @@ const config = {
       algolia: {
         appId: '2CBDVP21VK',
         apiKey: 'd983fd8603756b134758592e0334d240',
-        indexName: 'dev_beta_docs',
+        indexName: 'Docs',
         contextualSearch: true,
         searchParameters: {},
       },
