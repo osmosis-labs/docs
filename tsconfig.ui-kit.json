@@ -16,7 +16,6 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
-  "include": ["node_modules/@dytesdk/ui-kit/dist/types"],
   "typedocOptions": {
     "name": "Reference",
     "disableSources": true,
