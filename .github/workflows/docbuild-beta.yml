@@ -77,7 +77,6 @@ jobs:
 
       - name: Install and Build 🔧 # This will create version inside the 'build' folder.
         run: |
-          yarn install
           yarn build
 
       - name: Deploy to Beta Branch 🚀
