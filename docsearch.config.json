@@ -1,5 +1,6 @@
 {
-  "index_name": "docs",
+  "index_name": "Docs",
+  "sitemap_urls": ["https://beta-docs.osmosis.zone/sitemap.xml"],
   "start_urls": [
     {
       "url": "https://beta-docs.osmosis.zone/guides",
@@ -47,7 +48,7 @@
       "tags": "overview",
       "selectors_key": "overview"
     },
-    "https://beta-docs.osmosis.zone/"
+    "https://beta-docs.osmosis.zone"
   ],
   "stop_urls": [],
 
