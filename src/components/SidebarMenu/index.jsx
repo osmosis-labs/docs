@@ -79,11 +79,7 @@ export default function SidebarMenu() {
                     onValueChange={handleSectionChange}
                     triggerClassName={styles.sectionsMenu}
                   />
-                  <VersionDropdown
-                    docsPluginId={id}
-                    dropdownItemsBefore={[]}
-                    dropdownItemsAfter={[]}
-                  />
+            
                 </div>
               ) : (
                 <p className={styles.description}>{description}</p>

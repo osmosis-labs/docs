@@ -18,7 +18,7 @@ const posthogPlugin = require('./plugins/posthog-plugin.cjs');
  * @param {string} section
  * @param {import('@docusaurus/plugin-content-docs').Options} options
  */
-function defineSection(section, version = {}, options = {}) {
+function defineSection(section, options = {}) {
   return [
     '@docusaurus/plugin-content-docs',
     /** @type {import('@docusaurus/plugin-content-docs').Options} */
@@ -29,69 +29,22 @@ function defineSection(section, version = {}, options = {}) {
       sidebarPath: require.resolve('./sidebars-default.js'),
       breadcrumbs: false,
       editUrl: 'https://github.com/osmosis-labs/docs/tree/beta/',
-      versions: version && {
-        current: {
-          label: version.label,
-        },
-      },
       ...defaultSettings,
       ...options,
     }),
   ];
 }
 
-const latestVersions = {
-  'osmosis-core': '12.x',
-  'localosmosis': '12.x',
-  'networks': '12.x',
-  'cosmwasm': '12.x',
-  'beaker': '12.x',
-  'osmojs': '12.x',
-  'telescope': '12.x',
-  'overview': '12.x',
-
-  'web-core': '0.38.x',
-};
-
 const SECTIONS = [
-
-  // Osmosis Core
-  defineSection('osmosis-core', {
-    label: latestVersions['osmosis-core'],
-  }),
-  defineSection('localosmosis', {
-    label: latestVersions['localosmosis'],
-  }),
-
-  defineSection('networks', {
-    label: latestVersions['networks'],
-  }),
-
-  defineSection('cosmwasm', {
-    label: latestVersions['cosmwasm'],
-  }),
-
-  defineSection('beaker', {
-    label: latestVersions['beaker'],
-  }),
-
-  // [web] ui-sdk
-
-  defineSection('telescope', {
-    label: latestVersions['telescope'],
-  }),
-
-  defineSection('osmojs', {
-    label: latestVersions['osmojs'],
-  }),
-
-
-  //Overview
-  defineSection('overview', {
-    label: latestVersions['overview'],
-  }),
-
-
+  defineSection('osmosis-core'),
+  defineSection('localosmosis'),
+  defineSection('networks'),
+  defineSection('cosmwasm'),
+  defineSection('frontend'),
+  defineSection('beaker'),
+  defineSection('telescope'),
+  defineSection('osmojs'),
+  defineSection('overview'),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
@@ -243,16 +196,16 @@ const config = {
             title: 'Product',
             items: [
               {
-                label: 'Demo',
-                href: 'https://app.dyte.io',
+                label: 'Launch App',
+                href: 'https://app.osmosis.zome',
               },
               {
                 label: 'Developer Portal',
-                href: 'https://dev.dyte.io',
+                href: 'https://docs.osmosis.zone',
               },
               {
-                label: 'Pricing',
-                href: 'https://dyte.io/#pricing',
+                label: 'Ecosystem',
+                href: 'https://osmosis.zone/ecosystem',
               },
             ],
           },
