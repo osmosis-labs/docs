@@ -113,7 +113,7 @@ moreExamples();
 
 # Querying Smart Contracts
 
-::: warning
+:::warning
 Before we query smart contracts in localOsmosis we must [deploy one by following this guide](https://docs.osmosis.zone/developing/dapps/get_started/cosmwasm-localosmosis.html). 
 :::
 
@@ -165,7 +165,7 @@ The output should look like this:
 ## Get the count from the contract
 The contract we are interacting with has a few simple functions. 'get_count', 'increment' and 'reset'. These two functions can be called via by using the `queryContractSmart` method. 
 
-::: tip
+:::tip
 Please note there is a complete guide on how to upload the example contract on localOsmosis [here](cosmwasm-localosmosis.html).
 :::
 

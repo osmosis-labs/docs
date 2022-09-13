@@ -52,7 +52,7 @@ Note how we added `--network testnet` to tell beaker to deploy to the testnet Os
 ### Deploy with an admin
 In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/main/packages/cli/src/framework/config.rs) file. 
 
-::: warning
+:::warning
 Please note that account test1 is publicaly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker will support local keyring in about 1-2 weeks. 
 :::
 

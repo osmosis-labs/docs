@@ -55,7 +55,7 @@ Then click Add/Remove Liquidity
 
 Input a quantity of one of the assets. The quantity of the other asset(s) will auto-complete. (Pools require assets to be deposited in pre-determined weights.)
 
-::: warning Warning
+:::warning Warning
 Please note that simply adding liquidity will not give you rewards. In order to get rewards you must bond LP tokens. 
 :::
 

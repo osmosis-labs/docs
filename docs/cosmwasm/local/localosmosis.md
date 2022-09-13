@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # CosmWasm & LocalOsmosis 
 
-::: tip  
+:::tip  
 You can now deploy contracts to LocalOsmosis with [Beaker](https://github.com/osmosis-labs/beaker). The official tooling to deploy Osmosis Smartcontracts.
 :::
 
@@ -86,7 +86,7 @@ You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOs
 ![](../../assets/localOsmosis.png)
 
 
-::: tip  
+:::tip  
 To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page]([developing/tools/localosmosis.html#accounts](https://github.com/osmosis-labs/localosmosis#accounts)). 
 :::
 

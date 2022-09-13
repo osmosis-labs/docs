@@ -19,7 +19,7 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Upload the code
     - Execute the contract
 
-::: tip
+:::tip
 Please note this a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](cosmwasm-testnet-beaker.md) with a couple of commands. 
 :::
 

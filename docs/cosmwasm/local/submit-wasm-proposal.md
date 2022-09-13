@@ -24,7 +24,7 @@ docker-compose up
 ```
 You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOsmosis running while you perform the next steps in a new terminal window.
 
-::: tip
+:::tip
 If you had previously installed localOsmosis, it's a good idea to start fresh and delete ~/localosmosis `rm -rf ~/localosmosis` before installing it again.
 ::: 
 
