@@ -12,8 +12,6 @@ Governance is the critical component of how Osmosis evolves. Active stakeholders
 
 The pools eligible for liquidity rewards will be selected by OSMO governance participants, allowing the stakeholders to formulate an incentivization strategy that best aligns with the long-term interests of the protocol.
 
-While OSMO will initially function as both a governance token and a staking token, Osmosis intends to transition into a Cosmos Hub shared security zone as soon as the feature is ready.
-
 ## Superfluid Staking
 
 The OSMO token is also minted and burned in the context of Superfluid Staking. As a Osmosis-specific feature, Superfluid Staking provides the consensus layer more security with a sort of "Proof of Useful Stake". Each person gets an amount of Osmo representative of the value of their share of liquidity pool tokens staked and delegated to validators, resulting in the security guarantee of the consensus layer to also be based on GAMM LP shares. 
