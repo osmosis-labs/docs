@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkosmosis_docs=self.webpackChunkosmosis_docs||[]).push([[2746],{83159:(s,e,a)=>{a.r(e),a.d(e,{default:()=>c});var o=a(67294),t=a(76775);function c(){const s=(0,t.k6)();return o.createElement(t.l_,{to:{pathname:"/api",search:"v=v2",hash:s.location.hash}})}}}]);
