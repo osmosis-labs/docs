@@ -21,7 +21,7 @@ go version go1.18.1 darwin/amd64
 
 ## Build Osmosis
 
-In order to build Flink you need the source code. Either [download the source of a release](https://github.com/osmosis-labs/osmosis/releases) or [clone the git repository](https://github.com/osmosis-labs/osmosis).
+In order to build Osmosis you need the source code. Either [download the source of a release](https://github.com/osmosis-labs/osmosis/releases) or [clone the git repository](https://github.com/osmosis-labs/osmosis).
 
 Build Osmosis from the source code:
 

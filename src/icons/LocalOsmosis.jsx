@@ -12,7 +12,7 @@ export default function ReactIcon(props) {
     <defs>
       <style>
         {
-          "\n      .cls-1 {\n        fill: #fff100;\n      }\n\n      .cls-2 {\n        fill: #d9e4e8;\n      }\n\n      .cls-3 {\n        fill: #17292d;\n      }\n\n      .cls-4 {\n        fill: #141f38;\n      }\n\n      .cls-5 {\n        opacity: .14;\n      }\n    "
+          "\n      .clslocal-1 {\n        fill: #fff100;\n      }\n\n      .clslocal-2 {\n        fill: #d9e4e8;\n      }\n\n      .clslocal-3 {\n        fill: #17292d;\n      }\n\n      .clslocal-4 {\n        fill: #141f38;\n      }\n\n      .clslocal-5 {\n        opacity: .14;\n      }\n    "
         }
       </style>
     </defs>
