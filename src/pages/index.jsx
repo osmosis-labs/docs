@@ -31,6 +31,7 @@ import {
   KeysIcon,
   Transaction,
   OsmosisCore,
+  Contribute,
 } from '../icons';
 import GuidesSection from '../components/GuidesSection';
 
@@ -137,7 +138,7 @@ export default function Homepage() {
     title="Contributing"
     description=" Guidelines to contributing to Osmosis core development."
     to="/osmosis-core/contributing"
-    icon={<KeysIcon />}
+    icon={<Contribute />}
   />
 
             </Section>
@@ -183,7 +184,7 @@ export default function Homepage() {
   <Card
     title="TS Codegen"
     description="The npm package for the Official Cosmos chain registry"
-    to="https://github.com/cosmology-tech/chain-registry"
+    to="https://github.com/CosmWasm/ts-codegen"
     icon={<Tscodegen />}
   />   
  

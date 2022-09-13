@@ -1,10 +1,24 @@
 # Joining Mainnet
 
-## Install Osmosis Binary
+## Osmosis Installer
+
+Join a netork by using Osmosis Installer from [https://get.osmosis.zone](https://get.osmosis.zone) 
+
+
+![](../assets/installer_11.png)
+
+Simply run:
+
+```
+curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
+```
+
+
+
+## Or Install Osmosis Binary manually
 
 Make sure you have [installed the Osmosis Binary (CLI)](https://docs.osmosis.zone/developing/tools/osmosisd.html#minimum-requirements) prior to following the below instructions.
 
-You may also [use the Osmosis installer](https://docs.osmosis.zone/developing/tools/osmosisd.html#quick-start) if you want everything to be done automatically.
 
 ## Initialize Osmosis Node
 

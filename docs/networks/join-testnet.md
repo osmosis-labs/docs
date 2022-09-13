@@ -1,6 +1,21 @@
 # Joining Testnet
 
-## Install Osmosis Binary
+## Osmosis Installer
+
+Join a netork by using Osmosis Installer from [https://get.osmosis.zone](https://get.osmosis.zone) 
+
+
+![](../assets/installer_11.png)
+
+Simply run:
+
+```
+curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
+```
+
+
+
+## Or Install Osmosis Binary manually
 
 Make sure you have [installed the Osmosis Binary (CLI)](../cli/install#manual-installation) prior to following the below instructions.
 
