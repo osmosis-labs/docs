@@ -29,6 +29,8 @@ import {
   Cosmoskit,
   Tscodegen,
   KeysIcon,
+  Transaction,
+  OsmosisCore,
 } from '../icons';
 import GuidesSection from '../components/GuidesSection';
 
@@ -77,10 +79,7 @@ export default function Homepage() {
               HeadingTag="h4"
               description={
                 <>
-                  Realtime communication SDKs to add high quality audio/video
-                  calls to your web applications. <br />
-                  These are generally used with our UI Kit but you can create
-                  your own UI as well, it&apos;s pretty easy.
+                  Everything that is needed to learn about the Osmosis core chain development. 
                 </>
               }
             >
@@ -90,7 +89,7 @@ export default function Homepage() {
     title="Build and Test Osmosis Source Code"
     description="Getting started with building and testing Osmosis codebase"
     to="/osmosis-core/build"
-    icon={<ChainIcon />}
+    icon={<OsmosisCore />}
   />
   <Card
     title="IDE Setup"
@@ -132,7 +131,7 @@ export default function Homepage() {
     title="Transaction Structure"
     description=" Understanding the structure of a transaction on the Osmosis blockchain"
     to="/osmosis-core/guides/structure"
-    icon={<KeysIcon />}
+    icon={<Transaction />}
   />
   <Card
     title="Contributing"

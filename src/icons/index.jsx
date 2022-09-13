@@ -31,3 +31,4 @@ export { default as Createapp } from './Createapp';
 export { default as Cosmoskit } from './Cosmoskit';
 export { default as Frontend } from './Frontend';
 export { default as Tscodegen } from './Tscodegen';
+export { default as Transaction } from './Transaction';
