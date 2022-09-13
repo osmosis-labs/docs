@@ -6,6 +6,7 @@ import {
   Beaker,
   Osmojs,
   Telescope,
+  Frontend,
 } from './icons';
 
 const SECTIONS = [
@@ -54,16 +55,22 @@ const SECTIONS = [
 
   // UI SDKs
   {
+    name: 'Frontend',
+    id: 'frontend',
+    icon: Frontend,
+    section: 'frontend',
+  },
+  {
     name: 'OsmoJS',
     id: 'osmojs',
     icon: Osmojs,
-    section: 'ui-sdk',
+    section: 'frontend',
   },
   {
     name: 'Telescope',
     id: 'telescope',
     icon: Telescope,
-    section: 'ui-sdk',
+    section: 'frontend',
   },
 
 ];
@@ -83,7 +90,7 @@ const MULTI_SECTIONS = [
     },
     {
       name: 'Frontend SDKs',
-      section: 'ui-sdk',
+      section: 'frontend',
       description:
         'Libraries & UI components to build on top of Osmosis.',
     }

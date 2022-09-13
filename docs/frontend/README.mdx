@@ -1,5 +1,5 @@
 ---
-title: Cosmwasm
+title: Frontend SDKs
 sidebar_position: 1
 ---
 ---
@@ -15,129 +15,63 @@ import {
   ModulesIcon,
   RelayerIcon,
   AssetIcon,
-  KeysIcon,
+  Telescope,
+  Osmojs,
+  Createapp,
+  Cosmoskit,
+  Tscodegen
 } from '../../src/icons';
 
-# Smart Contracts Development
+# Frontend SDKs and Tools
 
-The following are a collection of guides on how to build and deploy CoswmWasm smart contracts on the Osmosis blockchain. Please note that a user can deploy contracts with tools such as Beaker or directly with the Osmosisd binary via CLI. 
+The following are libraries and utilities to start developing with Osmosis.
 
-<Section title="Guides" id="web-sdks" hasSubSections >
+<Section title="Frontend Libraries & Utilities" id="web-sdks" hasSubSections >
 
    <Section>
     <Card
-    title="CosmWasm on LocalOsmosis"
-    description=" Compile, upload and interact with a contract with LocalOsmosis."
-    to="/cosmwasm/local/localosmosis"
-    icon={<KeysIcon />}
-  />
-    <Card
-    title=" Deploy Cosmwasm Contracts to Testnet"
-    description=" Deploying contracts to testnet via osmosisd binary"
-    to="/cosmwasm/testnet/cosmwasm-deployment"
-    icon={<KeysIcon />}
-  />
-    <Card
-    title=" Submit a CosmWasm Governance Proposal"
-    description="  Example on how submit a CosmWasm binary proposal."
-    to="/cosmwasm/local/submit-wasm-proposal"
-    icon={<KeysIcon />}
-  />
-    <Card
-    title=" Deploy Cosmwasm Contracts to Testnet with Beaker"
-    description=" Deploying contracts to testnet with Beaker"
-    to="/cosmwasm/testnet/cosmwasm-beaker"
-    icon={<KeysIcon />}
-  />
- 
-  <Card
-    title="Verifying Smart Contracts"
-    description=" Download contract and verify the hash."
-    to="/cosmwasm/cosmwasm-verify-contract"
-    icon={<KeysIcon />}
-  />
- 
-  </Section>
-
-  </Section>
-
-
-<Section title="Resources" id="web-sdks" hasSubSections >
-   <Section>
-    <Card
-    title="Osmosis Contract List"
-    description="Repository contains a list of all approved code IDs to Osmosis"
-    to="https://github.com/osmosis-labs/contract-list"
-    icon={<KeysIcon />}
-  />
-    <Card
-    title="Your first contract"
-    description=" Official CosmWasm Documentation"
-    to="https://docs.cosmwasm.com/docs/1.0/getting-started/intro"
-    icon={<KeysIcon />}
-  />
-    </Section>
-  </Section>
-
-
-<Section title="Front-end Development" id="web-sdks" hasSubSections >
-   <Section>
-    <Card
-    title=" Cosmwasm & Javascript"
-    description="Interacting via JavaScript runtimes such as Node.js and the browser."
-    to="/cosmwasm/javascript"
-    icon={<KeysIcon />}
-  />
-    </Section>
-  </Section>
-
-
-<Section title="Tools" id="web-sdks" hasSubSections >
-   <Section>
-    <Card
-    title="Beaker"
-    description="Easy to scaffold a new cosmwasm app."
-    to="/beaker"
-    icon={<KeysIcon />}
-  />
-    <Card
-    title="LocalOsmosis"
-    description="Run Osmosis locally"
-    to="/localosmosis"
-    icon={<KeysIcon />}
-  />
-<Card
-    title="OsmoJs"
-    description="Osmosis JS Stargate Client"
+    title="OsmoJS"
+    description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
     to="/osmojs"
-    icon={<KeysIcon />}
+    icon={<Osmojs />}
   />
-<Card
-    title="Osmosisd CLI"
-    description="Learn how to interact with Osmosis via the CLI"
-    to="/osmosis-core/osmosisd"
-    icon={<KeysIcon />}
+
+  <Card
+    title="Cosmos Kit"
+    description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
+    to="https://github.com/cosmology-tech/cosmos-kit"
+    icon={<Cosmoskit />}
   />
-    </Section>
-  </Section>
+
+  <Card
+    title="Telescope"
+    description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
+    to="/telescope"
+    icon={<Telescope />}
+  />
+
+  <Card
+    title="Create Cosmos App"
+    description="Set up a modern Cosmos app by running one command"
+    to="https://github.com/cosmology-tech/create-cosmos-app"
+    icon={<Createapp />}
+  />
+
+  <Card
+    title="Chain Registry"
+    description="The npm package for the Official Cosmos chain registry"
+    to="https://github.com/cosmology-tech/chain-registry"
+    icon={<Cosmoskit />}
+  />
+
+  <Card
+    title="TS Codegen"
+    description="The npm package for the Official Cosmos chain registry"
+    to="https://github.com/cosmology-tech/chain-registry"
+    icon={<Tscodegen />}
+  />   
  
+  </Section>
 
+  </Section>
 
-<Section title="Networks" id="web-sdks" hasSubSections >
-   <Section>
-    <Card
-    title="Public endpoints"
-    description="Official and third party API endpoints."
-    to="/networks"
-    icon={<KeysIcon />}
-  />
-
-<Card
-    title="Explorers"
-    description="Block and contract explorers"
-    to="/networks/explorers"
-    icon={<KeysIcon />}
-  />
-
-</Section>
-</Section>

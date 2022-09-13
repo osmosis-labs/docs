@@ -50,13 +50,13 @@ const SECTIONS = [
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Osmosis Docs',
-  tagline: 'Swap, earn, and build on the leading decentralized Cosmos exchange. 🚀',
+  tagline: 'Build on the leading decentralized Cosmos exchange. 🚀',
   // TODO: Update base url
   url: 'https://beta-docs.osmosis.zone',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: '/favicon.ico',
+  favicon: '/favicon.png',
   trailingSlash: false,
 
   // GitHub pages deployment config.
@@ -86,7 +86,7 @@ const config = {
           breadcrumbs: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/dyte-in/docs/tree/main/',
+          editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
           ...defaultSettings,
         },
         blog: false,
@@ -95,9 +95,6 @@ const config = {
             require.resolve('./src/css/custom.css'),
             require.resolve('./src/css/api-reference.css'),
           ],
-        },
-        googleAnalytics: {
-          trackingID: '000',
         },
       }),
     ],
@@ -188,7 +185,7 @@ const config = {
           href: '/',
           src: '/logo/light.svg',
           srcDark: '/logo/dark.svg',
-          alt: 'Dyte Docs',
+          alt: 'Osmosis Docs',
           height: '36px',
         },
         links: [
@@ -210,40 +207,19 @@ const config = {
             ],
           },
           {
-            title: 'Company',
-            items: [
-              {
-                label: 'About Us',
-                href: 'https://dyte.io',
-              },
-              {
-                label: 'Join Us',
-                href: 'https://dyte.freshteam.com/jobs',
-              },
-              {
-                label: 'Privacy Policy',
-                href: 'https://dyte.io/privacy-policy.html',
-              },
-              {
-                label: 'Contact Us',
-                href: 'mailto:support@dyte.in',
-              },
-            ],
-          },
-          {
             title: 'Resources',
             items: [
               {
                 label: 'Documentation',
-                href: 'https://docs.dyte.io',
+                href: 'https://docs.osmosis.zone',
               },
               {
-                label: 'Blog',
-                href: 'https://dyte.io/blog',
+                label: 'Medium',
+                href: 'https://medium.com/@Osmosis',
               },
               {
                 label: 'Community',
-                href: 'https://community.dyte.io',
+                href: 'https://commonwealth.im/osmosis/',
               },
             ],
           },

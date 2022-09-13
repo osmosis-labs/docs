@@ -1,10 +1,5 @@
 # Contributing
 
-Thanks for contributing! :smile:
-We love contributions from everyone.
-By participating in this project,
-you agree to abide by our [code of conduct](./CODE_OF_CONDUCT.md).
-
 The following is a set of guidelines for contributing. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## Table of Contents

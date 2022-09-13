@@ -18,6 +18,17 @@ import {
   TerminalIcon,
   DisconnectedPlugIcon,
   UIKitIcon,
+  ChainIcon,
+  IDEIcon,
+  ModulesIcon,
+  RelayerIcon,
+  AssetIcon,
+  Telescope,
+  Osmojs,
+  Createapp,
+  Cosmoskit,
+  Tscodegen,
+  KeysIcon,
 } from '../icons';
 import GuidesSection from '../components/GuidesSection';
 
@@ -73,79 +84,118 @@ export default function Homepage() {
                 </>
               }
             >
-              <Card
-                title="Osmosis Core"
-                description=" A node implementation for the Osmosis chain"
-                to="/osmosis-core/"
-                icon={<UIKitIcon />}
-              />
-              <Card
-                title="Modules"
-                description="Create your own plugins for use in meetings"
-                to="/osmosis-core/modules/"
-                icon={<DisconnectedPlugIcon />}
-              />
-              <Card
-                title="Cosmos-sdk fork"
-                description="Fork of the Cosmos SDK used in Osmosis"
-                to="https://github.com/osmosis-labs/cosmos-sdk"
-                icon={<DisconnectedPlugIcon />}
-              />
-            </Section>
-            <Section title="🎨 UI Kit" id="ui-kit" HeadingTag="h4">
-              <Card
-                title="React UI Kit"
-                description="Add UI Kit to your React App"
-                to="/react-ui-kit/"
-                icon={<ReactIcon />}
-              />
-              <Card
-                title="UI Kit"
-                description="HTML Web Components"
-                to="/ui-kit/"
-                icon={<HTMLIcon />}
-              />
-              <Card
-                title="Angular UI Kit"
-                description="Add UI Kit to your Angular App"
-                to="/angular-ui-kit/"
-                icon={<AngularIcon />}
-              />
+             
+
+             <Card
+    title="Build and Test Osmosis Source Code"
+    description="Getting started with building and testing Osmosis codebase"
+    to="/osmosis-core/build"
+    icon={<ChainIcon />}
+  />
+  <Card
+    title="IDE Setup"
+    description="Recommended IDE setup for developing on Osmosis in Go"
+    to="/osmosis-core/ide-guide"
+    icon={<IDEIcon />}
+  />
+  <Card
+    title="Osmosisd CLI"
+    description="Install osmosisd to join the network or simple query it."
+    to="/osmosis-core/osmosisd"
+    icon={<TerminalIcon />}
+  />
+  <Card
+    title="Modules"
+    description="Osmosis modules and their respective CLI commands"
+    to="/osmosis-core/modules"
+    icon={<ModulesIcon />}
+  />
+  <Card
+    title="Relaying"
+    description=" Relay IBC packets between Osmosis and other chains"
+    to="/osmosis-core/relaying"
+    icon={<RelayerIcon />}
+  />
+  <Card
+    title="Assets"
+    description="     Currently supported assets on Osmosis with their corresponding channels and IBC denoms."
+    to="/osmosis-core/asset-info"
+    icon={<AssetIcon />}
+  />
+  <Card
+    title="Key Management"
+    description="Managing keys via CLI and advanced operations such as multisig wallets"
+    to="/osmosis-core/category/keys-management"
+    icon={<KeysIcon />}
+  />
+  <Card
+    title="Transaction Structure"
+    description=" Understanding the structure of a transaction on the Osmosis blockchain"
+    to="/osmosis-core/guides/structure"
+    icon={<KeysIcon />}
+  />
+  <Card
+    title="Contributing"
+    description=" Guidelines to contributing to Osmosis core development."
+    to="/osmosis-core/contributing"
+    icon={<KeysIcon />}
+  />
+
             </Section>
           </Section>
 
-          <Section title="📱 Mobile SDKs" id="mobile-sdks">
-            <Card
-              title="React Native"
-              description="Integrate Dyte in your React Native App"
-              to="/react-native/"
-              icon={<ReactIcon />}
-            />
-            <Card
-              title="Android"
-              description="Integrate Dyte in your Android App (Kotlin)"
-              to="/android/"
-              icon={<KotlinIcon />}
-            />
-            <Card
-              title="iOS"
-              description="Integrate Dyte in your iOS App (Swift)"
-              to="/ios/"
-              icon={<SwiftIcon />}
-            />
-            <Card
-              title="Flutter"
-              description="Integrate Dyte in your Flutter App"
-              to="/flutter/"
-              icon={<FlutterIcon />}
-            />
-          </Section>
+    
+   <Section title="Frontend Libraries & Utilities" id="front-end">
+    <Card
+    title="OsmoJS"
+    description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
+    to="/osmojs"
+    icon={<Osmojs />}
+  />
+
+  <Card
+    title="Cosmos Kit"
+    description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
+    to="https://github.com/cosmology-tech/cosmos-kit"
+    icon={<Cosmoskit />}
+  />
+
+  <Card
+    title="Telescope"
+    description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
+    to="/telescope"
+    icon={<Telescope />}
+  />
+
+  <Card
+    title="Create Cosmos App"
+    description="Set up a modern Cosmos app by running one command"
+    to="https://github.com/cosmology-tech/create-cosmos-app"
+    icon={<Createapp />}
+  />
+
+  <Card
+    title="Chain Registry"
+    description="The npm package for the Official Cosmos chain registry"
+    to="https://github.com/cosmology-tech/chain-registry"
+    icon={<Cosmoskit />}
+  />
+
+  <Card
+    title="TS Codegen"
+    description="The npm package for the Official Cosmos chain registry"
+    to="https://github.com/cosmology-tech/chain-registry"
+    icon={<Tscodegen />}
+  />   
+ 
+  </Section>
+
 
           <Section title="🛠 Tools">
             <Card
-              title="Dyte CLI"
+              title="Osmosisd CLI"
               description="A command line tool to get things done quick!"
-              to="/cli/"
+              to="/osmosis-core/osmosisd"
               icon={<TerminalIcon />}
             />
           </Section>
@@ -153,13 +203,12 @@ export default function Homepage() {
           <Section title="📜 API Reference">
             <Card
               title="API Reference"
-              description="Dyte REST API Reference"
+              description="Osmosis RPC and LCD API Reference"
               to="/api/"
               icon={<APIReferenceIcon />}
             />
           </Section>
 
-          <GuidesSection title="📖 Advanced Guides" />
         </div>
       </div>
     </Layout>

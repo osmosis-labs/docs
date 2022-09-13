@@ -29,7 +29,7 @@ const mainConfig = {
             }
         ]
     ],
-    repositoryUrl: 'https://github.com/dyte-in/docs'
+    repositoryUrl: 'https://github.com/osmosis-labs/docs'
 };
 
 module.exports = mainConfig;
