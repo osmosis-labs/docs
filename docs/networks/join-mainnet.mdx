@@ -1,3 +1,5 @@
+
+
 # Joining Mainnet
 
 ## Osmosis Installer
@@ -115,83 +117,87 @@ Download the chain data:
 
 
 <!-- #region -->
-::::::: tabs :options="{ useUrlFragment: false }"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-:::::: tab Default
-::::: tabs :options="{ useUrlFragment: false }"
+### Default
+<Tabs>
+  <TabItem value="netherlands" label="Netherlands" default>
 
-:::: tab Netherlands
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::: tab Singapore
+  </TabItem>
+  <TabItem value="singapore" label="Singapore">
+
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="Singapore")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::: tab SanFrancisco
+  </TabItem>
+  <TabItem value="sanfrancisco" label="San Francisco">
+
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="SanFrancisco")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::::
-::::::
+  </TabItem>
+</Tabs>
 
-:::::: tab Pruned
-::::: tabs :options="{ useUrlFragment: false }"
+### Pruned
+<Tabs>
+  <TabItem value="netherlands" label="Netherlands" default>
 
-:::: tab Netherlands
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::: tab Singapore
+  </TabItem>
+  <TabItem value="singapore" label="Singapore">
+
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="Singapore")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::: tab SanFrancisco
+  </TabItem>
+  <TabItem value="sanfrancisco" label="San Francisco">
+
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="SanFrancisco")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::::
-::::::
+  </TabItem>
+</Tabs>
 
-:::::: tab Archive
-::::: tabs :options="{ useUrlFragment: false }"
 
-:::: tab Netherlands
+
+### Archive
+<Tabs>
+  <TabItem value="netherlands" label="Netherlands" default>
+
 ``` bash
 URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-archive")|select (.mirror=="Netherlands")|.url'`
 cd $HOME/.osmosisd/
 wget -O - $URL | lz4 -d | tar -xvf -
 ```
-::::
 
-:::::
-::::::
+  </TabItem>
 
-:::::::
+</Tabs>
+
 
 <!-- #endregion -->
 
