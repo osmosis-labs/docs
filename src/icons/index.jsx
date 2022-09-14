@@ -34,3 +34,4 @@ export { default as Tscodegen } from './Tscodegen';
 export { default as Transaction } from './Transaction';
 export { default as Contribute } from './Contribute';
 export { default as Guide } from './Guide';
+export { default as Chainregistry } from './Chainregistry';

@@ -7,7 +7,7 @@ import {
   HomepageCard as Card,
   HomepageSection as Section,
 } from '../../src/components/HomepageComponents';
-
+import Link from '@docusaurus/Link';
 import {
   ChainIcon,
   IDEIcon,
@@ -19,7 +19,8 @@ import {
   Osmojs,
   Createapp,
   Cosmoskit,
-  Tscodegen
+  Tscodegen,
+  Chain
 } from '../../src/icons';
 
 # Frontend SDKs and Tools
@@ -34,13 +35,15 @@ The following are libraries and utilities to start developing with Osmosis.
     description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
     to="/osmojs"
     icon={<Osmojs />}
+    svgFile=""
   />
 
   <Card
     title="Cosmos Kit"
     description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
     to="https://github.com/cosmology-tech/cosmos-kit"
-    icon={<Cosmoskit />}
+    icon=""
+    svgFile="/icons/bag.svg"
   />
 
   <Card
@@ -48,6 +51,7 @@ The following are libraries and utilities to start developing with Osmosis.
     description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
     to="/telescope"
     icon={<Telescope />}
+    svgFile=""
   />
 
   <Card
@@ -55,6 +59,7 @@ The following are libraries and utilities to start developing with Osmosis.
     description="Set up a modern Cosmos app by running one command"
     to="https://github.com/cosmology-tech/create-cosmos-app"
     icon={<Createapp />}
+    svgFile="/icons/create-cosmos-app.svg"
   />
 
   <Card
@@ -62,6 +67,7 @@ The following are libraries and utilities to start developing with Osmosis.
     description="The npm package for the Official Cosmos chain registry"
     to="https://github.com/cosmology-tech/chain-registry"
     icon={<Cosmoskit />}
+    svgFile="/icons/registry.svg"
   />
 
   <Card
@@ -69,8 +75,10 @@ The following are libraries and utilities to start developing with Osmosis.
     description="The npm package for the Official Cosmos chain registry"
     to="https://github.com/CosmWasm/ts-codegen"
     icon={<Tscodegen />}
+    svgFile=""
   />   
- 
+
+
   </Section>
 
   </Section>
