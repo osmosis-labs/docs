@@ -153,16 +153,20 @@ const config = {
             // className: 'new-badge',
           },
           {
-            label: 'API Reference',
-            to: 'apis',
-            position: 'left',
-          },
-          {
             label: 'Integrate',
             to: 'overview/integrate',
             position: 'left',
           },
-
+          {
+            label: 'Validate',
+            to: 'overview/validate',
+            position: 'left',
+          },
+          {
+            label: 'API Reference',
+            to: 'apis',
+            position: 'right',
+          },
           {
             href: 'https://github.com/osmosis-labs',
             className: 'pseudo-icon github-icon',

@@ -8,17 +8,8 @@ import {
   HomepageSection as Section,
 } from '../components/HomepageComponents';
 import {
-  AngularIcon,
   APIReferenceIcon,
-  FlutterIcon,
-  HTMLIcon,
-  KotlinIcon,
-  ReactIcon,
-  SwiftIcon,
   TerminalIcon,
-  DisconnectedPlugIcon,
-  UIKitIcon,
-  ChainIcon,
   IDEIcon,
   ModulesIcon,
   RelayerIcon,
