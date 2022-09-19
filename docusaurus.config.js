@@ -45,6 +45,7 @@ const SECTIONS = [
   defineSection('telescope'),
   defineSection('osmojs'),
   defineSection('overview'),
+  defineSection('apis'),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
@@ -153,7 +154,7 @@ const config = {
           },
           {
             label: 'API Reference',
-            to: '/api/',
+            to: 'apis',
             position: 'left',
           },
 
