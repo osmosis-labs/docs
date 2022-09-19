@@ -28,7 +28,7 @@ function defineSection(section, options = {}) {
       id: section,
       sidebarPath: require.resolve('./sidebars-default.js'),
       breadcrumbs: false,
-      editUrl: 'https://github.com/osmosis-labs/docs/tree/beta/',
+      editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
       ...defaultSettings,
       ...options,
     }),
@@ -53,7 +53,7 @@ const config = {
   title: 'Osmosis Docs',
   tagline: 'Build on the leading decentralized Cosmos exchange. 🚀',
   // TODO: Update base url
-  url: 'https://beta-docs.osmosis.zone',
+  url: 'https://docs.osmosis.zone',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
