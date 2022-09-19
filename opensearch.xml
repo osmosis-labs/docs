@@ -4,8 +4,8 @@
   <ShortName>Osmosis Docs</ShortName>
   <Description>Search Osmosis Docs</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://beta-docs.osmosis.zone/favicon.png</Image>
-  <Url type="text/html" method="get" template="https://beta-docs.osmosis.zone/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://beta-docs.osmosis.zone/opensearch.xml" />
-  <moz:SearchForm>https://beta-docs.osmosis.zone/</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://docs.osmosis.zone/favicon.png</Image>
+  <Url type="text/html" method="get" template="https://docs.osmosis.zone/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://docs.osmosis.zone/opensearch.xml" />
+  <moz:SearchForm>https://docs.osmosis.zone/</moz:SearchForm>
 </OpenSearchDescription>
