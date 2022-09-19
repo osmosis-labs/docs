@@ -14,8 +14,8 @@ The minimum recommended specs for running osmosisd is as follows:
 
 You can check if you have enough storage to run osmosisd [here](https://quicksync.io/networks/osmosis.html).
 
+## Commands
 Go to [commands](#commands) to learn more.
-
 
 ## Quick Start
 
@@ -66,13 +66,16 @@ After installed, open new terminal to properly load go
 
 ## Install Osmosis Binary
 
-Clone the osmosis repo, checkout and install v10.0.1:
+Clone the osmosis repo, checkout and install v11.0.1:
+
 
 ```bash
 cd $HOME
 git clone https://github.com/osmosis-labs/osmosis
 cd osmosis
-git checkout v10.0.1
+
+git checkout v11.0.1
+
 make install
 ```
 :::tip Note
