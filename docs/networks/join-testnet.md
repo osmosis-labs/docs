@@ -15,11 +15,11 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 
 
-## Or Install Osmosis Binary manually
+## Osmosis CLI
 
-Make sure you have [installed the Osmosis Binary (CLI)](../cli/install#manual-installation) prior to following the below instructions.
+Make sure you have [installed the Osmosis Binary (CLI)](../osmosis-core/osmosisd.md) prior to following the below instructions.
 
-You may also [use the Osmosis installer](../cli/install#quick-start) if you want everything to be done automatically.
+You may also [use the Osmosis installer](../osmosis-core/osmosisd.md) if you want everything to be done automatically.
 
 ## Faucet 
 In order to get testnet tokens use  [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/)

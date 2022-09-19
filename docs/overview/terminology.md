@@ -132,7 +132,7 @@ Since buying and selling from the pool changes the quantities of assets within a
 ## Long-Term Liquidity
 Liquidity mining rewards tend to attract short-term “mercenary farmers” who quickly deposit and withdraw their liquidity after harvesting the yield. These farmers are only interested in the speculative value of the governance tokens that they are earning. They usually bounce between protocols in search of the best yield.
 Mercenary farmers often create the mirage of protocol adoption, but when these farmers leave, it results in significant liquidity volatility. Users of the AMM have difficulty executing trades without encountering slippage. Therefore, long-term liquidity is crucial to the success of an AMM.
-Osmosis’ design includes two mechanisms to incentivize long-term liquidity: [exit fees](../overview/osmosis-app/learn-more.md#swap-fees) and [bonded liquidity gauges](../overview/osmosis-app/learn-more.md#bonded-liquidity-gauges).
+Osmosis’ design includes two mechanisms to incentivize long-term liquidity: [exit fees](../overview/getting-started.md#swap-fees) and [bonded liquidity gauges](../overview/getting-started.md#bonded-liquidity-gauges).
 
 
 ## Market swap

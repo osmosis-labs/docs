@@ -16,6 +16,6 @@ The pools eligible for liquidity rewards will be selected by OSMO governance par
 
 The OSMO token is also minted and burned in the context of Superfluid Staking. As a Osmosis-specific feature, Superfluid Staking provides the consensus layer more security with a sort of "Proof of Useful Stake". Each person gets an amount of Osmo representative of the value of their share of liquidity pool tokens staked and delegated to validators, resulting in the security guarantee of the consensus layer to also be based on GAMM LP shares. 
 
-Further details can be seen in the [Superfluid module specifications](../developing/osmosis-core/modules/spec-superfluid.md)
+Further details can be seen in the [Superfluid module specifications](../osmosis-core/modules/spec-superfluid.md)
 
 

@@ -1,6 +1,6 @@
 # Creating a LBP
 
-The below is an example of the pool.json file for a [liquidity bootstrapping pool](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#liquidity-bootstrapping-pools).
+The below is an example of the pool.json file for a [liquidity bootstrapping pool](../getting-started.md#liquidity-bootstrapping-pools).
 
 A liquidity bootstrapping pool's weight begins at the weight set in the `weights` parameter and linearly shifts the weights until `target-pool-weights` is reached over a time period set by the `duration` parameter upon pool creation.
 
