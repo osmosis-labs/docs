@@ -1,0 +1,14 @@
+{
+  "position": 4,
+  "label": "Integrate",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+  
+    "title": "Integration Guides"
+  },
+  "customProps": {
+    "description": "The guides on this page will explain the process of integrating with Osmosis."
+  }
+}

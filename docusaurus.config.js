@@ -157,6 +157,11 @@ const config = {
             to: 'apis',
             position: 'left',
           },
+          {
+            label: 'Integrate',
+            to: 'overview/integrate',
+            position: 'left',
+          },
 
           {
             href: 'https://github.com/osmosis-labs',

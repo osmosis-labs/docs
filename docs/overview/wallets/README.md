@@ -1,7 +1,11 @@
-# Available Wallets
+---
+title: Available Wallets
+sidebar_position: 2.5
+---
+import DocCardList from '@theme/DocCardList';
 
-## [Keplr](keplr/create-keplr-wallet)
+# Integrate
 
-
-
+Wallet information & configuration.
+<DocCardList />
 
