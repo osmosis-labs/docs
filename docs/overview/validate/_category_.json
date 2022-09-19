@@ -1,0 +1,14 @@
+{
+  "position": 4,
+  "label": "Validate",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+  
+    "title": "Validator Guides"
+  },
+  "customProps": {
+    "description": "The guides on this page will explain the process of integrating with Osmosis."
+  }
+}

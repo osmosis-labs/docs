@@ -1,3 +1,0 @@
-# Joining Edgenet
-
-## Place holder
