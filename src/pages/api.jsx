@@ -97,6 +97,7 @@ export default function Home() {
               values={[
                 { name: 'RPC', id: 'RPC' },
                 { name: 'LCD', id: 'LCD' },
+                { name: 'DATA', id: 'DATA' },
               ]}
               onValueChange={(version) => {
                 if (showV2Tooltip) {

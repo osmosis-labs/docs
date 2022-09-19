@@ -153,11 +153,12 @@ export default function Homepage() {
     icon={<Osmojs />}
   />
 
-  <Card
+<Card
     title="Cosmos Kit"
     description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
     to="https://github.com/cosmology-tech/cosmos-kit"
-    icon={<Cosmoskit />}
+    icon=""
+    svgFile="/icons/bag.svg"
   />
 
   <Card
@@ -167,23 +168,27 @@ export default function Homepage() {
     icon={<Telescope />}
   />
 
-  <Card
+<Card
     title="Create Cosmos App"
     description="Set up a modern Cosmos app by running one command"
     to="https://github.com/cosmology-tech/create-cosmos-app"
     icon={<Createapp />}
+    svgFile="/icons/create-cosmos-app.svg"
   />
 
-  <Card
+
+
+ <Card
     title="Chain Registry"
     description="The npm package for the Official Cosmos chain registry"
     to="https://github.com/cosmology-tech/chain-registry"
     icon={<Cosmoskit />}
+    svgFile="/icons/registry.svg"
   />
 
   <Card
     title="TS Codegen"
-    description="The npm package for the Official Cosmos chain registry"
+    description="The quickest and easiest way to interact with CosmWasm Contracts"
     to="https://github.com/CosmWasm/ts-codegen"
     icon={<Tscodegen />}
   />   
