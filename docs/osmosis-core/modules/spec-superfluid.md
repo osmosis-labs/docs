@@ -156,7 +156,7 @@ unbonding, allows the underlying lock to start unlocking if desired
 
 ### SyntheticLockups
 
-SyntheticLockups are synthetica of PeriodLocks, but different in the
+SyntheticLockups are synthetic forms of PeriodLocks, but different in the
 sense that they store suffix, which is a combination of
 bonding/unbonding status + validator address. This is mainly used to
 track whether an individual lock that has been superfluid staked has an
@@ -164,7 +164,7 @@ bonding status or a unbonding status from the staking delegations.
 
 ### Intermediary Account
 
-Intermediary Accounts establishes the connections between the superfluid
+Intermediary Accounts establish the connections between the superfluid
 staked locks and delegations to the validator. Intermediary accounts
 exists for every denom + validator combination, so that it would group
 locks with the same denom + validator selection. Superfluid staking a
@@ -181,7 +181,7 @@ that an Intermediary Account is dedicated to.
 
 ### Superfluid Asset
 
-A superfluid asset is a alternative asset (non-OSMO) that is allowed by
+A superfluid asset is an alternative asset (non-OSMO) that is allowed by
 governance to be used for staking.
 
 It can only be updated by governance proposals. We validate at proposal
@@ -212,7 +212,7 @@ their multiplier. We currently support two asset types.
 
 1. Native Token
 
-The multiplier for OSMO is alway 1.
+The multiplier for OSMO is always 1.
 
 2. Gamm LP Shares
 
