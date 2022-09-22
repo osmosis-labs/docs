@@ -49,7 +49,7 @@ When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth o
 
 ## Additional Liquidity
 
-As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Mining Incentives Docs page](https://docs.osmosis.zone/integrate/incentives.html) to learn more about Osmosis Liquidity Mining Rewards, External Gauge Incentives, and Superfluid Staking.
+As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Mining Incentives Docs page](https://docs.osmosis.zone/overview/integrate/incentives/) to learn more about Osmosis Liquidity Mining Rewards, External Gauge Incentives, and Superfluid Staking.
 
 ## Creating a Liquidity Bootstrapping Pool
 

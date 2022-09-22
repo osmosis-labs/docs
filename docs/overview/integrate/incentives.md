@@ -1,7 +1,10 @@
 # Liquidity Mining Incentives
 
 There are many ways pools on Osmosis can reward liquidity mining incentives. One way is through (internal) Osmosis Liquidity Mining; Osmosis allocates 45% of its inflation to incentivize users to bond their liquidity on Osmosis. In addition, Osmosis allows for the permissionless creation of (external) liquidity mining gauges, allowing projects to add thier own rewards to further incentivize users to provide liquidity into a pool.
-To learn more about the Liquidity Mining modules, see: [Osmosis Docs: Develop > Chain Development > Modules > Incentives](https://docs.osmosis.zone/developing/osmosis-core/modules/spec-incentives.html)
+To learn more about the Liquidity Mining modules, see: Osmosis Docs: Develop > Osmosis-core > Modules > [Incentives](http://localhost:3000/osmosis-core/modules/spec-incentives)
+
+## Current incentives
+There is a spreadsheet that shows the current incentives from the Osmosis chain: https://docs.google.com/spreadsheets/d/1oEn8JtrIU1mze_3Fw4DbbxWBq6yPUM-yAoaOPxG6Y1k/edit#gid=9186761
 
 ## External Incentives
 
