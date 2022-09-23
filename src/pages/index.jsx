@@ -36,7 +36,7 @@ export default function Homepage() {
     >
       <div className="pad">
         <div className="center homepage-content">
-          <div id="hero">
+          <div className='margin-bottom--lg'>
             <h2>Osmosis Docs</h2>
             <p>
             The Osmosis blockchain is a decentralized network, ran by 100+ validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
@@ -45,6 +45,15 @@ export default function Homepage() {
               Get Started &rarr;
             </DyteButton>
           </div>
+
+
+          <div className='margin-bottom--lg'>
+            <h1>🇨🇴 HackWasm Medellin</h1>
+            <p>Join us for the first Hackwasm ever made in Medellín city! This hackathon is your chance to network with incredible people and work with some of the best developers in the Cosmos ecosystem and helping them to solve real problems.</p>
+          <DyteButton onClick={() => router.push('/cosmwasm/hackwasm')}>Resources</DyteButton>
+          </div>
+            
+  
 
           <Section title="Learn about Osmosis">
             <Card
@@ -94,18 +103,21 @@ export default function Homepage() {
     description="Install osmosisd to join the network or simple query it."
     to="/osmosis-core/osmosisd"
     icon={<TerminalIcon />}
+    svgFile="/icons/cli.svg"
   />
   <Card
     title="Modules"
     description="Osmosis modules and their respective CLI commands"
     to="/osmosis-core/modules"
     icon={<ModulesIcon />}
+    svgFile="/icons/modules.svg"
   />
   <Card
     title="Relaying"
     description=" Relay IBC packets between Osmosis and other chains"
     to="/osmosis-core/relaying"
-    icon={<RelayerIcon />}
+    icon=""
+    svgFile="/icons/relayer.svg"
   />
   <Card
     title="Assets"
@@ -124,12 +136,14 @@ export default function Homepage() {
     description=" Understanding the structure of a transaction on the Osmosis blockchain"
     to="/osmosis-core/guides/structure"
     icon={<Transaction />}
+    svgFile="/icons/transaction.svg"
   />
   <Card
     title="Contributing"
     description=" Guidelines to contributing to Osmosis core development."
     to="/osmosis-core/contributing"
     icon={<Contribute />}
+    svgFile="/icons/octocat.svg"
   />
 
             </Section>
@@ -142,6 +156,7 @@ export default function Homepage() {
     description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
     to="/osmojs"
     icon={<Osmojs />}
+    svgFile="/icons/osmojs.svg"
   />
 
 <Card
@@ -156,7 +171,7 @@ export default function Homepage() {
     title="Telescope"
     description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
     to="/telescope"
-    icon={<Telescope />}
+    svgFile="/icons/telescope.svg"
   />
 
 <Card
@@ -182,6 +197,7 @@ export default function Homepage() {
     description="The quickest and easiest way to interact with CosmWasm Contracts"
     to="https://github.com/CosmWasm/ts-codegen"
     icon={<Tscodegen />}
+    svgFile="/icons/tscodegen.svg"
   />   
  
   </Section>
@@ -193,6 +209,7 @@ export default function Homepage() {
               description="A command line tool to get things done quick!"
               to="/osmosis-core/osmosisd"
               icon={<TerminalIcon />}
+              svgFile="/icons/cli.svg"
             />
           </Section>
 

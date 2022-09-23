@@ -1,54 +1,54 @@
 {
   "index_name": "Docs",
-  "sitemap_urls": ["https://beta-docs.osmosis.zone/sitemap.xml"],
+  "sitemap_urls": ["https://docs.osmosis.zone/sitemap.xml"],
   "start_urls": [
     {
-      "url": "https://beta-docs.osmosis.zone/guides",
+      "url": "https://docs.osmosis.zone/guides",
       "tags": "guides",
       "selectors_key": "guides"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/osmosis-core",
+      "url": "https://docs.osmosis.zone/osmosis-core",
       "tags": "osmosis-core",
       "selectors_key": "osmosis-core"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/cosmwasm",
+      "url": "https://docs.osmosis.zone/cosmwasm",
       "tags": "cosmwasm",
       "selectors_key": "cosmwasm"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/localosmosis",
+      "url": "https://docs.osmosis.zone/localosmosis",
       "tags": "localosmosis",
       "selectors_key": "localosmosis"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/networks",
+      "url": "https://docs.osmosis.zone/networks",
       "tags": "networks",
       "selectors_key": "networks"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/beaker",
+      "url": "https://docs.osmosis.zone/beaker",
       "tags": "beaker",
       "selectors_key": "beaker"
     },
 
     {
-      "url": "https://beta-docs.osmosis.zone/telescope",
+      "url": "https://docs.osmosis.zone/telescope",
       "tags": "telescope",
       "selectors_key": "telescope"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/osmojs",
+      "url": "https://docs.osmosis.zone/osmojs",
       "tags": "osmojs",
       "selectors_key": "osmojs"
     },
     {
-      "url": "https://beta-docs.osmosis.zone/overview",
+      "url": "https://docs.osmosis.zone/overview",
       "tags": "overview",
       "selectors_key": "overview"
     },
-    "https://beta-docs.osmosis.zone"
+    "https://docs.osmosis.zone"
   ],
   "stop_urls": [],
 
