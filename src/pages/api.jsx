@@ -83,7 +83,7 @@ export default function Home() {
           <DyteTooltip
             placement="bottom"
             variant="primary"
-            label="Please note there are multiple servers available such as mainnet, testnet, etc"
+            label="Please note there are APIs available from this dropdown menu."
             open={showV2Tooltip}
             onDyteOpenChange={(open) => {
               if (!open) {
