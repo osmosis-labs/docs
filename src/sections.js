@@ -89,7 +89,7 @@ const MULTI_SECTIONS = [
         'Building and interacting with Smart contracts on Osmosis.',
     },
     {
-      name: 'Frontend SDKs',
+      name: 'Frontend & SDKs',
       section: 'frontend',
       description:
         'Libraries & UI components to build on top of Osmosis.',
