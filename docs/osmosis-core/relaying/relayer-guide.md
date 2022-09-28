@@ -146,7 +146,7 @@ hermes 0.12.0
 Edit hermes config (use ports according to the port configuration we set above, add only chains you want to relay)
 
 ```
-nano $HOME/.hermes/config/config.toml
+nano $HOME/.hermes/config.toml
 ```
 In this example, we will set `channel-141` on the cosmoshub-4 chain settings and `channel-0` on the osmosis-1 chain settings:
 
