@@ -8,7 +8,7 @@ The following are the steps needed to verify any contract from the chain. In thi
 
 
 ### Create new contract
-Follow [this guide]( https://docs.osmosis.zone/developing/dapps/get_started/cosmwasm-testnet.html) to create a new contract with Beaker.
+Follow [this guide](../cosmwasm/testnet/cosmwasm-beaker) to create a new contract with Beaker.
 
 Output:
 

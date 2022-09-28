@@ -1,7 +1,7 @@
 # Beaker
 
 <p align="center">
-<a href="https://docs.osmosis.zone/developing/dapps/get_started/">
+<a href="https://docs.osmosis.zone/cosmwasm/">
     <img src="/icons/beaker.svg" alt="Beaker logo" title="Beaker" width="150" align="center" height="150" />
 </a>
 </p>

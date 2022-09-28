@@ -32,12 +32,12 @@ In our example, block height 2138101 is many months in the past, so we must use 
 
 
 ### Run an osmosis node
-To set up either a default or archive node, either use the osmosis bash installer [located here](https://get.osmosis.zone/)OR follow the instructions step by step [starting here.](https://docs.osmosis.zone/developing/cli/install.html)Ensure you follow the instructions for mainnet and set up using either the archive or default snapshot as determined above. Do not use state sync for this situation.
+To set up either a default or archive node, either use the osmosis bash installer [located here](https://get.osmosis.zone/)OR follow the instructions step by step [starting here.](../../osmosis-core/osmosisd)Ensure you follow the instructions for mainnet and set up using either the archive or default snapshot as determined above. Do not use state sync for this situation.
 
 
 
 ### Install the daemon version corresponding to snapshot height
-If you are looking to take a snapshot for a block height that occurred during a previously breaking major release (i.e v3.x, v4.x, v5.x, etc.), you must ensure your daemon is running that version before taking the state export. To see the block height for all major releases, go to [the history of changes page](https://docs.osmosis.zone/history-and-changes.html)and check the titles of all major releases. You will see the block height the upgrade took place in the title. In our example, we are taking a state export at block height 2138101. Since v4 released at block height 1314500 and v5 didn't release until block height 2383300, we must ensure the daemon is now running v4 before we take the state export. To change the daemon version (in this example to v4.0.0):
+If you are looking to take a snapshot for a block height that occurred during a previously breaking major release (i.e v3.x, v4.x, v5.x, etc.), you must ensure your daemon is running that version before taking the state export. To see the block height for all major releases, go to [Osmosis Releases](https://github.com/osmosis-labs/osmosis/releases)and check the titles of all major releases. You will see the block height the upgrade took place in the title. In our example, we are taking a state export at block height 2138101. Since v4 released at block height 1314500 and v5 didn't release until block height 2383300, we must ensure the daemon is now running v4 before we take the state export. To change the daemon version (in this example to v4.0.0):
 
 ```sh
 cd $HOME/osmosis

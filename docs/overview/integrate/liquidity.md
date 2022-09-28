@@ -18,9 +18,9 @@ When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth o
 			- Sufficient liquidity (at least USD $1000-worth)
 	- Alternatively, find some partners who would be willing to provide the base asset (e.g., OSMO, ATOM, UST, etc.) portion of the liquidity (this is assuming you can provide the pair asset portion (i.e., the new asset))
 	- Alternatively, it is possible to create an asymmetrically-weighted liquidity pool to reduce the requirement for the base asset (e.g., 80% FOO::20% OSMO). However, Osmosis Foundation recommends only creating 50/50 pools
-	- See: [GAMM Module: Create pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool) for the CLI command to create a pool
-	- If the asset has already been [added onto the Osmosis Zone Frontier Assets page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page), then a new pool can be created using the [Osmosis Zone Frontier Pools page](https://frontier.osmosis.zone/pools)
-		- See: [Create a new pool](https://docs.osmosis.zone/overview/osmosis-app/#create-a-new-pool)
+	- See: [GAMM Module: Create pool](../../osmosis-core/modules/gamm/#create-pool) for the CLI command to create a pool
+	- If the asset has already been [added onto the Osmosis Zone Frontier Assets page](../integrate/frontend.md#how-to-add-an-asset-onto-the-osmosis-assets-page), then a new pool can be created using the [Osmosis Zone Frontier Pools page](https://frontier.osmosis.zone/pools)
+		- See: [Create a new pool](../../overview/getting-started.md#create-a-new-pool)
 - Initiate a Liquidity Bootstrapping Pool (LBP)
 	- A Liquidity Bootstrapping Pool (LBP) is a Liquidity Pool that is initiated with a phase of linear weight change.
 		- Choose any starting weights (e.g., 90:10), ending weights (e.g., 50:50), and weight change duration (e.g., 3 days)
@@ -34,8 +34,8 @@ When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth o
 			- Note that if the price of the pair asset (FOO) increases or decreases throughout the LBP, that can mitigate or exacerbate the loss of value of the GAMM/LP token
 	- The secondary purpose of an LBP is natural price discovery for the new asset.
 		- Although it can be a strategic way to establish a price for the token, an LBP is still possible to conduct with an already established price, even while arbitrage opportunities would exist. However, the GAMM/LP tokens will lose value of the duration of the weight change, and is therefore generally not recommended
-	- To learn more about LBPs, see: [Learn More: Liquidity Bootstrapping Pools](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#liquidity-bootstrapping-pools).
-	- To create an LBP, see: [Creating an LBP](https://docs.osmosis.zone/integrate/liquidity.html#creating-a-liquidity-bootstrapping-pool)
+	- To learn more about LBPs, see: [Learn More: Liquidity Bootstrapping Pools](../../overview/getting-started.md#liquidity-bootstrapping-pools).
+	- To create an LBP, see: [Creating an LBP](../integrate/liquidity.md#creating-a-liquidity-bootstrapping-pool)
 	- When creating an LBP, be sure to request the appropriate changes on the Osmosis Zone Frontier Front End to ensure the LBP page is displayed
 	- Note: It is highly recommended to postpone any aridrops until after the LBP has fully completed. The potential for users dumping an airdropped token during such a sensitive phase of price discovery can significantly negatively impact the final price of the asset--much moreso than an airdrop that is released afterward.
 	- Note: LBP 2.0 is still being developed, and will likely be at least a few more months before the front end interface is implemented for it
@@ -49,11 +49,11 @@ When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth o
 
 ## Additional Liquidity
 
-As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Mining Incentives Docs page](https://docs.osmosis.zone/overview/integrate/incentives/) to learn more about Osmosis Liquidity Mining Rewards, External Gauge Incentives, and Superfluid Staking.
+As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Mining Incentives Docs page](../integrate/incentives.md) to learn more about Osmosis Liquidity Mining Rewards, External Gauge Incentives, and Superfluid Staking.
 
 ## Creating a Liquidity Bootstrapping Pool
 
-The below is an example of the pool.json file for a [liquidity bootstrapping pool](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#liquidity-bootstrapping-pools).
+The below is an example of the pool.json file for a [liquidity bootstrapping pool](../../overview/getting-started.md#liquidity-bootstrapping-pools).
 
 A liquidity bootstrapping pool's weight begins at the weight set in the `weights` parameter and linearly shifts the weights until `target-pool-weights` is reached over a time period set by the `duration` parameter upon pool creation.
 

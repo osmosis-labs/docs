@@ -9,12 +9,12 @@ The Cosmos Chain Registry is used as a single source of truth and is used to loo
 ### Prerequisites
 
 - Registered to [SLIP173](https://github.com/satoshilabs/slips/blob/master/slip-0173.md)
-    - See: [How to register a bech32 prefix onto SLIP173](https://docs.osmosis.zone/integrate/registration.html#how-to-register-a-bech32-prefix-onto-slip173)
+    - See: [How to register a bech32 prefix onto SLIP173](../integrate/registration.md#how-to-register-a-bech32-prefix-onto-slip173)
 - Registered to [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md) (if coin type is not like ATOM)
     - Note: Coin Type 118 represents the Cosmos Hub's ATOM token, registered listed in [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md); many projects also default to using this coin type, while some have registered their own.
 - Chain added to Mintscan (optional)
 - Assets listed on CoinGecko (optional)
-    - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
+    - See: [How to enlist assets onto CoinGecko](../integrate/registration.md#how-to-enlist-an-asset-onto-coingecko)
 
 ### Requirements
 
@@ -55,15 +55,15 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
 ### Prerequisites
 
 - Registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
+    - See: [How to register onto the Cosmos Chain Registry](../integrate/registration.md#how-to-register-onto-the-cosmos-chain-registry)
 - Opened IBC connection between the source chain and Osmosis
     - Selected a sole desigate IBC connection between the registering chain and Osmosis for this asset
         - All native assets from a chain should go through a single connection, but CW20 tokens can be sent through another connection
 - There is a liquidity pool on Osmosis with sufficient liquidity.
-	- See: [Liquidity](https://docs.osmosis.zone/integrate/liquidity.html)
-	- See: [GAMM Module: Create pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool) for the CLI command to create a pool
+	- See: [Liquidity](../integrate/liquidity.md)
+	- See: [GAMM Module: Create pool](../../osmosis-core/modules/gamm/#create-pool) for the CLI command to create a pool
 - Assets listed on CoinGecko (optional)
-    - See: [How to enlist assets onto CoinGecko](https://docs.osmosis.zone/integrate/registration.html#how-to-enlist-an-asset-onto-coingecko)
+    - See: [How to enlist assets onto CoinGecko](../integrate/registration.md#how-to-enlist-an-asset-onto-coingecko)
 
 ### Requirements
 
@@ -141,7 +141,7 @@ From [coingecko.com/en/methodology](https://www.coingecko.com/en/methodology):
 - Working block explorer
 - Listed on at least one (1) active exchanges where CoinGecko is integrated with.
     - Note: Because Osmosis is integrated with CoinGecko, this will automatically be fullfilled once a Liquidity Pool containing the new Asset is created on Osmosis.
-    - See: [How to Add an Asset onto the Osmosis Assets Page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-an-asset-onto-the-osmosis-assets-page)
+    - See: [How to Add an Asset onto the Osmosis Assets Page](../integrate/frontend.md#how-to-add-an-asset-onto-the-osmosis-assets-page)
 
 ### Requirements
 

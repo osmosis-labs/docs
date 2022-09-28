@@ -8,13 +8,13 @@ There is a spreadsheet that shows the current incentives from the Osmosis chain:
 
 ## External Incentives
 
-External Incentives are an effective way to incentivize users to provide liquidity, as well as a great way to have the pool be considered for onboarding into the set of pools receiving (internal) Osmosis Liquidity Mining incentives. Creating an incentive gauge is permissionless, so anyone can deposit tokens into a gauge to be distributed as bonding incentives. This feature allows outside parties to augment Osmosis’ own liquidity incentive program. To learn more, see: [External Incentives](https://docs.osmosis.zone/overview/osmosis-app/learn-more.html#external-incentives).
+External Incentives are an effective way to incentivize users to provide liquidity, as well as a great way to have the pool be considered for onboarding into the set of pools receiving (internal) Osmosis Liquidity Mining incentives. Creating an incentive gauge is permissionless, so anyone can deposit tokens into a gauge to be distributed as bonding incentives. This feature allows outside parties to augment Osmosis’ own liquidity incentive program. To learn more, see: [External Incentives](../../overview/getting-started.md#external-incentives).
 
 It is possible to add incentives to any combination of 1-day, 7-day, and 14-day gauges. Incentives allocated to the 1-day gauge will be split among all three gauges. Incentives allocated to the 7-day gauge will be split among only the 7-day and 14-day gauges, but not to the 1-day gauge. Incentives allocated to the 14-day gauge will only be distributed to the 14-day gauge.
 
-Currently, the only way to create an external incentive gauge is to run the [create-gauge command](https://docs.osmosis.zone/developing/osmosis-core/modules/spec-incentives.html#create-gauge) using CLI.
+Currently, the only way to create an external incentive gauge is to run the [create-gauge command](../../osmosis-core/modules/incentives/#create-gauge) using CLI.
 
-Once external incentives have been added, note the gauge Id numbers and follow the procedure to [Add External Incentive Gauges onto the Osmosis Zone Pools page](https://docs.osmosis.zone/integrate/frontend.html#how-to-add-external-incentive-gauges-onto-the-osmosis-pools-page) to request to show the gauges on the [Osmosis Zone Pools page](https://app.osmosis.zone/pools).
+Once external incentives have been added, note the gauge Id numbers and follow the procedure to [Add External Incentive Gauges onto the Osmosis Zone Pools page](../integrate/frontend.md#how-to-add-external-incentive-gauges-onto-the-osmosis-pools-page) to request to show the gauges on the [Osmosis Zone Pools page](https://app.osmosis.zone/pools).
 
 ### External Incentive Matching Program
 

@@ -63,7 +63,7 @@ beaker wasm deploy counter --signer-account test1 --admin osmo1nyphwl8p5yx6fxzev
 
 
 ### Deploy contract via governance
-We can also deploy the contract via governance on the testnet before going to mainnet. There are a couple of steps as described in the manual process via CLI[here](https://docs.osmosis.zone/developing/dapps/get_started/submit_wasm_proposal.html), more details also available on the [official CosmWasm Docs](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md). 
+We can also deploy the contract via governance on the testnet before going to mainnet. There are a couple of steps as described in the manual process via CLI[here](../local/submit-wasm-proposal.md), more details also available on the [official CosmWasm Docs](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md). 
 
 
 ### Build contract
