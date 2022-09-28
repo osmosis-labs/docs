@@ -32,61 +32,92 @@ The following is detailed guide that shows the basics of manually deploying a co
      - List all contracts
 
 
-## Initial setup
+## Initial Setup: Rust, Contract Environment, Beaker, and Osmosis
 
-This tutorial uses a Osmosis specific development tools to deploy contracts to your local Osmosis environment powered by localOsmosis.
+Before beginning, you must set up Rust, your contract environment, Beaker, and Osmosis with one of the two following options:
+
+### Option 1: Automatic Setup
+
+Start the installer with the following command, choose LocalOsmosis (option 3), and follow the prompts:
+
+```bash
+bash <(curl -sL https://get.osmosis.zone/run)
+```
+![](../../assets/local-installer.png)
 
 
-### Set up Rust
+### Option 2: Manual Setup
 
-Rust is the main programming language used for CosmWasm smart contracts. While WASM smart contracts can theoretically be written in any programming language, CosmWasm libraries and tooling work best with Rust.
+#### Rust
 
-First, install the latest version of [Rust](https://www.rust-lang.org/tools/install).  
+Install Rust using rustup with the following command and follow the prompts:
 
-Then run the following commands:
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
-```sh
-# 1. Set 'stable' as the default release channel:
+#### Contact Environment
 
+Set 'stable' as the default release channel:
+
+```bash
 rustup default stable
+```
 
-# 2. Add WASM as the compilation target:
+Add WASM as the compilation target:
 
+```bash
 rustup target add wasm32-unknown-unknown
+```
 
-# 3. Install the following packages to generate the contract:
+Install the following packages to generate the contract:
 
+```bash
 cargo install cargo-generate --features vendored-openssl
-cargo install cargo-run-script
+cargo install cargo-run-scrip
 ```
 
-### Setup  LocalOsmosis
-The easiest way to setup your localOsmosis is by downloading the [automated installer](https://get.osmosis.zone/). You can learn more about localOsmosis by reading the [README](https://github.com/osmosis-labs/localosmosis) in the official repo. 
+#### Beaker
 
-Run the following and choose option #3.
+Install Beaker with the following command:
+
+```bash
+cargo install -f beaker
 ```
-curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
+
+#### Osmosis
+
+Setup v12.x Osmosis
+
+```bash
+cd $HOME
+git clone https://github.com/osmosis-labs/osmosis.git
+cd $HOME/osmosis
+git checkout v12.x
+make install
+source ~/.profile
 ```
-   ![](../../assets/local-installer.png)
 
+## Start LocalOsmosis
 
+Inside a separate bash window start LocalOsmosis
 
-#### Start localOsmosis
-
-Inside a separate bash window start your localOsmosis which was installed in ~/localosmosis
-
-```
-cd ~/localosmosis
-docker-compose up
-
+```bash
+cd ~/osmosis
+make localnet-start
 ```
 You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOsmosis running while you perform the next steps in a new terminal window.
 
-
 ![](../../assets/localOsmosis.png)
 
+In place of doing the above commands, you can instead start LocalOsmosis with pre-made pools by starting LocalOsmosis with the following commands:
 
-:::tip  
+```bash
+cd ~/osmosis
+make localnet-start-with-state
+```
+
+:::tip
 To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page](https://github.com/osmosis-labs/localosmosis#accounts). 
 :::
 
@@ -135,7 +166,7 @@ Create a key using one of the seeds provided in localOsmosis.
 ```
 osmosisd keys add <unsafe-test-key-name> --recover
 ```
-Example test1 key from [here](https://github.com/osmosis-labs/localosmosis#accounts):
+Example test1 key from [here](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts):
 
 ```
 notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius
@@ -223,4 +254,4 @@ osmosisd query wasm contract $CONTRACT_ADDR
 osmosisd query wasm list-code
 ```
 
-Good job! It's not time to learn how to actually develop contracts.  You can now visit the [official CosmWasm contracts](https://docs.cosmwasm.com/docs/1.0/getting-started/intro) and as you explore the docs you will understand how tio actually interact with the Osmosis Blockchain.
+Good job! It's now time to learn how to actually develop contracts. You can now visit the [official CosmWasm contracts](https://docs.cosmwasm.com/docs/1.0/getting-started/intro) and as you explore the docs you will understand how tio actually interact with the Osmosis Blockchain.
