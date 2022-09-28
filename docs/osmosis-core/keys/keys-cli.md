@@ -1,6 +1,8 @@
 # Basic Key Management
 
-Create, import, export and delete keys using the CLI keyring.
+Create, import, export and delete keys using the CLI keyring. 
+
+For this guide, The osmosis Binary is required which you can install from here.
 
 ## Create a new key
 

@@ -226,12 +226,12 @@ use a TWAP instead.
 The state of superfluid module state modifiers are classified into below
 categories.
 
-- [Proposals](07_proposals.md)
-- [Messages](03_messages.md)
-- [Epoch](04_epoch.md)
-- [Hooks](06_hooks.md)
+- [Proposals](#proposals)
+- [Messages](#messages)
+- [Epoch](#epochs)
+- [Hooks](#superfluid-hooks)
 
-### Messages
+# Messages
 
 ### Superfluid Delegate
 
