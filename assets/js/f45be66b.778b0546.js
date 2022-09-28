@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkosmosis_docs=self.webpackChunkosmosis_docs||[]).push([[6421],{7072:s=>{s.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"osmosis-core"}')}}]);
