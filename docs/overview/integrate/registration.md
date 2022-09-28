@@ -77,7 +77,7 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
     - CoinGecko ID (optional, but should be included if and when there is one)
         - Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list)
 - Token Logo Image files (both .png and .svg is recommended)
-    - Note: Currently, a .png is required to be able to render on [info.osmosis.zone](https://info.osmosis.zone)
+    - Note: Currently, a .png is required to be able to render on [info.osmosis.zone](info.osmosis.zone)
 - Basic understanding of GitHub, knowing how to fork a respository, create a branch, commit changes, and submit a Pull Request
 
 ### Steps
@@ -127,7 +127,7 @@ CosmosSDK Chain addresses can be represented with a chain-specific string preced
 
 ### Purpose
 
-CoinGecko ([CoinGecko.com](https://coingecko.com)) is cryptocurrency price aggregator which can provide asset price data directly to Osmosis Zone via API. Check out their [FAQ](https://www.coingecko.com/en/faq) to learn more.
+CoinGecko ([CoinGecko.com](coingecko.com)) is cryptocurrency price aggregator which can provide asset price data directly to Osmosis Zone via API. Check out their [FAQ](https://www.coingecko.com/en/faq) to learn more.
 
 Osmosis embraces CoinGecko price feeds and prioritizes CoinGecko prices over Osmosis pool spot prices on Osmosis Zone. If as asset is not yet registered on CoinGecko, it should aim to do so. This procedure will guide project administrators to register their Asset onto CoinGecko.
 
