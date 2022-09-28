@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 # Getting Started
-Before opening the Osmosis AMM App, make sure to install the [Keplr Wallet](../wallets/keplr/README.md).
+Before opening the Osmosis AMM App, make sure to install the [Keplr Wallet](wallets/keplr/README.md).
 
 ## Open the App
 Go to [https://app.osmosis.zone/](https://app.osmosis.zone/)
@@ -45,7 +45,7 @@ Once the transaction is completed a series if confirmations notifications will  
 
 ## Swapping Tokens
 
-Trading tokens is as easy as clicking on the Trade link and then selecting the pair you would like to trade.  Check out the [glossary](../terminology.md) to learn about terms such as [slipage](../terminology.md#slippage). 
+Trading tokens is as easy as clicking on the Trade link and then selecting the pair you would like to trade.  Check out the [glossary](terminology.md) to learn about terms such as [slipage](terminology.md#slippage). 
 ![](../assets/swap.png)
 
 
@@ -91,7 +91,7 @@ Go to Pools > Create a Pool. Select from your wallet the assets that will compri
 
 Choose a quantity of each asset to deposit into the pool.
 
-Input a swap fee for the pool. (An explanation of swap fees can be found [here](../terminology.md#fees).)
+Input a swap fee for the pool. (An explanation of swap fees can be found [here](terminology.md#fees).)
 
 Click Create a Pool and voilà! The pool is launched. The parameters chosen when creating the pool (token weights, swap fees) cannot be changed later.
 

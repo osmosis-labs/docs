@@ -54,7 +54,7 @@ Note that Osmosis will temporarily utilize an alternate front end interface for 
     	- Trading currencies (All currencies that can be trading on the chain)
 - Asset data:
     - Token Logo Image files (both .png and .svg is recommended)
-        - Note: Currently, a .png is required to be able to render on info.osmosis.zone
+        - Note: Currently, a .png is required to be able to render on https://info.osmosis.zone
         - Note: image files shall be titled exactly with the token Symbol in lowercase. E.g., for 'ATOM', title the files `atom.png` and `atom.svg`
     - Denominations
     	- coin minimal denomination
