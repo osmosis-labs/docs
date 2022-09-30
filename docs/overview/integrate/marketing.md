@@ -1,49 +1,26 @@
 # Marketing
 
-## About
+## About the Osmosis Ministry of Marketing
 
-The Osmosis Ministry of Marketing was formed to help market Osmosis. Don't hestitate to reach out to [osmosismarketing@osmosisdao.team](mailto:osmosismarketing@osmosisdao.team). There exist many opportunites to better market a project and its assets, and feel free to suggest new marketing ideas that aren't listed.
+Established by [Proposal 251](https://wallet.keplr.app/chains/osmosis/proposals/251) the Osmosis Ministry of Marketing version 2 (OMMv2) was formed to better help market Osmosis.
 
+The team ensures that the community run social media platforms and groups are maintained and informed in collaboration with the [Osmosis Support Lab](https://support.osmosis.zone/). The OMMv2 has worked to standardize content and voice while reaching out to other communities for collaboration and partnership.
+
+If you have any questions, or concerns, please don't hesitate to reach out to [Marketing@OsmosisDao.zone](mailto:marketing@OsmosisDao.zone). There are many opportunities to better market a project and its assets, and feel free to suggest new marketing ideas that aren't listed.
 
 ## Marketing Opportunities
 
-### Co-sponsored Twitter Competition
-
-An art competition, such as a Meme creation competition run on Twitter is a great way to get people excited about a project and to help spread awareness by requiring tagging, sharing, and/or retweeting as part of the qualification requirements. Historically, these have been meme-competitions (who can make the funniest memes?), but it could also be serious art, or, really, anything else.
-
-Osmosis Ministry of Marketing Sponsorship Amounts:
-- 1st place: 69 OSMO
-- 2nd place: 20 OSMO
-- 3rd place: 4 OSMO
-
-Sponsoring Project Amounts:
-- Can be virtually any amount, but should at least be worth the OMM Sponsorship amounts.
-- Should have an amount for 1st, 2nd, 3rd place winners
-
-See: [Osmosis Ministry of Marketing Twitter](https://twitter.com/OsmoMinistryMkt)
-
-Please reach out to our primary Twitter Manager, MadCatAttack:
-- Email: madcat@osmosisdao.team
-- Telegram: @MadCatAttack
-- Twitter:  @madcatattack1
-
-Examples:
-- [Chihuahua's Meme Competition](https://twitter.com/OsmoMinistryMkt/status/1484864183795691522)
-- [Sentinel's Meme Competition](https://twitter.com/OsmoMinistryMkt/status/1466923415986573312)
-- [BitCanna's Meme Competition](https://twitter.com/OsmoMinistryMkt/status/1459957529635536897)
-
-<br/>
+This is a non-exhaustive list. Please reach out to any one of the contacts listed below to if you have a new idea!
 
 ### Sponsored Graphics
 
-The Osmosis Ministry of Marketing can commission graphics to promote newly listed assets, specific pools, external incentives on specific pools, and significant governance proposals. These will be shared on many platforms to maximaize visibility (Twitter, Discord, Reddit, Instragram, Facebook, Medium, etc.).
+The Osmosis Ministry of Marketing can produce graphics to promote some newly listed assets, specific pools, external incentives on specific pools, and even significant governance proposals. We work together with the requesting party to ensure these will be shared on as many platforms as possible to maximize visibility (Twitter, Discord, Reddit, Instagram, Facebook, Medium, etc.).
 
-We let our talented artists run with their ideas on how best to produce an attractive graphic. If a project would like to collaborate on the artisitc design aspects or upgrade the graphic to a short video clip, it will incur an extra fee which can be priced upon discussion.
+The OMM retains talented artists so we can achieve visual consistency with the Osmosis "brand." We let our artists run with their ideas on how best to produce an attractive graphic. If a project would like to collaborate on the artistic design aspects, we can make arrangements on a case-by-case basis.
 
-Fee 25 OSMO
+Please reach out to our *Art Director*, **Kych**:
 
-Please reach out to our Art Director, Kych:
-- Email: Kych@osmosisdao.team
+- Email: [Kych@OsmosisDao.zone](mailto:Kych@OsmosisDao.zone)
 - Telegram: @kychuli
 
 Examples:
@@ -51,26 +28,21 @@ Examples:
 ![Darc_listing_2k_v0005](https://user-images.githubusercontent.com/95667791/160200760-f14eb0eb-5142-47a0-a4ff-55b6feffe02f.png)
 ![GRAV_Listing_2k_v0004](https://user-images.githubusercontent.com/95667791/160200328-07f753b1-3b50-4544-973a-b1a60502d1f2.png)
 
-<br/>
+### Blog Post on [Osmosis Community Updates](https://medium.com/osmosis-community-updates/)
 
-### Sponsored Blog Post
+In collaboration with [Osmosis Support Lab](https://support.osmosis.zone/), the OMM maintains a [community updates Medium blog](https://medium.com/osmosis-community-updates/). We encourage any builders of dapps, new tools, creators of liquidity pools, data scientists, and more, to write up a brief article to discuss their project, listing, etc. Our chief editor will review and coordinate a special image to be made, if one is not provided, and we will post to the Community Medium. Anything posted to this Medium blog is then shared through the various social channels by the OMM.
 
-The Osmosis Ministry of Marketing can commission a writer to briefly discuss a project, new listings, new external incentives, upcoming governance propsals, etc., which will be posted to their Blog platform, (currently Medium), and shared to various platform. This is best done in combination with the Custom Graphics.
+We collaborate with some regular builders and data scientists in the ecosystem for interesting and neat information. Their contributions have inspired Governance Proposals, changes in pool economics and more! So we really do love learning about the next *new* project!
 
-Fee 15 OSMO
+Please reach out to our *Chief Editor*, **RoboMcGobo**:
 
-Please reach out to our Chief Editor, RoboMcGobo:
-- Email: Robert@osmosisdao.team
-- Telegram: @RoboMcGobo
+- **Email:** [Robo@OsmosisDao.zone](mailto:Robo@OsmosisDao.zone)
+- **Telegram:** @RoboMcGobo
+- **Discord:** RoboMcGobo#2827
 
-<br/>
+## Retweets, Quote Retweets
 
-### Retweets
+In many cases, the Osmosis Ministry of Marketing Twitter account will retweet an integrating project's promotional or informational tweet. We're regular social media users too and love to share information. If you have something you'd like come across our eyes. Feel free to DM us!
 
-In many cases, the Osmosis Ministry of Marketing Twitter account can retweet an integrating project's promotional Tweet at no extra charge.
-
-
-Please reach out to our primary Twitter Manager, MadCatAttack:
-- Email: madcat@osmosisdao.team
-- Telegram: @MadCatAttack
-- Twitter:  @madcatattack1
+- *Twitter:* [@OsmoMinistryMkt](https://twitter.com/OsmoMinistryMkt)
+- Email: [MadCat@OsmosisDao.zone](mailto:MadCat@OsmosisDao.zone), [Togg@OsmosisDao.zone](mailto:Togg@OsmosisDao.zone)
