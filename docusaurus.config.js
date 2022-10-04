@@ -1,3 +1,4 @@
+const path = require('path')
 /* eslint-disable */
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
@@ -6,6 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 // const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 const posthogPlugin = require('./plugins/posthog-plugin.cjs');
+const { default: analytics } = require('./plugins/analytics/index.js');
 
 /** @type {import('@docusaurus/preset-classic').Options} */ defaultSettings = {
   remarkPlugins: [
@@ -73,7 +75,10 @@ const config = {
     locales: ['en'],
   },
 
-  clientModules: [require.resolve('./src/client/define-ui-kit.js')],
+  clientModules: [
+    require.resolve('./src/client/define-ui-kit.js'),
+    require.resolve('./src/client/analytics.js'),
+    ],
 
   presets: [
     [
@@ -101,12 +106,19 @@ const config = {
     ],
   ],
 
+  // plugins: [
+
+  //   path.resolve(__dirname, './src/plugins/analytics'),
+  // ],
+
   plugins: [
     ...SECTIONS,
     // ...UIKitReferencePlugins,
     webpackPlugin,
     posthogPlugin,
+    path.resolve(__dirname, 'plugins', 'analytics')
   ],
+
 
   themes: ['@docusaurus/theme-live-codeblock'],
 
@@ -261,6 +273,9 @@ const config = {
       },
       posthog: {
         apiKey: '00',
+      },
+      amplitude: {
+        code: 'MYCODE',
       },
     }),
 };

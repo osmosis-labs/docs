@@ -2,6 +2,8 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import { useHistory } from '@docusaurus/router';
 import { DyteButton } from '@dytesdk/react-ui-kit';
+//import useGoogleAnalytics from './useAnalyticshooks'
+
 
 import {
   HomepageCard as Card,
@@ -28,7 +30,6 @@ import GuidesSection from '../components/GuidesSection';
 
 export default function Homepage() {
   const router = useHistory();
-
   return (
     <Layout
       description="The Osmosis blockchain is a decentralized network, ran by 100+ validators and full nodes, with many front-ends and development teams on it. 🚀"

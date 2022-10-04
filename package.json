@@ -3,7 +3,6 @@
   "version": "1.0",
   "private": true,
   "scripts": {
-
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -19,6 +18,7 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^1.5.1",
     "@docusaurus/core": "^2.0.1",
     "@docusaurus/preset-classic": "^2.0.1",
     "@docusaurus/remark-plugin-npm2yarn": "^2.0.1",
