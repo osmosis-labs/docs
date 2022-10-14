@@ -4,7 +4,7 @@ info:
   description: REST API to get the historical data for Osmosis
   version: 1.1.1
 servers:
-  - url: https://api-osmosis.imperator.co/
+  - url: https://api.osmosis.zone/
     description: Osmosis Historical Data
 paths:
   /health/v1/check:
