@@ -4,11 +4,11 @@ These following API's are recommended for development purposes. For maximun cont
 
 ## Official public endpoints 
 
-| Network | Mainnet | Testnet | 
-| -------- | -------- | -------- | 
+| Network | Mainnet | Testnet | Docs |
+| -------- | -------- | -------- | -------- | 
 | **Chain ID**  | osmosis-1 | osmo-test-4  |
-| **GRPC endpoint**  | grpc.osmosis.zone | grpc-test.osmosis.zone |
-| **RPC endpoint**  | rpc.osmosis.zone  | rpc-test.osmosis.zone |
+| **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc-test.osmosis.zone:443 |
+| **gRPC-gateway**  | rpc.osmosis.zone  | rpc-test.osmosis.zone |
 | **RPC API Reference**  |  [API Reference](/api) | [API Reference](/api) |
 | **LCD API Reference**  |  [API Reference](/api/?v=LCD) | [API Reference](/api/?v=LCD) |
 | **LCD endpoint**  | lcd.osmosis.zone | lcd-test.osmosis.zone  |

@@ -1,3 +1,7 @@
+---
+title: Osmosis Public APIs
+sidebar_position: 1
+---
 import {
   HomepageCard as Card,
   HomepageSection as Section,
@@ -11,9 +15,16 @@ There are currently 3 public APIs provided by Osmosis: LCD, RPC and the historic
 <Section title="APIs" id="apis"  >
 
   <Card
-    title="Tendermint RPC"
-    description="Osmosis Tendermint RPC endpoints"
+    title="RPC ednpoints"
+    description="Osmosis RPC endpoints"
     to="/api/?v=RPC"
+    icon={<Tscodegen />}
+    svgFile="/icons/api.svg"
+  />   
+    <Card
+    title="gRPC"
+    description="Osmosis high performance, universal RPC framework"
+    to="/apis/grpc"
     icon={<Tscodegen />}
     svgFile="/icons/api.svg"
   />   
