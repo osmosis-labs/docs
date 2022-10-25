@@ -47,13 +47,6 @@ export default function Homepage() {
           </div>
 
 
-          <div className='margin-bottom--lg'>
-            <h1>🇨🇴 HackWasm Medellin</h1>
-            <p>Join us for the first Hackwasm ever made in Medellín city! This hackathon is your chance to network with incredible people and work with some of the best developers in the Cosmos ecosystem and helping them to solve real problems.</p>
-          <DyteButton onClick={() => router.push('/cosmwasm/hackwasm')}>Resources</DyteButton>
-          </div>
-            
-  
 
           <Section title="Learn about Osmosis">
             <Card
