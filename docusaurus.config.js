@@ -204,7 +204,7 @@ const config = {
             items: [
               {
                 label: 'Launch App',
-                href: 'https://app.osmosis.zome',
+                href: 'https://app.osmosis.zone',
               },
               {
                 label: 'Developer Portal',
