@@ -36,6 +36,9 @@
     margin-right: 0.5rem;
     height: 2rem;
   }
+  .col {
+    max-width: 100% !important;
+}
 }
 
 .sidebarLogo {

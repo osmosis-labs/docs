@@ -811,3 +811,10 @@ img[src$='#terminal'] {
 
 /* OSMOSIS */
 
+
+    @media (min-width: 997px) 
+{
+  .col {
+    max-width: 100% !important;
+}
+}

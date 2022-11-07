@@ -47,6 +47,9 @@
   .info {
     flex-direction: row;
   }
+  .col {
+    max-width: 100% !important;
+}
 }
 
 .infoRGB {
