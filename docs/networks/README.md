@@ -35,4 +35,11 @@ Did you know there is also an NPM package that fetch chain-registry data? <br/>
 
 ## Other providers
 
+- [All That Node](https://www.allthatnode.com/osmosis.dsrv) : `https://www.allthatnode.com/osmosis.dsrv`
+  - Features
+    - Unlimited access to archive data
+    - Faucet available
+    - Automated updates
+    - Technical support
+
 - [DataHub](https://datahub.figment.io) : `https://datahub.figment.io`
