@@ -123,9 +123,9 @@ sudo apt install librust-openssl-dev build-essential git
 Make the directory where you'll place the binary, clone the hermes source repository and build it using the latest release.
 ```sh
 mkdir -p $HOME/hermes
-git clone https://github.com/informalsystems/ibc-rs.git hermes
+git clone https://github.com/informalsystems/hermes
 cd hermes
-git checkout v0.12.0
+git checkout v1.0.0
 cargo install ibc-relayer-cli --bin hermes --locked
 ```
 
@@ -140,10 +140,10 @@ Check hermes version & config dir setup
 ```sh
 hermes version
 INFO ThreadId(01) using default configuration from '/home/relay/.hermes/config.toml'
-hermes 0.12.0
+hermes 1.0.0
 ```
 
-Edit hermes config (use ports according to the port configuration we set above, add only chains you want to relay)
+Edit Hermes config (use ports according to the port configuration we set above, add only chains you want to relay).
 
 ```
 nano $HOME/.hermes/config.toml
@@ -164,13 +164,13 @@ store_prefix = 'ibc'
 default_gas = 2000000
 max_gas = 10000000
 gas_price = { price = 0.005, denom = 'uatom' }
-gas_adjustment = 0.1
+gas_multiplier = 1.1
 max_msg_num = 25
 max_tx_size = 180000
 clock_drift = '10s'
 max_block_time = '10s'
 trusting_period = '14days'
-memo_prefix = ''
+memo_prefix = 'Osmosis Docs Rocks'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'
@@ -191,13 +191,13 @@ store_prefix = 'ibc'
 default_gas = 5000000
 max_gas = 15000000
 gas_price = { price = 0.0026, denom = 'uosmo' }
-gas_adjustment = 0.1
+gas_multiplier = 1.1
 max_msg_num = 20
 max_tx_size = 209715
 clock_drift = '20s'
 max_block_time = '10s'
 trusting_period = '10days'
-memo_prefix = 'Relayed by Czar'
+memo_prefix = 'Osmosis Docs Rocks'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'
@@ -209,14 +209,14 @@ list = [
 
 Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
 
-Best practice is to use the same mnemonic over all networks. Do not use your relaying-addresses for anything else because it will lead to account sequence errors.
+Best practice is to use the same mnemonic over all networks. Do not use the relayer wallets for anything else because it will lead to account sequence errors.
 
 ```sh
 hermes keys restore cosmoshub-4 -m "24-word mnemonic seed"
 hermes keys restore osmosis-1 -m "24-word mnemonic seed"
 ```
 
-Ensure this wallet has funds in both OSMO and ATOM in order to pay the fees required to relay.
+Ensure this wallet has funds in both $OSMO and $ATOM in order to pay the fees required to relay.
 
 ## Final Checks
 
@@ -247,37 +247,36 @@ hermes start
 ```
 
 Watch hermes' output for successfully relayed packets or any errors.
-It will try & clear any unreceived packets after startup has completed.
+It will try & clear any unreceived ("pending") packets after startup has completed.
 
 
 ## Helpful Commands
 
-Query Hermes for unreceived packets & acknowledgements (check if channels are "clear")
+Use Hermes to query for unreceived packets & acknowledgements (check if channels are "clear").
+This will query both the Osmosis and Cosmos Hub sides of the channel, printing if there is any pending packet on that path in any direction and for any packet type.
+
 ```sh
-hermes query packet unreceived-packets cosmoshub-4 transfer channel-141
-hermes query packet unreceived-acks cosmoshub-4 transfer channel-141
+hermes query packet pending --chain cosmoshub-4 --port transfer --channel channel-141
+```
+
+You can also individually query for each direction of the channel and each packet type (sends or acknowledgements).
+```sh
+hermes query packet pending-sends --chain cosmoshub-4 --port transfer --channel channel-141
+hermes query packet pending-acks --chain cosmoshub-4 --port transfer --channel channel-141
 ```
 ```sh
-hermes query packet unreceived-packets osmosis-1 transfer channel-0
-hermes query packet unreceived-acks osmosis-1 transfer channel-0
+hermes query packet pending-sends --chain osmosis-1 --port transfer --channel channel-0
+hermes query packet pending-acks --chain osmosis-1 --port transfer --channel channel-0
 ```
 
 Query Hermes for packet commitments:
 ```sh
-hermes query packet commitmentss cosmoshub-4 transfer channel-141
-hermes query packet commitments osmosis-1 transfer channel-0
+hermes query packet commitments --chain cosmoshub-4 --port transfer --channel channel-141
+hermes query packet commitments --chain osmosis-1 --port transfer --channel channel-0
 ```
 
-Clear channel (only works on hermes `v0.12.0` and higher)
-```sh
-hermes clear packets cosmoshub-4 transfer channel-141
-hermes clear packets osmosis-1 transfer channel-0
-```
+Clear channel manually in both directions. Use this in case you want to clear congestion manually. Only works on hermes `v0.12.0` and higher. *You'll need to stop your Hermes daemon before using `clear packets`. This is important, otherwise the `clear packets` process will be racing with the daemeon process to access the same relayer wallet, resulting in account sequence mismatch errors.*
 
-Clear unreceived packets manually. *Experimental: you'll need to stop your hermes daemon for it not to get confused with account sequences.*
 ```sh
-hermes tx raw packet-recv osmosis-1 cosmoshub-4 transfer channel-141
-hermes tx raw packet-ack osmosis-1 cosmoshub-4 transfer channel-141
-hermes tx raw packet-recv cosmoshub-4 osmosis-1 transfer channel-0
-hermes tx raw packet-ack cosmoshub-4 osmosis-1 transfer channel-0
+hermes clear packets --chain cosmoshub-4 --port transfer --channel channel-141
 ```
