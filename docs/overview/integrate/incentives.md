@@ -33,7 +33,7 @@ See [Osmosis Proposal #178: Match External Incentives for SWTH/OSMO](https://www
 
 Bonded Liquidity Gauges are mechanisms for distributing liquidity incentives to LP tokens that have been bonded for a minimum amount of time. 45% of the daily issuance of OSMO goes towards these liquidity incentives. When a new pool is onboarded to receive (internal) Osmosis Liquidity Mining incentives, it will be granted allocation points and recieve a portion of the 45% of daily OSMO issuance. See [Bonded Liquidity Gauges](../../overview/getting-started.md#bonded-liquidity-gauges).
 
-### Distribution Calcultions
+### Distribution Calculations
 
 
 #### Category Model
