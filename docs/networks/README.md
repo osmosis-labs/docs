@@ -8,10 +8,10 @@ These following API's are recommended for development purposes. For maximun cont
 | -------- | -------- | -------- | -------- | 
 | **Chain ID**  | osmosis-1 | osmo-test-4  |
 | **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc-test.osmosis.zone:443 |
-| **gRPC-gateway**  | rpc.osmosis.zone  | rpc-test.osmosis.zone |
+| **gRPC-gateway**  | https://rpc.osmosis.zone:443  | https://rpc-test.osmosis.zone:443 |
 | **RPC API Reference**  |  [API Reference](/api) | [API Reference](/api) |
 | **LCD API Reference**  |  [API Reference](/api/?v=LCD) | [API Reference](/api/?v=LCD) |
-| **LCD endpoint**  | lcd.osmosis.zone | lcd-test.osmosis.zone  |
+| **LCD endpoint**  | https://lcd.osmosis.zone | https://lcd-test.osmosis.zone  |
 | **LCD Swagger**  |  [Swagger](https://lcd.osmosis.zone/swagger/) |  [Swagger](https://lcd-test.osmosis.zone/swagger/) |
 | **RPC Swagger**  |  [Swagger](https://rpc-docs.osmosis.zone/) | [Swagger](https://rpc-docs.osmosis.zone/) |
 | **Faucet** | I wish 🤑 | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
