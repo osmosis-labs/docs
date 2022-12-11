@@ -210,7 +210,7 @@ A validator that is not in the active set and does not participate in consensus 
 
 ## Unbonding validator
 
-A validator transitioning from the active set to the inactive set. An unbonding validator does not participate in consensus or earn rewards. The unbonding process takes 21 days.
+A validator transitioning from the active set to the inactive set. An unbonding validator does not participate in consensus or earn rewards. The unbonding process takes 14 days.
 
 ## Unbonded Osmo
 
@@ -218,15 +218,15 @@ Osmo that can be freely traded and is not staked to a validator.
 
 ## Unbonding
 
-When a delegator decides to undelegate their Osmo from a validator. This process takes 21 days. No rewards accrue during this period. This action cannot be stopped once executed.
+When a delegator decides to undelegate their Osmo from a validator. This process takes 14 days. No rewards accrue during this period. This action cannot be stopped once executed.
 
 ## Unbonding Osmo
 
-Osmo that is transitioning from bonded to unbonded. Osmo that is unbonding cannot be traded freely. The unbonding process takes 21 days. No rewards accrue during this period. This action cannot be stopped once executed.
+Osmo that is transitioning from bonded to unbonded. Osmo that is unbonding cannot be traded freely. The unbonding process takes 14 days. No rewards accrue during this period. This action cannot be stopped once executed.
 
 ## Undelegate
 
-When a delegator no longer wishes to have their Osmo bonded to a validator. This process takes 21 days. No rewards accrue during this period. This action cannot be stopped once executed.
+When a delegator no longer wishes to have their Osmo bonded to a validator. This process takes 14 days. No rewards accrue during this period. This action cannot be stopped once executed.
 
 ## Uptime
 
