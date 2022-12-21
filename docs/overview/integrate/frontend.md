@@ -62,8 +62,8 @@ Asset Data
         - Coin denomination (the denomination for a 'whole' token (e.g., 'ATOM'))
     	- Coin minimal denomination (base denom on originating chain (e.g., 'uatom')
 		- For CW20 tokens:
-			- The minimal denomination looks like `cw20:<CONTRACT ADDRESS>`
-			- Will also need the CW20<>ICS20 contract address
+			- The minimal denomination looks like `cw20:</CONTRACT ADDRESS>`
+			- Will also need the CW20`<>`ICS20 contract address
 		- For assets originally foreign to the integrating chain (multihop IBC tokens):
 			- The minimal denomination is the 'ibc/...' denom on the registering chain
 			- Will also need the entire IBC Transfer Path with the original denomination
@@ -187,7 +187,7 @@ Examples of ibc-assets.ts::IBCAssetInfos:
     },
 ```
 - NETA, a CW20 token from Juno:
-    - Note: *channel-42* is Osmosis' channel to Juno for native Juno assets, but channel-169 is Osmosis' channel to this CW20<>ICS20 contract on Juno, which currently accomodates NETA, MARBLE, BLOCK, HOPE, RACOON, and potentially other CW20 tokens in the future 
+    - Note: *channel-42* is Osmosis' channel to Juno for native Juno assets, but channel-169 is Osmosis' channel to this CW20`<>`ICS20 contract on Juno, which currently accomodates NETA, MARBLE, BLOCK, HOPE, RACOON, and potentially other CW20 tokens in the future 
 ```
     {
         counterpartyChainId: 'juno-1',
