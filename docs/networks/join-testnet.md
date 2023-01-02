@@ -185,8 +185,16 @@ WantedBy=multi-user.target
 Move this new file to the systemd directory:
 
 ```bash
-sudo mv cosmovisor.service /lib/systemd/system/cosmovisor.service
+sudo mv cosmovisor.service /etc/systemd/system/cosmovisor.service
 ```
+
+:::note
+Previously, this documentation suggested to move the systemd unit file to:
+
+    /lib/systemd/system/cosmovisor.service
+
+If dealing with a server that may have followed older instructions, you may consider looking there.
+:::
 
 ## Start Osmosis Service
 
