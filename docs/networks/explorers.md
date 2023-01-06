@@ -6,6 +6,7 @@ The explorers in the Cosmos ecosystem are rapidily growing. The following is a l
 ## Mainnet
 
 #### Block explorers
+- [DSRV SonarPod](https://www.sonarpod.com)
 - [Mintscan](https://www.mintscan.io/osmosis)
 - [Bigdipper](https://osmosis.bigdipper.live/)
 
