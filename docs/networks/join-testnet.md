@@ -172,7 +172,7 @@ Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 Environment="DAEMON_LOG_BUFFER_SIZE=512"
 Environment="UNSAFE_SKIP_BACKUP=true"
 User=$USER
-ExecStart=${HOME}/go/bin/cosmovisor start
+ExecStart=${HOME}/go/bin/cosmovisor run start
 Restart=always
 RestartSec=3
 LimitNOFILE=infinity
