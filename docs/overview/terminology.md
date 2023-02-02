@@ -83,6 +83,9 @@ A user who delegates, bonds, or stakes OSMO to a validator to earn rewards.
 
 A computer connected to the Osmosis mainnet able to validate transactions and interact with the Osmosis blockchain. All active validators run full nodes.
 
+## Generalized Solidly Stableswap
+Generalized Solidly Stableswap: A type of Stableswap that offers low slippage for multiple assets that are expected to maintain a tight correlation. It uses a mathematical formula to maintain a stable price ratio and reduce slippage, but there is still some price impact for each trade. If the liquidity becomes imbalanced, the slippage can increase. This Stableswap is implemented using the Solidly Stableswap curve and is generalized to support multiple assets.
+
 ## Governance
 
 Governance is the democratic process that allows users and validators to make changes to the Osmosis protocol. Community members submit, vote, and implement proposals.
@@ -156,6 +159,9 @@ Proof of Stake. A style of blockchain where validators are chosen to propose blo
 ## Rewards
 
 Revenue generated from fees given to validators and delegators.
+
+## Scaling Factor
+Scaling factors are introduced to set the expected price ratio for Stableswaps. Precision of pegged coins, differences in staking derivatives, and other issues make it difficult to simply rely on x_reserves ~= y_reserves. Scaling factors are used to map from raw coin units to AMM math units by dividing the raw units by the scaling factor. This mapping is done by rounding the result based on the rounding mode which has three options: RoundUp, RoundDown, and RoundBankers. All token inputs are scaled and the AMM equations must ensure that rounding is done correctly. The details of scaling and rounding are described in the relevant sections of the specification. [here](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/pool-models/stableswap/README.md)
 
 ## Self-delegation
 
