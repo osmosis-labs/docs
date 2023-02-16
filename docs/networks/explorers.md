@@ -5,9 +5,13 @@ The explorers in the Cosmos ecosystem are rapidily growing. The following is a l
 
 ## Mainnet
 
-#### Block explorers
+#### Block Explorers
 - [Mintscan](https://www.mintscan.io/osmosis)
 - [Bigdipper](https://osmosis.bigdipper.live/)
+
+#### Contract Explorers
+
+- [Celatone](https://celatone.osmosis.zone/mainnet)
 
 
 ## Testnet
@@ -15,4 +19,5 @@ The explorers in the Cosmos ecosystem are rapidily growing. The following is a l
 - [Mintscan](https://testnet.mintscan.io/osmosis-testnet)
 
 #### Contract Explorers
+- [Celatone](https://celatone.osmosis.zone/testnet)
 - [Code-explorer](https://osmosis-contracts.web.app/#/codes)
