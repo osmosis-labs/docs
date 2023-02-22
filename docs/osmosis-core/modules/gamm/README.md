@@ -60,7 +60,7 @@ Existing Join types:
 
 #### Join types code call stack and structure:
 <img src="GAMM_JoinPoolMsgs.png" height="500"/>
-</br>
+<br/>
 
 #### Exiting Pool
 
@@ -85,7 +85,7 @@ Existing Exit types:
 
 #### Exit types code call stack and structure:
 <img src="GAMM_ExitPoolMsgs.png" height="500"/>
-</br>
+<br/>
 
 
 ### Swap
@@ -190,8 +190,8 @@ The GAMM module also has a **PoolCreationFee** parameter, which currently is set
 
 Migration records are used to track a canonical link between a single balancer pool and its corresponding concentrated liquidity pool. There is a single `MigrationRecords` object for the entire gamm module that consists of many `BalancerToConcentratedPoolLink` objects. Each balancer pool can be linked to a maximum of one concentrated liquidity pool, and each concentrated liquidity pool can be linked to a maximum of one balancer pool. The entire `MigrationRecords` object can be either replaced through governance via `ReplaceMigrationRecordsProposal` or specific pool links can be added/removed/modified through governance via `UpdateMigrationRecordsProposal` (similar to how incentives are replaced and updated).
 
-</br>
-</br>
+<br/><br/>
+
 
 ## Messages
 
