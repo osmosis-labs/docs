@@ -5,17 +5,13 @@ sidebar_position: 1
 
 ##  What is Osmosis?
 
-Osmosis is an advanced automated market maker (AMM) protocol that allows developers to build customized AMMs with sovereign liquidity pools. Built using the Cosmos SDK, Osmosis utilizes Inter-Blockchain Communication (IBC) to enable cross-chain transactions.
+Osmosis is the premier cross-chain DeFi hub. As the liquidity center and primary trading venue of Cosmos – the open, emergent ecosystem of sovereign Layer 1s connected with the Inter-Blockchain Communication protocol (IBC) – it is the access point for the wide world of appchains, the gateway to the interchain.
+As IBC continues to explode – with more than 50 blockchains connected and dozens more in development, including dYdX chain, and with teams working to enable IBC on Avalanche, Polkadot, NEAR, and others, potentially even Ethereum – Osmosis will be there to welcome new users, developers, and protocols to the Internet of Blockchains.
 
 ![](../assets/welcome.png)
 
-Osmosis allows users to launch liquidity pools with unique parameters, like bonding curves and multi-weighted asset pools. The incentive structure of Osmosis is also adaptable. Governance implements liquidity reward (LP) rewards for specific pools, allowing for strategically targeted incentives.
-
-Osmosis is a fair-launched, customizable automated market maker for interchain assets that allows the creation and management of non-custodial, self-balancing, interchain token index similar to one of Balancer.
-
-Inspired by [Balancer](http://balancer.finance/whitepaper) and Sunny Aggarwal's '[DAOfying Uniswap Automated Market Maker Pools](https://www.sunnya97.com/blog/daoifying-uniswap-automated-market-maker-pools)', the goal for Osmosis is to provide the best-in-class tools that extend the use of AMMs within the Cosmos ecosystem beyond traditional token swap-type use cases. Bonding curves, while have found its primary use case in decentralized exchange mechanisms, its potential use case can be further extended through the customizability that Osmosis offers. Through the customizability offered by Osmosis, such as custom-curve AMMs, dynamic adjustments of swap fees, multi-token liquidity pools–the AMM can offer decentralized formation of token fundraisers, interchain staking, options market, and more for the Cosmos ecosystem.
-
-Whereas most Cosmos zones have focused their incentive scheme on the delegators, Osmosis attempts to align the interests of multiple stakeholders of the ecosystem such as LPs, DAO members, as well as delegators. One mechanism that is introduced is how staked liquidity providers have sovereign ownership over their pools, and through the pool governance process allow them to adjust the parameters depending on the pool’s competition and market conditions. Osmosis is a sovereign Cosmos zone that derives its sovereignty not only from its application-specific blockchain architecture but also the collective sovereignty of the LPs that has aligned interest to different tokens that they are providing liquidity for.
+The Osmosis Ecosystem is a suite of premier, DAO-gated dApps that are tightly integrated into the Osmosis AMMs and IBC routing capabilities. Most recently, Mars Protocol launched its lending and credit protocol on Osmosis, and dozens of other developer teams are building index tokens, options, perps, stops and limit orders, automated trading, yield vaults, NFTs, and more.
+With new apps and features like stableswap, concentrated liquidity, rate-limiting, in-protocol MEV capture, and more going live all the time, Osmosis is continuing to expand its moat as the only full-service, cross-chain exchange and DeFi hub, one that rivals the smooth user experience of a CEX without compromising on the benefits of decentralized finance – self-custody, trust-minimized transactions, direct on-chain access, and privacy.
 
 
 ### Why Osmosis?
