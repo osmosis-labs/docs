@@ -14,7 +14,7 @@ The minimum recommended specs for running osmosisd is as follows:
 
 You can check if you have enough storage to run osmosisd [here](https://quicksync.io/networks/osmosis.html).
 
-## Commands
+## Command Help
 Go to [commands](#commands) to learn more.
 
 ## Quick Start
