@@ -8,7 +8,7 @@ These following API's are recommended for development purposes. For maximun cont
 | -------- | -------- | -------- | -------- | 
 | **Chain ID**  | osmosis-1 | osmo-test-4  |
 | **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc-test.osmosis.zone:443 |
-| **gRPC-gateway**  | https://rpc.osmosis.zone:443  | https://rpc-test.osmosis.zone:443 |
+| **gRPC-gateway**  | https://rpc.osmosis.zone:443  | https://rpc.testnet.osmosis.zone:443 |
 | **RPC API Reference**  |  [API Reference](/api) | [API Reference](/api) |
 | **LCD API Reference**  |  [API Reference](/api/?v=LCD) | [API Reference](/api/?v=LCD) |
 | **LCD endpoint**  | https://lcd.osmosis.zone | https://lcd-test.osmosis.zone  |

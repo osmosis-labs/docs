@@ -61,7 +61,7 @@ info:
 servers:
   - url: https://rpc.osmosis.zone
     description: Osmosis mainnet node to interact with the Tendermint RPC
-  - url: https://rpc-test.osmosis.zone
+  - url: https://rpc.testnet.osmosis.zone
     description: Osmosis testnet node to interact with the Tendermint RPC
   - url: https://rpc.cosmos.network
     description: Cosmos mainnet node to interact with the Tendermint RPC
