@@ -43,3 +43,5 @@ Did you know there is also an NPM package that fetch chain-registry data? <br/>
     - Technical support
 
 - [DataHub](https://datahub.figment.io) : `https://datahub.figment.io`
+
+- [OnFinality](https://onfinality.io/) is a blockchain infrastructure platform that saves Web3 builders time and makes their lives easier. OnFinality delivers scalable API endpoints for the biggest blockchain networks and empowers developers to automatically test, deploy, scale and monitor their own blockchain nodes in minutes. OnFinality offers free and premium (Pay-as-you-go or subsription-based) API [services for Osmosis](https://onfinality.io/networks/osmosis). Public RPC Endpoint for Osmosis: `https://osmosis.api.onfinality.io/public`
