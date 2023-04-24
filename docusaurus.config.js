@@ -263,6 +263,17 @@ const config = {
         apiKey: '00',
       },
     }),
-};
+    scripts: [
+      {
+            src: "https://widget.kapa.ai/kapa-widget.bundle.js",
+            "data-website-id": "c5b5e9fc-d025-4c12-b08e-9784d0e2161f",
+            "data-project-name": "Osmosis",
+            "data-project-color": "#7900B4",
+            "data-project-logo":
+              "https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fosmo.svg&w=64&q=75",
+            async: true,
+          },
+    ],
+  };
 
 module.exports = config;
