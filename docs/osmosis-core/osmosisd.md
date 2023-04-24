@@ -19,7 +19,7 @@ Go to [commands](#commands) to learn more.
 
 ## Quick Start
 
-Go to [https://get.osmosis.zone/](https://get.osmosis.zone/) or copy and past the following into your terminal, then follow the onscreen instructions:
+Go to [https://get.osmosis.zone/](https://get.osmosis.zone/) or copy and paste the following into your terminal, then follow the onscreen instructions:
 
 ```
 curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
