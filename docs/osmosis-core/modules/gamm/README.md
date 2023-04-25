@@ -36,7 +36,7 @@ us safe when it comes to the malicious creation of unneeded pools.
 
 #### Joining Pool
 
-When joining a pool without swapping - with `JoinPool`, a user can provide the maximum amount of tokens `TokenInMaxs'
+When joining a pool without swapping - with `JoinPool`, a user can provide the maximum amount of tokens `TokenInMaxs`
 they're willing to deposit. This argument must contain all the denominations from the pool or no tokens at all, 
 otherwise, the tx will be aborted.
 If `TokenInMaxs` contains no tokens, the calculations are done based on the user's balance as the only constraint.
@@ -60,7 +60,7 @@ Existing Join types:
 
 #### Join types code call stack and structure:
 <img src="GAMM_JoinPoolMsgs.png" height="500"/>
-<br/>
+</br>
 
 #### Exiting Pool
 
@@ -85,7 +85,7 @@ Existing Exit types:
 
 #### Exit types code call stack and structure:
 <img src="GAMM_ExitPoolMsgs.png" height="500"/>
-<br/>
+</br>
 
 
 ### Swap
@@ -184,14 +184,14 @@ Pools have the following parameters:
 
 The GAMM module also has a **PoolCreationFee** parameter, which currently is set to `100000000 uosmo` or `100 OSMO`.
 
-[comment]: `<>` (TODO Add better description of how the weights affect things)
+[comment]: <> (TODO Add better description of how the weights affect things)
 
 ## Migration Records
 
 Migration records are used to track a canonical link between a single balancer pool and its corresponding concentrated liquidity pool. There is a single `MigrationRecords` object for the entire gamm module that consists of many `BalancerToConcentratedPoolLink` objects. Each balancer pool can be linked to a maximum of one concentrated liquidity pool, and each concentrated liquidity pool can be linked to a maximum of one balancer pool. The entire `MigrationRecords` object can be either replaced through governance via `ReplaceMigrationRecordsProposal` or specific pool links can be added/removed/modified through governance via `UpdateMigrationRecordsProposal` (similar to how incentives are replaced and updated).
 
-<br/><br/>
-
+</br>
+</br>
 
 ## Messages
 
@@ -432,7 +432,7 @@ Swap a **maximum** of `.407239 AKT` through `pool 3` into **exactly** `.140530 O
 osmosisd tx gamm swap-exact-amount-out 140530uosmo 407239 --swap-route-pool-ids 3 --swap-route-denoms ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-[comment]: `<>` (Other resources Creating a liquidity bootstrapping pool and Creating a pool with a pool file)
+[comment]: <> (Other resources Creating a liquidity bootstrapping pool and Creating a pool with a pool file)
 :::
 
 ## Queries
