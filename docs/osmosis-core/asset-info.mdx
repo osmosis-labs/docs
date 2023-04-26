@@ -4,67 +4,8 @@ sidebar_position: 5
 ---
 # Asset Info
 
-import { useState, useEffect } from 'react'
+import AssetData from './AssetData';
 
-export const AssetData = () => {
-  const [assets, setAssets] = useState(null)
-  useEffect(() => {
-    const fetchAssets = () => {
-      fetch('https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmosis-1/osmosis-1.assetlist.json')
-        .then((result) => result.json())
-        .then((data) => setAssets(data.assets))
-    }
-    fetchAssets()
-  }, [])
-  if (!assets) {
-    return <h1>Fetching Assets...</h1>
-  }
-return  (
-<table>
-  <thead>
-    <tr>
-      <th>
-        <code>Name</code>
-      </th>
-       <th>
-        <code>Symbol</code>
-      </th>
-      <th>
-        <code>IBC Denom</code>
-      </th>
-    <th>
-        <code>Source Channel</code>
-      </th>
-      <th>
-        <code>Destination Channel</code>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-      {assets.map(asset => <tr key={asset.symbol}>
-        <td>{asset.name}</td>
-        <td>{asset.symbol}</td>
-        <td>{asset.base}</td>
-                <td>
-        {typeof asset.ibc != "undefined" &&
-          <div> {asset.ibc.source_channel}</div>
-        }
-        </td>
-        <td>
-        {typeof asset.ibc != "undefined" &&
-          <div> {asset.ibc.dst_channel}</div>
-        }
-        </td>
-      
-        </tr>)}
-  </tbody>
-</table>
-)
-}
+Osmosis frontend supports various assets with corresponding IBC denomination and channel. When assets are transferred through IBC, they obtain a new IBC denomination that is used to identify them in the frontend. The IBC channel is used to identify which chain the asset is from, for example, channel-0 for ATOMs transferred from the Cosmos Hub to Osmosis.
 
-
-
-
-The following are all the assets currently supported by the Osmosis frontend along with their corresponding IBC denomination and channel. When assets are transferred through IBC, they lose their original denomination (i.e ATOM) and obtain a new IBC denomination (i.e. ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2)
-<AssetData/>
-
+<AssetData />
