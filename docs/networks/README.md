@@ -4,17 +4,20 @@ These following API's are recommended for development purposes. For maximun cont
 
 ## Official public endpoints 
 
-| Network | Mainnet | Testnet | Docs |
+| Network | Mainnet | Current Testnet | New Testnet (Coming soon) | 
 | -------- | -------- | -------- | -------- | 
-| **Chain ID**  | osmosis-1 | osmo-test-4  |
-| **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc-test.osmosis.zone:443 |
-| **gRPC-gateway**  | https://rpc.osmosis.zone:443  | https://rpc.testnet.osmosis.zone:443 |
-| **RPC API Reference**  |  [API Reference](/api) | [API Reference](/api) |
-| **LCD API Reference**  |  [API Reference](/api/?v=LCD) | [API Reference](/api/?v=LCD) |
-| **LCD endpoint**  | https://lcd.osmosis.zone | https://lcd-test.osmosis.zone  |
-| **LCD Swagger**  |  [Swagger](https://lcd.osmosis.zone/swagger/) |  [Swagger](https://lcd-test.osmosis.zone/swagger/) |
-| **RPC Swagger**  |  [Swagger](https://rpc-docs.osmosis.zone/) | [Swagger](https://rpc-docs.osmosis.zone/) |
-| **Faucet** | I wish 🤑 | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
+| **Chain ID**  | osmosis-1 | osmo-test-4  | osmo-test-5 
+| **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc-test.osmosis.zone:443 |grpc.osmotest5.osmosis.zone 
+| **gRPC-gateway**  | https://rpc.osmosis.zone:443  | https://rpc.testnet.osmosis.zone:443 | https://rpc.osmotest5.osmosis.zone/ 
+| **LCD endpoint**  | https://lcd.osmosis.zone | https://lcd-test.osmosis.zone  | https://lcd.osmotest5.osmosis.zone/ 
+| **Explorer**  | https://lcd.osmosis.zone | https://lcd-test.osmosis.zone  | https://explorer.osmotest5.osmosis.zone/ 
+| **Landing Page**  | ... | ...  | [https://explorer.osmotest5.osmosis.zone/](https://osmotest5.osmosis.zone/) 
+| **RPC API Reference**  |  [API Reference](/api) | [API Reference](/api) | ... 
+| **LCD API Reference**  |  [API Reference](/api/?v=LCD) | [API Reference](/api/?v=LCD) | ... 
+| **LCD Swagger**  |  [Swagger](https://lcd.osmosis.zone/swagger/) |  [Swagger](https://lcd-test.osmosis.zone/swagger/) |  ...
+| **RPC Swagger**  |  [Swagger](https://rpc-docs.osmosis.zone/) | [Swagger](https://rpc-docs.osmosis.zone/) | ...
+| **Faucet** | I wish 🤑 | [faucet.osmosis.zone](https://faucet.osmosis.zone/) | [faucet.osmotest5.osmosis.zone/](https://faucet.osmotest5.osmosis.zone/) 
+
 
 
 ### API Docs
