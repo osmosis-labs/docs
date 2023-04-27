@@ -22,12 +22,11 @@ export default function useSectionMenu() {
           data: {},
         };
 
-        for (const { name, section, description, isNew } of multiSection) {
+        for (const { name, section, description } of multiSection) {
           sections.data[section] = {
             name,
             description,
             items: SECTIONS.filter((item) => item.section === section),
-            isNew,
           };
         }
       }

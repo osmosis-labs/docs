@@ -8,7 +8,6 @@ import clsx from 'clsx';
 
 import useBreakpoint from '../lib/useBreakpoint';
 import SectionsMenu from '../components/SectionsMenu';
-import RunInPostmanButton from '../components/RunInPostmanButton';
 
 const API_TOOLTIP_KEY = 'dyte-api-v2-tooltip-shown';
 
@@ -77,7 +76,6 @@ export default function Home() {
       <div className="header">
         <h2>Osmosis {currentVersion} endpoints</h2>
         <div className="aside">
-          {/* <RunInPostmanButton /> */}
           <a className="navbar__item navbar__link dev-portal-signup dev-postman-link"  target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis' rel="noreferrer">Open Postman Collection</a>
 
           <DyteTooltip

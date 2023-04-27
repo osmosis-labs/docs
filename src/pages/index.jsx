@@ -12,7 +12,6 @@ import {
   TerminalIcon,
   IDEIcon,
   ModulesIcon,
-  RelayerIcon,
   AssetIcon,
   Telescope,
   Osmojs,
@@ -24,7 +23,6 @@ import {
   OsmosisCore,
   Contribute,
 } from '../icons';
-import GuidesSection from '../components/GuidesSection';
 
 export default function Homepage() {
   const router = useHistory();

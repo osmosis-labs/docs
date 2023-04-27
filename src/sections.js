@@ -100,7 +100,6 @@ const MULTI_SECTIONS = [
     {
       name: 'Osmosis Core',
       section: 'mobile-core',
-      isNew: true,
       description: 'Osmosis Chain Development documentation.',
     },
     {
