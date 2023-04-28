@@ -1,4 +1,8 @@
-# Token Listings
+---
+sidebar_position: 4
+---
+
+# Create a Pool
 
 ## How to create a new pool with IBC assets
 

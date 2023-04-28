@@ -1,4 +1,8 @@
-# Liquidity
+---
+sidebar_position: 5
+---
+
+# Initial Liquidity
 
 ## Options for Intial Liquidity
 

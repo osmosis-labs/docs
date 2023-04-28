@@ -1,4 +1,8 @@
-# Osmosis Zone Front End
+---
+sidebar_position: 7
+---
+
+# List on Main
 
 ## How to Add Assets onto the Osmosis Assets Page
 

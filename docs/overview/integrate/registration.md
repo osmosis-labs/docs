@@ -1,4 +1,8 @@
-# Registration
+---
+sidebar_position: 3
+---
+
+# Register Assets
 
 ## How to Register onto the Cosmos Chain Registry
 

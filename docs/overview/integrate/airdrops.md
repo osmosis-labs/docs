@@ -1,4 +1,8 @@
-# Airdrop Guide
+---
+sidebar_position: 2
+---
+
+# Airdrop Distribution
 
 ## Overview
 

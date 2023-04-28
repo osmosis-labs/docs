@@ -243,6 +243,21 @@ The proposal.json would look as follows:
 ```
 :::
 
+### submit-proposal (set superfluid asset)
+
+Enable a pool as eligible for Superfluid Staking, allowing a portion of the OSMO within the pool to be staked - providing additional security for Osmosis as well as staking rewards and voting power for Liquidity Providers
+
+```
+osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets=GAMM --from WALLET --chain-id CHAIN_ID
+```
+
+Example
+
+Add Superfluid Staking to Pool 831
+
+```bash
+osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET --chain-id CHAIN_ID
+```
 
 ### deposit
 
