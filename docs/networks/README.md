@@ -19,7 +19,7 @@ These following API's are recommended for development purposes. For maximun cont
 
 ## Official public endpoints 
 
-| Network | Mainnet | Current Testnet | New Testnet (Coming soon) | 
+| Network | Mainnet | Osmo Testnet 5 | Osmo Testnet 4 | 
 | -------- | -------- | -------- | -------- | 
 | **Chain ID**  | osmosis-1 | osmo-test-5 | osmo-test-4
 | **gRPC endpoint**  | grpc.osmosis.zone:9090 | grpc.osmotest5.osmosis.zone | grpc-test.osmosis.zone:443 
