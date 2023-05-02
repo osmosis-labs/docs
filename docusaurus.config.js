@@ -136,7 +136,7 @@ const config = {
         items: [
           {
             label: 'Overview',
-            to: '/overview',
+            to: 'overview/educate',
             position: 'left',
           },
           {

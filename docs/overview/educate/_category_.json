@@ -1,0 +1,14 @@
+{
+  "position": 4,
+  "label": "Overview",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+  
+    "title": "Overview"
+  },
+  "customProps": {
+    "description": "The guides on this page will give a grounding on Osmosis functionality."
+  }
+}

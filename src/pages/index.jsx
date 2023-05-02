@@ -29,7 +29,7 @@ export default function Homepage() {
 
   return (
     <Layout
-      description="The Osmosis blockchain is a decentralized network, ran by 100+ validators and full nodes, with many front-ends and development teams on it. 🚀"
+      description="The Osmosis blockchain is a decentralized network, run by 150+ validators and full nodes, with many front-ends and development teams on it."
       wrapperClassName="homepage"
     >
       <div className="pad">
@@ -37,7 +37,7 @@ export default function Homepage() {
           <div className='margin-bottom--lg'>
             <h2>Osmosis Docs</h2>
             <p>
-            The Osmosis blockchain is a decentralized network, ran by 100+ validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
+            The Osmosis blockchain is a decentralized network, run by 150+ validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
             </p>
             <DyteButton onClick={() => router.push('/osmosis-core/')}>
               Get Started &rarr;
@@ -49,18 +49,29 @@ export default function Homepage() {
           <Section title="Learn about Osmosis">
             <Card
               title="What is Osmosis?"
-              description="Osmosis is an advanced automated market maker (AMM) protocol that allows developers to build customized AMMs with sovereign liquidity pools."
-              to="/overview/"
+              description="Osmosis is an advanced automated market maker (AMM) protocol that allows developers to build customized AMMs."
+              to="/overview/educate/osmosis"
+              icon={<OsmosisCore />}
             />
             <Card
-              title="How to use the Osmosis Dex"
+              title="How to use the Osmosis DEX"
               description="Learn about how to swap, provide liquidity and more."
-              to="/overview/getting-started"
+              to="/overview/educate/getting-started"
             />
             <Card
-              title="The OSMO Token"
-              description="The OSMO token is a governance token that allows staked token holders to decide the future of the protocol, including every implementation detail. "
-              to="/overview/getting-started"
+              title="Explore the Ecosystem"
+              description="Osmosis is home to a wide array of protocols and tools, find documentation relating to these on their sites"
+              to="https://osmosis.zone/ecosystem"
+            />
+            <Card
+              title="List on Osmosis"
+              description="Learn how to list your project's token on Osmosis"
+              to="/overview/integrate"
+            />
+            <Card
+              title="Join the Chain"
+              description="Learn how to run an Osmosis node or validator"
+              to="/overview/validate"
             />
           </Section>
 
