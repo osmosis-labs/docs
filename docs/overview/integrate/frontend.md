@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # List on Main
@@ -15,7 +15,7 @@ Once a pool containing the asset has received governance approval, the asset wil
 ![](../../assets/asset_list.png)
 
 Goverance approval can come in many forms such as:
-* Being part of the [External Incentive Matching Program](https://docs.osmosis.zone/overview/getting-started/.#external-incentive-matching-program)
+* Being part of the [External Incentive Matching Program](https://docs.osmosis.zone/overview/getting-started/#external-incentive-matching-program).
 * Receiving [Internal Incentives](https://docs.osmosis.zone/overview/getting-started/#internal-incentives).
 * Having [Superfluid Staking](https://docs.osmosis.zone/overview/getting-started/#superfluid-staking) enabled.
 * Being explicitly approved for listing on the frontend e.g. [Mintscan Proposal 491](https://www.mintscan.io/osmosis/proposals/491).

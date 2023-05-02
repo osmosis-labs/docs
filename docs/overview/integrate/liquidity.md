@@ -1,8 +1,8 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-# Initial Liquidity
+# Source Initial Liquidity
 
 When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth of liquidity in a pool before it is listed onto [frontier.osmosis.zone](https://frontier.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
 
