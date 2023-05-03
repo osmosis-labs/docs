@@ -7,11 +7,11 @@ These following API's are recommended for development purposes. For maximun cont
 
 :::warning Important Notice
 ### 
-> **During April**, `osmo-test-4` will remain the official testnet while `osmo-test-5` will be in public beta.
+> **During April, 2023**, `osmo-test-4` will remain the official testnet while `osmo-test-5` will be in public beta.
 >
-> **During May**, `osmo-test-4` will be deprecated (but not removed) and the official testnet will become `osmo-test-5`.
+> **During May, 2023**, `osmo-test-4` will be deprecated (but not removed) and the official testnet will become `osmo-test-5`.
 >
-> **On June 1st**, `osmo-test-4` will be deleted.
+> **On June 1st, 2023**, `osmo-test-4` will be deleted.
 >
 > For now, the official testnet is `osmo-test-4`. Unless bugs are discovered, in May we will promote `osmo-test-5` as the official testnet.
 >
@@ -29,7 +29,6 @@ These following API's are recommended for development purposes. For maximun cont
 | API Reference | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) |
 | Swagger       | [LCD Swagger](https://lcd.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd.osmotest5.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd-test.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) |
 | Faucet        | Not Available                                   | [faucet.osmotest5.osmosis.zone/](https://faucet.osmotest5.osmosis.zone/) | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
-``
 
 
 ## Frontend URLs
