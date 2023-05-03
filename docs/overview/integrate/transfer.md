@@ -29,7 +29,14 @@ Recommended readings:
 * [IBC Overview](https://docs.cosmos.network/master/ibc/overview.html) - To understand IBC clients, connections, 
 * [How to Upgrade IBC Chains and their Clients](https://docs.cosmos.network/master/ibc/upgrades/quick-guide.html)
 
-## Setting up and operating relayer to Osmosis
+### Not on a Cosmos-SDK chain?
+Several intermediary chains are in use or being developed that link the IBC enabled Cosmos with other ecosystems.
+
+For EVM chains, Osmosis [voted](https://www.mintscan.io/osmosis/proposals/206) to use [Axelar](https://axelar.network/) as its canonical bridge. This connects Osmosis to networks such as Ethereum, Avalanche, Arbitrum, Binance Smart Chain, Celo, Fantom, Polkadot and Polygon.
+
+Any token added to the Axelar bridge is enabled for transfer to Osmosis and gains access to permissionless listing.
+
+## Setting up and operating a relayer to Osmosis
 Relayers are responsible of transferring IBC packets between Osmosis chain and the native chain of an asset. All Osmosis 'deposits' and 'withdrawals' are IBC transfers which dedicated relayers process.
 
 To ensure fungibility amongst IBC assets, the frontend will assume social consensus have been achieved and designate one specific channel between Osmosis and the native chain as the primary channel for all IBC token transfers. Multiple relayers can be active on the same channel, and for the sake of redundancy and increased resilience we recommend having multiple relayers actively relaying packets. It is recommended to initialize the channel as an unordered IBC channel, rather than an ordered IBC channel.
