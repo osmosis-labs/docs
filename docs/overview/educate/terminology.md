@@ -1,11 +1,11 @@
-# Glossary 
-
-
-Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.
-
 ---
 sidebar_position: 5
 ---
+
+# Glossary 
+
+Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.
+
 ## Active set
 
 The top 150 validators that participate in consensus and receive rewards.

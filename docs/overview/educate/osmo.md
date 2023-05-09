@@ -8,21 +8,28 @@ The OSMO token is a governance token that allows staked token holders to decide 
 ## Voting
 Governance is the critical component of how Osmosis evolves. Active stakeholders of the network will be responsible for proposing, vetting, and passing protocol upgrades.
 
-The pools eligible for liquidity rewards will be selected by OSMO governance participants, allowing the stakeholders to formulate an incentivization strategy that best aligns with the long-term interests of the protocol.
+The pools eligible for liquidity rewards are selected by OSMO governance participants, allowing the stakeholders to formulate an incentivization strategy that best aligns with the long-term interests of the protocol.
 
-## Consolidation of Liquidity
-### Multihop
+## Consolidation of Liquidity and Multihops
+While there are a huge variety of pool pairings, swap fees and curves available, this can lead to fragmented liquidity. Osmosis governance has chosen to mostly incentivise pools paired with OSMO which concentrates the liquidity for each token to a smaller numbers of pools, allowing for more efficient trades with less slippage.
 
-### Superfluid Staking
+With each trade routing through OSMO, Osmosis discounts the spread factor for each trade that does so. This leads to the same cost to a trader between any two pairs and minimal slippage, even if this pair does not exist.
 
+## Superfluid Staking
 The OSMO token is also minted and burned in the context of Superfluid Staking. As a Osmosis-specific feature, Superfluid Staking provides the consensus layer more security with a sort of "Proof of Useful Stake". Each person gets an amount of Osmo representative of the value of their share of liquidity pool tokens staked and delegated to validators, resulting in the security guarantee of the consensus layer to also be based on GAMM LP shares. 
 
 Further details can be seen in the [Superfluid module specifications](/osmosis-core/modules/superfluid/)
 
-## TX Fees
+## Transaction Fees
 Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. Minimum gas costs are determined by the proposer of a block in which the transaction is included. This transaction fee is distributed to OSMO stakers on the network.
-Validators can choose which assets to accept for fees in the blocks that they propose. This optionality is a unique feature of Osmosis.
+Validators can choose which assets to accept for fees in the blocks that they propose, but all accepted assets are converted to OSMO before distribution.
 
 ## ProtoRev
+The ProtoRev module mints and burns the OSMO token in order to perform priviledged arbitrage transactions on chain to ensure prices are balanced across liquidity sources on chain.
+No use for this revenue has currently been decided, but will be allocated by governance in the future.
 
-## Fees
+## Other Fees
+The OSMO token is required as fees for several tasks on chain to prevent spam and encourage considered usage of features. All fees paid go to the Community Pool.
+Creating a pool: 100 OSMO
+Adding External Incentives to a pool: 50 OSMO
+Topping up External Incentives on an existing stream: 25 OSMO
