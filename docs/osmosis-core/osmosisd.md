@@ -59,7 +59,7 @@ sudo apt install git build-essential ufw curl jq snapd --yes
 Install go:
 
 ```bash
-wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.17.2
+wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.19.9
 ```
 
 After installed, open new terminal to properly load go
