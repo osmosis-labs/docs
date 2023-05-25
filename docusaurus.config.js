@@ -264,6 +264,7 @@ const config = {
       },
     }),
     scripts: [
+      "https://tally.so/widgets/embed.js",
       {
             src: "https://widget.kapa.ai/kapa-widget.bundle.js",
             "data-website-id": "c5b5e9fc-d025-4c12-b08e-9784d0e2161f",
