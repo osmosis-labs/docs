@@ -7,17 +7,11 @@ These following API's are recommended for development purposes. For maximun cont
 
 :::warning Important Notice
 ### 
-> **During April, 2023**, `osmo-test-4` will remain the official testnet while `osmo-test-5` will be in public beta.
+> **On June 15th, 2023**, `osmo-test-4` will be soft deleted. The new official testnet will be `osmo-test-5`. 
 >
-> **During May, 2023**, `osmo-test-4` will be deprecated (but not removed) and the official testnet will become `osmo-test-5`.
+> `osmo-test-5` is not a fork of mainnet, it has started with no state.
 >
-> **On June 1st, 2023**, `osmo-test-4` will be deleted.
->
-> For now, the official testnet is `osmo-test-4`. Unless bugs are discovered, in May we will promote `osmo-test-5` as the official testnet.
->
-> `osmo-test-5` is not a fork of mainnet, it has started with no state. The rationale is to treat it like a separate production environment, with its own relayers and pools. Forking mainnet creates a lot of unusable chain state (with pools and IBC channels that are now unusable) and makes configuring the frontend complicated.
->
-> We will also release a devnet publicly, which will be a fork of mainnet.
+> Devnet and edgenet are now available at https://github.com/osmosis-labs/testnets
 :::
 
 |        | Mainnet                                     | Testnet (New)                              | Testnet (Legacy)                          |
@@ -30,6 +24,8 @@ These following API's are recommended for development purposes. For maximun cont
 | Swagger       | [LCD Swagger](https://lcd.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd.osmotest5.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd-test.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) |
 | Faucet        | Not Available                                   | [faucet.osmotest5.osmosis.zone/](https://faucet.osmotest5.osmosis.zone/) | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
 
+## Networks
+Osmosis now offers several testnets and devnets, to learn more go to the https://github.com/osmosis-labs/testnets repo.
 
 ## Frontend URLs
 The Osmosis front-end can be accessed by anyone, and there are several places where it can be found. Additionally, you can run the Osmosis front-end on your own computer by following the instructions provided [ here](https://docs.osmosis.zone/frontend/osmosis-frontend)
