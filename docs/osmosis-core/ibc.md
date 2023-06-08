@@ -1,3 +1,8 @@
+---
+title: IBC Protocol
+sidebar_position: 7
+---
+
 # Inter-Blockchain Communication Protocol (IBC): Enabling Seamless Cross-Chain Communication
 
 ## Introduction, What is IBC?
