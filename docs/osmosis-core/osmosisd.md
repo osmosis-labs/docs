@@ -31,6 +31,7 @@ If you are running on an Apple M1 Chip and are running into issues with osmosisd
 
 ```
 git clone https://github.com/osmosis-labs/osmosis.git
+cd osmosis
 make build
 sudo cp build/osmosisd /usr/local/bin
 ```
