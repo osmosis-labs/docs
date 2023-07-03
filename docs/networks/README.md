@@ -22,7 +22,7 @@ These following API's are recommended for development purposes. For maximun cont
 | Utilities  | ...                                         | [https://explorer.osmotest5.osmosis.zone/](https://osmotest5.osmosis.zone/) | ...                                      |
 | API Reference | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) |
 | Swagger       | [LCD Swagger](https://lcd.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd.osmotest5.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd-test.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) |
-| Faucet        | Not Available                                   | [faucet.osmotest5.osmosis.zone/](https://faucet.osmotest5.osmosis.zone/) | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
+| Faucet        | Not Available                                   | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |  Discontinued |
 
 ## Networks
 Osmosis now offers several testnets and devnets, to learn more go to the https://github.com/osmosis-labs/testnets repo.
