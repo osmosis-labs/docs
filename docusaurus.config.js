@@ -37,6 +37,7 @@ function defineSection(section, options = {}) {
 
 const SECTIONS = [
   defineSection('osmosis-core'),
+  defineSection('osmosis-outpost'),
   defineSection('localosmosis'),
   defineSection('networks'),
   defineSection('cosmwasm'),
