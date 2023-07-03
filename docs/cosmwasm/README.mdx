@@ -1,0 +1,147 @@
+---
+title: Cosmwasm
+sidebar_position: 1
+---
+---
+import {
+  HomepageCard as Card,
+  HomepageSection as Section,
+} from '../../src/components/HomepageComponents';
+
+import {
+  ChainIcon,
+  IDEIcon,
+  TerminalIcon,
+  ModulesIcon,
+  RelayerIcon,
+  AssetIcon,
+  KeysIcon,
+  Cosmwasm,
+  Beaker,
+  LocalOsmosis,
+  Osmojs,
+} from '../../src/icons';
+
+# Smart Contracts Development
+
+The following are a collection of guides on how to build and deploy CoswmWasm smart contracts on the Osmosis blockchain. Please note that a user can deploy contracts with tools such as Beaker or directly with the Osmosisd binary via CLI. 
+
+<Section title="Guides" id="web-sdks" hasSubSections >
+
+   <Section>
+    <Card
+    title="CosmWasm on LocalOsmosis"
+    description=" Compile, upload and interact with a contract with LocalOsmosis."
+    to="/cosmwasm/local/localosmosis"
+    icon={<Cosmwasm />}
+  />
+    <Card
+    title=" Deploy Cosmwasm Contracts to Testnet"
+    description=" Deploying contracts to testnet via osmosisd binary"
+    to="/cosmwasm/testnet/cosmwasm-deployment"
+    icon={<Cosmwasm />}
+  />
+    <Card
+    title=" Submit a CosmWasm Governance Proposal"
+    description="  Example on how submit a CosmWasm binary proposal."
+    to="/cosmwasm/local/submit-wasm-proposal"
+    icon={<Cosmwasm />}
+  />
+    <Card
+    title=" Deploy Cosmwasm Contracts to Testnet with Beaker"
+    description=" Deploying contracts to testnet with Beaker"
+    to="/cosmwasm/testnet/cosmwasm-beaker"
+    icon={<Cosmwasm />}
+  />
+ 
+  <Card
+    title="Verifying Smart Contracts"
+    description=" Download contract and verify the hash."
+    to="/cosmwasm/cosmwasm-verify-contract"
+    icon={<Cosmwasm />}
+  />
+ 
+  </Section>
+
+  </Section>
+
+
+<Section title="Resources" id="web-sdks" hasSubSections >
+   <Section>
+    <Card
+    title="Osmosis Contract List"
+    description="Repository contains a list of all approved code IDs to Osmosis"
+    to="https://github.com/osmosis-labs/contract-list"
+    icon={<Cosmwasm />}
+  />
+    <Card
+    title="Your first contract"
+    description=" Official CosmWasm Documentation"
+    to="https://docs.cosmwasm.com/docs/1.0/getting-started/intro"
+    icon={<Cosmwasm />}
+  />
+    </Section>
+  </Section>
+
+
+<Section title="Front-end Development" id="web-sdks" hasSubSections >
+   <Section>
+    <Card
+    title=" Cosmwasm & Javascript"
+    description="Interacting via JavaScript runtimes such as Node.js and the browser."
+    to="/cosmwasm/javascript"
+    icon={<Cosmwasm />}
+  />
+    </Section>
+  </Section>
+
+
+<Section title="Tools" id="web-sdks" hasSubSections >
+   <Section>
+    <Card
+    title="Beaker"
+    description="Easy to scaffold a new cosmwasm app."
+    to="/beaker"
+    icon={<Beaker />}
+  />
+    <Card
+    title="LocalOsmosis"
+    description="Run Osmosis locally"
+    to="/localosmosis"
+    icon={<LocalOsmosis />}
+  />
+<Card
+    title="OsmoJs"
+    description="Osmosis JS Stargate Client"
+    to="/osmojs"
+    icon={<Osmojs />}
+  />
+<Card
+    title="Osmosisd CLI"
+    description="Learn how to interact with Osmosis via the CLI"
+    to="/osmosis-core/osmosisd"
+    icon={<TerminalIcon />}
+  />
+    </Section>
+  </Section>
+ 
+
+
+<Section title="Networks" id="web-sdks" hasSubSections >
+   <Section>
+    <Card
+    title="Public endpoints"
+    description="Official and third party API endpoints."
+    to="/networks"
+    icon={<KeysIcon />}
+  />
+
+<Card
+    title="Explorers"
+    description="Block and contract explorers"
+    to="/networks/explorers"
+    icon={<KeysIcon />}
+  />
+
+</Section>
+</Section>

@@ -1,0 +1,109 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+import {
+  HomepageCard as Card,
+  HomepageSection as Section,
+} from '../../src/components/HomepageComponents';
+
+import {
+  ChainIcon,
+  IDEIcon,
+  TerminalIcon,
+  ModulesIcon,
+  RelayerIcon,
+  AssetIcon,
+  KeysIcon,
+  Transaction,
+  OsmosisCore,
+  Contribute,
+  Guide,
+} from '../../src/icons';
+
+# Introduction
+
+The guides on this page will explain the process of developing on Osmosis.
+
+
+ ## Get Started
+   <Section title="Developers" id="web-sdks" hasSubSections >
+
+   <Section>
+  <Card
+    title="Build and Test Osmosis Source Code"
+    description="Getting started with building and testing Osmosis codebase"
+    to="/osmosis-core/build"
+    icon={<OsmosisCore />}
+  />
+  <Card
+    title="IDE Setup"
+    description="Recommended IDE setup for developing on Osmosis in Go"
+    to="/osmosis-core/ide-guide"
+    icon={<IDEIcon />}
+  />
+  <Card
+    title="Osmosisd CLI"
+    description="Install osmosisd to join the network or simple query it."
+    to="/osmosis-core/osmosisd"
+    icon={<TerminalIcon />}
+  />
+  <Card
+    title="Modules"
+    description="Osmosis modules and their respective CLI commands"
+    to="/osmosis-core/modules"
+    icon={<ModulesIcon />}
+  />
+  <Card
+    title="Relaying"
+    description=" Relay IBC packets between Osmosis and other chains"
+    to="/osmosis-core/relaying"
+    icon={<RelayerIcon />}
+  />
+  <Card
+    title="Assets"
+    description="     Currently supported assets on Osmosis with their corresponding channels and IBC denoms."
+    to="/osmosis-core/asset-info"
+    icon={<AssetIcon />}
+  />
+  <Card
+    title="Key Management"
+    description="Managing keys via CLI and advanced operations such as multisig wallets"
+    to="/osmosis-core/category/keys-management"
+    icon={<KeysIcon />}
+  />
+  <Card
+    title="Contributing"
+    description=" Guidelines to contributing to Osmosis core development."
+    to="/osmosis-core/contributing"
+    icon={<Contribute />}
+  />
+  </Section>
+
+  </Section>
+
+   <Section title="Guides" id="web-sdks" hasSubSections >
+
+   <Section>
+    <Card
+    title="Transaction Structure"
+    description=" Understanding the structure of a transaction on the Osmosis blockchain"
+    to="/osmosis-core/guides/structure"
+    icon={<Guide />}
+  />
+   <Card
+    title="Performance & Profiling"
+    description="Learn how to measure performance and profile your node"
+  to="/osmosis-core/guides/performance"
+    icon={<Guide />}
+  />
+
+  <Card
+    title="Creating IBC Pools"
+    description="This document lays out the prerequisites and the  process that's needed to ensure that your token meets the interchain UX standards set by Osmosis."
+  to="/osmosis-core/guides/create-ibc-pool"
+    icon={<Guide />}
+  />
+  </Section>
+
+  </Section>
