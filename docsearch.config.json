@@ -13,6 +13,11 @@
       "selectors_key": "osmosis-core"
     },
     {
+      "url": "https://docs.osmosis.zone/osmosis-outpost",
+      "tags": "osmosis-outpost",
+      "selectors_key": "osmosis-outpost"
+    },
+    {
       "url": "https://docs.osmosis.zone/cosmwasm",
       "tags": "cosmwasm",
       "selectors_key": "cosmwasm"
