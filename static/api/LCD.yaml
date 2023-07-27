@@ -6,7 +6,7 @@ info:
 paths:
   /osmosis/epochs/v1beta1/current_epoch:
     get:
-      summary: CurrentEpoch provide current epoch of specified identifier
+      summary: ""
       operationId: CurrentEpoch
       responses:
         "200":
@@ -53,7 +53,7 @@ paths:
         - Query
   /osmosis/epochs/v1beta1/epochs:
     get:
-      summary: EpochInfos provide running epochInfos
+      summary: ""
       operationId: EpochInfos
       responses:
         "200":
@@ -179,11 +179,417 @@ paths:
                           format: byte
       tags:
         - Query
+  /osmosis/gamm/v1beta1/cfmm_concentrated_pool_links:
+    get:
+      summary: ""
+      operationId: CFMMConcentratedPoolLinks
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  migration_records:
+                    type: object
+                    properties:
+                      balancer_to_concentrated_pool_links:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            balancer_pool_id:
+                              type: string
+                              format: uint64
+                            cl_pool_id:
+                              type: string
+                              format: uint64
+                          description: >-
+                            BalancerToConcentratedPoolLink defines a single link between a single
+
+                            balancer pool and a single concentrated liquidity pool. This link is used to
+
+                            allow a balancer pool to migrate to a single canonical full range
+
+                            concentrated liquidity pool position
+
+                            A balancer pool can be linked to a maximum of one cl pool, and a cl pool can
+
+                            be linked to a maximum of one balancer pool.
+                    title: >-
+                      MigrationRecords contains all the links between balancer and concentrated
+
+                      pools
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      tags:
+        - Query
+  "/osmosis/gamm/v1beta1/concentrated_pool_id_link_from_cfmm/{cfmm_pool_id}":
+    get:
+      summary: ""
+      operationId: ConcentratedPoolIdLinkFromCFMM
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  concentrated_pool_id:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      parameters:
+        - name: cfmm_pool_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uint64
+      tags:
+        - Query
   /osmosis/gamm/v1beta1/filtered_pools:
     get:
-      summary: |-
-        PoolsWithFilter allows you to query specific pools with requested
-        parameters
+      summary: ""
       operationId: PoolsWithFilter
       responses:
         "200":
@@ -537,6 +943,14 @@ paths:
                               "value": "1.212s"
                             }
       parameters:
+        - name: min_liquidity
+          description: |-
+            String of the coins in single string seperated by comma. Ex)
+            10uatom,100uosmo.
+          in: query
+          required: false
+          schema:
+            type: string
         - name: pool_type
           in: query
           required: false
@@ -601,6 +1015,7 @@ paths:
         - Query
   /osmosis/gamm/v1beta1/num_pools:
     get:
+      summary: ""
       operationId: NumPools
       responses:
         "200":
@@ -787,10 +1202,7 @@ paths:
         - Query
   "/osmosis/gamm/v1beta1/pool_type/{pool_id}":
     get:
-      summary: |-
-        PoolType returns the type of the pool.
-        Returns "Balancer" as a string literal when the pool is a balancer pool.
-        Errors if the pool is failed to be type caseted.
+      summary: ""
       operationId: PoolType
       responses:
         "200":
@@ -1393,9 +1805,10 @@ paths:
             type: boolean
       tags:
         - Query
+      summary: ""
   "/osmosis/gamm/v1beta1/pools/{pool_id}":
     get:
-      summary: Per Pool gRPC Endpoints
+      summary: ""
       operationId: Pool
       responses:
         "200":
@@ -1559,6 +1972,7 @@ paths:
                             "@type": "type.googleapis.com/google.protobuf.Duration",
                             "value": "1.212s"
                           }
+                title: "Deprecated: please use the alternative in x/poolmanager"
         default:
           description: An unexpected error response.
           content:
@@ -1949,6 +2363,7 @@ paths:
             type: string
       tags:
         - Query
+      summary: ""
   "/osmosis/gamm/v1beta1/pools/{pool_id}/join_swap_exact_in":
     get:
       operationId: CalcJoinPoolShares
@@ -2157,6 +2572,7 @@ paths:
             format: uint64
       tags:
         - Query
+      summary: ""
   "/osmosis/gamm/v1beta1/pools/{pool_id}/params":
     get:
       operationId: PoolParams
@@ -2501,11 +2917,10 @@ paths:
             format: uint64
       tags:
         - Query
+      summary: ""
   "/osmosis/gamm/v1beta1/pools/{pool_id}/prices":
     get:
-      summary: |-
-        SpotPrice defines a gRPC query handler that returns the spot price given
-        a base denomination and a quote denomination.
+      summary: ""
       operationId: SpotPrice
       responses:
         "200":
@@ -2713,6 +3128,7 @@ paths:
         - Query
   "/osmosis/gamm/v1beta1/pools/{pool_id}/total_pool_liquidity":
     get:
+      summary: ""
       operationId: TotalPoolLiquidity
       responses:
         "200":
@@ -2738,6 +3154,7 @@ paths:
                         NOTE: The amount field is an Int which implements the custom method
 
                         signatures required by gogoproto.
+                title: "Deprecated: please use the alternative in x/poolmanager"
         default:
           description: An unexpected error response.
           content:
@@ -3121,6 +3538,7 @@ paths:
             format: uint64
       tags:
         - Query
+      summary: ""
   /osmosis/gamm/v1beta1/total_liquidity:
     get:
       operationId: TotalLiquidity
@@ -3320,9 +3738,10 @@ paths:
                             }
       tags:
         - Query
+      summary: ""
   "/osmosis/gamm/v1beta1/{pool_id}/estimate/swap_exact_amount_in":
     get:
-      summary: Estimate the swap.
+      summary: ""
       operationId: EstimateSwapExactAmountIn
       responses:
         "200":
@@ -3512,7 +3931,6 @@ paths:
             type: string
             format: uint64
         - name: sender
-          description: "TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE."
           in: query
           required: false
           schema:
@@ -3526,6 +3944,7 @@ paths:
         - Query
   "/osmosis/gamm/v1beta1/{pool_id}/estimate/swap_exact_amount_out":
     get:
+      summary: ""
       operationId: EstimateSwapExactAmountOut
       responses:
         "200":
@@ -3715,7 +4134,6 @@ paths:
             type: string
             format: uint64
         - name: sender
-          description: "TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE."
           in: query
           required: false
           schema:
@@ -3729,7 +4147,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/active_gauges:
     get:
-      summary: ActiveGauges returns active gauges
+      summary: ""
       operationId: ActiveGauges
       responses:
         "200":
@@ -3773,6 +4191,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -3977,7 +4396,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/active_gauges_per_denom:
     get:
-      summary: ActiveGaugesPerDenom returns active gauges by denom
+      summary: ""
       operationId: ActiveGaugesPerDenom
       responses:
         "200":
@@ -4021,6 +4440,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -4231,7 +4651,7 @@ paths:
         - Query
   "/osmosis/incentives/v1beta1/gauge_by_id/{id}":
     get:
-      summary: GaugeByID returns gauges by their respective ID
+      summary: ""
       operationId: GaugeByID
       responses:
         "200":
@@ -4273,6 +4693,7 @@ paths:
                             enum:
                               - ByDuration
                               - ByTime
+                              - NoLock
                             default: ByDuration
                             description: >-
                               LockQueryType defines the type of the lock query that can
@@ -4402,7 +4823,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/gauges:
     get:
-      summary: Gauges returns both upcoming and active gauges
+      summary: ""
       operationId: Gauges
       responses:
         "200":
@@ -4446,6 +4867,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -4650,10 +5072,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/lockable_durations:
     get:
-      summary: >-
-        LockableDurations returns lockable durations that are valid to distribute
-
-        incentives for
+      summary: ""
       operationId: LockableDurations
       responses:
         "200":
@@ -4696,7 +5115,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/module_to_distribute_coins:
     get:
-      summary: ModuleToDistributeCoins returns coins that are going to be distributed
+      summary: ""
       operationId: ModuleToDistributeCoins
       responses:
         "200":
@@ -4751,12 +5170,7 @@ paths:
         - Query
   "/osmosis/incentives/v1beta1/rewards_est/{owner}":
     get:
-      summary: >-
-        RewardsEst returns an estimate of the rewards from now until a specified
-
-        time in the future The querier either provides an address or a set of locks
-
-        for which they want to find the associated rewards
+      summary: ""
       operationId: RewardsEst
       responses:
         "200":
@@ -4840,7 +5254,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/upcoming_gauges:
     get:
-      summary: Returns scheduled gauges that have not yet occured
+      summary: ""
       operationId: UpcomingGauges
       responses:
         "200":
@@ -4884,6 +5298,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -5088,10 +5503,7 @@ paths:
         - Query
   /osmosis/incentives/v1beta1/upcoming_gauges_per_denom:
     get:
-      summary: >-
-        UpcomingGaugesPerDenom returns scheduled gauges that have not yet occured
-
-        by denom
+      summary: ""
       operationId: UpcomingGaugesPerDenom
       responses:
         "200":
@@ -5135,6 +5547,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -5345,7 +5758,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_coins/{owner}":
     get:
-      summary: Return a locked coins that can't be withdrawn
+      summary: ""
       operationId: AccountLockedCoins
       responses:
         "200":
@@ -5405,7 +5818,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_duration/{owner}":
     get:
-      summary: Returns account locked records with a specific duration
+      summary: ""
       operationId: AccountLockedDuration
       responses:
         "200":
@@ -5466,6 +5879,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -5515,7 +5936,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_longer_duration/{owner}":
     get:
-      summary: Returns account locked records with longer duration
+      summary: ""
       operationId: AccountLockedLongerDuration
       responses:
         "200":
@@ -5576,6 +5997,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -5625,7 +6054,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_longer_duration_denom/{owner}":
     get:
-      summary: Returns account's locked records for a denom with longer duration
+      summary: ""
       operationId: AccountLockedLongerDurationDenom
       responses:
         "200":
@@ -5686,6 +6115,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -5740,9 +6177,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}":
     get:
-      summary: |-
-        Returns account locked records with longer duration excluding tokens
-        started unlocking
+      summary: ""
       operationId: AccountLockedLongerDurationNotUnlockingOnly
       responses:
         "200":
@@ -5803,6 +6238,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -5852,7 +6295,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_pasttime/{owner}":
     get:
-      summary: Returns locked records of an account with unlock time beyond timestamp
+      summary: ""
       operationId: AccountLockedPastTime
       responses:
         "200":
@@ -5913,6 +6356,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -5963,7 +6414,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_pasttime_denom/{owner}":
     get:
-      summary: Returns lock records by address, timestamp, denom
+      summary: ""
       operationId: AccountLockedPastTimeDenom
       responses:
         "200":
@@ -6024,6 +6475,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -6079,9 +6538,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}":
     get:
-      summary: |-
-        Returns locked records of an account with unlock time beyond timestamp
-        excluding tokens started unlocking
+      summary: ""
       operationId: AccountLockedPastTimeNotUnlockingOnly
       responses:
         "200":
@@ -6142,6 +6599,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -6192,7 +6657,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_unlockable_coins/{owner}":
     get:
-      summary: Returns unlockable coins which are not withdrawn yet
+      summary: ""
       operationId: AccountUnlockableCoins
       responses:
         "200":
@@ -6252,7 +6717,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_unlocked_before_time/{owner}":
     get:
-      summary: Returns unlocked records with unlock time before timestamp
+      summary: ""
       operationId: AccountUnlockedBeforeTime
       responses:
         "200":
@@ -6313,6 +6778,14 @@ paths:
 
                               signatures required by gogoproto.
                           description: Coins are the tokens locked within the lock, kept in the module account.
+                        reward_receiver_address:
+                          type: string
+                          description: >-
+                            Reward Receiver Address is the address that would be receiving rewards for
+
+                            the incentives for the lock. This is set to owner by default and can be
+
+                            changed via separate msg.
                       description: >-
                         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -6363,7 +6836,7 @@ paths:
         - Query
   "/osmosis/lockup/v1beta1/account_unlocking_coins/{owner}":
     get:
-      summary: Returns unlocking coins
+      summary: ""
       operationId: AccountUnlockingCoins
       responses:
         "200":
@@ -6421,9 +6894,56 @@ paths:
             type: string
       tags:
         - Query
+  "/osmosis/lockup/v1beta1/lock_reward_receiver/{lock_id}":
+    get:
+      summary: ""
+      operationId: LockRewardReceiver
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  reward_receiver:
+                    type: string
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                        value:
+                          type: string
+                          format: byte
+      parameters:
+        - name: lock_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uint64
+      tags:
+        - Query
   "/osmosis/lockup/v1beta1/locked_by_id/{lock_id}":
     get:
-      summary: Returns lock record by id
+      summary: ""
       operationId: LockedByID
       responses:
         "200":
@@ -6482,6 +7002,14 @@ paths:
 
                             signatures required by gogoproto.
                         description: Coins are the tokens locked within the lock, kept in the module account.
+                      reward_receiver_address:
+                        type: string
+                        description: >-
+                          Reward Receiver Address is the address that would be receiving rewards for
+
+                          the incentives for the lock. This is set to owner by default and can be
+
+                          changed via separate msg.
                     description: >-
                       PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -6527,7 +7055,7 @@ paths:
         - Query
   /osmosis/lockup/v1beta1/locked_denom:
     get:
-      summary: Returns total locked per denom with longer past given time
+      summary: ""
       operationId: LockedDenom
       responses:
         "200":
@@ -6578,7 +7106,7 @@ paths:
         - Query
   /osmosis/lockup/v1beta1/module_balance:
     get:
-      summary: Return full balance of the module
+      summary: ""
       operationId: ModuleBalance
       responses:
         "200":
@@ -6632,7 +7160,7 @@ paths:
         - Query
   /osmosis/lockup/v1beta1/module_locked_amount:
     get:
-      summary: Return locked balance of the module
+      summary: ""
       operationId: ModuleLockedAmount
       responses:
         "200":
@@ -6684,9 +7212,50 @@ paths:
                           format: byte
       tags:
         - Query
+  /osmosis/lockup/v1beta1/next_lock_id:
+    get:
+      summary: ""
+      operationId: NextLockID
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  lock_id:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                        value:
+                          type: string
+                          format: byte
+      tags:
+        - Query
   /osmosis/lockup/v1beta1/params:
     get:
-      summary: Params returns lockup params.
+      summary: ""
       operationId: LockupParams
       responses:
         "200":
@@ -6729,9 +7298,91 @@ paths:
                           format: byte
       tags:
         - Query
+  "/osmosis/lockup/v1beta1/synthetic_lockup_by_lock_id/{lock_id}":
+    get:
+      summary: ""
+      operationId: SyntheticLockupByLockupID
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  synthetic_lock:
+                    type: object
+                    properties:
+                      underlying_lock_id:
+                        type: string
+                        format: uint64
+                        description: >-
+                          Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                          lockup. A synthetic lock MUST have an underlying lock.
+                      synth_denom:
+                        type: string
+                        description: >-
+                          SynthDenom is the synthetic denom that is a combination of
+
+                          gamm share + bonding status + validator address.
+                      end_time:
+                        type: string
+                        format: date-time
+                        title: >-
+                          used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                          value is set to uninitialized value
+                      duration:
+                        type: string
+                        description: >-
+                          Duration is the duration for a synthetic lock to mature
+
+                          at the point of unbonding has started.
+                    description: >-
+                      SyntheticLock is creating virtual lockup where new denom is combination of
+
+                      original denom and synthetic suffix. At the time of synthetic lockup creation
+
+                      and deletion, accumulation store is also being updated and on querier side,
+
+                      they can query as freely as native lockup.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                        value:
+                          type: string
+                          format: byte
+      parameters:
+        - name: lock_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uint64
+      tags:
+        - Query
   "/osmosis/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}":
     get:
-      summary: Returns synthetic lockups by native lockup id
+      summary: ""
       operationId: SyntheticLockupsByLockupID
       responses:
         "200":
@@ -6815,7 +7466,7 @@ paths:
         - Query
   /osmosis/mint/v1beta1/epoch_provisions:
     get:
-      summary: EpochProvisions returns the current minting epoch provisions value.
+      summary: ""
       operationId: EpochProvisions
       responses:
         "200":
@@ -7006,7 +7657,7 @@ paths:
         - Query
   /osmosis/mint/v1beta1/params:
     get:
-      summary: Params returns the total set of minting parameters.
+      summary: ""
       operationId: MintParams
       responses:
         "200":
@@ -7280,7 +7931,7 @@ paths:
         - Query
   /osmosis/pool-incentives/v1beta1/distr_info:
     get:
-      summary: DistrInfo returns the pool's matching gauge ids and weights.
+      summary: ""
       operationId: DistrInfo
       responses:
         "200":
@@ -7333,7 +7984,7 @@ paths:
         - Query
   /osmosis/pool-incentives/v1beta1/external_incentive_gauges:
     get:
-      summary: ExternalIncentiveGauges returns external incentive gauges.
+      summary: ""
       operationId: ExternalIncentiveGauges
       responses:
         "200":
@@ -7377,6 +8028,7 @@ paths:
                               enum:
                                 - ByDuration
                                 - ByTime
+                                - NoLock
                               default: ByDuration
                               description: >-
                                 LockQueryType defines the type of the lock query that can
@@ -7497,7 +8149,7 @@ paths:
         - Query
   "/osmosis/pool-incentives/v1beta1/gauge-ids/{pool_id}":
     get:
-      summary: GaugeIds takes the pool id and returns the matching gauge ids and durations
+      summary: ""
       operationId: GaugeIds
       responses:
         "200":
@@ -7554,7 +8206,7 @@ paths:
         - Query
   /osmosis/pool-incentives/v1beta1/incentivized_pools:
     get:
-      summary: IncentivizedPools returns currently incentivized pools
+      summary: ""
       operationId: IncentivizedPools
       responses:
         "200":
@@ -7605,7 +8257,7 @@ paths:
         - Query
   /osmosis/pool-incentives/v1beta1/lockable_durations:
     get:
-      summary: LockableDurations returns lock durations for pools.
+      summary: ""
       operationId: PoolLockableDurations
       responses:
         "200":
@@ -7647,7 +8299,7 @@ paths:
         - Query
   /osmosis/pool-incentives/v1beta1/params:
     get:
-      summary: Params returns pool incentives params.
+      summary: ""
       operationId: PoolIncentivesParams
       responses:
         "200":
@@ -7696,9 +8348,545 @@ paths:
                           format: byte
       tags:
         - Query
+  "/osmosis/superfluid/v1beta1/account_delegated_cl_positions/{delegator_address}":
+    get:
+      operationId: UserConcentratedSuperfluidPositionsDelegated
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  cl_pool_user_position_records:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        validator_address:
+                          type: string
+                        position_id:
+                          type: string
+                          format: uint64
+                        lock_id:
+                          type: string
+                          format: uint64
+                        synthetic_lock:
+                          type: object
+                          properties:
+                            underlying_lock_id:
+                              type: string
+                              format: uint64
+                              description: >-
+                                Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                                lockup. A synthetic lock MUST have an underlying lock.
+                            synth_denom:
+                              type: string
+                              description: >-
+                                SynthDenom is the synthetic denom that is a combination of
+
+                                gamm share + bonding status + validator address.
+                            end_time:
+                              type: string
+                              format: date-time
+                              title: >-
+                                used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                                value is set to uninitialized value
+                            duration:
+                              type: string
+                              description: >-
+                                Duration is the duration for a synthetic lock to mature
+
+                                at the point of unbonding has started.
+                          description: >-
+                            SyntheticLock is creating virtual lockup where new denom is combination of
+
+                            original denom and synthetic suffix. At the time of synthetic lockup creation
+
+                            and deletion, accumulation store is also being updated and on querier side,
+
+                            they can query as freely as native lockup.
+                        delegation_amount:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                          description: >-
+                            Coin defines a token with a denomination and an amount.
+
+
+                            NOTE: The amount field is an Int which implements the custom method
+
+                            signatures required by gogoproto.
+                        equivalent_staked_amount:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                          description: >-
+                            Coin defines a token with a denomination and an amount.
+
+
+                            NOTE: The amount field is an Int which implements the custom method
+
+                            signatures required by gogoproto.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      parameters:
+        - name: delegator_address
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Query
+      summary: ""
+  "/osmosis/superfluid/v1beta1/account_undelegating_cl_positions/{delegator_address}":
+    get:
+      operationId: UserConcentratedSuperfluidPositionsUndelegating
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  cl_pool_user_position_records:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        validator_address:
+                          type: string
+                        position_id:
+                          type: string
+                          format: uint64
+                        lock_id:
+                          type: string
+                          format: uint64
+                        synthetic_lock:
+                          type: object
+                          properties:
+                            underlying_lock_id:
+                              type: string
+                              format: uint64
+                              description: >-
+                                Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                                lockup. A synthetic lock MUST have an underlying lock.
+                            synth_denom:
+                              type: string
+                              description: >-
+                                SynthDenom is the synthetic denom that is a combination of
+
+                                gamm share + bonding status + validator address.
+                            end_time:
+                              type: string
+                              format: date-time
+                              title: >-
+                                used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                                value is set to uninitialized value
+                            duration:
+                              type: string
+                              description: >-
+                                Duration is the duration for a synthetic lock to mature
+
+                                at the point of unbonding has started.
+                          description: >-
+                            SyntheticLock is creating virtual lockup where new denom is combination of
+
+                            original denom and synthetic suffix. At the time of synthetic lockup creation
+
+                            and deletion, accumulation store is also being updated and on querier side,
+
+                            they can query as freely as native lockup.
+                        delegation_amount:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                          description: >-
+                            Coin defines a token with a denomination and an amount.
+
+
+                            NOTE: The amount field is an Int which implements the custom method
+
+                            signatures required by gogoproto.
+                        equivalent_staked_amount:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                          description: >-
+                            Coin defines a token with a denomination and an amount.
+
+
+                            NOTE: The amount field is an Int which implements the custom method
+
+                            signatures required by gogoproto.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      parameters:
+        - name: delegator_address
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Query
+      summary: ""
   /osmosis/superfluid/v1beta1/all_assets:
     get:
-      summary: Returns all registered superfluid assets.
+      summary: ""
       operationId: AllAssets
       responses:
         "200":
@@ -7724,11 +8912,8 @@ paths:
                           enum:
                             - SuperfluidAssetTypeNative
                             - SuperfluidAssetTypeLPShare
+                            - SuperfluidAssetTypeConcentratedShare
                           default: SuperfluidAssetTypeNative
-                          description: >-
-                            SuperfluidAssetType indicates whether the superfluid asset is
-
-                            a native token itself or the lp share of a pool.
                       title: SuperfluidAsset stores the pair of superfluid asset type and denom pair
         default:
           description: An unexpected error response.
@@ -7904,7 +9089,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/all_intermediary_accounts:
     get:
-      summary: Returns all superfluid intermediary accounts.
+      summary: ""
       operationId: AllIntermediaryAccounts
       responses:
         "200":
@@ -8184,9 +9369,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/all_superfluid_delegations:
     get:
-      summary: |-
-        Returns the total amount of osmo superfluidly staked.
-        Response is denominated in uosmo.
+      summary: ""
       operationId: TotalSuperfluidDelegations
       responses:
         "200":
@@ -8372,7 +9555,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/asset_multiplier:
     get:
-      summary: Returns the osmo equivalent multiplier used in the most recent epoch.
+      summary: ""
       operationId: AssetMultiplier
       responses:
         "200":
@@ -8587,9 +9770,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/asset_type:
     get:
-      summary: |-
-        Returns superfluid asset type, whether if it's a native asset or an lp
-        share.
+      summary: ""
       operationId: AssetType
       responses:
         "200":
@@ -8604,11 +9785,12 @@ paths:
                     enum:
                       - SuperfluidAssetTypeNative
                       - SuperfluidAssetTypeLPShare
+                      - SuperfluidAssetTypeConcentratedShare
                     default: SuperfluidAssetTypeNative
-                    description: >-
+                    title: >-
                       SuperfluidAssetType indicates whether the superfluid asset is
 
-                      a native token itself or the lp share of a pool.
+                      a native token, lp share of a pool, or concentrated share of a pool
         default:
           description: An unexpected error response.
           content:
@@ -8789,7 +9971,7 @@ paths:
         - Query
   "/osmosis/superfluid/v1beta1/connected_intermediary_account/{lock_id}":
     get:
-      summary: Returns intermediary account connected to a superfluid staked lock by id
+      summary: ""
       operationId: ConnectedIntermediaryAccount
       responses:
         "200":
@@ -8992,12 +10174,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/estimate_superfluid_delegation_amount_by_validator_denom:
     get:
-      summary: >-
-        Returns the amount of a specific denom delegated to a specific validator
-
-        This is labeled an estimate, because the way it calculates the amount can
-
-        lead rounding errors from the true delegated amount
+      summary: ""
       operationId: EstimateSuperfluidDelegatedAmountByValidatorDenom
       responses:
         "200":
@@ -9208,7 +10385,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/params:
     get:
-      summary: Params returns the total set of superfluid parameters.
+      summary: ""
       operationId: SuperfluidParams
       responses:
         "200":
@@ -9407,10 +10584,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/superfluid_delegation_amount:
     get:
-      summary: >-
-        Returns the coins superfluid delegated for the delegator, validator, denom
-
-        triplet
+      summary: ""
       operationId: SuperfluidDelegationAmount
       responses:
         "200":
@@ -9626,7 +10800,7 @@ paths:
         - Query
   "/osmosis/superfluid/v1beta1/superfluid_delegations/{delegator_address}":
     get:
-      summary: Returns all the delegated superfluid poistions for a specific delegator.
+      summary: ""
       operationId: SuperfluidDelegationsByDelegator
       responses:
         "200":
@@ -9887,10 +11061,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/superfluid_delegations_by_validator_denom:
     get:
-      summary: >-
-        Returns all the superfluid positions of a specific denom delegated to one
-
-        validator
+      summary: ""
       operationId: SuperfluidDelegationsByValidatorDenom
       responses:
         "200":
@@ -10126,7 +11297,7 @@ paths:
         - Query
   "/osmosis/superfluid/v1beta1/superfluid_undelegations_by_delegator/{delegator_address}":
     get:
-      summary: Returns all the undelegating superfluid poistions for a specific delegator.
+      summary: ""
       operationId: SuperfluidUndelegationsByDelegator
       responses:
         "200":
@@ -10417,7 +11588,7 @@ paths:
         - Query
   "/osmosis/superfluid/v1beta1/total_delegation_by_delegator/{delegator_address}":
     get:
-      summary: Returns the specified delegations for a specific delegator
+      summary: ""
       operationId: TotalDelegationByDelegator
       responses:
         "200":
@@ -10719,7 +11890,7 @@ paths:
         - Query
   /osmosis/superfluid/v1beta1/unpool_whitelist:
     get:
-      summary: Returns a list of whitelisted pool ids to unpool.
+      summary: ""
       operationId: UnpoolWhitelist
       responses:
         "200":
@@ -10908,9 +12079,7 @@ paths:
         - Query
   "/osmosis/tokenfactory/v1beta1/denoms/{denom}/authority_metadata":
     get:
-      summary: |-
-        DenomAuthorityMetadata defines a gRPC query method for fetching
-        DenomAuthorityMetadata for a particular denom.
+      summary: ""
       operationId: DenomAuthorityMetadata
       responses:
         "200":
@@ -10968,11 +12137,59 @@ paths:
             type: string
       tags:
         - Query
+  "/osmosis/tokenfactory/v1beta1/denoms/{denom}/before_send_hook":
+    get:
+      summary: ""
+      operationId: BeforeSendHookAddress
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  cosmwasm_address:
+                    type: string
+                description: >-
+                  QueryBeforeSendHookAddressResponse defines the response structure for the
+
+                  DenomBeforeSendHook gRPC query.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                        value:
+                          type: string
+                          format: byte
+      parameters:
+        - name: denom
+          in: path
+          required: true
+          schema:
+            type: string
+      tags:
+        - Query
   "/osmosis/tokenfactory/v1beta1/denoms_from_creator/{creator}":
     get:
-      summary: |-
-        DenomsFromCreator defines a gRPC query method for fetching all
-        denominations created by a specific admin/creator.
+      summary: ""
       operationId: DenomsFromCreator
       responses:
         "200":
@@ -11024,10 +12241,7 @@ paths:
         - Query
   /osmosis/tokenfactory/v1beta1/params:
     get:
-      summary: >-
-        Params defines a gRPC query method that returns the tokenfactory module's
-
-        parameters.
+      summary: ""
       operationId: TokenfactoryParams
       responses:
         "200":
@@ -11057,6 +12271,22 @@ paths:
                             NOTE: The amount field is an Int which implements the custom method
 
                             signatures required by gogoproto.
+                        description: >-
+                          DenomCreationFee defines the fee to be charged on the creation of a new
+
+                          denom. The fee is drawn from the MsgCreateDenom's sender account, and
+
+                          transferred to the community pool.
+                      denom_creation_gas_consume:
+                        type: string
+                        format: uint64
+                        description: >-
+                          DenomCreationGasConsume defines the gas cost for creating a new denom.
+
+                          This is intended as a spam deterrence mechanism.
+
+
+                          See: https://github.com/CosmWasm/token-factory/issues/11
                 description: QueryParamsResponse is the response type for the Query/Params RPC method.
         default:
           description: An unexpected error response.
@@ -11086,7 +12316,7 @@ paths:
         - Query
   /osmosis/txfees/v1beta1/base_denom:
     get:
-      summary: Returns a list of all base denom tokens and their corresponding pools.
+      summary: ""
       operationId: TxFeesBaseDenom
       responses:
         "200":
@@ -11126,7 +12356,7 @@ paths:
         - Query
   "/osmosis/txfees/v1beta1/denom_pool_id/{denom}":
     get:
-      summary: Returns the poolID for a specified denom input.
+      summary: ""
       operationId: DenomPoolId
       responses:
         "200":
@@ -11173,12 +12403,7 @@ paths:
         - Query
   /osmosis/txfees/v1beta1/fee_tokens:
     get:
-      summary: >-
-        FeeTokens returns a list of all the whitelisted fee tokens and their
-
-        corresponding pools. It does not include the BaseDenom, which has its own
-
-        query endpoint
+      summary: ""
       operationId: FeeTokens
       responses:
         "200":
@@ -11234,7 +12459,7 @@ paths:
         - Query
   /osmosis/txfees/v1beta1/spot_price_by_denom:
     get:
-      summary: DenomSpotPrice returns all spot prices by each registered token denom.
+      summary: ""
       operationId: DenomSpotPrice
       responses:
         "200":
@@ -11287,7 +12512,7 @@ paths:
         - Query
   /cosmos/auth/v1beta1/accounts:
     get:
-      summary: Accounts returns all the existing accounts
+      summary: ""
       description: "Since: cosmos-sdk 0.43"
       operationId: Accounts
       responses:
@@ -11707,7 +12932,7 @@ paths:
         - Query
   "/cosmos/auth/v1beta1/accounts/{address}":
     get:
-      summary: Account returns account details based on address.
+      summary: ""
       operationId: Account
       responses:
         "200":
@@ -12053,7 +13278,7 @@ paths:
         - Query
   /cosmos/auth/v1beta1/module_accounts:
     get:
-      summary: ModuleAccounts returns all the existing module accounts.
+      summary: ""
       operationId: ModuleAccounts
       responses:
         "200":
@@ -12394,7 +13619,7 @@ paths:
         - Query
   /cosmos/auth/v1beta1/params:
     get:
-      summary: Params queries all parameters.
+      summary: ""
       operationId: AuthParams
       responses:
         "200":
@@ -12598,7 +13823,7 @@ paths:
         - Query
   /cosmos/authz/v1beta1/grants:
     get:
-      summary: Returns list of `Authorization`, granted to the grantee by the granter.
+      summary: ""
       operationId: Grants
       responses:
         "200":
@@ -13036,9 +14261,877 @@ paths:
             type: boolean
       tags:
         - Query
+  "/cosmos/authz/v1beta1/grants/grantee/{grantee}":
+    get:
+      summary: ""
+      operationId: GranteeGrants
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  grants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        granter:
+                          type: string
+                        grantee:
+                          type: string
+                        authorization:
+                          type: object
+                          properties:
+                            type_url:
+                              type: string
+                              description: >-
+                                A URL/resource name that uniquely identifies the type of the serialized
+
+                                protocol buffer message. This string must contain at least
+
+                                one "/" character. The last segment of the URL's path must represent
+
+                                the fully qualified name of the type (as in
+
+                                `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                                (e.g., leading "." is not accepted).
+
+
+                                In practice, teams usually precompile into the binary all types that they
+
+                                expect it to use in the context of Any. However, for URLs which use the
+
+                                scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                                server that maps type URLs to message definitions as follows:
+
+
+                                * If no scheme is provided, `https` is assumed.
+
+                                * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                                  value in binary format, or produce an error.
+                                * Applications are allowed to cache lookup results based on the
+
+                                  URL, or have them precompiled into a binary to avoid any
+                                  lookup. Therefore, binary compatibility needs to be preserved
+                                  on changes to types. (Use versioned type names to manage
+                                  breaking changes.)
+
+                                Note: this functionality is not currently available in the official
+
+                                protobuf release, and it is not used for type URLs beginning with
+
+                                type.googleapis.com.
+
+
+                                Schemes other than `http`, `https` (or the empty scheme) might be
+
+                                used with implementation specific semantics.
+                            value:
+                              type: string
+                              format: byte
+                              description: Must be a valid serialized protocol buffer of the above specified type.
+                          description: >-
+                            `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                            URL that describes the type of the serialized message.
+
+
+                            Protobuf library provides support to pack/unpack Any values in the form
+
+                            of utility functions or additional generated methods of the Any type.
+
+
+                            Example 1: Pack and unpack a message in C++.
+
+
+                                Foo foo = ...;
+                                Any any;
+                                any.PackFrom(foo);
+                                ...
+                                if (any.UnpackTo(&foo)) {
+                                  ...
+                                }
+
+                            Example 2: Pack and unpack a message in Java.
+
+
+                                Foo foo = ...;
+                                Any any = Any.pack(foo);
+                                ...
+                                if (any.is(Foo.class)) {
+                                  foo = any.unpack(Foo.class);
+                                }
+
+                             Example 3: Pack and unpack a message in Python.
+
+                                foo = Foo(...)
+                                any = Any()
+                                any.Pack(foo)
+                                ...
+                                if any.Is(Foo.DESCRIPTOR):
+                                  any.Unpack(foo)
+                                  ...
+
+                             Example 4: Pack and unpack a message in Go
+
+                                 foo := &pb.Foo{...}
+                                 any, err := ptypes.MarshalAny(foo)
+                                 ...
+                                 foo := &pb.Foo{}
+                                 if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                                   ...
+                                 }
+
+                            The pack methods provided by protobuf library will by default use
+
+                            'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                            methods only use the fully qualified type name after the last '/'
+
+                            in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                            name "y.z".
+
+
+
+                            JSON
+
+                            ====
+
+                            The JSON representation of an `Any` value uses the regular
+
+                            representation of the deserialized, embedded message, with an
+
+                            additional field `@type` which contains the type URL. Example:
+
+
+                                package google.profile;
+                                message Person {
+                                  string first_name = 1;
+                                  string last_name = 2;
+                                }
+
+                                {
+                                  "@type": "type.googleapis.com/google.profile.Person",
+                                  "firstName": <string>,
+                                  "lastName": <string>
+                                }
+
+                            If the embedded message type is well-known and has a custom JSON
+
+                            representation, that representation will be embedded adding a field
+
+                            `value` which holds the custom JSON in addition to the `@type`
+
+                            field. Example (for message [google.protobuf.Duration][]):
+
+
+                                {
+                                  "@type": "type.googleapis.com/google.protobuf.Duration",
+                                  "value": "1.212s"
+                                }
+                        expiration:
+                          type: string
+                          format: date-time
+                      title: >-
+                        GrantAuthorization extends a grant with both the addresses of the grantee and granter.
+
+                        It is used in genesis.proto and query.proto
+                    description: grants is a list of grants granted to the grantee.
+                  pagination:
+                    description: pagination defines an pagination for the response.
+                    type: object
+                    properties:
+                      next_key:
+                        type: string
+                        format: byte
+                        title: |-
+                          next_key is the key to be passed to PageRequest.key to
+                          query the next page most efficiently
+                      total:
+                        type: string
+                        format: uint64
+                        title: >-
+                          total is total number of results available if PageRequest.count_total
+
+                          was set, its value is undefined otherwise
+                description: QueryGranteeGrantsResponse is the response type for the Query/GranteeGrants RPC method.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      parameters:
+        - name: grantee
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key should
+
+            be set.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should include
+
+            a count of the total number of items available for pagination in UIs.
+
+            count_total is only respected when offset is used. It is ignored when key
+
+            is set.
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Query
+  "/cosmos/authz/v1beta1/grants/granter/{granter}":
+    get:
+      summary: ""
+      operationId: GranterGrants
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  grants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        granter:
+                          type: string
+                        grantee:
+                          type: string
+                        authorization:
+                          type: object
+                          properties:
+                            type_url:
+                              type: string
+                              description: >-
+                                A URL/resource name that uniquely identifies the type of the serialized
+
+                                protocol buffer message. This string must contain at least
+
+                                one "/" character. The last segment of the URL's path must represent
+
+                                the fully qualified name of the type (as in
+
+                                `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                                (e.g., leading "." is not accepted).
+
+
+                                In practice, teams usually precompile into the binary all types that they
+
+                                expect it to use in the context of Any. However, for URLs which use the
+
+                                scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                                server that maps type URLs to message definitions as follows:
+
+
+                                * If no scheme is provided, `https` is assumed.
+
+                                * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                                  value in binary format, or produce an error.
+                                * Applications are allowed to cache lookup results based on the
+
+                                  URL, or have them precompiled into a binary to avoid any
+                                  lookup. Therefore, binary compatibility needs to be preserved
+                                  on changes to types. (Use versioned type names to manage
+                                  breaking changes.)
+
+                                Note: this functionality is not currently available in the official
+
+                                protobuf release, and it is not used for type URLs beginning with
+
+                                type.googleapis.com.
+
+
+                                Schemes other than `http`, `https` (or the empty scheme) might be
+
+                                used with implementation specific semantics.
+                            value:
+                              type: string
+                              format: byte
+                              description: Must be a valid serialized protocol buffer of the above specified type.
+                          description: >-
+                            `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                            URL that describes the type of the serialized message.
+
+
+                            Protobuf library provides support to pack/unpack Any values in the form
+
+                            of utility functions or additional generated methods of the Any type.
+
+
+                            Example 1: Pack and unpack a message in C++.
+
+
+                                Foo foo = ...;
+                                Any any;
+                                any.PackFrom(foo);
+                                ...
+                                if (any.UnpackTo(&foo)) {
+                                  ...
+                                }
+
+                            Example 2: Pack and unpack a message in Java.
+
+
+                                Foo foo = ...;
+                                Any any = Any.pack(foo);
+                                ...
+                                if (any.is(Foo.class)) {
+                                  foo = any.unpack(Foo.class);
+                                }
+
+                             Example 3: Pack and unpack a message in Python.
+
+                                foo = Foo(...)
+                                any = Any()
+                                any.Pack(foo)
+                                ...
+                                if any.Is(Foo.DESCRIPTOR):
+                                  any.Unpack(foo)
+                                  ...
+
+                             Example 4: Pack and unpack a message in Go
+
+                                 foo := &pb.Foo{...}
+                                 any, err := ptypes.MarshalAny(foo)
+                                 ...
+                                 foo := &pb.Foo{}
+                                 if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                                   ...
+                                 }
+
+                            The pack methods provided by protobuf library will by default use
+
+                            'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                            methods only use the fully qualified type name after the last '/'
+
+                            in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                            name "y.z".
+
+
+
+                            JSON
+
+                            ====
+
+                            The JSON representation of an `Any` value uses the regular
+
+                            representation of the deserialized, embedded message, with an
+
+                            additional field `@type` which contains the type URL. Example:
+
+
+                                package google.profile;
+                                message Person {
+                                  string first_name = 1;
+                                  string last_name = 2;
+                                }
+
+                                {
+                                  "@type": "type.googleapis.com/google.profile.Person",
+                                  "firstName": <string>,
+                                  "lastName": <string>
+                                }
+
+                            If the embedded message type is well-known and has a custom JSON
+
+                            representation, that representation will be embedded adding a field
+
+                            `value` which holds the custom JSON in addition to the `@type`
+
+                            field. Example (for message [google.protobuf.Duration][]):
+
+
+                                {
+                                  "@type": "type.googleapis.com/google.protobuf.Duration",
+                                  "value": "1.212s"
+                                }
+                        expiration:
+                          type: string
+                          format: date-time
+                      title: >-
+                        GrantAuthorization extends a grant with both the addresses of the grantee and granter.
+
+                        It is used in genesis.proto and query.proto
+                    description: grants is a list of grants granted by the granter.
+                  pagination:
+                    description: pagination defines an pagination for the response.
+                    type: object
+                    properties:
+                      next_key:
+                        type: string
+                        format: byte
+                        title: |-
+                          next_key is the key to be passed to PageRequest.key to
+                          query the next page most efficiently
+                      total:
+                        type: string
+                        format: uint64
+                        title: >-
+                          total is total number of results available if PageRequest.count_total
+
+                          was set, its value is undefined otherwise
+                description: QueryGranterGrantsResponse is the response type for the Query/GranterGrants RPC method.
+        default:
+          description: An unexpected error response.
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type_url:
+                          type: string
+                          description: >-
+                            A URL/resource name that uniquely identifies the type of the serialized
+
+                            protocol buffer message. This string must contain at least
+
+                            one "/" character. The last segment of the URL's path must represent
+
+                            the fully qualified name of the type (as in
+
+                            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                            (e.g., leading "." is not accepted).
+
+
+                            In practice, teams usually precompile into the binary all types that they
+
+                            expect it to use in the context of Any. However, for URLs which use the
+
+                            scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                            server that maps type URLs to message definitions as follows:
+
+
+                            * If no scheme is provided, `https` is assumed.
+
+                            * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                              value in binary format, or produce an error.
+                            * Applications are allowed to cache lookup results based on the
+
+                              URL, or have them precompiled into a binary to avoid any
+                              lookup. Therefore, binary compatibility needs to be preserved
+                              on changes to types. (Use versioned type names to manage
+                              breaking changes.)
+
+                            Note: this functionality is not currently available in the official
+
+                            protobuf release, and it is not used for type URLs beginning with
+
+                            type.googleapis.com.
+
+
+                            Schemes other than `http`, `https` (or the empty scheme) might be
+
+                            used with implementation specific semantics.
+                        value:
+                          type: string
+                          format: byte
+                          description: Must be a valid serialized protocol buffer of the above specified type.
+                      description: >-
+                        `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                        URL that describes the type of the serialized message.
+
+
+                        Protobuf library provides support to pack/unpack Any values in the form
+
+                        of utility functions or additional generated methods of the Any type.
+
+
+                        Example 1: Pack and unpack a message in C++.
+
+
+                            Foo foo = ...;
+                            Any any;
+                            any.PackFrom(foo);
+                            ...
+                            if (any.UnpackTo(&foo)) {
+                              ...
+                            }
+
+                        Example 2: Pack and unpack a message in Java.
+
+
+                            Foo foo = ...;
+                            Any any = Any.pack(foo);
+                            ...
+                            if (any.is(Foo.class)) {
+                              foo = any.unpack(Foo.class);
+                            }
+
+                         Example 3: Pack and unpack a message in Python.
+
+                            foo = Foo(...)
+                            any = Any()
+                            any.Pack(foo)
+                            ...
+                            if any.Is(Foo.DESCRIPTOR):
+                              any.Unpack(foo)
+                              ...
+
+                         Example 4: Pack and unpack a message in Go
+
+                             foo := &pb.Foo{...}
+                             any, err := ptypes.MarshalAny(foo)
+                             ...
+                             foo := &pb.Foo{}
+                             if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                               ...
+                             }
+
+                        The pack methods provided by protobuf library will by default use
+
+                        'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                        methods only use the fully qualified type name after the last '/'
+
+                        in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                        name "y.z".
+
+
+
+                        JSON
+
+                        ====
+
+                        The JSON representation of an `Any` value uses the regular
+
+                        representation of the deserialized, embedded message, with an
+
+                        additional field `@type` which contains the type URL. Example:
+
+
+                            package google.profile;
+                            message Person {
+                              string first_name = 1;
+                              string last_name = 2;
+                            }
+
+                            {
+                              "@type": "type.googleapis.com/google.profile.Person",
+                              "firstName": <string>,
+                              "lastName": <string>
+                            }
+
+                        If the embedded message type is well-known and has a custom JSON
+
+                        representation, that representation will be embedded adding a field
+
+                        `value` which holds the custom JSON in addition to the `@type`
+
+                        field. Example (for message [google.protobuf.Duration][]):
+
+
+                            {
+                              "@type": "type.googleapis.com/google.protobuf.Duration",
+                              "value": "1.212s"
+                            }
+      parameters:
+        - name: granter
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key should
+
+            be set.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should include
+
+            a count of the total number of items available for pagination in UIs.
+
+            count_total is only respected when offset is used. It is ignored when key
+
+            is set.
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          schema:
+            type: boolean
+      tags:
+        - Query
   "/cosmos/bank/v1beta1/balances/{address}":
     get:
-      summary: AllBalances queries the balance of all coins for a single account.
+      summary: ""
       operationId: AllBalances
       responses:
         "200":
@@ -13176,7 +15269,7 @@ paths:
         - Query
   "/cosmos/bank/v1beta1/balances/{address}/by_denom":
     get:
-      summary: Balance queries the balance of a single coin for a single account.
+      summary: ""
       operationId: Balance
       responses:
         "200":
@@ -13242,10 +15335,7 @@ paths:
         - Query
   /cosmos/bank/v1beta1/base_denom:
     get:
-      summary: >-
-        BaseDenom queries for a base denomination given a denom that can either be
-
-        the base denom itself or a metadata denom unit that maps to the base denom.
+      summary: ""
       operationId: BaseDenom
       responses:
         "200":
@@ -13292,7 +15382,7 @@ paths:
         - Query
   /cosmos/bank/v1beta1/denoms_metadata:
     get:
-      summary: DenomsMetadata queries the client metadata for all registered coin denominations.
+      summary: ""
       operationId: DenomsMetadata
       responses:
         "200":
@@ -13470,7 +15560,7 @@ paths:
         - Query
   "/cosmos/bank/v1beta1/denoms_metadata/{denom}":
     get:
-      summary: DenomsMetadata queries the client metadata of a given coin denomination.
+      summary: ""
       operationId: DenomMetadata
       responses:
         "200":
@@ -13578,7 +15668,7 @@ paths:
         - Query
   /cosmos/bank/v1beta1/params:
     get:
-      summary: Params queries the parameters of x/bank module.
+      summary: ""
       operationId: BankParams
       responses:
         "200":
@@ -13636,7 +15726,7 @@ paths:
         - Query
   /cosmos/bank/v1beta1/supply:
     get:
-      summary: TotalSupply queries the total supply of all coins.
+      summary: ""
       operationId: TotalSupply
       responses:
         "200":
@@ -13771,7 +15861,7 @@ paths:
         - Query
   "/cosmos/bank/v1beta1/supply/{denom}":
     get:
-      summary: SupplyOf queries the supply of a single coin.
+      summary: ""
       operationId: SupplyOf
       responses:
         "200":
@@ -13831,7 +15921,7 @@ paths:
         - Query
   /cosmos/bank/v1beta1/supply_without_offset:
     get:
-      summary: TotalSupplyWithoutOffset queries the total supply of all coins.
+      summary: ""
       operationId: TotalSupplyWithoutOffset
       responses:
         "200":
@@ -13966,7 +16056,7 @@ paths:
         - Query
   "/cosmos/bank/v1beta1/supply_without_offset/{denom}":
     get:
-      summary: SupplyOf queries the supply of a single coin.
+      summary: ""
       operationId: SupplyOfWithoutOffset
       responses:
         "200":
@@ -14026,7 +16116,7 @@ paths:
         - Query
   /cosmos/base/tendermint/v1beta1/blocks/latest:
     get:
-      summary: GetLatestBlock returns the latest block.
+      summary: ""
       operationId: GetLatestBlock
       responses:
         "200":
@@ -14726,7 +16816,7 @@ paths:
         - Service
   "/cosmos/base/tendermint/v1beta1/blocks/{height}":
     get:
-      summary: GetBlockByHeight queries block for given height.
+      summary: ""
       operationId: GetBlockByHeight
       responses:
         "200":
@@ -15433,7 +17523,7 @@ paths:
         - Service
   /cosmos/base/tendermint/v1beta1/node_info:
     get:
-      summary: GetNodeInfo queries the current node info.
+      summary: ""
       operationId: GetNodeInfo
       responses:
         "200":
@@ -15687,7 +17777,7 @@ paths:
         - Service
   /cosmos/base/tendermint/v1beta1/syncing:
     get:
-      summary: GetSyncing queries node syncing.
+      summary: ""
       operationId: GetSyncing
       responses:
         "200":
@@ -15874,7 +17964,7 @@ paths:
         - Service
   /cosmos/base/tendermint/v1beta1/validatorsets/latest:
     get:
-      summary: GetLatestValidatorSet queries latest validator-set.
+      summary: ""
       operationId: GetLatestValidatorSet
       responses:
         "200":
@@ -16303,7 +18393,7 @@ paths:
         - Service
   "/cosmos/base/tendermint/v1beta1/validatorsets/{height}":
     get:
-      summary: GetValidatorSetByHeight queries validator-set at a given height.
+      summary: ""
       operationId: GetValidatorSetByHeight
       responses:
         "200":
@@ -16738,7 +18828,7 @@ paths:
         - Service
   /cosmos/distribution/v1beta1/community_pool:
     get:
-      summary: CommunityPool queries the community pool coins.
+      summary: ""
       operationId: CommunityPool
       responses:
         "200":
@@ -16797,9 +18887,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards":
     get:
-      summary: |-
-        DelegationTotalRewards queries the total rewards accrued by a each
-        validator.
+      summary: ""
       operationId: DelegationTotalRewards
       responses:
         "200":
@@ -16892,7 +18980,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards/{validator_address}":
     get:
-      summary: DelegationRewards queries the total rewards accrued by a delegation.
+      summary: ""
       operationId: DelegationRewards
       responses:
         "200":
@@ -16963,7 +19051,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/delegators/{delegator_address}/validators":
     get:
-      summary: DelegatorValidators queries the validators of a delegator.
+      summary: ""
       operationId: DelegatorValidators
       responses:
         "200":
@@ -17016,7 +19104,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/delegators/{delegator_address}/withdraw_address":
     get:
-      summary: DelegatorWithdrawAddress queries withdraw address of a delegator.
+      summary: ""
       operationId: DelegatorWithdrawAddress
       responses:
         "200":
@@ -17068,7 +19156,7 @@ paths:
         - Query
   /cosmos/distribution/v1beta1/params:
     get:
-      summary: Params queries params of the distribution module.
+      summary: ""
       operationId: DistributionParams
       responses:
         "200":
@@ -17119,7 +19207,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/validators/{validator_address}/commission":
     get:
-      summary: ValidatorCommission queries accumulated commission for a validator.
+      summary: ""
       operationId: ValidatorCommission
       responses:
         "200":
@@ -17187,7 +19275,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/validators/{validator_address}/outstanding_rewards":
     get:
-      summary: ValidatorOutstandingRewards queries rewards of a validator address.
+      summary: ""
       operationId: ValidatorOutstandingRewards
       responses:
         "200":
@@ -17259,7 +19347,7 @@ paths:
         - Query
   "/cosmos/distribution/v1beta1/validators/{validator_address}/slashes":
     get:
-      summary: ValidatorSlashes queries slash events of a validator.
+      summary: ""
       operationId: ValidatorSlashes
       responses:
         "200":
@@ -17412,7 +19500,7 @@ paths:
         - Query
   /cosmos/evidence/v1beta1/evidence:
     get:
-      summary: AllEvidence queries all evidence.
+      summary: ""
       operationId: AllEvidence
       responses:
         "200":
@@ -17830,7 +19918,7 @@ paths:
         - Query
   "/cosmos/evidence/v1beta1/evidence/{evidence_hash}":
     get:
-      summary: Evidence queries evidence based on evidence hash.
+      summary: ""
       operationId: Evidence
       responses:
         "200":
@@ -18177,7 +20265,7 @@ paths:
         - Query
   "/cosmos/feegrant/v1beta1/allowance/{granter}/{grantee}":
     get:
-      summary: Allowance returns fee granted to the grantee by the granter.
+      summary: ""
       operationId: Allowance
       responses:
         "200":
@@ -18441,7 +20529,7 @@ paths:
         - Query
   "/cosmos/feegrant/v1beta1/allowances/{grantee}":
     get:
-      summary: Allowances returns all the grants for address.
+      summary: ""
       operationId: Allowances
       responses:
         "200":
@@ -18772,7 +20860,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/params/{params_type}":
     get:
-      summary: Params queries all parameters of the gov module.
+      summary: ""
       operationId: GovParams
       responses:
         "200":
@@ -18879,6 +20967,10 @@ paths:
                         type: string
                         format: byte
                         description: "Minimum proportion of Yes votes for an expedited proposal to pass. Default value: 0.67."
+                      expedited_quorum:
+                        type: string
+                        format: byte
+                        description: "Minimum proportion of Yes votes for an expedited proposal to reach quorum. Default value: 0.67."
                 description: QueryParamsResponse is the response type for the Query/Params RPC method.
         default:
           description: An unexpected error response.
@@ -19064,7 +21156,7 @@ paths:
         - Query
   /cosmos/gov/v1beta1/proposals:
     get:
-      summary: Proposals queries all proposals based on given status.
+      summary: ""
       operationId: Proposals
       responses:
         "200":
@@ -19603,7 +21695,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}":
     get:
-      summary: Proposal queries proposal details based on ProposalID.
+      summary: ""
       operationId: Proposal
       responses:
         "200":
@@ -20028,7 +22120,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/deposits":
     get:
-      summary: Deposits queries all deposits of a single proposal.
+      summary: ""
       operationId: Deposits
       responses:
         "200":
@@ -20323,7 +22415,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/deposits/{depositor}":
     get:
-      summary: Deposit queries single deposit information based proposalID, depositAddr.
+      summary: ""
       operationId: Deposit
       responses:
         "200":
@@ -20550,7 +22642,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/tally":
     get:
-      summary: TallyResult queries the tally of a proposal vote.
+      summary: ""
       operationId: TallyResult
       responses:
         "200":
@@ -20755,7 +22847,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/votes":
     get:
-      summary: Votes queries votes of a given proposal.
+      summary: ""
       operationId: Votes
       responses:
         "200":
@@ -21081,7 +23173,7 @@ paths:
         - Query
   "/cosmos/gov/v1beta1/proposals/{proposal_id}/votes/{voter}":
     get:
-      summary: Vote queries voted information based on proposalID, voterAddr.
+      summary: ""
       operationId: Vote
       responses:
         "200":
@@ -21338,7 +23430,7 @@ paths:
         - Query
   /cosmos/mint/v1beta1/annual_provisions:
     get:
-      summary: AnnualProvisions current minting annual provisions value.
+      summary: ""
       operationId: AnnualProvisions
       responses:
         "200":
@@ -21383,7 +23475,7 @@ paths:
         - Query
   /cosmos/mint/v1beta1/inflation:
     get:
-      summary: Inflation returns the current minting inflation value.
+      summary: ""
       operationId: Inflation
       responses:
         "200":
@@ -21429,7 +23521,7 @@ paths:
         - Query
   /cosmos/mint/v1beta1/params:
     get:
-      summary: Params returns the total set of minting parameters.
+      summary: ""
       operationId: CosmosMintParams
       responses:
         "200":
@@ -21491,9 +23583,7 @@ paths:
         - Query
   /cosmos/params/v1beta1/params:
     get:
-      summary: |-
-        Params queries a specific parameter of a module, given its subspace and
-        key.
+      summary: ""
       operationId: Params
       responses:
         "200":
@@ -21555,7 +23645,7 @@ paths:
         - Query
   /cosmos/slashing/v1beta1/params:
     get:
-      summary: Params queries the parameters of slashing module
+      summary: ""
       operationId: SlashingParams
       responses:
         "200":
@@ -21612,7 +23702,7 @@ paths:
         - Query
   /cosmos/slashing/v1beta1/signing_infos:
     get:
-      summary: SigningInfos queries signing info of all validators
+      summary: ""
       operationId: SigningInfos
       responses:
         "200":
@@ -21778,7 +23868,7 @@ paths:
         - Query
   "/cosmos/slashing/v1beta1/signing_infos/{cons_address}":
     get:
-      summary: SigningInfo queries the signing info of given cons address
+      summary: ""
       operationId: SigningInfo
       responses:
         "200":
@@ -21867,7 +23957,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/delegations/{delegator_addr}":
     get:
-      summary: DelegatorDelegations queries all delegations of a given delegator address.
+      summary: ""
       operationId: DelegatorDelegations
       responses:
         "200":
@@ -22175,7 +24265,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/delegators/{delegator_addr}/redelegations":
     get:
-      summary: Redelegations queries redelegations of given address.
+      summary: ""
       operationId: Redelegations
       responses:
         "200":
@@ -22533,10 +24623,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/delegators/{delegator_addr}/unbonding_delegations":
     get:
-      summary: >-
-        DelegatorUnbondingDelegations queries all unbonding delegations of a given
-
-        delegator address.
+      summary: ""
       operationId: DelegatorUnbondingDelegations
       responses:
         "200":
@@ -22839,9 +24926,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/delegators/{delegator_addr}/validators":
     get:
-      summary: |-
-        DelegatorValidators queries all validators info for given delegator
-        address.
+      summary: ""
       operationId: StakingDelegatorValidators
       responses:
         "200":
@@ -23355,9 +25440,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/delegators/{delegator_addr}/validators/{validator_addr}":
     get:
-      summary: |-
-        DelegatorValidator queries validator info for given delegator validator
-        pair.
+      summary: ""
       operationId: DelegatorValidator
       responses:
         "200":
@@ -23802,7 +25885,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/historical_info/{height}":
     get:
-      summary: HistoricalInfo queries the historical info for given height.
+      summary: ""
       operationId: HistoricalInfo
       responses:
         "200":
@@ -24324,7 +26407,7 @@ paths:
         - Query
   /cosmos/staking/v1beta1/params:
     get:
-      summary: Parameters queries the staking parameters.
+      summary: ""
       operationId: StakingParams
       responses:
         "200":
@@ -24537,7 +26620,7 @@ paths:
         - Query
   /cosmos/staking/v1beta1/pool:
     get:
-      summary: Pool queries the pool info.
+      summary: ""
       operationId: StakingPool
       responses:
         "200":
@@ -24730,7 +26813,7 @@ paths:
         - Query
   /cosmos/staking/v1beta1/validators:
     get:
-      summary: Validators queries all validators that match the given status.
+      summary: ""
       operationId: Validators
       responses:
         "200":
@@ -25242,7 +27325,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/validators/{validator_addr}":
     get:
-      summary: Validator queries validator info for given validator address.
+      summary: ""
       operationId: Validator
       responses:
         "200":
@@ -25679,7 +27762,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/validators/{validator_addr}/delegations":
     get:
-      summary: ValidatorDelegations queries delegate info for given validator.
+      summary: ""
       operationId: ValidatorDelegations
       responses:
         "200":
@@ -25986,7 +28069,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}":
     get:
-      summary: Delegation queries delegate info for given validator delegator pair.
+      summary: ""
       operationId: Delegation
       responses:
         "200":
@@ -26223,9 +28306,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}/unbonding_delegation":
     get:
-      summary: |-
-        UnbondingDelegation queries unbonding info for given validator delegator
-        pair.
+      summary: ""
       operationId: UnbondingDelegation
       responses:
         "200":
@@ -26460,7 +28541,7 @@ paths:
         - Query
   "/cosmos/staking/v1beta1/validators/{validator_addr}/unbonding_delegations":
     get:
-      summary: ValidatorUnbondingDelegations queries unbonding delegations of a validator.
+      summary: ""
       operationId: ValidatorUnbondingDelegations
       responses:
         "200":
@@ -27968,7 +30049,7 @@ paths:
         - Service
   "/cosmos/upgrade/v1beta1/applied_plan/{name}":
     get:
-      summary: AppliedPlan queries a previously applied upgrade plan by its name.
+      summary: ""
       operationId: AppliedPlan
       responses:
         "200":
@@ -28167,7 +30248,7 @@ paths:
         - Query
   /cosmos/upgrade/v1beta1/current_plan:
     get:
-      summary: CurrentPlan queries the current upgrade plan.
+      summary: ""
       operationId: CurrentPlan
       responses:
         "200":
@@ -28550,7 +30631,7 @@ paths:
         - Query
   /cosmos/upgrade/v1beta1/module_versions:
     get:
-      summary: ModuleVersions queries the list of module versions from state.
+      summary: ""
       description: "Since: cosmos-sdk 0.43"
       operationId: ModuleVersions
       responses:
@@ -28770,18 +30851,7 @@ paths:
         - Query
   "/cosmos/upgrade/v1beta1/upgraded_consensus_state/{last_height}":
     get:
-      summary: >-
-        UpgradedConsensusState queries the consensus state that will serve
-
-        as a trusted kernel for the next version of this chain. It will only be
-
-        stored at the last height of this chain.
-
-        UpgradedConsensusState RPC not supported with legacy querier
-
-        This rpc is deprecated now that IBC has its own replacement
-
-        (https://github.com/cosmos/ibc-go/blob/2c880a22e9f9cc75f62b527ca94aa75ce1106001/proto/ibc/core/client/v1/query.proto#L54)
+      summary: ""
       operationId: UpgradedConsensusState
       responses:
         "200":
@@ -29570,6 +31640,90 @@ components:
 
         NOTE: The amount field is an Int which implements the custom method
         signatures required by gogoproto.
+    osmosis.gamm.v1beta1.BalancerToConcentratedPoolLink:
+      type: object
+      properties:
+        balancer_pool_id:
+          type: string
+          format: uint64
+        cl_pool_id:
+          type: string
+          format: uint64
+      description: >-
+        BalancerToConcentratedPoolLink defines a single link between a single
+
+        balancer pool and a single concentrated liquidity pool. This link is used to
+
+        allow a balancer pool to migrate to a single canonical full range
+
+        concentrated liquidity pool position
+
+        A balancer pool can be linked to a maximum of one cl pool, and a cl pool can
+
+        be linked to a maximum of one balancer pool.
+    osmosis.gamm.v1beta1.MigrationRecords:
+      type: object
+      properties:
+        balancer_to_concentrated_pool_links:
+          type: array
+          items:
+            type: object
+            properties:
+              balancer_pool_id:
+                type: string
+                format: uint64
+              cl_pool_id:
+                type: string
+                format: uint64
+            description: >-
+              BalancerToConcentratedPoolLink defines a single link between a single
+
+              balancer pool and a single concentrated liquidity pool. This link is used to
+
+              allow a balancer pool to migrate to a single canonical full range
+
+              concentrated liquidity pool position
+
+              A balancer pool can be linked to a maximum of one cl pool, and a cl pool can
+
+              be linked to a maximum of one balancer pool.
+      title: >-
+        MigrationRecords contains all the links between balancer and concentrated
+
+        pools
+    osmosis.gamm.v1beta1.QueryCFMMConcentratedPoolLinksResponse:
+      type: object
+      properties:
+        migration_records:
+          type: object
+          properties:
+            balancer_to_concentrated_pool_links:
+              type: array
+              items:
+                type: object
+                properties:
+                  balancer_pool_id:
+                    type: string
+                    format: uint64
+                  cl_pool_id:
+                    type: string
+                    format: uint64
+                description: >-
+                  BalancerToConcentratedPoolLink defines a single link between a single
+
+                  balancer pool and a single concentrated liquidity pool. This link is used to
+
+                  allow a balancer pool to migrate to a single canonical full range
+
+                  concentrated liquidity pool position
+
+                  A balancer pool can be linked to a maximum of one cl pool, and a cl pool can
+
+                  be linked to a maximum of one balancer pool.
+          title: >-
+            MigrationRecords contains all the links between balancer and concentrated
+
+            pools
     osmosis.gamm.v1beta1.QueryCalcExitPoolCoinsFromSharesResponse:
       type: object
       properties:
@@ -29631,6 +31785,12 @@ components:
               NOTE: The amount field is an Int which implements the custom method
 
               signatures required by gogoproto.
+    osmosis.gamm.v1beta1.QueryConcentratedPoolIdLinkFromCFMMResponse:
+      type: object
+      properties:
+        concentrated_pool_id:
+          type: string
+          format: uint64
     osmosis.gamm.v1beta1.QueryNumPoolsResponse:
       type: object
       properties:
@@ -29951,6 +32111,7 @@ components:
                   "@type": "type.googleapis.com/google.protobuf.Duration",
                   "value": "1.212s"
                 }
+      title: "Deprecated: please use the alternative in x/poolmanager"
     osmosis.gamm.v1beta1.QueryPoolTypeResponse:
       type: object
       properties:
@@ -30366,6 +32527,7 @@ components:
               NOTE: The amount field is an Int which implements the custom method
 
               signatures required by gogoproto.
+      title: "Deprecated: please use the alternative in x/poolmanager"
     osmosis.gamm.v1beta1.QueryTotalSharesResponse:
       type: object
       properties:
@@ -30381,7 +32543,7 @@ components:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-    osmosis.gamm.v1beta1.SwapAmountInRoute:
+    osmosis.poolmanager.v1beta1.SwapAmountInRoute:
       type: object
       properties:
         pool_id:
@@ -30389,8 +32551,7 @@ components:
           format: uint64
         token_out_denom:
           type: string
-      title: ===================== MsgSwapExactAmountIn
-    osmosis.gamm.v1beta1.SwapAmountOutRoute:
+    osmosis.poolmanager.v1beta1.SwapAmountOutRoute:
       type: object
       properties:
         pool_id:
@@ -30398,7 +32559,6 @@ components:
           format: uint64
         token_in_denom:
           type: string
-      title: ===================== MsgSwapExactAmountOut
     osmosis.incentives.ActiveGaugesPerDenomResponse:
       type: object
       properties:
@@ -30435,6 +32595,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -30587,6 +32748,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -30734,6 +32896,7 @@ components:
               enum:
                 - ByDuration
                 - ByTime
+                - NoLock
               default: ByDuration
               description: |-
                 LockQueryType defines the type of the lock query that can
@@ -30858,6 +33021,7 @@ components:
                   enum:
                     - ByDuration
                     - ByTime
+                    - NoLock
                   default: ByDuration
                   description: |-
                     LockQueryType defines the type of the lock query that can
@@ -30985,6 +33149,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -31187,6 +33352,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -31339,6 +33505,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -31460,6 +33627,7 @@ components:
       enum:
         - ByDuration
         - ByTime
+        - NoLock
       default: ByDuration
       description: |-
         LockQueryType defines the type of the lock query that can
@@ -31473,6 +33641,7 @@ components:
           enum:
             - ByDuration
             - ByTime
+            - NoLock
           default: ByDuration
           description: |-
             LockQueryType defines the type of the lock query that can
@@ -31576,6 +33745,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31640,6 +33817,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31704,6 +33889,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31768,6 +33961,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31832,6 +34033,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31896,6 +34105,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -31960,6 +34177,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -32043,6 +34268,14 @@ components:
 
                     signatures required by gogoproto.
                 description: Coins are the tokens locked within the lock, kept in the module account.
+              reward_receiver_address:
+                type: string
+                description: >-
+                  Reward Receiver Address is the address that would be receiving rewards for
+
+                  the incentives for the lock. This is set to owner by default and can be
+
+                  changed via separate msg.
             description: >-
               PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -32072,6 +34305,11 @@ components:
               NOTE: The amount field is an Int which implements the custom method
 
               signatures required by gogoproto.
+    osmosis.lockup.LockRewardReceiverResponse:
+      type: object
+      properties:
+        reward_receiver:
+          type: string
     osmosis.lockup.LockedDenomResponse:
       type: object
       properties:
@@ -32129,6 +34367,14 @@ components:
 
                   signatures required by gogoproto.
               description: Coins are the tokens locked within the lock, kept in the module account.
+            reward_receiver_address:
+              type: string
+              description: >-
+                Reward Receiver Address is the address that would be receiving rewards for
+
+                the incentives for the lock. This is set to owner by default and can be
+
+                changed via separate msg.
           description: >-
             PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -32177,6 +34423,12 @@ components:
               NOTE: The amount field is an Int which implements the custom method
 
               signatures required by gogoproto.
+    osmosis.lockup.NextLockIDResponse:
+      type: object
+      properties:
+        lock_id:
+          type: string
+          format: uint64
     osmosis.lockup.Params:
       type: object
       properties:
@@ -32232,6 +34484,14 @@ components:
 
               signatures required by gogoproto.
           description: Coins are the tokens locked within the lock, kept in the module account.
+        reward_receiver_address:
+          type: string
+          description: >-
+            Reward Receiver Address is the address that would be receiving rewards for
+
+            the incentives for the lock. This is set to owner by default and can be
+
+            changed via separate msg.
       description: >-
         PeriodLock is a single lock unit by period defined by the x/lockup module.
 
@@ -32287,6 +34547,44 @@ components:
         and deletion, accumulation store is also being updated and on querier side,
 
         they can query as freely as native lockup.
+    osmosis.lockup.SyntheticLockupByLockupIDResponse:
+      type: object
+      properties:
+        synthetic_lock:
+          type: object
+          properties:
+            underlying_lock_id:
+              type: string
+              format: uint64
+              description: >-
+                Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                lockup. A synthetic lock MUST have an underlying lock.
+            synth_denom:
+              type: string
+              description: |-
+                SynthDenom is the synthetic denom that is a combination of
+                gamm share + bonding status + validator address.
+            end_time:
+              type: string
+              format: date-time
+              title: >-
+                used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                value is set to uninitialized value
+            duration:
+              type: string
+              description: |-
+                Duration is the duration for a synthetic lock to mature
+                at the point of unbonding has started.
+          description: >-
+            SyntheticLock is creating virtual lockup where new denom is combination of
+
+            original denom and synthetic suffix. At the time of synthetic lockup creation
+
+            and deletion, accumulation store is also being updated and on querier side,
+
+            they can query as freely as native lockup.
     osmosis.lockup.SyntheticLockupsByLockupIDResponse:
       type: object
       properties:
@@ -32660,6 +34958,7 @@ components:
                     enum:
                       - ByDuration
                       - ByTime
+                      - NoLock
                     default: ByDuration
                     description: |-
                       LockQueryType defines the type of the lock query that can
@@ -32886,10 +35185,8 @@ components:
                 enum:
                   - SuperfluidAssetTypeNative
                   - SuperfluidAssetTypeLPShare
+                  - SuperfluidAssetTypeConcentratedShare
                 default: SuperfluidAssetTypeNative
-                description: |-
-                  SuperfluidAssetType indicates whether the superfluid asset is
-                  a native token itself or the lp share of a pool.
             title: SuperfluidAsset stores the pair of superfluid asset type and denom pair
     osmosis.superfluid.AllIntermediaryAccountsResponse:
       type: object
@@ -32968,10 +35265,81 @@ components:
           enum:
             - SuperfluidAssetTypeNative
             - SuperfluidAssetTypeLPShare
+            - SuperfluidAssetTypeConcentratedShare
           default: SuperfluidAssetTypeNative
-          description: |-
+          title: |-
             SuperfluidAssetType indicates whether the superfluid asset is
-            a native token itself or the lp share of a pool.
+            a native token, lp share of a pool, or concentrated share of a pool
+    osmosis.superfluid.ConcentratedPoolUserPositionRecord:
+      type: object
+      properties:
+        validator_address:
+          type: string
+        position_id:
+          type: string
+          format: uint64
+        lock_id:
+          type: string
+          format: uint64
+        synthetic_lock:
+          type: object
+          properties:
+            underlying_lock_id:
+              type: string
+              format: uint64
+              description: >-
+                Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                lockup. A synthetic lock MUST have an underlying lock.
+            synth_denom:
+              type: string
+              description: |-
+                SynthDenom is the synthetic denom that is a combination of
+                gamm share + bonding status + validator address.
+            end_time:
+              type: string
+              format: date-time
+              title: >-
+                used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                value is set to uninitialized value
+            duration:
+              type: string
+              description: |-
+                Duration is the duration for a synthetic lock to mature
+                at the point of unbonding has started.
+          description: >-
+            SyntheticLock is creating virtual lockup where new denom is combination of
+
+            original denom and synthetic suffix. At the time of synthetic lockup creation
+
+            and deletion, accumulation store is also being updated and on querier side,
+
+            they can query as freely as native lockup.
+        delegation_amount:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+          description: |-
+            Coin defines a token with a denomination and an amount.
+
+            NOTE: The amount field is an Int which implements the custom method
+            signatures required by gogoproto.
+        equivalent_staked_amount:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+          description: |-
+            Coin defines a token with a denomination and an amount.
+
+            NOTE: The amount field is an Int which implements the custom method
+            signatures required by gogoproto.
     osmosis.superfluid.ConnectedIntermediaryAccountResponse:
       type: object
       properties:
@@ -33221,20 +35589,19 @@ components:
           enum:
             - SuperfluidAssetTypeNative
             - SuperfluidAssetTypeLPShare
+            - SuperfluidAssetTypeConcentratedShare
           default: SuperfluidAssetTypeNative
-          description: |-
-            SuperfluidAssetType indicates whether the superfluid asset is
-            a native token itself or the lp share of a pool.
       title: SuperfluidAsset stores the pair of superfluid asset type and denom pair
     osmosis.superfluid.SuperfluidAssetType:
       type: string
       enum:
         - SuperfluidAssetTypeNative
         - SuperfluidAssetTypeLPShare
+        - SuperfluidAssetTypeConcentratedShare
       default: SuperfluidAssetTypeNative
-      description: |-
+      title: |-
         SuperfluidAssetType indicates whether the superfluid asset is
-        a native token itself or the lp share of a pool.
+        a native token, lp share of a pool, or concentrated share of a pool
     osmosis.superfluid.SuperfluidDelegationAmountResponse:
       type: object
       properties:
@@ -33518,6 +35885,164 @@ components:
       properties:
         total_delegations:
           type: string
+    osmosis.superfluid.UserConcentratedSuperfluidPositionsDelegatedResponse:
+      type: object
+      properties:
+        cl_pool_user_position_records:
+          type: array
+          items:
+            type: object
+            properties:
+              validator_address:
+                type: string
+              position_id:
+                type: string
+                format: uint64
+              lock_id:
+                type: string
+                format: uint64
+              synthetic_lock:
+                type: object
+                properties:
+                  underlying_lock_id:
+                    type: string
+                    format: uint64
+                    description: >-
+                      Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                      lockup. A synthetic lock MUST have an underlying lock.
+                  synth_denom:
+                    type: string
+                    description: |-
+                      SynthDenom is the synthetic denom that is a combination of
+                      gamm share + bonding status + validator address.
+                  end_time:
+                    type: string
+                    format: date-time
+                    title: >-
+                      used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                      value is set to uninitialized value
+                  duration:
+                    type: string
+                    description: |-
+                      Duration is the duration for a synthetic lock to mature
+                      at the point of unbonding has started.
+                description: >-
+                  SyntheticLock is creating virtual lockup where new denom is combination of
+
+                  original denom and synthetic suffix. At the time of synthetic lockup creation
+
+                  and deletion, accumulation store is also being updated and on querier side,
+
+                  they can query as freely as native lockup.
+              delegation_amount:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom method
+
+                  signatures required by gogoproto.
+              equivalent_staked_amount:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom method
+
+                  signatures required by gogoproto.
+    osmosis.superfluid.UserConcentratedSuperfluidPositionsUndelegatingResponse:
+      type: object
+      properties:
+        cl_pool_user_position_records:
+          type: array
+          items:
+            type: object
+            properties:
+              validator_address:
+                type: string
+              position_id:
+                type: string
+                format: uint64
+              lock_id:
+                type: string
+                format: uint64
+              synthetic_lock:
+                type: object
+                properties:
+                  underlying_lock_id:
+                    type: string
+                    format: uint64
+                    description: >-
+                      Underlying Lock ID is the underlying native lock's id for this synthetic
+
+                      lockup. A synthetic lock MUST have an underlying lock.
+                  synth_denom:
+                    type: string
+                    description: |-
+                      SynthDenom is the synthetic denom that is a combination of
+                      gamm share + bonding status + validator address.
+                  end_time:
+                    type: string
+                    format: date-time
+                    title: >-
+                      used for unbonding synthetic lockups, for active synthetic lockups, this
+
+                      value is set to uninitialized value
+                  duration:
+                    type: string
+                    description: |-
+                      Duration is the duration for a synthetic lock to mature
+                      at the point of unbonding has started.
+                description: >-
+                  SyntheticLock is creating virtual lockup where new denom is combination of
+
+                  original denom and synthetic suffix. At the time of synthetic lockup creation
+
+                  and deletion, accumulation store is also being updated and on querier side,
+
+                  they can query as freely as native lockup.
+              delegation_amount:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom method
+
+                  signatures required by gogoproto.
+              equivalent_staked_amount:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom method
+
+                  signatures required by gogoproto.
     osmosis.tokenfactory.v1beta1.DenomAuthorityMetadata:
       type: object
       properties:
@@ -33549,7 +36074,32 @@ components:
               NOTE: The amount field is an Int which implements the custom method
 
               signatures required by gogoproto.
+          description: >-
+            DenomCreationFee defines the fee to be charged on the creation of a new
+
+            denom. The fee is drawn from the MsgCreateDenom's sender account, and
+
+            transferred to the community pool.
+        denom_creation_gas_consume:
+          type: string
+          format: uint64
+          description: >-
+            DenomCreationGasConsume defines the gas cost for creating a new denom.
+
+            This is intended as a spam deterrence mechanism.
+
+
+            See: https://github.com/CosmWasm/token-factory/issues/11
       description: Params defines the parameters for the tokenfactory module.
+    osmosis.tokenfactory.v1beta1.QueryBeforeSendHookAddressResponse:
+      type: object
+      properties:
+        cosmwasm_address:
+          type: string
+      description: >-
+        QueryBeforeSendHookAddressResponse defines the response structure for the
+
+        DenomBeforeSendHook gRPC query.
     osmosis.tokenfactory.v1beta1.QueryDenomAuthorityMetadataResponse:
       type: object
       properties:
@@ -33602,6 +36152,22 @@ components:
                   NOTE: The amount field is an Int which implements the custom method
 
                   signatures required by gogoproto.
+              description: >-
+                DenomCreationFee defines the fee to be charged on the creation of a new
+
+                denom. The fee is drawn from the MsgCreateDenom's sender account, and
+
+                transferred to the community pool.
+            denom_creation_gas_consume:
+              type: string
+              format: uint64
+              description: >-
+                DenomCreationGasConsume defines the gas cost for creating a new denom.
+
+                This is intended as a spam deterrence mechanism.
+
+
+                See: https://github.com/CosmWasm/token-factory/issues/11
       description: QueryParamsResponse is the response type for the Query/Params RPC method.
     osmosis.txfees.v1beta1.FeeToken:
       type: object
@@ -34365,6 +36931,558 @@ components:
       description: |-
         Grant gives permissions to execute
         the provide method with expiration time.
+    cosmos.authz.v1beta1.GrantAuthorization:
+      type: object
+      properties:
+        granter:
+          type: string
+        grantee:
+          type: string
+        authorization:
+          type: object
+          properties:
+            type_url:
+              type: string
+              description: >-
+                A URL/resource name that uniquely identifies the type of the serialized
+
+                protocol buffer message. This string must contain at least
+
+                one "/" character. The last segment of the URL's path must represent
+
+                the fully qualified name of the type (as in
+
+                `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                (e.g., leading "." is not accepted).
+
+
+                In practice, teams usually precompile into the binary all types that they
+
+                expect it to use in the context of Any. However, for URLs which use the
+
+                scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                server that maps type URLs to message definitions as follows:
+
+
+                * If no scheme is provided, `https` is assumed.
+
+                * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                  value in binary format, or produce an error.
+                * Applications are allowed to cache lookup results based on the
+
+                  URL, or have them precompiled into a binary to avoid any
+                  lookup. Therefore, binary compatibility needs to be preserved
+                  on changes to types. (Use versioned type names to manage
+                  breaking changes.)
+
+                Note: this functionality is not currently available in the official
+
+                protobuf release, and it is not used for type URLs beginning with
+
+                type.googleapis.com.
+
+
+                Schemes other than `http`, `https` (or the empty scheme) might be
+
+                used with implementation specific semantics.
+            value:
+              type: string
+              format: byte
+              description: Must be a valid serialized protocol buffer of the above specified type.
+          description: >-
+            `Any` contains an arbitrary serialized protocol buffer message along with a
+
+            URL that describes the type of the serialized message.
+
+
+            Protobuf library provides support to pack/unpack Any values in the form
+
+            of utility functions or additional generated methods of the Any type.
+
+
+            Example 1: Pack and unpack a message in C++.
+
+
+                Foo foo = ...;
+                Any any;
+                any.PackFrom(foo);
+                ...
+                if (any.UnpackTo(&foo)) {
+                  ...
+                }
+
+            Example 2: Pack and unpack a message in Java.
+
+
+                Foo foo = ...;
+                Any any = Any.pack(foo);
+                ...
+                if (any.is(Foo.class)) {
+                  foo = any.unpack(Foo.class);
+                }
+
+             Example 3: Pack and unpack a message in Python.
+
+                foo = Foo(...)
+                any = Any()
+                any.Pack(foo)
+                ...
+                if any.Is(Foo.DESCRIPTOR):
+                  any.Unpack(foo)
+                  ...
+
+             Example 4: Pack and unpack a message in Go
+
+                 foo := &pb.Foo{...}
+                 any, err := ptypes.MarshalAny(foo)
+                 ...
+                 foo := &pb.Foo{}
+                 if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                   ...
+                 }
+
+            The pack methods provided by protobuf library will by default use
+
+            'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+            methods only use the fully qualified type name after the last '/'
+
+            in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+            name "y.z".
+
+
+
+            JSON
+
+            ====
+
+            The JSON representation of an `Any` value uses the regular
+
+            representation of the deserialized, embedded message, with an
+
+            additional field `@type` which contains the type URL. Example:
+
+
+                package google.profile;
+                message Person {
+                  string first_name = 1;
+                  string last_name = 2;
+                }
+
+                {
+                  "@type": "type.googleapis.com/google.profile.Person",
+                  "firstName": <string>,
+                  "lastName": <string>
+                }
+
+            If the embedded message type is well-known and has a custom JSON
+
+            representation, that representation will be embedded adding a field
+
+            `value` which holds the custom JSON in addition to the `@type`
+
+            field. Example (for message [google.protobuf.Duration][]):
+
+
+                {
+                  "@type": "type.googleapis.com/google.protobuf.Duration",
+                  "value": "1.212s"
+                }
+        expiration:
+          type: string
+          format: date-time
+      title: >-
+        GrantAuthorization extends a grant with both the addresses of the grantee and granter.
+
+        It is used in genesis.proto and query.proto
+    cosmos.authz.v1beta1.QueryGranteeGrantsResponse:
+      type: object
+      properties:
+        grants:
+          type: array
+          items:
+            type: object
+            properties:
+              granter:
+                type: string
+              grantee:
+                type: string
+              authorization:
+                type: object
+                properties:
+                  type_url:
+                    type: string
+                    description: >-
+                      A URL/resource name that uniquely identifies the type of the serialized
+
+                      protocol buffer message. This string must contain at least
+
+                      one "/" character. The last segment of the URL's path must represent
+
+                      the fully qualified name of the type (as in
+
+                      `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                      (e.g., leading "." is not accepted).
+
+
+                      In practice, teams usually precompile into the binary all types that they
+
+                      expect it to use in the context of Any. However, for URLs which use the
+
+                      scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                      server that maps type URLs to message definitions as follows:
+
+
+                      * If no scheme is provided, `https` is assumed.
+
+                      * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                        value in binary format, or produce an error.
+                      * Applications are allowed to cache lookup results based on the
+
+                        URL, or have them precompiled into a binary to avoid any
+                        lookup. Therefore, binary compatibility needs to be preserved
+                        on changes to types. (Use versioned type names to manage
+                        breaking changes.)
+
+                      Note: this functionality is not currently available in the official
+
+                      protobuf release, and it is not used for type URLs beginning with
+
+                      type.googleapis.com.
+
+
+                      Schemes other than `http`, `https` (or the empty scheme) might be
+
+                      used with implementation specific semantics.
+                  value:
+                    type: string
+                    format: byte
+                    description: Must be a valid serialized protocol buffer of the above specified type.
+                description: >-
+                  `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                  URL that describes the type of the serialized message.
+
+
+                  Protobuf library provides support to pack/unpack Any values in the form
+
+                  of utility functions or additional generated methods of the Any type.
+
+
+                  Example 1: Pack and unpack a message in C++.
+
+
+                      Foo foo = ...;
+                      Any any;
+                      any.PackFrom(foo);
+                      ...
+                      if (any.UnpackTo(&foo)) {
+                        ...
+                      }
+
+                  Example 2: Pack and unpack a message in Java.
+
+
+                      Foo foo = ...;
+                      Any any = Any.pack(foo);
+                      ...
+                      if (any.is(Foo.class)) {
+                        foo = any.unpack(Foo.class);
+                      }
+
+                   Example 3: Pack and unpack a message in Python.
+
+                      foo = Foo(...)
+                      any = Any()
+                      any.Pack(foo)
+                      ...
+                      if any.Is(Foo.DESCRIPTOR):
+                        any.Unpack(foo)
+                        ...
+
+                   Example 4: Pack and unpack a message in Go
+
+                       foo := &pb.Foo{...}
+                       any, err := ptypes.MarshalAny(foo)
+                       ...
+                       foo := &pb.Foo{}
+                       if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                         ...
+                       }
+
+                  The pack methods provided by protobuf library will by default use
+
+                  'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                  methods only use the fully qualified type name after the last '/'
+
+                  in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                  name "y.z".
+
+
+
+                  JSON
+
+                  ====
+
+                  The JSON representation of an `Any` value uses the regular
+
+                  representation of the deserialized, embedded message, with an
+
+                  additional field `@type` which contains the type URL. Example:
+
+
+                      package google.profile;
+                      message Person {
+                        string first_name = 1;
+                        string last_name = 2;
+                      }
+
+                      {
+                        "@type": "type.googleapis.com/google.profile.Person",
+                        "firstName": <string>,
+                        "lastName": <string>
+                      }
+
+                  If the embedded message type is well-known and has a custom JSON
+
+                  representation, that representation will be embedded adding a field
+
+                  `value` which holds the custom JSON in addition to the `@type`
+
+                  field. Example (for message [google.protobuf.Duration][]):
+
+
+                      {
+                        "@type": "type.googleapis.com/google.protobuf.Duration",
+                        "value": "1.212s"
+                      }
+              expiration:
+                type: string
+                format: date-time
+            title: >-
+              GrantAuthorization extends a grant with both the addresses of the grantee and granter.
+
+              It is used in genesis.proto and query.proto
+          description: grants is a list of grants granted to the grantee.
+        pagination:
+          description: pagination defines an pagination for the response.
+          type: object
+          properties:
+            next_key:
+              type: string
+              format: byte
+              title: |-
+                next_key is the key to be passed to PageRequest.key to
+                query the next page most efficiently
+            total:
+              type: string
+              format: uint64
+              title: >-
+                total is total number of results available if PageRequest.count_total
+
+                was set, its value is undefined otherwise
+      description: QueryGranteeGrantsResponse is the response type for the Query/GranteeGrants RPC method.
+    cosmos.authz.v1beta1.QueryGranterGrantsResponse:
+      type: object
+      properties:
+        grants:
+          type: array
+          items:
+            type: object
+            properties:
+              granter:
+                type: string
+              grantee:
+                type: string
+              authorization:
+                type: object
+                properties:
+                  type_url:
+                    type: string
+                    description: >-
+                      A URL/resource name that uniquely identifies the type of the serialized
+
+                      protocol buffer message. This string must contain at least
+
+                      one "/" character. The last segment of the URL's path must represent
+
+                      the fully qualified name of the type (as in
+
+                      `path/google.protobuf.Duration`). The name should be in a canonical form
+
+                      (e.g., leading "." is not accepted).
+
+
+                      In practice, teams usually precompile into the binary all types that they
+
+                      expect it to use in the context of Any. However, for URLs which use the
+
+                      scheme `http`, `https`, or no scheme, one can optionally set up a type
+
+                      server that maps type URLs to message definitions as follows:
+
+
+                      * If no scheme is provided, `https` is assumed.
+
+                      * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+
+                        value in binary format, or produce an error.
+                      * Applications are allowed to cache lookup results based on the
+
+                        URL, or have them precompiled into a binary to avoid any
+                        lookup. Therefore, binary compatibility needs to be preserved
+                        on changes to types. (Use versioned type names to manage
+                        breaking changes.)
+
+                      Note: this functionality is not currently available in the official
+
+                      protobuf release, and it is not used for type URLs beginning with
+
+                      type.googleapis.com.
+
+
+                      Schemes other than `http`, `https` (or the empty scheme) might be
+
+                      used with implementation specific semantics.
+                  value:
+                    type: string
+                    format: byte
+                    description: Must be a valid serialized protocol buffer of the above specified type.
+                description: >-
+                  `Any` contains an arbitrary serialized protocol buffer message along with a
+
+                  URL that describes the type of the serialized message.
+
+
+                  Protobuf library provides support to pack/unpack Any values in the form
+
+                  of utility functions or additional generated methods of the Any type.
+
+
+                  Example 1: Pack and unpack a message in C++.
+
+
+                      Foo foo = ...;
+                      Any any;
+                      any.PackFrom(foo);
+                      ...
+                      if (any.UnpackTo(&foo)) {
+                        ...
+                      }
+
+                  Example 2: Pack and unpack a message in Java.
+
+
+                      Foo foo = ...;
+                      Any any = Any.pack(foo);
+                      ...
+                      if (any.is(Foo.class)) {
+                        foo = any.unpack(Foo.class);
+                      }
+
+                   Example 3: Pack and unpack a message in Python.
+
+                      foo = Foo(...)
+                      any = Any()
+                      any.Pack(foo)
+                      ...
+                      if any.Is(Foo.DESCRIPTOR):
+                        any.Unpack(foo)
+                        ...
+
+                   Example 4: Pack and unpack a message in Go
+
+                       foo := &pb.Foo{...}
+                       any, err := ptypes.MarshalAny(foo)
+                       ...
+                       foo := &pb.Foo{}
+                       if err := ptypes.UnmarshalAny(any, foo); err != nil {
+                         ...
+                       }
+
+                  The pack methods provided by protobuf library will by default use
+
+                  'type.googleapis.com/full.type.name' as the type URL and the unpack
+
+                  methods only use the fully qualified type name after the last '/'
+
+                  in the type URL, for example "foo.bar.com/x/y.z" will yield type
+
+                  name "y.z".
+
+
+
+                  JSON
+
+                  ====
+
+                  The JSON representation of an `Any` value uses the regular
+
+                  representation of the deserialized, embedded message, with an
+
+                  additional field `@type` which contains the type URL. Example:
+
+
+                      package google.profile;
+                      message Person {
+                        string first_name = 1;
+                        string last_name = 2;
+                      }
+
+                      {
+                        "@type": "type.googleapis.com/google.profile.Person",
+                        "firstName": <string>,
+                        "lastName": <string>
+                      }
+
+                  If the embedded message type is well-known and has a custom JSON
+
+                  representation, that representation will be embedded adding a field
+
+                  `value` which holds the custom JSON in addition to the `@type`
+
+                  field. Example (for message [google.protobuf.Duration][]):
+
+
+                      {
+                        "@type": "type.googleapis.com/google.protobuf.Duration",
+                        "value": "1.212s"
+                      }
+              expiration:
+                type: string
+                format: date-time
+            title: >-
+              GrantAuthorization extends a grant with both the addresses of the grantee and granter.
+
+              It is used in genesis.proto and query.proto
+          description: grants is a list of grants granted by the granter.
+        pagination:
+          description: pagination defines an pagination for the response.
+          type: object
+          properties:
+            next_key:
+              type: string
+              format: byte
+              title: |-
+                next_key is the key to be passed to PageRequest.key to
+                query the next page most efficiently
+            total:
+              type: string
+              format: uint64
+              title: >-
+                total is total number of results available if PageRequest.count_total
+
+                was set, its value is undefined otherwise
+      description: QueryGranterGrantsResponse is the response type for the Query/GranterGrants RPC method.
     cosmos.authz.v1beta1.QueryGrantsResponse:
       type: object
       properties:
@@ -40439,6 +43557,10 @@ components:
               type: string
               format: byte
               description: "Minimum proportion of Yes votes for an expedited proposal to pass. Default value: 0.67."
+            expedited_quorum:
+              type: string
+              format: byte
+              description: "Minimum proportion of Yes votes for an expedited proposal to reach quorum. Default value: 0.67."
       description: QueryParamsResponse is the response type for the Query/Params RPC method.
     cosmos.gov.v1beta1.QueryProposalResponse:
       type: object
@@ -41112,6 +44234,10 @@ components:
           type: string
           format: byte
           description: "Minimum proportion of Yes votes for an expedited proposal to pass. Default value: 0.67."
+        expedited_quorum:
+          type: string
+          format: byte
+          description: "Minimum proportion of Yes votes for an expedited proposal to reach quorum. Default value: 0.67."
       description: TallyParams defines the params for tallying votes on governance proposals.
     cosmos.gov.v1beta1.TallyResult:
       type: object
