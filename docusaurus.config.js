@@ -235,7 +235,7 @@ const config = {
             ],
           },
         ],
-        copyright: 'Copyright © Osmosis Labs since 2021. All rights reserved.',
+        copyright: 'Copyright © Osmosis Labs since 2023. All rights reserved.',
       },
       prism: {
         theme: lightCodeTheme,
