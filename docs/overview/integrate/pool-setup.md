@@ -218,10 +218,10 @@ Note that it is recommended to always first show the associated help/information
 Start with: `osmosisd tx cosmwasmpool create-pool -h`
 
 > create a cosmwasm pool
-
+> 
 > Usage:
 >   osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
-
+> 
 > Examples:
 > osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
 
@@ -241,7 +241,7 @@ Note that it is recommended to always first show the associated help/information
 Start with: `osmosisd tx wasm execute -h`
 
 > Execute a command on a wasm contract
-
+> 
 > Usage:
 >   osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]
 
