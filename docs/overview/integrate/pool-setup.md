@@ -45,14 +45,14 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-Sample pool JSON file contents for balancer:
-{
-        "weights": "4uatom,4osmo,2uakt",
-        "initial-deposit": "100uatom,5osmo,20uakt",
-        "swap-fee": "0.001",
-        "exit-fee": "0.001",
-        "future-governor": "168h"
-}
+> Sample pool JSON file contents for balancer:
+> {
+>         "weights": "4uatom,4osmo,2uakt",
+>         "initial-deposit": "100uatom,5osmo,20uakt",
+>         "swap-fee": "0.001",
+>         "exit-fee": "0.001",
+>         "future-governor": "168h"
+> }
 
 There are recommendations for creating balancer pools:
 - Number of tokens: For most cases, add only two constituent tokens for best user familiarity, even though the pool is capable of more
@@ -98,14 +98,14 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-For stableswap (demonstrating need for a 1:1000 scaling factor, see doc)
-{
-        "initial-deposit": "1000000uusdc,1000miliusdc",
-        "swap-fee": "0.001",
-        "exit-fee": "0.00",
-        "future-governor": "168h",
-        "scaling-factors": "1000,1"
-}
+> For stableswap (demonstrating need for a 1:1000 scaling factor, see doc)
+> {
+>         "initial-deposit": "1000000uusdc,1000miliusdc",
+>         "swap-fee": "0.001",
+>         "exit-fee": "0.00",
+>         "future-governor": "168h",
+>         "scaling-factors": "1000,1"
+> }
 
 See the recommended parameter values for Weighted pools above, as many of those recommendations apply to Stableswap pools as well.
 
@@ -126,13 +126,13 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx concentratedliquidity create-pool -h`
 
-denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module
-
-Usage:
-  osmosisd tx concentratedliquidity create-pool [denom-0] [denom-1] [tick-spacing] [spread-factor] [flags]
-
-Examples:
-osmosisd tx concentratedliquidity create-pool uion uosmo 100 0.01 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
+> denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module
+> 
+> Usage:
+>  osmosisd tx concentratedliquidity create-pool [denom-0] [denom-1] [tick-spacing] [spread-factor] [flags]
+> 
+> Examples:
+> osmosisd tx concentratedliquidity create-pool uion uosmo 100 0.01 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
 
 There are recommendations for creating CL pools:
 - As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd q concentratedliquidity params`
@@ -144,7 +144,7 @@ There are recommendations for creating CL pools:
   - ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB (kava.USDT)
   - ibc/EA1D43981D5C9A1C4AAEA9C23BB1D4FA126BA9BC7020A25E0AE4AA841EA25DC5 (wETH.axl)
   - ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F (WBTC.axl)
-And on Testnet (osmo-test-5) are:
+- ...and on Testnet (osmo-test-5) are:
   - uosmo (OSMO)
   - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
   - ibc/8E2FEFCBD754FA3C97411F0126B9EC76191BAA1B3959CB73CECF396A4037BBF0 (unregistered denom)
@@ -152,7 +152,7 @@ And on Testnet (osmo-test-5) are:
 - tick-spacing: Must be from a set of authorized values: 1, 10, 100, and 1000
   - It is recommended to use a tick spacing of 100, which nearly all current Supercharged pools use; this effectively sets positions as being definable at any `0.01%` interval.
   - Since passing each initialized tick carries a computational cost(, and therefore requires more gas), a smaller tick spacing will require higher transaction fees, while a larger tick spacing will have lower transaction fees (but less precise positions).
-- spread-factor: Basically the same thing as Swap Fee. Must be from a set of authorized values:
+- spread-factor: Mimicks the bid-ask spread, and is comparable to Swap Fee. Must be from a set of authorized values:
   - 0
   - 0.0001 (0.01%)
   - 0.0005 (0.05%)
@@ -170,13 +170,13 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx concentratedliquidity create-position -h`
 
-create or add to existing concentrated liquidity position
-
-Usage:
-  osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
-
-Examples:
-osmosisd tx concentratedliquidity create-position 1 "[-69082]" 69082 10000uosmo,10000uion 0 0 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
+> create or add to existing concentrated liquidity position
+> 
+> Usage:
+>   osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
+> 
+> Examples:
+> osmosisd tx concentratedliquidity create-position 1 "[-69082]" 69082 10000uosmo,10000uion 0 0 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
 
 For parameter values:
 - The first argument is the pool-id; all pools have a unique identifier
@@ -217,13 +217,13 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx cosmwasmpool create-pool -h`
 
-create a cosmwasm pool
+> create a cosmwasm pool
 
-Usage:
-  osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
+> Usage:
+>   osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
 
-Examples:
-osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
+> Examples:
+> osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
 
 For parameter values:
 - code-id: See the Contract Code section above for more about Code ID.
@@ -240,10 +240,10 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx wasm execute -h`
 
-Execute a command on a wasm contract
+> Execute a command on a wasm contract
 
-Usage:
-  osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]
+> Usage:
+>   osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]
 
 For parameter values:
 - contract_addr_bech32: the address of the contract specific to the pool
