@@ -89,7 +89,7 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Continue to approve the transaction with the connected wallet.
 
 1. Scaling factor is used to adjust for differences in token precision or relative value. (e.g., if 4 $QUARTER is meant to be equal in value to 1 $USDC, then we’d use a scaling factor of 4:1). The most common usage of scaling factor is to equate like-value tokens (e.g., USDC and DAI) whose minimum denominations have differing precision; e.g., USDC’s minimum denomination is micro-usdc (1,000,000 uusdc == 1 USDC) and DAI’s minimum denomination is atto-DAI (where 1,000,000,000,000,000,000 attodai == 1 DAI), so a scaling factor such as 10^6:10^18 (or 1:10^12) is used.
-2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factory controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
+2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factor controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
 
 #### CLI Command
 The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
