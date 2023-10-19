@@ -14,8 +14,6 @@ It is possible to add incentives to any combination of 1-day, 7-day, and 14-day 
 
 Currently, the only way to create an external incentive gauge is to run the [create-gauge command](../../osmosis-core/modules/incentives/#create-gauge) using CLI.
 
-Once external incentives have been added, note the gauge Id numbers and follow the procedure to [Add External Incentive Gauges onto the Osmosis Zone Pools page](../integrate/frontend.md#how-to-add-external-incentive-gauges-onto-the-osmosis-pools-page) to request to show the gauges on the [Osmosis Zone Pools page](https://app.osmosis.zone/pools).
-
 ### External Incentive Matching Program
 
 To incentivize projects to add external incentives, Osmosis governance voted to add the External Incentive Matching program. If on-chain governance approves to match external incentives for a pool, the incentives adjustment process measures the total dollar value of external incentives that have been added to the pool, matches the value in OSMO tokens, and releases that OSMO as extra liquidity mining rewards to all bonding gauges of the pool.
