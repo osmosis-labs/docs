@@ -32,11 +32,12 @@ Finally, add the Cosmos SDK to your workspace by selecting it in `File -> Add Fo
 Both Osmosis and the Cosmos SDK should now show up on the same VSCode page!
 
 ## Add Relevant VSCode Extensions
-Add the following extensions to your VSCode:
+These are the VSCode extensions that are in daily use by the teams working on Osmosis, you can feel free to mix and match, but these are what is in common use.  
+
 1. [Go by Google](https://marketplace.visualstudio.com/items?itemName=golang.Go)
 2. [VSCode Proto 3 by zxh404](https://marketplace.visualstudio.com/items?itemName=zxh404.vscode-proto3)
 3. [Git Lens by GitKraken](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-4. [Tabnine AI by Tabnine](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode)
+4. [Github Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilotvs)
 
 ## Vscode configuration
 
@@ -47,7 +48,7 @@ Go to: `VSCode -> Preferences -> settings -> Extensions -> Go`
 * Set `Go: Lint tool` to `golint`. You can use `staticcheck` if you'd like, it can just take lots of computational resources.
     * If you'd like to use the same configuration as osmosis code, use `golangci-lint` .
     * You will likely be prompted to install the linter you choose, click the install button.
-* Set `Go: Format tool` to one of the following: `goreturns` or `gofumports`
+* Set `Go: Format tool` to `gofumpt`
     * You will likely be prompted to install the formatter you choose, click the install button.
 * Check `Go: Test on Save`
 

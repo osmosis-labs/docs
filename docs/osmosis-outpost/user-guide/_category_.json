@@ -1,0 +1,8 @@
+{
+    "label": "User Guide",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "description": "How to use the frontend user interface of an Osmosis outpost."
+    }
+}

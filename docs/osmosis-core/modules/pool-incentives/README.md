@@ -229,13 +229,13 @@ An example output:
 Query externally incentivized gauges (gauges distributing rewards on top of the normal OSMO rewards)
 
 ```sh
-osmosisd query pool-incentives external-incentivized-gauges
+osmosisd query poolincentives external-incentivized-gauges
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query pool-incentives external-incentivized-gauges
+osmosisd query poolincentives external-incentivized-gauges
 ```
 
 An example output:
