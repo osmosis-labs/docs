@@ -18,7 +18,7 @@ provides a set of **components** and **templates** to allow any enabled chain
 to realize its own *frontend outpost*.
 
 If you want to create your own outpost platform, please follow the instruction
-available at the [Introduction page](./user-interface-setup/introduction).
+available at the [Overview page](./user-interface-setup/overview).
 
 ### 📡 Stay tuned 
 
