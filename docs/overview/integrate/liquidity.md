@@ -4,16 +4,16 @@ sidebar_position: 6
 
 # Source Initial Liquidity
 
-When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth of liquidity in a pool before it is listed onto [frontier.osmosis.zone](https://frontier.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
+When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth of liquidity in a pool before it is listed onto [osmosis.zone](https://app.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
 
 *Note that the Osmosis Foundation will **not** consider any OTC token transfers or loans*
 
 ## Add your own liquidity
-Buy at least USD $500-worth of your chosen Base Asset (OSMO (recommended), ATOM, or USDC) to pair with USD $500-worth of the new asset to create a 50/50 pool.
+Buy at least USD $500-worth of your chosen Quote Asset (USDC, USDT, DAI, WBTC, ETH, ATOM or OSMO) to pair with USD $500-worth of the new asset to create a 50/50 pool.
 
 Alternatively, find partners who would be willing to provide the base asset portion of the liquidity to the equivalent value of the new asset you are creating a pool for.
 
-Alternatively, it is possible to create an asymmetrically-weighted liquidity pool to reduce the requirement for the base asset (e.g. 80% FOO::20% OSMO). However,  50/50 pools are recommended.
+Alternatively, it is possible to create an asymmetrically-weighted liquidity pool to reduce the requirement for the base asset (e.g. 80% FOO::20% OSMO). However, 50/50 pools are recommended.
 
 ## Utilise StreamSwap to obtain initial liquidity
 [StreamSwap](https://streamswap.io/) is a protocol built on Osmosis that allows a token to be loaded into a stream and users to subscribe by depositing a second asset in order to receive a share of the token according to the proportion of the total deposit they contributed.
@@ -48,4 +48,3 @@ Regen Network worked with the Osmosis Community to swap ~133,000 OSMO for ~53,00
 # Additional Liquidity
 
 As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Incentives Docs page](../integrate/incentives.md) to learn more about how you can .
-
