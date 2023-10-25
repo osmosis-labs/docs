@@ -8,7 +8,7 @@ As IBC continues to explode – with more than 50 blockchains connected and doze
 
 ![](../../assets/welcome.png)
 
-The [Osmosis Ecosystem](https://osmosis.zone/ecosystem) is a suite of premier, DAO-gated dApps that are tightly integrated into the Osmosis AMMs and IBC routing capabilities. Most recently, [Mars Protocol](https://marsprotocol.io/) launched its lending and credit protocol on Osmosis, and dozens of other developer teams are building index tokens, options, perps, stops and limit orders, automated trading, yield vaults, NFTs, and more.
+The [Osmosis Ecosystem](https://osmosis.zone/ecosystem) is a suite of premier, DAO-gated dApps that are tightly integrated into the Osmosis AMMs and IBC routing capabilities. Dozens of developer teams are building index tokens, options, perps, stops and limit orders, automated trading, yield vaults, NFTs, and more.
 With new apps and features like stableswap, concentrated liquidity, rate-limiting, in-protocol MEV capture, and more going live all the time, Osmosis is continuing to expand its moat as the only full-service, cross-chain exchange and DeFi hub, one that rivals the smooth user experience of a CEX without compromising on the benefits of decentralized finance – self-custody, trust-minimized transactions, direct on-chain access, and privacy.
 
 
