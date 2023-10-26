@@ -164,6 +164,55 @@ type MsgAddToGauge struct {
 - Modify the `Gauge` record by adding `msg.Rewards`
 - Transfer the tokens from the `Owner` to incentives `ModuleAccount`.
 
+## Transactions
+
+### create-gauge
+
+Create a gauge to distribute rewards to users
+
+```sh
+osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
+```
+
+**Example 1**
+
+I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 1 day.
+I want to reward 100 AKT to this pool over 2 days (2 epochs). (50 rewarded on each day)
+I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
+
+```bash
+osmosisd tx incentives create-gauge gamm/pool/3 10000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 \
+--duration 24h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id osmosis-1
+```
+
+**Example 2**
+
+I want to make incentives for ATOM (ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2) that have been locked up for at least 1 week (168h).
+I want to reward 1000 JUNO (ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED) to ATOM holders perpetually (perpetually meaning I must add more tokens to this gauge myself every epoch). I want the reward to start dispersing immediately.
+
+```bash
+osmosisd tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 \
+1000000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED --perpetual --duration 168h \
+--from WALLET_NAME --chain-id osmosis-1
+```
+
+### add-to-gauge
+
+Add coins to a gauge previously created to distribute more rewards to users
+
+```sh
+osmosisd tx incentives add-to-gauge [gauge_id] [rewards] [flags]
+```
+
+**Example**
+
+I want to refill the gauge with 500 JUNO to a previously created gauge (gauge ID 1914) after the distribution.
+
+```bash
+osmosisd tx incentives add-to-gauge 1914 500000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED \
+--from WALLET_NAME --chain-id osmosis-1
+```
+
 ## Events
 
 The incentives module emits the following events:
@@ -236,62 +285,6 @@ epochs, the identifier is required to check if distribution should be
 done at `AfterEpochEnd` hook
 
 
-
-## Transactions
-
-### create-gauge
-
-Create a gauge to distribute rewards to users
-
-```sh
-osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
-```
-
-::: details Example 1
-
-I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 1 day.
-I want to reward 100 AKT to this pool over 2 days (2 epochs). (50 rewarded on each day)
-I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
-
-```bash
-osmosisd tx incentives create-gauge gamm/pool/3 10000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 \
---duration 24h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id osmosis-1
-```
-
-:::
-
-::: details Example 2
-
-I want to make incentives for ATOM (ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2) that have been locked up for at least 1 week (168h).
-I want to reward 1000 JUNO (ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED) to ATOM holders perpetually (perpetually meaning I must add more tokens to this gauge myself every epoch). I want the reward to start dispersing immediately.
-
-```bash
-osmosisd tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 \
-1000000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED --perpetual --duration 168h \
---from WALLET_NAME --chain-id osmosis-1
-```
-
-:::
-
-### add-to-gauge
-
-Add coins to a gauge previously created to distribute more rewards to users
-
-```sh
-osmosisd tx incentives add-to-gauge [gauge_id] [rewards] [flags]
-```
-
-::: details Example
-
-I want to refill the gauge with 500 JUNO to a previously created gauge (gauge ID 1914) after the distribution.
-
-```bash
-osmosisd tx incentives add-to-gauge 1914 500000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED \
---from WALLET_NAME --chain-id osmosis-1
-```
-
-:::
-
 ## Queries
 
 In this section we describe the queries required on grpc server.
@@ -326,7 +319,7 @@ Query active gauges
 osmosisd query incentives active-gauges [flags]
 ```
 
-::: details Example
+**Example**
 
 ```bash
 osmosisd query incentives active-gauges
@@ -364,9 +357,6 @@ pagination:
   total: "0"
 ...
 ```
-
-:::
-
 ### active-gauges-per-denom
 
 Query active gauges per denom
@@ -375,7 +365,7 @@ Query active gauges per denom
 osmosisd query incentives active-gauges-per-denom [denom] [flags]
 ```
 
-::: details Example
+**Example**
 
 Query all active gauges distributing incentives to holders of gamm/pool/341
 
@@ -416,8 +406,6 @@ pagination:
 ...
 ```
 
-:::
-
 ### distributed-coins
 
 Query coins distributed so far
@@ -426,7 +414,7 @@ Query coins distributed so far
 osmosisd query incentives distributed-coins [flags]
 ```
 
-::: details Example
+**Example**
 
 ```bash
 osmosisd query incentives distributed-coins
@@ -466,8 +454,6 @@ coins:
   denom: uosmo
 ```
 
-:::
-
 ### gauge-by-id
 
 Query gauge by id
@@ -476,7 +462,7 @@ Query gauge by id
 osmosisd query incentives gauge-by-id [id] [flags]
 ```
 
-::: details Example
+**Example**
 
 Query the incentive distribution for gauge ID 1:
 
@@ -504,8 +490,6 @@ gauge:
   start_time: "2021-06-19T04:30:19.082462364Z"
 ```
 
-:::
-
 ### gauges
 
 Query available gauges
@@ -514,7 +498,7 @@ Query available gauges
 osmosisd query incentives gauges [flags]
 ```
 
-::: details Example
+**Example**
 
 Query ALL gauges (by default the limit is 100, so here I will define a much larger number to output all gauges)
 
@@ -559,8 +543,6 @@ pagination:
 ...
 ```
 
-:::
-
 ### rewards-estimation
 
 Query rewards estimation
@@ -575,7 +557,7 @@ Query coins that is going to be distributed
 osmosisd query incentives to-distribute-coins [flags]
 ```
 
-::: details Example
+**Example**
 
 ```bash
 osmosisd query incentives to-distribute-coins
@@ -611,8 +593,6 @@ coins:
   denom: uosmo
 ```
 
-:::
-
 ### upcoming-gauges
 
 Query scheduled gauges (gauges whose `start_time` has not yet occurred)
@@ -621,7 +601,7 @@ Query scheduled gauges (gauges whose `start_time` has not yet occurred)
 osmosisd query incentives upcoming-gauges [flags]
 ```
 
-::: details Example
+**Example**
 
 ```bash
 osmosisd query incentives upcoming-gauges
@@ -646,5 +626,3 @@ Using this command, we will see the gauge we created earlier, among all other up
   start_time: "2021-12-21T10:10:02Z"
 ...
 ```
-
-:::

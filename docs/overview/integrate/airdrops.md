@@ -1,38 +1,43 @@
-# Airdrop Guide
+---
+sidebar_position: 2
+---
+
+# Airdrop Distribution
 
 ## Overview
 
-As more chains enter the cosmos ecosystem, more projects may desire to airdrop their tokens to osmosis accounts.
+As more chains enter the cosmos ecosystem, more projects may desire to airdrop their tokens to Osmosis accounts.
 
-This document lays out the process of creating a state export to derive all osmosis account addresses that exists at a specified height. We will then show how to further filter this list to also airdrop to accounts providing liquidity to specific osmosis pools.
+This document lays out the process of creating a state export to derive all Osmosis account addresses that existed at a specified height. We will then show how to further filter this list to also airdrop to accounts providing liquidity to specific Osmosis pools.
 
 ### Prerequisites
-1. Know what height you want to take the snapshot at
+1. Know what block height you want to take the snapshot at
 2. Know the pool IDs if looking to airdrop to accounts LPing to specific pools
-3. Run an osmosis node with enough state history to state export at the desired height
-
+3. Run an Osmosis node with enough state history to state export at the desired height
 
 ### Choosing a block height
-The current Osmosis block height can be found on the [Mintscan blocks page.](https://www.mintscan.io/osmosis/blocks)To find the date/time of a specific block height in the past, type the desired block height in the Mintscan search bar and press enter. Here is the Mintscan block height page for block 2138101:
+The current Osmosis block height can be found on the [Mintscan blocks page](https://www.mintscan.io/osmosis/blocks). To find the date/time of a specific block height in the past, type the desired block height in the Mintscan search bar and press enter. Here is the Mintscan block height page for block 2138101:
 
 ![](../../assets/mintscan_height.png)
 
 In this example, block height 2138101 happened on 25 November 2021 at 12:59:55AM local time.
 
+Change this value until you have a block height at the time you want to perform the snapshot.
+
 ### Choosing pool IDs
-If your organization also wants to airdrop tokens to liquidity providers of specific osmosis pools, you must first determine the pool IDs of the pools in question. The easiest way to find the pool ID is to go to the [info.osmosis.zone pools page ](https://info.osmosis.zone/pools)and note the number in the furthest left column for all the desired pools. You will need these pool IDs later.
+If your organization also wants to airdrop tokens to liquidity providers of specific Osmosis pools, you must first determine the pool IDs of the pools in question. The easiest way to find the pool ID is to go to the [info.osmosis.zone pools page](https://info.osmosis.zone/pools) and note the number in the furthest left column for all the desired pools. You will need these pool IDs later.
 
 ![](../../assets/osmosis_pools.png)
 
 
-### Determine osmosis node type requirement
-First, determine how far in the past the desired block height is from the current time. If the desired block height is within the last seven days, you can make the state export with a default snapshot node. Anything further in the past more than likely needs to be done by setting up a node with an archive snapshot.
+### Determine Osmosis node type requirement
+First, determine how far in the past the desired block height is from the current time. If the desired block height is within the last seven days, you can make the state export with a default snapshot node. Anything further in the past more than likely needs to be done by setting up a node with an archive snapshot as the data for the block in question may not be present due to pruning.
 
 In our example, block height 2138101 is many months in the past, so we must use an archive snapshot.
 
 
-### Run an osmosis node
-To set up either a default or archive node, either use the osmosis bash installer [located here](https://get.osmosis.zone/)OR follow the instructions step by step [starting here.](../../osmosis-core/osmosisd)Ensure you follow the instructions for mainnet and set up using either the archive or default snapshot as determined above. Do not use state sync for this situation.
+### Run an Osmosis node
+To set up either a default or archive node, either use the Osmosis bash installer [located here](https://get.osmosis.zone/) OR follow the instructions step by step [starting here](../../osmosis-core/osmosisd). Ensure you follow the instructions for mainnet and set up using either the archive or default snapshot as determined above. Do not use state sync for this situation.
 
 
 
@@ -66,14 +71,12 @@ osmosisd export 2138101 > state_export.json
 
 This process may take 30 minutes or more.
 
-::: warning NOTE
-Some cosmos sdk versions write to STDERR instead of STDOUT. If the above command does not work for you, try to replace the > with 2>
+NOTE: Some cosmos sdk versions write to STDERR instead of STDOUT. If the above command does not work for you, try to replace the > with 2>
 As of this writing, v5 and later will require 2> while anything before v5 will just use >
-:::
 
 
 ### Export accounts in JSON format
-Now that you have a state export file with the name `state_export.json`, the last step needed is to export the accounts and respective balances from the state export. To get all existing osmosis accounts on the height the state export was taken and write it to a file called `balances.json`:
+Now that you have a state export file with the name `state_export.json`, the last step needed is to export the accounts and respective balances from the state export. To get all existing Osmosis accounts on the height the state export was taken and write it to a file called `balances.json`:
 
 ```sh
 osmosisd export-derive-balances state_export.json balances.json
