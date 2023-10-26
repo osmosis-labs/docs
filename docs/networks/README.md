@@ -5,24 +5,16 @@ Recommended API Endpoints and Frontend URLs for Osmosis Network, Chain Registry,
 These following API's are recommended for development purposes. For maximun control and reliability it's recommended to run your own node. This can be easility accomplsihed by using the get.osmosis.zone installer. 
 
 
-:::warning Important Notice
-### 
-> **On June 15th, 2023**, `osmo-test-4` will be soft deleted. The new official testnet will be `osmo-test-5`. 
->
-> `osmo-test-5` is not a fork of mainnet, it has started with no state.
->
-> Devnet and edgenet are now available at https://github.com/osmosis-labs/testnets
-:::
+|        | Mainnet                                     | Testnet                               |
+|---------------|---------------------------------------------|--------------------------------------------|
+| Chain ID      | osmosis-1                                   | osmo-test-5                                |
+| Endpoints     | gRPC endpoint: `grpc.osmosis.zone:9090`<br/> gRPC-gateway: `https://rpc.osmosis.zone:443` <br/> LCD endpoint: `https://lcd.osmosis.zone` | gRPC endpoint: `grpc.osmotest5.osmosis.zone` <br/> gRPC-gateway: `https://rpc.osmotest5.osmosis.zone`<br/> LCD endpoint: `https://lcd.osmotest5.osmosis.zone/` |
+| Explorer      | https://lcd.osmosis.zone                   | https://explorer.osmotest5.osmosis.zone/   |
+| Utilities  | ...                                         | [https://explorer.osmotest5.osmosis.zone/](https://osmotest5.osmosis.zone/) |
+| API Reference | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) |
+| Swagger       | [LCD Swagger](https://lcd.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd.osmotest5.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) |
+| Faucet        | Not Available                                   | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |
 
-|        | Mainnet                                     | Testnet (New)                              | Testnet (Legacy)                          |
-|---------------|---------------------------------------------|--------------------------------------------|-------------------------------------------|
-| Chain ID      | osmosis-1                                   | osmo-test-5                                | osmo-test-4                               |
-| Endpoints     | gRPC endpoint: `grpc.osmosis.zone:9090`<br/> gRPC-gateway: `https://rpc.osmosis.zone:443` <br/> LCD endpoint: `https://lcd.osmosis.zone` | gRPC endpoint: `grpc.osmotest5.osmosis.zone` <br/> gRPC-gateway: `https://rpc.osmotest5.osmosis.zone`<br/> LCD endpoint: `https://lcd.osmotest5.osmosis.zone/` | gRPC endpoint: `grpc-test.osmosis.zone:443` <br/>gRPC-gateway:  `https://rpc.testnet.osmosis.zone:443`<br/> LCD endpoint: `https://lcd-test.osmosis.zone` |
-| Explorer      | https://lcd.osmosis.zone                   | https://explorer.osmotest5.osmosis.zone/   | https://lcd-test.osmosis.zone             |
-| Utilities  | ...                                         | [https://explorer.osmotest5.osmosis.zone/](https://osmotest5.osmosis.zone/) | ...                                      |
-| API Reference | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) | [RPC API Reference](/api)<br/> [LCD API Reference](/api/?v=LCD) |
-| Swagger       | [LCD Swagger](https://lcd.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd.osmotest5.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) | [LCD Swagger](https://lcd-test.osmosis.zone/swagger/)<br/> [RPC Swagger](https://rpc-docs.osmosis.zone/) |
-| Faucet        | Not Available                                   | [faucet.osmosis.zone](https://faucet.osmosis.zone/) |  Discontinued |
 
 ## Networks
 Osmosis now offers several testnets and devnets, to learn more go to the https://github.com/osmosis-labs/testnets repo.
