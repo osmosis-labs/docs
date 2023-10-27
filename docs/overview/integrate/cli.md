@@ -2,6 +2,7 @@
 sidebar_position: 9
 ---
 
+# Interact with CLI
 
 ## Using the CLI
 
