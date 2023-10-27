@@ -106,7 +106,7 @@ The command above creates a local key-pair that is not yet registered on the cha
 # Check that the testaccount account did receive the tokens.
 osmosisd query bank balances $MYACCOUNT
 ```
-![](../assets/query-balance.png)
+![](../../assets/asset_list.png)
 
 For more information about querying osmosisd via the CLI visit the [Cosmos documentation](https://hub.cosmos.network/main/hub-tutorials/gaiad.html).
 
