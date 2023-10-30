@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# Interacting with the gRPC Server
+# Interact with gRPC Server
 
 As described on the [Network page](../../networks). A gRPC endpoint is availble on the public Osmosis nodes so that you can start playing and intreacting with it right away.
 
