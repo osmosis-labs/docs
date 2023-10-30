@@ -1,30 +1,8 @@
 ---
-title: Interacting with gRPC
-sidebar_position: 3
+sidebar_position: 10
 ---
 
-import {
-  HomepageCard as Card,
-  HomepageSection as Section,
-} from '../../../src/components/HomepageComponents';
-import Link from '@docusaurus/Link';
-import {
-  ChainIcon,
-  IDEIcon,
-  TerminalIcon,
-  ModulesIcon,
-  RelayerIcon,
-  AssetIcon,
-  Telescope,
-  Osmojs,
-  Createapp,
-  Cosmoskit,
-  Tscodegen,
-  Chain
-} from '../../../src/icons';
-
-
-## Interacting with the gRPC Server
+# Interacting with the gRPC Server
 
 As described on the [Network page](../../networks). A gRPC endpoint is availble on the public Osmosis nodes so that you can start playing and intreacting with it right away.
 
