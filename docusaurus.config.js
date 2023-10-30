@@ -164,7 +164,7 @@ const config = {
             position: 'left',
           },
           {
-            label: 'API Reference',
+            label: 'Endpoints',
             to: 'apis',
             position: 'right',
           },
