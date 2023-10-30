@@ -1,0 +1,13 @@
+{
+  "position": 5,
+  "label": "Endpoints",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "title": "Endpoints"
+  },
+  "customProps": {
+    "description": "Listing different endpoints available for different sources for Osmosis"
+  }
+}
