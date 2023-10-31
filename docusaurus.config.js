@@ -169,11 +169,6 @@ const config = {
             position: 'left',
           },
           {
-            label: 'Endpoints',
-            to: 'apis',
-            position: 'right',
-          },
-          {
             href: 'https://github.com/osmosis-labs',
             className: 'pseudo-icon github-icon',
             position: 'right',
