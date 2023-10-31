@@ -141,11 +141,6 @@ const config = {
             position: 'left',
           },
           {
-            label: 'Endpoints',
-            to: 'overview/endpoints',
-            position: 'left',
-          },
-          {
             label: 'Develop',
             to: 'osmosis-core',
             position: 'right',
@@ -166,6 +161,11 @@ const config = {
           {
             label: 'Validate',
             to: 'overview/validate',
+            position: 'left',
+          },
+          {
+            label: 'Endpoints',
+            to: 'overview/endpoints',
             position: 'left',
           },
           {
