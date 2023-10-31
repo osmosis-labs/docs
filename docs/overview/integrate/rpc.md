@@ -2,7 +2,7 @@
 sidebar_position: 12
 ---
 
-# Interacting with RPC endpoints
+# Interact with RPC endpoints
 
 As shown on the RPC specifications, there are different endpoints to communicate with the Osmosis chain. Unlike the LCD rest api, the RPC endpoints provide genereic endpoints to communicate with the various modules available. For example the [ABCI Query](/api?v=RPC#/operations/abci_query) allows you the query different data from Osmosis.
 
