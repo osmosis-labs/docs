@@ -31,8 +31,6 @@ The Osmosis front-end can be accessed by anyone, and there are several places wh
 | Legacy Testnet | [testnet.osmosis.zone](https://testnet.osmosis.zone/) | osmo-test-4  | [Ping.pub](https://explorer.osmotest5.osmosis.zone/) | None |
 
 
-
-
 ### API Docs
 
 Please visit the [API reference](/api) to interact with these endpoints. 

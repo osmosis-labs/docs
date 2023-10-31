@@ -16,8 +16,35 @@ These following API's are recommended for development purposes. For maximun cont
 - gRPC-gateway: [https://rpc.osmosis.zone:443](https://rpc.osmosis.zone:443)
 - lcd-endpoint: [https://lcd.osmosis.zone](https://lcd.osmosis.zone)
 
+Swagger for RPC and LCD: 
 - rpc swagger: [https://rpc-docs.osmosis.zone/](https://rpc-docs.osmosis.zone/)
 - lcd swagger: [https://lcd.osmosis.zone/swagger/](https://lcd.osmosis.zone/swagger/)
 
+Please visit [API Playground](/api) for more docs and to try interacting with these endpoints.
 
 For more information how to integrate with each endpoints, please refer to the [integrate section](/overview/integrate)
+
+## Historical Data
+
+Osmosis keeps indexed chain data in a separate endpoint:
+- [api.osmosis.zone](api.osmosis.zone)
+
+This endpoint provides processed data such as: 
+- [historical token price chart](https://api-osmosis.imperator.co/swagger/#/tokens/token_price_historical_chart_v2)
+- [historical liquidity chart](https://api-osmosis.imperator.co/swagger/#/liquidity/liquidity_historical_all_chart)
+- [APR](https://api-osmosis.imperator.co/swagger/#/apr)
+- [Data for Trading View](https://api-osmosis.imperator.co/swagger/#/tradingview)
+
+and much more!
+
+Please visit [Swagger](https://api-osmosis.imperator.co/swagger/#/) to see the full view of APIs supported.
+
+
+## Testnet Networks
+
+Osmosis now offers several testnets and devnets, for endpoints and information on different endpoints across different network, please refer to https://github.com/osmosis-labs/testnets repo.
+
+## Frontend
+ 
+Although we are providing a front end in [app.osmosis.zone](app.osmosis.zone), front-ends can be accessed and hosted by anyone, and there are several places where it can be found. Visit [FrontEnd URLs page](/) for more information of different front ends.
+
