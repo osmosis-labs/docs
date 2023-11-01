@@ -31,6 +31,6 @@ Further details can be seen in the [Superfluid module specifications](/osmosis-c
 
 ## Other Fees
 The OSMO token is required as fees for several tasks on chain to prevent spam and encourage considered usage of features. All fees paid go to the Community Pool.
-Creating a pool: 1000 OSMO
+Creating a pool: 400 OSMO
 Adding External Incentives to a pool: 50 OSMO
 Topping up External Incentives on an existing stream: 25 OSMO
