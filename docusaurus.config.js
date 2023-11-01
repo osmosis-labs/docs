@@ -158,7 +158,7 @@ const config = {
             position: 'left',
           },
           {
-            label: 'Validate',
+            label: 'Validate & Run a Node',
             to: 'overview/validate',
             position: 'left',
           },
