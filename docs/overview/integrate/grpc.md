@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Interact with gRPC Server
 
-As described on the [Network page](../../networks). A gRPC endpoint is availble on the public Osmosis nodes so that you can start playing and intreacting with it right away.
+A gRPC endpoint is availble on the public Osmosis nodes so that you can start playing and intreacting with it right away.
 
 ## Enabling gRPC on a node
 If you are running your own node. It's also possible to enable them by editing  `~/.osmosisd/config/app.toml`: 
