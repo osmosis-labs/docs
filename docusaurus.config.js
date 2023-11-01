@@ -46,7 +46,6 @@ const SECTIONS = [
   defineSection('telescope'),
   defineSection('osmojs'),
   defineSection('overview'),
-  defineSection('apis'),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
