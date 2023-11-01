@@ -80,9 +80,9 @@ git checkout v11.0.1
 make install
 ```
 :::tip Note
-If you came from the testnet node instruction, [click here to return](../networks/join-testnet)
+If you came from the testnet node instruction, [click here to return](../overview/validate)
 
-If you came from the mainnet node instruction, [click here to return](../networks/join-mainnet)
+If you came from the mainnet node instruction, [click here to return](../overview/validate)
 :::
 
 

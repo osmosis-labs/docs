@@ -179,7 +179,7 @@ osmosisd tx gov submit-proposal software-upgrade [proposal-file] --from WALLET_A
 Update Osmosis to V11:
 
 ```bash
-osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --upgrade-info https://raw.githubusercontent.com/osmosis-labs/osmosis/main/networks/osmosis-1/upgrades/v11/mainnet/upgrade_11_binaries.json  --title="Osmosis v11 Upgrade" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --upgrade-info https://raw.githubusercontent.com/osmosis-labs/osmosis/main//osmosis-1/upgrades/v11/mainnet/upgrade_11_binaries.json  --title="Osmosis v11 Upgrade" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (cancel upgrade)

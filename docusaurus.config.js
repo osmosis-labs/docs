@@ -39,7 +39,6 @@ const SECTIONS = [
   defineSection('osmosis-core'),
   defineSection('osmosis-outpost'),
   defineSection('localosmosis'),
-  defineSection('networks'),
   defineSection('cosmwasm'),
   defineSection('frontend'),
   defineSection('beaker'),
@@ -145,12 +144,6 @@ const config = {
             position: 'right',
             // className: 'new-badge',
             activeBaseRegex: '(.*ui-kit|.*web-core)',
-          },
-          {
-            label: 'Networks',
-            to: '/networks',
-            position: 'right',
-            // className: 'new-badge',
           },
           {
             label: 'Integrate',
