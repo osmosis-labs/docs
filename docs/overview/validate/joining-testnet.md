@@ -1,4 +1,4 @@
-# Joining Testnet
+# Running a Node on Testnet
 
 ## Osmosis Installer
 

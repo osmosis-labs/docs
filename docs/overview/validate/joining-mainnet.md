@@ -1,6 +1,6 @@
 
 
-# Joining Mainnet
+# Running a Node on Mainnet
 
 ## Osmosis Installer
 

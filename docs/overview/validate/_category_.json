@@ -1,11 +1,10 @@
 {
   "position": 4,
-  "label": "Validate",
+  "label": "Validate & Run your Node",
   "collapsible": true,
   "collapsed": true,
   "className": "red",
   "link": {
-  
     "title": "Validator Guides"
   },
   "customProps": {
