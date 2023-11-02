@@ -16,7 +16,7 @@ If running many nodes on a single VM, [ensure your open files limit is increased
 
 ## Prerequisites
 
-Before beginning, ensure you have an osmosis node running in the background of the same machine you intend to relay on. Follow [this guide](../../networks/join-mainnet) or [use the Osmosis installer](https://get.osmosis.zone) to set up an Osmosis node if you have not already.
+Before beginning, ensure you have an osmosis node running in the background of the same machine you intend to relay on. Follow [this guide](../../overview/validate) or [use the Osmosis installer](https://get.osmosis.zone) to set up an Osmosis node if you have not already.
 
 In this guide, we will be relaying between Osmosis (channel-0) and Cosmos Hub (channel-141). When setting up your Cosmos and Osmosis full nodes, be sure to offset the ports being used in both the app.toml and config.toml files of the respective chains (I will show how to do this below).
 

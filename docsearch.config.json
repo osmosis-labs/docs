@@ -1,6 +1,8 @@
 {
   "index_name": "Docs",
-  "sitemap_urls": ["https://docs.osmosis.zone/sitemap.xml"],
+  "sitemap_urls": [
+    "https://docs.osmosis.zone/sitemap.xml"
+  ],
   "start_urls": [
     {
       "url": "https://docs.osmosis.zone/guides",
@@ -28,16 +30,10 @@
       "selectors_key": "localosmosis"
     },
     {
-      "url": "https://docs.osmosis.zone/networks",
-      "tags": "networks",
-      "selectors_key": "networks"
-    },
-    {
       "url": "https://docs.osmosis.zone/beaker",
       "tags": "beaker",
       "selectors_key": "beaker"
     },
-
     {
       "url": "https://docs.osmosis.zone/telescope",
       "tags": "telescope",
@@ -56,7 +52,6 @@
     "https://docs.osmosis.zone"
   ],
   "stop_urls": [],
-
   "selectors": {
     "default": {
       "lvl0": {
@@ -171,11 +166,15 @@
       "text": "article p, article li, article td:last-child"
     }
   },
-
   "strip_chars": " .,;:#",
   "custom_settings": {
     "separatorsToIndex": "_",
-    "attributesForFaceting": ["language", "version", "type", "docusaurus_tag"],
+    "attributesForFaceting": [
+      "language",
+      "version",
+      "type",
+      "docusaurus_tag"
+    ],
     "attributesToRetrieve": [
       "hierarchy",
       "content",

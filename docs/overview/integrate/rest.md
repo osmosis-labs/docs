@@ -1,9 +1,8 @@
 ---
-title: Rest Endpoints
-sidebar_position: 4
+sidebar_position: 11
 ---
 
-## Using the REST Endpoints
+# Interact with REST
 
 All gRPC services on the Cosmos SDK  and Osmosis are made available for more convenient REST-based queries through gRPC-gateway. The format of the URL path is based on the Protobuf service method's full-qualified name, but may contain small customizations so that final URLs look more idiomatic. For example, the REST endpoint for the `cosmos.bank.v1beta1.Query/AllBalances` method is `GET /cosmos/bank/v1beta1/balances/{address}`. Request arguments are passed as query parameters.
 

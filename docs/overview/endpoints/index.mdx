@@ -1,0 +1,106 @@
+---
+title: Overview
+sidebar_position: 1
+---
+import DocCardList from '@theme/DocCardList';
+
+# Endpoints
+
+This section serves the purpose of different endpoints for different projects on top of Osmosis.
+
+## Table of Contents
+[Endpoints](#endpoints)
+  - [Mainnet Chain Endpoints](#mainnet-chain-endpoints)
+  - [Historical Data](#historical-data)
+  - [Testnet Networks](#testnet-networks)
+  - [Frontend](#frontend)
+  - [Chain Registry](#chain-registry)
+  - [Explorers](#explorers)
+    - [Mainnet](#mainnet)
+    - [Testnet](#testnet)
+  - [Infrastructure Providers](#infrastructure-providers)
+
+## Mainnet Chain Endpoints
+
+These following API's are recommended for development purposes. For maximun control and reliability it's recommended to run your own node. This can be easility accomplsihed by using the get.osmosis.zone installer.
+
+- gRPC endpoint: [grpc.osmosis.zone:9090](grpc.osmosis.zone:9090)
+- gRPC-gateway: [https://rpc.osmosis.zone:443](https://rpc.osmosis.zone:443)
+- lcd-endpoint: [https://lcd.osmosis.zone](https://lcd.osmosis.zone)
+
+Swagger for RPC and LCD: 
+- rpc swagger: [https://rpc-docs.osmosis.zone/](https://rpc-docs.osmosis.zone/)
+- lcd swagger: [https://lcd.osmosis.zone/swagger/](https://lcd.osmosis.zone/swagger/)
+
+Please visit [API Playground](/api) for more docs and to try interacting with these endpoints.
+
+For more information how to integrate with each endpoints, please refer to the [integrate section](/overview/integrate)
+
+## Historical Data
+
+Osmosis keeps indexed chain data in a separate endpoint:
+- [api.osmosis.zone](api.osmosis.zone)
+
+This endpoint provides processed data such as: 
+- [historical token price chart](https://api-osmosis.imperator.co/swagger/#/tokens/token_price_historical_chart_v2)
+- [historical liquidity chart](https://api-osmosis.imperator.co/swagger/#/liquidity/liquidity_historical_all_chart)
+- [APR](https://api-osmosis.imperator.co/swagger/#/apr)
+- [Data for Trading View](https://api-osmosis.imperator.co/swagger/#/tradingview)
+
+and much more!
+
+Please visit [Swagger](https://api-osmosis.imperator.co/swagger/#/) to see the full view of APIs supported.
+
+
+## Testnet Networks
+
+Osmosis now offers several testnets and devnets, for endpoints and information on different endpoints across different network, please refer to https://github.com/osmosis-labs/testnets repo.
+
+## Frontend
+ 
+Osmosis provides front-end for mainnet and testnet in the following endpoints:
+
+- Mainnet: [app.osmosis.zone](https://app.osmosis.zone/)
+- Testnet: [testnet.osmosis.zone](https://testnet.osmosis.zone/)
+
+
+Additionally, you can run the Osmosis front-end on your own computer by following the instructions provided [ here](https://docs.osmosis.zone/frontend/osmosis-frontend)
+
+
+## Chain Registry
+
+Chain registry repo contains a chain.json and assetlist.json for a number of cosmos-sdk based chains. A chain.json contains data that makes it easy to start running or interacting with a node.
+- [https://github.com/cosmos/chain-registry](https://github.com/cosmos/chain-registry)
+
+## Explorers
+
+The following is a list of explorers available.
+
+#### Mainnet
+
+- Mintscan: [https://www.mintscan.io/osmosis](https://www.mintscan.io/osmosis)
+- Bigdipper: [https://osmosis.bigdipper.live/](https://osmosis.bigdipper.live/)
+- Ping.pub: [https://ping.pub/osmosis](https://ping.pub/osmosis)
+- Celatone (Contract Explorer): [https://celatone.osmosis.zone/mainnet](https://celatone.osmosis.zone/mainnet)
+
+#### Testnet
+
+- Mintscan: [https://testnet.mintscan.io/osmosis-testnet](https://testnet.mintscan.io/osmosis-testnet)
+- Ping.pub: [https://testnet.ping.pub/osmosis](https://testnet.ping.pub/osmosis)
+- Celatone (Contract Explorer): [https://celatone.osmosis.zone/testnet]https://celatone.osmosis.zone/testnet
+
+
+
+## Infrastructure Providers
+
+- [All That Node](https://www.allthatnode.com/osmosis.dsrv) : `https://www.allthatnode.com/osmosis.dsrv`
+  - Features
+    - Unlimited access to archive data
+    - Faucet available
+    - Automated updates
+    - Technical support
+
+- [DataHub](https://datahub.figment.io) : `https://datahub.figment.io`
+
+- [OnFinality](https://onfinality.io/) is a blockchain infrastructure platform that saves Web3 builders time and makes their lives easier. OnFinality delivers scalable API endpoints for the biggest blockchain networks and empowers developers to automatically test, deploy, scale and monitor their own blockchain nodes in minutes. OnFinality offers free and premium (Pay-as-you-go or subsription-based) API [services for Osmosis](https://onfinality.io/networks/osmosis). Public RPC Endpoint for Osmosis: `https://osmosis.api.onfinality.io/public`
+

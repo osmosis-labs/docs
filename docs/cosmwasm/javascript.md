@@ -49,7 +49,7 @@ main();
 ```
 
 :: tip
-You can also connect to the mainnet by replacing rpcEndpoint to https://rpc.osmosis.zone/ [Learn more here.](../networks/)
+You can also connect to the mainnet by replacing rpcEndpoint to https://rpc.osmosis.zone/ 
 ::
 
 ## Run it
