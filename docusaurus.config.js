@@ -264,7 +264,7 @@ const config = {
       "data-project-name": "Osmosis",
       "data-project-color": "#7900B4",
       "data-project-logo":
-        "https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fosmo.svg&w=64&q=75",
+        "https://app.osmosis.zone/tokens/osmo.svg",
       async: true,
     },
   ],
