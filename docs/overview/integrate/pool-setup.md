@@ -15,7 +15,7 @@ There are several different types of liquidity pools on Osmosis, each with uniqu
 - Supercharged Liquidity (Concentrated Liquidity) Pools, and
 - CosmWasm Pools (e.g., Transmuter and Alloyed Assets).
 
-Note: As of Osmosis v19, the Pool Creation Fee is 1000 OSMO
+Note: As of [Proposal 669](https://www.mintscan.io/osmosis/proposals/669), the Pool Creation Fee is 400 OSMO
 
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.
 
@@ -39,7 +39,7 @@ To create a Classic Pool on Osmosis via the Osmosis Zone app:
 - Enter a >0 amount of each token to add to the pool upon creation
 - Next
 - Set Swap Fee
-- Tick ‘I understand that creating a new pool will cost 1000 OSMO
+- Tick ‘I understand that creating a new pool will cost 400 OSMO
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
 #### CLI Command
@@ -88,7 +88,7 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Next
 - Set Swap Fee
 - Set scaling factor controller (optional)<sup>2</sup>
-- Tick ‘I understand that creating a new pool will cost 1000 OSMO
+- Tick ‘I understand that creating a new pool will cost 400 OSMO
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
 
