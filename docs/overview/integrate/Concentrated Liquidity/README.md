@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Overview
+# Concentrated Liquidity
 
 ## Index
 - [Background](#background)
