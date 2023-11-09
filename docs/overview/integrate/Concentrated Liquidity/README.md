@@ -74,11 +74,9 @@ Please use this network instead of the edgenet to perform testing. It is similar
 
 - It's a state exported testnet that has passed through the v16 upgrade handler.
 - The CL pool creation flag is set to true.
-- There is 1 CL pool created via the upgrade handler (osmo <> dai).
+- There is 1 CL pool created via the upgrade handler (osmo,dai pool).
 - All the lo-test* localosmosis test accounts have funds for testing (both osmo and dai). Refer to [this link](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#local)
 
-## Clients
-WIP
 
 
 ## Concentrated Liquidity Module Messages
