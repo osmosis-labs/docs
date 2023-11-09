@@ -4,16 +4,35 @@ sidebar_position: 3
 
 # Concentrated Liquidity
 
+
 ## Index
 - [Concentrated Liquidity](#concentrated-liquidity)
   - [Background](#background)
+  - [Network Information](#network-information)
+    - [Endpoints](#endpoints)
+    - [Chain Information](#chain-information)
+  - [Clients](#clients)
+  - [Notable Features](#notable-features)
+  - [Concentrated Liquidity Module Messages](#concentrated-liquidity-module-messages)
+    - [`MsgCreatePosition`](#msgcreateposition)
+    - [`MsgWithdrawPosition`](#msgwithdrawposition)
+    - [`MsgCreatePool`](#msgcreatepool)
+    - [`MsgCollectSpreadRewards`](#msgcollectspreadrewards)
+    - [`MsgFungifyChargedPositions`](#msgfungifychargedpositions)
 - [Our Implementation](#our-implementation)
 - [TWAP Integration](#twap-integration)
+- [Parameters](#parameters)
+- [Listeners](#listeners)
+  - [`AfterConcentratedPoolCreated`](#afterconcentratedpoolcreated)
+  - [`AfterInitialPoolPositionCreated`](#afterinitialpoolpositioncreated)
+  - [`AfterLastPoolPositionRemoved`](#afterlastpoolpositionremoved)
+  - [`AfterConcentratedPoolSwap`](#afterconcentratedpoolswap)
+- [State and Keys](#state-and-keys)
+  - [Incentive Records](#incentive-records)
 - [Precision Issues With Price](#precision-issues-with-price)
   - [Solution](#solution)
 - [Terminology](#terminology)
 - [External Sources](#external-sources)
-
 
 ## Background
 
