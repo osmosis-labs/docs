@@ -241,65 +241,80 @@ For parameter values:
   - If you don't know the pool ID is, to find out which is token-0, and which is token-1, use the query: `osmosisd query concentratedliquidity pools`, and search for the pool among the returned list of pools. Note: this query command paginates, so if the pool ID you were expected is not returned, append `--page N` (.e.g., `--page 2`) to paginate through all pools.
 
 ## CosmWasm Pools
+
 CosmWasm Pools are pools written with CosmWasm code and implement custom functionality. For example, a CosmWasm pool could be used to establish a floor price for an NFT. A couple examples of types of CosmWasm pools that are important currently are: the Transmuter and Alloyed Asset Pool types.
 
 ### Contract Code
-All CosmWasm pools must refer to a Contract via a Code ID. The CosmWasm contract defines the logic of how the pool works, and must be approved for upload and whitelisting by Osmosis governance via a UploadCosmWasmPoolCodeAndWhiteListProposal before any pool instantiating that logic can be created. Instructions on how to write and upload Contract Code is out of scope for the guide. Once the contract is uploaded, it is assigned a Code ID, which must be referenced when creating the CosmWasm pool. It is possible to check for whitelisted code IDs with this command:
-`osmosisd q cosmwasmpool params`
+
+All CosmWasm pools must refer to a Contract via a Code ID. The CosmWasm contract defines the logic of how the pool works, and must be approved for upload and whitelisting by Osmosis governance via a UploadCosmWasmPoolCodeAndWhiteListProposal before any pool instantiating that logic can be created. Instructions on how to write and upload Contract Code is out of scope for the guide. Once the contract is uploaded, it is assigned a Code ID, which must be referenced when creating the CosmWasm pool. It is possible to check for whitelisted code IDs with this command: `osmosisd q cosmwasmpool params`
 
 ### Transmuter/Alloyed Asset Pools
+
 A Transmuter Pool is a type of multi-asset constant sum zero-fee pool, meant to allow for the feeless conversion of like-origin token variants, such as USDC.axl and noble.USDC. It may contain more than two assets, but must be at a 1:1 (or 1:1:1, or 1:1:1:1, etc.) ratio, so it cannot properly handle tokens with differing decimal precision. It also accepts an administrator address, which can freeze all swapping, joining, and exiting of the pool, and can also pass the role of administrator onto another address. If no administrator address is provided, it will default to using the executing account as the administrator.
 
 The creation of transmuter pools requires osmosisd version v19.2.0 or later. The Transmuter pools on Osmosis that were created before the release of v19.2.0 were co-created using a custom branch of osmosisd by Osmosis Labs and the author of the Transmuter CosmWasm code.
 
 The code-id for Transmuter pools on Osmosis chains are as follows:
+
 - osmosis-1 (mainnet): 148
 - osmo-test-5 (testnet): 3084
 
 Alloyed Asset Pools have not yet been finalized.
+
 ### Create Pool
+
 For now, since CosmWasm pools are custom and can be created many different ways, complete instructions on how to create each type is considered out of scope for this guide.
 
 Note: for creating CosmWasm pools, it is recommended to use osmosisd v19.2.0 or later, as earlier versions do not correctly encode the JSON instantiate message, and interpret it as a list of token denominations.
+
 #### CLI Command
-The command to create a pool with osmosisd CLI is: osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
+
+The command to create a pool with osmosisd CLI is: `osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]`
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
 
 Start with: `osmosisd tx cosmwasmpool create-pool -h`
 
-> create a cosmwasm pool
-> 
-> Usage:
->   osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
-> 
-> Examples:
-> osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
+```bash
+create a cosmwasm pool
+
+Usage:
+  osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
+
+Examples:
+  osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
+```
 
 For parameter values:
-- code-id: See the Contract Code section above for more about Code ID.
-- instantiate-msg: the required JSON encoded instantiate message depends on which type of pool is being created. For example, the transmuter pool type requires a denom list and an administrator, but other pool types might require a different instantiate message.
+
+- `code-id`: See the Contract Code section above for more about Code ID.
+- `instantiate-msg`: the required JSON encoded instantiate message depends on which type of pool is being created. For example, the transmuter pool type requires a denom list and an administrator, but other pool types might require a different instantiate message.
 
 Once created, the transaction hash can be used to query the pool’s contract address.
 
 ### Join Pool
+
 When CosmWasm pools are created, they may initially have no liquidity. It is recommended that the team creating the pool should also create the first liquidity position.
+
 #### CLI Command
+
 The command to join a CosmWasm pool with osmosisd CLI is: `osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]`
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
 
 Start with: `osmosisd tx wasm execute -h`
 
-> Execute a command on a wasm contract
-> 
-> Usage:
->   osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]
+Usage (to execute a command on a wasm contract):
+
+```bash
+osmosisd tx wasm execute [contract_addr_bech32] [json_encoded_send_args] --amount [coins,optional] [flags]
+```
 
 For parameter values:
-- contract_addr_bech32: the address of the contract specific to the pool
+
+- `contract_addr_bech32`: the address of the contract specific to the pool
   - I.e., the contract of the instance of the pool, NOT the contract of the type of pool
-- json_encoded_send_args: should be `'{"join_pool":{}}'`
+- `json_encoded_send_args`: should be `'{"join_pool":{}}'`
   - Note that the single quote must not be vertical ('') , and not angled (‘’)
-- --amount [coins,optional]: the amount of each token being added to the pool.
-  - E.g., --amount 10000ibc/8242AD24008032E457D2E12D46588FD39FB54FB29680C6C7663D296B383C37C4,10000ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB
+- `--amount [coins,optional]`: the amount of each token being added to the pool.
+  - E.g., `--amount 10000ibc/8242AD24008032E457D2E12D46588FD39FB54FB29680C6C7663D296B383C37C4,10000ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB`
