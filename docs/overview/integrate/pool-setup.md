@@ -216,21 +216,29 @@ Note that it is recommended to always first show the associated help/information
 Start with the following command to create or add to existing concentrated liquidity position: `osmosisd tx concentratedliquidity create-position -h`
 
 Usage:
->   osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
-> 
-> Examples:
-> osmosisd tx concentratedliquidity create-position 1 "[-69082]" 69082 10000uosmo,10000uion 0 0 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
+
+```bash
+osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
+```
+
+Example:
+
+```bash
+osmosisd tx concentratedliquidity create-position 1 "[-108000000]" 342000000 10000ibc/...,10000uosmo 100 100 --from val --chain-id osmosis-1 -b block --gas auto --gas-adjustment 1.3 --gas-prices 0.025uosmo
+```
 
 For parameter values:
-- The first argument is the pool-id; all pools have a unique identifier
+
+- The first argument is the `pool-id`; all pools have a unique identifier
 - For lower and upper tick, start with the lower tick first, then the upper tick.
-  - If a tick has a negative value, then surround it with brackets ([]) and double quotes (“”) so the hypen/dash can be interpreted as a negative sign
+  - If a tick has a negative value, then surround it with brackets ([]) and double quotes (“”) so the hyphen/dash can be interpreted as a negative sign
   - Tick 0 is a 1:1 ratio of assets
   - A full-range position in a Supercharged pool is currently defined as a lower tick of `-108000000` and an upper tick of  `342000000`, which sufficiently approximates infinity in both directions for all practical purposes. Creating this position can be the easiest way to establish initial liquidity in a pool and enable visibility on the Osmosis Zone frontend app.
 - Based on the current price/balance of tokens in the pool, (and the defined tick boundary,) the amount of each token that can be added must be at a precise ratio; the exact ratio would be difficult to calculate, and can also change frequently, which is why the command asks for maximum and minimum amounts of tokens to add rather than exact amounts.
-- tokensProvided requires a list of (maximum) token amounts approved for addition. Both constituent tokens must be specified with an amount, even if the amount is 0, and must be separated by a comma. Generally these should be supplied in alphabetical order.
-- token-0-min-amount and token-1-min-amount refer to the minimum amount of token-0 and token-1, respectively, that must be added to the position. These values must also be less than the corresponding amounts of tokensProvided because the transaction cannot add more tokens than were approved for addition.
-  - To find out which is token-0, and which is token-1, query: osmosisd q concentratedliquidity pools, and search for the pool among the returned list of pools.
+- `tokensProvided` requires a list of (maximum) token amounts approved for addition. Both constituent tokens must be specified with an amount, even if the amount is 0, and must be separated by a comma. Generally these should be supplied in alphabetical order.
+- `token-0-min-amount` and `token-1-min-amount` refer to the minimum amount of token-0 and token-1, respectively, that must be added to the position. These values must also be less than the corresponding amounts of tokensProvided because the transaction cannot add more tokens than were approved for addition.
+  - To find out which is token-0, and which is token-1, query: `osmosisd query poolmanager <pool-id>`. If you created the pool in the previous step (when adding liquidity for the first time to the pool), the pool ID will be in the `create-pool` output.
+  - If you don't know the pool ID is, to find out which is token-0, and which is token-1, use the query: `osmosisd query concentratedliquidity pools`, and search for the pool among the returned list of pools. Note: this query command paginates, so if the pool ID you were expected is not returned, append `--page N` (.e.g., `--page 2`) to paginate through all pools.
 
 ## CosmWasm Pools
 CosmWasm Pools are pools written with CosmWasm code and implement custom functionality. For example, a CosmWasm pool could be used to establish a floor price for an NFT. A couple examples of types of CosmWasm pools that are important currently are: the Transmuter and Alloyed Asset Pool types.
