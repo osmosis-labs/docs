@@ -49,14 +49,17 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-> Sample pool JSON file contents for balancer:
-> {
->         "weights": "4uatom,4osmo,2uakt",
->         "initial-deposit": "100uatom,5osmo,20uakt",
->         "swap-fee": "0.001",
->         "exit-fee": "0.001",
->         "future-governor": "168h"
-> }
+Sample pool JSON file contents for balancer:
+
+```json
+{
+  "weights": "4uatom,4osmo,2uakt",
+  "initial-deposit": "100uatom,5osmo,20uakt",
+  "swap-fee": "0.001",
+  "exit-fee": "0.001",
+  "future-governor": "168h"
+}
+```
 
 There are recommendations for creating balancer pools:
 - Number of tokens: For most cases, add only two constituent tokens for best user familiarity, even though the pool is capable of more
