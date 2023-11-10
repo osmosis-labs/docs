@@ -9,6 +9,7 @@ sidebar_position: 5
 A key step to integrating a project with Osmosis is ensuring there is at least one liquidity pool offering the token to the market. This page is intended to guide integrating teams on setting up pools for their tokens.
 
 There are several different types of liquidity pools on Osmosis, each with unique benefits; the main ones are:
+
 - Weighted Pool
 - Stableswap Pool,
 - Liquidity Bootstrapping Pool (LBP),
@@ -21,12 +22,16 @@ Note: Sometimes there is no way to find the Pool ID of a pool via a block explor
 
 Note: When specifying token denominations that are represented as `ibc/<hash>` via CLI, be sure to always use uppercase letters within the hash portion of the denomination, or else the pool will not function correctly. E.g., use `ibc/A1B2C3…`, but do NOT use `ibc/a1b2c3…`.
 
-
 ## Weighted Pool
+
 Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: k = x^wx * y^wy.
+
 ### Create Pool
+
 #### Osmosis Zone
+
 To create a Classic Pool on Osmosis via the Osmosis Zone app:
+
 - Go to app.osmosis.zone
 - Connect a Wallet
 - Go to Pools page
@@ -42,7 +47,9 @@ To create a Classic Pool on Osmosis via the Osmosis Zone app:
 - Tick ‘I understand that creating a new pool will cost 400 OSMO
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
+
 #### CLI Command
+
 The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
@@ -62,6 +69,7 @@ Sample pool JSON file contents for balancer:
 ```
 
 There are recommendations for creating balancer pools:
+
 - Number of tokens: For most cases, add only two constituent tokens for best user familiarity, even though the pool is capable of more
 - Weights: Use an equal amount of each token, thereby making it a balanced 50/50 pool (or 33/33/33, if three tokens, etc.). The absolute numbers are not of great importance, but rather the relative values; both 5uosmo,5uion and 1000000uosmo,1000000uion would create a 50/50 pool.
 - Initial deposit: Use a high amount of liquidity.
@@ -73,9 +81,13 @@ There are recommendations for creating balancer pools:
 - Future governor: This parameter has no current usage. It is recommended to leave it blank (“”), which will default to “168h” when queried thereafter.
 
 ## Stableswap Pool
+
 [Stableswap Pools on Osmosis](https://osmosis.zone/blog/osmosis-dex-stableswap) are inspired by [Curve’s StableSwap implementation](https://berkeley-defi.github.io/assets/material/StableSwap.pdf), allowing for a targeted flat section of the price curve where the relative values of the tokens are meant to be consistent (e.g., with a pair of USD stablecoins because both are meant to be worth $1.00 USD), although technically uses a slightly different(, and more computationally efficient,) formula: k = xy(x^2 + y^2)
+
 ### Create Pool
+
 #### Osmosis Zone
+
 To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Go to app.osmosis.zone
 - Connect a Wallet
@@ -84,7 +96,7 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Choose Stable pool
 - Next
 - Add new token (only shows tokens available in the connected wallet).
-- Assign token scaling factor<sup>1</sup>; 
+- Assign token scaling factor<sup>1</sup>
 - Repeat until all tokens have been added; ensure weights add to 100%
 - Next
 - Enter a >0 amount of each token to add to the pool upon creation
@@ -99,50 +111,68 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factor controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
 
 #### CLI Command
+
 The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-> For stableswap (demonstrating need for a 1:1000 scaling factor, see doc)
-> {
->         "initial-deposit": "1000000uusdc,1000miliusdc",
->         "swap-fee": "0.001",
->         "exit-fee": "0.00",
->         "future-governor": "168h",
->         "scaling-factors": "1000,1"
-> }
+For stableswap (demonstrating need for a 1:1000 scaling factor, see doc):
+
+```json
+{
+  "initial-deposit": "1000000uusdc,1000miliusdc",
+  "swap-fee": "0.001",
+  "exit-fee": "0.00",
+  "future-governor": "168h",
+  "scaling-factors": "1000,1"
+}
+```
 
 See the recommended parameter values for Weighted pools above, as many of those recommendations apply to Stableswap pools as well.
 
 ## Liquidity Bootstrapping Pool
+
 A Liquidity Bootstrapping Pool (LBP) is a weighted pool that begins with linearly adjusting weights until they reach a desired final weighting, and then behaves as a normal weighted pool from then onward. This allows for natural price discovery, as well as aids with liquidity bootstrapping. Nowadays, LBPs have become much less popular than they used to be; the current recommendation for liquidity bootstrapping and price discovery for a new token is a StreamSwap stream on Osmosis, with the frontend interface hosted by Omniflix.
 
 ## Supercharged Liquidity (a.k.a. Concentrated Liquidity) Pool
+
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
 
 On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–basically the same thing as swap fee–and tick spacing–used for refining the granularity of possible positions.
+
 ### Create Pool
+
 #### Osmosis Zone
+
 As of writing, Supercharged Liquidity Pools cannot be created via the Osmosis Zone app.
+
 #### CLI Command
+
 The command to create a pool with osmosisd CLI is: `osmosisd tx concentratedliquidity create-pool [flags]`
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
 
-Start with: `osmosisd tx concentratedliquidity create-pool -h`
+Start with: `osmosisd tx concentratedliquidity create-pool --help`
 
-> denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module
-> 
-> Usage:
->  osmosisd tx concentratedliquidity create-pool [denom-0] [denom-1] [tick-spacing] [spread-factor] [flags]
-> 
-> Examples:
-> osmosisd tx concentratedliquidity create-pool uion uosmo 100 0.01 --from val --chain-id osmosis-1 -b block --keyring-backend test --fees 1000uosmo
+Usage:
+
+```bash
+osmosisd tx concentratedliquidity create-pool [denom-0] [denom-1] [tick-spacing] [spread-factor] [flags]`
+
+denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module
+```
+
+Example:
+
+```bash
+osmosisd tx concentratedliquidity create-pool ibc/... uosmo 100 0.01 --from val --chain-id osmosis-1 -b block --gas auto --gas-adjustment 1.3 --gas-prices 0.025uosmo
+```
 
 There are recommendations for creating CL pools:
-- As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd q concentratedliquidity params`
+
+- As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
 - denom-1: Must be from a set of authorized ‘quote’ assets, which, as of writing, are:
   - uosmo (OSMO)
   - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
@@ -159,7 +189,7 @@ There are recommendations for creating CL pools:
 - tick-spacing: Must be from a set of authorized values: 1, 10, 100, and 1000
   - It is recommended to use a tick spacing of 100, which nearly all current Supercharged pools use; this effectively sets positions as being definable at any `0.01%` interval.
   - Since passing each initialized tick carries a computational cost(, and therefore requires more gas), a smaller tick spacing will require higher transaction fees, while a larger tick spacing will have lower transaction fees (but less precise positions).
-- spread-factor: Mimicks the bid-ask spread, and is comparable to Swap Fee. Must be from a set of authorized values:
+- spread-factor: Mimics the bid-ask spread, and is comparable to Swap Fee. Must be from a set of authorized values:
   - 0
   - 0.0001 (0.01%)
   - 0.0005 (0.05%)
@@ -168,18 +198,24 @@ There are recommendations for creating CL pools:
   - 0.003 (0.3%)
   - 0.005 (0.5%)
   - Generally, the lower fees are used for like-value stablecoin pairs, since those theoretically have a lower risk of impermanent loss.
+
 ### Join Pool
+
 When Supercharged Liquidity pools are created, they initially have no liquidity. It is recommended that the team creating the pool should also create the first liquidity position.
+
 #### CLI Command
-The command to join a CL pool with osmosisd CLI is: `osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]`
+
+The command to join a CL pool with osmosisd CLI is:
+
+```bash
+osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
+```
 
 Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
 
-Start with: `osmosisd tx concentratedliquidity create-position -h`
+Start with the following command to create or add to existing concentrated liquidity position: `osmosisd tx concentratedliquidity create-position -h`
 
-> create or add to existing concentrated liquidity position
-> 
-> Usage:
+Usage:
 >   osmosisd tx concentratedliquidity create-position [pool-id] [lower-tick] [upper-tick] [tokensProvided] [token-0-min-amount] [token-1-min-amount] [flags]
 > 
 > Examples:
