@@ -5,16 +5,16 @@ sidebar_position: 7
 
 Liquidity Providers on Osmosis receive swap fees by default, but can choose to bond to pools and receive additional liquidity incentives from many sources.
 
-* [External Incentives](https://docs.osmosis.zone/overview/getting-started/#external-incentives)
+* [External Incentives](#external-incentives)
 
 	Osmosis allows for the permissionless creation of (external) liquidity mining gauges, allowing projects to add thier own rewards to further incentivize users to provide liquidity into a pool.
 
-* [Internal Incentives](https://docs.osmosis.zone/overview/getting-started/#internal-incentives)
+* [Internal Incentives](#internal-incentives)
 
 	Osmosis allocates up to 20% of inflation to incentivize users to bond their liquidity on Osmosis. If a pool is included then it will be allocated a share of incentives based on several factors such as type of asset, swap fees generated in the pool, age of listing and sustained volumes. 
 	Osmosis currently only incentivises pools composed of a very limited set of tokens as of [Proposal 638](https://www.mintscan.io/osmosis/proposals/638).
 
-* [Superfluid Staking](https://docs.osmosis.zone/overview/getting-started/#superfluid-staking)
+* [Superfluid Staking](#superfluid-staking)
 
 	If enabled on a pool, a portion of the OSMO within can also be staked. Providing additional security to Osmosis as well as giving the liquidity providers additional staking rewards and the ability to participate in governance.
 	Superfluid staking is only available on Classic pools or full range Supercharged Pools.
