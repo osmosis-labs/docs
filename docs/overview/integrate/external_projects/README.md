@@ -1,4 +1,4 @@
-# Integration with External Projects
+# External Projects
 
 Osmosis supports integration with a diverse range of external projects. 
 
