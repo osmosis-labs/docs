@@ -11,10 +11,10 @@ A key step to integrating a project with Osmosis is ensuring there is at least o
 There are several different types of liquidity pools on Osmosis, each with unique benefits; the main ones are:
 
 - Weighted Pool
-- Stableswap Pool,
-- Liquidity Bootstrapping Pool (LBP),
-- Supercharged Liquidity (Concentrated Liquidity) Pools, and
-- CosmWasm Pools (e.g., Transmuter and Alloyed Assets).
+- Stableswap Pool
+- Liquidity Bootstrapping Pool (LBP)
+- Supercharged Liquidity (Concentrated Liquidity) Pool, and
+- CosmWasm Pools (e.g., Transmuter and Alloyed Assets)
 
 Note: As of [Proposal 669](https://www.mintscan.io/osmosis/proposals/669), the Pool Creation Fee is 400 OSMO
 
@@ -24,7 +24,7 @@ Note: When specifying token denominations that are represented as `ibc/<hash>` v
 
 ## Weighted Pool
 
-Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: k = x^wx * y^wy.
+Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: `k = x^wx * y^wy`.
 
 ### Create Pool
 
@@ -89,6 +89,7 @@ There are recommendations for creating balancer pools:
 #### Osmosis Zone
 
 To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
+
 - Go to app.osmosis.zone
 - Connect a Wallet
 - Go to Pools page
@@ -106,6 +107,8 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Tick ‘I understand that creating a new pool will cost 400 OSMO
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
+
+Notes:
 
 1. Scaling factor is used to adjust for differences in token precision or relative value. (e.g., if 4 $QUARTER is meant to be equal in value to 1 $USDC, then we’d use a scaling factor of 4:1). The most common usage of scaling factor is to equate like-value tokens (e.g., USDC and DAI) whose minimum denominations have differing precision; e.g., USDC’s minimum denomination is micro-usdc (1,000,000 uusdc == 1 USDC) and DAI’s minimum denomination is atto-DAI (where 1,000,000,000,000,000,000 attodai == 1 DAI), so a scaling factor such as 10^6:10^18 (or 1:10^12) is used.
 2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factor controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
@@ -275,14 +278,16 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx cosmwasmpool create-pool -h`
 
-```bash
-create a cosmwasm pool
-
 Usage:
-  osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
 
-Examples:
-  osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b=block
+```bash
+osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
+```
+
+Example:
+
+```bash
+osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b block
 ```
 
 For parameter values:
