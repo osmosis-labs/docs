@@ -14,9 +14,10 @@ Concentrated Liquidity pools allow liquidity providers to allocate their capital
 
 ### Calculation:
 - **APR for CL Pools**: 
-  $$
+\[ \text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100 \]
+  <!-- $$
   \text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100
-  $$
+  $$ -->
 
 Where:
 - **Spread Reward per Unit Liquidity**: This is the reward earned from the spread for providing liquidity, expressed per unit.
@@ -43,11 +44,11 @@ Incentives for CFMM pools involve a broader range of liquidity provision, not co
 
 2. **Superfluid APR Calculation** (if applicable):
    - The Superfluid APR is calculated additionally for pools where it's relevant, using the formula:
-     $$
+     <!-- $$
      \text{Superfluid APR} = \left( \frac{\text{Staking APR} \times \text{Superfluid Percentage}}{100} \right) \times \frac{\text{Superfluid Risk Factor}}{100} + \text{APR}_{14d}
-     $$
+     $$ -->
    - Where:
-     - `Staking APR` is the APR from staking.
+     - \(\text{Staking APR}\) is the APR from staking.
      - `Superfluid Percentage` is the percentage of the pool that is superfluid.
      - `Superfluid Risk Factor` is a risk adjustment factor.
      - `APR_14d` is the 14-day APR calculated as above.
