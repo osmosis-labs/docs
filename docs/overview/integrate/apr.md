@@ -1,0 +1,53 @@
+---
+sidebar_position: 11
+---
+
+# APR Calculation
+
+## Introduction
+APR for each pools is a metric that indicates the expected annualized return on investment for liquidity providers. APRs are calculated differently for CL pools and normal pools due to their distinct operational mechanisms.
+
+## Concentrated Liquidity Pools
+Concentrated Liquidity pools allow liquidity providers to allocate their capital to a specific price range within a pool. The APR calculation for these pools is based on the rewards earned in this range.
+
+
+
+### Calculation:
+- **APR for CL Pools**: 
+  $$
+  \text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100
+  $$
+
+Where:
+- **Spread Reward per Unit Liquidity**: This is the reward earned from the spread for providing liquidity, expressed per unit.
+- **Incentive Reward per Unit Liquidity**: This is any additional incentive reward for providing liquidity, also expressed per unit.
+- **Base Price**: The standardized value of one unit of liquidity in the pool, used to convert the reward values into a comparable base.
+- **Seconds in a Year**: Represents the total number of seconds in a year, used for annualizing the return. It's calculated as \( 365.25 \times 24 \times 60 \times 60 \) to account for leap years.
+- **Calculation Time Duration**: The duration in seconds over which the rewards were calculated 
+
+## CFMM Liquidity Pools(Balancer pools, Stableswap Pools)
+Incentives for CFMM pools involve a broader range of liquidity provision, not concentrated on a specific price range.
+
+
+1. **Standard APR Calculation** (for 1 day, 7 days, and 14 days):
+   - The APR is calculated for each time frame using the formula:
+     $$
+     \text{APR}_{\text{time frame}} = \left( \frac{\text{Distributed Amount}_{\text{time frame}} / \text{Exponent}}{\text{Liquidity}} \right) \times \text{Coin Price} \times 36500
+     $$
+   - Where:
+     - `Distribured Amount_timeframe` is the sum of distributed rewards for the time frame (1 day, 7 days, or 14 days).
+     - `Exponent` is a factor related to the coin denomination.
+     - `Liquidity` is the total liquidity in USD for the pool, adjusted by the percentage bonded (if applicable).
+     - `Coin Price` is the current price of the coin.
+     - The multiplier \(36500\) annualizes the rate.
+
+2. **Superfluid APR Calculation** (if applicable):
+   - The Superfluid APR is calculated additionally for pools where it's relevant, using the formula:
+     $$
+     \text{Superfluid APR} = \left( \frac{\text{Staking APR} \times \text{Superfluid Percentage}}{100} \right) \times \frac{\text{Superfluid Risk Factor}}{100} + \text{APR}_{14d}
+     $$
+   - Where:
+     - `Staking APR` is the APR from staking.
+     - `Superfluid Percentage` is the percentage of the pool that is superfluid.
+     - `Superfluid Risk Factor` is a risk adjustment factor.
+     - `APR_14d` is the 14-day APR calculated as above.
