@@ -8,9 +8,6 @@ sidebar_position: 11
 APR for each pools is a metric that indicates the expected annualized return on investment for liquidity providers. APRs are calculated differently for CL pools and normal pools due to their distinct operational mechanisms.
 
 ## Concentrated Liquidity Pools
-Concentrated Liquidity pools allow liquidity providers to allocate their capital to a specific price range within a pool. The APR calculation for these pools is based on the rewards earned in this range.
-
-
 
 ### Calculation:
 - **APR for CL Pools**: 
@@ -23,8 +20,6 @@ Where:
 - **Calculation Time Duration**: The duration in seconds over which the rewards were calculated 
 
 ## CFMM Liquidity Pools(Balancer pools, Stableswap Pools)
-Incentives for CFMM pools involve a broader range of liquidity provision, not concentrated on a specific price range.
-
 
 1. **Standard APR Calculation** (for 1 day, 7 days, and 14 days):
    - The APR is calculated for each time frame using the formula:
