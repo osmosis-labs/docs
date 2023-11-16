@@ -14,11 +14,7 @@ Concentrated Liquidity pools allow liquidity providers to allocate their capital
 
 ### Calculation:
 - **APR for CL Pools**: 
-\[ \text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100 \]
-  <!-- $$
-  \text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100
-  $$ -->
-
+![](../../assets/apr-cl.png)
 Where:
 - **Spread Reward per Unit Liquidity**: This is the reward earned from the spread for providing liquidity, expressed per unit.
 - **Incentive Reward per Unit Liquidity**: This is any additional incentive reward for providing liquidity, also expressed per unit.
@@ -32,9 +28,7 @@ Incentives for CFMM pools involve a broader range of liquidity provision, not co
 
 1. **Standard APR Calculation** (for 1 day, 7 days, and 14 days):
    - The APR is calculated for each time frame using the formula:
-     $$
-     \text{APR}_{\text{time frame}} = \left( \frac{\text{Distributed Amount}_{\text{time frame}} / \text{Exponent}}{\text{Liquidity}} \right) \times \text{Coin Price} \times 36500
-     $$
+     ![](../../assets/apr-normal.png)
    - Where:
      - `Distribured Amount_timeframe` is the sum of distributed rewards for the time frame (1 day, 7 days, or 14 days).
      - `Exponent` is a factor related to the coin denomination.
@@ -44,9 +38,7 @@ Incentives for CFMM pools involve a broader range of liquidity provision, not co
 
 2. **Superfluid APR Calculation** (if applicable):
    - The Superfluid APR is calculated additionally for pools where it's relevant, using the formula:
-     <!-- $$
-     \text{Superfluid APR} = \left( \frac{\text{Staking APR} \times \text{Superfluid Percentage}}{100} \right) \times \frac{\text{Superfluid Risk Factor}}{100} + \text{APR}_{14d}
-     $$ -->
+    ![](../../assets/apr-superfluid.png)
    - Where:
      - \(\text{Staking APR}\) is the APR from staking.
      - `Superfluid Percentage` is the percentage of the pool that is superfluid.
