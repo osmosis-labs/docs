@@ -87,7 +87,7 @@ representative price of the GAMM token shares. The superfluid module has
 (`RefreshIntermediaryDelegationAmounts`) and to increase delegation on
 lockup (`IncreaseSuperfluidDelegation`). Then, we see whether or not the
 superfluid OSMO currently delegated is worth more or less than this
-expected delegation amount amount. If the OSMO is worth more, we do
+expected delegation amount. If the OSMO is worth more, we do
 instant undelegations and immediately burn the OSMO. If less, we mint
 OSMO and update the amount delegated. A simplified diagram of this whole
 process is found below:
