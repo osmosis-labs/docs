@@ -7,7 +7,7 @@ Assets need to be registered in several locations in order to be displayed corre
 # Prerequisites
 
 - Registered to [SLIP173](https://github.com/satoshilabs/slips/blob/master/slip-0173.md)
-    - See: [How to register a bech32 prefix onto SLIP173](../integrate/transfer.md#how-to-register-a-bech32-prefix-onto-slip173)
+    - See: [How to register a bech32 prefix onto SLIP173](https://docs.osmosis.zone/overview/integrate/transfer#register-a-bech32-prefix-onto-slip173)
 - If coin type is not like ATOM, registered to [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md)
     - Note: Coin Type 118 represents the Cosmos Hub's ATOM token, registered listed in [SLIP44](https://github.com/satoshilabs/slips/blob/master/slip-0044.md); many projects also default to using this coin type, while some have registered their own.
 
@@ -54,13 +54,13 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
 ### Prerequisites
 
 - Registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](../integrate/registration.md#how-to-register-onto-the-cosmos-chain-registry)
+    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/overview/integrate/registration#step-1-register-onto-the-cosmos-chain-registry)
 - Opened IBC connection between the source chain and Osmosis
     - Selected a sole desigate IBC connection between the registering chain and Osmosis for this asset
         - All native assets from a chain should go through a single connection, but CW20 tokens can be sent through another connection
-	- See: [Enabling IBC transfers](../integrate/registration.md#enabling-ibc-transfers) and [Setting up and operating relayer to Osmosis](../integrate/registration.md#setting-up-and-operating-relayer-to-osmosis)
+	- See: [Enabling IBC transfers](https://docs.osmosis.zone/overview/integrate/transfer#enabling-ibc-transfers) and [Setting up and operating relayer to Osmosis](https://docs.osmosis.zone/overview/integrate/transfer#setting-up-and-operating-a-relayer-to-osmosis)
 - There is a liquidity pool on Osmosis.
-	- See: [GAMM Module: Create pool](../../osmosis-core/modules/gamm/#create-pool) for the CLI command to create a pool
+	- See: [Pool Setup Guide](https://docs.osmosis.zone/overview/integrate/pool-setup) for the CLI command to create a pool
 - Assets listed on CoinGecko (optional)
     - See: [How to enlist assets onto CoinGecko](../integrate/registration.md#how-to-enlist-an-asset-onto-coingecko)
 
@@ -95,12 +95,12 @@ The Osmosis Assetlists Registry is used as a local source of truth for assets di
 Chain Data
 
 - Chain registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
+    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/overview/integrate/registration#step-1-register-onto-the-cosmos-chain-registry)
 - Chain registered onto SLIP173
-    - See: [How to Register onto SLIP173](https://docs.osmosis.zone/integrate/registration.html#how-to-register-a-bech32-prefix-onto-slip173)
+    - See: [How to Register onto SLIP173](https://docs.osmosis.zone/overview/integrate/transfer#register-a-bech32-prefix-onto-slip173)
 - Relayer(s) set up to relay packets between chains
-    - To set up a relayer, see the [Relaying Guide](https://docs.osmosis.zone/developing/relaying/relay.html)
-    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider](https://docs.osmosis.zone/developing/relaying/relayers.html) 
+    - To set up a relayer, see the [Relaying Guide](https://docs.osmosis.zone/osmosis-core/relaying/relayer-guide)
+    - Don't want to set up a Relayer? See: [Shop for a Relayer as a Service (RAAS) Provider](https://docs.osmosis.zone/osmosis-core/relaying/ibc-relayers-list) 
 - IBC token transfer has been validated
     - Or else a functioning Bridge between Chains (only if regular IBC transfers are not possible)
 - Chain has a block explorer, either:
@@ -110,12 +110,9 @@ Chain Data
 Asset Data
 
 - Asset registered onto the Cosmos Chain Registry
-    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-onto-the-cosmos-chain-registry)
-- Asset price oracle added to Osmosis Zone (co-requisite)
-    - See: [How to Specify Asset Price Oracle on Osmosis Zone (CoinGecko)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-coingecko)
-    - See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-liquidity-pool)
-- Asset registered onto the Osmosis Assetlists Registry (post-requisite)
-    - See: [How to register an Asset onto the Osmosis Assetlists Registry](https://docs.osmosis.zone/integrate/registration.html#how-to-register-an-asset-onto-the-osmosis-assetlists-registry)
+    - See: [How to register onto the Cosmos Chain Registry](https://docs.osmosis.zone/overview/integrate/registration#step-1-register-onto-the-cosmos-chain-registry)
+- Asset registered onto the Osmosis Assetlists Registry
+    - See: [How to register an Asset onto the Osmosis Assetlists Registry](https://docs.osmosis.zone/overview/integrate/registration#step-2-register-an-asset-onto-the-osmosis-assetlists-registry)
 
 ### Requirements
 
@@ -147,10 +144,6 @@ Asset Data
     - Asset Price data (if available), either:
     	- CoinGecko ID (optional, but should be included if and when one exists), or
     		- Refer to the latest [CoinGecko Coins List](https://api.coingecko.com/api/v3/coins/list)
-        - `pool:<coin minimal denomination>` (default alternative, if no CoinGecko ID exists yet), or
-        	- The alternatives should only be used if there is an acceptable pool with the new asset
-        	- See: [How to Specify Asset Price Oracle on Osmosis Zone (Liquidity Pool)](https://docs.osmosis.zone/integrate/frontend.html#how-to-specify-asset-price-oracle-on-osmosis-zone-liquidity-pool)
-        - none
     - Token Logo Image files (both .png and .svg is recommended)
         - Note: Currently, a .png is required to be able to render on info.osmosis.zone
         - Note: image files shall be titled exactly with the token Symbol in lowercase. E.g., for 'ATOM', title the files `atom.png` and `atom.svg`
@@ -319,7 +312,7 @@ From [coingecko.com/en/methodology](https://www.coingecko.com/en/methodology):
 - Working block explorer
 - Listed on at least one (1) active exchanges where CoinGecko is integrated with.
     - Note: Because Osmosis is integrated with CoinGecko, this will automatically be fullfilled once a Liquidity Pool containing the new Asset is created on Osmosis.
-    - See: [How to Add an Asset onto the Osmosis Assets Page](../integrate/frontend.md#how-to-add-an-asset-onto-the-osmosis-assets-page)
+    - See: [How to Add an Asset onto the Osmosis Assets Page](https://docs.osmosis.zone/overview/integrate/registration#step-3-register-an-asset-on-the-osmosis-frontend-repository)
 
 ### Requirements
 
@@ -351,7 +344,7 @@ This procedure will set up the default asset pricing mechanism for an asset to s
 #### Pre-requisites
 
 - Asset is in a Pool
-	- See: [How to create a Liquidity Pool](https://docs.osmosis.zone/developing/modules/spec-gamm.html#create-pool)
+	- See: [Pool Setup Guide](https://docs.osmosis.zone/overview/integrate/pool-setup)
 - Pool containing Asset is acceptable
 	- The criteria for 'acceptable' pools are *roughly* as follows:
 		- Contains only 2 tokens
