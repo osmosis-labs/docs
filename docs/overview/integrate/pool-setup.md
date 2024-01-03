@@ -16,7 +16,7 @@ There are several different types of liquidity pools on Osmosis, each with uniqu
 - Supercharged Liquidity (Concentrated Liquidity) Pool, and
 - CosmWasm Pools (e.g., Transmuter and Alloyed Assets)
 
-Note: As of [Proposal 669](https://www.mintscan.io/osmosis/proposals/669), the Pool Creation Fee is 400 OSMO
+Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), the Pool Creation Fee is 100 USDC.
 
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.
 
@@ -44,7 +44,7 @@ To create a Classic Pool on Osmosis via the Osmosis Zone app:
 - Enter a >0 amount of each token to add to the pool upon creation
 - Next
 - Set Swap Fee
-- Tick ‘I understand that creating a new pool will cost 400 OSMO
+- Tick ‘I understand that creating a new pool will cost 100 USDC
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
 
@@ -104,7 +104,7 @@ To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
 - Next
 - Set Swap Fee
 - Set scaling factor controller (optional)<sup>2</sup>
-- Tick ‘I understand that creating a new pool will cost 400 OSMO
+- Tick ‘I understand that creating a new pool will cost 100 USDC.
 - Create Pool
 - Continue to approve the transaction with the connected wallet.
 
@@ -177,13 +177,14 @@ There are recommendations for creating CL pools:
 
 - As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
 - denom-1: Must be from a set of authorized ‘quote’ assets, which, as of writing, are:
-  - uosmo (OSMO)
-  - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
-  - ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7 (DAI.axl)
   - ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 (noble.USDC)
   - ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB (kava.USDT)
+  - ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7 (DAI.axl)
   - ibc/EA1D43981D5C9A1C4AAEA9C23BB1D4FA126BA9BC7020A25E0AE4AA841EA25DC5 (wETH.axl)
-  - ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F (WBTC.axl)
+  - factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc (WBTC)
+  - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
+  - ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877 (TIA)
+  - uosmo (OSMO)
 - ...and on Testnet (osmo-test-5) are:
   - uosmo (OSMO)
   - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
