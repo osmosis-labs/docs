@@ -185,7 +185,7 @@ osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chai
 `<chain-id>` = localosmosis
 
 Replace `<unsafe-test-key-name>` with the key name from your local keys. `osmosisd keys list`
-Replace `<chain-id>` with localosmosis or osmo-test-4. 
+Replace `<chain-id>` with localosmosis or osmo-test-5. 
 Save the CODE_ID from the output of the command above as a local variable `CODE_ID=XX`
 
 ### Or Store CODE_ID 

@@ -147,7 +147,7 @@ grpc_endpoint = 'http://localhost:9090'
 rpc_endpoint = 'http://localhost:26657'
 
 [networks.testnet]
-chain_id = 'osmo-test-4'
+chain_id = 'osmo-test-5'
 network_variant = 'Shared'
 grpc_endpoint = 'https://grpc-test.osmosis.zone:443'
 rpc_endpoint = 'https://rpc.testnet.osmosis.zone'

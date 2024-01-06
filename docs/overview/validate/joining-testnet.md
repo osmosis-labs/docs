@@ -29,7 +29,7 @@ In order to get testnet tokens use  [https://faucet.osmosis.zone/](https://fauce
 Use osmosisd to initialize your node (replace the ```NODE_NAME``` with a name of your choosing):
 
 ```bash
-osmosisd init NODE_NAME --chain-id=osmo-test-4
+osmosisd init NODE_NAME --chain-id=osmo-test-5
 ```
 
 Open the config.toml to edit the seeds and persistent peers:
@@ -89,7 +89,7 @@ Download and replace the genesis file:
 
 ```bash
 cd $HOME/.osmosisd/config
-wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-4/genesis.tar.bz2
+wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-5/genesis.tar.bz2
 tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
 ```
 

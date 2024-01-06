@@ -19,7 +19,7 @@ NEXT_PUBLIC_OSMOSIS_ASSETLISTS_BASE_URL=https://raw.githubusercontent.com/nabla-
 NEXT_PUBLIC_COINGECKO_BASE_URL=https://api.coingecko.com/api/v3/
 
 # Osmosis Chain Configuration Overwrite
-NEXT_PUBLIC_OSMOSIS_CHAIN_ID_BASE=osmo-test-4
+NEXT_PUBLIC_OSMOSIS_CHAIN_ID_BASE=osmo-test-5
 NEXT_PUBLIC_OSMOSIS_CHAIN_NAME_BASE=osmosistestnet
 
 # Source Chain Configuration Overwrite
