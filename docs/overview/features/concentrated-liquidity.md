@@ -2,10 +2,10 @@
 sidebar_position: 1
 ---
 
-# Overview
+# Concentrated Liquidity
 
 ## Index
-- [Overview](#Overview)
+- [Overview](#concentrated-liquidity)
   - [Background](#background)
   - [Notable Features](#notable-features)
 - [Our Implementation](#our-implementation)
