@@ -93,18 +93,7 @@ lockup (`IncreaseSuperfluidDelegation`). Then, we see whether or not the
 superfluid OSMO currently delegated is worth more or less than this
 expected delegation amount amount. If the OSMO is worth more, we do
 instant undelegations and immediately burn the OSMO. If less, we mint
-OSMO and update the amount delegated. A simplified diagram of this whole
-process is found below:
-
-<br/>
-
-<p style="text-align:center;">
-
-<img src="https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/superfluiddiagram.png" height="300"/>
-
-</p>
-
-</br>
+OSMO and update the amount delegated. 
 
 This minting is safe because we strict constrain the permissions of Bank
 (the module that burns and mints OSMO) to do what it's designed to do.
