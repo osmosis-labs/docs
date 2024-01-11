@@ -1,11 +1,11 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
-# Concentrated Liquidity
+# Overview
 
 ## Index
-- [Concentrated Liquidity](#concentrated-liquidity)
+- [Overview](#Overview)
   - [Background](#background)
   - [Notable Features](#notable-features)
 - [Our Implementation](#our-implementation)
@@ -16,7 +16,6 @@ sidebar_position: 3
   - [Solution](#solution)
 - [Terminology](#terminology)
 - [External Sources](#external-sources)
-
 ## Background
 
 Concentrated liquidity is a novel Automated Market Maker (AMM) design introduced
