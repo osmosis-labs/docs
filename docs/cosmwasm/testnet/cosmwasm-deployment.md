@@ -1,5 +1,5 @@
 # Cosmwasm testnet deployment
-The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (`osmo-test-4`). It covers:
+The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (`osmo-test-5`). It covers:
 
 - Initial Setup
     - Setup Rust
@@ -26,7 +26,7 @@ Please note this a detailed guide on how to deploy via `osmosisd`, it also cover
 
 ## Initial Setup
 
-This tutorial uses a Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-4`).
+This tutorial uses a Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-5`).
 
 ### Setup Rust
 

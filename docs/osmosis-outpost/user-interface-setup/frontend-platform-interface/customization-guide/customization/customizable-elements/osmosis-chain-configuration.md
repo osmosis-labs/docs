@@ -23,7 +23,7 @@ This is the chain id of the Osmosis chain you want to use.
 Osmosis testnet chain.
 
 ```bash
-NEXT_PUBLIC_OSMOSIS_CHAIN_ID_BASE=osmo-test-4
+NEXT_PUBLIC_OSMOSIS_CHAIN_ID_BASE=osmo-test-5
 ```
 
 ### OSMOSIS_CHAIN_NAME_BASE
@@ -67,9 +67,9 @@ The following table resume the information for the Osmosis *mainnet* and
 look at the 
 [cosmos/chain-registry](https://github.com/cosmos/chain-registry/) repository.
 
-| Value      | Osmosis Testnet (osmo-test-4)                                                   | Osmosis Mainnet                                         |
+| Value      | Osmosis Testnet (osmo-test-5)                                                   | Osmosis Mainnet                                         |
 | ---------- | ------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Chain ID   | `osmo-test-4`                                                                   | `osmosis-1`                                             |
+| Chain ID   | `osmo-test-5`                                                                   | `osmosis-1`                                             |
 | Chain Name | `osmosistestnet`                                                                | `osmosis`                                               |
 | RPC        | [https://rpc.testnet.osmosis.zone:443](https://rpc.testnet.osmosis.zone:443)    | [https://rpc.osmosis.zone](https://rpc.osmosis.zone)    |
 | LCD        | [https://lcd.testnet.osmosis.zone](https://lcd.testnet.osmosis.zone)            | [https://lcd.osmosis.zone](https://lcd.osmosis.zone)    |

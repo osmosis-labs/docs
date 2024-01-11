@@ -6,7 +6,7 @@ const AssetData = () => {
 
   const assetUrls = {
     mainnet: 'https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmosis-1/osmosis-1.assetlist.json',
-    osmo_test_4: 'https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmo-test-4/osmo-test-4.assetlist.json',
+    osmo_test_4: 'https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmo-test-5/osmo-test-5.assetlist.json',
     osmo_test_5: 'https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmo-test-5/osmo-test-5.assetlist.json',
   };
 
