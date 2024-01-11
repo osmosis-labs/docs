@@ -16,6 +16,7 @@ sidebar_position: 2
   - [Solution](#solution)
 - [Terminology](#terminology)
 - [External Sources](#external-sources)
+
 ## Background
 
 Concentrated liquidity is a novel Automated Market Maker (AMM) design introduced
@@ -272,3 +273,6 @@ Note, that the current tick of 155 is defined inside the bucket over a range of 
 
 - [Uniswap V3 Whitepaper](https://uniswap.org/whitepaper-v3.pdf)
 - [Technical Note on Liquidity Math](https://atiselsts.github.io/pdfs/uniswap-v3-liquidity-math.pdf)
+
+## Repository
+For more an in-depth docs and implementation, please visit: https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity
