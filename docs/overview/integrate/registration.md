@@ -179,6 +179,7 @@ Asset Data
                 - 'ibc-transfer' -- must be specified if IBC transfers following the ICS20 standard have been enabled on the chain
                 - 'no-legacy-stdTx' -- must be specified if using Cosmos SDK v0.43+, but still recommended to specify, regardless of Cosmos SDK version
                 - 'ibc-go' -- must be specified if using Cosmos SDK v0.43+, and import the ibc-go repository
+                - 'wasmd_0.24+' -- must be specified if it needs to append the /cosmwasm pathname (usually for cw20 tokens)
                 - E.g., `features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],`
             - Include gas price step
             - Include chain explorer path
