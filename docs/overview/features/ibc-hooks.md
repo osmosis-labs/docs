@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# IBC-hooks
+# IBC Hooks
 
 ## Wasm Hooks
 

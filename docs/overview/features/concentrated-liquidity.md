@@ -3,20 +3,6 @@ sidebar_position: 2
 ---
 
 # Concentrated Liquidity
-
-## Index
-- [Overview](#concentrated-liquidity)
-  - [Background](#background)
-  - [Notable Features](#notable-features)
-- [Our Implementation](#our-implementation)
-  - [Incentives](#Incentive-Creation-and-Querying)
-  - [Reward Splitting Between Classic and CL pools](#Reward-Splitting-Between-Classic-and-CL-pools)
-- [TWAP Integration](#twap-integration)
-- [Precision Issues With Price](#precision-issues-with-price)
-  - [Solution](#solution)
-- [Terminology](#terminology)
-- [External Sources](#external-sources)
-
 ## Background
 
 Concentrated liquidity is a novel Automated Market Maker (AMM) design introduced
