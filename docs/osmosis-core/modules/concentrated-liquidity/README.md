@@ -23,7 +23,7 @@ similar to a limit order with order-books.
 
 The traditional Balancer AMM relies on the following curve that tracks current reserves:
 
-$$xy = k$$
+![eq-1](./img/eq-1.png)
 
 This formula allows for distributing liquidity along the $xy=k$ curve and across
 the entire price range of (0, &infin;).
@@ -35,42 +35,47 @@ it functions as the traditional `xy = k` within that range.
 
 In the new architecture, real reserves are described by the following formula:
 
-$$(x + L / \sqrt P_u)(y + L \sqrt P_l) = L^2$$
+![eq-2](./img/eq-2.png)
 
 Where `P_l` is the lower tick, `P_u` is the upper tick, and `L` is the amount
-of liquidity provided, $$L = \sqrt k$$
+of liquidity provided, 
+![eq-4](./img/eq-4.png)
+<!-- $$L = \sqrt k$$ -->
 
 This formula stems from the original $xy = k$ but with a limited range. In the
 traditional design, a pool's `x` and `y` tokens are tracked directly. However,
 with the concentrated design, we only track $L$ and $\sqrt P$, which can be
 calculated with:
 
+![eq-5](./img/eq-5.png)
+<!-- 
 $$L = \sqrt {xy}$$
 
-$$\sqrt P = \sqrt {y / x}$$
+$$\sqrt P = \sqrt {y / x}$$ -->
 
 By rearranging the above, we obtain the following formulas to track virtual reserves:
+![eq-6](./img/eq-6.png)
+<!-- $$x = L / \sqrt P$$
 
-$$x = L / \sqrt P$$
-
-$$y = L \sqrt P$$
+$$y = L \sqrt P$$ -->
 
 Note the square root around price. By tracking it this way, we can utilize the
 following core property of the architecture:
 
-$$L = \Delta y / \Delta \sqrt P$$
+![eq-7](./img/eq-7.png)
 
 Since only one of the following changes at a time:
 
 - $L$: When an LP adds or removes liquidity
-- $\sqrt P$: When a trader swaps
+- sqrt P: When a trader swaps
 
 We can use the above relationship to calculate the outcome of swaps as well as
 pool joins that mint shares.
 
 Conversely, we calculate liquidity from the other token in the pool:
 
-$$\Delta x = \Delta \frac {1}{\sqrt P} L$$
+![eq-8](./img/eq-8.png)
+<!-- $$\Delta x = \Delta \frac {1}{\sqrt P} L$$ -->
 
 Overall, the architecture's goal is to enable LPs to provide concentrated
 liquidity within a specific range while maintaining high capital efficiency.
@@ -84,7 +89,8 @@ in a concentrated liquidity pool.
 
 The price [p] corresponding to a tick [t] is defined by the equation:
 
-$$ p(t) = 1.0001^t $$
+![eq-9](./img/eq-9.png)
+<!-- $$ p(t) = 1.0001^t $$ -->
 
 This results in a .01% difference between adjacent tick prices. This does not,
 however, allow for control over the specific prices that the ticks correspond
@@ -111,30 +117,30 @@ since only every 100 ticks are able to be initialized.
 When $exponentAtPriceOne = -6$ (and tick spacing is 100), each tick starting at
 0 and ending at the first factor of 10 will represents a spot price increase of 0.0001:
 
-- $tick_{0} = 1$
-- $tick_{100} = 1.0001$
-- $tick_{200} = 1.0002$
-- $tick_{300} = 1.0003$
+- tick_{0} = 1
+- tick_{100} = 1.0001
+- tick_{200} = 1.0002
+- tick_{300} = 1.0003
 
 This continues until the pool reaches a spot price of 10. At this point, since
 the pool has increased by a factor of 10, the $exponentAtCurrentTick$ increases
 from -4 to -3 (decreasing the incremental precision), and the ticks will
 increase as follows:
 
-- $tick_{8999900} =  9.9999$
-- $tick_{9000000} = 10.000$
-- $tick_{9000100} = 10.001$
-- $tick_{9000200} = 10.002$
+- tick_{8999900} =  9.9999
+- tick_{9000000} = 10.000
+- tick_{9000100} = 10.001
+- tick_{9000200} = 10.002
 
 For spot prices less than a dollar, the precision factor decreases
 (increasing the incremental precision) at every factor of 10:
 
-- $tick_{-100} = 0.99999$
-- $tick_{-200} = 0.99998$
-- $tick_{-500100} = 0.94999$
-- $tick_{-500200} = 0.94998$
-- $tick_{-9000100} = 0.099999$
-- $tick_{-9000200} = 0.099998$
+- tick_{-100} = 0.99999
+- tick_{-200} = 0.99998
+- tick_{-500100} = 0.94999
+- tick_{-500200} = 0.94998
+- tick_{-9000100} = 0.099999
+- tick_{-9000200} = 0.099998
 
 This goes on in the negative direction until it reaches a spot price of
 0.000000000000000001 or in the positive direction until it reaches a spot
@@ -154,40 +160,46 @@ since $exponentAtPriceOne$ is fixed), we can then calculate how many ticks must
 be crossed in order for $k$ to be incremented
 ( $geometricExponentIncrementDistanceInTicks$ ).
 
-$$geometricExponentIncrementDistanceInTicks = 9 * 10^{(-exponentAtPriceOne)}$$
+![eq-10](./img/eq-10.png)
+<!-- $$geometricExponentIncrementDistanceInTicks = 9 * 10^{(-exponentAtPriceOne)}$$ -->
 
-Since we define $exponentAtPriceOne$ and utilize this as the increment starting
+Since we define exponentAtPriceOne and utilize this as the increment starting
 point instead of price zero, we must multiply the result by 9 as shown above.
 In other words, starting at 1, it takes 9 ticks to get to the first power of 10.
 Then, starting at 10, it takes 9\*10 ticks to get to the next power of 10, etc.
 
 Now that we know how many ticks must be crossed in order for our
-$exponentAtPriceOne$ to be incremented, we can then figure out what our change
-in $exponentAtPriceOne$ will be based on what tick is being traded at:
+exponentAtPriceOne to be incremented, we can then figure out what our change
+in exponentAtPriceOne will be based on what tick is being traded at:
 
-$$geometricExponentDelta = ⌊ tick / geometricExponentIncrementDistanceInTicks ⌋$$
+![eq-11](./img/eq-11.png)
+<!-- $$geometricExponentDelta = ⌊ tick / geometricExponentIncrementDistanceInTicks ⌋$$ -->
 
-With $geometricExponentDelta$ and $exponentAtPriceOne$, we can figure out what
-the $exponentAtPriceOne$ value we will be at when we reach the provided tick:
+With geometricExponentDelta and *exponentAtPriceOne*, we can figure out what
+the *exponentAtPriceOne* value we will be at when we reach the provided tick:
 
-$$exponentAtCurrentTick = exponentAtPriceOne + geometricExponentDelta$$
+<!-- exponentAtCurrentTick = exponentAtPriceOne + geometricExponentDelta -->
+![eq-13](./img/eq-13.png)
 
-Knowing what our $exponentAtCurrentTick$ is, we must then figure out what power
+Knowing what our *exponentAtCurrentTick* is, we must then figure out what power
 of 10 this $exponentAtPriceOne$ corresponds to (by what number does the price
 gets incremented with each new tick):
 
-$$currentAdditiveIncrementInTicks = 10^{(exponentAtCurrentTick)}$$
+![eq-12](./img/eq-12.png)
+<!-- $$currentAdditiveIncrementInTicks = 10^{(exponentAtCurrentTick)}$$ -->
 
 Lastly, we must determine how many ticks above the current increment we are at:
 
-$$numAdditiveTicks = tick - (geometricExponentDelta * geometricExponentIncrementDistanceInTicks)$$
+![eq-14](./img/eq-14.png)
+<!-- $$numAdditiveTicks = tick - (geometricExponentDelta * geometricExponentIncrementDistanceInTicks)$$ -->
 
 With this, we can determine the price:
 
-$$price = (10^{geometricExponentDelta}) + (numAdditiveTicks * currentAdditiveIncrementInTicks)$$
+![eq-15](./img/eq-15.png)
+<!-- $$price = (10^{geometricExponentDelta}) + (numAdditiveTicks * currentAdditiveIncrementInTicks)$$ -->
 
-where $(10^{geometricExponentDelta})$ is the price after $geometricExponentDelta$
-increments of $exponentAtPriceOne$ (which is basically the number of decrements
+where (10^{geometricExponentDelta}) is the price after $geometricExponentDelta$
+increments of *exponentAtPriceOne* (which is basically the number of decrements
 of difference in price between two adjacent ticks by the power of 10)
 
 ### Tick Spacing Example: Tick to Price
@@ -195,7 +207,8 @@ of difference in price between two adjacent ticks by the power of 10)
 Bob sets a limit order on the `USD<>BTC` pool at tick 36650010. This pool's
 $exponentAtPriceOne$ is -6. What price did Bob set his limit order at?
 
-$$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$
+![eq-16](./img/eq-16.png)
+<!-- $$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$
 
 $$geometricExponentDelta = ⌊ 36650010 / 9000000 ⌋ = 4$$
 
@@ -205,7 +218,7 @@ $$currentAdditiveIncrementInTicks = 10^{(-2)} = 0.01$$
 
 $$numAdditiveTicks = 36650010 - (4 * 9000000) = 650010$$
 
-$$price = (10^{4}) + (650010 * 0.01) = 16,500.10$$
+$$price = (10^{4}) + (650010 * 0.01) = 16,500.10$$ -->
 
 Bob set his limit order at price $16,500.10
 
@@ -214,12 +227,14 @@ Bob set his limit order at price $16,500.10
 Bob sets a limit order on the `USD<>BTC` pool at price $16,500.10. This pool's
 $exponentAtPriceOne$ is -6. What tick did Bob set his limit order at?
 
-$$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$
+![eq-17](./img/eq-17.png)
+<!-- $$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$ -->
 
 We must loop through increasing exponents until we find the first exponent that
 is greater than or equal to the desired price
 
-$$currentPrice = 1$$
+![eq-18](./img/eq-18.png)
+<!-- $$currentPrice = 1$$
 
 $$ticksPassed = 0$$
 
@@ -232,11 +247,12 @@ $$ticksPassed = ticksPassed + geometricExponentIncrementDistanceInTicks =
 0 + 9000000 = 9000000$$
 
 $$totalPrice = totalPrice + maxPriceForCurrentAdditiveIncrementInTicks =
-1 + 9 = 10$$
+1 + 9 = 10$$ -->
 
 10 is less than 16,500.10, so we must increase our exponent and try again
 
-$$currentAdditiveIncrementInTicks = 10^{(-5)} = 0.00001$$
+![eq-19](./img/eq-19.png)
+<!-- $$currentAdditiveIncrementInTicks = 10^{(-5)} = 0.00001$$
 
 $$maxPriceForCurrentAdditiveIncrementInTicks = geometricExponentIncrementDistanceInTicks
 * currentAdditiveIncrementInTicks = 9000000 * 0.00001 = 90$$
@@ -245,12 +261,13 @@ $$ticksPassed = ticksPassed + geometricExponentIncrementDistanceInTicks =
 9000000 + 9000000 = 18000000$$
 
 $$totalPrice = totalPrice + maxPriceForCurrentAdditiveIncrementInTicks =
-10 + 90 = 100$$
+10 + 90 = 100$$ -->
 
 100 is less than 16,500.10, so we must increase our exponent and try again.
 This goes on until...
 
-$$currentAdditiveIncrementInTicks = 10^{(-2)} = 0.01$$
+![eq-20](./img/eq-20.png)
+<!-- $$currentAdditiveIncrementInTicks = 10^{(-2)} = 0.01$$
 
 $$maxPriceForCurrentAdditiveIncrementInTicks = geometricExponentIncrementDistanceInTicks
 * currentAdditiveIncrementInTicks = 9000000 * 0.01 = 90000$$
@@ -259,17 +276,19 @@ $$ticksPassed = ticksPassed + geometricExponentIncrementDistanceInTicks =
 36000000 + 9000000 = 45000000$$
 
 $$totalPrice = totalPrice + maxPriceForCurrentAdditiveIncrementInTicks =
-10000 + 90000 = 100000$$
+10000 + 90000 = 100000$$ -->
 
 100000 is greater than 16,500.10. This means we must now find out how many
 additive tick in the currentAdditiveIncrementInTicks of -2 we must pass in
 order to reach 16,500.10.
 
+![eq-21](./img/eq-21.png)
+<!-- 
 $$ticksToBeFulfilledByExponentAtCurrentTick = (desiredPrice - totalPrice) /
 currentAdditiveIncrementInTicks = (16500.10 - 100000) / 0.01 = -8349990$$
 
 $$tickIndex = ticksPassed + ticksToBeFulfilledByExponentAtCurrentTick =
-45000000 + -8349990 = 36650010$$
+45000000 + -8349990 = 36650010$$ -->
 
 Bob set his limit order at tick 36650010
 
@@ -287,11 +306,12 @@ As explained previously, the exponent at price one determines how much the spot
 price increases or decreases when traversing ticks. The following equation will
 assist in selecting this value:
 
-$$exponentAtPriceOne=log_{10}(\frac{D}{P})$$
+![eq-22](./img/eq-22.png)
+<!-- $$exponentAtPriceOne=log_{10}(\frac{D}{P})$$
 
 $$P=(\frac{baseAssetInUSD}{quoteAssetInUSD})$$
 
-$$D=P-(\frac{baseAssetInUSD}{quoteAssetInUSD+desiredIncrementOfQuoteInUSD})$$
+$$D=P-(\frac{baseAssetInUSD}{quoteAssetInUSD+desiredIncrementOfQuoteInUSD})$$ -->
 
 ### Example 1
 
@@ -301,12 +321,12 @@ BTC is trading at $28,000 per BTC
 We want to create a SHIB/BTC concentrated liquidity pool where SHIB is the
 baseAsset (asset0) and BTC is the quoteAsset (asset1). In terms of the quoteAsset,
 we want to increment in 10 cent values.
-
-$$P=(\frac{0.00001070}{28,000})=0.000000000382142857$$
+![eq-23](./img/eq-23.png)
+<!-- $$P=(\frac{0.00001070}{28,000})=0.000000000382142857$$
 
 $$D=(0.000000000382142857)-(\frac{0.00001070}{28,000+0.10})=0.0000000000000013647910441136$$
 
-$$exponentAtPriceOne=log_{10}(\frac{0.0000000000000013647910441136}{0.000000000382142857})=-5.447159582$$
+$$exponentAtPriceOne=log_{10}(\frac{0.0000000000000013647910441136}{0.000000000382142857})=-5.447159582$$ -->
 
 We can therefore conclude that we can use an exponent at price one of -5
 (slightly under precise) or -6 (slightly over precise) for this base/quote pair
@@ -319,11 +339,13 @@ Flipping the quoteAsset/baseAsset, for BTC/SHIB, lets determine what the
 exponentAtPriceOne should be. For SHIB as a quote, centralized exchanges
 list prices at the 10^-8, so we will set our desired increment to this value.
 
-$$P=(\frac{28,000}{0.00001070})=2616822429$$
+
+![eq-24](./img/eq-24.png)
+<!-- $$P=(\frac{28,000}{0.00001070})=2616822429$$
 
 $$D=(2616822429)-(\frac{28,000}{0.00001070+0.00000001})=2443345$$
 
-$$exponentAtPriceOne=-log_{10}(\frac{2443345}{2616822429})=-3.0297894598783$$
+$$exponentAtPriceOne=-log_{10}(\frac{2443345}{2616822429})=-3.0297894598783$$ -->
 
 We can therefore conclude that we can use an exponent at price one of -3
 for this base/quote pair and desired price granularity. This means we would
