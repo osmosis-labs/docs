@@ -23,7 +23,7 @@ similar to a limit order with order-books.
 
 The traditional Balancer AMM relies on the following curve that tracks current reserves:
 
-$$xy = k$$
+$xy = k$
 
 This formula allows for distributing liquidity along the $xy=k$ curve and across
 the entire price range of (0, &infin;).
