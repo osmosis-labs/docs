@@ -1,4 +1,8 @@
-# On-chain Integration
+---
+sidebar_position: 3
+---
+
+# Concentraed Liquidity Integration
 
 
 Concentrated liquidity is a novel Automated Market Maker (AMM) design introduced by Uniswap that allows for more efficient use of capital. The improvement is achieved by providing liquidity in specific price ranges chosen by the user.

@@ -1,0 +1,13 @@
+{
+  "position": 6,
+  "label": "Features",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "title": "Features"
+  },
+  "customProps": {
+    "description": "Listing different endpoints available for different sources for Osmosis"
+  }
+}

@@ -1,22 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Concentrated Liquidity
-
-## Index
-- [Concentrated Liquidity](#concentrated-liquidity)
-  - [Background](#background)
-  - [Notable Features](#notable-features)
-- [Our Implementation](#our-implementation)
-  - [Incentives](#Incentive-Creation-and-Querying)
-  - [Reward Splitting Between Classic and CL pools](#Reward-Splitting-Between-Classic-and-CL-pools)
-- [TWAP Integration](#twap-integration)
-- [Precision Issues With Price](#precision-issues-with-price)
-  - [Solution](#solution)
-- [Terminology](#terminology)
-- [External Sources](#external-sources)
-
 ## Background
 
 Concentrated liquidity is a novel Automated Market Maker (AMM) design introduced
@@ -273,3 +259,6 @@ Note, that the current tick of 155 is defined inside the bucket over a range of 
 
 - [Uniswap V3 Whitepaper](https://uniswap.org/whitepaper-v3.pdf)
 - [Technical Note on Liquidity Math](https://atiselsts.github.io/pdfs/uniswap-v3-liquidity-math.pdf)
+
+## Repository
+For more an in-depth docs and implementation, please visit: https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity

@@ -161,6 +161,11 @@ const config = {
             position: 'left',
           },
           {
+            label: 'Features',
+            to: 'overview/features',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/osmosis-labs',
             className: 'pseudo-icon github-icon',
             position: 'right',
