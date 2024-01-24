@@ -240,6 +240,8 @@ const config = {
           'java',
           'swift',
           'objectivec',
+          'rust',
+          'toml',
         ],
       },
       liveCodeBlock: {

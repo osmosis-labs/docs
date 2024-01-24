@@ -23,6 +23,7 @@ import {
   OsmosisCore,
   Contribute,
 } from '../icons';
+import CwOrchestratorIcon from '../icons/CwOrchestrator';
 
 export default function Homepage() {
   const router = useHistory();
@@ -268,6 +269,13 @@ export default function Homepage() {
               to="/osmosis-core/osmosisd"
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
+            />
+            <Card
+              title="Cw-orchestrator"
+              description="Rust testing and deployment tool to interact with smart contracts properly!"
+              to="/osmosis-core/guides/cw-orch"
+              icon={<TerminalIcon/>}
+              svgFile="/icons/cw-orch.svg"
             />
           </Section>
 
