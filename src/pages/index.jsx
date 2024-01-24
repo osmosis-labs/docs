@@ -23,7 +23,6 @@ import {
   OsmosisCore,
   Contribute,
 } from '../icons';
-import CwOrchestratorIcon from '../icons/CwOrchestrator';
 
 export default function Homepage() {
   const router = useHistory();
