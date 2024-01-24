@@ -38,6 +38,9 @@ In this quick-start guide, we will review the necessary steps in order to integr
   - [Creating an Interface](#creating-an-interface)
   - [Interaction helpers](#interaction-helpers)
   - [Using the integration](#using-the-integration)
+- [Integration in a workspace](#integration-in-a-workspace)
+  - [Handling dependencies and features](#handling-dependencies-and-features)
+  - [Creating an interface crate](#creating-an-interface-crate)
   - [Integrating single contracts](#integrating-single-contracts)
 - [More examples and scripts](#more-examples-and-scripts)
 
@@ -220,7 +223,8 @@ pub fn main() -> anyhow::Result<()> {
     assert_eq!(count.count, 1);
 
     Ok(())
-}```
+}
+```
 
 ## Integration in a workspace
 
