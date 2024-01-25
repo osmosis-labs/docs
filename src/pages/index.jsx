@@ -271,7 +271,7 @@ export default function Homepage() {
             />
             <Card
               title="Cw-orchestrator"
-              description="Rust testing and deployment tool to interact with smart contracts properly!"
+              description="All-in-one Rust-based CosmWasm contracts testing, scripting, and deployment tool"
               to="/osmosis-core/guides/cw-orch"
               icon={<TerminalIcon/>}
               svgFile="/icons/cw-orch.svg"
