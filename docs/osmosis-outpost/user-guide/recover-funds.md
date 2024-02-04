@@ -6,7 +6,7 @@ description: How to recover funds if the swap fails.
 
 # How to recover funds
 
-Even if the user interface allow to swap tokens with a very low effort, the 
+Even if the user interface allows to swap tokens with a very low effort, the 
 swap process involves *several steps and actors*, like **IBC transactions**, 
 **smart contract executions**. In such a context, it is reasonable that some
 steps could fail. Obviously, even if any of the steps fail, the funds are not
