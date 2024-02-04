@@ -120,14 +120,14 @@ This is our configuration file, you can find more information about it [here](co
 
 #### `.beaker`
 
-Last but not least, `.beaker` which is the most unusal part. It contains 2 files:
+Last but not least, `.beaker` which is the most unusual part. It contains 2 files:
 
 ```
 ├── state.json
 └── state.local.json
 ```
 
-These 2 files has similar functionality, which are containing beaker related state such as `address`, `code-id`, `label` for each contract on each network for later use.
+These 2 files have similar functionality, which are containing beaker related state such as `address`, `code-id`, `label` for each contract on each network for later use.
 
 While `state.json` is there for mainnet and testnet state. `state.local.json` is intended to use locally and _being gitignored_ since its state will not make any sense on other's machine.
 
@@ -144,7 +144,7 @@ cd counter-dapp
 beaker wasm new counter
 ```
 
-Now your new contract will be avaiable on `contracts/counter`.
+Now your new contract will be available on `contracts/counter`.
 
 If you want to use other contract template, you can change the configuration, for example:
 
@@ -157,7 +157,7 @@ template_repo = "https://github.com/osmosis-labs/cw-tpl-osmosis.git"
 
 ### Deploy contract on LocalOsmosis
 
-LocalOsmosis, as it's name suggest, is Osmosis for local development. In the upcoming release, Beaker will have more complete integration with LocalOsmosis, it has to be installed and run separately.
+LocalOsmosis, as its name suggest, is Osmosis for local development. In the upcoming release, Beaker will have more complete integration with LocalOsmosis, it has to be installed and run separately.
 
 You can install from source by following the instruction at [osmosis-labs/LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis), or use the official installer and select option 3:
 
@@ -171,7 +171,7 @@ After that, `counter` contract can be deployed (build + store-code + instantiate
 beaker wasm deploy counter --signer-account test1 --no-wasm-opt --raw '{ "count": 0 }'
 ```
 
-What's happending here equivalent to the following command sequence:
+What's happening here equivalent to the following command sequence:
 
 ```sh
 # build .wasm file
@@ -187,7 +187,7 @@ beaker wasm store-code counter --signer-account test1 --no-wasm-opt
 
 # instantiate counter contract
 # with instantiate msg: '{ "count": 0 }'
-beaker wasm instanitate counter --signer-account test1 --raw '{ "count": 0 }'
+beaker wasm instantiate counter --signer-account test1 --raw '{ "count": 0 }'
 ```
 
 The flag `--no-wasm-opt` is skipping [rust-optimizer](https://github.com/CosmWasm/rust-optimizer) for faster development iteration.
@@ -234,7 +234,7 @@ use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg
 ```rust
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn migrate(_deps: DepsMut, _env: Env, _msg: MigrateMsg) -> StdResult<Response> {
-    // perform state update or anything neccessary for the migration
+    // perform state update or anything necessary for the migration
     Ok(Response::default())
 }
 ```
@@ -266,7 +266,7 @@ With admin as `test1`, only `test1` can upgrade the contract
 beaker wasm upgrade counter --signer-account test1 --raw '{}' --no-wasm-opt
 ```
 
-Similar to `deploy`, `upgrade` is basiaclly running sequences of commands behind the scene:
+Similar to `deploy`, `upgrade` is basically running sequences of commands behind the scene:
 
 ```sh
 beaker wasm build --no-wasm-opt
@@ -274,7 +274,7 @@ beaker wasm store-code counter --signer-account test1 --no-wasm-opt
 beaker wasm migrate counter --signer-account test1 --raw '{}'
 ```
 
-And, like before, `--no-wasm-opt` only means for developement. For mainnet, use:
+And, like before, `--no-wasm-opt` only means for development. For mainnet, use:
 
 ```sh
 beaker wasm upgrade counter --signer-account test1 --raw '{}' --network mainnet
@@ -383,7 +383,7 @@ Beaker console is also allowed to deploy contract, so that you don't another ter
 
 `.build`, `.storeCode`, `.instantiate` commands are also available and has the same options as Beaker cli command, except that `--no-wasm-opt` are in by default since it is being intended to use in the development phase.
 
-`.help` to see all avaiable commands.
+`.help` to see all available commands.
 
 Apart from that, in the console, you can access Beaker's state, configuration and sdk from `state`, `conf` and `sdk` variables accordingly.
 
@@ -399,7 +399,7 @@ To generate sdk for contract, run
 beaker wasm ts-gen counter # replace `counter` with any of contract name
 ```
 
-With this a package is avaiable in `ts/sdk` with name `<project-name>-sdk` which can be used by any node / js / ts project.
+With this a package is available in `ts/sdk` with name `<project-name>-sdk` which can be used by any node / js / ts project.
 
 Let's try adding `multiply` method to our contract and see how this works.
 
@@ -483,7 +483,7 @@ await sc.getCount()
 
 ### Frontend
 
-Beaker project template also come with frontend template. But in order to interact with it you need:
+Beaker project template also comes with frontend template. But in order to interact with it you need:
 
 - [Keplr installed](https://www.keplr.app/)
 - [Keplr chain setup for LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis/tree/main/localKeplr)
