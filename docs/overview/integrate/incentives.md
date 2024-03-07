@@ -28,10 +28,9 @@ Creating an incentive gauge is permissionless, anyone can deposit tokens into a 
 There is a small fee in OSMO to create a gauge, which is transferred from the running wallet's balance to the Osmosis Community Pool. At the time of writing this is 50 OSMO.
 
 ### Classic and Stableswap Pool Distribution mechanism
-In Classic and Stableswap pools, it is possible to add incentives to any combination of 1-day, 7-day, and 14-day gauges. As long as a provider bonds liquidity for at least the time that is specified then they will receive a share of incentives at epoch. 
-* Incentives allocated to the 1-day gauge will be split among all three gauges. 
-* Incentives allocated to the 7-day gauge will be split among only the 7-day and 14-day gauges, but not to the 1-day gauge. 
-* Incentives allocated to the 14-day gauge will only be distributed to the 14-day gauge.
+In Classic and Stableswap pools, it is possible to add incentives to 14-day gauges*. As long as a provider bonds liquidity for at least the time that is specified, they will receive a share of incentives at epoch. 
+
+* 1 and 7 day gauges are also possible through the SDK, but this is **not** suggested and may be removed entirely in the near future
 
 ### Supercharged Pool Distribution mechanism
 In Supercharged pools, incentives are distributed block by block according to the ratio of liquidity provision to the active tick.
