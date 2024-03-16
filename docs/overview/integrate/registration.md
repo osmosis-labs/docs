@@ -8,7 +8,7 @@ This guide intends to support teams looking to enlist their tokenized crypto ass
 
 At a very high level, the process entails three main steps:
  - Registering to the Cosmos Chain Registry,
- - Registering to Osmosis Labs’ Assetlist Registry, and
+ - Registering to Osmosis Labsâ€™ Assetlist Registry, and
  - Establishing markets for the asset on Osmosis.
 Note that the overall process could require collaboration from knowledgeable technical teams to provide information or services, as well as market-making entities to provide funding for initial liquidity or incentive programs.
 
@@ -114,10 +114,11 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
     2. [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md)
     3. [assetlist.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/assetlist.schema.json)
 2. Submit a pull request with necessary changes to enlist the asset:
-  1. Ensure the source chain in included in `osmosis-1/osmosis.zone_chains.json`.
+  - Ensure the source chain in included in `osmosis-1/osmosis.zone_chains.json`.
     - If not yet registered, add the chain object to the end of the `chains` array.
     - Include `chain_name`, `rpc`, `rest`, `explorer_tx_url`, and `keplr_features`.
       - E.G.,
+        
       ```
         {
           "chain_name": "osmosis",
@@ -133,7 +134,7 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
           ]
         }
       ```
-  2. Add the asset to the `osmosis-1/osmosis.zone_assets.json` file.
+  - Add the asset to the `osmosis-1/osmosis.zone_assets.json` file.
     - Add the new asset object to the end of the `assets` array.
     - Include `base_denom`, `chain_name`, and `path`.
     - New additions always must always start with `"osmosis_unlisted": true
@@ -145,6 +146,7 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
       - E.G., `"peg_mechanism": "collateralized"`
     - If transferring the asset is not a simple IBC transfer, but requires another bridging/transfer interface, provide the URL(s) for the Deposit and Withdraw functions in the `transfer_methods` array within the asset's object.
     - E.G.,
+      
     ```
     {
       "chain_name": "terra",
