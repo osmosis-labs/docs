@@ -166,7 +166,7 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
       ]
     },
     ```
-  3. In the Pull Request, briefly describe the change, and complete the checklist as thoroughly as possible.
+  - In the Pull Request, briefly describe the change, and complete the checklist as thoroughly as possible.
     - New Pull Requests will automatically initialize with a description template that includes the checklist.
     - Be sure to describe the plan for onchain liquidity, and provide a Pool ID once one exists.
     - The PR reviewers will assist with any questions.
