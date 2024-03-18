@@ -49,7 +49,7 @@ The data provided through the assetlist are realized to be consumed by an
 
 For this reason, according to how an outpost is designed, you need to ensure
 that all the tokens you are listing, are able to be swapped on Osmosis and
-recevied from and sent to the `outpost chain`.
+received from and sent to the `outpost chain`.
 To do this, you need to list only the tokens who can reach your blockchain.
 
 > E.g., if you are constructing the `Juno outpost` and `Stride blockchain` does

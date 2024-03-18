@@ -36,6 +36,6 @@ Once you have integrated the widget, or created your new platform application,
 we recommend you create a support channel in your own community for users to 
 troubleshoot issues that users may encounter while using the widget or the app.
 
-If you, our your users, discover any **issues or errors** while using the 
+If you, or your users, discover any **issues or errors** while using the 
 platform, please *reach us* through the channels available 
 [here](../../contact).

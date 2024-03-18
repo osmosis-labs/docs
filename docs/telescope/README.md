@@ -128,7 +128,7 @@ To create the Typescript files, run the `transpile` command.
 telescope transpile
 ```
 
-You should now seem some `.ts` files generated in `./src`. These are the real source files used in your application.
+You should now see some `.ts` files generated in `./src`. These are the real source files used in your application.
 
 ### Build
 
@@ -139,10 +139,10 @@ yarn install
 yarn buidl
 ```
 
-Now you should have code inside of your `./src` folder, ready for publshing via `npm publish`. Or, if you used the defaults, you can start developing and your code can be imported from `./src/codegen`;
+Now you should have code inside of your `./src` folder, ready for publishing via `npm publish`. Or, if you used the defaults, you can start developing and your code can be imported from `./src/codegen`;
 
 # Usage
-## Programatic Usage
+## Programmatic Usage
 
 First add telescope to your `devDependencies`:
 

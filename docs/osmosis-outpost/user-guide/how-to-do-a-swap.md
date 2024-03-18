@@ -8,7 +8,7 @@ description: How to perform a swap.
 
 ### 1. Connect a wallet
 
-To **swap tokens**, the fist step is to connect the wallet containing such 
+To **swap tokens**, the first step is to connect the wallet containing such 
 tokens to the dApp. To do this, you can *click* on one of the two "connect
 wallet" buttons available on the page (one on the bottom right, the other on
 the bottom center). Once the wallet is connected to the dApp, you can see the 
