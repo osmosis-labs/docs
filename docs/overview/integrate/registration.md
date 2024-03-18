@@ -162,8 +162,6 @@ Asset Data
 1. Review the [Osmosis Frontend Repo](https://github.com/osmosis-labs/osmosis-frontend) docs:
     1. [README.md](https://github.com/osmosis-labs/osmosis-frontend/blob/master/README.md)
 2. Submit a pull request branch with necessary changes to the following:
-    - `osmosis-frontend/packages/web/public/tokens/`:
-        - Add token logo images
     - `osmosis-frontend/packages/web/config/chain-infos.ts`:
         - Add chain data to the `chainInfos` onject
             - Include the optimal RPC and REST endpoints
