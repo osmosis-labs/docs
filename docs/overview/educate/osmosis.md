@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 # What is Osmosis?
 
-Osmosis is the premier cross-chain DeFi hub. As the liquidity center and primary trading venue of Cosmos – the open, emergent ecosystem of sovereign Layer 1s connected with the [Inter-Blockchain Communication protocol](https://ibcprotocol.org/) (IBC) – it is the access point for the wide world of appchains, the gateway to the interchain.
+Osmosis is the premier cross-chain DeFi hub. As the liquidity center and primary trading venue of Cosmos – the open, emergent ecosystem of sovereign Layer 1s connected with the [Inter-Blockchain Communication protocol](https://www.ibcprotocol.dev/) (IBC) – it is the access point for the wide world of appchains, the gateway to the interchain.
 As IBC continues to explode – with more than 50 blockchains connected and dozens more in development, including [dYdX chain](https://dydx.exchange/blog/dydx-chain), and with teams working to enable IBC on [Avalanche](https://www.landslide.network/), [Polkadot](https://docs.composable.finance/products/centauri-overview/), [NEAR](https://medium.com/composable-finance/near-foundation-issues-grant-to-composable-for-extending-ibc-to-near-via-the-centauri-bridge-e1d6c291ffb8), and others, potentially even [Ethereum](https://ethresear.ch/t/bringing-ibc-to-ethereum-using-zk-snarks/13634) – Osmosis will be there to welcome new users, developers, and protocols to the Internet of Blockchains.
 
 ![](../../assets/welcome.png)
