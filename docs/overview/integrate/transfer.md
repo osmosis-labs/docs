@@ -26,8 +26,8 @@ IBC transfers can be enabled:
 To ensure a smooth user experience, Osmosis assumes all tokens will be transferred through a single designated IBC channel between Osmosis and the counterparty zone.
 
 Recommended readings:
-* [IBC Overview](https://docs.cosmos.network/master/ibc/overview.html) - To understand IBC clients, connections, 
-* [How to Upgrade IBC Chains and their Clients](https://docs.cosmos.network/master/ibc/upgrades/quick-guide.html)
+* [IBC Overview](https://ibc.cosmos.network/main/ibc/overview) - To understand IBC components, including clients, connections, proofs, paths, and channels.
+* [How to Upgrade IBC Chains and their Clients](https://ibc.cosmos.network/main/ibc/upgrades/quick-guide)
 
 ### Not on a Cosmos-SDK chain?
 Several intermediary chains are in use or being developed that link the IBC enabled Cosmos with other ecosystems.

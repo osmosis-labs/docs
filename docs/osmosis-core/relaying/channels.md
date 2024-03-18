@@ -50,3 +50,4 @@ sidebar_position: 3
 | osmosis-1 | channel-175 | fetch.ai | fetchhub-3 | channel-0 |
 | osmosis-1 | channel-204 | evmos | evmos_9001-1 | channel-0 |
 | osmosis-1 | channel-143 | kava | kava-9 | channel-1 |
+| osmosis-1 | channel-20100 | scorum | scorum-1 | channel-1 |
