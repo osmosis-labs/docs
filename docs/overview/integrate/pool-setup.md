@@ -16,7 +16,8 @@ There are several different types of liquidity pools on Osmosis, each with uniqu
 - Supercharged Liquidity (Concentrated Liquidity) Pool, and
 - CosmWasm Pools (e.g., Transmuter and Alloyed Assets)
 
-Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), the Pool Creation Fee is 100 USDC.
+Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), a pool creation fee of 100 USDC is required.<br>
+*[fee taken automatically when creating via CLI]*
 
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.
 
