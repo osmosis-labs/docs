@@ -269,6 +269,13 @@ export default function Homepage() {
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
             />
+            <Card
+              title="Cw-orchestrator"
+              description="All-in-one Rust-based CosmWasm contracts testing, scripting, and deployment tool"
+              to="/cosmwasm/cw-orch"
+              icon={<TerminalIcon/>}
+              svgFile="/icons/cw-orch.svg"
+            />
           </Section>
 
           <Section title="📜 API Reference">
