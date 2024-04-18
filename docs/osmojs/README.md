@@ -105,6 +105,56 @@ const fee = {
 };
 ```
 
+### Doing a swap 
+```js
+  const signingClient = await getSigningOsmosisClient({
+      rpcEndpoint: getRpcEndpoint(),
+      signer: aminoSigner
+    });
+
+    const ibcDenom = pool.poolAssets.find((asset) => {
+      if (asset.token.denom.startsWith('ibc/')) {
+        return asset;
+      }
+    }).token.denom;
+
+    const balanceBefore = await signingClient.getBalance(address, ibcDenom);
+
+    const msg =
+      osmosis.gamm.v1beta1.MessageComposer.withTypeUrl.swapExactAmountIn({
+        sender: address,
+        routes: [
+          {
+            poolId,
+            tokenOutDenom: ibcDenom
+          }
+        ],
+        tokenIn: {
+          amount: '200000',
+          denom: denom
+        },
+        tokenOutMinAmount: '100000'
+      });
+
+    const fee = {
+      amount: [
+        {
+          denom,
+          amount: '100000'
+        }
+      ],
+      gas: '550000'
+    };
+
+    const result = await signingClient.signAndBroadcast(
+      address,
+      [msg],
+      fee,
+      'swap tokens'
+    );
+```
+
+
 ### Initializing the Stargate Client
 
 Use `getSigningOsmosisClient` to get your `SigningStargateClient`, with the Osmosis proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
@@ -257,9 +307,11 @@ const {
 } = cosmwasm.wasm.v1.MessageComposer.withTypeUrl;
 ```
 
-### Advanced Usage
+### Further examples
 
-[documentation](https://github.com/osmosis-labs/osmojs/tree/main/packages/osmojs/docs)
+Examples in [`create-cosmos-app` repo's examples directory](https://github.com/cosmology-tech/create-cosmos-app/tree/main/examples) gives you a great guideline on how osmojs can be used at its full extent.
+
+You can also refer to the [osmojs documentation](https://github.com/osmosis-labs/osmojs/tree/main/packages/osmojs/docs) for further documentations on osmojs usage.
 
 ## Credits
 
