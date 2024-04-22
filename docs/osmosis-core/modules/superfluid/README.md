@@ -291,7 +291,7 @@ type MsgSuperfluidUndelegate struct {
   pair
 - Create a new `SyntheticLockup` which is unbonding
 - Calculate the amount of `Osmo` delegated on behalf of this `lock` as
-  `Osmo Equivalent Multipler` \* `# LP Shares` \*
+  `Osmo Equivalent Multiplier` \* `# LP Shares` \*
   `Risk Adjustment Factor`
   - If this amount is less than 0.000001 `Osmo`, there is no
     delegated `Osmo` to undelegate and burn
@@ -373,7 +373,7 @@ Overall Epoch sequence
     - (Currently spot price at epoch)
   - Refresh delegation amounts for all `Intermediary Accounts`
     - Calculate the expected delegation for this account as
-      `Osmo Equivalent Multipler` _`# LP Shares`_
+      `Osmo Equivalent Multiplier` _`# LP Shares`_
       `Risk adjustment`
       - If this is less than 0.000001 `Osmo` it will be rounded
         to 0

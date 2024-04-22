@@ -553,5 +553,5 @@ The result was 6 transfers, represented by the 6 `coin_received` and 6 `coin_spe
 
 These align precisely with the `coin_spent` and `coin_received` entries.
 
-This specific transaction was an arbitrage transaction. With one exact swap in/out, the initator deposited 15000000uosmo and
+This specific transaction was an arbitrage transaction. With one exact swap in/out, the initiator deposited 15000000uosmo and
 received 15003605uosmo, a gain of 3605uosmo.

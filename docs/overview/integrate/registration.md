@@ -177,4 +177,4 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
 
 ## Step 3 (optional): Complete the Asset Integration
 
-To create an ideal user experience when interacting with an Asset on Osmosios Zone, it is best to ensure that all metadata is registered, dependend data sources have all data about the asset, and that there is sufficient and efficient liquidity of the asset on Osmosis. See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details.
+To create an ideal user experience when interacting with an Asset on Osmosios Zone, it is best to ensure that all metadata is registered, dependent data sources have all data about the asset, and that there is sufficient and efficient liquidity of the asset on Osmosis. See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details.

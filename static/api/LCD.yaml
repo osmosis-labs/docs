@@ -24093,7 +24093,7 @@ paths:
         schema:
           format: uint64
           type: string
-      - description: voter defines the oter address for the proposals.
+      - description: voter defines the other address for the proposals.
         in: path
         name: voter
         required: true

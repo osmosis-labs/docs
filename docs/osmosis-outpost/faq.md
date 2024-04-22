@@ -31,7 +31,7 @@ sub-operations, or sub-swaps, maybe passing through the OSMO token.
 
 ### Not allowed
 If you want to perform a swap but the swap button is disabled and says 
-"Not allowd", this means that you denied the connection of the dApp to one of 
+"Not allowed", this means that you denied the connection of the dApp to one of 
 the chains involved in the swap operations. You can allow/deny such permissions
 directly through your wallet (e.g., keplr).
 
