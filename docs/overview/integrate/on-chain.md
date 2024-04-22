@@ -57,7 +57,7 @@ Concentrated liquidity is available on the OsmoJS package. For more information 
 
 ## CosmWasm - (`osmosis-std`)
 
-Concentrated liquidity types and querier are available on [`osmosis-std` crate.](https://crates.io/crates/osmosis-std/)
+Concentrated liquidity types and querier are available on [`osmosis-std` create.](https://crates.io/crates/osmosis-std/)
 
 ### Install `osmosis-std`
 ```bash
@@ -155,7 +155,7 @@ type MsgCreatePosition struct {
 
 - **Response**
 
-On succesful response, we receive the actual amounts of each token used to
+On successful response, we receive the actual amounts of each token used to
 create the liquidityCreated number of shares in the given range.
 
 ```go

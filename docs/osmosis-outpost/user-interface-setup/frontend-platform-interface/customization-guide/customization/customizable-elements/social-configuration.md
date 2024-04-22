@@ -20,7 +20,7 @@ This is a url to add as link to the label "Analytics". We recommend you to use
 a link to your DeFi project analytics, as the one provided by the 
 [info.osmosis.zone](https://info.osmosis.zone) service.
 
-E.g., for the Osmosis project, we reccomend you to use
+E.g., for the Osmosis project, we recommend you to use
 [info.osmosis.zone/token/OSMO](https://info.osmosis.zone/token/OSMO).
 
 ```bash
@@ -32,7 +32,7 @@ NEXT_PUBLIC_ANALYTICS_LINK=
 This is a url to add as link to the label "Documentation". We recommend you to 
 use a link to your project documentation.
 
-E.g., for the Osmosis project, we reccomend you to use
+E.g., for the Osmosis project, we recommend you to use
 [docs.osmosis.zone](https://docs.osmosis.zone).
 
 ```bash
@@ -44,7 +44,7 @@ NEXT_PUBLIC_DOCS_LINK=
 This is a url to add as link to the label "GitHub". Use the link to your 
 GitHub organization/project.
 
-E.g., for the Osmosis project, we reccomend you to use
+E.g., for the Osmosis project, we recommend you to use
 [github.com/osmosis-labs](https://github.com/osmosis-labs).
 
 ```bash

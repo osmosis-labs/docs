@@ -11,7 +11,7 @@ import PropsTable from '../components/PropsTable';
 import ComponentsGrid from '../components/ComponentsGrid';
 
 export default {
-  // Re-use the default mapping
+  // Reuse the default mapping
   ...MDXComponents,
 
   Tabs,

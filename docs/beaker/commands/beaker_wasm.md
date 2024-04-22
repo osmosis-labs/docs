@@ -218,7 +218,7 @@ Arguments:
 
 * ` <contract-name>`Name of the contract to instantiate
 
-* `-l/--label <label>`: Label for the instantiated contract for selcting migration target (default: `default`)
+* `-l/--label <label>`: Label for the instantiated contract for selecting migration target (default: `default`)
 
 * `-r/--raw <raw>`: Raw json string to use as instantiate msg
 

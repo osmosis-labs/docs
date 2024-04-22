@@ -55,7 +55,7 @@ msg := MsgExecuteContract{
 
 ### ICS20 packet structure
 
-So given the details above, we propogate the implied ICS20 packet data structure.
+So given the details above, we propagate the implied ICS20 packet data structure.
 ICS20 is JSON native, so we use JSON for the memo format.
 
 ```json 
@@ -94,7 +94,7 @@ We consider an ICS20 packet as directed towards wasmhooks iff all of the followi
 * `memo` has at least one key, with name `"wasm"`
 
 If an ICS20 packet is not directed towards wasmhooks, wasmhooks doesn't do anything.
-If an ICS20 packet is directed towards wasmhooks, and is formated incorrectly, then wasmhooks returns an error.
+If an ICS20 packet is directed towards wasmhooks, and is formatted incorrectly, then wasmhooks returns an error.
 
 ### Execution flow
 

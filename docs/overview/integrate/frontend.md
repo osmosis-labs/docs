@@ -18,4 +18,4 @@ Approval requires meeting the requirements in the assetlist repo that can be see
 
 ## Swap Page
 
-Although any asset in a liquidity pool can be traded when a user specifies the pool, an asset will only be listed on the Swap page if it is has a pool cointaining liquidity of USD $10,000.
+Although any asset in a liquidity pool can be traded when a user specifies the pool, an asset will only be listed on the Swap page if it is has a pool containing liquidity of USD $10,000.

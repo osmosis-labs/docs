@@ -26,7 +26,7 @@ Arguments:
 
 * `--title <title>`: Proposal title (default: ``)
 
-* `--description <description>`: Proposal decsription (default: ``)
+* `--description <description>`: Proposal description (default: ``)
 
 * `--deposit <deposit>`: Proposal deposit to activate voting
 

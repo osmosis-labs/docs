@@ -64,7 +64,7 @@ paths:
       description: |-
         List all existing paths with pending packets, last tx and since when (in minutes)
            
-        optionnal: filter by dex
+        optional: filter by dex
       operationId: ibc_all
       parameters:
         - required: false
@@ -733,7 +733,7 @@ paths:
       tags:
         - fees
       summary: Fees Spent Pool
-      description: fees paid on 24h and 7d timeframe from a choosen pools
+      description: fees paid on 24h and 7d timeframe from a chosen pools
       operationId: fees_spent_pool
       parameters:
         - required: true

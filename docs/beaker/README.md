@@ -225,10 +225,10 @@ To create the contract entrypoint for migration, first, define `MigrateMsg` in `
 pub struct MigrateMsg {}
 ```
 
-With MigrateMsg defined we need to update `contract.rs`. First update the import from `crate::msg` to include `MigrateMsg`:
+With MigrateMsg defined we need to update `contract.rs`. First update the import from `create::msg` to include `MigrateMsg`:
 
 ```rust
-use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
+use create::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
 ```
 
 ```rust
@@ -340,7 +340,7 @@ await contract.counter.signer(account.test1).execute({ increment: {} });
 await contract.counter.query({ get_count: {} });
 ```
 
-You can find avaialable methods for the aforementioned instances here:
+You can find available methods for the aforementioned instances here:
 
 - [Account](console/classes//Account.md#methods-1)
 - [Contract](./console/classes//Contract.md#methods-1)

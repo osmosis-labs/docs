@@ -202,7 +202,7 @@ Here is a list of the corresponding password managers in different operating sys
   - [kwallet](https://api.kde.org/frameworks/kwallet/html/index.html)
 
 ### file backend
-The `file` backend stores the encrypted keys inside the app's configuration directory. A password entry is required everytime a user access it, which may also occur multiple times of repeated password prompts in one single command.
+The `file` backend stores the encrypted keys inside the app's configuration directory. A password entry is required every time a user access it, which may also occur multiple times of repeated password prompts in one single command.
 
 ### test backend
 The `test` backend is a password-less variation of the `file` backend. It stores unencrypted keys inside the app's configuration directory. It should only be used in testing environments and never be used in production.

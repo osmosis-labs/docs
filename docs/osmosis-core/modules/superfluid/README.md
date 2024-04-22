@@ -610,7 +610,7 @@ The params query returns the params for the superfluid module. This
 currently contains:
 
 - `MinimumRiskFactor` which is an sdk.Dec that represents the discount
-  to apply to all superfluid staked modules when calcultating their
+  to apply to all superfluid staked modules when calculating their
   staking power. For example, if a specific denom has an OSMO
   equivalent value of 100 OSMO, but the the `MinimumRiskFactor` param
   is 0.05, then the denom will only get 95 OSMO worth of staking power
@@ -784,7 +784,7 @@ message SuperfluidDelegationRecord {
 ```
 
 This query returns a list of all the superfluid delegations of a
-specific delegator. The return value includes, the validator delgated to
+specific delegator. The return value includes, the validator delegated to
 and the delegated coins (both denom and amount).
 
 The return value of the query also includes the `total_delegated_coins`
@@ -906,7 +906,7 @@ already safely handled by the Superfluid refreshing logic.
 
 The refreshing logic checks the total amount of tokens in locks to this
 denom (Reading from the lockup accumulation store), calculates how many
-osmo thats worth at the epochs new osmo worth for that asset, and then
+osmo that's worth at the epochs new osmo worth for that asset, and then
 uses that. Thus this safely handles this edge case, as it uses the new
 'live' lockup amount.
 
@@ -972,7 +972,7 @@ for the underlying asset.
 
 ### SlashLockupsForValidatorSlash (BeforeValidatorSlashed Hook)
 
-During slashing the invariant is likely to be temporraily broken if the
+During slashing the invariant is likely to be temporarily broken if the
 referenced validator has any unbonding delegations. These unbonding
 delegations are slashed first, which means that the amount delegated by
 the `IntermediaryAccount` will be slashed by less than the

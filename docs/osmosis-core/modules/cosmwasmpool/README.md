@@ -83,9 +83,9 @@ sequenceDiagram
 
 Currently, all existing pool types have their own way of providing liquidity and shares calculation. CosmWasm pool aims to be flexible that regards and let the contract define the way of providing liquidity. So there is no restriction here, and the contract developer can define the way of providing liquidity as they wish, potentially with execute endpoint since `MsgExecuteContract` triggers state mutating endpoint and can also attach funds to it.
 
-Common interface and later be defined for the contract to implement as spec and/or create a separated crate for that purpose.
+Common interface and later be defined for the contract to implement as spec and/or create a separated create for that purpose.
 
-It's important to note that the _**contract itselfs hold tokens that are provided by users**_.
+It's important to note that the _**contract itself hold tokens that are provided by users**_.
 
 
 ## Swap
@@ -140,7 +140,7 @@ And because sudo message can't attach funds like execute message, chain-side is 
 
 ## Deactivating
 
-On contract's sudo enpoint, `SetActive` can be called to deactivate the pool. This will prevent the pool from being used for swap, and also prevent users from providing liquidity to the pool. Contract needs to check if the pool is active before performing any state mutating operation except `SetActive`.
+On contract's sudo endpoint, `SetActive` can be called to deactivate the pool. This will prevent the pool from being used for swap, and also prevent users from providing liquidity to the pool. Contract needs to check if the pool is active before performing any state mutating operation except `SetActive`.
 
 ```rs
 SetActive {

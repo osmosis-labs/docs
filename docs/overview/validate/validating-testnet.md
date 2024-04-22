@@ -91,7 +91,7 @@ If you inspect your `create-validator` transaction in the explorer, and see the 
 out of gas in location: WritePerByte; gasWanted: 177140, gasUsed: 177979: out of gas
 ```
 
-Please try subsituting:
+Please try substituting:
 ```
 --gas="auto" \
 --gas-prices="0.0025uosmo"

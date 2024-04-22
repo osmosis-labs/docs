@@ -20,7 +20,7 @@ Fee-abs implementation:
 
 - Fee-abs module imported to the customer chain.
 
-The implememtation also uses Osmosis swap router and async-icq module which are already deployed on Osmosis testnet.
+The implementation also uses Osmosis swap router and async-icq module which are already deployed on Osmosis testnet.
 
 ## Prototype
 
@@ -36,7 +36,7 @@ Fee-abs mechanism in a nutshell:
 
  3. Swap accumulated ibc-token fee:
 
-- The collected ibc-token users use for tx fee is periodically swaped back to customer chain's native token using osmosis.
+- The collected ibc-token users use for tx fee is periodically swapped back to customer chain's native token using osmosis.
 
 We'll goes into all the details now:
 

@@ -42,7 +42,7 @@ CONTRACT=cw20_base
 ```
 
 ## Define proposal ID
-We cannot really do this progamatically. Proposal `1` will come out after submitting it for the first time on a new chain. You can always update this manually when testing multiple times on the same state.
+We cannot really do this programmatically. Proposal `1` will come out after submitting it for the first time on a new chain. You can always update this manually when testing multiple times on the same state.
 
 ```
 PROPOSAL=1

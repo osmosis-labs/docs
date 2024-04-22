@@ -163,7 +163,7 @@ osmosisd query block 2836990 | jq '.block.data.txs[0]' | base64 -D > outfile
 ```
 
 The `outfile` will contain raw protobuf data.
-Protobuf data does not contain its own structre with it. It requires the `.proto` file to understand
+Protobuf data does not contain its own structure with it. It requires the `.proto` file to understand
 and interpret the fields, including converting them to a readable json format.
 
 Fortunately, `osmosisd` provides some basic tools for querying individual transactions. It does not,
