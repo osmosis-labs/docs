@@ -182,7 +182,7 @@ Pools have the following parameters:
     This allows pool governance to smoothly change the weights of the assets it holds in the pool. So it can slowly move from a 2:1 ratio, to a 1:1 ratio.
     Currently, smooth weight changes are implemented as a linear change in weight ratios over a given duration of time. So weights changed from 4:1 to 2:2 over 2 days, then at day 1 of the change, the weights would be 3:1.5, and at day 2 its 2:2, and will remain at these weight ratios.
 
-The GAMM module also has a **PoolCreationFee** parameter, which currently is set to `100000000 uusdc` or `100 USDC`.
+The GAMM module also has a **PoolCreationFee** parameter, which currently is set to `20000000 uusdc` or `20 USDC`.
 
 [comment]: `<>` (TODO Add better description of how the weights affect things)
 
@@ -283,7 +283,7 @@ The configuration json file contains the following parameters:
 :::
 
 ::: warning
-There is now a 100 USDC fee for creating pools.
+There is now a 20 USDC fee for creating pools.
 :::
 
 ### Join pool
