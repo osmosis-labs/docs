@@ -71,7 +71,7 @@ tags:
   - name: Websocket
     description: Subscribe/unsubscribe are reserved for websocket events.
   - name: Info
-    description: Informations about the node APIs
+    description: Information about the node APIs
   - name: Tx
     description: Transactions broadcast APIs
   - name: ABCI
@@ -1375,7 +1375,7 @@ paths:
       parameters:
         - in: query
           name: hash
-          description: transaction Hash to retrive
+          description: transaction Hash to retrieve
           required: true
           schema:
             type: string
@@ -3172,9 +3172,9 @@ components:
               example: 2
           type: object
 
-    ###### Reuseable types ######
+    ###### Reusable types ######
 
-    # Validator type with proposer prioirty
+    # Validator type with proposer priority
     ValidatorPriority:
       type: object
       properties:

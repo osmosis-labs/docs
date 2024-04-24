@@ -4316,7 +4316,7 @@ paths:
       - name: latest_height
         in: query
         description: |-
-          latest_height overrrides the height field and queries the latest stored
+          latest_height overrides the height field and queries the latest stored
           ConsensusState.
         schema:
           type: boolean
@@ -5440,7 +5440,7 @@ paths:
                                 items:
                                   type: string
                             description: |-
-                              Version defines the versioning scheme used to negotiate the IBC verison in
+                              Version defines the versioning scheme used to negotiate the IBC version in
                               the connection handshake.
                         state:
                           type: string
@@ -5714,7 +5714,7 @@ paths:
                               items:
                                 type: string
                           description: |-
-                            Version defines the versioning scheme used to negotiate the IBC verison in
+                            Version defines the versioning scheme used to negotiate the IBC version in
                             the connection handshake.
                       state:
                         type: string
@@ -11008,7 +11008,7 @@ components:
               signatures required by gogoproto.
     ibc.core.channel.v1.PacketId:
       title: |-
-        PacketId is an identifer for a unique Packet
+        PacketId is an identifier for a unique Packet
         Source chains refer to packets by source port/channel
         Destination chains refer to packets by destination port/channel
       type: object
@@ -12344,7 +12344,7 @@ components:
                 items:
                   type: string
             description: |-
-              Version defines the versioning scheme used to negotiate the IBC verison in
+              Version defines the versioning scheme used to negotiate the IBC version in
               the connection handshake.
         state:
           type: string
@@ -12446,7 +12446,7 @@ components:
                 items:
                   type: string
             description: |-
-              Version defines the versioning scheme used to negotiate the IBC verison in
+              Version defines the versioning scheme used to negotiate the IBC version in
               the connection handshake.
         state:
           type: string
@@ -12865,7 +12865,7 @@ components:
                     items:
                       type: string
                 description: |-
-                  Version defines the versioning scheme used to negotiate the IBC verison in
+                  Version defines the versioning scheme used to negotiate the IBC version in
                   the connection handshake.
             state:
               type: string
@@ -12974,7 +12974,7 @@ components:
                       items:
                         type: string
                   description: |-
-                    Version defines the versioning scheme used to negotiate the IBC verison in
+                    Version defines the versioning scheme used to negotiate the IBC version in
                     the connection handshake.
               state:
                 type: string
@@ -13095,7 +13095,7 @@ components:
           items:
             type: string
       description: |-
-        Version defines the versioning scheme used to negotiate the IBC verison in
+        Version defines the versioning scheme used to negotiate the IBC version in
         the connection handshake.
     ibc.core.channel.v1.Channel:
       type: object
