@@ -54,7 +54,7 @@ see which tokens you are able to recover, and there is a button to recover them.
 ### Settings
 You can set the *slippage tolerance* and the recovery address. You can perform 
 this action through the settings screen. Here, you can see a list of buttons 
-that allow you to select one of the default values avaliable for the slippage 
+that allow you to select one of the default values available for the slippage 
 tolerance, and a numeric input box that let you insert a custom value. In the 
 bottom of the page, you have the ability to set a valid osmosis address as the
 recovery address. Please, read carefully 

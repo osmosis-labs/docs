@@ -3274,7 +3274,7 @@ components:
     cosmos.distribution.v1beta1.QueryValidatorCommissionResponse:
       properties:
         commission:
-          description: commission defines the commision the validator received.
+          description: commission defines the commission the validator received.
           properties:
             commission:
               items:
@@ -7804,7 +7804,7 @@ components:
 
         gas to be used by the transaction. The ratio yields an effective "gasprice",
 
-        which must be above some miminum to be accepted into the mempool.'
+        which must be above some minimum to be accepted into the mempool.'
       properties:
         amount:
           items:
@@ -10939,7 +10939,7 @@ components:
         lockable_durations:
           items:
             type: string
-          title: Time durations that users can lock coins for in order to recieve
+          title: Time durations that users can lock coins for in order to receive
             rewards
           type: array
       type: object
@@ -10959,7 +10959,7 @@ components:
               denom:
                 type: string
             type: object
-          title: 'Estimated coin rewards that will be recieved at provided address
+          title: 'Estimated coin rewards that will be received at provided address
 
             from specified locks between current time and end epoch'
           type: array
@@ -12911,7 +12911,7 @@ components:
 
             to be set as the Time-weighted-average-osmo-backing for the entire duration
 
-            of epoch N-1. (Thereby locking whats in use for epoch N as based on the
+            of epoch N-1. (Thereby locking what's in use for epoch N as based on the
             prior
 
             epochs rewards) However for now, this is not the TWAP but instead the
@@ -13069,7 +13069,7 @@ components:
 
         to be set as the Time-weighted-average-osmo-backing for the entire duration
 
-        of epoch N-1. (Thereby locking whats in use for epoch N as based on the prior
+        of epoch N-1. (Thereby locking what's in use for epoch N as based on the prior
 
         epochs rewards) However for now, this is not the TWAP but instead the spot
 
@@ -21367,7 +21367,7 @@ paths:
               schema:
                 properties:
                   commission:
-                    description: commission defines the commision the validator received.
+                    description: commission defines the commission the validator received.
                     properties:
                       commission:
                         items:
@@ -24093,7 +24093,7 @@ paths:
         schema:
           format: uint64
           type: string
-      - description: voter defines the oter address for the proposals.
+      - description: voter defines the other address for the proposals.
         in: path
         name: voter
         required: true
@@ -30186,7 +30186,7 @@ paths:
     get:
       operationId: PoolsWithFilter
       parameters:
-      - description: 'String of the coins in single string seperated by comma. Ex)
+      - description: 'String of the coins in single string separated by comma. Ex)
 
           10uatom,100uosmo.'
         in: query
@@ -33251,7 +33251,7 @@ paths:
                     items:
                       type: string
                     title: Time durations that users can lock coins for in order to
-                      recieve rewards
+                      receive rewards
                     type: array
                 type: object
           description: A successful response.
@@ -33391,7 +33391,7 @@ paths:
                         denom:
                           type: string
                       type: object
-                    title: 'Estimated coin rewards that will be recieved at provided
+                    title: 'Estimated coin rewards that will be received at provided
                       address
 
                       from specified locks between current time and end epoch'
@@ -37326,7 +37326,7 @@ paths:
                       to be set as the Time-weighted-average-osmo-backing for the
                       entire duration
 
-                      of epoch N-1. (Thereby locking whats in use for epoch N as based
+                      of epoch N-1. (Thereby locking what's in use for epoch N as based
                       on the prior
 
                       epochs rewards) However for now, this is not the TWAP but instead

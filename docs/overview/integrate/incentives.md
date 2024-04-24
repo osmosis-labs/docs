@@ -7,7 +7,7 @@ Liquidity Providers on Osmosis receive swap fees by default, but can receive add
 
 * [External Incentives](#external-incentives)
 
-	Osmosis allows for the permissionless creation of external liquidity mining gauges, allowing projects to add thier own rewards to further incentivize users to provide liquidity into a pool.
+	Osmosis allows for the permissionless creation of external liquidity mining gauges, allowing projects to add their own rewards to further incentivize users to provide liquidity into a pool.
 
 * [Internal Incentives](#internal-incentives)
 

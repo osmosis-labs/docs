@@ -4,13 +4,13 @@ sidebar_position: 12
 
 # Interact with RPC endpoints
 
-As shown on the RPC specifications, there are different endpoints to communicate with the Osmosis chain. Unlike the LCD rest api, the RPC endpoints provide genereic endpoints to communicate with the various modules available. For example the [ABCI Query](/api?v=RPC#/operations/abci_query) allows you the query different data from Osmosis.
+As shown on the RPC specifications, there are different endpoints to communicate with the Osmosis chain. Unlike the LCD rest api, the RPC endpoints provide generic endpoints to communicate with the various modules available. For example the [ABCI Query](/api?v=RPC#/operations/abci_query) allows you the query different data from Osmosis.
 
 For more information please read generating, [signing and boradcasting transactions.] https://docs.cosmos.network/v0.46/run-node/txs.html on the cosmos-sdk docs. 
 
 ## Querying the ABCI Query with Javascript via Telescope
 
-If you are looking to query, sign and broadcast transactions using Javascript. Telescope and OsmoJS make this very easy. The following is a very simple example of you could acomplish this using Telescope.
+If you are looking to query, sign and broadcast transactions using Javascript. Telescope and OsmoJS make this very easy. The following is a very simple example of you could accomplish this using Telescope.
 
 ## Setting up Telescope
 ```bash

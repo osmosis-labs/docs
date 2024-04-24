@@ -22,5 +22,5 @@ all the logic necessary to integrate it in an existing dApp.
 If you are interested in customizing the style of your own widget, please 
 follow the instructions [here](./customization-guide/customizability).
 
-Otherwise, if you are interested in embedding the widget in your exising 
+Otherwise, if you are interested in embedding the widget in your existing 
 application, follow the instructions [here](./embed/installation.md).

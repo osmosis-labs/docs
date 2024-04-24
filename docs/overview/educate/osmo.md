@@ -15,7 +15,7 @@ Transaction fees are paid by any user to post a transaction on the chain. The fe
 Validators can choose which assets to accept for fees in the blocks that they propose, but all accepted assets are converted to OSMO before distribution.
 
 ## ProtoRev
-The ProtoRev module mints and burns the OSMO token in order to perform priviledged arbitrage transactions on chain to ensure prices are balanced across liquidity sources on chain.
+The ProtoRev module mints and burns the OSMO token in order to perform privileged arbitrage transactions on chain to ensure prices are balanced across liquidity sources on chain.
 No use for this revenue has currently been decided, but will be allocated by governance in the future.
 Protocol Revenue collected so far is currently stored in the [module address](https://www.mintscan.io/osmosis/account/osmo17qdmjdumw4xawam4g46gtwzle5rd4zwyfqvvza)
 

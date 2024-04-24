@@ -41,7 +41,7 @@ beaker wasm new counter
 ```
 
 ### Deploy contract on permisionless network
-The testnet is permisionless by default in order to allow developers to easyly deploy contracts. 
+The testnet is permisionless by default in order to allow developers to easily deploy contracts. 
 
 ```sh
 beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-opt --raw '{ "count": 0 }' --label 'My first Beaker Contract'
@@ -53,7 +53,7 @@ Note how we added `--network testnet` to tell beaker to deploy to the testnet Os
 In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/main/packages/cli/src/framework/config.rs) file. 
 
 :::warning
-Please note that account test1 is publicaly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker will support local keyring in about 1-2 weeks. 
+Please note that account test1 is publicly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker will support local keyring in about 1-2 weeks. 
 :::
 
 ```
@@ -149,7 +149,7 @@ Run the following command to vote from beaker
 beaker wasm proposal vote --option yes counter --signer-account test1 --network testnet
 ```
 
-Even though the testnet is configured as permisionless, it's important to undertanding the voting process. We need validators to vote  for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
+Even though the testnet is configured as permisionless, it's important to understanding the voting process. We need validators to vote  for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
 
 Please visit: 
 

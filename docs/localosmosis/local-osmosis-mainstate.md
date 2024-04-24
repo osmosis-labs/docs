@@ -73,7 +73,7 @@ make localnet-build-state-export
 make localnet-start-state-export
 ```
 
-You will then go through the genesis intialization process. This will take ~15 minutes. You will then hit the first block (not block 1, but the block number after your snapshot was taken), and then you will just see a bunch of p2p error logs with some KV store logs. **This will happen for about 1 hour**, and then you will finally hit blocks at a normal pace.
+You will then go through the genesis initialization process. This will take ~15 minutes. You will then hit the first block (not block 1, but the block number after your snapshot was taken), and then you will just see a bunch of p2p error logs with some KV store logs. **This will happen for about 1 hour**, and then you will finally hit blocks at a normal pace.
 
 9. On your host machine, add this specific wallet which holds a large amount of osmo funds
 

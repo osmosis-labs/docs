@@ -32,7 +32,7 @@ Create a new index.ts file
 touch index.ts
 ```
 
-The class CosmWasmClient is exported from the CosmJS package @cosmjs/cosmwasm-stargate. Learn more in the [offical docs](https://cosmwasm.github.io/CosmWasmJS/clients/reading/CosmWasmClient.html).
+The class CosmWasmClient is exported from the CosmJS package @cosmjs/cosmwasm-stargate. Learn more in the [official docs](https://cosmwasm.github.io/CosmWasmJS/clients/reading/CosmWasmClient.html).
 
 ```javascript=
 import { CosmWasmClient } from "cosmwasm";

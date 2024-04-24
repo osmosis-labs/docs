@@ -29,7 +29,7 @@
     * **`branch`** : String  
       
        > 
-       > Brance of the repo to be used as template  
+       > Branch of the repo to be used as template  
        > 
       
       

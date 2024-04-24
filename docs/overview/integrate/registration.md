@@ -16,7 +16,7 @@ To ensure a complete integration with Osmosis Zone and related apps, see the [Os
 
 ### Required Skills
 
-Basic understanding of GitHub, knowing how to fork a respository, create a branch, commit changes, and submit a Pull Request
+Basic understanding of GitHub, knowing how to fork a repository, create a branch, commit changes, and submit a Pull Request
 
 ## Step 1: Register to the Cosmos Chain Registry
 
@@ -103,7 +103,7 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
     - Generally describes to the 'path' (IBC hops) that the asset takes to get to Osmosis
       - Every IBC hop is described in the path, including destination chain port and destination chain channel-id
     - Used as input for the IBC Hash function to determine the asset denomination on the destination chain.
-      - IBC denoms alway appear as: 'ibc/{SHA256 HASH of IBC Path}'
+      - IBC denoms always appear as: 'ibc/{SHA256 HASH of IBC Path}'
     - In some rare cases, some characters in the source chain's base_denom or replaced with other characters.
   - Whether the Asset is bridged (not referring to IBC transfers)
 
@@ -177,4 +177,4 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
 
 ## Step 3 (optional): Complete the Asset Integration
 
-To create an ideal user experience when interacting with an Asset on Osmosios Zone, it is best to ensure that all metadata is registered, dependend data sources have all data about the asset, and that there is sufficient and efficient liquidity of the asset on Osmosis. See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details.
+To create an ideal user experience when interacting with an Asset on Osmosios Zone, it is best to ensure that all metadata is registered, dependent data sources have all data about the asset, and that there is sufficient and efficient liquidity of the asset on Osmosis. See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details.

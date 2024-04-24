@@ -105,7 +105,7 @@ The logo to provide must agree the following:
 - colour: single-color **WHITE**;
 - format: **\*.svg**;
 
-We attach some exmaples (Nabla, Osmosis and Juno) of logos to give you a guideline.
+We attach some examples (Nabla, Osmosis and Juno) of logos to give you a guideline.
 Please, access this page in dark mode to have a better experience.
 
 | **nabla** |   | **Osmosis** |   | **Juno** |
