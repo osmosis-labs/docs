@@ -1,5 +1,5 @@
 # Cosmwasm testnet deployment
-The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (`osmo-test-5`). It covers:
+The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (`osmo-test-6`). It covers:
 
 - Initial Setup
     - Setup Rust
@@ -26,7 +26,7 @@ Please note this a detailed guide on how to deploy via `osmosisd`, it also cover
 
 ## Initial Setup
 
-This tutorial uses a Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-5`).
+This tutorial uses a Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-6`).
 
 ### Setup Rust
 
@@ -266,7 +266,7 @@ If you run the `get_count` query again after sending the `increment` transaction
 
 ```bash
 TRY_INCREMENT='{"increment": {}}'
-osmosisd tx wasm execute $CONTRACT_ADDR "$TRY_INCREMENT" --from wallet --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -y --chain-id osmo-test-5
+osmosisd tx wasm execute $CONTRACT_ADDR "$TRY_INCREMENT" --from wallet --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -y --chain-id osmo-test-6
 ```
 
 - `osmosisd tx wasm execute` : execute a command on a wasm contract
