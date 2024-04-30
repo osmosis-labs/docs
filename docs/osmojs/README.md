@@ -206,7 +206,7 @@ import { signAndBroadcast } from 'osmojs';
 
 const res = await signAndBroadcast({
   client, // SigningStargateClient
-  chainId: 'osmosis-1', // use 'osmo-test-5' for testnet
+  chainId: 'osmosis-1', // use 'osmo-test-6' for testnet
   address,
   msgs: [msg],
   fee,

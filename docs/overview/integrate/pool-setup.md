@@ -186,7 +186,7 @@ There are recommendations for creating CL pools:
   - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
   - ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877 (TIA)
   - uosmo (OSMO)
-- ...and on Testnet (osmo-test-5) are:
+- ...and on Testnet (osmo-test-6) are:
   - uosmo (OSMO)
   - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
   - ibc/8E2FEFCBD754FA3C97411F0126B9EC76191BAA1B3959CB73CECF396A4037BBF0 (unregistered denom)
@@ -262,7 +262,7 @@ The creation of transmuter pools requires osmosisd version v19.2.0 or later. The
 The code-id for Transmuter pools on Osmosis chains are as follows:
 
 - osmosis-1 (mainnet): 148
-- osmo-test-5 (testnet): 3084
+- osmo-test-6 (testnet): 3084
 
 Alloyed Asset Pools have not yet been finalized.
 

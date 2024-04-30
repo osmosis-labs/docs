@@ -43,7 +43,7 @@ The following table resume the information for the Osmosis *mainnet* and
 **contract versions**! The following information **could be not up to date**, so do your own 
 research to ensure you are on the right way.
 
-| Contract         | Osmosis Testnet (osmo-test-5)                                     | Osmosis Mainnet                                                   |
+| Contract         | Osmosis Testnet (osmo-test-6)                                     | Osmosis Mainnet                                                   |
 | ---------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
 | swaprouter       | `osmo1qw6npqrhgt0k4wvjecyggsyy0u492sg26wwtgttrmwc2xxelghgqkykpf9` | `osmo1fy547nr4ewfc38z73ghr6x62p7eguuupm66xwk8v8rjnjyeyxdqs6gdqx7` |
 | crosschain-swaps | `osmo1efakw4was99usxve258p58a5a26f0yt072gvyej5zr4lv5r0hxqqsddqgg` | `osmo1uwk8xc6q0s6t5qcpr6rht3sczu6du83xq8pwxjua0hfj5hzcnh3sqxwvxs` |

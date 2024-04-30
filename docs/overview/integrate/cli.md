@@ -89,7 +89,7 @@ osmosis config node https://rpc.osmosis.zone:443
 
 ```bash
 osmosisd config node https://rpc.testnet.osmosis.zone:443
-osmosisd config chain-id osmo-test-5
+osmosisd config chain-id osmo-test-6
 ```
 
 To add a  new account on your local keyring
