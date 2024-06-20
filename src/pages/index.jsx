@@ -70,7 +70,7 @@ export default function Homepage() {
           <Section title="Learn about Osmosis">
             <Card
               title="What is Osmosis?"
-              description="Osmosis is an advanced automated market maker (AMM) protocol that allows developers to build customized AMMs."
+              description="Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond."
               to="/overview/educate/osmosis"
               icon={<OsmosisCore />}
             />
@@ -273,7 +273,7 @@ export default function Homepage() {
               title="Cw-orchestrator"
               description="All-in-one Rust-based CosmWasm contracts testing, scripting, and deployment tool"
               to="/cosmwasm/cw-orch"
-              icon={<TerminalIcon/>}
+              icon={<TerminalIcon />}
               svgFile="/icons/cw-orch.svg"
             />
           </Section>
