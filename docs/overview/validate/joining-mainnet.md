@@ -36,21 +36,23 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
-## Latest Version (V10) Upgrade Info
+## Latest Version (V25.1.2) Upgrade Info
 
 ### Go Requirement
 
-You will need to be running go1.18 for this version of Osmosis. You can check if you are running go1.18 with the following command:
+You will need to be running go1.21.1 for this version of Osmosis. You can check if you are running go1.21.1 with the following command:
 
 ```{.sh}
 go version
 ```
 
-If this does not say go1.18, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go 1.18 on linux is as follows:
+If this does not say go1.21.1, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go1.21.1 on linux is as follows:
 
 ```{.sh}
-wget -q -O - https://git.io/vQhTU | bash -s -- --remove
-wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.18
+sudo rm -rvf /usr/local/go/
+wget https://golang.org/dl/go1.21.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+rm go1.21.1.linux-amd64.tar.gz
 ```
 ### Memory Requirements
 
