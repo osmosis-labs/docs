@@ -176,23 +176,23 @@ osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
 
 **Example 1**
 
-I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 1 day.
+I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 14 days. [this is currently the only valid bonding duration]
 I want to reward 100 AKT to this pool over 2 days (2 epochs). (50 rewarded on each day)
 I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
 
 ```bash
 osmosisd tx incentives create-gauge gamm/pool/3 10000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 \
---duration 24h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id osmosis-1
+--duration 336h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id osmosis-1
 ```
 
 **Example 2**
 
-I want to make incentives for ATOM (ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2) that have been locked up for at least 1 week (168h).
+I want to make incentives for ATOM (ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2) that have been locked up for at least 2 weeks (336h). [this is currently the only valid bonding duration]
 I want to reward 1000 JUNO (ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED) to ATOM holders perpetually (perpetually meaning I must add more tokens to this gauge myself every epoch). I want the reward to start dispersing immediately.
 
 ```bash
 osmosisd tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 \
-1000000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED --perpetual --duration 168h \
+1000000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED --perpetual --duration 336h \
 --from WALLET_NAME --chain-id osmosis-1
 ```
 
