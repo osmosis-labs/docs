@@ -10324,7 +10324,7 @@ components:
                 title: start_time is the distribution start time
                 type: string
             type: object
-          title: Active gagues that match denom in query
+          title: Active gauges that match denom in query
           type: array
         pagination:
           description: "PageResponse is to be embedded in gRPC response messages where\
@@ -10480,7 +10480,7 @@ components:
                 title: start_time is the distribution start time
                 type: string
             type: object
-          title: Active gagues only
+          title: Active gauges only
           type: array
         pagination:
           description: "PageResponse is to be embedded in gRPC response messages where\
@@ -10756,7 +10756,7 @@ components:
               format: date-time
               title: start_time is the distribution start time
               type: string
-          title: Gauge that corresponds to provided gague ID
+          title: Gauge that corresponds to provided gauge ID
           type: object
       type: object
     osmosis.incentives.GaugesResponse:
@@ -11117,7 +11117,7 @@ components:
                 title: start_time is the distribution start time
                 type: string
             type: object
-          title: Upcoming gagues that match denom in query
+          title: Upcoming gauges that match denom in query
           type: array
       type: object
     osmosis.incentives.UpcomingGaugesResponse:
@@ -32479,7 +32479,7 @@ paths:
                           title: start_time is the distribution start time
                           type: string
                       type: object
-                    title: Active gagues only
+                    title: Active gauges only
                     type: array
                   pagination:
                     description: "PageResponse is to be embedded in gRPC response\
@@ -32536,7 +32536,7 @@ paths:
     get:
       operationId: ActiveGaugesPerDenom
       parameters:
-      - description: Desired denom when querying active gagues.
+      - description: Desired denom when querying active gauges.
         in: query
         name: denom
         required: false
@@ -32742,7 +32742,7 @@ paths:
                           title: start_time is the distribution start time
                           type: string
                       type: object
-                    title: Active gagues that match denom in query
+                    title: Active gauges that match denom in query
                     type: array
                   pagination:
                     description: "PageResponse is to be embedded in gRPC response\
@@ -32799,7 +32799,7 @@ paths:
     get:
       operationId: GaugeByID
       parameters:
-      - description: Gague ID being queried
+      - description: gauge ID being queried
         in: path
         name: id
         required: true
@@ -32949,7 +32949,7 @@ paths:
                         format: date-time
                         title: start_time is the distribution start time
                         type: string
-                    title: Gauge that corresponds to provided gague ID
+                    title: Gauge that corresponds to provided gauge ID
                     type: object
                 type: object
           description: A successful response.
@@ -33687,7 +33687,7 @@ paths:
     get:
       operationId: UpcomingGaugesPerDenom
       parameters:
-      - description: Filter for upcoming gagues that match specific denom.
+      - description: Filter for upcoming gauges that match specific denom.
         in: query
         name: denom
         required: false
@@ -33914,7 +33914,7 @@ paths:
                           title: start_time is the distribution start time
                           type: string
                       type: object
-                    title: Upcoming gagues that match denom in query
+                    title: Upcoming gauges that match denom in query
                     type: array
                 type: object
           description: A successful response.
