@@ -56,11 +56,16 @@ The command to run takes the format:
 `[poolId]` is the pool ID of the Supercharged pool, this should be set to 0 for Classic and Stableswap pools
 
 `[flags]` required specific to this transaction are 
-	`--duration` 
- 		In Classic or Stableswap pools this specifies the length of time that a provider must be bonded for to receive incentives. This is typically 336h.
- 		In Supercharged pools this specifies the length of time that a position must be in place to receive incentives. Permitted values are 1ns, 60s, 1h and 24h. Typical values are 60s or 1h for a volatile pairing, and 1h or 24h for a highly correlated pairing. If not specified this defaults to 1 minute.
-	`--epochs` which specifies the number of days that these incentives will be distributed over
-	`--start-time` which specifies a Unix timestamp to begin incentives on, they will begin distribution the epoch after this time
+
+`--duration` 
+
+ * In Classic or Stableswap pools this specifies the length of time that a provider must be bonded for to receive incentives. This is typically 336h.
+
+ * In Supercharged pools this specifies the length of time that a position must be in place to receive incentives. Permitted values are 1ns, 60s, 1h and 24h. Typical values are 60s or 1h for a volatile pairing, and 1h or 24h for a highly correlated pairing. If not specified this defaults to 1 minute.
+
+`--epochs` which specifies the number of days that these incentives will be distributed over
+
+`--start-time` which specifies a Unix timestamp to begin incentives on, they will begin distribution the epoch after this time
 
 **Example Supercharged command**
 
