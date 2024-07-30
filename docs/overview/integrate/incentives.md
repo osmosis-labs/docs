@@ -56,13 +56,20 @@ The command to run takes the format:
 `[poolId]` is the pool ID of the Supercharged pool, this should be set to 0 for Classic and Stableswap pools
 
 `[flags]` required specific to this transaction are 
-	`--duration` which specifies the length of time that a provider must be bonded for to receive incentives, this is not required for Supercharged pools as there is no bonding. Typical values are 24h, 168h and 336h.
-	`--epochs` which specifies the number of days that these incentives will be distributed over
-	`--start-time` which specifies a Unix timestamp to begin incentives on, they will begin distribution the epoch after this time
+
+`--duration` 
+
+ * In Classic or Stableswap pools this specifies the length of time that a provider must be bonded for to receive incentives. This is typically 336h.
+
+ * In Supercharged pools this specifies the length of time that a position must be in place to receive incentives. Permitted values are 1ns, 60s, 1h and 24h. Typical values are 60s or 1h for a volatile pairing, and 1h or 24h for a highly correlated pairing. If not specified this defaults to 1 minute.
+
+`--epochs` which specifies the number of days that these incentives will be distributed over
+
+`--start-time` which specifies a Unix timestamp to begin incentives on, they will begin distribution the epoch after this time
 
 **Example Supercharged command**
 
-`osmosisd tx incentives create-gauge 0 1355000000uosmo 1081 --epochs 30 --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3`
+`osmosisd tx incentives create-gauge 0 1355000000uosmo 1081 --epochs 30 --duration 60s --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3`
 
 **Example Classic Pool command**
 
@@ -90,15 +97,7 @@ Incentives are then adjusted by up to 10% per month until that liquidity target 
 ## Superfluid Staking
 Osmosis Superfluid Staking can further incentivize users to provide liquidity to a pool, as they are able to stake their LP tokens for additional rewards as well as participating in Osmosis governance. The rewards from superfluid staking come from a portion of the OSMO in the pool being staked, so only OSMO pools can qualify for superfluid staking.
 
-The reason Osmosis hasn't simply allowed all OSMO pools to enable Superfluid staking is because any sudden extreme loss of value in an asset paired with OSMO would cause the OSMO side of the pool to shrink significantly, and this poses a risk to the security of the chain. The superfluid staked OSMO is meant to be safely staked and untouchable for at least 14-days (the duration on the unbonding period), like all staked OSMO, but if the amount of OSMO in a pool suddenly shrinks, then it essentially has the effect of releasing staked OSMO before the 14-days. This is why governance must assess whether a pool seems stable before enabling superfluid staking for it. 
-
-Currently, there is no strict criteria on which pools may have Superfluid staking enabled, however typical standards from historical discussions include:
-* Chain/Token should be established for at least three months.
-* Token supply should be reasonably decentralised.
-* Liquidity should be suitably high (>$300k) to prevent high volatility in the quantity of Superfluid Staked OSMO. 
-* Pool liquidity should have stabilised.
-
-Superfluid staking is only available on full range positions in Supercharged pools and so this is most frequently used in Classic pools.
+Superfluid staking is only available on full range positions in Supercharged pools and is currently only enabled on major pairings with OSMO.
 
 The feature is enabled by via on-chain governance by a `Set Superfluid Asset` Proposal. These proposals must also be posted to the [Osmosis Governance Forum](https://forum.osmosis.zone/) for 3 days before moving to chain.
 
