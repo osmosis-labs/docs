@@ -12,7 +12,8 @@ The pools eligible for liquidity rewards are selected by OSMO governance partici
 
 ## Transaction Fees
 Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. Minimum gas costs are determined by the proposer of a block in which the transaction is included. This transaction fee is distributed to OSMO stakers on the network.
-Validators can choose which assets to accept for fees in the blocks that they propose, but all accepted assets are converted to OSMO before distribution.
+
+Validators can choose which assets to accept for fees in the blocks that they propose, allowing users to pay for gas in almost any token listed on Osmosis. All accepted assets are converted back to OSMO before distribution, retaining this utility.
 
 :::info
 
@@ -22,14 +23,22 @@ _the token must have reasonable liquidity, paired with $OSMO as a minimum requir
 :::
 
 ## ProtoRev
-The ProtoRev module mints and burns the OSMO token in order to perform privileged arbitrage transactions on chain to ensure prices are balanced across liquidity sources on chain.
-No use for this revenue has currently been decided, but will be allocated by governance in the future.
-Protocol Revenue collected so far is currently stored in the [module address](https://www.mintscan.io/osmosis/account/osmo17qdmjdumw4xawam4g46gtwzle5rd4zwyfqvvza)
+The ProtoRev module mints and burns tokens in order to perform privileged arbitrage transactions onchain, ensuring prices are balanced across all liquidity sources. This happens within the same transaction and results in a net gain after the mint and burn from the arbitrage performed.
+
+If a non-OSMO asset is recovered from this arbitrage, it is sent to the Community Pool as specified in [Proposal 709](https://daodao.zone/dao/osmosis/proposals/709).
+
+If OSMO is recovered from this arbitrage, it is burned as specified in [Proposal 710](https://daodao.zone/dao/osmosis/proposals/710), permanently decreasing the Maximum Supply of 1 billion.
+All permanent burns can be tracked by viewing the [Null Address](https://www.mintscan.io/osmosis/address/osmo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmcn030).
 
 ## Taker Fees
 Osmosis charges a small taker fee on all trades with a 0.1% default.
-Several routes have reductions or exemptions and these are managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO.
-Taker fees are collected in the Quote asset involved in the trade. All OSMO collected is distributed to stakers. Non-OSMO collected is divided, with 33% going to the Community Pool and 67% being converted to OSMO before being distributed to stakers.
+Several routes have reductions or exemptions, which are managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO.
+
+Taker fees are collected in the Quote asset involved in the trade. 
+
+All OSMO collected is distributed to stakers. 
+
+Non-OSMO collected is divided, with 33% going to the Community Pool and 67% being converted to OSMO before being distributed to stakers.
 
 ## Superfluid Staking
 The OSMO token is also minted and burned in the context of Superfluid Staking. As a Osmosis-specific feature, Superfluid Staking provides the consensus layer more security with a sort of "Proof of Useful Stake". Each person gets an amount of OSMO representative of the value of their share of liquidity pool tokens staked and delegated to validators, resulting in the security guarantee of the consensus layer to also be based on GAMM LP shares. This is available in pools that contain OSMO in the pairing and have had this feature enabled by governance.
