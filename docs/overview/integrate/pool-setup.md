@@ -22,11 +22,6 @@ Note: Sometimes there is no way to find the Pool ID of a pool via a block explor
 
 Note: When specifying token denominations that are represented as `ibc/<hash>` via CLI, be sure to always use uppercase letters within the hash portion of the denomination, or else the pool will not function correctly. E.g., use `ibc/A1B2C3…`, but do NOT use `ibc/a1b2c3…`.
 
-
-## Liquidity Bootstrapping Pool
-
-A Liquidity Bootstrapping Pool (LBP) is a weighted pool that begins with linearly adjusting weights until they reach a desired final weighting, and then behaves as a normal weighted pool from then onward. This allows for natural price discovery, as well as aids with liquidity bootstrapping. Nowadays, LBPs have become much less popular than they used to be; the current recommendation for liquidity bootstrapping and price discovery for a new token is a StreamSwap stream on Osmosis, with the frontend interface hosted by Omniflix.
-
 ## Supercharged Liquidity (a.k.a. Concentrated Liquidity) Pool
 
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
