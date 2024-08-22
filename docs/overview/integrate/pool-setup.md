@@ -10,11 +10,10 @@ A key step to integrating a project with Osmosis is ensuring there is at least o
 
 There are several different types of liquidity pools on Osmosis, each with unique benefits; the main ones are:
 
+- Supercharged Liquidity (Concentrated Liquidity) Pools
+- CosmWasm Pools (e.g. Orderbooks and Alloyed Assets)
 - Weighted Pool
 - Stableswap Pool
-- Liquidity Bootstrapping Pool (LBP)
-- Supercharged Liquidity (Concentrated Liquidity) Pool, and
-- CosmWasm Pools (e.g., Transmuter and Alloyed Assets)
 
 Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), a pool creation fee of 20 USDC is required.
 *[fee taken automatically when transaction has been sent via CLI]*
@@ -22,123 +21,6 @@ Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), a poo
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.
 
 Note: When specifying token denominations that are represented as `ibc/<hash>` via CLI, be sure to always use uppercase letters within the hash portion of the denomination, or else the pool will not function correctly. E.g., use `ibc/A1B2C3…`, but do NOT use `ibc/a1b2c3…`.
-
-## Weighted Pool
-
-Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: `k = x^wx * y^wy`.
-
-### Create Pool
-
-#### Osmosis Zone
-
-To create a Classic Pool on Osmosis via the Osmosis Zone app:
-
-- Go to app.osmosis.zone
-- Connect a Wallet
-- Go to Pools page
-- Create New Pool button
-- Choose Weighted pool
-- Next
-- Add new token (only shows tokens available in the connected wallet)
-- Assign token weight and repeat until all tokens have been added; ensure weights add to 100%
-- Next
-- Enter a >0 amount of each token to add to the pool upon creation
-- Next
-- Set Swap Fee
-- Tick ‘I understand that creating a new pool will cost 20 USDC
-- Create Pool
-- Continue to approve the transaction with the connected wallet.
-
-#### CLI Command
-
-The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
-
-Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
-
-Start with: `osmosisd tx gamm create-pool -h`
-
-Sample pool JSON file contents for balancer:
-
-```json
-{
-  "weights": "4uatom,4osmo,2uakt",
-  "initial-deposit": "100uatom,5osmo,20uakt",
-  "swap-fee": "0.001",
-  "exit-fee": "0.001",
-  "future-governor": "168h"
-}
-```
-
-There are recommendations for creating balancer pools:
-
-- Number of tokens: For most cases, add only two constituent tokens for best user familiarity, even though the pool is capable of more
-- Weights: Use an equal amount of each token, thereby making it a balanced 50/50 pool (or 33/33/33, if three tokens, etc.). The absolute numbers are not of great importance, but rather the relative values; both 5uosmo,5uion and 1000000uosmo,1000000uion would create a 50/50 pool.
-- Initial deposit: Use a high amount of liquidity.
-  - Although a very low initial deposit allows a team to create a small pool and confirm the pool parameters with lower risk of drainage, it also risks that some other accounts and bots can quickly throw off the intended balance of supply in the pool before the initiating team has had a chance to add the remainder (and often the vast majority) of the liquidity intended for the pool. Manually rebalancing the pool to an exact ratio can be challenging, especially when trying to do so via a multisig account.
-  - In contrast, a very high initial deposit means that fewer transactions are needed and allows the team to add all the intended liquidity into it right away(, without needing to rebalance). Note, this carries a (very uncommon) risk of unintentionally making the new token available for absurdly cheap (by accidentally using an unfavorable weighting), potentially compromising the security and value of the new token.
-- Swap fee: 0.2% or 0.3% swap fee for most pairs. Sometimes a lower fee makes sense for stablecoin:stablecoin pairs.
-  - Note that the swap fee argument is not provided as a percentage, but as a multiplier (where a value of 1 is equivalent to 100%). So, a 0.2% swap fee, for example, must be specified in the argument as 0.002.
-- Exit fee: Always choose 0%--this parameter is now obsolete and should be set to 0.
-- Future governor: This parameter has no current usage. It is recommended to leave it blank (“”), which will default to “168h” when queried thereafter.
-
-## Stableswap Pool
-
-[Stableswap Pools on Osmosis](https://osmosis.zone/blog/osmosis-dex-stableswap) are inspired by [Curve’s StableSwap implementation](https://berkeley-defi.github.io/assets/material/StableSwap.pdf), allowing for a targeted flat section of the price curve where the relative values of the tokens are meant to be consistent (e.g., with a pair of USD stablecoins because both are meant to be worth $1.00 USD), although technically uses a slightly different(, and more computationally efficient,) formula: k = xy(x^2 + y^2)
-
-### Create Pool
-
-#### Osmosis Zone
-
-To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
-
-- Go to app.osmosis.zone
-- Connect a Wallet
-- Go to Pools page
-- Create New Pool
-- Choose Stable pool
-- Next
-- Add new token (only shows tokens available in the connected wallet).
-- Assign token scaling factor<sup>1</sup>
-- Repeat until all tokens have been added; ensure weights add to 100%
-- Next
-- Enter a >0 amount of each token to add to the pool upon creation
-- Next
-- Set Swap Fee
-- Set scaling factor controller (optional)<sup>2</sup>
-- Tick ‘I understand that creating a new pool will cost 20 USDC.
-- Create Pool
-- Continue to approve the transaction with the connected wallet.
-
-Notes:
-
-1. Scaling factor is used to adjust for differences in token precision or relative value. (e.g., if 4 $QUARTER is meant to be equal in value to 1 $USDC, then we’d use a scaling factor of 4:1). The most common usage of scaling factor is to equate like-value tokens (e.g., USDC and DAI) whose minimum denominations have differing precision; e.g., USDC’s minimum denomination is micro-usdc (1,000,000 uusdc == 1 USDC) and DAI’s minimum denomination is atto-DAI (where 1,000,000,000,000,000,000 attodai == 1 DAI), so a scaling factor such as 10^6:10^18 (or 1:10^12) is used.
-2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factor controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
-
-#### CLI Command
-
-The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
-
-Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
-
-Start with: `osmosisd tx gamm create-pool -h`
-
-For stableswap (demonstrating need for a 1:1000 scaling factor, see doc):
-
-```json
-{
-  "initial-deposit": "1000000uusdc,1000miliusdc",
-  "swap-fee": "0.001",
-  "exit-fee": "0.00",
-  "future-governor": "168h",
-  "scaling-factors": "1000,1"
-}
-```
-
-See the recommended parameter values for Weighted pools above, as many of those recommendations apply to Stableswap pools as well.
-
-## Liquidity Bootstrapping Pool
-
-A Liquidity Bootstrapping Pool (LBP) is a weighted pool that begins with linearly adjusting weights until they reach a desired final weighting, and then behaves as a normal weighted pool from then onward. This allows for natural price discovery, as well as aids with liquidity bootstrapping. Nowadays, LBPs have become much less popular than they used to be; the current recommendation for liquidity bootstrapping and price discovery for a new token is a StreamSwap stream on Osmosis, with the frontend interface hosted by Omniflix.
 
 ## Supercharged Liquidity (a.k.a. Concentrated Liquidity) Pool
 
@@ -253,18 +135,44 @@ CosmWasm Pools are pools written with CosmWasm code and implement custom functio
 
 All CosmWasm pools must refer to a Contract via a Code ID. The CosmWasm contract defines the logic of how the pool works, and must be approved for upload and whitelisting by Osmosis governance via a UploadCosmWasmPoolCodeAndWhiteListProposal before any pool instantiating that logic can be created. Instructions on how to write and upload Contract Code is out of scope for the guide. Once the contract is uploaded, it is assigned a Code ID, which must be referenced when creating the CosmWasm pool. It is possible to check for whitelisted code IDs with this command: `osmosisd q cosmwasmpool params`
 
-### Transmuter/Alloyed Asset Pools
+### Orderbooks
 
-A Transmuter Pool is a type of multi-asset constant sum zero-fee pool, meant to allow for the feeless conversion of like-origin token variants, such as USDC.axl and noble.USDC. It may contain more than two assets, but must be at a 1:1 (or 1:1:1, or 1:1:1:1, etc.) ratio, so it cannot properly handle tokens with differing decimal precision. It also accepts an administrator address, which can freeze all swapping, joining, and exiting of the pool, and can also pass the role of administrator onto another address. If no administrator address is provided, it will default to using the executing account as the administrator.
+Orderbooks are a novel mechanism for fully onchain order books that are fully composable with all existing trading on Osmosis through integration as a CosmWasm Pool type.
 
-The creation of transmuter pools requires osmosisd version v19.2.0 or later. The Transmuter pools on Osmosis that were created before the release of v19.2.0 were co-created using a custom branch of osmosisd by Osmosis Labs and the author of the Transmuter CosmWasm code.
+They allow an address to place a buy or sell order at a fixed ratio, which will be used if volume attempts to move the spot price of liquidity on Osmosis past that point. This order is then claimed and returned to the placing address.
 
-The code-id for Transmuter pools on Osmosis chains are as follows:
+The current code-id for Orderbook pools on Osmosis is as follows:
 
-- osmosis-1 (mainnet): 148
-- osmo-test-5 (testnet): 3084
+- osmosis-1 (mainnet): 885
 
-Alloyed Asset Pools have not yet been finalized.
+To create an orderbook pool the command format is:
+```bash
+osmosisd tx cosmwasmpool create-pool [code-id] '{"base_denom":"[base-denom]","quote_denom":"[quote-denom]"}'
+```
+
+Example creation of an OSMO/USDC orderbook:
+```bash
+osmosisd tx cosmwasmpool create-pool 885 '{"base_denom":"uosmo","quote_denom":"ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4"}' --from poolcreator --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+```
+
+Order books have a built-in moderator account that can freeze and unfreeze liquidity in the pools in the event of a security issue. This may be viewed [here](https://daodao.zone/dao/osmo1peuxfjj66n2qt2v5jmqlvzz8neakjgduez7vttvemw58uug6546sr60ngl)
+
+### Alloyed Assets
+
+Formed from Transmuter Pools, a type of multi-asset constant sum zero-fee pool, meant to allow for the feeless conversion of like-origin token variants, such as USDC.axl and noble.USDC. It may contain more than two assets, but will always maintain a 1:1 (or 1:1:1, or 1:1:1:1, etc.) ratio with scaling allowing different precision representations of the same base to join. 
+
+Each accepts an administrator address, which can add new assets denominations to the pool after creation, adjust internal rate limits, unfreeze the pool and set a moderator. The moderator in turn can freeze all swapping, joining, and exiting of the pool as well as declare a constituent of the pool to be corrupted and no longer able to be added. The moderator for all canonical Alloys can be viewed [here](https://daodao.zone/dao/osmo1ugrn8qgsvyr8zwrv8h2g4r8ascngxk7qeaz7e0htjq3znswkh4cqhjdpgy).
+
+The current code-id for Transmuter pools on Osmosis chains are as follows:
+
+- osmosis-1 (mainnet): 996
+- osmo-test-5 (testnet): 8319
+
+These create an Alloyed Asset as a representative of the Transmuter pool contents. This Alloy can be used as a token itself, providing composability between multiple variants of the same base asset while bounding bridge risk through built-in rate limiters.
+
+Alloys minted for this purpose should follow the guidelines established in [Proposal 826](https://daodao.zone/dao/osmosis/proposals/826).
+
+For more information on creating a Transmuter pool and to confirm the current code version see [Github](https://github.com/osmosis-labs/transmuter).
 
 ### Create Pool
 
@@ -289,7 +197,7 @@ osmosisd tx cosmwasmpool create-pool [code-id] [instantiate-msg] [flags]
 Example:
 
 ```bash
-osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b block
+osmosisd tx cosmwasmpool create-pool 1 '{"pool_assets_denom":["uion","uosmo"]}' --from lo-test1 --keyring-backend test --chain-id localosmosis --fees 875uosmo -b block 
 ```
 
 For parameter values:
@@ -325,3 +233,117 @@ For parameter values:
   - Note that the single quote must not be vertical ('') , and not angled (‘’)
 - `--amount [coins,optional]`: the amount of each token being added to the pool.
   - E.g., `--amount 10000ibc/8242AD24008032E457D2E12D46588FD39FB54FB29680C6C7663D296B383C37C4,10000ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB`
+ 
+## Weighted Pool
+
+Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: `k = x^wx * y^wy`.
+
+### Create Pool
+
+#### Osmosis Zone
+
+To create a Classic Pool on Osmosis via the Osmosis Zone app:
+
+- Go to app.osmosis.zone
+- Connect a Wallet
+- Go to Pools page
+- Create New Pool button
+- Choose Weighted pool
+- Next
+- Add new token (only shows tokens available in the connected wallet)
+- Assign token weight and repeat until all tokens have been added; ensure weights add to 100%
+- Next
+- Enter a >0 amount of each token to add to the pool upon creation
+- Next
+- Set Swap Fee
+- Tick ‘I understand that creating a new pool will cost 20 USDC
+- Create Pool
+- Continue to approve the transaction with the connected wallet.
+
+#### CLI Command
+
+The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
+
+Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
+
+Start with: `osmosisd tx gamm create-pool -h`
+
+Sample pool JSON file contents for balancer:
+
+```json
+{
+  "weights": "4uatom,4osmo,2uakt",
+  "initial-deposit": "100uatom,5osmo,20uakt",
+  "swap-fee": "0.001",
+  "exit-fee": "0.001",
+  "future-governor": "168h"
+}
+```
+
+There are recommendations for creating balancer pools:
+
+- Number of tokens: For most cases, add only two constituent tokens for best user familiarity, even though the pool is capable of more
+- Weights: Use an equal amount of each token, thereby making it a balanced 50/50 pool (or 33/33/33, if three tokens, etc.). The absolute numbers are not of great importance, but rather the relative values; both 5uosmo,5uion and 1000000uosmo,1000000uion would create a 50/50 pool.
+- Initial deposit: Use a high amount of liquidity.
+  - Although a very low initial deposit allows a team to create a small pool and confirm the pool parameters with lower risk of drainage, it also risks that some other accounts and bots can quickly throw off the intended balance of supply in the pool before the initiating team has had a chance to add the remainder (and often the vast majority) of the liquidity intended for the pool. Manually rebalancing the pool to an exact ratio can be challenging, especially when trying to do so via a multisig account.
+  - In contrast, a very high initial deposit means that fewer transactions are needed and allows the team to add all the intended liquidity into it right away(, without needing to rebalance). Note, this carries a (very uncommon) risk of unintentionally making the new token available for absurdly cheap (by accidentally using an unfavorable weighting), potentially compromising the security and value of the new token.
+- Swap fee: 0.2% or 0.3% swap fee for most pairs. Sometimes a lower fee makes sense for stablecoin:stablecoin pairs.
+  - Note that the swap fee argument is not provided as a percentage, but as a multiplier (where a value of 1 is equivalent to 100%). So, a 0.2% swap fee, for example, must be specified in the argument as 0.002.
+- Exit fee: Always choose 0%--this parameter is now obsolete and should be set to 0.
+- Future governor: This parameter has no current usage. It is recommended to leave it blank (“”), which will default to “168h” when queried thereafter.
+
+## Stableswap Pool
+
+[Stableswap Pools on Osmosis](https://osmosis.zone/blog/osmosis-dex-stableswap) are inspired by [Curve’s StableSwap implementation](https://berkeley-defi.github.io/assets/material/StableSwap.pdf), allowing for a targeted flat section of the price curve where the relative values of the tokens are meant to be consistent (e.g., with a pair of USD stablecoins because both are meant to be worth $1.00 USD), although technically uses a slightly different(, and more computationally efficient,) formula: k = xy(x^2 + y^2)
+
+### Create Pool
+
+#### Osmosis Zone
+
+To create a Stableswap Pool on Osmosis via the Osmosis Zone app:
+
+- Go to app.osmosis.zone
+- Connect a Wallet
+- Go to Pools page
+- Create New Pool
+- Choose Stable pool
+- Next
+- Add new token (only shows tokens available in the connected wallet).
+- Assign token scaling factor<sup>1</sup>
+- Repeat until all tokens have been added; ensure weights add to 100%
+- Next
+- Enter a >0 amount of each token to add to the pool upon creation
+- Next
+- Set Swap Fee
+- Set scaling factor controller (optional)<sup>2</sup>
+- Tick ‘I understand that creating a new pool will cost 20 USDC.
+- Create Pool
+- Continue to approve the transaction with the connected wallet.
+
+Notes:
+
+1. Scaling factor is used to adjust for differences in token precision or relative value. (e.g., if 4 $QUARTER is meant to be equal in value to 1 $USDC, then we’d use a scaling factor of 4:1). The most common usage of scaling factor is to equate like-value tokens (e.g., USDC and DAI) whose minimum denominations have differing precision; e.g., USDC’s minimum denomination is micro-usdc (1,000,000 uusdc == 1 USDC) and DAI’s minimum denomination is atto-DAI (where 1,000,000,000,000,000,000 attodai == 1 DAI), so a scaling factor such as 10^6:10^18 (or 1:10^12) is used.
+2. Scaling factor controller allows a contract be the administrator over the scaling factor, and is often used to handle a constantly changing scaling factor, such as where a liquid staking token/derivative projects a constantly increasing relative value to its underlying staked token (e.g., Stride’s stOSTMO will slowly increase in value measured in OSMO, so a scaling factor controller slowly adjusts the scaling factor accordingly to reap the benefits of a Stableswap pool).
+
+#### CLI Command
+
+The command to create a pool with osmosisd CLI is: `osmosisd tx gamm create-pool [flags]`
+
+Note that it is recommended to always first show the associated help/information before executing any command by using the --help, -h flag. Note that what is shown will correspond to the version of osmosisd that you have installed, and doesn’t necessarily reflect the parameter requirements of the current version of the Osmosis chain.
+
+Start with: `osmosisd tx gamm create-pool -h`
+
+For stableswap (demonstrating need for a 1:1000 scaling factor, see doc):
+
+```json
+{
+  "initial-deposit": "1000000uusdc,1000miliusdc",
+  "swap-fee": "0.001",
+  "exit-fee": "0.00",
+  "future-governor": "168h",
+  "scaling-factors": "1000,1"
+}
+```
+
+See the recommended parameter values for Weighted pools above, as many of those recommendations apply to Stableswap pools as well.
+
