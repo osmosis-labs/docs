@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const AssetData = () => {
   const [assets, setAssets] = useState(null);
-  const [selectedUrl, setSelectedUrl] = useState('https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmosis-1/osmosis-1.assetlist.json');
+  const [selectedUrl, setSelectedUrl] = useState('https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmosis-1/generated/chain_registry/assetlist.json');
 
   const assetUrls = {
     mainnet: 'https://raw.githubusercontent.com/osmosis-labs/assetlists/main/osmosis-1/generated/chain_registry/assetlist.json',
