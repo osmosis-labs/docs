@@ -1,5 +1,5 @@
 # Cosmwasm testnet deployment
-The following is a quick guide that shows the basics of deploying a contract to a Osmosis Testnet (`osmo-test-5`). It covers:
+The following is a quick guide that shows the basics of deploying a contract to an Osmosis Testnet (`osmo-test-5`). It covers:
 
 - Initial Setup
     - Setup Rust
@@ -20,13 +20,13 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Execute the contract
 
 :::tip
-Please note this a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](./cosmwasm-beaker.md) with a couple of commands. 
+Please note this is a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](./cosmwasm-beaker.md) with a couple of commands. 
 :::
 
 
 ## Initial Setup
 
-This tutorial uses a Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-5`).
+This tutorial uses an Osmosis specific development tools to deploy contracts to Osmosis Testnet(`osmo-test-5`).
 
 ### Setup Rust
 
@@ -95,7 +95,7 @@ You need some tokens named `OSMO`(`uosmo`) in your address to interact with the 
 You can request tokens from the official faucet at [faucet.osmosis.zone](https://faucet.osmosis.zone) 
 
 #### Discord Faucet
-Youcan also participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
+You can also participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
 
 ```bash
 $request <address>

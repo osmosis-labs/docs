@@ -34,7 +34,7 @@ osmosisd query wasm contract-state raw osmo1mpf0guu0t363xrshhedandypq003ahzaxvsx
 ```
 What in the world is `636F6E74726163745F696E666F`? 😕 
 
-ContractInfo is must be stored under "contract_info" key which translates to "636F6E74726163745F696E666F" in hex format. As documented [here](https://lib.rs/crates/cw2).
+ContractInfo must be stored under "contract_info" key which translates to "636F6E74726163745F696E666F" in hex format. As documented [here](https://lib.rs/crates/cw2).
 
 Output:
 

@@ -6,7 +6,7 @@ sidebar_position: 2
 # Cosmwasm & Beaker
 ## Deploying Cosmwasm Contracts to the testnet with Beaker
 
-The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permisonless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
+The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permissionless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
 
 ### Requirements
 - [Rust](https://www.rust-lang.org/tools/install)
@@ -33,15 +33,15 @@ For detailed information about Beaker [click here](https://github.com/osmosis-la
 
 ### Your first CosmWasm contract with Beaker
 
-After that we can create new contract (the command uses template from [cw-template](https://github.com/InterWasm/cw-template))
+After that we can create a new contract (the command uses template from [cw-template](https://github.com/InterWasm/cw-template))
 
 ```sh
 cd counter-dapp
 beaker wasm new counter
 ```
 
-### Deploy contract on permisionless network
-The testnet is permisionless by default in order to allow developers to easily deploy contracts. 
+### Deploy contract on permissionless network
+The testnet is permissionless by default in order to allow developers to easily deploy contracts. 
 
 ```sh
 beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-opt --raw '{ "count": 0 }' --label 'My first Beaker Contract'
@@ -128,10 +128,10 @@ https://testnet.mintscan.io/osmosis-testnet/proposals/196
 https://lcd-test.osmosis.zone/cosmos/gov/v1beta1/proposals/196
 ```
 
-Note how the min_deposit was `500000000uosmo` that's why our prop.yml had `500000000uosmo`. If the deposit requirement is not met, then additional funds need to be send to the proposal. 
+Note how the min_deposit was `500000000uosmo` that's why our prop.yml had `500000000uosmo`. If the deposit requirement is not met, then additional funds need to be sent to the proposal. 
 
 #### Proposal period 
-On the testnet the voting period is very short to allow developers to move quickly with their testing, as you can see in this case it's `3 minutes`. This means you must vote within the next 3 minutes for your proposal to pass. In mainet the voting period is usually several days. If you take longer than 3 minutes, then you will get an error letting you know that the voting period has passed. 
+On the testnet the voting period is very short to allow developers to move quickly with their testing, as you can see in this case it's `3 minutes`. This means you must vote within the next 3 minutes for your proposal to pass. In mainnet the voting period is usually several days. If you take longer than 3 minutes, then you will get an error letting you know that the voting period has passed. 
 
 ```
     ├── voting_start_time: 2022-07-06T18:45:06Z
@@ -149,7 +149,7 @@ Run the following command to vote from beaker
 beaker wasm proposal vote --option yes counter --signer-account test1 --network testnet
 ```
 
-Even though the testnet is configured as permisionless, it's important to understanding the voting process. We need validators to vote  for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
+Even though the testnet is configured as permissionless, it's important to understand the voting process. We need validators to vote for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
 
 Please visit: 
 
@@ -170,7 +170,7 @@ In the examples above we used the test1 account to sign transactions. However, B
 - `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](../../beaker/commands/beaker_key).
 
 ### Using the OS keyring
-Let's dive a little deeper on how to use the OS keyring in order to sing a transaction with your OS keyring. 
+Let's dive a little deeper on how to use the OS keyring in order to sign a transaction with your OS keyring. 
 
 First of all you can import an account by running:
 

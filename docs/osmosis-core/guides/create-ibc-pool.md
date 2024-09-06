@@ -5,9 +5,9 @@ sidebar_position: 9
 
 # How to create a new pool with IBC assets
 
-Osmosis is a automated market maker blockchain. This means any IBC-enabled zone can add its token as an asset to be traded on Osmosis AMM completely permissionlessly. Because Osmosis is fundamentally designed as an IBC-native AMM that trades IBC tokens, rather than tokens issued on the Osmosis zone, there are additional nuances to understand and steps to be taken in order to ensure your asset is supported by Osmosis.
+Osmosis is an automated market maker blockchain. This means any IBC-enabled zone can add its token as an asset to be traded on Osmosis AMM completely permissionlessly. Because Osmosis is fundamentally designed as an IBC-native AMM that trades IBC tokens, rather than tokens issued on the Osmosis zone, there are additional nuances to understand and steps to be taken in order to ensure your asset is supported by Osmosis.
 
-This document lays out the prerequisites and the  process that's needed to ensure that your token meets the interchain UX standards set by Osmosis.
+This document lays out the prerequisites and the process that's needed to ensure that your token meets the interchain UX standards set by Osmosis.
 
 ### Prerequisites
 1. Zone must have IBC token transferred enabled (ICS20 standard).
@@ -39,7 +39,7 @@ Make a PR to add your chain's entry to the [Cosmos Chain Registry](https://githu
 Make sure to include at least one reliable RPC, gRPC, REST endpoint behind https. Refer to the [Osmosis entry](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json) as an example.
 
 ### 2. Setting up and operating relayer to Osmosis
-Relayers are responsible of transferring IBC packets between Osmosis chain and the native chain of an asset. All Osmosis 'deposits' and 'withdrawals' are IBC transfers which dedicated relayers process.
+Relayers are responsible for transferring IBC packets between Osmosis chain and the native chain of an asset. All Osmosis 'deposits' and 'withdrawals' are IBC transfers which dedicated relayers process.
 
 To ensure fungibility amongst IBC assets, the frontend will assume social consensus have been achieved and designate one specific channel between Osmosis and the native chain as the primary channel for all IBC token transfers. Multiple relayers can be active on the same channel, and for the sake of redundancy and increased resilience we recommend having multiple relayers actively relaying packets. It is recommended to initialize the channel as an unordered IBC channel, rather than an ordered IBC channel.
 

@@ -160,16 +160,16 @@ SyntheticLockups are synthetic forms of PeriodLocks, but different in the
 sense that they store suffix, which is a combination of
 bonding/unbonding status + validator address. This is mainly used to
 track whether an individual lock that has been superfluid staked has an
-bonding status or a unbonding status from the staking delegations.
+bonding status or an unbonding status from the staking delegations.
 
 ### Intermediary Account
 
 Intermediary Accounts establish the connections between the superfluid
 staked locks and delegations to the validator. Intermediary accounts
-exists for every denom + validator combination, so that it would group
+exist for every denom + validator combination, so that it would group
 locks with the same denom + validator selection. Superfluid staking a
 lock would mint equivalent amount of OSMO of the lock and send it to the
-intermediary account and the intermediarry accounts would be delegating
+intermediary account and the intermediary accounts would be delegating
 to the specified validator.
 
 ### Intermediary Account Connection
@@ -194,7 +194,7 @@ Lots of questions to be answered here
 
 ### Dedicated Gauges
 
-Each intermediary account has has dedicated gauge where it sends the
+Each intermediary account has a dedicated gauge where it sends the
 delegation rewards to. Gauges are distributing the rewards to end users
 at the end of the epoch.
 
@@ -340,7 +340,7 @@ This message does all the functionality of `MsgSuperfluidUndelegate` but
 also starts unbonding the underlying lock as well, allowing both the
 unstaking and unlocking to complete at the same time. Without using this
 function, a user will not be able to start unbonding their underlying
-lock until after the the unstaking has finished.
+lock until after the unstaking has finished.
 
 **State Modifications:**
 
@@ -612,7 +612,7 @@ currently contains:
 - `MinimumRiskFactor` which is an sdk.Dec that represents the discount
   to apply to all superfluid staked modules when calculating their
   staking power. For example, if a specific denom has an OSMO
-  equivalent value of 100 OSMO, but the the `MinimumRiskFactor` param
+  equivalent value of 100 OSMO, but the `MinimumRiskFactor` param
   is 0.05, then the denom will only get 95 OSMO worth of staking power
   when staked.
 

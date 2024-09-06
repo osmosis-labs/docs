@@ -18,7 +18,7 @@ The cosmwasm contract then has all of the actual IBC rate limiting logic.
 The Cosmwasm code can be found in the [`contracts`](./contracts/) package, with bytecode findable in the [`bytecode`](./bytecode/) folder. The cosmwasm VM usage allows Osmosis chain governance to choose to change this safety control with no hard forks, via a parameter change proposal, a great mitigation for faster threat adaptavity.
 
 The status of the module is being in a state suitable for some initial governance settable rate limits for high value bridged assets.
-Its not in its long term / end state for all channels by any means, but does act as a strong protection we
+It's not in its long term / end state for all channels by any means, but does act as a strong protection we
 can instantiate today for high value IBC connections.
 
 ## Motivation
@@ -119,7 +119,7 @@ As mentioned at the beginning of the README, the go code is a relatively minimal
 
 ### Go Middleware
 
-To achieve this, the middleware  needs to implement  the `porttypes.Middleware` interface and the
+To achieve this, the middleware needs to implement the `porttypes.Middleware` interface and the
 `porttypes.ICS4Wrapper` interface. This allows the middleware to send and receive IBC messages by wrapping 
 any IBC module, and be used as an ICS4 wrapper by a transfer module (for sending packets or writing acknowledgements).
 
@@ -156,8 +156,8 @@ Something to keep in mind with all of the code, is that we have to reason separa
 (Error ACK can reuse the same code as timeout)
 
 TODO: Spend more time on sudo messages in the following description. We need to better describe how we map the quota concepts onto the code.
-Need to describe how we get the quota beginning balance, and that its different for sends and receives.
-Explain intracacies of tracking that a timeout and/or ErrorAck must appear from the same quota, else we ignore its update to the quotas.
+Need to describe how we get the quota beginning balance, and that it's different for sends and receives.
+Explain intricacies of tracking that a timeout and/or ErrorAck must appear from the same quota, else we ignore its update to the quotas.
 
 
 The tracking contract uses the following concepts
@@ -205,7 +205,7 @@ The contract also supports quotas on a custom channel called "any" that is check
 transfer channel or the "any" channel have a quota that has been filled, the transaction will be rate limited.
 
 #### Notes on Denom
-We always use the the denom as represented on Osmosis. For native assets that is the local denom, and for non-native 
+We always use the denom as represented on Osmosis. For native assets that is the local denom, and for non-native 
 assets it's the "ibc" prefix and the sha256 hash of the denom trace (`ibc/...`).
 
 ##### Sends
@@ -220,7 +220,7 @@ is built on the `relay.SendTransfer()` in the transfer module and then passed to
 
 ##### Receives
 
-This behaves slightly different if the asset is an osmosis asset that was sent to the counterparty and is being
+This behaves slightly differently if the asset is an osmosis asset that was sent to the counterparty and is being
 returned to the chain, or if the asset is being received by the chain and originates on the counterparty. In ibc this
 is called being a "source" or a "sink" respectively.
 
@@ -237,7 +237,7 @@ We have iterated on different strategies for calculating the channel value. Our 
 * For non-native tokens (`ibc/...`), the channel value should be the supply of those tokens in Osmosis
 * For native tokens, the channel value should be the total amount of tokens in escrow across all ibc channels
 
-The later ensures the limits are lower and represent the amount of native tokens that exist outside Osmosis. This is 
+The latter ensures the limits are lower and represent the amount of native tokens that exist outside Osmosis. This is 
 beneficial as we assume the majority of native tokens exist on the native chain and the amount "normal" ibc transfers is 
 proportional to the tokens that have left the chain. 
 
@@ -311,4 +311,4 @@ Not yet highlighted
 * Analyze changing denom-based rate limits, to just overall withdrawal amount for Osmosis
 
 ## Repository
-For more an in-depth docs and implementation, please visit: https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit
+For more in-depth docs and implementation, please visit: https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit

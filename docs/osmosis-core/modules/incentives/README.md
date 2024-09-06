@@ -10,9 +10,9 @@ Anyone can create gauge and add rewards to the gauge, there is no way to take it
 
 There are two kinds of `gauges`, perpetual and non-perpetual ones.
 
-- Non perpetual ones get removed from active queue after the the distribution period finish but perpetual ones persist.
+- Non perpetual ones get removed from active queue after the distribution period finish but perpetual ones persist.
 - For non perpetual ones, they distribute the tokens equally per epoch during the `gauge` is in the active period.
-- For perpetual ones, it distribute all the tokens at a single time and somewhere else put the tokens regularly to distribute the tokens, it's mainly used to distribute minted OSMO tokens to LP token stakers.
+- For perpetual ones, it distributes all the tokens at a single time and somewhere else put the tokens regularly to distribute the tokens, it's mainly used to distribute minted OSMO tokens to LP token stakers.
 
 ## Contents
 
@@ -74,7 +74,7 @@ message QueryCondition {
 
 message Gauge {
   uint64 id = 1; // unique ID of a Gauge
-  QueryCondition distribute_to = 2; // distribute condition of a lock which meet one of these conditions
+  QueryCondition distribute_to = 2; // distribute condition of a lock which meets one of these conditions
   repeated cosmos.base.v1beta1.Coin coins = 3; // can distribute multiple coins
   google.protobuf.Timestamp start_time = 4; // condition for lock start time, not valid if unset value
   uint64 num_epochs_paid_over = 5; // number of epochs distribution will be done
@@ -279,7 +279,7 @@ The incentives module contains the following parameters:
 | -------------------- | ------ | -------- |
 | DistrEpochIdentifier | string | "weekly" |
 
-Note: DistrEpochIdentifier is a epoch identifier, and module distribute
+Note: DistrEpochIdentifier is an epoch identifier, and module distribute
 rewards at the end of epochs. As `epochs` module is handling multiple
 epochs, the identifier is required to check if distribution should be
 done at `AfterEpochEnd` hook
