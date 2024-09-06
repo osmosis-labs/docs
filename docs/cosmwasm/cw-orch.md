@@ -9,7 +9,7 @@ sidebar_position: 9
 cw-orchestrator is the most advanced scripting, testing, and deployment framework for CosmWasm smart-contracts. It makes it easy to write cross-environment compatible code for [cw-multi-test](https://github.com/CosmWasm/cw-multi-test), [Osmosis Test Tube](https://github.com/osmosis-labs/test-tube), [Starship](https://github.com/cosmology-tech/starship) (alpha), and **live networks**, significantly reducing code duplication and test-writing time. 
 
 
-Get ready to change the way you interact with contracts and simplify you smart-contracts journey. The following steps will allow you to integrate `cw-orch` and write clean code such as:
+Get ready to change the way you interact with contracts and simplify your smart-contracts journey. The following steps will allow you to integrate `cw-orch` and write clean code such as:
 
 ```rust
 counter.upload()?;
@@ -133,7 +133,7 @@ Learn more about the content of the interface creation specifics in the [`cw-orc
 
 ### Interaction helpers
 
-cw-orchestrator provides a additional macros that simplify contract calls and queries. The macro implements functions on the interface for each variant of the contract's `ExecuteMsg` and `QueryMsg`.
+cw-orchestrator provides an additional macros that simplify contract calls and queries. The macro implements functions on the interface for each variant of the contract's `ExecuteMsg` and `QueryMsg`.
 
 Enabling this functionality is very straightforward. Find your `ExecuteMsg` and `QueryMsg` definitions (in `msg.rs` in our example) and add the `ExecuteFns` and `QueryFns` derive macros to them like below:
 
