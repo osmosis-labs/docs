@@ -236,7 +236,7 @@ For parameter values:
  
 ## Weighted Pool
 
-Weighted Pools on Osmosis are essentially a copy of [Balancer’s v1 implementation](https://balancer.fi/whitepaper.pdf) of a Liquidity Pool, which uses the weighted constant product formula: `k = x^wx * y^wy`.
+Weighted Pools on Osmosis are essentially a copy of Balancer’s v1 implementation of a Liquidity Pool, which uses the weighted constant product formula: `k = x^wx * y^wy`.
 
 ### Create Pool
 
@@ -294,7 +294,7 @@ There are recommendations for creating balancer pools:
 
 ## Stableswap Pool
 
-[Stableswap Pools on Osmosis](https://osmosis.zone/blog/osmosis-dex-stableswap) are inspired by [Curve’s StableSwap implementation](https://berkeley-defi.github.io/assets/material/StableSwap.pdf), allowing for a targeted flat section of the price curve where the relative values of the tokens are meant to be consistent (e.g., with a pair of USD stablecoins because both are meant to be worth $1.00 USD), although technically uses a slightly different(, and more computationally efficient,) formula: k = xy(x^2 + y^2)
+Stableswap Pools on Osmosis are inspired by [Curve’s StableSwap implementation](https://berkeley-defi.github.io/assets/material/StableSwap.pdf), allowing for a targeted flat section of the price curve where the relative values of the tokens are meant to be consistent (e.g., with a pair of USD stablecoins because both are meant to be worth $1.00 USD), although technically uses a slightly different(, and more computationally efficient,) formula: k = xy(x^2 + y^2)
 
 ### Create Pool
 

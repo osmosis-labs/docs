@@ -112,7 +112,7 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
 1. Review the [Osmosis Assetlists Registry](https://github.com/osmosis-labs/assetlists) docs and schema:
     1. [README.md](https://github.com/osmosis-labs/assetlists/blob/main/README.md)
     2. [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md)
-    3. [assetlist.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/assetlist.schema.json)
+    3. [zone_assets.schema.json](https://github.com/osmosis-labs/assetlists/blob/main/zone_assets.schema.json)
 2. Submit a pull request with necessary changes to enlist the asset:
   - Ensure the source chain in included in `osmosis-1/osmosis.zone_chains.json`.
     - If not yet registered, add the chain object to the end of the `chains` array.

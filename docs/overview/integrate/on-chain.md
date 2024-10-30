@@ -66,7 +66,7 @@ cargo add osmosis-std
 
 ### Usage
 
-The following is an example of how you might use types and querier in your CosmWasm contract, for more info, see the crate's [doc.rs](https://docs.rs/osmosis-std/osmosis_std/types/osmosis/concentratedliquidity/index.html).
+The following is an example of how you might use types and querier in your CosmWasm contract, for more info, see the crate's [doc.rs](https://docs.rs/osmosis-std/latest/osmosis_std/types/osmosis/concentratedliquidity/index.html).
 
 Note that queries are only available if they are [whitelisted here](https://github.com/osmosis-labs/osmosis/blob/main/wasmbinding/stargate_whitelist.go).
 
