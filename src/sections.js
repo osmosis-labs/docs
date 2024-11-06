@@ -27,18 +27,6 @@ const SECTIONS = [
     icon: OsmosisCore,
     section: 'core-sdk',
   },
-  {
-    name: 'Local Osmosis',
-    id: 'localosmosis',
-    icon: LocalOsmosis,
-    section: 'core-sdk',
-  },
-  {
-    name: 'Networks',
-    id: 'networks',
-    icon: Network,
-    section: 'core-sdk',
-  },
   //Cosmwasm
   {
     name: 'Cosmwasm',
