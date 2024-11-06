@@ -1,7 +1,8 @@
 ---
-title: LocalOsmosis
-sidebar_position: 1
+title: Local Testing
+sidebar_position: 3
 ---
+
 # LocalOsmosis
 
 
