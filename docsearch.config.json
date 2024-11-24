@@ -25,11 +25,6 @@
       "selectors_key": "cosmwasm"
     },
     {
-      "url": "https://docs.osmosis.zone/localosmosis",
-      "tags": "localosmosis",
-      "selectors_key": "localosmosis"
-    },
-    {
       "url": "https://docs.osmosis.zone/beaker",
       "tags": "beaker",
       "selectors_key": "beaker"
@@ -72,20 +67,6 @@
         "selector": "",
         "global": true,
         "default_value": "Guides"
-      },
-      "lvl1": "article h1",
-      "lvl2": "article h2",
-      "lvl3": "article h3",
-      "lvl4": "article h4",
-      "lvl5": "article h5, article td:first-child",
-      "lvl6": "article h6",
-      "text": "article p, article li, article td:last-child"
-    },
-    "localosmosis": {
-      "lvl0": {
-        "selector": "",
-        "global": true,
-        "default_value": "LocalOsmosis"
       },
       "lvl1": "article h1",
       "lvl2": "article h2",

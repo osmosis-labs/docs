@@ -1,6 +1,5 @@
 import {
   OsmosisCore,
-  LocalOsmosis,
   Network,
   Cosmwasm,
   Beaker,
@@ -25,18 +24,6 @@ const SECTIONS = [
     name: 'Osmosis Core',
     id: 'osmosis-core',
     icon: OsmosisCore,
-    section: 'core-sdk',
-  },
-  {
-    name: 'Local Osmosis',
-    id: 'localosmosis',
-    icon: LocalOsmosis,
-    section: 'core-sdk',
-  },
-  {
-    name: 'Networks',
-    id: 'networks',
-    icon: Network,
     section: 'core-sdk',
   },
   //Cosmwasm
