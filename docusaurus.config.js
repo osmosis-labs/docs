@@ -252,8 +252,8 @@ const config = {
         playgroundPosition: 'bottom',
       },
       algolia: {
-        appId: '2CBDVP21VK',
-        apiKey: 'd983fd8603756b134758592e0334d240',
+        appId: 'O18C1RUI3F',
+        apiKey: '7e6702351d8d0157591e9c8d417f47dd',
         indexName: 'Docs',
         contextualSearch: true,
         searchParameters: {},
