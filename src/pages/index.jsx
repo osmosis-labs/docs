@@ -82,7 +82,7 @@ export default function Homepage() {
             <Card
               title="Explore the Ecosystem"
               description="Osmosis is home to a wide array of protocols and tools, find documentation relating to these on their sites"
-              to="https://osmosis.zone/ecosystem"
+              to="https://app.osmosis.zone/apps"
             />
             <Card
               title="List on Osmosis"
