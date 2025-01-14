@@ -137,8 +137,6 @@ The Osmosis Labs' Assetlist Registry is used to serve asset metadata displayed o
   - Add the asset to the `osmosis-1/osmosis.zone_assets.json` file.
     - Add the new asset object to the end of the `assets` array.
     - Include `base_denom`, `chain_name`, and `path`.
-    - New additions always must always start with `"osmosis_unlisted": true
-      - This allows the Osmosis team to validate via preview mode that the asset appears and behaves correctly on Osmosis Zone.
     - New additions always default with having `"osmosis_verified": false
       - Once assets are fully integrated, the asset can then be upgraded to "Verified" status.
       - See [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) for details on upgrading an asset to Verified status.
