@@ -156,3 +156,65 @@ To see a list of tokens created by a specific account, use the denoms-from-creat
 ```sh
 osmosisd query tokenfactory denoms-from-creator osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja
 ```
+To update the metadata of a token created using Osmosis's Token Factory module, you can utilize the `osmosisd` command-line interface to execute the `tokenfactory set-denom-metadata` transaction. This operation allows the admin of a specific denomination (denom) to modify its associated metadata.
+
+**Prerequisites:**
+
+- **Admin Privileges:** Ensure that your account has admin rights over the denom whose metadata you intend to update.
+    
+- **Metadata Structure:** Prepare the new metadata in JSON format, adhering to the `Metadata` structure defined in the Cosmos SDK's bank module. This structure includes fields such as `description`, `denom_units`, `base`, `display`, `name`, and `symbol`.
+    
+
+**Steps to Update Token Metadata:**
+
+1. **Create a Metadata JSON File:** Define the new metadata in a JSON file, for example, `metadata.json`.
+
+```
+{
+  "description": "Your token description",
+  "denom_units": [
+    {
+      "denom": "factory/your_creator_address/your_subdenom",
+      "exponent": 0,
+      "aliases": ["your_alias"]
+    },
+    {
+      "denom": "your_display_denom",
+      "exponent": 6,
+      "aliases": []
+    }
+  ],
+  "base": "factory/your_creator_address/your_subdenom",
+  "display": "your_display_denom",
+  "name": "Your Token Name",
+  "symbol": "YTN"
+}
+```
+- Replace `your_creator_address` with your Osmosis address.
+- Replace `your_subdenom` with the subdenomination of your token.
+- Customize the `description`, `denom_units`, `base`, `display`, `name`, and `symbol` fields as per your token's specifications.
+
+2. **Execute the SetDenomMetadata Transaction:** Use the `osmosisd` CLI to submit the transaction.
+```
+osmosisd tx tokenfactory set-denom-metadata \
+  --metadata="$(cat metadata.json)" \
+  --from your_admin_account \
+  --chain-id your_chain_id \
+  --fees your_fee_amount \
+  --gas auto \
+  --gas-adjustment 1.5
+```
+1. - Ensure that `your_admin_account` is the account with admin privileges over the denom.
+    - Replace `your_chain_id` with your target chain's ID.
+    - Set `your_fee_amount` to an appropriate fee for the transaction.
+
+**Important Considerations:**
+
+- **Admin Verification:** The transaction will verify that the sender is the admin of the specified denom.
+    
+- **Metadata Overwrite:** Executing this transaction will overwrite the existing metadata associated with the denom.
+    
+
+For more detailed information, you can refer to the [Osmosis Token Factory module documentation](https://docs.osmosis.zone/osmosis-core/modules/tokenfactory/).
+
+If you encounter any issues or need further assistance, consider reaching out to the Osmosis community or checking the [Osmosis GitHub repository](https://github.com/osmosis-labs/osmosis) for additional resources.
