@@ -28,7 +28,7 @@ Groups of information stored on a blockchain. Each block contains transactions t
 
 ## Bonded validator
 
-A validator in the [active set](../overview/educate/terminology.md#active-set) participating in consensus. Bonded validators earn rewards.
+A validator in the [active set](../../overview/educate/terminology.md#active-set) participating in consensus. Bonded validators earn rewards.
 
 ## Bonding
 
@@ -98,7 +98,7 @@ A written submission for a change or addition to the Osmosis protocol. Topics of
 
 ## Inactive set
 
-Validators that are not in the [active set](../overview/educate/terminology.md#active-set). These validators do not participate in consensus and do not earn rewards.
+Validators that are not in the [active set](../../overview/educate/terminology.md#active-set). These validators do not participate in consensus and do not earn rewards.
 
 ## IBC
 
@@ -138,7 +138,7 @@ Since buying and selling from the pool changes the quantities of assets within a
 ## Long-Term Liquidity
 Liquidity mining rewards tend to attract short-term “mercenary farmers” who quickly deposit and withdraw their liquidity after harvesting the yield. These farmers are only interested in the speculative value of the governance tokens that they are earning. They usually bounce between protocols in search of the best yield.
 Mercenary farmers often create the mirage of protocol adoption, but when these farmers leave, it results in significant liquidity volatility. Users of the AMM have difficulty executing trades without encountering slippage. Therefore, long-term liquidity is crucial to the success of an AMM.
-Osmosis’ design includes two mechanisms to incentivize long-term liquidity: [exit fees](../overview/educate/getting-started.md#swap-fees) and [bonded liquidity gauges](../overview/educate/getting-started.md#bonded-liquidity-gauges).
+Osmosis’ design includes two mechanisms to incentivize long-term liquidity: [exit fees](../../overview/educate/getting-started.md#swap-fees) and [bonded liquidity gauges](../../overview/educate/getting-started.md#bonded-liquidity-gauges).
 
 
 ## Market swap
