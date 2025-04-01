@@ -18,18 +18,18 @@ provides a set of **components** and **templates** to allow any enabled chain
 to realize its own *frontend outpost*.
 
 If you want to create your own outpost platform, please follow the instruction
-available at the [Introduction page](./user-interface-setup/introduction).
+available at the [Introduction page](/osmosis-outpost/user-interface-setup/introduction).
 
 ### 📡 Stay tuned 
 
 If you have integrated the platform, please let us know so we can share the news
 with our community! Moreover, to stay updated with any changes or new features,
-please follow us. You can find how to reach us [here](./contact).
+please follow us. You can find how to reach us [here](/osmosis-outpost/contact).
 
 ### 📖 User guide 
 We realized a set of **tutorial** to follow your users step by step on *how to*
 *perform a swap* and *how to troubleshoot some common issues*. You can find it 
-[here](./user-guide/how-to-do-a-swap).
+[here](/osmosis-outpost/user-guide/how-to-do-a-swap).
 
 ### 📞 Support 
 Once you have integrated the widget, or created your new platform application, 
@@ -38,4 +38,4 @@ troubleshoot issues that users may encounter while using the widget or the app.
 
 If you, or your users, discover any **issues or errors** while using the 
 platform, please *reach us* through the channels available 
-[here](./contact).
+[here](/osmosis-outpost/contact).
