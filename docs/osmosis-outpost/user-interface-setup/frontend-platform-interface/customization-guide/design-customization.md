@@ -16,11 +16,11 @@ design version of the platform by simply editing the colours, label and logo.
 
 The result of a such a process, will give you a design showing what you will get
 if you follow the instructions on the 
-[customization guide](./customization/customizations) creating a code 
+[customization guide](./customization/code-customization.md) creating a code 
 implementation associated to the colours code you set on the Figma file.
 
 To better understand how the color are linked to the elements in the platform, 
-please give a look at the [Theme Customization](./theme-customization) page.
+please give a look at the [Theme Customization](./theme-customization.md) page.
 
 ### 1. Duplicate the Figma file
 Click on the 

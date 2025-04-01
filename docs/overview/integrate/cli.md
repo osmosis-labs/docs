@@ -6,7 +6,7 @@ sidebar_position: 9
 
 ## Using the CLI
 
-Once osmosisd is [installed](../osmosis-core/osmosisd) and configured with the correct network, you can now send commands with it. In a new terminal window, start by running the following query command:
+Once osmosisd is [installed](../../osmosis-core/osmosisd) and configured with the correct network, you can now send commands with it. In a new terminal window, start by running the following query command:
 
 ### Node status
 ```bash
@@ -77,7 +77,7 @@ Output:
 	"grpc-concurrency": false
 }
 ```
-In this example when we install osmosisd as a client with the [installer](../osmosis-core/osmosisd), it connects to the `http://osmosis.artifact-staking.io:26657`.
+In this example when we install osmosisd as a client with the [installer](../../osmosis-core/osmosisd), it connects to the `http://osmosis.artifact-staking.io:26657`.
 
 ### Change node
 
