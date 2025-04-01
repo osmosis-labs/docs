@@ -3,7 +3,7 @@ sidebar_position: 3
 ---
 # Getting Started
 ## Set up a Wallet
-Before opening the Osmosis AMM App, make sure to install the [Keplr Wallet](wallets/keplr/README.md).
+Before opening the Osmosis AMM App, make sure to install a wallet such as [Keplr Wallet](https://www.keplr.app/).
 
 ## Open the App
 Go to [https://app.osmosis.zone/](https://app.osmosis.zone/)

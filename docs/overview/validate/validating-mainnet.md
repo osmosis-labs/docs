@@ -2,7 +2,7 @@
 
 ## Synced Node
 
-Before creating a mainnet validator, ensure you have first followed the instructions on how to [join the mainnet](/overview/validate/joining-mainnet)
+Before creating a mainnet validator, ensure you have first followed the instructions on how to [join the mainnet](../validate/joining-mainnet.md)
 
 ## Initialize Wallet Keyring
 

@@ -26,7 +26,7 @@ LocalOsmosis has the following advantages over a public testnet:
 - [`docker-compose`](https://github.com/docker/compose)
 - [`Osmosisd`](https://get.osmosis.zone)
   * Select option 3 (localosmosis), the installer will configure everything for you. 
-  * The osmosisd dameon on your local computer is used to communicate with the localosmosis daemin running inside the Docker container. 
+  * The osmosisd daemon on your local computer is used to communicate with the localosmosis daemon running inside the Docker container. 
 - Supported known architecture: x86_64
 - 16+ GB of RAM is recommended
 

@@ -38,4 +38,4 @@ on a NextJS or a React application:
 
 > **_NOTE_:**  To get an example of a dApp embedding the widget, please give a
 > look to our 
-> [Frontend Platform Interface documentation](../frontend-platform-interface/getting-started.md).
+> [Frontend Platform Interface documentation](../../frontend-platform-interface/getting-started.md).
