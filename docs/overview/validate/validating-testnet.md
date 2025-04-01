@@ -2,7 +2,7 @@
 
 ## Synced Node
 
-Before creating a testnet validator, ensure you have first followed the instructions on how to [join the testnet](/overview/endpoints)
+Before creating a testnet validator, ensure you have first followed the instructions on how to [join the testnet](./joining-testnet.md)
 
 ## Initialize Wallet Keyring
 
