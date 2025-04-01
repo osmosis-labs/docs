@@ -21,7 +21,7 @@
 
 ## What is the purpose of the change
 
-*(For example: This pull request improves documation of area A by adding ....*
+*(For example: This pull request improves documentation of area A by adding ....*
 
 
 ## Brief change log
