@@ -77,7 +77,7 @@ Output:
 	"grpc-concurrency": false
 }
 ```
-In this example when we install osmosisd as a client with the [installer](../osmosis-core/osmosisd), it connects to the `http://osmosis.artifact-staking.io:26657`.
+In this example when we install osmosisd as a client with the [installer](/docs/osmosis-core/osmosisd), it connects to the `http://osmosis.artifact-staking.io:26657`.
 
 ### Change node
 
