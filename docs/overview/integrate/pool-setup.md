@@ -78,7 +78,7 @@ osmosisd tx concentratedliquidity create-pool ibc/... uosmo 100 0.01 --from val 
 There are recommendations for creating CL pools:
 
 - As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
-- denom-1: Must be from a set of authorized ‘quote’ assets, which, as of writing, are:
+- denom-1: Must be from a set of authorized ‘quote’ assets, which include (not exhaustive):
   - ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 (noble.USDC)
   - ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB (kava.USDT)
   - ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7 (DAI.axl)
@@ -87,6 +87,7 @@ There are recommendations for creating CL pools:
   - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
   - ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877 (TIA)
   - uosmo (OSMO)
+  - ...and several others
 - ...and on Testnet (osmo-test-5) are:
   - uosmo (OSMO)
   - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
