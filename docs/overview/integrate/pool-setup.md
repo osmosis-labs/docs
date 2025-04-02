@@ -26,13 +26,32 @@ Note: When specifying token denominations that are represented as `ibc/<hash>` v
 
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
 
-On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–basically the same thing as swap fee–and tick spacing–used for refining the granularity of possible positions.
+On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–-basically the same thing as swap fee–-and tick spacing–-used for refining the granularity of possible positions.
 
 ### Create Pool
 
 #### Osmosis Zone
 
-As of writing, Supercharged Liquidity Pools cannot be created via the Osmosis Zone app.
+To create a Supercharge Liquidity Pool on Osmosis via the Osmosis Zone app:
+
+IMPORTANT: If it is desired to entirely complete the setup of a Supercharged pool via the Osmosis Zone app--.i.e., not using osmosisd CLI--then the pool creator must add an initial liquidity position immediately after creating the pool, without closing the modal. If the pool creation flow is disrupted before the initial liquidfity has been added, e.g., by closing the modal or navigating to a different page, then it will not be possible to add initial liquidity to the new pool via the Osmosis Zone app, in which case it can only be added via osmosisd CLI (see [Join Pool](#join-pool) for steps).
+
+- Go to app.osmosis.zone
+- Connect a Wallet
+- Go to Pools page
+- Create New Pool button
+- Choose Supercharged pool
+- Next
+- Under Base, Add new token
+- Select a token
+- Under Quote, click the dropdown (default selection is USDC)
+- Set Swap Fee
+- Tick ‘I understand that creating a new pool will cost 20 USDC.'
+- Create Pool
+- Approve the transaction via the connected wallet (20 USDC will be charged at this stage).
+- Enter a >0 amount for both tokens
+- Next
+- Approve the transaction via the connected wallet
 
 #### CLI Command
 
