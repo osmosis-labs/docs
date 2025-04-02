@@ -26,13 +26,32 @@ Note: When specifying token denominations that are represented as `ibc/<hash>` v
 
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
 
-On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–basically the same thing as swap fee–and tick spacing–used for refining the granularity of possible positions.
+On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–-basically the same thing as swap fee–-and tick spacing–-used for refining the granularity of possible positions.
 
 ### Create Pool
 
 #### Osmosis Zone
 
-As of writing, Supercharged Liquidity Pools cannot be created via the Osmosis Zone app.
+To create a Supercharge Liquidity Pool on Osmosis via the Osmosis Zone app:
+
+IMPORTANT: If it is desired to entirely complete the setup of a Supercharged pool via the Osmosis Zone app--.i.e., not using osmosisd CLI--then the pool creator must add an initial liquidity position immediately after creating the pool, without closing the modal. If the pool creation flow is disrupted before the initial liquidfity has been added, e.g., by closing the modal or navigating to a different page, then it will not be possible to add initial liquidity to the new pool via the Osmosis Zone app, in which case it can only be added via osmosisd CLI (see [Join Pool](#join-pool) for steps).
+
+- Go to app.osmosis.zone
+- Connect a Wallet
+- Go to Pools page
+- Create New Pool button
+- Choose Supercharged pool
+- Next
+- Under Base, Add new token
+- Select a token
+- Under Quote, click the dropdown (default selection is USDC)
+- Set Swap Fee
+- Tick ‘I understand that creating a new pool will cost 20 USDC.'
+- Create Pool
+- Approve the transaction via the connected wallet (20 USDC will be charged at this stage).
+- Enter a >0 amount for both tokens
+- Next
+- Approve the transaction via the connected wallet
 
 #### CLI Command
 
@@ -59,7 +78,7 @@ osmosisd tx concentratedliquidity create-pool ibc/... uosmo 100 0.01 --from val 
 There are recommendations for creating CL pools:
 
 - As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
-- denom-1: Must be from a set of authorized ‘quote’ assets, which, as of writing, are:
+- denom-1: Must be from a set of authorized ‘quote’ assets, which include (not exhaustive):
   - ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 (noble.USDC)
   - ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB (kava.USDT)
   - ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7 (DAI.axl)
@@ -68,6 +87,7 @@ There are recommendations for creating CL pools:
   - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
   - ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877 (TIA)
   - uosmo (OSMO)
+  - ...and several others
 - ...and on Testnet (osmo-test-5) are:
   - uosmo (OSMO)
   - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
