@@ -49,9 +49,10 @@ IMPORTANT: If it is desired to entirely complete the setup of a Supercharged poo
 - Tick ‘I understand that creating a new pool will cost 20 USDC.'
 - Create Pool
 - Approve the transaction via the connected wallet (20 USDC will be charged at this stage).
-- Enter a >0 amount for both tokens
+- Enter a >0 amount for both tokens. This will set the price ratio with a full range position; the implied value is shown below.
 - Next
 - Approve the transaction via the connected wallet
+- The position can now be seen under Your Positions and it is now possible to create concentrated positions.
 
 #### CLI Command
 
