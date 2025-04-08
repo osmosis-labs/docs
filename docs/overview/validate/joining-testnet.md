@@ -106,7 +106,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 7.0.3
+These two command should both output 29.0.0
 
 Reset private validator file to genesis state:
 
@@ -218,20 +218,20 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V7
+## Update Cosmovisor to V29
 
-If you want osmosisd to upgrade automatically from V6 to V7, do the following steps prior to the upgrade height (3215657):
+If you want osmosisd to upgrade automatically from V28 to V29, do the following steps prior to the upgrade height (27192200):
 
-This step is only needed if syncing from genesis and haven't passed block 3215657 yet.
+This step is only needed if syncing from genesis and haven't passed block 27192200 yet.
 
 ```bash
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v7/bin
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/v28/bin
 cd $HOME/osmosis
 git pull
-git checkout v10.0.1
+git checkout v29.0.0
 make build
 systemctl stop cosmovisor.service
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v7/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v28/bin
 systemctl start cosmovisor.service
 cd $HOME
 ```

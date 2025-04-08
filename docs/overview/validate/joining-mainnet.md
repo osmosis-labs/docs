@@ -36,23 +36,23 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
-## Latest Version (V25.1.2) Upgrade Info
+## Latest Version (v29) Upgrade Info
 
 ### Go Requirement
 
-You will need to be running go1.21.1 for this version of Osmosis. You can check if you are running go1.21.1 with the following command:
+You will need to be running go1.22.11 for this version of Osmosis. You can check if you are running go1.22.11 with the following command:
 
 ```{.sh}
 go version
 ```
 
-If this does not say go1.21.1, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go1.21.1 on linux is as follows:
+If this does not say go1.22.11, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go1.22.11 on linux is as follows:
 
 ```{.sh}
 sudo rm -rvf /usr/local/go/
-wget https://golang.org/dl/go1.21.1.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
-rm go1.21.1.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.22.11.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.22.11.linux-amd64.tar.gz
+rm go1.22.11.linux-amd64.tar.gz
 ```
 ### Memory Requirements
 
@@ -267,15 +267,15 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V10
+## Update Cosmovisor to V29
 
-If you want osmosisd to upgrade automatically from V9 to V10, do the following steps prior to the upgrade height (4713065):
+If you want osmosisd to upgrade automatically from V28 to V29, do the following steps prior to the upgrade height (33187000):
 
 ```{.sh}
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v9/bin
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/v28/bin
 cd $HOME/osmosis
 git pull
-git checkout v10.0.0
+git checkout v29.0.0
 make build
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v9/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v28/bin
 ```
