@@ -267,15 +267,15 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V10
+## Update Cosmovisor to V29
 
-If you want osmosisd to upgrade automatically from V9 to V10, do the following steps prior to the upgrade height (4713065):
+If you want osmosisd to upgrade automatically from V28 to V29, do the following steps prior to the upgrade height (33187000):
 
 ```{.sh}
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v9/bin
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/v28/bin
 cd $HOME/osmosis
 git pull
-git checkout v10.0.0
+git checkout v29.0.0
 make build
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v9/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v28/bin
 ```
