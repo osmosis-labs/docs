@@ -36,7 +36,7 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
-## Latest Version (V25.1.2) Upgrade Info
+## Latest Version Upgrade Info
 
 ### Go Requirement
 
