@@ -254,4 +254,4 @@ osmosisd query wasm contract $CONTRACT_ADDR
 osmosisd query wasm list-code
 ```
 
-Good job! It's now time to learn how to actually develop contracts. You can now visit the [official CosmWasm contracts](https://docs.cosmwasm.com/docs/1.0/getting-started/intro) and as you explore the docs you will understand how tio actually interact with the Osmosis Blockchain.
+Good job! It's now time to learn how to actually develop contracts. You can now visit the [official CosmWasm contracts](https://docs.cosmwasm.com/docs/1.0/getting-started/intro) and as you explore the docs you will understand how to actually interact with the Osmosis Blockchain.
