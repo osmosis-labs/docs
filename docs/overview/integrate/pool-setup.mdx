@@ -26,7 +26,7 @@ Note: When specifying token denominations that are represented as `ibc/<hash>` v
 
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
 
-On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. For example, the allowable quote assets are limited to a small set of tokens, meaning that all CL pools must contain at least one of these authorized tokens (which are listed below). The same applies to spread factor–-basically the same thing as swap fee–-and tick spacing–-used for refining the granularity of possible positions.
+On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. These are the spread factor–-basically the same thing as swap fee–-and tick spacing–-used for refining the granularity of possible positions.
 
 ### Create Pool
 
@@ -73,7 +73,7 @@ Usage:
 ```bash
 osmosisd tx concentratedliquidity create-pool [denom-0] [denom-1] [tick-spacing] [spread-factor] [flags]`
 
-denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module
+tick spacing, and spread factors must all be authorized by the concentrated liquidity module
 ```
 
 Example:
@@ -84,22 +84,7 @@ osmosisd tx concentratedliquidity create-pool ibc/... uosmo 100 0.01 --from val 
 
 There are recommendations for creating CL pools:
 
-- As mentioned in the help text, denom-1 (the quote denom), tick spacing, and spread factors must all be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
-- denom-1: Must be from a set of authorized ‘quote’ assets, which include (not exhaustive):
-  - ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 (noble.USDC)
-  - ibc/4ABBEF4C8926DDDB320AE5188CFD63267ABBCEFC0583E4AE05D6E5AA2401DDAB (kava.USDT)
-  - ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7 (DAI.axl)
-  - ibc/EA1D43981D5C9A1C4AAEA9C23BB1D4FA126BA9BC7020A25E0AE4AA841EA25DC5 (wETH.axl)
-  - factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc (WBTC)
-  - ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 (ATOM)
-  - ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877 (TIA)
-  - uosmo (OSMO)
-  - ...and several others
-- ...and on Testnet (osmo-test-5) are:
-  - uosmo (OSMO)
-  - ibc/A8C2D23A1E6F95DA4E48BA349667E322BD7A6C996D8A4AAE8BA72E190F3D1477 (ATOM)
-  - ibc/8E2FEFCBD754FA3C97411F0126B9EC76191BAA1B3959CB73CECF396A4037BBF0 (unregistered denom)
-  - ibc/6F34E1BD664C36CE49ACC28E60D62559A5F96C4F9A6CCE4FC5A67B2852E24CFE (aUSDC.axl)
+- As mentioned in the help text, tick spacing, and spread factors must be authorized by the concentrated liquidity module, and these can be confirmed by querying the chain: `osmosisd query concentratedliquidity params`
 - tick-spacing: Must be from a set of authorized values: 1, 10, 100, and 1000
   - It is recommended to use a tick spacing of 100, which nearly all current Supercharged pools use; this effectively sets positions as being definable at any `0.01%` interval.
   - Since passing each initialized tick carries a computational cost(, and therefore requires more gas), a smaller tick spacing will require higher transaction fees, while a larger tick spacing will have lower transaction fees (but less precise positions).

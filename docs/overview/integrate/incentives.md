@@ -3,21 +3,7 @@ sidebar_position: 7
 ---
 # Liquidity Incentives
 
-Liquidity Providers on Osmosis receive swap fees by default, but can receive additional liquidity incentives from many sources.
-
-* [External Incentives](#external-incentives)
-
-	Osmosis allows for the permissionless creation of external liquidity mining gauges, allowing projects to add their own rewards to further incentivize users to provide liquidity into a pool.
-
-* [Internal Incentives](#internal-incentives)
-
-	Osmosis allocates up to 20% of inflation to incentivize users to bond their liquidity on Osmosis. If a pool is included by governance then it will be allocated a share of incentives based on several factors such as type of asset, swap fees generated in the pool, age of listing and sustained volumes. 
-	Osmosis currently only incentivizes pools composed of a very limited set of tokens as of [Proposal 638](https://www.mintscan.io/osmosis/proposals/638).
-
-* [Superfluid Staking](#superfluid-staking)
-
-	If enabled on a pool, a portion of the OSMO within can also be staked. Providing additional security to Osmosis as well as giving the liquidity providers additional staking rewards and the ability to participate in governance.
-	Superfluid staking is only available on Classic pools or full range Supercharged Pools.
+Liquidity Providers on Osmosis receive swap fees by default, but can receive additional liquidity incentives through the permissionless creation of external liquidity mining gauges, allowing projects to add their own rewards to further incentivize users to provide liquidity into a pool.
 
 ## How to add External Incentives to a pool
 
@@ -74,33 +60,3 @@ The command to run takes the format:
 **Example Classic Pool command**
 
 `osmosisd tx incentives create-gauge gamm/pool/1 1355000000uosmo 0 --duration 336h --epochs 30 --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3`
-
-
-
-## Internal incentives
-Internal incentives are provided from Osmosis inflation at each Epoch. Each pool on Osmosis has gauges that may be assigned a weighting to receive a share of these emissions. This weighting can be viewed on chain by [querying the poolincentives module](https://docs.osmosis.zone/osmosis-core/modules/pool-incentives#queries).
-
-To see how these weightings translate into incentive rates and expected changes at the next adjustment there is a dashboard available from [Chaos Labs](https://community-staging.chaoslabs.xyz/osmosis/incentives-optimization).
-
-Adjustments happen monthly and are required to be voted through Osmosis Governance in order to directly approve changes to the on chain parameters. An example of this is [Proposal 647](https://www.mintscan.io/osmosis/proposals/647).
-
-Calculations to determine incentive weighting for each pool were set in [Proposal 578](https://www.mintscan.io/osmosis/proposals/578).
-
-These use the incentives research carried out [documented in this paper](https://hathornodes.com/osmosis_incentives_research.html) and the [revision to this](https://hathornodes.com/incentives_research_update.html) based on community feedback.
-
-In summary, liquidity targets are set based on:
-* Aiming to have slippage of 0.25% for most retail swaps, with 2.5% allowed for whale swaps.
-* Minimum liquidity targets to defend against Oracle manipulation
-
-Incentives are then adjusted by up to 10% per month until that liquidity target is reached.
-
-## Superfluid Staking
-Osmosis Superfluid Staking can further incentivize users to provide liquidity to a pool, as they are able to stake their LP tokens for additional rewards as well as participating in Osmosis governance. The rewards from superfluid staking come from a portion of the OSMO in the pool being staked, so only OSMO pools can qualify for superfluid staking.
-
-Superfluid staking is only available on full range positions in Supercharged pools and is currently only enabled on major pairings with OSMO.
-
-The feature is enabled by via on-chain governance by a `Set Superfluid Asset` Proposal. These proposals must also be posted to the [Osmosis Governance Forum](https://forum.osmosis.zone/) for 3 days before moving to chain.
-
-For an example of a Superfluid proposal see [Proposal #546: Enable Superfluid Staking on OSMO/KAVA](https://www.mintscan.io/osmosis/proposals/546)
-
-For instructions on how to carry out a `Set Superfluid Asset` Proposal via [CLI](https://docs.osmosis.zone/osmosis-core/osmosisd) see [Gov Module Documentation](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-set-superfluid-asset)
