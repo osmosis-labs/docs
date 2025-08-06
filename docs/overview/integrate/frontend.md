@@ -6,7 +6,7 @@ sidebar_position: 8
 
 ## List onto the Osmosis Frontend
 
-As long as the asset has been properly registered according to the [registration documentation](https://docs.osmosis.zone/overview/integrate/registration) and there is a pool with USD $1000 of [initial liquidity](https://docs.osmosis.zone/overview/integrate/liquidity) then the pool will be visible on this frontend.
+As long as the asset has been properly registered according to the [registration documentation](https://docs.osmosis.zone/overview/integrate/registration) and there is a pool with USD $1,000 of [initial liquidity](https://docs.osmosis.zone/overview/integrate/liquidity) then the pool will be visible on this frontend.
 
 ## Verify Assets
 
@@ -18,4 +18,4 @@ Approval requires meeting the requirements in the assetlist repo that can be see
 
 ## Swap Page
 
-Although any asset in a liquidity pool can be traded when a user specifies the pool, an asset will only be listed on the Swap page if it is has a pool containing liquidity of USD $10,000.
+Although any asset in a liquidity pool can be traded when a user specifies the pool, an asset will only be listed on the Swap page if it is has a pool containing liquidity of USD $1,000.
