@@ -159,13 +159,13 @@ Also, if you don’t use compilation optimization, CosmWasm smart contract will 
 
 ### Optimized Compilation
 
-You can do further optimization using [rust-optimizer](https://github.com/CosmWasm/rust-optimizer). **rust-optimizer** produces reproducible builds of CosmWasm smart contracts and does heavy optimization on the build size, using binary stripping and `wasm-opt`.
+You can do further optimization using the [CosmWasm optimizer](https://github.com/CosmWasm/optimizer). The optimizer produces reproducible builds of CosmWasm smart contracts and does heavy optimization on the build size, using binary stripping and `wasm-opt`.
 
 ```bash
 sudo docker run --rm -v "$(pwd)":/code \
     --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
     --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-    cosmwasm/rust-optimizer:0.12.6
+    cosmwasm/optimizer:0.17.0
 ```
 
 Binary file will be at `artifacts/my_first_contract.wasm` folder and its size will be about `130K`, which is more smaller than when only RUTFLAGS was used.
