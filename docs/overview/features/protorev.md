@@ -1,5 +1,6 @@
 ---
 sidebar_position: 8
+description: Protocol-owned arbitrage that captures cyclic-trade MEV on Osmosis and returns it to OSMO stakers.
 ---
 
 # Protorev

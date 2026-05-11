@@ -1,5 +1,6 @@
 ---
 sidebar_position: 7
+description: Permissionless token creation — any account can mint a token namespaced under its address.
 ---
 
 # Token Factory

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 11
+description: REST/LCD endpoints exposed via gRPC-gateway for simpler HTTP-based queries.
 ---
 
 # Interact with REST

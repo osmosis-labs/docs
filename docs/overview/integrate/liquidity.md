@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+description: Several routes for sourcing the $1,000+ minimum liquidity Osmosis Zone requires to list a new asset.
 ---
 
 # Source Initial Liquidity

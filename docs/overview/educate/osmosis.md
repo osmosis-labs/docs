@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+description: Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond.
 ---
 # What is Osmosis?
 

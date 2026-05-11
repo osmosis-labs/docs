@@ -1,3 +1,7 @@
+---
+description: Turn a synced testnet node into a validator — keyring setup, self-delegation, and registration.
+---
+
 # Validating On Testnet
 
 ## Synced Node

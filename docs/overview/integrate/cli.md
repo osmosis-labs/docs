@@ -1,5 +1,6 @@
 ---
 sidebar_position: 9
+description: Query chain state and broadcast transactions from your terminal using osmosisd.
 ---
 
 # Interact with CLI

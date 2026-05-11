@@ -1,5 +1,6 @@
 ---
 sidebar_position: 8
+description: Once an asset is registered and a pool has $1,000+ in liquidity it appears on app.osmosis.zone automatically.
 ---
 
 # Ensure Visibility

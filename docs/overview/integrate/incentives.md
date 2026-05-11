@@ -1,5 +1,6 @@
 ---
 sidebar_position: 7
+description: Add external rewards to a pool by creating a permissionless liquidity-mining gauge.
 ---
 # Liquidity Incentives
 

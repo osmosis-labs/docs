@@ -1,5 +1,6 @@
 ---
 sidebar_position: 10
+description: Connect to Osmosis nodes via gRPC for typed, efficient queries and message broadcasts.
 ---
 
 # Interact with gRPC Server

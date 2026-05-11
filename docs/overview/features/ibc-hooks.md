@@ -1,5 +1,6 @@
 ---
 sidebar_position: 5
+description: Middleware that lets ICS-20 token transfers trigger CosmWasm contract calls — cross-chain calls with value attached.
 ---
 
 # IBC Hooks

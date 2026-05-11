@@ -1,3 +1,7 @@
+---
+description: Set up an Osmosis testnet full node to test changes against the public testnet.
+---
+
 # Running a Node on Testnet
 
 ## Osmosis Installer

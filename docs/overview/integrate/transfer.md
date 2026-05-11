@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+description: Bring your IBC-enabled chain's token to Osmosis — the prerequisites for permissionless trading.
 ---
 
 # Connect with Osmosis
