@@ -58,7 +58,7 @@ Then press ```Ctrl+O``` then enter to save, then ```Ctrl+X``` to exit
 Set up cosmovisor to ensure future upgrades happen flawlessly. To install Cosmovisor:
 
 ```bash
-go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ```
 
 Create the required directories:
@@ -106,7 +106,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two command should both output 29.0.0
+These two commands should both output the current osmosisd version (for example `v31.x.x` — check the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) for the canonical tag).
 
 Reset private validator file to genesis state:
 
@@ -218,20 +218,21 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V29
+## Updating Cosmovisor for the Next Testnet Upgrade
 
-If you want osmosisd to upgrade automatically from V28 to V29, do the following steps prior to the upgrade height (27192200):
+To allow osmosisd to upgrade automatically when the testnet hits the next upgrade height, prepare the upgrade binary in advance. Replace `<CURRENT_VERSION>`, `<UPGRADE_VERSION>`, and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding testnet upgrade announcement.
 
-This step is only needed if syncing from genesis and haven't passed block 27192200 yet.
+This step is only needed if syncing from genesis and you haven't passed `<UPGRADE_HEIGHT>` yet.
 
 ```bash
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v28/bin
+# Example: upgrading from v31 -> v32. Replace the placeholders below.
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
 cd $HOME/osmosis
 git pull
-git checkout v29.0.0
+git checkout <UPGRADE_VERSION>
 make build
 systemctl stop cosmovisor.service
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v28/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
 systemctl start cosmovisor.service
 cd $HOME
 ```

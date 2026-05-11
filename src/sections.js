@@ -1,6 +1,5 @@
 import {
   OsmosisCore,
-  Network,
   Cosmwasm,
   Beaker,
   Osmojs,
