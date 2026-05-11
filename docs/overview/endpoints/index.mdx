@@ -11,7 +11,7 @@ This section serves the purpose of different endpoints for different projects on
 ## Table of Contents
 [Endpoints](#endpoints)
   - [Mainnet Chain Endpoints](#mainnet-chain-endpoints)
-  - [Historical Data / Indexed Data](#historical-data--indexed-data)
+  - [Indexed Data and Routing](#indexed-data-and-routing)
   - [Testnet Networks](#testnet-networks)
   - [Frontend](#frontend)
   - [Chain Registry](#chain-registry)
@@ -36,20 +36,14 @@ Please visit [API Playground](/api) for more docs and to try interacting with th
 
 For more information how to integrate with each endpoints, please refer to the [Integrate section](../overview/integrate).
 
-## Historical Data / Indexed Data
+## Indexed Data and Routing
 
-Osmosis keeps indexed chain data in a separate endpoint:
-- [api.osmosis.zone](https://api.osmosis.zone)
+For historical, analytical, and indexed Osmosis chain data such as token prices, historical liquidity, APRs, trading-view feeds, and similar processed data, use [Numia](https://www.numia.xyz). Numia provides managed indexers, REST endpoints, and a SQL data warehouse covering Osmosis and the wider Cosmos ecosystem. Access requires an API key; sign up via the [Numia portal](https://www.numia.xyz).
 
-This endpoint provides processed data such as: 
-- [historical token price chart](https://api-osmosis.imperator.co/swagger/#/tokens/token_price_historical_chart_v2)
-- [historical liquidity chart](https://api-osmosis.imperator.co/swagger/#/liquidity/liquidity_historical_all_chart)
-- [APR](https://api-osmosis.imperator.co/swagger/#/apr)
-- [Data for Trading View](https://api-osmosis.imperator.co/swagger/#/tradingview)
+For live routing and pool-state queries (the data that powers swap quoting on the Osmosis frontend), use the Sidecar Query Service (SQS):
 
-and much more!
-
-Please visit [Swagger](https://api-osmosis.imperator.co/swagger/#/) to see the full view of APIs supported.
+- SQS endpoint: [sqs.osmosis.zone](https://sqs.osmosis.zone)
+- SQS swagger: [sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html)
 
 
 ## Testnet Networks
@@ -87,7 +81,7 @@ The following is a list of explorers available.
 
 - Mintscan: [https://testnet.mintscan.io/osmosis-testnet](https://testnet.mintscan.io/osmosis-testnet)
 - Ping.pub: [https://testnet.ping.pub/osmosis](https://testnet.ping.pub/osmosis)
-- Celatone (Contract Explorer): [https://celatone.osmosis.zone/testnet]https://celatone.osmosis.zone/testnet
+- Celatone (Contract Explorer): [https://celatone.osmosis.zone/osmo-test-5](https://celatone.osmosis.zone/osmo-test-5)
 
 
 
