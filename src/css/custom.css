@@ -811,10 +811,24 @@ img[src$='#terminal'] {
 
 /* OSMOSIS */
 
+/* Issue #210: render DocCardList items full-width on desktop. Infima
+   drives both flex-basis and max-width from --ifm-col-width on any
+   element matching .col[class*=col--], so override the variable
+   (scoped to <article class="col">, the DocCardList markup) to keep
+   the footer unaffected.
 
-    @media (min-width: 997px) 
-{
-  .col {
-    max-width: 100% !important;
-}
+   Docusaurus's DocCategoryGeneratedIndexPage zeros margin-bottom on
+   the last two articles (`article:nth-last-child(-n + 2)`) on the
+   assumption of a 2-col grid where they share a row. Once we collapse
+   to a single column those two are stacked, so we need the gap back
+   between them — restore margin-bottom on every article except the
+   actual last one. */
+@media (min-width: 997px) {
+  article.col {
+    --ifm-col-width: 100%;
+  }
+
+  article.col.margin-bottom--lg:not(:last-child) {
+    margin-bottom: 2rem !important;
+  }
 }
