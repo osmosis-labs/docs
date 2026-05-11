@@ -1,4 +1,6 @@
-
+---
+description: Set up an Osmosis mainnet full node using the official installer or from source.
+---
 
 # Running a Node on Mainnet
 

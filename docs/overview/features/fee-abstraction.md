@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+description: Pay transaction fees in any whitelisted IBC asset, not just OSMO.
 ---
 
 # Fee Abstraction

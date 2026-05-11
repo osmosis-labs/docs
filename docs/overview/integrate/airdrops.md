@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: Snapshot Osmosis accounts at a given height — optionally filtered by LP position — for airdrop distribution.
 ---
 
 # Airdrop Distribution

@@ -1,3 +1,7 @@
+---
+description: Integrations between Osmosis and external services — oracles, indexers, and analytics platforms.
+---
+
 # External Projects
 
 Osmosis supports integration with a diverse range of external projects. 

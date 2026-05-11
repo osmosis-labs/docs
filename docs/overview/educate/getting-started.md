@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+description: Install a wallet, open the Osmosis app, and execute your first swap or liquidity position.
 ---
 # Getting Started
 ## Set up a Wallet

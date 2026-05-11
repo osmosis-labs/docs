@@ -1,5 +1,6 @@
 ---
 sidebar_position: 5
+description: Definitions for the terms used across Osmosis and the wider Cosmos ecosystem.
 ---
 
 # Glossary 

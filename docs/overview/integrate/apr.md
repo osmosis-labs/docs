@@ -1,5 +1,6 @@
 ---
 sidebar_position: 11
+description: How LP APRs are computed — separately for concentrated-liquidity pools and classic AMM pools.
 ---
 
 # APR Calculation

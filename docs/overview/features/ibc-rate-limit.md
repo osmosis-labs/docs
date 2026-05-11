@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+description: A governance-configurable safety control that caps IBC outflows in a rolling window to contain hacks and bugs.
 ---
 
 # IBC Rate Limit
