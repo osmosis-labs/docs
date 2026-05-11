@@ -140,7 +140,7 @@ const config = {
           {
             label: 'Develop',
             to: 'osmosis-core',
-            position: 'right',
+            position: 'left',
             // className: 'new-badge',
             activeBaseRegex: '(.*ui-kit|.*web-core)',
           },
@@ -170,21 +170,9 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://discord.com/invite/osmosis',
-            className: 'pseudo-icon discord-icon',
-            position: 'right',
-          },
-          {
             type: 'search',
             position: 'right',
           },
-          {
-            label: 'Launch Dex',
-            href: 'https://app.osmosis.zone',
-            position: 'right',
-            className: 'dev-portal-signup dev-portal-link',
-          },
-
         ],
       },
       footer: {
@@ -271,8 +259,21 @@ const config = {
         apiKey: '00',
       },
     }),
-  scripts: [
-    "https://tally.so/widgets/embed.js",
+  scripts: ['https://tally.so/widgets/embed.js'],
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com',
+      rel: 'preconnect',
+    },
+    {
+      href: 'https://fonts.gstatic.com',
+      rel: 'preconnect',
+      crossorigin: 'anonymous',
+    },
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap',
+      rel: 'stylesheet',
+    },
   ],
 };
 

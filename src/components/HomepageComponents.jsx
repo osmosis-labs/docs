@@ -27,13 +27,24 @@ export function HomepageSection({
   );
 }
 
-export function HomepageCard({ id, icon, svgFile, title, description, to }) {
+export function HomepageCard({
+  id,
+  icon,
+  svgFile,
+  title,
+  description,
+  to,
+  featured = false,
+}) {
+  const hasIcon = Boolean(svgFile) || Boolean(icon);
+
   return (
-    <Link to={to} className="homepage-card">
-      {svgFile
-        ?  <div className="icon"><img src={svgFile}/></div>
-        :  icon && <div className="icon">{icon}</div>
-      }
+    <Link to={to} className={clsx('homepage-card', featured && 'featured')}>
+      {hasIcon && (
+        <div className="icon-frame">
+          {svgFile ? <img src={svgFile} alt="" /> : icon}
+        </div>
+      )}
       <div className="card-content">
         <div className="title" id={id && paramCase(title)}>
           {title}
