@@ -10,7 +10,9 @@ const posthogPlugin = require('./plugins/posthog-plugin.cjs');
 /** @type {import('@docusaurus/preset-classic').Options} */ defaultSettings = {
   remarkPlugins: [
     [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+    require('remark-math'),
   ],
+  rehypePlugins: [require('rehype-katex')],
 };
 
 /**
@@ -264,6 +266,15 @@ const config = {
     }),
   scripts: [
     "https://tally.so/widgets/embed.js",
+  ],
+  stylesheets: [
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+      type: 'text/css',
+      integrity:
+        'sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV',
+      crossorigin: 'anonymous',
+    },
   ],
 };
 
