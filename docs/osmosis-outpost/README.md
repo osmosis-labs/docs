@@ -2,40 +2,25 @@
 sidebar_position: 1
 sidebar_label: What is an Osmosis outpost
 ---
+
 # What is an Osmosis Outpost
 
-An Osmosis outpost is a platform that makes it *much simpler* to perform swaps
-on different *Cosmos chains*, without having to manually send the tokens to 
-Osmosis to trade them, or worse, to build their own DEx.
+An Osmosis outpost is a platform that lets users on **other Cosmos chains** swap through the Osmosis DEX without first bridging their tokens over and back. The outpost handles the IBC routing, the smart-contract calls, and the return delivery — the user sees a single, native-feeling swap on their home chain.
 
-The outpost performs the swaps through the **Osmosis DEX** and can send the
-swapped token to the outpost chain. Such a platform uses **IBC protocol** and
-**smart contracts** to allow users on the outpost chain to *perform the swaps*.
+Each outpost UI is meant to be **simple, intuitive, and customizable** for its host chain. The [**nabla** framework](/osmosis-outpost/user-interface-setup/introduction) ships a set of components and templates so any enabled chain can spin up its own outpost frontend without rebuilding the plumbing.
 
-It is important for the UI of such a platform to be *simple, intuitive, and* 
-*highly customizable* for each outpost chain and, for this reason, **nabla** 
-provides a set of **components** and **templates** to allow any enabled chain 
-to realize its own *frontend outpost*.
+:::tip Building your own outpost?
+Start with the [Introduction page](/osmosis-outpost/user-interface-setup/introduction) — it walks through the templates, configuration, and deployment.
+:::
 
-If you want to create your own outpost platform, please follow the instruction
-available at the [Introduction page](/osmosis-outpost/user-interface-setup/introduction).
+## 📡 Stay tuned
 
-### 📡 Stay tuned 
+If you've integrated the platform, let us know so we can share the news with the wider community. To follow new features and changes, [find us on our channels](/osmosis-outpost/contact).
 
-If you have integrated the platform, please let us know so we can share the news
-with our community! Moreover, to stay updated with any changes or new features,
-please follow us. You can find how to reach us [here](/osmosis-outpost/contact).
+## 📖 User guide
 
-### 📖 User guide 
-We realized a set of **tutorial** to follow your users step by step on *how to*
-*perform a swap* and *how to troubleshoot some common issues*. You can find it 
-[here](/osmosis-outpost/user-guide/how-to-do-a-swap).
+A step-by-step walkthrough — including common troubleshooting — for users performing their first outpost swap is available in the [User Guide](/osmosis-outpost/user-guide/how-to-do-a-swap).
 
-### 📞 Support 
-Once you have integrated the widget, or created your new platform application, 
-we recommend you create a support channel in your own community for users to 
-troubleshoot issues that users may encounter while using the widget or the app.
+## 📞 Support
 
-If you, or your users, discover any **issues or errors** while using the 
-platform, please *reach us* through the channels available 
-[here](/osmosis-outpost/contact).
+Once you've shipped your outpost, we recommend opening a community support channel so users have somewhere to report issues. If you or your users hit problems with the widget or the underlying chain, [reach out through our channels](/osmosis-outpost/contact).
