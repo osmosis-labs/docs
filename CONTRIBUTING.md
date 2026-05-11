@@ -44,6 +44,41 @@ The code should satisfy the following:
 - Have meaningful file names, directory names and directory structure.
 - Have a scope for easy fixing, refactoring and scaling.
 
+### Docs page conventions
+
+A few conventions keep the docs readable and consistent. These are
+strongly preferred — push back in review if a PR ignores them.
+
+- **Open every page with a lede.** One or two sentences directly under
+  the page title that explain what the page covers and who it's for.
+  The first paragraph gets a slightly larger size automatically, so use
+  the space — don't waste it on filler ("This guide will...").
+
+- **Break up walls of text.** If a paragraph is more than ~6 lines,
+  split it, pull part into a bullet list, or move an aside into a
+  Docusaurus admonition (`:::tip`, `:::note`, `:::warning`,
+  `:::info`, `:::danger`). Admonitions are the cheapest way to break
+  up dense prose and they render with strong visual contrast.
+
+- **Use headings as scannable structure, not decoration.** Aim for an
+  `<h2>` every ~150–200 words on dense pages. A reader should be able
+  to skim heading-to-heading and understand the page's shape.
+
+- **Index pages need an intro paragraph above the card grid.** When a
+  page is mostly a `<HomepageSection>` table of contents (like the
+  `osmosis-core/README.mdx`), add one or two sentences above the grid
+  that frame what's in the section and which card to read first. A bare
+  grid of identical cards reads as a placeholder.
+
+- **Featured card per section.** `<HomepageCard>` accepts a `featured`
+  prop that doubles the card width and brightens the border. Use it for
+  the "if you read nothing else, read this" entry — **at most one per
+  section**. Don't featuring everything; that's just colour noise.
+
+- **Code blocks deserve a language tag.** ` ```sh ` / ` ```ts ` /
+  ` ```rust ` so syntax highlighting picks them up. Plain ` ``` ` is
+  rarely the right choice.
+
 ## What should I know before I get started
 
 You can contribute to any of the features you want, here's what you need to know:

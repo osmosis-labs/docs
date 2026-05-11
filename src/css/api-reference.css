@@ -14,7 +14,7 @@
 .elements-container {
   --ifm-link-color: currentColor;
   --ifm-link-decoration: none;
-  
+
   flex-grow: 1;
   height: 100%;
 }
@@ -25,16 +25,16 @@
 
 .ElementsTableOfContentsItem div {
   border-right: 2px solid transparent !important;
-  border-radius: 4px 0 0 4px;
+  border-radius: 6px 0 0 6px;
 }
 
 .ElementsTableOfContentsItem .sl-bg-primary-tint {
-  border-color: var(--docs-color-primary-100) !important;
+  border-color: var(--docs-color-primary) !important;
 }
 
 html[data-theme='dark'] .elements-container {
   --color-canvas-200: var(--docs-color-background-200) !important;
-  --ifm-pre-background: #1e1e1e;
+  --ifm-pre-background: var(--docs-color-code-background);
 }
 
 html[data-theme='dark'] .TryItPanel {
@@ -42,11 +42,15 @@ html[data-theme='dark'] .TryItPanel {
   --color-canvas-200: var(--docs-color-background-200) !important;
 }
 
-html[data-theme='dark'] .elements-container :is(.token.string, .token.function, .token.property) {
-  color: var(--docs-color-primary-100) !important;
+html[data-theme='dark']
+  .elements-container
+  :is(.token.string, .token.function, .token.property) {
+  color: var(--docs-color-primary) !important;
 }
 
-html[data-theme='dark'] .elements-container :is(.token.punctuation, .token.operator) {
+html[data-theme='dark']
+  .elements-container
+  :is(.token.punctuation, .token.operator) {
   color: #fff !important;
 }
 
@@ -57,7 +61,7 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 .JsonSchemaViewer > div:first-child {
   --color-canvas-pure: var(--docs-color-background-200);
   z-index: 0;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0 12px !important;
 }
 
