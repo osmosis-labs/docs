@@ -2,117 +2,90 @@
 title: Frontend & SDKs
 sidebar_position: 1
 ---
----
+
 import {
   HomepageCard as Card,
   HomepageSection as Section,
 } from '../../src/components/HomepageComponents';
-import Link from '@docusaurus/Link';
+
 import {
-  ChainIcon,
-  IDEIcon,
-  TerminalIcon,
-  ModulesIcon,
-  RelayerIcon,
-  AssetIcon,
   Telescope,
   Osmojs,
   Createapp,
   Cosmoskit,
+  Chainregistry,
   Tscodegen,
-  Chain
+  Frontend,
+  Network,
 } from '../../src/icons';
 
-# Osmosis Frontend, SDKs and Tools
+# Frontend, SDKs & Tooling
 
-The following are libraries and utilities to start developing with Osmosis.
+Libraries for building on top of Osmosis from JavaScript, TypeScript, and the web. The **Osmosis Frontend** section covers the official `app.osmosis.zone` codebase and the npm packages it's built from; **Cosmos Ecosystem** lists the wider tooling that most Cosmos frontends — Osmosis included — rely on.
 
-<Section title="Osmosis Frontend" id="web-sdks" hasSubSections >
-
-   <Section>
-   <Card
+<Section title="Osmosis Frontend">
+  <Card
+    featured
     title="Osmosis Frontend"
-    description="Web interface for Osmosis Zone"
+    description="The web interface for app.osmosis.zone. Start here for architecture, local setup, and contributing."
     to="/frontend/osmosis-frontend"
-    icon=""
-    svgFile="/icons/osmo.svg"/>
-
+    svgFile="/icons/osmo.svg"
+  />
   <Card
     title="OsmoJS"
-    description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
+    description="Compose and broadcast Osmosis and Cosmos messages — proto and amino encoding handled for you."
     to="/osmojs"
     icon={<Osmojs />}
-    svgFile=""
   />
-
   <Card
-    title="Osmosis-Labs Math"
-    description="NPM package with math functions related to Osmosis AMM. Useful for estimating state changes to propose reasonable min/max amounts in transactions."
+    title="@osmosis-labs/math"
+    description="AMM math utilities. Estimate state changes to set reasonable min/max amounts on transactions."
     to="https://www.npmjs.com/package/@osmosis-labs/math"
-    icon={<Tscodegen />}
     svgFile="/icons/math.svg"
-  />   
+  />
   <Card
-    title="Osmosis-Labs Pools"
-    description="NPM package that defines pool interface and pool routing logic for the Osmosis Dex."
+    title="@osmosis-labs/pools"
+    description="The pool interface and routing logic that powers the Osmosis DEX."
     to="https://www.npmjs.com/package/@osmosis-labs/pools"
-    icon={<Tscodegen />}
     svgFile="/icons/pools.svg"
-  /> 
+  />
   <Card
-    title="Osmosis-Labs Stores"
-    description="NPM package which contains observable stores via mobx data storage framework for the Osmosis front-end"
+    title="@osmosis-labs/stores"
+    description="Observable MobX stores used by the Osmosis frontend — live balances, pools, and chain state."
     to="https://www.npmjs.com/package/@osmosis-labs/stores"
-    icon={<Tscodegen />}
     svgFile="/icons/store.svg"
-  /> 
-  </Section>
+  />
 </Section>
 
-<Section title="Frontend SDK Libraries & Utilities" id="web-sdks" hasSubSections >
-
-   <Section>
-
+<Section title="Cosmos Ecosystem">
   <Card
     title="Cosmos Kit"
-    description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
+    description="React wallet adapter with mobile WalletConnect support for every major Cosmos wallet."
     to="/frontend/cosmos-kit"
-    icon=""
     svgFile="/icons/bag.svg"
   />
   <Card
     title="Telescope"
-    description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
+    description="TypeScript transpiler for Cosmos protobufs — generate typed clients for any Cosmos chain."
     to="/telescope"
     icon={<Telescope />}
-    svgFile=""
   />
   <Card
     title="Create Cosmos App"
-    description="Set up a modern Cosmos app by running one command"
+    description="Bootstrap a modern Cosmos frontend with a single command."
     to="https://github.com/cosmology-tech/create-cosmos-app"
-    icon={<Createapp />}
     svgFile="/icons/create-cosmos-app.svg"
   />
   <Card
     title="Chain Registry"
-    description="The npm package for the Official Cosmos chain registry"
+    description="npm package wrapping the official Cosmos chain registry — chain IDs, RPC endpoints, asset lists."
     to="https://github.com/cosmology-tech/chain-registry"
-    icon={<Cosmoskit />}
-    svgFile="/icons/registry.svg"
+    icon={<Chainregistry />}
   />
   <Card
     title="TS Codegen"
-    description="The quickest and easiest way to interact with CosmWasm Contracts"
+    description="Generate TypeScript clients from CosmWasm contract schemas."
     to="https://github.com/CosmWasm/ts-codegen"
     icon={<Tscodegen />}
-    svgFile="/icons/tscodegen.svg"
-  />   
-  
-
-
- 
-  </Section>
-
-  </Section>
-
+  />
+</Section>
