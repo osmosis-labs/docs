@@ -197,37 +197,46 @@ const config = {
         },
         links: [
           {
-            title: 'Product',
+            title: 'Platform',
             items: [
-              {
-                label: 'Launch App',
-                href: 'https://app.osmosis.zone',
-              },
-              {
-                label: 'Developer Portal',
-                href: 'https://docs.osmosis.zone',
-              },
-              {
-                label: 'Ecosystem',
-                href: 'https://osmosis.zone/ecosystem',
-              },
+              { label: 'Trade', href: 'https://app.osmosis.zone' },
+              { label: 'Assets', href: 'https://app.osmosis.zone/assets' },
+              { label: 'Staking', href: 'https://app.osmosis.zone/stake' },
+              { label: 'Pools', href: 'https://app.osmosis.zone/pools' },
             ],
           },
           {
-            title: 'Resources',
+            title: 'Token',
             items: [
-              {
-                label: 'Documentation',
-                href: 'https://docs.osmosis.zone',
-              },
-              {
-                label: 'Medium',
-                href: 'https://medium.com/@Osmosis',
-              },
-              {
-                label: 'Community',
-                href: 'https://commonwealth.im/osmosis/',
-              },
+              { label: 'OSMO', href: 'https://app.osmosis.zone/assets/OSMO' },
+              { label: 'CoinGecko', href: 'https://www.coingecko.com/en/coins/osmosis' },
+              { label: 'CoinMarketCap', href: 'https://coinmarketcap.com/currencies/osmosis/' },
+              { label: 'Governance', href: 'https://support.osmosis.zone/tutorials/governance' },
+              { label: 'Vote', href: 'https://daodao.zone/gov/osmosis/proposals' },
+            ],
+          },
+          {
+            title: 'Community',
+            items: [
+              { label: 'X (Twitter)', href: 'https://twitter.com/osmosis' },
+              { label: 'Telegram', href: 'https://t.me/osmosis_chat' },
+              { label: 'Discord', href: 'https://discord.com/invite/osmosis' },
+              { label: 'Forum', href: 'https://forum.osmosis.zone/' },
+            ],
+          },
+          {
+            title: 'Developers',
+            items: [
+              { label: 'Docs', href: 'https://docs.osmosis.zone/' },
+              { label: 'GitHub', href: 'https://github.com/osmosis-labs' },
+              { label: 'Grants', href: 'https://grants.osmosis.zone/' },
+            ],
+          },
+          {
+            title: 'Team',
+            items: [
+              { label: 'Contact', href: 'https://support.osmosis.zone/' },
+              { label: 'Blog', href: 'https://forum.osmosis.zone/c/blog/13' },
             ],
           },
         ],
