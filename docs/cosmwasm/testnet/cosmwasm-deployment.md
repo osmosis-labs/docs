@@ -15,9 +15,7 @@ The following is a quick guide that shows the basics of deploying a contract to 
     - Get contract’s count
     - Increment contract’s count
     - Reset contract’s count
-- Osmo Contract Explorer
-    - Upload the code
-    - Execute the contract
+- Contract explorer
 
 :::tip
 Please note this is a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](./cosmwasm-beaker.md) with a couple of commands. 
@@ -121,8 +119,8 @@ osmosisd query bank balances $(osmosisd keys show -a wallet)
 For this example, we will use the [**cw-template**](https://github.com/osmosis-labs/cw-tpl-osmosis) repo with counter example.
 
 ```bash
-cargo generate --git https://github.com/osmosis-labs/cw-tpl-osmosis.git --name my-first-contract
-cd my-first-contract
+cargo generate --git https://github.com/osmosis-labs/cw-tpl-osmosis.git --name cw-tpl-osmosis
+cd cw-tpl-osmosis
 ```
 
 ### Compile the wasm contract with stable toolchain
@@ -147,7 +145,7 @@ cargo wasm
     So when we run the `cargo wasm` command, the `cargo build --release —-target wasm32-unknown-unknown` command is executed according to the option in the config file above.
     
 
-After this compiles, it should produce a file in `target/wasm32-unknown-unknown/release/my_first_contract.wasm`.  If you check the size of the file by using the `ls -lh` command, it shows around `1.8M`. This is a release build, but not stripped of all unneeded code. To produce a much smaller version, you can run this which tells the compiler to strip all unused code out:
+After this compiles, it should produce a file in `target/wasm32-unknown-unknown/release/cw_tpl_osmosis.wasm`.  If you check the size of the file by using the `ls -lh` command, it shows around `1.8M`. This is a release build, but not stripped of all unneeded code. To produce a much smaller version, you can run this which tells the compiler to strip all unused code out:
 
 ```bash
 RUSTFLAGS='-C link-arg=-s' cargo wasm
@@ -168,15 +166,20 @@ sudo docker run --rm -v "$(pwd)":/code \
     cosmwasm/rust-optimizer:0.12.6
 ```
 
-Binary file will be at `artifacts/my_first_contract.wasm` folder and its size will be about `130K`, which is more smaller than when only RUTFLAGS was used.
+Binary file will be at `artifacts/cw_tpl_osmosis.wasm` folder and its size will be about `130K`, which is more smaller than when only RUTFLAGS was used.
 
 ### Store to Osmosis Testnet chain
 
 We have the wasm binary executable ready. Now it is time to store the code to the Osmosis Testnet blockchain. 
 
 ```bash
-# store the code on chain
-RES=$(osmosisd tx wasm store artifacts/my_first_contract.wasm --from wallet --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -y --output json -b block)
+# broadcast the store-code tx; --output json prints the txhash we need
+TX=$(osmosisd tx wasm store artifacts/cw_tpl_osmosis.wasm --from wallet --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -y --output json -b sync)
+TXHASH=$(echo "$TX" | jq -r '.txhash')
+
+# wait a few seconds for inclusion, then query the receipt
+sleep 6
+RES=$(osmosisd query tx "$TXHASH" --output json)
 ```
 
 - `osmosisd tx wasm store` : upload a wasm binary
@@ -186,7 +189,7 @@ RES=$(osmosisd tx wasm store artifacts/my_first_contract.wasm --from wallet --ga
 - `--gas-adjustment` : adjustment factor to be multiplied against the estimate returned by the tx simulation.
 - `-y` : to skip tx broadcasting prompt confirmation.
 - `--output` : output format.
-- `-b` : transaction broadcasting mode
+- `-b sync` : broadcast the transaction synchronously and return immediately with the txhash. The `block` mode used in older Cosmos SDK versions is no longer supported — query the tx by hash after the next block to fetch the result.
 
 ![](https://user-images.githubusercontent.com/70956926/172293654-7beba11b-ce5f-4979-94e2-19156c6e5b27.png)
 
@@ -224,7 +227,7 @@ INIT='{"count":100}'
 
 # instantiate the contract
 osmosisd tx wasm instantiate $CODE_ID "$INIT" \
-    --from wallet --label "my first contract" --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+    --from wallet --label "my first contract" --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -b sync -y --no-admin
 ```
 
 - `osmosisd tx wasm instantiate` : instantiate a wasm contract using CODE_ID of the uploaded binary.
@@ -284,45 +287,8 @@ osmosisd tx wasm execute $CONTRACT_ADDR "$RESET" --from wallet --gas-prices 0.02
 
 ![](https://user-images.githubusercontent.com/70956926/172295239-ddf95369-5b9a-4096-a84d-aecc1ef30484.png)
 
-## Osmo Contract Explorer
+## Contract explorer
 
-You can also instantiate the contract using intuitive GUI in [Osmo Contract Explorer](https://osmosis-contracts.web.app/#/codes).
-
-Let’s do it together
-
-
-### Upload the code
-
-When you access the site, you will see a list of the code we uploaded to the chain and the contract instances created using the corresponding CODE_ID.
-
-![](https://user-images.githubusercontent.com/70956926/172296987-b8df32a4-f50e-4546-8773-a257a21fb92d.png)
-
-First, Login by connecting your wallet. Then click the `Create a Contract` button and enter the initial state of the instance in `Instantiate Message`. After also entering label and admin, you can easily create a contract instance by clicking the `Instantiate Contract` button.
-
-![](https://user-images.githubusercontent.com/70956926/172297151-64146bba-d7d4-444f-9a57-06dd55f62db8.png)
-
-### Execute the contract
-
-Now, let's send a transaction to the contract to see if the contract works well.
-
-You can send a query in the `Read Contract` section and you can send transactions that change the internal state of the contract in the `Write Contract` section.
-
-![](https://user-images.githubusercontent.com/70956926/172298609-95a0269d-ae58-472b-b02e-c2b1b5f3c4e6.png)
-
-#### get_count
-
-In the Read Contract section, type `get_count` messages and press the `Run query` button to get the count value.
-
-![](https://user-images.githubusercontent.com/70956926/172300337-eda6f76a-ad31-45d3-a5a1-8d324c2bc966.png)
-
-#### increment
-
-In the Write Contract section, type `increment` messages and the OSMO to pay and click the `Execute Contract` button to execute the transaction.
-
-![](https://user-images.githubusercontent.com/70956926/172300637-bb29452d-1d23-4c30-8cbb-d72f358b490e.png)
-
-#### reset
-
-![](https://user-images.githubusercontent.com/70956926/172300485-4d66b5a9-1082-48da-ba1c-b979206f277e.png)
+If you prefer a GUI to interact with your deployed contract, use [Celatone](https://celatone.osmosis.zone/osmo-test-5). Connect your wallet, look up your `CODE_ID` or `CONTRACT_ADDR`, and you can instantiate new contracts, run queries, and execute messages without leaving the browser.
 
 Congratulations! Now you deployed your wasm smart contract on Osmosis Testnet successfully.
