@@ -61,6 +61,8 @@ Set up cosmovisor to ensure future upgrades happen flawlessly. To install Cosmov
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ```
 
+(You may also refer to the Cosmovisor [installation instructions](https://github.com/cosmos/cosmos-sdk/tree/main/tools/cosmovisor#installation).)
+
 Create the required directories:
 
 ```bash
