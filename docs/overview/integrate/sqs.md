@@ -4,7 +4,7 @@ sidebar_position: 13
 
 # Sidecar Query Server (SQS)
 
-The Sidecar Query Server is a Go service that runs alongside an Osmosis full node and exposes high-performance HTTP endpoints for the queries that are too expensive or too slow to run directly against the chain — most importantly **swap routing**, **batched pool data**, and **token price lookups**.
+The Sidecar Query Server is a Go service that runs alongside an Osmosis full node and exposes high-performance HTTP endpoints for the queries that are too expensive or too slow to run directly against the chain: most importantly **swap routing**, **batched pool data**, and **token price lookups**.
 
 It is the query path used by [app.osmosis.zone](https://app.osmosis.zone) in production. If you are building a swap interface, a price oracle, an arbitrage bot, or any UI that needs current pool state without per-block chain queries, you should be reading SQS first and falling back to RPC/REST only when SQS does not expose the data you need.
 
@@ -12,7 +12,7 @@ It is the query path used by [app.osmosis.zone](https://app.osmosis.zone) in pro
 
 Routing a multi-hop swap on Osmosis requires knowing the balances, fees, and pool type of every relevant pool. Doing that on-chain or through stateless RPC is too slow to drive a frontend. SQS subscribes to a full node, ingests pool state at the end of every block, holds it in memory, and serves routing answers in single-digit milliseconds.
 
-The trade-off is that SQS is **eventually consistent** with the chain — by one block, in practice — and it does not cover every Cosmos SDK query. Use SQS for the operations it owns (routing, pool batch, prices) and use RPC/REST/gRPC for everything else.
+The trade-off is that SQS is **eventually consistent** with the chain (by one block, in practice) and it does not cover every Cosmos SDK query. Use SQS for the operations it owns (routing, pool batch, prices) and use RPC/REST/gRPC for everything else.
 
 ## Production endpoints
 
@@ -67,16 +67,16 @@ curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=u
 
 Parameters:
 
-- `tokenIn` — the input amount as an `sdk.Coin` string (e.g. `1000000uosmo`).
-- `tokenOutDenom` — the chain denom of the desired output token.
-- `singleRoute` (optional) — set to `true` to disable split-route quoting and return only the best single-path execution. Defaults to `false`.
-- `humanReadable` (optional) — set to `true` if you are passing human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`).
+- `tokenIn`: the input amount as an `sdk.Coin` string (e.g. `1000000uosmo`).
+- `tokenOutDenom`: the chain denom of the desired output token.
+- `singleRoute` (optional): set to `true` to disable split-route quoting and return only the best single-path execution. Defaults to `false`.
+- `humanReadable` (optional): set to `true` if you are passing human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`).
 
 `effective_fee` is the combined spread factor plus taker fee that the quote would pay if executed in the next block.
 
 ## Quote a specific route
 
-If you already know which pool(s) you want to route through — for example, you are quoting against a contract-specific pool that the general router has filtered out — use `GET /router/custom-direct-quote`:
+If you already know which pool(s) you want to route through (for example, when quoting against a contract-specific pool that the general router has filtered out), use `GET /router/custom-direct-quote`:
 
 ```bash
 curl "https://sqs.osmosis.zone/router/custom-direct-quote?tokenIn=1000000uosmo&tokenOutDenom=uion&poolID=2" | jq .
@@ -94,7 +94,7 @@ curl "https://sqs.testnet.osmosis.zone/router/routes?tokenIn=uosmo&tokenOutDenom
 
 ## Fetch pool state
 
-`GET /pools` returns hydrated pool data — chain model, balances, spread factor, pool type — for either a batch of pool IDs or all pools.
+`GET /pools` returns hydrated pool data (chain model, balances, spread factor, pool type) for either a batch of pool IDs or all pools.
 
 ```bash
 # Specific pools
@@ -132,7 +132,7 @@ curl "https://sqs.testnet.osmosis.zone/tokens/metadata/statom" | jq .
 }
 ```
 
-For mainnet integrators, the canonical source for this metadata is the [Osmosis assetlist](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/osmosis.zone_assets.json) — SQS reads from the same file.
+For mainnet integrators, the canonical source for this metadata is the [generated frontend assetlist](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/generated/frontend/assetlist.json). SQS reads from the same data.
 
 ## Health, metrics, and version
 
@@ -176,4 +176,4 @@ SQS is open-source at [osmosis-labs/sqs](https://github.com/osmosis-labs/sqs). T
 
 - Repository: <https://github.com/osmosis-labs/sqs>
 - Production swagger: <https://sqs.osmosis.zone/swagger/index.html>
-- Go client: [`osmosis-labs/sqs-go-client`](https://github.com/osmosis-labs/sqs-go-client) — first-party Go SDK wrapping the routing and price endpoints.
+- Go client: [`osmosis-labs/sqs-go-client`](https://github.com/osmosis-labs/sqs-go-client), a first-party Go SDK wrapping the routing and price endpoints.
