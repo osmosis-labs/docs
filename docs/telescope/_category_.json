@@ -1,0 +1,13 @@
+{
+  "label": "Telescope",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "title": "Telescope"
+  },
+  "customProps": {
+    "description": "Codegen tool that produces TypeScript bindings from Cosmos SDK proto files."
+  }
+}
