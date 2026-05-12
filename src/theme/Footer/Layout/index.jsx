@@ -1,28 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 export default function FooterLayout({ style, links, logo, copyright }) {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://tally.so/widgets/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    window.TallyConfig = {
-      formId: 'w8zL9k',
-      popup: {
-        width: 900,
-        emoji: {
-          text: '👋',
-          animation: 'wave'
-        },
-        layout: 'modal',
-        showOnce: true,
-        autoClose: 0
-      }
-    };
-  }, []);
-
   return (
     <footer
       className={clsx('footer', {
