@@ -799,6 +799,40 @@ img[src$='#terminal'] {
   }
 }
 
+/* Force the mobile-style hamburger navbar earlier than Docusaurus's
+   default 996px breakpoint. With ~9 navbar items + dropdown + search,
+   the desktop layout runs out of room well before 996px and the navbar
+   was visibly clipping. Switch to the hamburger at 1440px instead.
+
+   In this 997-1440px range:
+   - The desktop docs sidebar (left-hand page TOC) keeps its normal
+     position by Docusaurus default (only hidden below 996px).
+   - The navbar-sidebar drawer that slides in when the user clicks the
+     hamburger is constrained to a 320px wide panel instead of taking
+     over the full screen. Below 996px, Docusaurus's own full-width
+     mobile drawer takes back over. */
+@media (min-width: 997px) and (max-width: 1440px) {
+  .navbar__toggle {
+    display: inherit;
+  }
+  .navbar__items:not(.navbar__items--right) .navbar__item {
+    display: none;
+  }
+  .navbar__items--right .clean-btn[aria-label='Search'],
+  .navbar__items--right .pseudo-icon {
+    display: none;
+  }
+  /* Constrain the navbar-sidebar drawer width so it doesn't take over
+     the whole viewport at tablet/small-laptop widths. */
+  .navbar-sidebar {
+    width: 320px;
+  }
+  .navbar-sidebar__backdrop {
+    /* Subtle backdrop dimming so the drawer is visually anchored. */
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .section-content {
     grid-template-columns: repeat(1, minmax(0, 1fr));

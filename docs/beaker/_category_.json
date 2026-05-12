@@ -1,0 +1,13 @@
+{
+  "label": "Beaker (legacy)",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "title": "Beaker"
+  },
+  "customProps": {
+    "description": "CosmWasm scaffolding tool (maintenance mode — cw-orch is the recommended modern alternative)."
+  }
+}

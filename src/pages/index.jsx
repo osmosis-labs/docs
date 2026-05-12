@@ -46,13 +46,6 @@ export default function Homepage() {
 
           <Section title="What's the latest">
             <Card
-              title="Osmosis Outpost Docs"
-              description="An Osmosis outpost is a platform that makes it much simpler to perform swaps
-              on different Cosmos chains without having to manually send the tokens to 
-              Osmosis to trade them, or worse, to build their own DEX. Learn more about it here."
-              to="/osmosis-outpost"
-            />
-            <Card
               title="Osmosis Testnet-5 is live"
               description="Now live and ready for exploration. Join the testnet to gain hands-on experience with the newest features and take advantage of the expanded network options available."
               to="/overview/endpoints"
