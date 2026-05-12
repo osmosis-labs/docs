@@ -1,3 +1,7 @@
+---
+description: Use Pyth Network price feeds inside CosmWasm contracts on Osmosis.
+---
+
 # Pyth
 
 ## Introduction

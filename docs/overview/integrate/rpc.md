@@ -1,5 +1,6 @@
 ---
 sidebar_position: 12
+description: Generic Tendermint RPC endpoints for low-level chain access — ABCI queries, mempool, and block data.
 ---
 
 # Interact with RPC endpoints

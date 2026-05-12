@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: Capital-efficient AMM design where LPs concentrate liquidity into specific price ranges.
 ---
 
 # Concentrated Liquidity

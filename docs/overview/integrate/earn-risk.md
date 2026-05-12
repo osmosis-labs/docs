@@ -1,5 +1,6 @@
 ---
 sidebar_position: 16
+description: How the risk level shown for each Earn strategy on app.osmosis.zone is determined.
 ---
 
 # Determination of Risk Level for Earn Strategies

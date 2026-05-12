@@ -1,11 +1,11 @@
 :root {
-  --docs-sections-menu-background-color: #efefef;
-  --docs-sections-menu-active-background-color: #2549aa;
+  --docs-sections-menu-background-color: var(--docs-color-background-200);
+  --docs-sections-menu-active-background-color: var(--docs-color-primary);
   --docs-sections-menu-active-color: #fff;
 }
 
 html[data-theme='dark'] {
-  --docs-sections-menu-background-color: #3f3f3f;
+  --docs-sections-menu-background-color: var(--docs-color-background-200);
 }
 
 .container {
@@ -40,11 +40,11 @@ html[data-theme='dark'] {
 }
 
 .section:first-child {
-  border-radius: 8px 8px 0 0;
+  border-radius: 12px 12px 0 0;
 }
 
 .section:last-child {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 12px 12px;
 }
 
 .label {

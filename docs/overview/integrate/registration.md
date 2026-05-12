@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+description: Register a new asset in every required location so it displays correctly across Osmosis interfaces.
 ---
 # Register your Asset
 This guide intends to support teams looking to enlist their tokenized crypto asset onto the Osmosis Zone app. Assets need to be registered in several locations in order to be displayed correctly on all interfaces.

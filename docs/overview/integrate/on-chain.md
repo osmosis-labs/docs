@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+description: Integrate against the concentrated-liquidity module — pool creation, position management, and queries.
 ---
 
 # Concentrated Liquidity Integration
