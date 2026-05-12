@@ -3,7 +3,6 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
-// const UIKitReferencePlugins = require('./plugins/ui-kit-reference-plugin.cjs');
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 const posthogPlugin = require('./plugins/posthog-plugin.cjs');
 
@@ -37,7 +36,6 @@ function defineSection(section, options = {}) {
 
 const SECTIONS = [
   defineSection('osmosis-core'),
-  defineSection('osmosis-outpost'),
   defineSection('cosmwasm'),
   defineSection('frontend'),
   defineSection('beaker'),
@@ -78,16 +76,7 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          path: 'docs/home',
-          routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars-home.js'),
-          breadcrumbs: false,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
-          ...defaultSettings,
-        },
+        docs: false,
         blog: false,
         theme: {
           customCss: [
@@ -101,7 +90,6 @@ const config = {
 
   plugins: [
     ...SECTIONS,
-    // ...UIKitReferencePlugins,
     webpackPlugin,
     posthogPlugin,
   ],
@@ -138,16 +126,29 @@ const config = {
             position: 'left',
           },
           {
-            label: 'Develop',
-            to: 'osmosis-core',
-            position: 'right',
-            // className: 'new-badge',
-            activeBaseRegex: '(.*ui-kit|.*web-core)',
-          },
-          {
             label: 'Integrate',
             to: 'overview/integrate',
             position: 'left',
+          },
+          {
+            label: 'Develop',
+            to: 'osmosis-core',
+            position: 'left',
+          },
+          {
+            label: 'CosmWasm',
+            to: 'cosmwasm',
+            position: 'left',
+          },
+          {
+            label: 'SDKs',
+            position: 'left',
+            items: [
+              { label: 'Frontend', to: 'frontend' },
+              { label: 'OsmoJS', to: 'osmojs' },
+              { label: 'Telescope', to: 'telescope' },
+              { label: 'Beaker (legacy)', to: 'beaker' },
+            ],
           },
           {
             label: 'Validate & Run your Node',
