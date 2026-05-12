@@ -115,6 +115,48 @@ message MsgChangeAdmin {
 - Check that sender of the message is the admin of denom
 - Modify `AuthorityMetadata` state entry to change the admin of the denom
 
+### SetBeforeSendHook
+
+Allows the admin of a denom to designate a CosmWasm contract whose
+`BeforeSendHook` is invoked on every transfer of that denom. This is the
+hook used to implement features such as transfer fees or compliance
+restrictions on a tokenfactory denom. Passing an empty `cosmwasm_address`
+clears the hook.
+
+```go
+message MsgSetBeforeSendHook {
+  string sender = 1;
+  string denom = 2;
+  string cosmwasm_address = 3;
+}
+```
+
+**State Modifications:**
+
+- Check that the sender is the admin of the denom.
+- Set or clear the `BeforeSendHookAddress` entry for the denom.
+
+### ForceTransfer
+
+Allows the admin of a denom to move tokens from one address to another
+without the source account's signature. This is intentionally a powerful
+capability that exists for compliance and recovery flows on
+admin-controlled denoms.
+
+```go
+message MsgForceTransfer {
+  string sender = 1;
+  cosmos.base.v1beta1.Coin amount = 2;
+  string transferFromAddress = 3;
+  string transferToAddress = 4;
+}
+```
+
+**State Modifications:**
+
+- Check that the sender is the admin of the denom.
+- Move `amount` from `transferFromAddress` to `transferToAddress` via the bank keeper.
+
 ## Expectations from the chain
 
 The chain's bech32 prefix for addresses can be at most 16 characters long.

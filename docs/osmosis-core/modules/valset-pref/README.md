@@ -147,6 +147,37 @@ the redelegation is automatically completed in the EndBlocker. If the user does 
   ];
 ```
 
+### MsgUndelegateFromRebalancedValidatorSet
+
+Like `MsgUndelegateFromValidatorSet`, but the undelegation amount is
+distributed across the validator-set in proportion to the user's **current
+on-chain delegations** rather than the preference weights. This is the
+correct path when the actual delegation balances have drifted from the
+preference weights (for example, after reward auto-compounding) and the
+user wants to undelegate without first rebalancing.
+
+```go
+  // delegator is the user who is trying to undelegate.
+  string delegator = 1;
+
+  // the amount the user wants to undelegate
+  cosmos.base.v1beta1.Coin coin = 2;
+```
+
+### MsgDelegateBondedTokens
+
+Breaks the lockup on bonded OSMO referenced by `lockID` and delegates the
+released amount to the user's existing validator-set preferences. Use this
+when osmo is currently locked in the `x/lockup` module and the user wants
+to convert it into a staking delegation without manually unlocking first.
+
+```go
+  // delegator is the user who is trying to force unbond osmo and delegate.
+  string delegator = 1;
+  // lockup id of osmo in the pool
+  uint64 lockID = 2;
+```
+
 ## Redelegate algorithm logic pseudocode
 
 Existing ValSet   20osmos {ValA-> 0.5, ValB-> 0.3, ValC-> 0.2} [ValA-> 10osmo, ValB-> 6osmo, ValC-> 4osmo]
@@ -200,7 +231,7 @@ The Code Layout is very similar to TWAP module.
 
 - client/* - Implementation of GRPC and CLI queries
 - types/* - Implement ValidatorSetPreference, GenesisState. Define the interface and setup keys.
-- valpref-module/module.go - SDK AppModule interface implementation.
+- valset-pref/module.go - SDK AppModule interface implementation.
 - api.go - Public API, that other users / modules can/should depend on
 - listeners.go - Defines hooks & calls to logic.go, for triggering actions on 
 - keeper.go - generic SDK boilerplate (defining a wrapper for store keys + params)
