@@ -1,0 +1,13 @@
+{
+  "label": "OsmoJS",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "title": "OsmoJS"
+  },
+  "customProps": {
+    "description": "TypeScript SDK for Osmosis, generated from chain protos via Telescope."
+  }
+}
