@@ -267,15 +267,19 @@ To see live logs of the service:
 journalctl -u cosmovisor -f
 ```
 
-## Update Cosmovisor to V29
+## Updating Cosmovisor for the Next Chain Upgrade
 
-If you want osmosisd to upgrade automatically from V28 to V29, do the following steps prior to the upgrade height (33187000):
+To allow osmosisd to upgrade automatically when the chain hits the next upgrade height, prepare the upgrade binary in advance. Replace `<CURRENT_VERSION>`, `<UPGRADE_VERSION>`, and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding on-chain governance proposal.
 
 ```{.sh}
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/v28/bin
+# Example: upgrading from v31 -> v32 at height 99999999
+# Replace the placeholders with the values for the next upgrade.
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
 cd $HOME/osmosis
 git pull
-git checkout v29.0.0
+git checkout <UPGRADE_VERSION>
 make build
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/v28/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
 ```
+
+Cosmovisor will switch to the new binary automatically when the chain reaches `<UPGRADE_HEIGHT>`.

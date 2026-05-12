@@ -60,14 +60,14 @@ sudo apt install git build-essential ufw curl jq snapd --yes
 Install go:
 
 ```bash
-wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.22.11
+wget -q -O - https://git.io/vQhTU | bash -s -- --version 1.23.4
 ```
 
 After installed, open new terminal to properly load go
 
 ## Install Osmosis Binary
 
-Clone the osmosis repo, checkout and install v29:
+Clone the osmosis repo and check out the current mainnet release tag (replace `v31.0.0` below with the latest tag from the [Osmosis releases](https://github.com/osmosis-labs/osmosis/releases) page):
 
 
 ```bash
@@ -75,7 +75,7 @@ cd $HOME
 git clone https://github.com/osmosis-labs/osmosis
 cd osmosis
 
-git checkout v29.0.0
+git checkout v31.0.0
 
 make install
 ```

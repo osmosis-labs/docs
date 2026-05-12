@@ -43,4 +43,4 @@ For testing and development purposes there is an `enabled-unsafe-cors` field ins
 
 ### Signing transactions
 
-Sending transactions using gRPC and REST requires some additional steps: generating the transaction, signing it, and finally broadcasting it. Read about [generating and signing transactions](https://docs.cosmos.network/v0.46/run-node/txs.html).
+Sending transactions using gRPC and REST requires some additional steps: generating the transaction, signing it, and finally broadcasting it. Read about [generating and signing transactions](https://docs.cosmos.network/sdk/v0.50/learn/advanced/transactions).
