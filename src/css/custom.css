@@ -799,6 +799,23 @@ img[src$='#terminal'] {
   }
 }
 
+/* Force the mobile-style hamburger navbar earlier than Docusaurus's
+   default 996px breakpoint. With ~9 navbar items + dropdown + search,
+   the desktop layout runs out of room well before 996px and the navbar
+   was visibly clipping. Switch to the hamburger at 1280px instead. */
+@media (min-width: 997px) and (max-width: 1280px) {
+  .navbar__toggle {
+    display: inherit;
+  }
+  .navbar__items:not(.navbar__items--right) .navbar__item {
+    display: none;
+  }
+  .navbar__items--right .clean-btn[aria-label='Search'],
+  .navbar__items--right .pseudo-icon {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .section-content {
     grid-template-columns: repeat(1, minmax(0, 1fr));
