@@ -254,7 +254,7 @@ osmosisd tx gov wasm-store [contract.wasm] --title="" --description="" --code-ha
 Upload Crosschain Swaps contract.
 
 ```bash
-osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload Crosschain Swaps contract" --description="" --code-hash e7cfd4ec2cf594de9d15863c6e324025045de39236186c03483af7c9e06d4949 --code-source-url "https://github.com/osmosis-labs/osmosis/raw/v15.x/tests/ibc-hooks/bytecode/crosschain_swaps.wasm" --builder "cosmwasm/workspace-optimizer:0.12.10" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload Crosschain Swaps contract" --description="" --code-hash e7cfd4ec2cf594de9d15863c6e324025045de39236186c03483af7c9e06d4949 --code-source-url "https://github.com/osmosis-labs/osmosis/raw/main/tests/ibc-hooks/bytecode/crosschain_swaps.wasm" --builder "cosmwasm/workspace-optimizer:0.12.10" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (update unpool whitelist)
