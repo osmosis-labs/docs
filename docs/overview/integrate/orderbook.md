@@ -8,21 +8,19 @@ The Osmosis orderbook is a CosmWasm contract that implements a sumtree-backed li
 
 This page covers the integration surface: how to discover live orderbook pools, place and cancel orders, query state, and connect to the orderbook from a routing layer such as SQS.
 
-For the high-level mechanism (constant-time limit placements, log-time cancellations, tick math), see the [sumtree-orderbook repository](https://github.com/osmosis-labs/orderbook).
-
-## Where the orderbook lives on-chain
+## Where the orderbook lives onchain
 
 Each orderbook market is a separately instantiated CosmWasm contract. Discovery options:
 
 - **SQS**: the [`/pools`](https://docs.osmosis.zone/overview/integrate/sqs) endpoint returns orderbook pools alongside CFMM and concentrated-liquidity pools. This is the recommended path for any frontend or bot that needs to know the active orderbook markets.
-- **On-chain via cosmwasm-pool module**: orderbooks are registered as `x/cosmwasmpool` pool types; their pool IDs are addressable through `osmosis.poolmanager.v1beta1.Query.Pool` like any other pool.
+- **Onchain via cosmwasm-pool module**: orderbooks are registered as `x/cosmwasmpool` pool types; their pool IDs are addressable through `osmosis.poolmanager.v1beta1.Query.Pool` like any other pool.
 - **Direct contract address**: once you know an orderbook's contract address you can talk to it with `osmosisd query wasm contract-state smart <contract-addr> '<query-json>'`.
 
-Code IDs for the canonical orderbook contract are governance-managed and may change with each upgrade. Read the live SQS pools list or chain-state at submission time rather than hardcoding a code ID in client code.
+Code IDs for the canonical orderbook contract are governance-managed and may change. Read the live SQS pools list or chain-state at submission time rather than hardcoding a code ID in client code.
 
 ## Instantiation parameters
 
-When a new orderbook market is instantiated, the parameters are:
+When a new orderbook market is instantiated, the parameters follow the format:
 
 ```json
 {
@@ -43,7 +41,7 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
     "tick_id": 123456,
     "order_direction": "bid",
     "quantity": "1000000",
-    "claim_bounty": "0.001"
+    "claim_bounty": "0.0001"
   }
 }' --amount "1000000uusdc" --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
 ```
@@ -53,7 +51,7 @@ Fields:
 - `tick_id`: signed integer addressing the price tick at which to rest the order. Tick semantics match the CL convention; the corresponding price is derivable from the tick math in [`orderbook.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/orderbook.rs).
 - `order_direction`: `"bid"` (offering quote to buy base) or `"ask"` (offering base to sell into quote).
 - `quantity`: an integer string. For bids this is the quote-denom amount the order will spend if fully filled at `tick_id`; for asks it is the base-denom amount being offered.
-- `claim_bounty` (optional, decimal string): the fraction of the order's payout the placer is willing to pay any third party that claims the filled order on their behalf. Enables the claimbot economic flywheel described below.
+- `claim_bounty` (optional, decimal string): the fraction of the order's payout the placer is willing to pay any third party that claims the filled order on their behalf. Enables the claimbot economic flywheel described below. The Osmosis frontend currently sets this to `0.0001` (0.01%) for every limit order it places.
 
 The `--amount` flag must equal `quantity` of the appropriate denom for the side of the order (quote for bids, base for asks). The contract returns the assigned `order_id` for the placed order in the execution response.
 
@@ -101,7 +99,7 @@ The contract exposes both CosmWasm-pool-compatible queries (for routing) and ord
 These match the interface that the `x/cosmwasmpool` module expects so the orderbook can participate in chain-level routing:
 
 - `spot_price { quote_asset_denom, base_asset_denom }`: current best price.
-- `calc_out_amt_given_in { token_in, token_out_denom, swap_fee }`: quote a swap of an exact input.
+- `calc_out_amount_given_in { token_in, token_out_denom, swap_fee }`: quote a swap of an exact input.
 - `get_total_pool_liquidity {}`: pool's aggregate liquidity in both denoms.
 - `get_swap_fee {}`: the contract's swap fee parameter.
 
@@ -110,12 +108,12 @@ These match the interface that the `x/cosmwasmpool` module expects so the orderb
 For book inspection and order lookup:
 
 - `denoms {}`: returns the configured `base_denom` and `quote_denom`.
-- `orderbook_state {}`: the full `Orderbook` struct including `next_bid_tick`, `next_ask_tick`, and active flag.
+- `orderbook_state {}`: returns the orderbook's denoms and the current tick cursors as flat fields: `quote_denom`, `base_denom`, `current_tick`, `next_bid_tick`, `next_ask_tick`.
 - `is_active {}`: returns `true` if the contract accepts new orders.
 - `all_ticks { start_from, end_at, limit }`: paginated list of all ticks with state. Used by SQS to build its in-memory tick representation.
 - `ticks_by_id { tick_ids }`: batch fetch specific ticks.
-- `orders_by_owner { owner, start_from, end_at, limit }`: every order placed by an address.
-- `orders_by_tick { tick_id, start_from, end_at, limit }`: every order resting at a tick.
+- `orders_by_owner { owner, start_from, end_at, limit }`: every order placed by an address. Returns `{ orders, count }` where `count` is the number of orders in the response (useful for paginating).
+- `orders_by_tick { tick_id, start_from, end_at, limit }`: every order resting at a tick. Returns `{ orders, count }` where `count` is the number of orders in the response.
 - `get_maker_fee {}`: the configured maker fee.
 - `get_unrealized_cancels { tick_ids }`: for advanced users tracking realized-vs-unrealized accounting.
 
@@ -123,22 +121,72 @@ For book inspection and order lookup:
 
 SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go). This means an end-user swap routed through `/router/quote` can transparently use orderbook liquidity alongside CFMM and CL pools.
 
-Operationally this means:
+### Discovery
+
+SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go)). Once a market is instantiated on chain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
+
+When multiple orderbook contracts exist for the same base/quote pair, SQS continuously tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two dedicated endpoints expose this view:
+
+- `GET /pools/canonical-orderbook?base=<denom>&quote=<denom>` returns the canonical orderbook pool id for a single pair.
+- `GET /pools/canonical-orderbooks` returns the canonical orderbook for every supported pair.
+
+The non-canonical orderbooks still appear in `/pools` and remain reachable through direct-quote queries; they just are not the default routing target.
+
+### Quote and fill flow
 
 - A swap quote returned by SQS may include an orderbook pool in its route. The pool entry's `type` indicates the pool kind.
-- The orderbook contract is queried with `calc_out_amt_given_in` to price the swap, and the actual fill happens via a standard `osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn` against the orderbook's pool id.
-- The router treats the orderbook like any other pool from the integrator's perspective; you do not need to construct a `place_limit` execute message yourself when swapping.
+- SQS quotes orderbook swaps in-process. It walks the orderbook's ticks in Go and prices each tick locally via `TickToPrice`, using state ingested from the chain. It does not call `calc_out_amount_given_in` on the contract at quote time.
+- The actual fill happens via a standard `osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn` against the orderbook's pool id, not a CosmWasm execute message. The router treats the orderbook like any other pool from the integrator's perspective; you do not need to construct a `place_limit` execute message yourself when swapping.
 
-If you operate a new orderbook market and want it surfaced in SQS routing, the contract code id needs to be registered in the SQS deployment. Coordinate with the SQS team (see [Adding a custom CosmWasm pool to SQS](https://docs.osmosis.zone/overview/integrate/sqs#adding-a-custom-cosmwasm-pool-to-sqs)).
+### When a new orderbook code id needs registering
+
+A brand-new orderbook *contract instance* spawned from an already-registered code id needs no SQS action. A brand-new *code id* (a new orderbook contract version, typically tied to a chain upgrade) does: it has to be added to `OrderbookCodeIDs` in the SQS deployment config and the service redeployed. See [Adding a custom CosmWasm pool to SQS](https://docs.osmosis.zone/overview/integrate/sqs#adding-a-custom-cosmwasm-pool-to-sqs).
 
 ## Admin and moderator messages
 
-The contract has a two-tier permissioned interface for administrative operations:
+The contract has two privileged roles, each with its own offer-and-claim transfer flow. All admin and moderator messages are sent through the `auth` execute namespace, for example:
 
-- **Admin**: can transfer adminship, set the maker fee, set the maker-fee recipient, and renounce. Adminship transfers go through a two-step `transfer_admin` then `claim_admin` flow with a separate `cancel_admin_transfer` and `reject_admin_transfer` for safety.
-- **Moderator**: can pause the contract via `set_active { active: false }` to stop new orders. Used in incident response.
+```bash
+osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
+  "auth": { "set_active": { "active": false } }
+}' --from <KEY>
+```
 
-Both roles are settable via the `auth` execute submessage namespace. See [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/msg.rs) for the full `AuthExecuteMsg` and `AuthQueryMsg` enums.
+The contract sets its admin and moderator at instantiation and are hardcoded:
+- **Admin** is set to `osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp`, the Osmosis governance module account. Adminship can only be transferred by an onchain governance proposal that executes `auth { transfer_admin }` followed by the recipient calling `claim_admin`.
+- **Moderator** is set to `osmo1peuxfjj66n2qt2v5jmqlvzz8neakjgduez7vttvemw58uug6546sr60ngl`, a DAODAO subDAO designated as a circuit breaker.
+
+### Admin
+
+Permissions verified by [`ensure_is_admin`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/auth.rs) in `auth.rs`. Admin-only execute messages:
+
+- `transfer_admin { new_admin }`: writes the address into the admin-offer slot. Does not change the active admin.
+- `cancel_admin_transfer {}`: admin clears their own pending offer.
+- `renounce_adminship {}`: removes the admin entirely. After this the contract has no admin.
+- `offer_moderator { new_moderator }`: writes the address into the moderator-offer slot. The offered address still has to claim it (see below).
+- `set_maker_fee { fee }`: updates the contract's maker fee. Despite living in the enum's "Shared messages" section, the dispatcher enforces admin-only.
+- `set_maker_fee_recipient { recipient }`: updates the maker-fee recipient. Also admin-only despite the enum categorisation.
+
+Messages callable by the *address offered admin*, not the current admin:
+
+- `claim_admin {}`: the offered address accepts the offer and becomes admin.
+- `reject_admin_transfer {}`: the offered address rejects the offer.
+
+### Moderator
+
+The moderator role exists for incident response; it can pause new orders without giving the holder economic privileges over the orderbook.
+
+- `set_active { active }`: pause or unpause the contract. This is the only "shared" message that actually accepts both admin and moderator (`ensure_is_admin_or_moderator`).
+- `claim_moderator {}`: the address offered moderatorship accepts the offer and becomes the moderator.
+- `reject_moderator_offer {}`: the offered address rejects.
+
+Note that moderator transfer is one-sided: the admin offers via `offer_moderator`, and only the offered address can accept or reject. There is no `cancel_moderator_offer` message; the admin can overwrite a pending offer by calling `offer_moderator` again.
+
+### Auth queries
+
+`AuthQueryMsg` exposes four read-only queries through the `auth` query namespace: `admin`, `admin_offer`, `moderator`, `moderator_offer`. Each returns the current address holding that slot (or `null` if empty).
+
+See [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/msg.rs) for the complete `AuthExecuteMsg` and `AuthQueryMsg` definitions and [`auth.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/auth.rs) for the dispatchers.
 
 ## Repository references
 
