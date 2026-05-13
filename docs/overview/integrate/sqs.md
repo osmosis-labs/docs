@@ -10,7 +10,7 @@ It is the query path used by [app.osmosis.zone](https://app.osmosis.zone) in pro
 
 ## Why SQS exists
 
-Routing a multi-hop swap on Osmosis requires knowing the balances, fees, and pool type of every relevant pool. Doing that on-chain or through stateless RPC is too slow to drive a frontend. SQS subscribes to a full node, ingests pool state at the end of every block, holds it in memory, and serves routing answers in single-digit milliseconds.
+Routing a multi-hop swap on Osmosis requires knowing the balances, fees, and pool type of every relevant pool. Doing that onchain or through stateless RPC is too slow to drive a frontend. SQS subscribes to a full node, ingests pool state at the end of every block, holds it in memory, and serves routing answers in single-digit milliseconds.
 
 The trade-off is that SQS is **eventually consistent** with the chain (by one block, in practice) and it does not cover every Cosmos SDK query. Use SQS for the operations it owns (routing, pool batch, prices) and use RPC/REST/gRPC for everything else.
 
@@ -28,6 +28,8 @@ The mainnet host is geo-distributed across three regions and front-ended by ngin
 - `/router/custom-direct-quote`
 - `/tokens/prices`
 - `/pools`
+- `/pools/canonical-orderbook`
+- `/pools/canonical-orderbooks`
 - Health / metrics / version / config
 
 The testnet deployment exposes every endpoint and is the right environment to develop against if you need access to less-common routes such as `/router/routes` or `/tokens/metadata`.
@@ -105,6 +107,29 @@ curl "https://sqs.osmosis.zone/pools" | jq '.[0]'
 ```
 
 This is the preferred way to populate a frontend's pool list. It is much faster than iterating `osmosis.gamm.v1beta1.Query.Pools` or its `osmosis.poolmanager.v1beta1` equivalent and it returns balances in the same payload, saving a separate `cosmos.bank.v1beta1.Query.AllBalances` per pool.
+
+## Canonical orderbook lookup
+
+When multiple orderbook contracts exist for the same base/quote pair, SQS tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two endpoints expose this view:
+
+`GET /pools/canonical-orderbook?base=<denom>&quote=<denom>` returns the canonical orderbook pool id and contract address for a single pair:
+
+```bash
+curl "https://sqs.osmosis.zone/pools/canonical-orderbook?base=factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC&quote=ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" | jq .
+```
+
+```json
+{
+  "base": "factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC",
+  "quote": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+  "pool_id": 1930,
+  "contract_address": "osmo13zuafleemprax0csfddn8z8p8nt9a80tefg6cw0jlkqhzvt4h49sjxy0wm"
+}
+```
+
+`GET /pools/canonical-orderbooks` returns the canonical orderbook for every supported pair as an array of the same shape.
+
+These endpoints are the right entry point for any orderbook UI or bot that needs to know which contract address to talk to for a given trading pair. Non-canonical orderbooks for the same pair still appear in `/pools` and can be queried directly by pool id; they just are not the default routing target.
 
 ## Read token prices
 
