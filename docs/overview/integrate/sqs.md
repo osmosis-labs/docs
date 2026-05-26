@@ -22,23 +22,17 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 | Staging | `https://sqs.stage.osmosis.zone` | `osmosis-1` |
 | Testnet | `https://sqs.testnet.osmosis.zone` | `osmo-test-5` |
 
-The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits and restricts which endpoints are publicly reachable. In production, only the following endpoints are exposed:
+The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host; the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
 
-- `/router/quote`
-- `/router/custom-direct-quote`
-- `/tokens/prices`
-- `/pools`
-- `/pools/canonical-orderbook`
-- `/pools/canonical-orderbooks`
-- Health / metrics / version / config
-
-The testnet deployment exposes every endpoint and is the right environment to develop against if you need access to less-common routes such as `/router/routes` or `/tokens/metadata`.
-
-Swagger reference for the production surface: <https://sqs.osmosis.zone/swagger/index.html>.
+Swagger reference: <https://sqs.osmosis.zone/swagger/index.html>.
 
 ## Get a swap quote
 
-`GET /router/quote` returns the best route SQS can find for a token-in / token-out pair, including any split routes that improve execution.
+`GET /router/quote` returns the best route SQS can find for a swap, including any split routes that improve execution. The same endpoint serves both quote directions; the canonical direction is **exact-in** (out-given-in), and **exact-out** (in-given-out) is a separate request shape.
+
+### Exact-in (canonical)
+
+Specify the input amount; SQS returns the maximum output it can produce.
 
 ```bash
 curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=uion" | jq .
@@ -47,34 +41,48 @@ curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=u
 ```json
 {
   "amount_in": { "denom": "uosmo", "amount": "1000000" },
-  "amount_out": "1803",
+  "amount_out": "2366",
   "route": [
     {
       "pools": [
         {
-          "id": 2,
+          "id": 1013,
           "type": 0,
           "spread_factor": "0.005000000000000000",
           "token_out_denom": "uion",
-          "taker_fee": "0.001000000000000000"
+          "taker_fee": "0.008000000000000000",
+          "liquidity_cap": "791"
         }
       ],
-      "out_amount": "1803",
+      "out_amount": "2366",
       "in_amount": "1000000"
     }
-  ],
-  "effective_fee": "0.006000000000000000"
+  ]
 }
 ```
 
-Parameters:
+### Exact-out
 
-- `tokenIn`: the input amount as an `sdk.Coin` string (e.g. `1000000uosmo`).
-- `tokenOutDenom`: the chain denom of the desired output token.
-- `singleRoute` (optional): set to `true` to disable split-route quoting and return only the best single-path execution. Defaults to `false`.
-- `humanReadable` (optional): set to `true` if you are passing human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`).
+Specify the output amount; SQS returns the minimum input required.
 
-`effective_fee` is the combined spread factor plus taker fee that the quote would pay if executed in the next block.
+```bash
+curl "https://sqs.osmosis.zone/router/quote?tokenOut=1000000uion&tokenInDenom=uosmo" | jq .
+```
+
+The response has `amount_in` as a string (the required input) and `amount_out` as an `sdk.Coin` (the target output). Do not invert an exact-in quote to estimate exact-out: call `/router/quote` with the exact-out parameter pair instead. Exact-out is a separate routing search internally and the optimal route may differ.
+
+### Parameters
+
+- `tokenIn` (exact-in): input amount as an `sdk.Coin` string, e.g. `1000000uosmo`.
+- `tokenOutDenom` (exact-in): chain denom of the desired output token.
+- `tokenOut` (exact-out): output amount as an `sdk.Coin` string, e.g. `1000000uion`.
+- `tokenInDenom` (exact-out): chain denom of the input token.
+- `singleRoute` (optional): set to `true` to disable split-route quoting. Defaults to `false`.
+- `humanDenoms` (optional): set to `true` to pass human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`).
+
+### Fees
+
+`amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side.
 
 ## Quote a specific route
 
@@ -84,27 +92,46 @@ If you already know which pool(s) you want to route through (for example, when q
 curl "https://sqs.osmosis.zone/router/custom-direct-quote?tokenIn=1000000uosmo&tokenOutDenom=uion&poolID=2" | jq .
 ```
 
-This endpoint bypasses the router's minimum-liquidity filter, so it returns a quote as long as the pool exists on chain.
+This endpoint bypasses the router's minimum-liquidity filter, so it returns a quote as long as the pool exists onchain.
 
 ## Discover available routes
 
-`GET /router/routes` enumerates every route between two tokens. The mainnet deployment does not expose this endpoint; use the testnet host or a self-hosted SQS for exploration.
+`GET /router/routes` enumerates every route SQS has cached between two tokens, without actually pricing a quote.
 
 ```bash
-curl "https://sqs.testnet.osmosis.zone/router/routes?tokenIn=uosmo&tokenOutDenom=uion" | jq .
+curl "https://sqs.osmosis.zone/router/routes?tokenIn=uosmo&tokenOutDenom=uion" | jq .
 ```
+
+```json
+{
+  "Routes": [
+    {
+      "Pools": [
+        { "ID": 1100, "TokenInDenom": "uosmo", "TokenOutDenom": "uion" }
+      ],
+      "IsCanonicalOrderboolRoute": false
+    }
+  ],
+  "UniquePoolIDs": [1100, 2, 1013, 1933, 2109],
+  "ContainsCanonicalOrderbook": false
+}
+```
+
+Useful for previewing what the router will consider before committing to a quote, or for surfacing every pool that connects two tokens.
 
 ## Fetch pool state
 
 `GET /pools` returns hydrated pool data (chain model, balances, spread factor, pool type) for either a batch of pool IDs or all pools.
 
 ```bash
-# Specific pools
-curl "https://sqs.osmosis.zone/pools?IDs=1,2,1066" | jq .
+# Specific pools (returns a bare array)
+curl "https://sqs.osmosis.zone/pools?IDs=1,2,1066" | jq '.[0]'
 
-# All pools (large response; cache responsibly)
-curl "https://sqs.osmosis.zone/pools" | jq '.[0]'
+# All pools (returns a paginated { data, meta } wrapper)
+curl "https://sqs.osmosis.zone/pools" | jq '.data[0]'
 ```
+
+Two response shapes: `?IDs=…` returns a bare array of pool objects; the no-IDs path returns `{ "data": [...], "meta": {...} }` with pagination metadata. The all-pools response is large; cache it client-side rather than fetching it per request.
 
 This is the preferred way to populate a frontend's pool list. It is much faster than iterating `osmosis.gamm.v1beta1.Query.Pools` or its `osmosis.poolmanager.v1beta1` equivalent and it returns balances in the same payload, saving a separate `cosmos.bank.v1beta1.Query.AllBalances` per pool.
 
@@ -139,25 +166,38 @@ These endpoints are the right entry point for any orderbook UI or bot that needs
 curl "https://sqs.osmosis.zone/tokens/prices?base=wbtc,dydx&humanDenoms=true" | jq .
 ```
 
-Each base maps to a quote-denom map whose value is the spot price. Set `humanDenoms=true` to pass `wbtc` instead of the IBC hash. If a price cannot be determined on chain, SQS falls back to CoinGecko.
+Each base maps to a quote-denom map whose value is the spot price. Set `humanDenoms=true` to pass `wbtc` instead of the IBC hash. If a price cannot be determined onchain, SQS falls back to CoinGecko.
 
 ## Token metadata
 
-`GET /tokens/metadata` returns chain denom, human denom, and precision for a list of denoms. The mainnet host does not expose this endpoint; use the testnet host or a self-hosted SQS.
+`GET /tokens/metadata?denoms=<chainDenom>[,<chainDenom>...]` returns SQS's view of asset metadata for one or more chain denoms.
 
 ```bash
-curl "https://sqs.testnet.osmosis.zone/tokens/metadata/statom" | jq .
+curl "https://sqs.osmosis.zone/tokens/metadata?denoms=uosmo,uion" | jq .
 ```
 
 ```json
 {
-  "chain_denom": "ibc/C140AFD542AE77BD7DCC83F13FDD8C5E5BB8C4929785E6EC2F4C636F98F17901",
-  "human_denom": "statom",
-  "precision": 6
+  "uosmo": {
+    "name": "Osmosis",
+    "symbol": "OSMO",
+    "coinMinimalDenom": "uosmo",
+    "decimals": 6,
+    "preview": false,
+    "coingeckoId": "osmosis"
+  },
+  "uion": {
+    "name": "Ion DAO",
+    "symbol": "ION",
+    "coinMinimalDenom": "uion",
+    "decimals": 6,
+    "preview": false,
+    "coingeckoId": "ion"
+  }
 }
 ```
 
-For mainnet integrators, the canonical source for this metadata is the [generated frontend assetlist](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/generated/frontend/assetlist.json). SQS reads from the same data.
+The response is keyed by the chain denom passed in. SQS reads this metadata from the [generated frontend assetlist](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/generated/frontend/assetlist.json); the assetlist remains the canonical source if you are not running SQS yourself.
 
 ## Health, metrics, and version
 
@@ -186,10 +226,10 @@ In short: SQS for cross-pool aggregation and routing, RPC/REST/gRPC for everythi
 
 ## Adding a custom CosmWasm pool to SQS
 
-If you operate a custom CosmWasm pool that you want SQS routing to use, there are two integration paths:
+If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/main/docs/architecture/COSMWASM_POOLS.MD) for the model.
 
-1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. See the [transmuter routable pool](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_transmuter_pool.go) as a reference implementation. Requires a PR against `osmosis-labs/sqs`.
-2. **Register your code ID as a generalized CosmWasm pool.** Best when the pool logic is complex enough that SQS would need to delegate quotes back to the chain. Add your code ID to `general-cosmwasm-code-ids` in [`config.json`](https://github.com/osmosis-labs/sqs/blob/main/config.json). Routes containing such pools are restricted to direct quotes (no splits) for performance reasons.
+1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
+2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/main/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are opted out of SQS route search entirely.** SQS will not surface them in `/router/quote` results; they remain reachable only via `/router/custom-direct-quote` against a known pool id, where SQS queries the contract directly at quote time.
 
 After the PR merges, the SQS team will deploy the updated config to production.
 

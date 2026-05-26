@@ -7,7 +7,7 @@ sidebar_position: 12
 As shown on the RPC specifications, there are different endpoints to communicate with the Osmosis chain. Unlike the LCD rest api, the RPC endpoints provide generic endpoints to communicate with the various modules available. For example the [ABCI Query](/api?v=RPC#/operations/abci_query) allows you the query different data from Osmosis.
 
 :::tip Looking for swap routing or aggregated pool data?
-RPC is the right path for signing, broadcasting, and per-block subscriptions, but for routing quotes and batched pool state you almost certainly want the [Sidecar Query Server (SQS)](./sqs) — it is the query path used by the production frontend.
+RPC is the right path for signing, broadcasting, and per-block subscriptions, but for routing quotes and batched pool state you almost certainly want the [Sidecar Query Server (SQS)](./sqs), the query path used by the production frontend.
 :::
 
 For more information please read generating, [signing and boradcasting transactions.] https://docs.cosmos.network/v0.46/run-node/txs.html on the cosmos-sdk docs. 
