@@ -124,8 +124,8 @@ Every query is sent with `osmosisd query wasm contract-state smart <contract-add
 These satisfy the `x/cosmwasmpool` routing interface:
 
 - `spot_price { base_asset_denom, quote_asset_denom }`: always returns the ratio of the two assets' normalization factors. There is no price curve.
-- `calc_out_amt_given_in { token_in, token_out_denom, swap_fee }`: how much of `token_out_denom` a swap of `token_in` would produce. Fails if there is insufficient backing of the requested output.
-- `calc_in_amt_given_out { token_out, token_in_denom, swap_fee }`: the inverse. Unlike many CosmWasm pools, the transmuter implements this for real rather than panicking.
+- `calc_out_amt_given_in { token_in, token_out_denom, swap_fee }`: how much of `token_out_denom` a swap of `token_in` would produce. `swap_fee` must equal the value returned by `get_swap_fee` (currently `"0"`); any other value errors. Fails if there is insufficient backing of the requested output.
+- `calc_in_amt_given_out { token_out, token_in_denom, swap_fee }`: the inverse, with the same `swap_fee` constraint. Unlike many CosmWasm pools, the transmuter implements this for real rather than panicking.
 - `get_total_pool_liquidity {}`: the contract's holdings of every backing asset, as a coins array.
 - `get_swap_fee {}`: returns the swap fee (currently `"0"` on the live contracts).
 
@@ -155,6 +155,7 @@ SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_
 - Quoting is exact: no slippage, no price impact, no spread fee on the current contracts. The output is simply the input scaled by the ratio of normalization factors.
 - **Static upper-limit enforcement happens at quote time.** Before returning a quote, SQS checks every backing variant's post-trade balance against its configured static upper limit. A swap that would push a variant over its cap is rejected by SQS as insufficient routing, not just by the contract at execute time.
 - Routing through a transmuter can also fail if the pool does not hold enough of the requested output denom. Balance validation is skipped on the alloyed side because the contract can mint or burn it freely; it is enforced on every backing denom.
+- SQS computes both exact-in and exact-out quotes in-process from normalization factors; it does not call the contract's `calc_in_amt_given_out` or `calc_out_amt_given_in`. For the transmuter the two directions are mathematically symmetric (no curve, no spread fee), so this is safe; static rate limiters are still applied in both directions.
 - The actual fill happens via `osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn` against the transmuter's pool id, not a direct CosmWasm execute. The router handles the swap construction; integrators using the SQS quote endpoint do not need to build `join_pool` / `exit_pool` messages themselves.
 
 For brand-new transmuter contracts spawned from an already-recognised code id, SQS picks them up automatically. A brand-new alloyed-transmuter *code id* (a new contract version, typically tied to a chain upgrade) has to be added to `AlloyedTransmuterCodeIDs` in the SQS deployment config and the service redeployed.
@@ -188,7 +189,7 @@ Admin-only execute messages:
 Moderator-only execute messages:
 
 - `set_active_status`: the contract's circuit breaker. Pausing stops both deposits and withdrawals.
-- `mark_corrupted_assets` and `unmark_corrupted_assets`: flag a backing denom as corrupted (excluded from the active pool, balances still tracked, redemptions drained into it) or undo that flag.
+- `mark_corrupted_assets` and `unmark_corrupted_assets`: flag a backing denom as corrupted, or undo that flag. While a denom is corrupted: `join_pool` rejects deposits of it; `calc_*` and `exit_pool` requests that take it out remain valid (and are the mechanism by which the pool drains it); `is_active` continues to report `true` unless the moderator separately pauses the contract. Querying `get_corrupted_denoms` is the canonical way to surface this state to users before they sign.
 
 The moderator role is assigned by the admin via `assign_moderator`; there is no offer-and-claim handshake on the moderator side.
 
