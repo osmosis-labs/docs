@@ -403,8 +403,8 @@ type MsgCreatePosition struct {
  UpperTick       int64
  TokenDesired0   types.Coin
  TokenDesired1   types.Coin
- TokenMinAmount0 github_com_cosmos_cosmos_sdk_types.Int
- TokenMinAmount1 github_com_cosmos_cosmos_sdk_types.Int
+ TokenMinAmount0 sdk.Int
+ TokenMinAmount1 sdk.Int
 }
 ```
 
@@ -416,10 +416,10 @@ create the liquidityCreated number of shares in the given range.
 ```go
 type MsgCreatePositionResponse struct {
  PositionId  uint64
- Amount0 github_com_cosmos_cosmos_sdk_types.Int
- Amount1 github_com_cosmos_cosmos_sdk_types.Int
- JoinTime google.protobuf.Timestamp
- LiquidityCreated github_com_cosmos_cosmos_sdk_types.Dec
+ Amount0 sdk.Int
+ Amount1 sdk.Int
+ JoinTime time.Time
+ LiquidityCreated sdk.Dec
 
 }
 ```
@@ -443,7 +443,7 @@ associated with the position are still retained until a user claims them manuall
 type MsgWithdrawPosition struct {
  PositionId      uint64
  Sender          string
- LiquidityAmount github_com_cosmos_cosmos_sdk_types.Dec
+ LiquidityAmount sdk.Dec
 }
 ```
 
@@ -454,8 +454,8 @@ for the provided share liquidity amount.
 
 ```go
 type MsgWithdrawPositionResponse struct {
- Amount0 github_com_cosmos_cosmos_sdk_types.Int
- Amount1 github_com_cosmos_cosmos_sdk_types.Int
+ Amount0 sdk.Int
+ Amount1 sdk.Int
 }
 ```
 
@@ -465,10 +465,11 @@ in the `"Liquidity Provision"` section of this document.
 ### `MsgCreateConcentratedPool`
 
 This message is responsible for creating a concentrated-liquidity pool.
-The transaction itself is submitted to the `x/poolmanager` module, which
-owns pool id allocation and swap routing. The poolmodel under
-`x/concentrated-liquidity/pool-model/concentrated` defines the message type
-and handler logic specific to concentrated pools.
+The RPC is registered on the `x/concentrated-liquidity` module's
+pool-creation message service (in the
+[`model` package](https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity/model)),
+not on `x/poolmanager`'s `Msg` service. Its handler delegates to the
+`x/poolmanager` keeper for pool-id allocation and swap-route registration.
 
 ```go
 type MsgCreateConcentratedPool struct {
@@ -476,7 +477,7 @@ type MsgCreateConcentratedPool struct {
  Denom0                    string
  Denom1                    string
  TickSpacing               uint64
- SpreadFactor                   github_com_cosmos_cosmos_sdk_types.Dec
+ SpreadFactor                   sdk.Dec
 }
 ```
 
@@ -528,10 +529,10 @@ the original join time so charging is preserved.
 type MsgAddToPosition struct {
  PositionId     uint64
  Sender         string
- Amount0        github_com_cosmos_cosmos_sdk_types.Int
- Amount1        github_com_cosmos_cosmos_sdk_types.Int
- TokenMinAmount0 github_com_cosmos_cosmos_sdk_types.Int
- TokenMinAmount1 github_com_cosmos_cosmos_sdk_types.Int
+ Amount0        sdk.Int
+ Amount1        sdk.Int
+ TokenMinAmount0 sdk.Int
+ TokenMinAmount1 sdk.Int
 }
 ```
 
@@ -539,7 +540,7 @@ type MsgAddToPosition struct {
 
 This message collects accrued external incentives for one or more positions
 owned by the same sender. The corresponding gauge logic lives in the
-`x/incentives` module; this message is the on-chain entry point for an
+`x/incentives` module; this message is the onchain entry point for an
 LP to claim what has accrued to their positions.
 
 ```go
@@ -569,7 +570,7 @@ type MsgTransferPositions struct {
 The `MsgFungifyChargedPositions` message type is defined in
 [`tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/concentratedliquidity/v1beta1/tx.proto)
 but is not currently wired into the module's Msg service, so it cannot be
-submitted on-chain. The description below documents the intended
+submitted onchain. The description below documents the intended
 semantics for the type as it exists in proto.
 :::
 

@@ -1,4 +1,4 @@
-# validator-set Preference 
+# Validator-Set Preference
 
 ## Abstract 
 
@@ -151,7 +151,7 @@ the redelegation is automatically completed in the EndBlocker. If the user does 
 
 Like `MsgUndelegateFromValidatorSet`, but the undelegation amount is
 distributed across the validator-set in proportion to the user's **current
-on-chain delegations** rather than the preference weights. This is the
+onchain delegations** rather than the preference weights. This is the
 correct path when the actual delegation balances have drifted from the
 preference weights (for example, after reward auto-compounding) and the
 user wants to undelegate without first rebalancing.
