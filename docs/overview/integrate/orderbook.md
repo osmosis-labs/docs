@@ -12,6 +12,8 @@ This page covers the integration surface: how to discover live orderbook pools, 
 
 Each orderbook market is a separately instantiated CosmWasm contract. Discovery options:
 
+{/* TODO(after #310 merges): relativise the SQS links on this page from
+    https://docs.osmosis.zone/overview/integrate/sqs to ./sqs. */}
 - **SQS**: the [`/pools`](https://docs.osmosis.zone/overview/integrate/sqs) endpoint returns orderbook pools alongside CFMM and concentrated-liquidity pools. This is the recommended path for any frontend or bot that needs to know the active orderbook markets.
 - **Onchain via cosmwasm-pool module**: orderbooks are registered as `x/cosmwasmpool` pool types; their pool IDs are addressable through `osmosis.poolmanager.v1beta1.Query.Pool` like any other pool.
 - **Direct contract address**: once you know an orderbook's contract address you can talk to it with `osmosisd query wasm contract-state smart <contract-addr> '<query-json>'`.
@@ -50,8 +52,8 @@ Fields:
 
 - `tick_id`: signed integer addressing the price tick at which to rest the order. Tick semantics match the CL convention; the corresponding price is derivable from the tick math in [`orderbook.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/orderbook.rs).
 - `order_direction`: `"bid"` (offering quote to buy base) or `"ask"` (offering base to sell into quote).
-- `quantity`: an integer string. For bids this is the quote-denom amount the order will spend if fully filled at `tick_id`; for asks it is the base-denom amount being offered.
-- `claim_bounty` (optional, decimal string): the fraction of the order's payout the placer is willing to pay any third party that claims the filled order on their behalf. Enables the claimbot economic flywheel described below. The Osmosis frontend currently sets this to `0.0001` (0.01%) for every limit order it places.
+- `quantity`: an integer string. The exact amount the order deposits up front: quote-denom for bids, base-denom for asks. The `--amount` flag below must match this value and denom exactly.
+- `claim_bounty` (optional, decimal string between `0` and `0.01`): the fraction of the order's payout the placer is willing to pay any third party that claims the filled order on their behalf. Enables the claimbot economic flywheel described below. The contract enforces a 1% hard cap (`InvalidClaimBounty`); the Osmosis frontend currently sets this to `0.0001` (0.01%) for every limit order it places.
 
 The `--amount` flag must equal `quantity` of the appropriate denom for the side of the order (quote for bids, base for asks). The contract returns the assigned `order_id` for the placed order in the execution response.
 
@@ -66,7 +68,7 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
 }' --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
 ```
 
-Only the original order placer can cancel. Cancelling a partially-filled order returns the unfilled remainder; the filled portion remains claimable.
+Only the original order placer can cancel. Cancellation is all-or-nothing: the contract rejects with `CancelFilledOrder` if any portion of the order has been filled. To recover a partial fill, claim the filled portion first; the unfilled remainder cannot be cancelled separately under the current contract.
 
 ## Claiming filled orders
 
@@ -112,7 +114,7 @@ For book inspection and order lookup:
 - `is_active {}`: returns `true` if the contract accepts new orders.
 - `all_ticks { start_from, end_at, limit }`: paginated list of all ticks with state. Used by SQS to build its in-memory tick representation.
 - `ticks_by_id { tick_ids }`: batch fetch specific ticks.
-- `orders_by_owner { owner, start_from, end_at, limit }`: every order placed by an address. Returns `{ orders, count }` where `count` is the number of orders in the response (useful for paginating).
+- `orders_by_owner { owner, start_from, end_at, limit }`: every order placed by an address. `start_from` and `end_at` are `[tick_id, order_id]` tuples (inclusive); `limit` defaults to 100. Returns `{ orders, count }` where `count` is the number of orders in the response (useful for paginating).
 - `orders_by_tick { tick_id, start_from, end_at, limit }`: every order resting at a tick. Returns `{ orders, count }` where `count` is the number of orders in the response.
 - `get_maker_fee {}`: the configured maker fee.
 - `get_unrealized_cancels { tick_ids }`: for advanced users tracking realized-vs-unrealized accounting.
@@ -123,7 +125,7 @@ SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_or
 
 ### Discovery
 
-SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go)). Once a market is instantiated on chain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
+SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go); `[885]` at the time of writing — read the live config for the current set). Once a market is instantiated on chain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
 
 When multiple orderbook contracts exist for the same base/quote pair, SQS continuously tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two dedicated endpoints expose this view:
 
