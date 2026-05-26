@@ -269,7 +269,7 @@ journalctl -u cosmovisor -f
 
 ## Updating Cosmovisor for the Next Chain Upgrade
 
-To allow osmosisd to upgrade automatically when the chain hits the next upgrade height, prepare the upgrade binary in advance. Replace `<CURRENT_VERSION>`, `<UPGRADE_VERSION>`, and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding on-chain governance proposal.
+To allow osmosisd to upgrade automatically when the chain hits the next upgrade height, prepare the upgrade binary in advance. Replace `<UPGRADE_VERSION>` and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding onchain governance proposal.
 
 ```{.sh}
 # Example: upgrading from v31 -> v32 at height 99999999

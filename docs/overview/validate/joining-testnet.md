@@ -108,7 +108,7 @@ cosmovisor version
 osmosisd version
 ```
 
-These two commands should both output the current osmosisd version (for example `v31.x.x` — check the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) for the canonical tag).
+These two commands should both output the current osmosisd version (for example `v31.x.x`; check the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) for the canonical tag).
 
 Reset private validator file to genesis state:
 
@@ -222,7 +222,7 @@ journalctl -u cosmovisor -f
 
 ## Updating Cosmovisor for the Next Testnet Upgrade
 
-To allow osmosisd to upgrade automatically when the testnet hits the next upgrade height, prepare the upgrade binary in advance. Replace `<CURRENT_VERSION>`, `<UPGRADE_VERSION>`, and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding testnet upgrade announcement.
+To allow osmosisd to upgrade automatically when the testnet hits the next upgrade height, prepare the upgrade binary in advance. Replace `<UPGRADE_VERSION>` and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding testnet upgrade announcement.
 
 This step is only needed if syncing from genesis and you haven't passed `<UPGRADE_HEIGHT>` yet.
 
