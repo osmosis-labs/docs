@@ -1,5 +1,5 @@
 ---
-sidebar_position: 16
+sidebar_position: 17
 ---
 
 # Smart Accounts and Authenticators
@@ -57,6 +57,8 @@ Seven authenticator types are registered in the chain's authenticator manager. T
 | `AnyOf` | composite | Authentication passes if any one nested authenticator passes. |
 | `PartitionedAllOf` | composite | `AllOf` with per-message partitioning. Each nested authenticator is responsible for a specific message in the transaction rather than all of them. |
 | `PartitionedAnyOf` | composite | `AnyOf` with per-message partitioning. |
+
+All four composites require at least two sub-authenticators; the `OnAuthenticatorAdded` hook rejects a composite with a single child ([`x/smart-account/authenticator/composite.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/smart-account/authenticator/composite.go)).
 | `CosmwasmAuthenticatorV1` | external | Delegates authentication to a CosmWasm contract. Used to implement arbitrary policy engines such as spend limits, session keys, or role-based controls. |
 
 The type string is what goes in `MsgAddAuthenticator.authenticator_type`. The `data` field of `MsgAddAuthenticator` is a type-specific byte payload that the authenticator's `OnAuthenticatorAdded` hook parses and validates at the time the authenticator is registered.
@@ -148,10 +150,10 @@ Other compositions are valid too. A multisig with custom quorum logic might be `
 
 Every authenticator implements four lifecycle hooks. Each authenticator type defines its own logic for these, and CosmWasm authenticators forward them as sudo messages to the backing contract:
 
-1. **`Authenticate`** runs in the ante handler. It validates the message and signature. Any state changes here are discarded once the hook returns; the role of this hook is read-only verification. If `Authenticate` fails, the transaction is rejected and no fee is charged.
-2. **`Track`** runs after every message has been authenticated and the fee has been collected, but before message execution. State changes here are persistent regardless of whether the message itself succeeds. Authenticators use this hook to record information about the transaction they are about to authorise.
+1. **`Authenticate`** runs in the ante handler ([`x/smart-account/ante/ante.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/smart-account/ante/ante.go)). It validates the message and signature. Any state changes here are discarded once the hook returns; the role of this hook is read-only verification. If `Authenticate` fails, the transaction is rejected and no fee is charged. The fee is deducted the first time the fee payer's `Authenticate` succeeds.
+2. **`Track`** also runs in the ante handler, after every message's `Authenticate` has returned successfully and before message execution. State changes here are persistent regardless of whether the message itself succeeds. Authenticators use this hook to record information about the transaction they are about to authorise.
 3. **Message execution** then runs normally.
-4. **`ConfirmExecution`** runs in the post handler. It can enforce rules that depend on the outcome of execution, such as spending limits that check the account's post-execution balance. State changes here persist if the hook succeeds and are discarded if it fails, in which case the whole transaction is rolled back.
+4. **`ConfirmExecution`** runs in the post handler ([`x/smart-account/post/post.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/smart-account/post/post.go)). It can enforce rules that depend on the outcome of execution, such as spending limits that check the account's post-execution balance. State changes here persist if the hook succeeds and are discarded if it fails, in which case the whole transaction is rolled back.
 
 A spend-limit authenticator is the canonical example of why `ConfirmExecution` matters: pre-execution balance is captured in `Track`, post-execution balance is captured in `ConfirmExecution`, and the difference is compared to the configured limit.
 
@@ -243,7 +245,7 @@ The spend-limit policy contract that the worked example points at is a single li
 
 The `osmo1wn58hxkv0869ua7qmz3gvek3sz773l89a778fjqvenl6anwuhgnq6ks7kl` DAODAO subDAO holds both the contract's wasm-level admin and the spend-limit contract's own internal `admin`. That is the same subDAO listed in the module's `circuit_breaker_controllers`, so the kill switch on the contract and the kill switch on the module are operated by the same governance hand.
 
-Each One Click Trading session passes its own per-session parameters to this shared contract via the `params` field of the `CosmwasmAuthenticatorV1` config. The shape is `{ "limit": "<microUSDC>", "reset_period": "day", "time_limit": { "end": "<unix-nanos>" } }`, base64-encoded. The contract keeps per-(account, authenticator-id) state so multiple sessions on the same account do not collide.
+Each One Click Trading session passes its own per-session parameters to this shared contract via the `params` field of the `CosmwasmAuthenticatorV1` config. The shape is `{ "limit": "<microUSDC>", "reset_period": "day", "time_limit": { "end": "<unix-nanos>", "start": "<unix-nanos>"? } }`, base64-encoded (`start` is optional). The contract keeps per-(account, authenticator-id) state so multiple sessions on the same account do not collide.
 
 The source for the contract is at [`osmosis-labs/spend-limit-authenticator`](https://github.com/osmosis-labs/spend-limit-authenticator). The same pattern can be reused for other policy contracts: a custom authenticator only has to implement the `cw-authenticator` sudo interface and the chain's lifecycle hooks do the rest.
 
@@ -252,5 +254,5 @@ The source for the contract is at [`osmosis-labs/spend-limit-authenticator`](htt
 - Chain module: [`osmosis-labs/osmosis` → `x/smart-account`](https://github.com/osmosis-labs/osmosis/tree/main/x/smart-account). The module README has the full authenticator-interface description and the authentication flow diagrams.
 - Registered authenticator types: [`x/smart-account/authenticator/`](https://github.com/osmosis-labs/osmosis/tree/main/x/smart-account/authenticator). The initialisation list lives in [`app/keepers/keepers.go`](https://github.com/osmosis-labs/osmosis/blob/main/app/keepers/keepers.go) under `InitializeAuthenticators`.
 - Spend-limit policy contract: [`osmosis-labs/spend-limit-authenticator`](https://github.com/osmosis-labs/spend-limit-authenticator).
-- Frontend One Click Trading implementation: [`osmosis-frontend` → `packages/web/hooks/mutations/one-click-trading/`](https://github.com/osmosis-labs/osmosis-frontend/tree/master/packages/web/hooks/mutations/one-click-trading). The `use-create-one-click-trading-session.tsx` hook contains the session construction logic walked through above.
+- Frontend One Click Trading implementation: [`osmosis-frontend` → `packages/web/hooks/mutations/one-click-trading/`](https://github.com/osmosis-labs/osmosis-frontend/tree/stage/packages/web/hooks/mutations/one-click-trading). The `use-create-one-click-trading-session.tsx` hook contains the session construction logic walked through above.
 - Authenticator interface crate: [`cw-authenticator` on crates.io](https://crates.io/crates/cw-authenticator).
