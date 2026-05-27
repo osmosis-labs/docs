@@ -4,12 +4,12 @@ sidebar_position: 6
 
 # Source Initial Liquidity
 
-When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth of liquidity in a pool before it is listed onto [osmosis.zone](https://app.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
+When integrating a new asset, Osmosis Zone recommends at least USD \$1000-worth of liquidity in a pool before it is listed onto [osmosis.zone](https://app.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
 
 *Note that the Osmosis Foundation will **not** consider any OTC token transfers or loans*
 
 ## Add your own liquidity
-Buy at least USD $500-worth of your chosen Quote Asset (USDC, USDT, DAI, WBTC, ETH, ATOM or OSMO) to pair with USD $500-worth of the new asset to create a 50/50 pool.
+Buy at least USD \$500-worth of your chosen Quote Asset (USDC, USDT, DAI, WBTC, ETH, ATOM or OSMO) to pair with USD \$500-worth of the new asset to create a 50/50 pool.
 
 Alternatively, find partners who would be willing to provide the base asset portion of the liquidity to the equivalent value of the new asset you are creating a pool for.
 
