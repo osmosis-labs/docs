@@ -125,7 +125,7 @@ SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_or
 
 ### Discovery
 
-SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go); `[885]` at the time of writing — read the live config for the current set). Once a market is instantiated on chain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
+SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go); `[885]` at the time of writing, read the live config for the current set). Once a market is instantiated onchain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
 
 When multiple orderbook contracts exist for the same base/quote pair, SQS continuously tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two dedicated endpoints expose this view:
 
