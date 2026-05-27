@@ -51,7 +51,7 @@ We have a Buf agent running at https://buf.osmosis.zone which will allow you to 
 
 [grpcurl](https://github.com/fullstorydev/grpcurl) is like `curl` but for gRPC. It is also available as a Go library, but we will use it only as a CLI command for debugging and testing purposes. Follow the instructions in the previous link to install it.
 
-Assuming you already installed osmosisd with the [installer](../../osmosis-core/osmosisd), you should be able to run the following command to list the Protobuf services available (you can replace `grpc.osmosis.zone:9000` by the gRPC server endpoint of another node such as the testnet, another provider or your own node.
+Assuming you already installed osmosisd with the [installer](../../osmosis-core/osmosisd), you should be able to run the following command to list the Protobuf services available (you can replace `grpc.osmosis.zone:9090` by the gRPC server endpoint of another node such as the testnet, another provider or your own node).
 
 Listing all the methods from the mainnet
 
@@ -127,8 +127,6 @@ grpcurl \
     grpc.osmosis.zone:9090 \
     cosmos.bank.v1beta1.Query/AllBalances
 ```
-Note: This endpoint might change to  grpc.osmosis.zone:443 in the near future. 
-
 Assuming the state at that block has not yet been pruned by the node, this query should return a non-empty response.
 
 

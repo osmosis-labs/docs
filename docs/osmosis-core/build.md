@@ -8,15 +8,15 @@ sidebar_position: 2
 
 ## Install Go 1.22
 
-Currently, Osmosis uses Go 1.22 to compile the code.
+Currently, Osmosis uses Go 1.23 to compile the code (see [`go.mod`](https://github.com/osmosis-labs/osmosis/blob/main/go.mod) for the canonical version).
 
-Install [Go 1.22](https://go.dev/doc/install) by following instructions there.
+Install [Go 1.23](https://go.dev/doc/install) by following instructions there.
 
 Verify the installation by typing `go version` in your terminal.
 
 ```sh
 $ go version
-go version go1.22.4 darwin/amd64
+go version go1.23.4 darwin/amd64
 ```
 
 ## Build Osmosis

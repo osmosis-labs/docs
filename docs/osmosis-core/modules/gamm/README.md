@@ -197,47 +197,49 @@ Migration records are used to track a canonical link between a single balancer p
 
 The `x/gamm` module supports the following message types:
 
+Message definitions live in [`proto/osmosis/gamm/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/v1beta1/tx.proto), with `MsgCreateBalancerPool` in [`proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto).
+
 ### MsgCreateBalancerPool
 
-[MsgCreateBalancerPool](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/pool-models/balancer/tx.proto#L16-L26)
+Creates a new Balancer-style weighted pool with the specified assets, weights, and swap fee.
 
 ### MsgJoinPool
 
-[MsgJoinPool](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L27-L39)
+Joins an existing pool by depositing assets and minting pool shares in return.
 
 ### MsgExitPool
 
-[MsgExitPool](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L44-L57)
+Burns pool shares and withdraws the corresponding proportional share of pool assets.
 
 ### MsgSwapExactAmountIn
 
-[MsgSwapExactAmountIn](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L68-L80)
+Swaps an exact input amount through one or more pools for a minimum acceptable output.
 
 Note, that this message was deprecated and moved to `x/poolmanager`. Please use the `MsgSwapExactAmountIn` message
 in `x/poolmanager` instead.
 
 ### MsgSwapExactAmountOut
 
-[MsgSwapExactAmountOut](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L90-L102)
+Swaps for an exact output amount through one or more pools using up to a maximum input.
 
 Note, that this message was deprecated and moved to `x/poolmanager`. Please use the `MsgSwapExactAmountOut` message
 in `x/poolmanager` instead.
 
 ### MsgJoinSwapExternAmountIn
 
-[MsgJoinSwapExternAmountIn](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L107-L119)
+Joins a pool by supplying a single asset; the module internally swaps part of it to match the pool's weights.
 
 #### MsgJoinSwapShareAmountOut
 
-[MsgJoinSwapShareAmountOut](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L124-L138)
+Joins a pool with a single asset such that the pool mints an exact number of shares to the joiner.
 
 #### MsgExitSwapShareAmountIn
 
-[MsgExitSwapShareAmountIn](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L143-L158)
+Burns an exact number of pool shares and withdraws the proceeds entirely in a single chosen asset.
 
 #### MsgExitSwapExternAmountOut
 
-[MsgExitSwapExternAmountOut](https://github.com/osmosis-labs/osmosis/blob/v7.1.0/proto/osmosis/gamm/v1beta1/tx.proto#L163-L175)
+Withdraws an exact amount of a single asset from a pool, burning as many shares as required.
 
 ## Transactions
 
