@@ -110,12 +110,20 @@ curl "https://sqs.osmosis.zone/router/routes?tokenIn=uosmo&tokenOutDenom=uion" |
         { "ID": 1100, "TokenInDenom": "uosmo", "TokenOutDenom": "uion" }
       ],
       "IsCanonicalOrderboolRoute": false
+    },
+    {
+      "Pools": [
+        { "ID": 2, "TokenInDenom": "uosmo", "TokenOutDenom": "uion" }
+      ],
+      "IsCanonicalOrderboolRoute": false
     }
   ],
-  "UniquePoolIDs": [1100, 2, 1013, 1933, 2109],
+  "UniquePoolIDs": { "1100": {}, "2": {} },
   "ContainsCanonicalOrderbook": false
 }
 ```
+
+`UniquePoolIDs` is a set serialized as a JSON object: the keys are the pool ids referenced across all routes and the values are empty objects. Read the keys, not the values.
 
 Useful for previewing what the router will consider before committing to a quote, or for surfacing every pool that connects two tokens.
 
