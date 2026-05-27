@@ -102,12 +102,12 @@ You only need to open a PR against `osmosis-labs/assetlists` if you want to conf
 
 #### Where the changes go
 
-- `osmosis-1/osmosis.zone_assets.json` — the asset entry.
-- `osmosis-1/osmosis.zone_chains.json` — only when you need to provide custom chain services (RPC/REST/explorer); otherwise leave it alone.
+- `osmosis-1/osmosis.zone_assets.json`, the asset entry.
+- `osmosis-1/osmosis.zone_chains.json`, only when you need to provide custom chain services (RPC/REST/explorer); otherwise leave it alone.
 
 #### Field reference
 
-See [assetlists README — Asset Object Structure](https://github.com/osmosis-labs/assetlists/blob/main/README.md) for a full field-by-field reference, defaults, and decision guidance.
+See [assetlists README, Asset Object Structure](https://github.com/osmosis-labs/assetlists/blob/main/README.md) for a full field-by-field reference, defaults, and decision guidance.
 
 The minimum required shape for an asset object is:
 
@@ -123,7 +123,7 @@ All other fields are optional and default to safe values (e.g., `osmosis_verifie
 
 #### Submitting the PR
 
-- New Pull Requests will automatically initialize with a description template that includes a checklist — complete it as thoroughly as possible.
+- New Pull Requests will automatically initialize with a description template that includes a checklist, complete it as thoroughly as possible.
 - Validation checks run automatically on the PR; address any failures before requesting review.
 - Maintainers will review and merge once validation passes and the configuration is sound.
 

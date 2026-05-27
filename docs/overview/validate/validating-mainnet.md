@@ -1,5 +1,5 @@
 ---
-description: Turn a synced mainnet node into a validator — keyring setup, self-delegation, and registration.
+description: Turn a synced mainnet node into a validator, keyring setup, self-delegation, and registration.
 ---
 
 # Validating On Mainnet

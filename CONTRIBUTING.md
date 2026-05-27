@@ -47,12 +47,12 @@ The code should satisfy the following:
 ### Docs page conventions
 
 A few conventions keep the docs readable and consistent. These are
-strongly preferred — push back in review if a PR ignores them.
+strongly preferred; push back in review if a PR ignores them.
 
 - **Open every page with a lede.** One or two sentences directly under
   the page title that explain what the page covers and who it's for.
   The first paragraph gets a slightly larger size automatically, so use
-  the space — don't waste it on filler ("This guide will...").
+  the space, don't waste it on filler ("This guide will...").
 
 - **Break up walls of text.** If a paragraph is more than ~6 lines,
   split it, pull part into a bullet list, or move an aside into a
@@ -72,7 +72,7 @@ strongly preferred — push back in review if a PR ignores them.
 
 - **Featured card per section.** `<HomepageCard>` accepts a `featured`
   prop that doubles the card width and brightens the border. Use it for
-  the "if you read nothing else, read this" entry — **at most one per
+  the "if you read nothing else, read this" entry, **at most one per
   section**. Don't featuring everything; that's just colour noise.
 
 - **Code blocks deserve a language tag.** ` ```sh ` / ` ```ts ` /

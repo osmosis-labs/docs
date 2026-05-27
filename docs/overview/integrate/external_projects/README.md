@@ -1,5 +1,5 @@
 ---
-description: Integrations between Osmosis and external services — oracles, indexers, and analytics platforms.
+description: Integrations between Osmosis and external services, oracles, indexers, and analytics platforms.
 ---
 
 # External Projects

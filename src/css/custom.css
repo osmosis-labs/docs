@@ -36,7 +36,7 @@ body {
   --dyte-colors-video-bg: 50 50 50;
 }
 
-/* Design tokens — light mode
+/* Design tokens, light mode
    Names kept from the legacy Dyte template; values remapped to the
    Osmosis frontend palette (osmosis-frontend/packages/web/tailwind.config.js). */
 :root {
@@ -48,7 +48,7 @@ body {
 
   --docs-color-border: #e4e1fb; /* osmoverse-100 */
 
-  --docs-color-text: #140f34; /* osmoverse-900 — purple-tinted near-black */
+  --docs-color-text: #140f34; /* osmoverse-900, purple-tinted near-black */
   --docs-color-text-100: #565081; /* osmoverse-600 */
 
   --docs-color-background: #ffffff;
@@ -106,7 +106,7 @@ body {
   --docusaurus-highlighted-code-line-bg: rgba(140, 138, 249, 0.18);
 }
 
-/* Headings — tighter tracking for Poppins */
+/* Headings, tighter tracking for Poppins */
 h1,
 h2,
 h3,
@@ -120,7 +120,7 @@ h6 {
    Page background stays #161616 (per user). Purple accents/surfaces
    are pulled from the frontend osmoverse palette. */
 [data-theme='dark'] {
-  --docs-color-border: #282750; /* osmoverse-800 — purple-tinted */
+  --docs-color-border: #282750; /* osmoverse-800, purple-tinted */
 
   --docs-color-text: #ffffff;
   --docs-color-text-100: #b0aadc; /* osmoverse-300 */
@@ -131,7 +131,7 @@ h6 {
   --docs-color-background-300: #282750; /* osmoverse-800 */
 
   --docs-color-code-background: #140f34; /* osmoverse-900 */
-  --docs-color-primary: #8c8af9; /* wosmongton-300 — accent/link */
+  --docs-color-primary: #8c8af9; /* wosmongton-300, accent/link */
   --docs-color-primary-100: #6a67ea; /* wosmongton-400 */
   --docs-color-primary-tint: rgba(140, 138, 249, 0.16);
   --docs-color-primary-tint-light: rgba(140, 138, 249, 0.24);
@@ -376,7 +376,7 @@ html[data-theme='dark'] .discord-icon::before {
   content: 'GitHub';
 }
 
-/* Navbar primary CTA — mirrors the frontend's <Button mode="primary">:
+/* Navbar primary CTA, mirrors the frontend's <Button mode="primary">:
    wosmongton-700 bg, 2px wosmongton-700 border, rounded-xl, hover to
    wosmongton-400. Inline-flex with align-items:center fixes the
    slight vertical offset against neighbour links. */
@@ -802,7 +802,7 @@ img[src$='#terminal'] {
   max-width: 60ch;
 }
 
-/* Hero CTA — mirrors the frontend's <Button mode="primary" size="normal">:
+/* Hero CTA, mirrors the frontend's <Button mode="primary" size="normal">:
    wosmongton-700 bg, 2px border same colour, rounded-xl, h-[56px], px-6,
    hover to wosmongton-400. */
 .hero-cta {
@@ -960,7 +960,7 @@ img[src$='#terminal'] {
   line-height: 1.5;
 }
 
-/* Featured card variant — for "if you read nothing else, read this".
+/* Featured card variant, for "if you read nothing else, read this".
    Spans two grid columns, larger title, brighter border, subtle gradient
    wash. Use sparingly: 1 per section, never more. */
 .homepage-card.featured {
@@ -988,7 +988,7 @@ img[src$='#terminal'] {
   background-color: var(--docs-color-primary-tint);
 }
 
-/* Single-column / sub-section grids — don't span 2 cols there. */
+/* Single-column / sub-section grids, don't span 2 cols there. */
 .has-sub-sections .homepage-card.featured,
 .two-cols .homepage-card.featured {
   grid-column: span 1;
@@ -1030,7 +1030,7 @@ img[src$='#terminal'] {
    ─────────────────────────────────────────────────────────────────────
    Docusaurus renders <DocCardList /> as a grid of `.card` links, each
    prefixed with a generic emoji (📄 / 🔗 / 🗃️). We can't drop the emoji
-   without swizzling the DocCard component, so we tone it down — small,
+   without swizzling the DocCard component, so we tone it down, small,
    muted, and treat it like the icon-frame on our HomepageCard.
 
    The card itself is restyled to match `.homepage-card` so the visual
@@ -1063,13 +1063,13 @@ article .card h2 {
   margin-top: 0;
   margin-bottom: 0.375rem;
   color: var(--docs-color-text);
-  /* The generic page emoji (📄 / 🔗 / 🗃️) is text inside the h2 — we
+  /* The generic page emoji (📄 / 🔗 / 🗃️) is text inside the h2, we
      can't strip it without swizzling, so soften it via the first letter
      until each page has a real icon mapping. */
   font-variant-emoji: text;
 }
 
-/* Tone down the leading emoji — first-letter targets the emoji glyph
+/* Tone down the leading emoji, first-letter targets the emoji glyph
    since it's the first character in the title node. */
 article .card h2::first-letter {
   font-size: 1.1em;
@@ -1084,7 +1084,7 @@ article .card p {
   margin: 0;
 }
 
-/* DocCardList grid spacing — slightly looser than Docusaurus default. */
+/* DocCardList grid spacing, slightly looser than Docusaurus default. */
 article .row > .col {
   margin-bottom: 1rem;
 }
@@ -1099,7 +1099,7 @@ article .row > .col {
    the last two articles (`article:nth-last-child(-n + 2)`) on the
    assumption of a 2-col grid where they share a row. Once we collapse
    to a single column those two are stacked, so we need the gap back
-   between them — restore margin-bottom on every article except the
+   between them, restore margin-bottom on every article except the
    actual last one. */
 @media (min-width: 997px) {
   article.col {
@@ -1118,7 +1118,7 @@ article .row > .col {
    wraps the rendered prose). The goal is to make wall-of-text pages feel
    less blocky without forcing every author to restructure their markdown:
 
-   - Cap the reading measure (~72ch) — long lines hurt readability more than
+   - Cap the reading measure (~72ch), long lines hurt readability more than
      people expect. The doc body retains the full container width for code
      blocks, tables, and embedded images; only flowing prose is capped.
    - Loosen paragraph leading by one notch.
@@ -1152,7 +1152,7 @@ article .row > .col {
   margin-top: 0;
 }
 
-/* Lede paragraph — the first <p> directly under the page heading. */
+/* Lede paragraph, the first <p> directly under the page heading. */
 .theme-doc-markdown > p:first-of-type,
 .theme-doc-markdown header + p {
   font-size: 1.125rem;
@@ -1174,7 +1174,7 @@ article .row > .col {
   margin-top: 0.375rem;
 }
 
-/* Blockquotes — used occasionally for asides. Make them feel intentional. */
+/* Blockquotes, used occasionally for asides. Make them feel intentional. */
 .theme-doc-markdown blockquote {
   border-left: 3px solid var(--docs-color-primary);
   background-color: var(--docs-color-background-100);

@@ -3,7 +3,7 @@
 [Beaker](https://github.com/osmosis-labs/beaker) is a scaffolding tool for CosmWasm apps on Osmosis. It wires up the contract dependencies, an interactive console, and a sample frontend so you can go from `beaker new` to a working dapp in a few commands.
 
 :::info Source on GitHub
-Beaker is maintained at [osmosis-labs/beaker](https://github.com/osmosis-labs/beaker) — see the repo for the latest releases, CI status, and license info.
+Beaker is maintained at [osmosis-labs/beaker](https://github.com/osmosis-labs/beaker), see the repo for the latest releases, CI status, and license info.
 :::
 
 ---

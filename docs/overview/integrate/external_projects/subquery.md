@@ -1,5 +1,5 @@
 ---
-description: Index Osmosis chain data — including cross-chain IBC flows — using the SubQuery SDK.
+description: Index Osmosis chain data, including cross-chain IBC flows, using the SubQuery SDK.
 ---
 
 # SubQuery

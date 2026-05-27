@@ -25,20 +25,13 @@ import {
   HomepageSection as Section,
 } from '../components/HomepageComponents';
 
-/** Opens the Algolia DocSearch modal by dispatching the Ctrl+K shortcut
- *  it already listens for. Docusaurus doesn't expose a public API for this. */
+/** Opens the Algolia DocSearch modal by clicking the existing
+ *  .DocSearch-Button in the navbar. The synthetic Ctrl+K alternative is
+ *  brittle (Mac uses Cmd+K, screen readers cannot see the synthetic event,
+ *  and DocSearch may rebind its listener target between versions). */
 function openSearch(event) {
   event.preventDefault();
-  const keyEvent = new KeyboardEvent('keydown', {
-    key: 'k',
-    code: 'KeyK',
-    keyCode: 75,
-    which: 75,
-    ctrlKey: true,
-    metaKey: true,
-    bubbles: true,
-  });
-  document.dispatchEvent(keyEvent);
+  document.querySelector('.DocSearch-Button')?.click();
 }
 
 export default function Homepage() {
@@ -106,7 +99,7 @@ export default function Homepage() {
             <Card
               featured
               title="Build and Test Osmosis Source Code"
-              description="The starting point for working on the chain itself — set up your toolchain, compile, and run the test suite."
+              description="The starting point for working on the chain itself, set up your toolchain, compile, and run the test suite."
               to="/osmosis-core/build"
               icon={<OsmosisCore />}
             />
@@ -168,7 +161,7 @@ export default function Homepage() {
             <Card
               featured
               title="Osmosis Frontend"
-              description="The web interface for app.osmosis.zone — architecture, contributing, and local setup."
+              description="The web interface for app.osmosis.zone, architecture, contributing, and local setup."
               to="/frontend/osmosis-frontend"
               svgFile="/icons/osmo.svg"
             />
