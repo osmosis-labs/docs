@@ -271,9 +271,6 @@ const config = {
         apiKey: '00',
       },
     }),
-  scripts: [
-    "https://tally.so/widgets/embed.js",
-  ],
 };
 
 module.exports = config;
