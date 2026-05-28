@@ -6,7 +6,7 @@ sidebar_position: 15
 
 An **alloyed asset** is a single canonical Osmosis denom that represents the sum of multiple equivalent assets held in a 1:1 backing pool. The contract that implements this primitive is the **transmuter**: a CosmWasm contract that custodies a basket of `n` "pool assets" and mints a single alloyed denom against deposits.
 
-`allBTC` is the most prominent live example. The contract at [`osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3) holds several different bridged-BTC denoms (wBTC variants, ckBTC, etc.) and mints `factory/.../alloyed/allBTC` against them. Holders of any of the backing assets can deposit and receive an equal amount of `allBTC`; holders of `allBTC` can redeem for any backing asset that has sufficient liquidity. The full backing list is a query away.
+`allBTC` is the most prominent live example. The contract at [`osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3) holds several different bridged-BTC denoms (wBTC variants, ckBTC, etc.) and mints `factory/.../alloyed/allBTC` against them. Holders of any of the backing assets can deposit and receive `allBTC` in return; holders of `allBTC` can redeem for any backing asset that has sufficient liquidity. The amount minted is **not** necessarily equal to the raw amount deposited: each asset is converted through its normalization factor first (see [How it works mechanically](#how-it-works-mechanically)), so backing assets with different decimal precision mint different raw amounts of `allBTC`. The full backing list is a query away.
 
 This page covers the integrator surface: how alloyed-asset transmuters are instantiated, the messages and queries the contract exposes, how routing through SQS works for them, and the implications for IBC transfers.
 
@@ -92,10 +92,12 @@ To mint alloyed tokens by depositing backing assets, send a `join_pool` execute 
 ```bash
 osmosisd tx wasm execute <TRANSMUTER_CONTRACT_ADDR> '{
   "join_pool": {}
-}' --amount "100000000ibc/<BACKING_DENOM>" --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+}' --amount "100000000ibc/<BACKING_DENOM>" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-The contract mints alloyed tokens to the sender in the same normalised amount as the deposit. `--amount` can include multiple coins in one call as long as every coin's denom is in the pool's asset list.
+The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/overview/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
+
+The contract mints alloyed tokens equal to the deposit converted into normalised units, which is **not** the same as the raw deposited amount unless the backing asset's normalization factor matches the alloyed asset's. Size redemptions off the minted (normalised) amount, not the raw deposit. For example, on the live `allBTC` pool one backing denom has a normalization factor of `1000000` while others have `1`, so depositing `1000000` base units of the high-factor denom mints `1` unit of `allBTC`, whereas `1000000` base units of a factor-`1` denom mints `1000000`. Query `list_asset_configs` for the factors before sizing a deposit or redemption. `--amount` can include multiple coins in one call as long as every coin's denom is in the pool's asset list.
 
 ## Redeem (exit_pool)
 
@@ -108,7 +110,7 @@ osmosisd tx wasm execute <TRANSMUTER_CONTRACT_ADDR> '{
       { "denom": "ibc/<BACKING_DENOM>", "amount": "100000000" }
     ]
   }
-}' --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+}' --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 No `--amount` is needed; the contract debits the required amount of the sender's alloyed-denom balance directly. The request fails if the requested output exceeds the contract's holdings of the chosen backing denom.
@@ -149,7 +151,7 @@ These satisfy the `x/cosmwasmpool` routing interface:
 
 ## Routing through SQS
 
-SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go). The routing semantics differ from a CFMM:
+See the [Sidecar Query Server (SQS)](./sqs) page for the routing and pool-query endpoints in general. SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go). The routing semantics differ from a CFMM:
 
 - SQS exposes the alloyed denom and every backing denom as connected through the pool, so a quote between any two of them can be routed through the transmuter.
 - Quoting is exact: no slippage, no price impact, no spread fee on the current contracts. The output is simply the input scaled by the ratio of normalization factors.
