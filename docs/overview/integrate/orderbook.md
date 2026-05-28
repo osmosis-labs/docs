@@ -4,7 +4,7 @@ sidebar_position: 14
 
 # Orderbook
 
-The Osmosis orderbook is a CosmWasm contract that implements a sumtree-backed limit-order venue. Each market is its own contract instance with one quote denom and one base denom, and the contract participates in the chain's pool routing graph alongside CFMM and concentrated-liquidity pools.
+The Osmosis orderbook is a CosmWasm contract that implements a sumtree-backed limit-order venue. Each market is its own contract instance with one quote denom and one base denom, and the contract participates in the chain's pool routing graph alongside [CFMM](/osmosis-core/modules/gamm) (Balancer-style weighted and stableswap) and [concentrated liquidity](/overview/features/concentrated-liquidity) pools.
 
 This page covers the integration surface: how to discover live orderbook pools, place and cancel orders, query state, and connect to the orderbook from a routing layer such as SQS.
 
@@ -12,9 +12,7 @@ This page covers the integration surface: how to discover live orderbook pools, 
 
 Each orderbook market is a separately instantiated CosmWasm contract. Discovery options:
 
-{/* TODO(after #310 merges): relativise the SQS links on this page from
-    https://docs.osmosis.zone/overview/integrate/sqs to ./sqs. */}
-- **SQS**: the [`/pools`](https://docs.osmosis.zone/overview/integrate/sqs) endpoint returns orderbook pools alongside CFMM and concentrated-liquidity pools. This is the recommended path for any frontend or bot that needs to know the active orderbook markets.
+- **SQS**: the [`/pools`](./sqs) endpoint returns orderbook pools alongside CFMM and concentrated liquidity pools. This is the recommended path for any frontend or bot that needs to know the active orderbook markets.
 - **Onchain via cosmwasm-pool module**: orderbooks are registered as `x/cosmwasmpool` pool types; their pool IDs are addressable through `osmosis.poolmanager.v1beta1.Query.Pool` like any other pool.
 - **Direct contract address**: once you know an orderbook's contract address you can talk to it with `osmosisd query wasm contract-state smart <contract-addr> '<query-json>'`.
 
@@ -45,8 +43,10 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
     "quantity": "1000000",
     "claim_bounty": "0.0001"
   }
-}' --amount "1000000uusdc" --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+}' --amount "1000000uusdc" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
+
+The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/overview/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
 
 Fields:
 
@@ -65,7 +65,7 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
     "tick_id": 123456,
     "order_id": 42
   }
-}' --from <KEY> --gas auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+}' --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 Only the original order placer can cancel. Cancellation is all-or-nothing: the contract rejects with `CancelFilledOrder` if any portion of the order has been filled. To recover a partial fill, claim the filled portion first; the unfilled remainder cannot be cancelled separately under the current contract.
@@ -142,7 +142,7 @@ The non-canonical orderbooks still appear in `/pools` and remain reachable throu
 
 ### When a new orderbook code id needs registering
 
-A brand-new orderbook *contract instance* spawned from an already-registered code id needs no SQS action. A brand-new *code id* (a new orderbook contract version, typically tied to a chain upgrade) does: it has to be added to `OrderbookCodeIDs` in the SQS deployment config and the service redeployed. See [Adding a custom CosmWasm pool to SQS](https://docs.osmosis.zone/overview/integrate/sqs#adding-a-custom-cosmwasm-pool-to-sqs).
+A brand-new orderbook *contract instance* spawned from an already-registered code id needs no SQS action. A brand-new *code id* (a new orderbook contract version, typically tied to a chain upgrade) does: it has to be added to `OrderbookCodeIDs` in the SQS deployment config and the service redeployed. See [Adding a custom CosmWasm pool to SQS](./sqs#adding-a-custom-cosmwasm-pool-to-sqs).
 
 ## Admin and moderator messages
 
