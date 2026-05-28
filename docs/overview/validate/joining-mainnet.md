@@ -36,23 +36,23 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
-## Latest Version (v29) Upgrade Info
+## Node Requirements and Cosmovisor Setup
 
 ### Go Requirement
 
-You will need to be running go1.22.11 for this version of Osmosis. You can check if you are running go1.22.11 with the following command:
+You will need to be running go1.23.4 for this version of Osmosis. You can check if you are running go1.23.4 with the following command:
 
 ```{.sh}
 go version
 ```
 
-If this does not say go1.22.11, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go1.22.11 on linux is as follows:
+If this does not say go1.23.4, you need to upgrade/downgrade. One of the many ways to upgrade/downgrade to/from go1.23.4 on linux is as follows:
 
 ```{.sh}
 sudo rm -rvf /usr/local/go/
-wget https://golang.org/dl/go1.22.11.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.22.11.linux-amd64.tar.gz
-rm go1.22.11.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.23.4.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz
+rm go1.23.4.linux-amd64.tar.gz
 ```
 ### Memory Requirements
 
@@ -106,7 +106,7 @@ osmosisd version
 
 ## Download Chain Data
 
-Download the latest chain data from a snapshot provider. In the following commands, I will use <a href="https://quicksync.io/networks/osmosis.html" target="_blank">https://quicksync.io/networks/osmosis.html</a> to download the chain data. You may choose the default, pruned, or archive based on your needs.
+Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a>, which publishes `osmosis-1` mainnet snapshots in both pruned (regular node) and archive (full history) forms. The snapshot URL is timestamped and rotates, so copy the current one from that page rather than hardcoding it.
 
 Download liblz4-tool to handle the compressed file:
 
@@ -114,96 +114,11 @@ Download liblz4-tool to handle the compressed file:
 sudo apt-get install wget liblz4-tool aria2 -y
 ```
 
-Download the chain data:
+Pick a pruned or archive snapshot from [snapshots.osmosis.zone](https://snapshots.osmosis.zone/) and extract it into the data directory. Replace `<SNAPSHOT_URL>` with the current URL copied from that page:
 
-- Select the tab to the desired node type (Default, Pruned, or Archive)
-- Select the tab to the region closest to you (Netherlands, Singapore, or San Francisco) and copy the commands
-
-
-<!-- #region -->
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-### Default
-<Tabs>
-  <TabItem value="netherlands" label="Netherlands" default>
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="Netherlands")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
+```bash
+wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C $HOME/.osmosisd -xvf -
 ```
-
-  </TabItem>
-  <TabItem value="singapore" label="Singapore">
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="Singapore")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-  <TabItem value="sanfrancisco" label="San Francisco">
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-default")|select (.mirror=="SanFrancisco")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-</Tabs>
-
-### Pruned
-<Tabs>
-  <TabItem value="netherlands" label="Netherlands" default>
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="Netherlands")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-  <TabItem value="singapore" label="Singapore">
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="Singapore")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-  <TabItem value="sanfrancisco" label="San Francisco">
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-pruned")|select (.mirror=="SanFrancisco")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-</Tabs>
-
-
-
-### Archive
-<Tabs>
-  <TabItem value="netherlands" label="Netherlands" default>
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmosis-1-archive")|select (.mirror=="Netherlands")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-  </TabItem>
-
-</Tabs>
-
-
-<!-- #endregion -->
 
 ## Set Up Osmosis Service
 

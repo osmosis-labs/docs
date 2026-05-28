@@ -118,7 +118,7 @@ osmosisd unsafe-reset-all
 
 ## Download Chain Data
 
-Download the latest chain data from a snapshot provider. In the following commands, I will use <a href="https://quicksync.io/networks/osmosis.html" target="_blank">https://quicksync.io/networks/osmosis.html</a> to download the chain data. You may choose the pruned or archive based on your needs.
+Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a>, which publishes pruned `osmo-test-5` testnet snapshots. The snapshot URL is timestamped and rotates, so copy the current one from that page rather than hardcoding it.
 
 Download liblz4-tool to handle the compressed file:
 
@@ -126,37 +126,11 @@ Download liblz4-tool to handle the compressed file:
 sudo apt-get install wget liblz4-tool aria2 -y
 ```
 
-Download the chain data:
+Download a pruned snapshot from [snapshots.osmosis.zone](https://snapshots.osmosis.zone/) and extract it into the data directory. Replace `<SNAPSHOT_URL>` with the current URL copied from that page:
 
-- Select the tab to the desired node type (Pruned or Archive)
-
-
-<!-- #region -->
-::::::: tabs :options="{ useUrlFragment: false }"
-
-:::::: tab Pruned
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-4-pruned")|select (.mirror=="Netherlands")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
+```bash
+wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C $HOME/.osmosisd -xvf -
 ```
-
-::::::
-
-:::::: tab Archive
-
-``` bash
-URL=`curl https://quicksync.io/osmosis.json|jq -r '.[] |select(.file=="osmotestnet-4-archive")|select (.mirror=="Netherlands")|.url'`
-cd $HOME/.osmosisd/
-wget -O - $URL | lz4 -d | tar -xvf -
-```
-
-::::::
-
-:::::::
-
-<!-- #endregion -->
 
 ## Set Up Osmosis Service
 
