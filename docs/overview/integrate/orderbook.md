@@ -142,7 +142,9 @@ The non-canonical orderbooks still appear in `/pools` and remain reachable throu
 
 ### When a new orderbook code id needs registering
 
-A brand-new orderbook *contract instance* spawned from an already-registered code id needs no SQS action. A brand-new *code id* (a new orderbook contract version, typically tied to a chain upgrade) does: it has to be added to `OrderbookCodeIDs` in the SQS deployment config and the service redeployed. See [Adding a custom CosmWasm pool to SQS](./sqs#adding-a-custom-cosmwasm-pool-to-sqs).
+A brand-new orderbook *contract instance* spawned from an already-registered code id needs no SQS action. 
+
+A brand-new *code id* (a new orderbook contract version, uploaded and whitelisted as a cosmwasm pool ID via chain governance) does: it has to be added to `OrderbookCodeIDs` in the SQS deployment config and the service redeployed.
 
 ## Admin and moderator messages
 
