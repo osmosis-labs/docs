@@ -29,7 +29,7 @@ export default function Homepage() {
 
   return (
     <Layout
-      description="The Osmosis blockchain is a decentralized network, run by 150+ validators and full nodes, with many front-ends and development teams on it."
+      description="The Osmosis blockchain is a decentralized network of validators and full nodes, with many front-ends and development teams on it."
       wrapperClassName="homepage"
     >
       <div className="pad">
@@ -37,7 +37,7 @@ export default function Homepage() {
           <div className='margin-bottom--lg'>
             <h2>Osmosis Docs</h2>
             <p>
-              The Osmosis blockchain is a decentralized network, run by 150+ validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
+              The Osmosis blockchain is a decentralized network of validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
             </p>
             <DyteButton onClick={() => router.push('/osmosis-core/')}>
               Get Started &rarr;
