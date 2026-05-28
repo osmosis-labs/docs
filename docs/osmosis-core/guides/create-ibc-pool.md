@@ -19,7 +19,7 @@ This document lays out the prerequisites and the process that's needed to ensure
 ### 0. Enabling IBC transfers
 Because only IBC assets that have been transferred to Osmosis can be traded on Osmosis, the native chain of the asset must have IBC transfers enabled. Cosmos defines the fungible IBC token transfer standard in [ICS20](https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer) specification.
 
-At this time, only chains using Cosmos-SDK v0.40+ (aka Stargate) can support IBC transfers.
+The counterparty chain must support IBC transfers (any IBC-enabled Cosmos chain does).
 
 Note that IBC transfers can be enabled via:
 1. as part of a software upgrade, or

@@ -131,7 +131,7 @@ There are precision issues that we must be considerate of in our design.
 Consider the balancer pool between `arb` base unit and `uosmo`:
 
 ```bash
-osmosisd q gamm pool 1011
+osmosisd query poolmanager pool 1011
 pool:
   '@type': /osmosis.gamm.v1beta1.Pool
   address: osmo1pv6ffw8whyle2nyxhh8re44k4mu4smqd7fd66cu2y8gftw3473csxft8y5
@@ -183,7 +183,7 @@ However, in our core logic it is represented as:
 or
 
 ```python
-osmosisd q gamm spot-price 1011 uosmo ibc/10E5E5B06D78FFBB61FD9F89209DEE5FD4446ED0550CBB8E3747DA79E10D9DC6
+osmosisd query poolmanager spot-price 1011 uosmo ibc/10E5E5B06D78FFBB61FD9F89209DEE5FD4446ED0550CBB8E3747DA79E10D9DC6
 spot_price: "0.000000000002155018"
 ```
 
