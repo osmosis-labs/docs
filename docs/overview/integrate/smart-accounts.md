@@ -57,9 +57,9 @@ Seven authenticator types are registered in the chain's authenticator manager. T
 | `AnyOf` | composite | Authentication passes if any one nested authenticator passes. |
 | `PartitionedAllOf` | composite | `AllOf` with per-message partitioning. Each nested authenticator is responsible for a specific message in the transaction rather than all of them. |
 | `PartitionedAnyOf` | composite | `AnyOf` with per-message partitioning. |
-
-All four composites require at least two sub-authenticators; the `OnAuthenticatorAdded` hook rejects a composite with a single child ([`x/smart-account/authenticator/composite.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/smart-account/authenticator/composite.go)).
 | `CosmwasmAuthenticatorV1` | external | Delegates authentication to a CosmWasm contract. Used to implement arbitrary policy engines such as spend limits, session keys, or role-based controls. |
+
+All four composites require at least two sub-authenticators; a composite registered with a single child is rejected when its sub-authenticators are added ([`x/smart-account/authenticator/composite.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/smart-account/authenticator/composite.go)).
 
 The type string is what goes in `MsgAddAuthenticator.authenticator_type`. The `data` field of `MsgAddAuthenticator` is a type-specific byte payload that the authenticator's `OnAuthenticatorAdded` hook parses and validates at the time the authenticator is registered.
 
@@ -118,7 +118,7 @@ message TxExtension {
 }
 ```
 
-`selected_authenticators` is a flat list with one entry per message in the transaction. Each entry is the id of the authenticator the chain should use to authenticate the corresponding message. If `selected_authenticators` is empty or missing, the transaction uses the standard Cosmos SDK signature mechanism (assuming the module's circuit breaker is on; otherwise the standard path is the only option).
+`selected_authenticators` is a flat list with one entry per message in the transaction. Each entry is the id of the authenticator the chain should use to authenticate the corresponding message. For a single-message transaction (the common case, e.g. a One Click Trading swap) this is a one-element list; only pad it to match a multi-message transaction. If `selected_authenticators` is empty or missing, the transaction uses the standard Cosmos SDK signature mechanism (assuming the module's circuit breaker is on; otherwise the standard path is the only option).
 
 Wallets and SDKs construct this extension when building the transaction. Direct integrators using `osmosisd` can pass it via the protobuf-any extension fields supported by the Cosmos SDK tx builder.
 
