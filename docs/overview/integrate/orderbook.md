@@ -16,20 +16,34 @@ Each orderbook market is a separately instantiated CosmWasm contract. Discovery 
 - **Onchain via cosmwasm-pool module**: orderbooks are registered as `x/cosmwasmpool` pool types; their pool IDs are addressable through `osmosis.poolmanager.v1beta1.Query.Pool` like any other pool.
 - **Direct contract address**: once you know an orderbook's contract address you can talk to it with `osmosisd query wasm contract-state smart <contract-addr> '<query-json>'`.
 
-Code IDs for the canonical orderbook contract are governance-managed and may change. Read the live SQS pools list or chain-state at submission time rather than hardcoding a code ID in client code.
+### Finding the current orderbook code id
 
-## Instantiation parameters
+The orderbook code id is whitelisted by governance and can change across contract versions, so query it at submission time rather than hardcoding it. Two ways:
 
-When a new orderbook market is instantiated, the parameters follow the format:
+```bash
+# Every code id whitelisted as a cosmwasm pool (the orderbook id is one of these)
+osmosisd q cosmwasmpool params
 
-```json
-{
-  "base_denom": "uatom",
-  "quote_denom": "uusdc"
-}
+# The code id backing a specific orderbook pool, via SQS
+curl -s "https://sqs.osmosis.zone/pools?IDs=1930" | jq '.[0].chain_model.code_id'
 ```
 
-The quote denom is the asset that prices are expressed in; the base denom is the asset being bought or sold. A single orderbook contract pairs exactly one quote denom against one base denom. To support a different pair, instantiate a new contract from the same code ID.
+Read the live whitelist or SQS pools list rather than hardcoding a code id in client code.
+
+## Creating a market
+
+Creating a new orderbook market is **permissionless**: anyone can instantiate a market for a new base/quote pair from an already-whitelisted code id, without a governance proposal. (Only whitelisting a *new* code id is governance-gated, see [below](#when-a-new-orderbook-code-id-needs-registering).) Markets are instantiated through the `x/cosmwasmpool` module, not a raw `wasm instantiate`:
+
+```bash
+osmosisd tx cosmwasmpool create-pool <CODE_ID> '{
+  "base_denom": "uatom",
+  "quote_denom": "uusdc"
+}' --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+```
+
+The quote denom is the asset that prices are expressed in; the base denom is the asset being bought or sold. A single orderbook contract pairs exactly one quote denom against one base denom; to support a different pair, create another market from the same code id. The `--gas-prices` value is illustrative, see the note under [Placing an order](#placing-an-order) for the dynamic fee.
+
+For the full pool-creation walkthrough (creation fee, denom-casing caveats, the `osmosisd` version requirement), see the [Pool Setup guide](./pool-setup).
 
 ## Placing an order
 
