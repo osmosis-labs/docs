@@ -13,6 +13,21 @@ const posthogPlugin = require('./plugins/posthog-plugin.cjs');
   ],
 };
 
+// KaTeX is enabled per-section, not globally. remark-math (v3) treats every
+// unescaped paired `$...$` as inline math and offers no option to disable that,
+// so enabling it everywhere would mangle currency ($500) and shell vars ($HOME,
+// $OSMO) in prose across the cosmwasm, validate, and endpoints pages. Only the
+// osmosis-core and overview sections carry real math (concentrated-liquidity,
+// stableswap, twap, apr), so the math plugins are scoped to just those two.
+// Within those sections, inline math uses `$...$` and display math uses
+// `$$...$$` (remark-math v3 supports no other delimiter). Prose dollar
+// amounts and shell vars in these sections are escaped as `\$` so they are
+// not parsed as math.
+const mathSettings = {
+  remarkPlugins: [require('remark-math')],
+  rehypePlugins: [require('rehype-katex')],
+};
+
 /**
  * Defines a section with overridable defaults
  * @param {string} section
@@ -31,19 +46,29 @@ function defineSection(section, options = {}) {
       editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
       ...defaultSettings,
       ...options,
+      // Concatenate plugin arrays rather than letting `options` clobber the
+      // defaults, so a section can add math plugins without dropping npm2yarn.
+      remarkPlugins: [
+        ...(defaultSettings.remarkPlugins || []),
+        ...(options.remarkPlugins || []),
+      ],
+      rehypePlugins: [
+        ...(defaultSettings.rehypePlugins || []),
+        ...(options.rehypePlugins || []),
+      ],
     }),
   ];
 }
 
 const SECTIONS = [
-  defineSection('osmosis-core'),
+  defineSection('osmosis-core', mathSettings),
   defineSection('osmosis-outpost'),
   defineSection('cosmwasm'),
   defineSection('frontend'),
   defineSection('beaker'),
   defineSection('telescope'),
   defineSection('osmojs'),
-  defineSection('overview'),
+  defineSection('overview', mathSettings),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
@@ -271,6 +296,15 @@ const config = {
         apiKey: '00',
       },
     }),
+  stylesheets: [
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+      type: 'text/css',
+      integrity:
+        'sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV',
+      crossorigin: 'anonymous',
+    },
+  ],
 };
 
 module.exports = config;

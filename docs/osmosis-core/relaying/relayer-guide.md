@@ -207,7 +207,7 @@ list = [
 
 ```
 
-Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
+Add your relayer wallet to Hermes' keyring (located in \$HOME/.hermes/keys)
 
 Best practice is to use the same mnemonic over all networks. Do not use the relayer wallets for anything else because it will lead to account sequence errors.
 
@@ -216,7 +216,7 @@ hermes keys restore cosmoshub-4 -m "24-word mnemonic seed"
 hermes keys restore osmosis-1 -m "24-word mnemonic seed"
 ```
 
-Ensure this wallet has funds in both $OSMO and $ATOM in order to pay the fees required to relay.
+Ensure this wallet has funds in both \$OSMO and \$ATOM in order to pay the fees required to relay.
 
 ## Final Checks
 

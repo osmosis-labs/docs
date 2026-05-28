@@ -10,8 +10,12 @@ APR for each pools is a metric that indicates the expected annualized return on 
 ## Concentrated Liquidity Pools
 
 ### Calculation:
-- **APR for CL Pools**: 
-![](../../assets/apr-cl.png)
+- **APR for CL Pools**:
+
+$$
+\text{CL APR} = \left( \frac{\text{Spread Reward per Unit Liquidity}}{\text{Base Price}} + \frac{\text{Incentive Reward per Unit Liquidity}}{\text{Base Price}} \right) \times \frac{\text{Seconds in a Year}}{\text{Calculation Time Duration}} \times 100
+$$
+
 Where:
 - **Spread Reward per Unit Liquidity**: This is the reward earned from the spread for providing liquidity, expressed per unit.
 - **Incentive Reward per Unit Liquidity**: This is any additional incentive reward for providing liquidity, also expressed per unit.
@@ -23,7 +27,11 @@ Where:
 
 1. **Standard APR Calculation** (for 1 day, 7 days, and 14 days):
    - The APR is calculated for each time frame using the formula:
-     ![](../../assets/apr-normal.png)
+
+$$
+\text{APR}_{\text{time frame}} = \left( \frac{\text{Distributed Amount}_{\text{time frame}} / \text{Exponent}}{\text{Liquidity}} \right) \times \text{Coin Price} \times 36500
+$$
+
    - Where:
      - `Distribured Amount_timeframe` is the sum of distributed rewards for the time frame (1 day, 7 days, or 14 days).
      - `Exponent` is a factor related to the coin denomination.
