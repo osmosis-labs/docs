@@ -65,7 +65,8 @@
     "stream-browserify": "^3.0.0",
     "typedoc": "^0.23.7",
     "typedoc-plugin-markdown": "^3.13.3",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "webpack": "5.74.0"
   },
   "browserslist": {
     "production": [

@@ -1,4 +1,10 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-exec < /dev/tty && npx git-cz --hook || true
+# Only launch the interactive commitizen prompt when both stdin and stdout are
+# a TTY. Non-interactive commits (GitHub Desktop, CI, scripted commits) have no
+# controlling terminal; previously `exec < /dev/tty` failed there and aborted
+# the commit, which is why HUSKY=0 was needed as a manual workaround.
+if [ -t 0 ] && [ -t 1 ]; then
+  exec < /dev/tty && npx git-cz --hook || true
+fi
