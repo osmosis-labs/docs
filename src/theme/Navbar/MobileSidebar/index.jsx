@@ -14,7 +14,7 @@ import NavbarMobileSidebarSecondaryMenu from '@theme/Navbar/MobileSidebar/Second
   Docusaurus computes `shouldRender` from useWindowSize() and only
   renders the navbar mobile sidebar when the viewport is below its
   hardcoded 996px threshold. We force the hamburger to be visible up
-  to 1440px via CSS to keep the top bar from squashing, so above 996px
+  to 1460px via CSS to keep the top bar from squashing, so above 996px
   the user can click the hamburger but it opens an empty grey drawer
   because shouldRender is still false.
 

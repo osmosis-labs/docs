@@ -9,7 +9,7 @@ import DocSidebarMobile from '@theme/DocSidebar/Mobile';
   Docusaurus's built-in `useWindowSize` hook hard-codes a 996px threshold
   for the desktop/mobile cut-off, which decides whether the docs sidebar
   renders inline (desktop) or only inside the navbar slide-in drawer
-  (mobile). We bump the navbar to its hamburger form earlier (at 1440px)
+  (mobile). We bump the navbar to its hamburger form earlier (at 1460px)
   so the navbar items don't overflow, but that change moved the docs
   sidebar with it and left tablet-width readers without an in-page TOC.
 
