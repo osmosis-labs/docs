@@ -12,7 +12,7 @@ This page covers the integrator surface: how alloyed assets are instantiated, th
 
 ## Why Alloyed Assets exist
 
-Bridging mechanisms often result in producing multiple bridged variants of "the same" asset. This is particularly noticable in the Cosmos ecosystem where most assets are bridged by default using IBC but may have multiple issuance chains. There are several legitimate wBTC denoms on Osmosis, several ETH denoms, several variants of USDT. Each is its own IBC denom (or factory denom) with its own liquidity pool, which fragments order flow and makes life harder for both LPs and users. The transmuter solves this by acting as a bridge fungifier: assets that arrived on Osmosis through different bridges become fungible at the trading layer.
+Bridging mechanisms often result in producing multiple bridged variants of "the same" asset. This is particularly noticeable in the Cosmos ecosystem where most assets are bridged by default using IBC but may have multiple issuance chains. There are several legitimate wBTC denoms on Osmosis, several ETH denoms, several variants of USDT. Each is its own IBC denom (or factory denom) with its own liquidity pool, which fragments order flow and makes life harder for both LPs and users. The transmuter solves this by acting as a bridge fungifier: assets that arrived on Osmosis through different bridges become fungible at the trading layer.
 
 Even where this is not currently true for an asset, additional bridges may emerge or existing ones may deprecate, resulting in shifting popularities of denominations and fractured liquidity between them.
 
