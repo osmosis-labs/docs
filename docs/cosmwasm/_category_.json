@@ -1,0 +1,13 @@
+{
+  "label": "CosmWasm",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "title": "CosmWasm on Osmosis"
+  },
+  "customProps": {
+    "description": "Smart contracts on Osmosis: deployment, tooling, and integration patterns."
+  }
+}
