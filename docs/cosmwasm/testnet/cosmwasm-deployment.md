@@ -174,7 +174,7 @@ We have the wasm binary executable ready. Now it is time to store the code to th
 
 ```bash
 # broadcast the store-code tx; --output json prints the txhash we need
-TX=$(osmosisd tx wasm store artifacts/cw_tpl_osmosis.wasm --from wallet --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -y --output json -b sync)
+TX=$(osmosisd tx wasm store artifacts/cw_tpl_osmosis.wasm --from wallet --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -y --output json -b sync)
 TXHASH=$(echo "$TX" | jq -r '.txhash')
 
 # wait a few seconds for inclusion, then query the receipt
@@ -227,7 +227,7 @@ INIT='{"count":100}'
 
 # instantiate the contract
 osmosisd tx wasm instantiate $CODE_ID "$INIT" \
-    --from wallet --label "my first contract" --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -b sync -y --no-admin
+    --from wallet --label "my first contract" --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b sync -y --no-admin
 ```
 
 - `osmosisd tx wasm instantiate` : instantiate a wasm contract using CODE_ID of the uploaded binary.
@@ -269,7 +269,7 @@ If you run the `get_count` query again after sending the `increment` transaction
 
 ```bash
 TRY_INCREMENT='{"increment": {}}'
-osmosisd tx wasm execute $CONTRACT_ADDR "$TRY_INCREMENT" --from wallet --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -y --chain-id osmo-test-5
+osmosisd tx wasm execute $CONTRACT_ADDR "$TRY_INCREMENT" --from wallet --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -y --chain-id osmo-test-5
 ```
 
 - `osmosisd tx wasm execute` : execute a command on a wasm contract
@@ -282,7 +282,7 @@ Lastly, let’s send a `reset` transaction. Like increment, reset transaction al
 
 ```bash
 RESET='{"reset": {"count": 0}}'
-osmosisd tx wasm execute $CONTRACT_ADDR "$RESET" --from wallet --gas-prices 0.025uosmo --gas auto --gas-adjustment 1.3 -y
+osmosisd tx wasm execute $CONTRACT_ADDR "$RESET" --from wallet --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -y
 ```
 
 ![](https://user-images.githubusercontent.com/70956926/172295239-ddf95369-5b9a-4096-a84d-aecc1ef30484.png)

@@ -74,7 +74,7 @@ osmosisd tx gov submit-proposal [flags]
 ```
 
 typical flags would be:  
-* `--gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3` to auto-calculate gas required
+* `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/overview/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 * `--from WALLET_ADDRESS` to set the running wallet
 * `--deposit=400000000uosmo` to provide the initial 400 OSMO (25% of total) deposit for putting a proposal on chain
 
@@ -102,7 +102,7 @@ osmosisd tx gov submit-proposal --type=text --title="" --description="" --from W
 Create a text signaling proposals to match external incentives for a `DOGE/OSMO` and `DOGE/ATOM` pair.
 
 ```bash
-osmosisd tx gov submit-proposal --type=text --title="Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs" --description="Input description" --from WALLET_ADDRESS --deposit=400000000uosmo --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal --type=text --title="Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs" --description="Input description" --from WALLET_ADDRESS --deposit=400000000uosmo --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (param change)
@@ -118,7 +118,7 @@ osmosisd tx gov submit-proposal param-change [proposal-file] --from WALLET_ADDRE
 Change the parameter MaxValidators (maximum number of validator) in the staking module:
  
 ```bash
-osmosisd tx gov submit-proposal param-change proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal param-change proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 The proposal.json file would look as follows:
 
@@ -150,7 +150,7 @@ osmosisd tx gov submit-proposal community-pool-spend [proposal-file] --from WALL
 Submit a proposal to use community funds to fund a DAO:
 
 ```bash
-osmosisd tx gov submit-proposal community-pool-spend proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal community-pool-spend proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 The proposal.json would look as follows:
@@ -179,7 +179,7 @@ osmosisd tx gov submit-proposal software-upgrade [proposal-file] --from WALLET_A
 Update Osmosis to V11:
 
 ```bash
-osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --upgrade-info https://raw.githubusercontent.com/osmosis-labs/osmosis/main//osmosis-1/upgrades/v11/mainnet/upgrade_11_binaries.json  --title="Osmosis v11 Upgrade" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --upgrade-info https://raw.githubusercontent.com/osmosis-labs/osmosis/main//osmosis-1/upgrades/v11/mainnet/upgrade_11_binaries.json  --title="Osmosis v11 Upgrade" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (cancel upgrade)
@@ -187,7 +187,7 @@ osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --
 Cancel the planned software upgrade before the upgrade height is reached.
 
 ```bash
-osmosisd tx gov submit-proposal cancel-software-upgrade --title="" --description"" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal cancel-software-upgrade --title="" --description"" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 The software upgrade does not have to be specified, as this will cancel the currently active software upgrade proposal. 
@@ -198,7 +198,7 @@ The software upgrade does not have to be specified, as this will cancel the curr
 Update the weight of specified pool gauges in regards to their share of incentives.
 
 ```bash
-osmosisd tx gov submit-proposal update-pool-incentives [gaugeIDs] [weights] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal update-pool-incentives [gaugeIDs] [weights] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 **Example**
@@ -215,7 +215,7 @@ osmosisd tx gov submit-proposal update-pool-incentives 0,1 5000,20000 --from WAL
 Enable a pool as eligible for Superfluid Staking, allowing a portion of the OSMO within the pool to be staked - providing additional security for Osmosis as well as staking rewards and voting power for Liquidity Providers
 
 ```bash
-osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 **Example**
@@ -223,7 +223,7 @@ osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-asse
 Add Superfluid Staking to Pool 831.
 
 ```bash
-osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (remove superfluid asset)
@@ -231,7 +231,7 @@ osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-asse
 Disable a pool as eligible for Superfluid Staking, this prevents OSMO in a pool from being able to also be staked.
 
 ```bash
-osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 **Example**
@@ -239,7 +239,7 @@ osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-a
 Remove Superfluid Staking from Pool 831.
 
 ```bash
-osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (wasm-store)
@@ -247,14 +247,14 @@ osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-a
 Upload a CosmWasm contract to Osmosis for subsequent instantiation.
 
 ```bash
-osmosisd tx gov wasm-store [contract.wasm] --title="" --description="" --code-hash [checksum] --code-source-url [source] --builder [builder] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov wasm-store [contract.wasm] --title="" --description="" --code-hash [checksum] --code-source-url [source] --builder [builder] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 **Example**
 Upload Crosschain Swaps contract.
 
 ```bash
-osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload Crosschain Swaps contract" --description="" --code-hash e7cfd4ec2cf594de9d15863c6e324025045de39236186c03483af7c9e06d4949 --code-source-url "https://github.com/osmosis-labs/osmosis/raw/v31.x/tests/ibc-hooks/bytecode/crosschain_swaps.wasm" --builder "cosmwasm/workspace-optimizer:0.12.10" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload Crosschain Swaps contract" --description="" --code-hash e7cfd4ec2cf594de9d15863c6e324025045de39236186c03483af7c9e06d4949 --code-source-url "https://github.com/osmosis-labs/osmosis/raw/v31.x/tests/ibc-hooks/bytecode/crosschain_swaps.wasm" --builder "cosmwasm/workspace-optimizer:0.12.10" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (update unpool whitelist)
@@ -262,7 +262,7 @@ osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload
 Enable immediate unpooling on a pool, allowing users to choose to freeze their impermanent loss during the unbonding period in the event of unexpected severe conditions.
 
 ```bash
-osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids [PoolIDs] --title="" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids [PoolIDs] --title="" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 **Example**
@@ -270,7 +270,7 @@ osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids [PoolIDs] --t
 Allow immediate unpooling of pools 1, 2 and 3.
 
 ```bash
-osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids "1, 2, 3" --title="Allow Immediate Unpooling of Pools 1, 2 and 3" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids "1, 2, 3" --title="Allow Immediate Unpooling of Pools 1, 2 and 3" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### deposit
@@ -278,7 +278,7 @@ osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids "1, 2, 3" --t
 Deposit tokens for an active proposal
 
 ```bash
-osmosisd tx gov deposit [proposal-id] [deposit] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov deposit [proposal-id] [deposit] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ``` 
 
 **Example**
@@ -286,7 +286,7 @@ osmosisd tx gov deposit [proposal-id] [deposit] --from WALLET_ADDRESS --gas=auto
 If proposal number 12 is in the deposit period and you would like to help bring it to a vote, you could deposit 1200 OSMO to that proposal as follows:
 
 ```bash
-osmosisd tx gov deposit 12 1200000000uosmo --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov deposit 12 1200000000uosmo --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### vote
@@ -294,7 +294,7 @@ osmosisd tx gov deposit 12 1200000000uosmo --from WALLET_ADDRESS --gas=auto --ga
 Vote for an active proposal
 
 ```bash
-osmosisd tx gov vote [proposal-id] [option] --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov vote [proposal-id] [option] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 Valid value of ```option``` field is ```yes```, ```no```, ```no_with_veto``` and ```abstain```. 
@@ -304,7 +304,7 @@ Valid value of ```option``` field is ```yes```, ```no```, ```no_with_veto``` and
 To vote yes for proposal 12:
 
 ```bash
-osmosisd tx gov vote 12 yes --from WALLET_ADDRESS --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3
+osmosisd tx gov vote 12 yes --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 

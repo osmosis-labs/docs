@@ -178,7 +178,7 @@ You can deploy the contract to localOsmosis or a testnet.  In this example we wi
 
 ```
 cd artifacts
-osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y
+osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y
 ```
 
 `<unsafe-test-key-name>` = Name of your local key.
@@ -192,7 +192,7 @@ Save the CODE_ID from the output of the command above as a local variable `CODE_
 Instead of looking for the code_id the command above, you can also run the following command to set the CODE_ID as a variable.
     
 ```
-TX=$(osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
+TX=$(osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
 CODE_ID=$(osmosisd query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')
 echo "Your contract code_id is $CODE_ID"
 ```
@@ -204,13 +204,13 @@ If this is a brand new localOsmosis instance it should be `1`
  
 ```
 INITIAL_STATE='{"count":100}'
-osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
 ```
 
 Example
 ```
 INITIAL_STATE='{"count":100}'
-osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from c1 --chain-id localosmosis --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from c1 --chain-id localosmosis --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
 ```
 
 ### Get contract address

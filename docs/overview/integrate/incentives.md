@@ -55,8 +55,10 @@ The command to run takes the format:
 
 **Example Supercharged command**
 
-`osmosisd tx incentives create-gauge 0 1355000000uosmo 1081 --epochs 30 --duration 60s --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3`
+`osmosisd tx incentives create-gauge 0 1355000000uosmo 1081 --epochs 30 --duration 60s --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3`
 
 **Example Classic Pool command**
 
-`osmosisd tx incentives create-gauge gamm/pool/1 1355000000uosmo 0 --duration 336h --epochs 30 --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.0025uosmo --gas-adjustment 1.3`
+`osmosisd tx incentives create-gauge gamm/pool/1 1355000000uosmo 0 --duration 336h --epochs 30 --start-time 1698328800 --from Wosmongton --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3`
+
+The `--gas-prices` value above is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/overview/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
