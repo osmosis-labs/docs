@@ -136,7 +136,7 @@
 
 ```toml
 name = ''
-gas_price = '0.025uosmo'
+gas_price = '0.05uosmo'
 gas_adjustment = 1.3
 account_prefix = 'osmo'
 derivation_path = '''m/44'/118'/0'/0/0'''

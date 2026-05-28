@@ -94,8 +94,10 @@ out of gas in location: WritePerByte; gasWanted: 177140, gasUsed: 177979: out of
 Please try substituting:
 ```
 --gas="auto" \
---gas-prices="0.0025uosmo"
+--gas-prices="0.05uosmo"
 ```
+
+The `--gas-prices` value is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/overview/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 
 with
 

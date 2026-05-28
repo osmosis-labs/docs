@@ -61,7 +61,7 @@ VAL=$(osmosisd keys show -a validator --keyring-backend test)
 osmosisd tx gov submit-proposal wasm-store $CONTRACT.wasm --title "Add $CONTRACT" \
   --description "Let's upload this contract" --run-as $VAL \
   --from validator --keyring-backend test --chain-id $CHAIN_ID -y -b block \
-  --gas 9000000 --gas-prices 0.025uosmo
+  --gas 9000000 --gas-prices 0.05uosmo
 ```
 
 ## Query proposal
@@ -72,13 +72,13 @@ osmosisd query gov proposal $PROPOSAL
 ## Deposit on proposal
 ```
 osmosisd tx gov deposit $PROPOSAL 10000000uosmo --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y -b block --gas 6000000 --gas-prices 0.025uosmo
+    --chain-id $CHAIN_ID -y -b block --gas 6000000 --gas-prices 0.05uosmo
 ```
 
 ## Vote
 ```
 osmosisd tx gov vote $PROPOSAL yes --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y -b block --gas 600000 --gas-prices 0.025uosmo
+    --chain-id $CHAIN_ID -y -b block --gas 600000 --gas-prices 0.05uosmo
 ```
 
 ## Check the results
