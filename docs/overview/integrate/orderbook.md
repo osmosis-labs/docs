@@ -108,30 +108,95 @@ The `batch_claim` flow is what [orderbook-claimbot](https://github.com/osmosis-l
 
 ## Querying state
 
-The contract exposes both CosmWasm-pool-compatible queries (for routing) and orderbook-specific queries (for UIs and bots). Run them with `osmosisd query wasm contract-state smart <contract-addr> '<query-json>'`.
+The contract exposes both CosmWasm-pool-compatible queries (for routing) and orderbook-specific queries (for UIs and bots). All are read-only smart queries:
+
+```bash
+osmosisd query wasm contract-state smart <CONTRACT_ADDR> '<QUERY_JSON>'
+```
 
 ### Pool-compatible queries
 
-These match the interface that the `x/cosmwasmpool` module expects so the orderbook can participate in chain-level routing:
+These match the interface that the `x/cosmwasmpool` module expects so the orderbook can participate in chain-level routing.
 
-- `spot_price { quote_asset_denom, base_asset_denom }`: current best price.
-- `calc_out_amount_given_in { token_in, token_out_denom, swap_fee }`: quote a swap of an exact input.
-- `get_total_pool_liquidity {}`: pool's aggregate liquidity in both denoms.
-- `get_swap_fee {}`: the contract's swap fee parameter.
+```json
+{ "spot_price": { "quote_asset_denom": "<denom>", "base_asset_denom": "<denom>" } }
+```
+
+Current best price.
+
+```json
+{ "calc_out_amount_given_in": { "token_in": { "denom": "<denom>", "amount": "<amount>" }, "token_out_denom": "<denom>", "swap_fee": "0" } }
+```
+
+Quote a swap of an exact input.
+
+```json
+{ "get_total_pool_liquidity": {} }
+```
+
+The pool's aggregate liquidity in both denoms.
+
+```json
+{ "get_swap_fee": {} }
+```
+
+The contract's swap fee parameter.
 
 ### Orderbook-specific queries
 
-For book inspection and order lookup:
+```json
+{ "denoms": {} }
+```
 
-- `denoms {}`: returns the configured `base_denom` and `quote_denom`.
-- `orderbook_state {}`: returns the orderbook's denoms and the current tick cursors as flat fields: `quote_denom`, `base_denom`, `current_tick`, `next_bid_tick`, `next_ask_tick`.
-- `is_active {}`: returns `true` if the contract accepts new orders.
-- `all_ticks { start_from, end_at, limit }`: paginated list of all ticks with state. Used by SQS to build its in-memory tick representation.
-- `ticks_by_id { tick_ids }`: batch fetch specific ticks.
-- `orders_by_owner { owner, start_from, end_at, limit }`: every order placed by an address. `start_from` and `end_at` are `[tick_id, order_id]` tuples (inclusive); `limit` defaults to 100. Returns `{ orders, count }` where `count` is the number of orders in the response (useful for paginating).
-- `orders_by_tick { tick_id, start_from, end_at, limit }`: every order resting at a tick. Returns `{ orders, count }` where `count` is the number of orders in the response.
-- `get_maker_fee {}`: the configured maker fee.
-- `get_unrealized_cancels { tick_ids }`: for advanced users tracking realized-vs-unrealized accounting.
+The configured `base_denom` and `quote_denom`.
+
+```json
+{ "orderbook_state": {} }
+```
+
+The orderbook's denoms and current tick cursors as flat fields: `quote_denom`, `base_denom`, `current_tick`, `next_bid_tick`, `next_ask_tick`.
+
+```json
+{ "is_active": {} }
+```
+
+Returns `true` if the contract accepts new orders.
+
+```json
+{ "all_ticks": { "start_from": "<tick_id>", "end_at": "<tick_id>", "limit": 100 } }
+```
+
+Paginated list of all ticks with state. Used by SQS to build its in-memory tick representation.
+
+```json
+{ "ticks_by_id": { "tick_ids": ["<tick_id>"] } }
+```
+
+Batch fetch specific ticks.
+
+```json
+{ "orders_by_owner": { "owner": "<address>", "start_from": ["<tick_id>", "<order_id>"], "end_at": ["<tick_id>", "<order_id>"], "limit": 100 } }
+```
+
+Every order placed by an address. `start_from` and `end_at` are `[tick_id, order_id]` tuples (inclusive); `limit` defaults to 100. Returns `{ orders, count }` where `count` is the number of orders in the response (useful for paginating).
+
+```json
+{ "orders_by_tick": { "tick_id": "<tick_id>", "start_from": "<order_id>", "end_at": "<order_id>", "limit": 100 } }
+```
+
+Every order resting at a tick. Returns `{ orders, count }` where `count` is the number of orders in the response.
+
+```json
+{ "get_maker_fee": {} }
+```
+
+The configured maker fee.
+
+```json
+{ "get_unrealized_cancels": { "tick_ids": ["<tick_id>"] } }
+```
+
+For advanced users tracking realized-vs-unrealized accounting.
 
 ## Routing through SQS
 
