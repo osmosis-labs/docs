@@ -6,7 +6,7 @@ sidebar_position: 15
 
 An **alloyed asset** is a single canonical Osmosis denom that represents the sum of multiple equivalent assets held in a 1:1 backing pool. The contract that implements this primitive is the **transmuter**: a CosmWasm contract that custodies a basket of `n` "variants" and mints a single alloyed denom against deposits.
 
-`allBTC` is the most prominent live example. The contract at [`osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3) holds several different bridged-BTC denoms (wBTC variants, ckBTC, etc.) and mints `factory/.../alloyed/allBTC` against them. Holders of any of the backing assets can deposit and receive `allBTC` in return; holders of `allBTC` can redeem for any backing asset that has sufficient liquidity. The amount minted is **not** necessarily equal to the raw amount deposited: each asset is converted through its normalization factor first (see [How it works mechanically](#how-it-works-mechanically)), so backing assets with different decimal precision mint different raw amounts of `allBTC`.
+`allBTC` is the most prominent live example. The contract at [`osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3) holds several different bridged-BTC denoms (wBTC variants, ckBTC, etc.) and mints `factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC` against them. Holders of any of the backing assets can deposit and receive `allBTC` in return; holders of `allBTC` can redeem for any backing asset that has sufficient liquidity. The amount minted is **not** necessarily equal to the raw amount deposited: each asset is converted through its normalization factor first (see [How it works mechanically](#how-it-works-mechanically)), so backing assets with different decimal precision mint different raw amounts of `allBTC`.
 
 This page covers the integrator surface: how alloyed assets are instantiated, the messages and queries the contract exposes, how routing through SQS works for them, and the implications for IBC transfers.
 
@@ -63,15 +63,15 @@ To find every live alloyed-asset pool:
 
 For a human-friendly view of the live alloyed-asset pools, including pool composition charts and swap interfaces, the [Alloyed Asset Dashboard](https://github.com/osmosis-labs/osmosis-alloy-asset-dashboard) reads the same code-id list and renders a per-pool overview.
 
-### Finding the current code id
+### Finding the current code ID
 
-Multiple alloyed-transmuter code IDs are whitelisted at once, and capabilities differ between them: newer code IDs are supersets of older ones. **When creating a new pool, use the most recent whitelisted code id** so the pool has the full feature set. Query the live whitelist rather than hardcoding a value:
+Multiple alloyed-transmuter code IDs are whitelisted at once, and capabilities differ between them: newer code IDs supersede older ones, adding capabilities. **When creating a new pool, use the most recent whitelisted code ID** so the pool has the full feature set. Query the live whitelist rather than hardcoding a value:
 
 ```bash
-# Every code id whitelisted as a cosmwasm pool
+# Every code ID whitelisted as a cosmwasm pool
 osmosisd q cosmwasmpool params
 
-# The code id backing a specific existing pool, via SQS
+# The code ID backing a specific existing pool, via SQS
 curl -s "https://sqs.osmosis.zone/pools?IDs=<POOL_ID>" | jq '.[0].chain_model.code_id'
 ```
 
@@ -254,7 +254,7 @@ See the [Sidecar Query Server (SQS)](./sqs) page for the routing and pool-query 
 - SQS computes both exact-in and exact-out quotes in-process from normalization factors; it does not call the contract's `calc_in_amt_given_out` or `calc_out_amt_given_in`. For the transmuter the two directions are mathematically symmetric (no curve, no spread fee), so this is safe; static rate limiters are still applied in both directions.
 - The actual fill happens via `osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn` against the transmuter's pool id, not a direct CosmWasm execute. The router handles the swap construction; integrators using the SQS quote endpoint do not need to build `join_pool` / `exit_pool` messages themselves.
 
-For brand-new transmuter contracts spawned from an already-recognised code id, SQS picks them up automatically. A brand-new alloyed-transmuter *code id* (a new contract version, typically tied to a chain upgrade) has to be added to `AlloyedTransmuterCodeIDs` in the SQS deployment config and the service redeployed.
+For brand-new transmuter contracts spawned from an already-recognised code ID, SQS picks them up automatically. A brand-new alloyed-transmuter *code ID* (a new contract version, typically tied to a chain upgrade) has to be added to `AlloyedTransmuterCodeIDs` in the SQS deployment config and the service redeployed.
 
 ## IBC implications
 
@@ -262,7 +262,7 @@ Because the alloyed denom is a tokenfactory denom created on Osmosis, **it can b
 
 Practical consequences for an integrator:
 
-- A user holding `allBTC` on a destination chain has to come back to Osmosis to redeem into a backing variant. There is no off-chain transmuter; redemption requires interacting with the contract on Osmosis.
+- A user holding `allBTC` on a destination chain has to come back to Osmosis to redeem into a backing variant. There is no offchain transmuter; redemption requires interacting with the contract on Osmosis.
 - The chain-registry assetlist for Osmosis lists the alloyed denom alongside its backing variants. The assetlists pipeline tags the relationship with `is_alloyed: true` so downstream apps can present them as related.
 - The 1:1 redemption invariant only holds for the alloyed denom as it sits on Osmosis. After an IBC transfer out, the redeem path is "transfer back, then exit_pool"; the destination chain treats the IBC-voucher of the alloyed denom as opaque.
 
@@ -291,6 +291,6 @@ The moderator role is assigned by the admin via `assign_moderator`; there is no 
 
 ## Repository references
 
-- Contract: [`osmosis-labs/transmuter`](https://github.com/osmosis-labs/transmuter). The v3.2.0 tag is the deployed version on code id 996.
+- Contract: [`osmosis-labs/transmuter`](https://github.com/osmosis-labs/transmuter). The v3.2.0 tag is the deployed version on code ID 996.
 - SQS routing: [`router/usecase/pools/routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go).
 - Assetlist tagging: the `is_alloyed` flag in [`osmosis-1/osmosis.zone_assets.json`](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/osmosis.zone_assets.json).
