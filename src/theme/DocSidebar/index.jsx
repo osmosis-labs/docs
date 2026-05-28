@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import DocSidebarDesktop from '@theme/DocSidebar/Desktop';
 import DocSidebarMobile from '@theme/DocSidebar/Mobile';
 
@@ -21,21 +20,23 @@ import DocSidebarMobile from '@theme/DocSidebar/Mobile';
 const DOCS_SIDEBAR_DESKTOP_THRESHOLD = 768;
 
 function getWindowSize() {
-  if (!ExecutionEnvironment.canUseDOM) {
-    return 'ssr';
-  }
   return window.innerWidth > DOCS_SIDEBAR_DESKTOP_THRESHOLD
     ? 'desktop'
     : 'mobile';
 }
 
 function useDocSidebarWindowSize() {
-  const [size, setSize] = useState(() => getWindowSize());
+  // Initialize to the constant 'ssr' so the server render and the client's
+  // first render agree (no hydration mismatch). Measure the real viewport in
+  // useEffect, which only runs on the client after hydration. Mirrors the
+  // official Docusaurus useWindowSize hook.
+  const [size, setSize] = useState('ssr');
 
   useEffect(() => {
     function update() {
       setSize(getWindowSize());
     }
+    update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
