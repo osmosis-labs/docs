@@ -124,7 +124,7 @@ path = "/root/tmkms/config/secrets/priv_validator_key"
 chain_id = "osmosis-1"
 addr = "tcp://123.456.32.123:26659"
 secret_key = "/root/tmkms/config/secrets/secret_connection_key"
-protocol_version = "v0.34"
+protocol_version = "v0.38"
 reconnect = true
 ```
 
