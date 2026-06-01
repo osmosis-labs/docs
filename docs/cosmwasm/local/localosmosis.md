@@ -87,13 +87,13 @@ cargo install -f beaker
 
 #### Osmosis
 
-Setup v29.x Osmosis
+Setup v31.x Osmosis
 
 ```bash
 cd $HOME
 git clone https://github.com/osmosis-labs/osmosis.git
 cd $HOME/osmosis
-git checkout v29.x
+git checkout v31.x
 make install
 source ~/.profile
 ```
@@ -154,7 +154,7 @@ To reduce gas costs, the binary size should be as small as possible. This will r
 sudo docker run --rm -v "$(pwd)":/code \
     --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
     --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-    cosmwasm/rust-optimizer:0.12.6
+    cosmwasm/optimizer:0.17.0
  
 ```
 

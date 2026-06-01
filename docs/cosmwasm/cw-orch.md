@@ -60,7 +60,7 @@ Alternatively, you can add it manually in your `Cargo.toml` file as shown below:
 
 ```toml
 [dependencies]
-cw-orch = {version = "0.19.1", optional = true } # Latest version at time of writing
+cw-orch = {version = "0.28.0", optional = true } # Check crates.io for the latest version
 ```
 
 Now that we have added `cw-orch` as an optional dependency we will want to enable it through a feature-flag. This ensures that the code added by `cw-orch` is **not** included in the wasm artifact of the contract.

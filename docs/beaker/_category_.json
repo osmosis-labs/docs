@@ -1,5 +1,5 @@
 {
-  "label": "Beaker (legacy)",
+  "label": "Beaker",
   "position": 1,
   "collapsible": true,
   "collapsed": true,
@@ -8,6 +8,6 @@
     "title": "Beaker"
   },
   "customProps": {
-    "description": "CosmWasm scaffolding tool in maintenance mode. cw-orch is the recommended modern alternative."
+    "description": "CosmWasm scaffolding tool for Osmosis: wires up contract dependencies, an interactive console, and a sample frontend."
   }
 }

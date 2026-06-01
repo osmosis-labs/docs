@@ -172,7 +172,7 @@ const config = {
               { label: 'Frontend', to: 'frontend' },
               { label: 'OsmoJS', to: 'osmojs' },
               { label: 'Telescope', to: 'telescope' },
-              { label: 'Beaker (legacy)', to: 'beaker' },
+              { label: 'Beaker', to: 'beaker' },
             ],
           },
           {
