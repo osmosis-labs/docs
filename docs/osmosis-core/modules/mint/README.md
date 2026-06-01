@@ -90,19 +90,19 @@ This fee collector is specified as the `auth` module's `FeeCollector` `ModuleAcc
 
 The minting module contains the following parameters:
 
-| Key                                        | Type         | Example                                |
-| ------------------------------------------ | ------------ | -------------------------------------- |
-| mint_denom                                 | string       | "uosmo"                                |
-| genesis_epoch_provisions                   | string (dec) | "500000000"                            |
-| epoch_identifier                           | string       | "weekly"                               |
-| reduction_period_in_epochs                 | int64        | 156                                    |
-| reduction_factor                           | string (dec) | "0.6666666666666"                      |
-| distribution_proportions.staking           | string (dec) | "0.4"                                  |
-| distribution_proportions.pool_incentives   | string (dec) | "0.3"                                  |
-| distribution_proportions.developer_rewards | string (dec) | "0.2"                                  |
-| distribution_proportions.community_pool    | string (dec) | "0.1"                                  |
-| weighted_developer_rewards_receivers       | array        | [{"address": "osmoxx", "weight": "1"}] |
-| minting_rewards_distribution_start_epoch   | int64        | 10                                     |
+| Key                                        | Type         | Example                                  |
+| ------------------------------------------ | ------------ | ---------------------------------------- |
+| mint_denom                                 | string       | "uosmo"                                  |
+| genesis_epoch_provisions                   | string (dec) | "500000000"                              |
+| epoch_identifier                           | string       | "weekly"                                 |
+| reduction_period_in_epochs                 | int64        | 156                                      |
+| reduction_factor                           | string (dec) | "0.6666666666666"                        |
+| distribution_proportions.staking           | string (dec) | "0.4"                                    |
+| distribution_proportions.pool_incentives   | string (dec) | "0.3"                                    |
+| distribution_proportions.developer_rewards | string (dec) | "0.2"                                    |
+| distribution_proportions.community_pool    | string (dec) | "0.1"                                    |
+| weighted_developer_rewards_receivers       | array        | `[{"address": "osmoxx", "weight": "1"}]` |
+| minting_rewards_distribution_start_epoch   | int64        | 10                                       |
 
 Below are all the network parameters for the `mint` module:
 
@@ -139,12 +139,11 @@ The minting module emits the following events:
 
 ### End of Epoch
 
-| Type | Attribute Key    | Attribute Value   |
-| ---- | ---------------- | ----------------- |
+| Type | Attribute Key    | Attribute Value     |
+| ---- | ---------------- | ------------------- |
 | mint | epoch_number     | `{epochNumber}`     |
 | mint | epoch_provisions | `{epochProvisions}` |
 | mint | amount           | `{amount}`          |
-
 
 ## Queries
 
@@ -275,7 +274,7 @@ As of this writing, this number will be equal to the `genesis-epoch-provisions`.
 The following tables show overall effects on different configurations of the `mint` related network parameters:
 
 | mint_denom            | epoch_provisions | epoch_identifier                   |
-|-----------------------|------------------|------------------------------------|
+| --------------------- | ---------------- | ---------------------------------- | ---------------------------------------- |
 | Type                  | string           | string (dec)                       | string                                   |
 | Higher                | N/A              | Higher inflation rate              | Increases time to reduction_period       |
 | Lower                 | N/A              | Lower inflation rate               | Decreases time to reduction_period       |

@@ -38,7 +38,7 @@ In the new architecture, real reserves are described by the following formula:
 $$(x + L/\sqrt{P_u})(y + L\sqrt{P_l}) = L^2$$
 
 Where `P_l` is the lower tick, `P_u` is the upper tick, and `L` is the amount
-of liquidity provided, 
+of liquidity provided,
 $$L = \sqrt k$$
 
 This formula stems from the original $xy = k$ but with a limited range. In the
@@ -129,12 +129,12 @@ increase as follows:
 For spot prices less than a dollar, the precision factor decreases
 (increasing the incremental precision) at every factor of 10:
 
-- tick_{-100} = 0.99999
-- tick_{-200} = 0.99998
-- tick_{-500100} = 0.94999
-- tick_{-500200} = 0.94998
-- tick_{-9000100} = 0.099999
-- tick_{-9000200} = 0.099998
+- `tick_{-100} = 0.99999`
+- `tick_{-200} = 0.99998`
+- `tick_{-500100} = 0.94999`
+- `tick_{-500200} = 0.94998`
+- `tick_{-9000100} = 0.099999`
+- `tick_{-9000200} = 0.099998`
 
 This goes on in the negative direction until it reaches a spot price of
 0.000000000000000001 or in the positive direction until it reaches a spot
@@ -166,33 +166,38 @@ exponentAtPriceOne to be incremented, we can then figure out what our change
 in exponentAtPriceOne will be based on what tick is being traded at:
 
 ![eq-11](./img/eq-11.png)
+
 <!-- $$geometricExponentDelta = ⌊ tick / geometricExponentIncrementDistanceInTicks ⌋$$ -->
 
-With geometricExponentDelta and *exponentAtPriceOne*, we can figure out what
-the *exponentAtPriceOne* value we will be at when we reach the provided tick:
+With geometricExponentDelta and _exponentAtPriceOne_, we can figure out what
+the _exponentAtPriceOne_ value we will be at when we reach the provided tick:
 
 <!-- exponentAtCurrentTick = exponentAtPriceOne + geometricExponentDelta -->
+
 ![eq-13](./img/eq-13.png)
 
-Knowing what our *exponentAtCurrentTick* is, we must then figure out what power
+Knowing what our _exponentAtCurrentTick_ is, we must then figure out what power
 of 10 this `exponentAtPriceOne` corresponds to (by what number does the price
 gets incremented with each new tick):
 
 ![eq-12](./img/eq-12.png)
+
 <!-- $$currentAdditiveIncrementInTicks = 10^{(exponentAtCurrentTick)}$$ -->
 
 Lastly, we must determine how many ticks above the current increment we are at:
 
 ![eq-14](./img/eq-14.png)
+
 <!-- $$numAdditiveTicks = tick - (geometricExponentDelta * geometricExponentIncrementDistanceInTicks)$$ -->
 
 With this, we can determine the price:
 
 ![eq-15](./img/eq-15.png)
+
 <!-- $$price = (10^{geometricExponentDelta}) + (numAdditiveTicks * currentAdditiveIncrementInTicks)$$ -->
 
-where (10^{geometricExponentDelta}) is the price after `geometricExponentDelta`
-increments of *exponentAtPriceOne* (which is basically the number of decrements
+where `(10^geometricExponentDelta)` is the price after `geometricExponentDelta`
+increments of _exponentAtPriceOne_ (which is basically the number of decrements
 of difference in price between two adjacent ticks by the power of 10)
 
 ### Tick Spacing Example: Tick to Price
@@ -201,6 +206,7 @@ Bob sets a limit order on the `USD<>BTC` pool at tick 36650010. This pool's
 `exponentAtPriceOne` is -6. What price did Bob set his limit order at?
 
 ![eq-16](./img/eq-16.png)
+
 <!-- $$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$
 
 $$geometricExponentDelta = ⌊ 36650010 / 9000000 ⌋ = 4$$
@@ -221,12 +227,14 @@ Bob sets a limit order on the `USD<>BTC` pool at price \$16,500.10. This pool's
 `exponentAtPriceOne` is -6. What tick did Bob set his limit order at?
 
 ![eq-17](./img/eq-17.png)
+
 <!-- $$geometricExponentIncrementDistanceInTicks = 9 * 10^{(6)} = 9000000$$ -->
 
 We must loop through increasing exponents until we find the first exponent that
 is greater than or equal to the desired price
 
 ![eq-18](./img/eq-18.png)
+
 <!-- $$currentPrice = 1$$
 
 $$ticksPassed = 0$$
@@ -245,6 +253,7 @@ $$totalPrice = totalPrice + maxPriceForCurrentAdditiveIncrementInTicks =
 10 is less than 16,500.10, so we must increase our exponent and try again
 
 ![eq-19](./img/eq-19.png)
+
 <!-- $$currentAdditiveIncrementInTicks = 10^{(-5)} = 0.00001$$
 
 $$maxPriceForCurrentAdditiveIncrementInTicks = geometricExponentIncrementDistanceInTicks
@@ -260,6 +269,7 @@ $$totalPrice = totalPrice + maxPriceForCurrentAdditiveIncrementInTicks =
 This goes on until...
 
 ![eq-20](./img/eq-20.png)
+
 <!-- $$currentAdditiveIncrementInTicks = 10^{(-2)} = 0.01$$
 
 $$maxPriceForCurrentAdditiveIncrementInTicks = geometricExponentIncrementDistanceInTicks
@@ -276,7 +286,8 @@ additive tick in the currentAdditiveIncrementInTicks of -2 we must pass in
 order to reach 16,500.10.
 
 ![eq-21](./img/eq-21.png)
-<!-- 
+
+<!--
 $$ticksToBeFulfilledByExponentAtCurrentTick = (desiredPrice - totalPrice) /
 currentAdditiveIncrementInTicks = (16500.10 - 100000) / 0.01 = -8349990$$
 
@@ -299,11 +310,11 @@ As explained previously, the exponent at price one determines how much the spot
 price increases or decreases when traversing ticks. The following equation will
 assist in selecting this value:
 
- $$exponentAtPriceOne=log_{10}(\frac{D}{P})$$
+$$exponentAtPriceOne=log_{10}(\frac{D}{P})$$
 
 $$P=(\frac{baseAssetInUSD}{quoteAssetInUSD})$$
 
-$$D=P-(\frac{baseAssetInUSD}{quoteAssetInUSD+desiredIncrementOfQuoteInUSD})$$ 
+$$D=P-(\frac{baseAssetInUSD}{quoteAssetInUSD+desiredIncrementOfQuoteInUSD})$$
 
 ### Example 1
 
@@ -318,7 +329,7 @@ $$P=(\frac{0.00001070}{28,000})=0.000000000382142857$$
 
 $$D=(0.000000000382142857)-(\frac{0.00001070}{28,000+0.10})=0.0000000000000013647910441136$$
 
-$$exponentAtPriceOne=log_{10}(\frac{0.0000000000000013647910441136}{0.000000000382142857})=-5.447159582$$ 
+$$exponentAtPriceOne=log_{10}(\frac{0.0000000000000013647910441136}{0.000000000382142857})=-5.447159582$$
 
 We can therefore conclude that we can use an exponent at price one of -5
 (slightly under precise) or -6 (slightly over precise) for this base/quote pair
@@ -331,12 +342,11 @@ Flipping the quoteAsset/baseAsset, for BTC/SHIB, lets determine what the
 exponentAtPriceOne should be. For SHIB as a quote, centralized exchanges
 list prices at the 10^-8, so we will set our desired increment to this value.
 
-
- $$P=(\frac{28,000}{0.00001070})=2616822429$$
+$$P=(\frac{28,000}{0.00001070})=2616822429$$
 
 $$D=(2616822429)-(\frac{28,000}{0.00001070+0.00000001})=2443345$$
 
-$$exponentAtPriceOne=-log_{10}(\frac{2443345}{2616822429})=-3.0297894598783$$ 
+$$exponentAtPriceOne=-log_{10}(\frac{2443345}{2616822429})=-3.0297894598783$$
 
 We can therefore conclude that we can use an exponent at price one of -3
 for this base/quote pair and desired price granularity. This means we would
@@ -351,7 +361,7 @@ instead of either:
 
 a) Preventing trade at a desirable spot price or
 b) Having the front end round the tick's actual price to the nearest
-  human readable/desirable spot price
+human readable/desirable spot price
 
 One side effect of increasing precision as we get closer to the minimum tick
 is that multiple ticks can represent the same price. For example, tick
@@ -378,13 +388,13 @@ to create position if the desired amounts cannot be satisfied.
 Three KV stores are initialized when a position is created:
 
 1. `Position ID -> Position` - This is a mapping from a unique position ID to a
-position object. The position ID is a monotonically increasing integer that is
-incremented every time a new position is created.
+   position object. The position ID is a monotonically increasing integer that is
+   incremented every time a new position is created.
 2. `Owner | Pool ID | Position ID -> Position ID` - This is a mapping from a
-composite key of the owner address, pool ID, and position ID to the position ID.
-This is used to keep track of all positions owned by a given owner in a given pool.
+   composite key of the owner address, pool ID, and position ID to the position ID.
+   This is used to keep track of all positions owned by a given owner in a given pool.
 3. `Pool ID -> Position ID` - This is a mapping from a pool ID to a position ID.
-This is used to keep track of all positions in a given pool.
+   This is used to keep track of all positions in a given pool.
 
 ```go
 type MsgCreatePosition struct {
@@ -629,7 +639,7 @@ discussed in the "Pool Creation" section.
 ## Liquidity Provision
 
 > As an LP, I want to provide liquidity in ranges so that I can achieve greater
-capital efficiency
+> capital efficiency
 
 This is a basic function that should allow LPs to provide liquidity in specific ranges
 to a pool.
@@ -730,7 +740,7 @@ func (k Keeper) withdrawPosition(
 ## Swapping
 
 > As a trader, I want to be able to swap over a concentrated liquidity pool so
-that my trades incur lower slippage
+> that my trades incur lower slippage
 
 Unlike balancer pools where liquidity is spread out over an infinite range,
 concentrated liquidity pools allow for LPs to provide deeper liquidity for
@@ -769,6 +779,7 @@ liquidity to the right.
 From the user perspective, there are two ways to swap:
 
 1. Swap given token in for token out.
+
    - E.g. I have 1 ETH that I swap for some computed amount of DAI.
 
 2. Swap given token out for token in
@@ -1070,8 +1081,8 @@ Our tick range and liquidity graph now looks like this:
 ```markdown
          cur_sqrt_price      //////////               <--- position by user B
 
-/////////////////////////////////////////////////////////  <---position by user A
--1000           -34          0       100              1000
+///////////////////////////////////////////////////////// <---position by user A
+-1000 -34 0 100 1000
 ```
 
 The swap state is initialized as follows:
@@ -1079,7 +1090,7 @@ The swap state is initialized as follows:
 - `amountSpecifiedRemaining` is set to 5_000 tokens one in specified by the user.
 - `amountCalculated` is set to zero.
 - `sqrtPrice` is set to the current sqrt price of the pool
-(computed from the tick -34)
+  (computed from the tick -34)
 - `tick` is set to the current tick of the pool (-34)
 - `liquidity` is set to the current liquidity tracked by the pool at tick -34 (10_000)
 - `spreadRewardGrowthGlobal` is set to (0)
@@ -1095,9 +1106,9 @@ Each initialized tick has 2 fields:
   at tick 1000: 10_000
 
 - `liquidity_net` - liquidity that needs to be added to the active liquidity as
-we cross the tick moving in the positive direction so that the active liquidity
-is always the sum of all `liquidity_net` amounts of initialized ticks below the
-current one.
+  we cross the tick moving in the positive direction so that the active liquidity
+  is always the sum of all `liquidity_net` amounts of initialized ticks below the
+  current one.
   at tick -1000: 10_000
   at tick 0: 1_000
   at tick 100: -1_000
@@ -1118,10 +1129,10 @@ Now, we update the swap state as follows:
 - `tick` is set to the tick of the crossed initialized tick 0 (0).
 
 - `liquidity` is set to the old liquidity value (10_000) + the `liquidity_net`
-of the crossed tick 0 (1_000) = 11_000.
+  of the crossed tick 0 (1_000) = 11_000.
 
 - `spreadRewardGrowthGlobal` is set to 2_500 \* 0.01 / 10_000 = 0.0025 because we assumed
-1% spread factor.
+  1% spread factor.
 
 Now, we proceed by getting the next initialized tick in the direction of
 the swap (100).
@@ -1158,14 +1169,14 @@ TODO: Swapping, Appendix B: Compute Swap Step Internals and Math
 ## Range Orders
 
 > As a trader, I want to be able to execute ranger orders so that I have better
-control of the price at which I trade
+> control of the price at which I trade
 
 TODO
 
 ## Spread Rewards
 
 > As a an LP, I want to earn spread rewards on my capital so that I am incentivized to
-participate in active market making.
+> participate in active market making.
 
 In Balancer-style pools, spread rewards go directly back into the pool to benefit all LPs pro-rata.
 For concentrated liquidity pools, this approach is no longer feasible due to the
@@ -1259,9 +1270,9 @@ We calculate the spread reward growth above the upper tick in the following way:
 
 - If calculating spread reward growth for an upper tick, we consider the following two cases:
   - currentTick >= upperTick: If the current tick is greater than or equal to the
-  upper tick, the spread reward growth would be the pool's spread reward growth minus the upper tick's
+    upper tick, the spread reward growth would be the pool's spread reward growth minus the upper tick's
   - currentTick &lt; upperTick: If the current tick is smaller than the upper tick,
-  the spread reward growth would be the upper tick's spread reward growth outside.
+    the spread reward growth would be the upper tick's spread reward growth outside.
 
 This process is vice versa for calculating spread reward growth below the lower tick.
 
@@ -1409,14 +1420,16 @@ this design.
 As a starting point, it's important to understand the properties of a healthy liquidity pool.
 These are all, of course, properties that become self-sustaining once the positive feedback cycle
 between liquidity and volume kicks off, but for the sake of understanding what exactly it is that
- we are trying to bootstrap with incentives it helps to be explicit with our goals.
+we are trying to bootstrap with incentives it helps to be explicit with our goals.
 
 ### Liquidity Depth
+
 We want to ensure spread rewards and incentives are being used to maximize liquidity depth at the active tick
 (i.e. the tick the current spot price is in), as this gives the best execution price for trades on
 the pool.
 
 ### Liquidity Breadth
+
 It is critical that as we roll out concentrated liquidity, there is an incentive for there to be
 width in the books for our major pools. This is to avoid the scenario where the liquidity in the
 active tick gets filled and liquidity falls off a cliff (e.g. when there is a large price move and
@@ -1485,6 +1498,7 @@ that has been in the pool for the required amount of time qualifies for claiming
 While it is technically possible for Osmosis to enable the creation of incentive records directly in the CL module, incentive creation is currently funneled through existing gauge infrastructure in the `x/incentives` module. This simplifies UX drastically for frontends, external incentive creators, and governance, while making CL incentives fully backwards-compatible with incentive creation and querying flows that everyone is already used to. As of the initial version of Osmosis's CL, all incentive creation and querying logic will be handled by respective gauge functions (e.g. the `IncentivizedPools` query in the `x/incentives` module will include CL pools that have internal incentives on them).
 
 To create a gauge dedicated to the concentrated liquidity pool, run a `MsgCreateGauge` message in the `x/incentives` module with the following parameter constraints:
+
 - `PoolId`: The ID of the CL pool to create a gauge for.
 - `DistrTo.LockQueryType` must be set to `locktypes.LockQueryType.NoLock`
 - `DistrTo.Denom` must be an empty string.
@@ -1574,7 +1588,7 @@ the use of these hooks.
 
 This was a list of quote denoms that can be used as token1 when creating a pool.
 Quote assets were limited to a small set for the purposes of having convenient
-price increments stemming from tick to price conversion. 
+price increments stemming from tick to price conversion.
 
 This is no longer an active parameter as of v30 although it remains visible on chain.
 
@@ -1617,9 +1631,9 @@ This listener executes after a swap in a concentrated liquidity pool.
 
 At the time of this writing, it is only utilized by the `x/twap` module.
 
-
 ### State entries and KV store management
-The following are the state entries (key and value pairs) stored for the concentrated liquidity module. 
+
+The following are the state entries (key and value pairs) stored for the concentrated liquidity module.
 
 - structs
   - TickPrefix + pool ID + tickIndex ➝ Tick Info struct
@@ -1632,7 +1646,6 @@ The following are the state entries (key and value pairs) stored for the concent
   - PoolPositionPrefix | pool id | position id ➝ boolean
 
 Note that for storing ticks, we use 9 bytes instead of directly using uint64, first byte being reserved for the Negative / Positive prefix, and the remaining 8 bytes being reserved for the tick itself, which is of uint64. Although we directly store signed integers as values, we use the first byte to indicate and re-arrange tick indexes from negative to positive.
-
 
 ## State and Keys
 
@@ -1685,10 +1698,12 @@ We want quote asset to be `uosmo` so that limit orders on ticks
 have tick spacing in terms of `uosmo` as the quote.
 
 Note:
-- OSMO has precision of 6. 1 OSMO = 10**6 `uosmo`
-- ARB has precision of 18. 1 ARB = 10**18 `arb` base unit
+
+- OSMO has precision of 6. 1 OSMO = 10\*\*6 `uosmo`
+- ARB has precision of 18. 1 ARB = 10\*\*18 `arb` base unit
 
 Therefore, the true price of the pool is:
+
 ```python
 >>> (218023341414 / 10**6)  / (101170077995723619690981 / 10**18)
 2.1550180224553714
@@ -1763,12 +1778,13 @@ We will use the following terms throughout the document and our codebase:
 - `Bucket` - an area between two initialized ticks.
 
 - `Tick Range` - a general term to describe a concept with lower and upper bound.
-  * Position is defined on a tick range.
-  * Bucket is defined on a tick range.
-  * A trader performs a swap over a tick range.
+
+  - Position is defined on a tick range.
+  - Bucket is defined on a tick range.
+  - A trader performs a swap over a tick range.
 
 - `Tick Spacing` - the distance between two ticks that can be initialized. This is
-what defines the minimum bucket size.
+  what defines the minimum bucket size.
 
 Note that ticks are defined inside buckets. Assume tick spacing is 100. A liquidity provider
 creates a position with amounts such that the current tick is 155 between ticks 100 and 200.
@@ -1776,26 +1792,26 @@ creates a position with amounts such that the current tick is 155 between ticks 
 Note, that the current tick of 155 is defined inside the bucket over a range of 100 to 200.
 
 - `Initialized Tick` - a tick at which LPs can provide liquidity. Some ticks cannot be
-initialized due to tick spacing. `MinCurrentTick` is an exception due to being 1 tick below
-`MinInitializedTick`. Only initialized ticks are crossed during a swap (see "Crossing Tick")
-for details.
+  initialized due to tick spacing. `MinCurrentTick` is an exception due to being 1 tick below
+  `MinInitializedTick`. Only initialized ticks are crossed during a swap (see "Crossing Tick")
+  for details.
 
 - `MinInitializedTick` - the minimum tick at which a position can be initialized. When this tick is
-crossed, all liquidity is consumed at the tick ends up on `MinCurrentTick`. At that point, there
-is no liquidity and the pool is in no bucket. To enter the first bucket, a swap right must be done
-to cross the next initialized tick and kick in the liquidity. If at least one full range position is
-defined, `MinInitializedTick` will be the first such tick.
+  crossed, all liquidity is consumed at the tick ends up on `MinCurrentTick`. At that point, there
+  is no liquidity and the pool is in no bucket. To enter the first bucket, a swap right must be done
+  to cross the next initialized tick and kick in the liquidity. If at least one full range position is
+  defined, `MinInitializedTick` will be the first such tick.
 
 - `MinCurrentTick` - is the minimum value that a current tick can take. If we consume all liquidity and
-cross the min initialized tick, our current tick will equal to MinInitializedTick - 1 (MinCurrentTick)
-with zero liquidity. However, note that this `MinCurrentTick` cannot be crossed. If current tick equals
-to this tick, it is only possible to swap in the right (one for zero) direction.
+  cross the min initialized tick, our current tick will equal to MinInitializedTick - 1 (MinCurrentTick)
+  with zero liquidity. However, note that this `MinCurrentTick` cannot be crossed. If current tick equals
+  to this tick, it is only possible to swap in the right (one for zero) direction.
 
-- MaxTick` - is the maximum tick at which a position can be initialized. It is also the maximum value that
-a current tick can be. Note that this is different from the `MinInitializedTick` and `MinCurrentTick` due
+- MaxTick`- is the maximum tick at which a position can be initialized. It is also the maximum value that
+a current tick can be. Note that this is different from the`MinInitializedTick`and`MinCurrentTick`due
 to our definition of the full range (see below). The full range is inclusive of the lower tick but exclusive
 of the upper tick. As a result, we do not need to differentiate between the two for the max. When the pool
-is on the `MaxTick`, there is no liquidity. To kick in the liquidity, a swap left must be done to cross
+is on the`MaxTick`, there is no liquidity. To kick in the liquidity, a swap left must be done to cross
 the `MaxTick` and enter the last bucket (when sequencing from left to right).
 
 - `Initialized Range` - the range of ticks that can be initialized: `[MinInitializedTick, MaxTick]`
@@ -1803,13 +1819,13 @@ the `MaxTick` and enter the last bucket (when sequencing from left to right).
 - `Full Range` - the maximum range at which a position can be defined: `[MinInitializedTick, MaxTick)`
 
 - `Crossing Tick` - crossing a tick means leaving one bucket and entering another. Each tick has a liquidity
-net value defined. This value measures "how much of liquidity needs to be added to the current when crossing
-a tick going left-to-right and entering a new bucket". This value is positive for lower ticks of a position
-and negative for higher. When going left-to-right, instead of adding, we subtract this value from the current liquidity.
-There are two edge cases. First, when pool crosses a `MinInitializedTick`, the pool does not enter any bucket.
-since it is now outside of the `Full Range`. Second, when pool crossed a `MaxTick`, the pool does not enter
-any bucket since it is now outside of the `Full Range`. Instead, we treat this being directly on either
-the `MinCurrentTick` or `MaxTick`.
+  net value defined. This value measures "how much of liquidity needs to be added to the current when crossing
+  a tick going left-to-right and entering a new bucket". This value is positive for lower ticks of a position
+  and negative for higher. When going left-to-right, instead of adding, we subtract this value from the current liquidity.
+  There are two edge cases. First, when pool crosses a `MinInitializedTick`, the pool does not enter any bucket.
+  since it is now outside of the `Full Range`. Second, when pool crossed a `MaxTick`, the pool does not enter
+  any bucket since it is now outside of the `Full Range`. Instead, we treat this being directly on either
+  the `MinCurrentTick` or `MaxTick`.
 
 ## External Sources
 
