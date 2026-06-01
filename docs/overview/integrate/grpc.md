@@ -108,7 +108,7 @@ grpcurl  -plaintext \
 It's also possible to execute an RPC call to query the node for information:
 
 ```bash
-grpcurl -plaintext grpc.dev-osmosis.zone:443 osmosis.gamm.v1beta1.Query.Pools
+grpcurl -plaintext grpc.osmosis.zone:9090 osmosis.gamm.v1beta1.Query.Pools
 ```
 
 
