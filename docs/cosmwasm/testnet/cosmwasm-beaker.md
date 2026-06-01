@@ -8,6 +8,10 @@ sidebar_position: 2
 
 The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permissionless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
 
+:::note
+For an alternative CosmWasm scripting, testing, and deployment framework, see [cw-orchestrator](../cw-orch.md).
+:::
+
 ### Requirements
 - [Rust](https://www.rust-lang.org/tools/install)
 - [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) 
@@ -29,7 +33,7 @@ In the directory you want your project to reside, run:
 beaker new counter-dapp
 ```
 
-For detailed information about Beaker [click here](https://github.com/osmosis-labs/beaker/edit/main/README.md).
+For detailed information about Beaker [click here](https://github.com/osmosis-labs/beaker/blob/main/README.md).
 
 ### Your first CosmWasm contract with Beaker
 
@@ -53,7 +57,7 @@ Note how we added `--network testnet` to tell beaker to deploy to the testnet Os
 In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/main/packages/cli/src/framework/config.rs) file. 
 
 :::warning
-Please note that account test1 is publicly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker will support local keyring in about 1-2 weeks. 
+Please note that account test1 is publicly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker also supports signing from the OS keyring (see [Using the OS keyring](#using-the-os-keyring) below).
 :::
 
 ```
@@ -184,7 +188,7 @@ beaker key set account1 'cable often loyal ozone master disorder gospel brief po
 ```
 
 
-Please note that Beaker currently supports 24 words mnemonics only. [ 12 will be supported](https://github.com/osmosis-labs/beaker/issues/88). 
+Please note that Beaker supports 24-word mnemonics only.
 
 This created a new account called `account1`. On Macs you are able to see this account in the keychain under the name of `beaker`
 
