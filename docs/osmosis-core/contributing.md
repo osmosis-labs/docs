@@ -72,11 +72,11 @@ and take look at the graphviz output!
 
 Note that if you are doing things that are low-level / small, the overhead of cpuprofile may mess with cache effects, etc. However for things like epoch code, or relatively large txs, this totally works!
 
-### Branch structure of releases on v7, v6, v4
+### Branch structure and backports
 
-People still need those versions for querying old versions of the chain, and syncing a node from genesis, so we keep these updated!
+Each major release has a long-lived release branch (for example `v31.x`). Older release branches are kept updated, since people still need those versions for querying old versions of the chain and syncing a node from genesis.
 
-For v6.x, and v4.x, most PRs to them should go to main and get a "backport" label. We typically use mergify for backporting. Backporting often takes place after a PR has been merged to main
+Most PRs land on `main` first. State-compatible fixes are then backported to the latest major release branch with a `backport` label. We typically use mergify for backporting, which takes place after a PR has been merged to main.
 
 ### How to build proto files. (rm -rf vendor/ && make build-reproducible once docker is installed)
 
