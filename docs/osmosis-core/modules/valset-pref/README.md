@@ -13,14 +13,14 @@ eases frontend code burden.
 
 How does this module work? 
 
-- Allow a user to set a list of {val-addr, weight} in the state, called their validator-set preference.
-- Allow a user to update a list of {val-addr, weight} in the state, then do the following; 
+- Allow a user to set a list of `{val-addr, weight}` in the state, called their validator-set preference.
+- Allow a user to update a list of `{val-addr, weight}` in the state, then do the following; 
   - Unstake the existing tokens (run the same unbond logic as cosmos-sdk staking).
   - Update the validator distribution weights.
   - Stake the tokens based on the new weights.
   - Redelegate their current delegation to the currently configured set.
-- Give users a single message to delegate {X} tokens, according to their validator-set preference distribution.
-- Give users a single message to undelegate {X} tokens, according to their validator-set preference distribution.
+- Give users a single message to delegate `{X}` tokens, according to their validator-set preference distribution.
+- Give users a single message to undelegate `{X}` tokens, according to their validator-set preference distribution.
 - Give users a single message to claim rewards from everyone on their preference list.
 - If the delegator has not set a validator-set preference list then the validator set, then it defaults to their current validator set.
 - If a user has no preference list and has not staked, then these messages / queries return errors.
