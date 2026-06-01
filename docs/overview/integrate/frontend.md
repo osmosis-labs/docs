@@ -8,6 +8,10 @@ sidebar_position: 8
 
 As long as the asset has been properly registered according to the [registration documentation](https://docs.osmosis.zone/overview/integrate/registration) and there is a pool with USD $1,000 of [initial liquidity](https://docs.osmosis.zone/overview/integrate/liquidity) then the pool will be visible on this frontend.
 
+:::info Frontend data dependencies
+The production frontend at [app.osmosis.zone](https://app.osmosis.zone) reads pool state, routing quotes, and token prices from the [Sidecar Query Server (SQS)](./sqs) (`sqs.osmosis.zone`), not directly from chain RPC. If you are running a fork of the frontend or building anything that needs to mirror its data, point at SQS first.
+:::
+
 ## Verify Assets
 
 An asset will initially show as an Unverified asset. This will require users to toggle on the Unverified Assets setting in the Cog Menu in the top right of their screen to see the asset.
