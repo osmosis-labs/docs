@@ -8,7 +8,7 @@ Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.
 
 ## Active set
 
-The top 120 validators that participate in consensus and receive rewards.
+The validators in the active set (currently the top 70, set by governance) that participate in consensus and receive rewards.
 
 ## Air drops
 
@@ -243,7 +243,7 @@ The amount of time a validator has been active in a given timeframe. Validators 
 
 ## Validator
 
-A Osmosis blockchain miner responsible for verifying transactions on the blockchain. Validators run programs called full nodes that allow them to participate in consensus, verify blocks, participate in governance, and receive rewards. The top 130 validators with the highest total stake can participate in consensus.
+A Osmosis blockchain miner responsible for verifying transactions on the blockchain. Validators run programs called full nodes that allow them to participate in consensus, verify blocks, participate in governance, and receive rewards. The validators with the highest total stake, up to the governance-set active-set size (currently 70), can participate in consensus.
 
 ## Weight
 

@@ -98,7 +98,7 @@ osmosisd query staking validators -o --limit 300 json | jq -r '.validators[] |
 
 If your bond status is `BOND_STATUS_BONDED`, congratulations, your validator is part of the active validator set!
 
-Please note, as of this writing, you must be in the top 150 validators (in other words, must have more OSMO delegated to your validator than the 100th validator in the active validator set) to be bonded. If you did everything above correct but do not have more OSMO delegated to your validator than the 100th validator, you will stay unbonded.
+Please note, you must be in the active validator set (currently the top 70, a governance-set parameter) to be bonded, meaning you must have more OSMO delegated to your validator than the lowest-ranked validator currently in the set. If you did everything above correctly but do not have enough delegated to break into the active set, you will stay unbonded. Query the live size with `osmosisd query staking params` (`max_validators`).
 
 ## Track Validator Signing
 

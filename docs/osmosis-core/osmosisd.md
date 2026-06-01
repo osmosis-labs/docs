@@ -75,7 +75,7 @@ cd $HOME
 git clone https://github.com/osmosis-labs/osmosis
 cd osmosis
 
-git checkout v31.0.0
+git checkout v31.0.3
 
 make install
 ```
