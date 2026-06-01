@@ -316,13 +316,11 @@ We see correctness of the swap fee, by imagining what happens if we took this re
 
 #### Precision handling
 
-{Something we have to be careful of is precision handling, notes on why and how we deal with it.}
+Something we have to be careful of is precision handling, notes on why and how we deal with it.
 
-<a name="err_proof">
+<a id="err_proof" />
 
-#### Proof that |e_y| < 100|e_k|
-
-</a>
+#### Proof that |e_y| &lt; 100|e_k|
 
 The function $f(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out}$ is monotonically increasing over the reals.
 You can prove this, by seeing that its [derivative's](https://www.wolframalpha.com/input?i=d%2Fdx+-x%5E3+%2B+3a+x%5E2+-+%28b+%2B+3a%5E2%29+x+) 0 values are both imaginary, and therefore has no local minima or maxima in the reals.
@@ -367,7 +365,7 @@ Tying this all together, we have that $e_k > .01e_y$. Therefore $e_y < 100 e_k$,
 
 To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $y_{out}$. When $y_{out}$ is smaller, the error is far lower. (Often to the case that $e_y < e_k$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $y_{out}$ is bigger than $.9y_0$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $x_f$ term must be large relative to $y_0$, which would yield a far better error bound.
 
-TODO: Justify a_y << y_out. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
+TODO: Justify a_y <&lt; y_out. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
 
 ### Spot Price
 

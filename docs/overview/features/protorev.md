@@ -77,21 +77,21 @@ The `x/protorev` module keeps the following objects in state:
 
 | State Object | Description | Key | Values | Store |
 | --- | --- | --- | --- | --- |
-| TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | []byte{1} + []byte{inputDenom} +[]byte{outputDenom} | []byte{TokenPairArbRoutes} | KV |
-| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom[]byte{2} | []byte{2} + []byte{baseDenom} + []byte{denomToMatch} | []byte{poolID} | KV |
-| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | []byte{3} | []byte{[]BaseDenoms{}} | KV |
-| NumberOfTrades | Tracks the number of trades protorev has executed | []byte{4} | []byte{numberOfTrades} | KV |
-| ProfitsByDenom | Tracks the profits protorev has made | []byte{5} + []byte{tokenDenom} | []byte{sdk.Coin} | KV |
-| TradesByRoute | Tracks the number of trades the module has executed on a given route | []byte{6} + []byte{route} | []byte{numberOfTrades} | KV |
-| ProfitsByRoute | Tracks the profits the module has accumulated after trading on a given route | []byte{7} + []byte{route} | []byte{sdk.Coin} | KV |
-| DeveloperAccount | Tracks the developer account for protorev | []byte{8} | []byte{sdk.AccAddress} | KV |
-| DaysSinceModuleGenesis | Tracks the number of days since the module was initialized. Used to track profits that can be withdrawn by the developer account | []byte{9} | []byte{uint} | KV |
-| DeveloperFees | Tracks the profits that the developer account can withdraw | []byte{10} + []byte{tokenDenom} | []byte{sdk.Coin} | KV |
-| MaxPoolPointsPerTx | Tracks the maximum number of pool points that can be consumed per tx | []byte{11} | []byte{uint64} | KV |
-| MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | []byte{12} | []byte{uint64} | KV |
-| PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | []byte{13} | []byte{uint64} | KV |
-| LatestBlockHeight | Tracks the latest recorded block height | []byte{14} | []byte{uint64} | KV |
-| PoolWeights | Tracks the weights (pool points) of the different pool types | []byte{15} | []byte{PoolWeights} | KV |
+| TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | `[]byte{1}` + `[]byte{inputDenom}` +`[]byte{outputDenom}` | `[]byte{TokenPairArbRoutes}` | KV |
+| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom`[]byte{2}` | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
+| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenoms{}`} | KV |
+| NumberOfTrades | Tracks the number of trades protorev has executed | `[]byte{4}` | `[]byte{numberOfTrades}` | KV |
+| ProfitsByDenom | Tracks the profits protorev has made | `[]byte{5}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
+| TradesByRoute | Tracks the number of trades the module has executed on a given route | `[]byte{6}` + `[]byte{route}` | `[]byte{numberOfTrades}` | KV |
+| ProfitsByRoute | Tracks the profits the module has accumulated after trading on a given route | `[]byte{7}` + `[]byte{route}` | `[]byte{sdk.Coin}` | KV |
+| DeveloperAccount | Tracks the developer account for protorev | `[]byte{8}` | `[]byte{sdk.AccAddress}` | KV |
+| DaysSinceModuleGenesis | Tracks the number of days since the module was initialized. Used to track profits that can be withdrawn by the developer account | `[]byte{9}` | `[]byte{uint}` | KV |
+| DeveloperFees | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
+| MaxPoolPointsPerTx | Tracks the maximum number of pool points that can be consumed per tx | `[]byte{11}` | `[]byte{uint64}` | KV |
+| MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | `[]byte{12}` | `[]byte{uint64}` | KV |
+| PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | `[]byte{13}` | `[]byte{uint64}` | KV |
+| LatestBlockHeight | Tracks the latest recorded block height | `[]byte{14}` | `[]byte{uint64}` | KV |
+| PoolWeights | Tracks the weights (pool points) of the different pool types | `[]byte{15}` | `[]byte{PoolWeights}` | KV |
 
 ### TokenPairArbRoutes
 

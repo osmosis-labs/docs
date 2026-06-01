@@ -111,20 +111,20 @@ since only every 100 ticks are able to be initialized.
 When $exponentAtPriceOne = -6$ (and tick spacing is 100), each tick starting at
 0 and ending at the first factor of 10 will represents a spot price increase of 0.0001:
 
-- tick_{0} = 1
-- tick_{100} = 1.0001
-- tick_{200} = 1.0002
-- tick_{300} = 1.0003
+- `tick_{0} = 1`
+- `tick_{100} = 1.0001`
+- `tick_{200} = 1.0002`
+- `tick_{300} = 1.0003`
 
 This continues until the pool reaches a spot price of 10. At this point, since
 the pool has increased by a factor of 10, the `exponentAtCurrentTick` increases
 from -4 to -3 (decreasing the incremental precision), and the ticks will
 increase as follows:
 
-- tick_{8999900} =  9.9999
-- tick_{9000000} = 10.000
-- tick_{9000100} = 10.001
-- tick_{9000200} = 10.002
+- `tick_{8999900} =  9.9999`
+- `tick_{9000000} = 10.000`
+- `tick_{9000100} = 10.001`
+- `tick_{9000200} = 10.002`
 
 For spot prices less than a dollar, the precision factor decreases
 (increasing the incremental precision) at every factor of 10:
@@ -1260,7 +1260,7 @@ We calculate the spread reward growth above the upper tick in the following way:
 - If calculating spread reward growth for an upper tick, we consider the following two cases:
   - currentTick >= upperTick: If the current tick is greater than or equal to the
   upper tick, the spread reward growth would be the pool's spread reward growth minus the upper tick's
-  - currentTick < upperTick: If the current tick is smaller than the upper tick,
+  - currentTick &lt; upperTick: If the current tick is smaller than the upper tick,
   the spread reward growth would be the upper tick's spread reward growth outside.
 
 This process is vice versa for calculating spread reward growth below the lower tick.
@@ -1732,7 +1732,7 @@ tick.
 As a workaround, we have decided to limit min spot price to 10^-12
 and min tick to `-108000000`. It has been shown at at price levels
 below 10^-12, this issue is most apparent. See this issue for details:
-<https://github.com/osmosis-labs/osmosis/issues/5550>
+[https://github.com/osmosis-labs/osmosis/issues/5550](https://github.com/osmosis-labs/osmosis/issues/5550)
 
 Now, we have a problem that we cannot handle pairs where
 the quote asset has a precision of 6 and the base asset has a

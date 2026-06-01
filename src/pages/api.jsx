@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { DyteSpinner, DyteTooltip } from '@dytesdk/react-ui-kit';
 import { useHistory } from '@docusaurus/router';
 import clsx from 'clsx';
 
 import useBreakpoint from '../lib/useBreakpoint';
 import SectionsMenu from '../components/SectionsMenu';
 
-const API_TOOLTIP_KEY = 'dyte-api-v2-tooltip-shown';
-
 function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
   return (
     <BrowserOnly
       fallback={
         <div className="loading-container">
-          <DyteSpinner />
+          <span className="api-loading-spinner" aria-label="Loading" />
         </div>
       }
     >
@@ -44,7 +41,6 @@ function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
 export default function Home() {
   const router = useHistory();
   const size = useBreakpoint();
-  const [showV2Tooltip, setShowV2Tooltip] = useState(false);
 
   const location = router.location;
 
@@ -53,13 +49,6 @@ export default function Home() {
   );
 
   const currentVersion = url.searchParams.get('v') || 'RPC';
-
-  useEffect(() => {
-    // show V2 tooltip only if user hasn't seen it yet
-    if (localStorage.getItem(API_TOOLTIP_KEY) !== 'true') {
-      setShowV2Tooltip(true);
-    }
-  }, []);
 
   return (
     <Layout
@@ -78,18 +67,7 @@ export default function Home() {
         <div className="aside">
           <a className="navbar__item navbar__link dev-portal-signup dev-postman-link" target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis' rel="noreferrer">Open Postman Collection</a>
 
-          <DyteTooltip
-            placement="bottom"
-            variant="primary"
-            label="Please note there are APIs available from this dropdown menu."
-            open={showV2Tooltip}
-            onDyteOpenChange={(open) => {
-              if (!open) {
-                localStorage.setItem(API_TOOLTIP_KEY, 'true');
-              }
-            }}
-            disabled={!showV2Tooltip}
-          >
+          <span title="Select an API set (RPC, LCD, DATA, IBCGO) from this menu.">
             <SectionsMenu
               defaultValue={currentVersion}
               values={[
@@ -99,16 +77,12 @@ export default function Home() {
                 { name: 'IBCGO', id: 'IBCGO' },
               ]}
               onValueChange={(version) => {
-                if (showV2Tooltip) {
-                  setShowV2Tooltip(false);
-                  localStorage.setItem(API_TOOLTIP_KEY, 'true');
-                }
                 router.push(`/api/?v=${version}`);
               }}
               className="compact"
               slot="trigger"
             />
-          </DyteTooltip>
+          </span>
         </div>
       </div>
       <APIElement

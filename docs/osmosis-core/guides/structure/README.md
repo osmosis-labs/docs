@@ -32,7 +32,8 @@ only its structure. The entire file is available at [block-2836990.json](block-2
 
 The main outline is as follows:
 
-<details><summary>Outline</summary>
+<details>
+<summary>Outline</summary>
 
 ```json
 {
@@ -222,7 +223,8 @@ cat outfile.json | jq '.txs[1]'
 
 Below is part of the transaction at index 1 of the above block.
 
-<details><summary>transaction 1</summary>
+<details>
+<summary>transaction 1</summary>
 
 ```json
 {
@@ -453,7 +455,8 @@ Below is part of the transaction at index 1 of the above block.
 
 Each transaction has an identical structure. The differences are in the details inside each structure:
 
-<details><summary>transaction 2</summary>
+<details>
+<summary>transaction 2</summary>
 
 ```json
 {

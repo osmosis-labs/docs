@@ -108,7 +108,7 @@ moreExamples();
 | .getContracts()        |      | cideId: number     |
 | .getContract()         |      | address: string    |
 | .queryContractRaw()    |      | address: string, key: Uint8Array    |
-| .queryContractSmart()  |      | address: string, queryMsg: Record<string, unknown>    |
+| .queryContractSmart()  |      | address: string, queryMsg: `Record<string, unknown>`    |
 
 
 # Querying Smart Contracts

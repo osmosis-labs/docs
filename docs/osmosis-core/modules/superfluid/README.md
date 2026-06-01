@@ -895,7 +895,7 @@ period, but this is not considered a near-term problem.
 
 The overslashing possibility stems from a problem in the SDKs slashing
 module, that really is a bug there, and superfluid is doing the correct
-thing. <https://github.com/cosmos/cosmos-sdk/issues/1440>
+thing. [https://github.com/cosmos/cosmos-sdk/issues/1440](https://github.com/cosmos/cosmos-sdk/issues/1440)
 
 Basically, slashes to unbondings and redelegations can lower the amount
 that gets slashed from live delegations in the staking module today.

@@ -41,7 +41,7 @@ storage, assign it to the new pool, and propagate the execution to either `gamm`
 or `concentrated-liquidity` modules.
 
 Note that we define a `CreatePoolMsg` interface:
-<https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9>
+[https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9)
 
 Each `balancer`, `stableswap` and `concentrated-liquidity` pool has its own implementation of `CreatePoolMsg`.
 
@@ -192,7 +192,7 @@ Between, `MsgSwapExactAmountIn` and `MsgSwapExactAmountOut`, the implementation 
 
 `MsgSplitRouteSwapExactAmountIn` and `MsgSplitRouteSwapExactAmountOut` support split routes where for each split route they call the respective
 `MsgSwapExactAmountIn` or `MsgSwapExactAmountOut` message. When using the split routes, the slippage protection is disabled on the per-route basis.
-For swap exact amount in, we provide zero for the min amount out. For swap exact amount out, we provide the max amount in which is 1 << 256 - 1.
+For swap exact amount in, we provide zero for the min amount out. For swap exact amount out, we provide the max amount in which is 1 <&lt; 256 - 1.
 Read more about route splitting in the "Route Splitting" section.
 
 Once the message is received, it calls `RouteExactAmountIn`

@@ -71,7 +71,7 @@ ___
 
 ### getBalance
 
-▸ **getBalance**(`denom`): `Promise`<`Coin`\>
+▸ **getBalance**(`denom`): `Promise`&lt;`Coin`>
 
 #### Parameters
 
@@ -81,7 +81,7 @@ ___
 
 #### Returns
 
-`Promise`<`Coin`\>
+`Promise`&lt;`Coin`>
 
 #### Defined in
 
@@ -91,7 +91,7 @@ ___
 
 ### withDerivedAddress
 
-▸ `Static` **withDerivedAddress**(`wallet`, `signingClient`): `Promise`<[`Account`](Account.md)\>
+▸ `Static` **withDerivedAddress**(`wallet`, `signingClient`): `Promise`&lt;[`Account`](Account.md)>
 
 #### Parameters
 
@@ -102,7 +102,7 @@ ___
 
 #### Returns
 
-`Promise`<[`Account`](Account.md)\>
+`Promise`&lt;[`Account`](Account.md)>
 
 #### Defined in
 

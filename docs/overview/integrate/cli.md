@@ -13,8 +13,8 @@ Once osmosisd is [installed](../../osmosis-core/osmosisd) and configured with th
 osmosisd status
 ```
 
-<details><summary>Output</summary>
-<p>
+<details>
+<summary>Output</summary>
 
 #### This is the output from `osmosisd status`
 
@@ -59,7 +59,6 @@ osmosisd status
 }
 ```
 
-</p>
 </details>
 
 ### Node configuration

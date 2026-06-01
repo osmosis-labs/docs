@@ -1,14 +1,21 @@
 /* eslint-disable */
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
+const { themes: prismThemes } = require('prism-react-renderer');
+const lightCodeTheme = prismThemes.github;
+const darkCodeTheme = prismThemes.vsDark;
 
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 
+// remark/rehype plugins are ESM-only as of MDX 3 / Docusaurus 3. Under the
+// sync (jiti) config loader, `require()` returns the module namespace object,
+// so unwrap the default export before handing the plugin to unified.
+const esmDefault = (m) => m.default ?? m;
+const npm2yarn = esmDefault(require('@docusaurus/remark-plugin-npm2yarn'));
+const remarkMath = esmDefault(require('remark-math'));
+const rehypeKatex = esmDefault(require('rehype-katex'));
+
 /** @type {import('@docusaurus/preset-classic').Options} */ defaultSettings = {
-  remarkPlugins: [
-    [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-  ],
+  remarkPlugins: [[npm2yarn, { sync: true }]],
 };
 
 // KaTeX is enabled per-section, not globally. remark-math (v3) treats every
@@ -22,8 +29,8 @@ const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
 // amounts and shell vars in these sections are escaped as `\$` so they are
 // not parsed as math.
 const mathSettings = {
-  remarkPlugins: [require('remark-math')],
-  rehypePlugins: [require('rehype-katex')],
+  remarkPlugins: [remarkMath],
+  rehypePlugins: [rehypeKatex],
 };
 
 /**
@@ -76,7 +83,11 @@ const config = {
   url: 'https://docs.osmosis.zone',
   baseUrl: '/',
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   favicon: '/favicon.png',
   trailingSlash: false,
 
@@ -92,8 +103,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
-  clientModules: [require.resolve('./src/client/define-ui-kit.js')],
 
   presets: [
     [

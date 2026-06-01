@@ -24,7 +24,7 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 
 The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host; the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
 
-Swagger reference: <https://sqs.osmosis.zone/swagger/index.html>.
+Swagger reference: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html).
 
 ## Get a swap quote
 
@@ -247,6 +247,6 @@ SQS is open-source at [osmosis-labs/sqs](https://github.com/osmosis-labs/sqs). T
 
 ## Reference
 
-- Repository: <https://github.com/osmosis-labs/sqs>
-- Production swagger: <https://sqs.osmosis.zone/swagger/index.html>
+- Repository: [https://github.com/osmosis-labs/sqs](https://github.com/osmosis-labs/sqs)
+- Production swagger: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html)
 - Go client: [`osmosis-labs/sqs-go-client`](https://github.com/osmosis-labs/sqs-go-client), a first-party Go SDK wrapping the routing and price endpoints.

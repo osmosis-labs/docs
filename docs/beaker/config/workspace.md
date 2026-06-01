@@ -34,7 +34,7 @@
       
       
     
-    * **`subfolder`** : Option < String >  
+    * **`subfolder`** : Option &lt; String >  
       
        > 
        > Subfolder of the repo to be used as template, use root of the repo if not specified  

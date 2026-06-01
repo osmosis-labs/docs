@@ -211,7 +211,7 @@ tick.
 As a workaround, we have decided to limit min spot price to 10^-12
 and min tick to `-108000000`. It has been shown at at price levels
 below 10^-12, this issue is most apparent. See this issue for details:
-<https://github.com/osmosis-labs/osmosis/issues/5550>
+[https://github.com/osmosis-labs/osmosis/issues/5550](https://github.com/osmosis-labs/osmosis/issues/5550)
 
 Now, we have a problem that we cannot handle pairs where
 the quote asset has a precision of 6 and the base asset has a
