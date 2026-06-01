@@ -4,7 +4,6 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
-const posthogPlugin = require('./plugins/posthog-plugin.cjs');
 
 /** @type {import('@docusaurus/preset-classic').Options} */ defaultSettings = {
   remarkPlugins: [
@@ -116,7 +115,6 @@ const config = {
   plugins: [
     ...SECTIONS,
     webpackPlugin,
-    posthogPlugin,
   ],
 
   themes: ['@docusaurus/theme-live-codeblock'],
@@ -292,9 +290,6 @@ const config = {
         indexName: 'Docs',
         contextualSearch: true,
         searchParameters: {},
-      },
-      posthog: {
-        apiKey: '00',
       },
     }),
   stylesheets: [
