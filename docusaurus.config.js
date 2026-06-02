@@ -126,8 +126,6 @@ const config = {
     webpackPlugin,
   ],
 
-  themes: ['@docusaurus/theme-live-codeblock'],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -289,9 +287,6 @@ const config = {
           'rust',
           'toml',
         ],
-      },
-      liveCodeBlock: {
-        playgroundPosition: 'bottom',
       },
       algolia: {
         appId: 'O18C1RUI3F',
