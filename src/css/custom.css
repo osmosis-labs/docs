@@ -521,10 +521,22 @@ html[data-theme='dark']
   justify-content: center;
 }
 
-.loading-container dyte-spinner {
+/* CSS spinner shown in the /api loading fallback before the Stoplight
+   bundle hydrates. Replaces the former dyte-spinner element (Dyte was
+   removed in the Docusaurus 3 migration). */
+.api-loading-spinner {
   width: 48px;
   height: 48px;
-  color: var(--docs-color-primary-100);
+  border: 4px solid var(--docs-color-primary-100);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: api-spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes api-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .dyte-video-showcase {
