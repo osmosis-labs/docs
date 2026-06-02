@@ -17,10 +17,36 @@ import SectionsMenu from '../components/SectionsMenu';
 // context conflict with the host app.
 const WEB_COMPONENTS_SRC = '/assets/js/elements-web-components.min.js';
 
+// Upper bound on how long we wait for <elements-api> to register before
+// treating the load as failed. customElements.whenDefined only ever resolves,
+// never rejects, so without a timeout a bundle that loads but never registers
+// the element (or an orphaned waiter on a tag that later errored) would leave
+// the page stuck on the spinner forever.
+const ELEMENTS_DEFINE_TIMEOUT_MS = 15000;
+
+// Resolves once <elements-api> is defined, or rejects on timeout.
+function whenElementsApiDefined() {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reject(new Error('elements-api did not register in time'));
+    }, ELEMENTS_DEFINE_TIMEOUT_MS);
+    window.customElements.whenDefined('elements-api').then(() => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve();
+    });
+  });
+}
+
 // Injects the bundle once and resolves when the <elements-api> custom element
-// is defined, or rejects if the script fails to load. Reused across version
-// switches: if the element is already defined we resolve immediately, and a
-// previously-failed <script> tag is removed so a retry can re-inject it.
+// is defined, or rejects if the script fails to load or never registers the
+// element within the timeout. Reused across version switches: if the element
+// is already defined we resolve immediately, and a previously-failed <script>
+// tag is removed so a retry can re-inject it.
 function loadElementsWebComponent() {
   if (typeof window === 'undefined' || !window.customElements) {
     return Promise.reject(new Error('No window/customElements'));
@@ -34,15 +60,15 @@ function loadElementsWebComponent() {
     );
     if (existing) {
       // A tag is already present: wait for the element to define rather than
-      // re-injecting. whenDefined resolves even if the script is mid-flight.
-      window.customElements.whenDefined('elements-api').then(resolve, reject);
+      // re-injecting. The timeout guards against the tag having errored out
+      // from under us (its waiter would otherwise never settle).
+      whenElementsApiDefined().then(resolve, reject);
       return;
     }
     const script = document.createElement('script');
     script.src = WEB_COMPONENTS_SRC;
     script.async = true;
-    script.onload = () =>
-      window.customElements.whenDefined('elements-api').then(resolve, reject);
+    script.onload = () => whenElementsApiDefined().then(resolve, reject);
     script.onerror = () => {
       // Drop the failed tag so a later attempt can re-inject and retry.
       script.remove();
