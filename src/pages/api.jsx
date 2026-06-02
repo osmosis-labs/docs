@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
@@ -17,14 +17,39 @@ import SectionsMenu from '../components/SectionsMenu';
 // context conflict with the host app.
 const WEB_COMPONENTS_SRC = '/assets/js/elements-web-components.min.js';
 
+// Injects the bundle once and resolves when the <elements-api> custom element
+// is defined, or rejects if the script fails to load. Reused across version
+// switches: if the element is already defined we resolve immediately, and a
+// previously-failed <script> tag is removed so a retry can re-inject it.
 function loadElementsWebComponent() {
-  if (typeof window === 'undefined') return;
-  if (window.customElements && window.customElements.get('elements-api')) return;
-  if (document.querySelector(`script[src="${WEB_COMPONENTS_SRC}"]`)) return;
-  const script = document.createElement('script');
-  script.src = WEB_COMPONENTS_SRC;
-  script.async = true;
-  document.head.appendChild(script);
+  if (typeof window === 'undefined' || !window.customElements) {
+    return Promise.reject(new Error('No window/customElements'));
+  }
+  if (window.customElements.get('elements-api')) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(
+      `script[src="${WEB_COMPONENTS_SRC}"]`
+    );
+    if (existing) {
+      // A tag is already present: wait for the element to define rather than
+      // re-injecting. whenDefined resolves even if the script is mid-flight.
+      window.customElements.whenDefined('elements-api').then(resolve, reject);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = WEB_COMPONENTS_SRC;
+    script.async = true;
+    script.onload = () =>
+      window.customElements.whenDefined('elements-api').then(resolve, reject);
+    script.onerror = () => {
+      // Drop the failed tag so a later attempt can re-inject and retry.
+      script.remove();
+      reject(new Error(`Failed to load ${WEB_COMPONENTS_SRC}`));
+    };
+    document.head.appendChild(script);
+  });
 }
 
 function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
@@ -36,20 +61,56 @@ function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
         </div>
       }
     >
-      {() => {
-        loadElementsWebComponent();
-
-        return (
-          <div className={clsx('elements-container', layout)}>
-            <elements-api
-              apiDescriptionUrl={`/api/${currentVersion}.yaml`}
-              router="hash"
-              layout={layout}
-            />
-          </div>
-        );
-      }}
+      {() => <APIElementClient layout={layout} currentVersion={currentVersion} />}
     </BrowserOnly>
+  );
+}
+
+// 'loading' until the web-component is defined, then 'ready'; 'error' if the
+// bundle fails to load (otherwise the page would render an empty, unupgraded
+// <elements-api> with no feedback).
+function APIElementClient({ layout, currentVersion }) {
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    let active = true;
+    setStatus('loading');
+    loadElementsWebComponent().then(
+      () => active && setStatus('ready'),
+      () => active && setStatus('error')
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (status === 'error') {
+    return (
+      <div className="loading-container">
+        <p role="alert">
+          The API reference failed to load. Please refresh the page, or view the{' '}
+          <a href={`/api/${currentVersion}.yaml`}>raw OpenAPI specification</a>.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'loading') {
+    return (
+      <div className="loading-container">
+        <span className="api-loading-spinner" aria-label="Loading" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={clsx('elements-container', layout)}>
+      <elements-api
+        apiDescriptionUrl={`/api/${currentVersion}.yaml`}
+        router="hash"
+        layout={layout}
+      />
+    </div>
   );
 }
 
