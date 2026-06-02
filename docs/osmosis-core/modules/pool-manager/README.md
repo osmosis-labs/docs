@@ -8,26 +8,27 @@ any on-chain pool.
 The user-stories for this module follow:
 
 > As a user, I would like to have a unified entrypoint for my swaps regardless
-of the underlying pool implementation so that I don't need to reason about
-API complexity
+> of the underlying pool implementation so that I don't need to reason about
+> API complexity
 
 > As a user, I would like the pool management to be unified so that I don't
-have to reason about additional complexity stemming from divergent pool sources.
+> have to reason about additional complexity stemming from divergent pool sources.
 
 We have multiple pool-storage modules. Namely, `x/gamm` and `x/concentrated-liquidity`.
 
 To avoid fragmenting swap and pool creation entrypoints and duplicating their boilerplate logic,
 we define a `poolmanager` module. Its purpose is twofold:
+
 1. Handle pool creation
-   * Assign ids to pools
-   * Store the mapping from pool id to one of the swap modules (`gamm` or `concentrated-liquidity`)
-   * Propagate the execution to the appropriate module depending on the pool type.
-   * Note, that pool creation messages are received by the pool model's message server.
-   Each module's message server then calls the `x/poolmanager` keeper method `CreatePool`.
+   - Assign ids to pools
+   - Store the mapping from pool id to one of the swap modules (`gamm` or `concentrated-liquidity`)
+   - Propagate the execution to the appropriate module depending on the pool type.
+   - Note, that pool creation messages are received by the pool model's message server.
+     Each module's message server then calls the `x/poolmanager` keeper method `CreatePool`.
 2. Handle swaps
-   * Cover & share multihop logic
-   * Propagate intra-pool swaps to the appropriate module depending on the pool type.
-   * Contrary to pool creation, swap messages are received by the `x/poolmanager` message server.
+   - Cover & share multihop logic
+   - Propagate intra-pool swaps to the appropriate module depending on the pool type.
+   - Contrary to pool creation, swap messages are received by the `x/poolmanager` message server.
 
 Let's consider pool creation and swaps separately and in more detail.
 
@@ -41,7 +42,7 @@ storage, assign it to the new pool, and propagate the execution to either `gamm`
 or `concentrated-liquidity` modules.
 
 Note that we define a `CreatePoolMsg` interface:
-<https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9>
+[https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9)
 
 Each `balancer`, `stableswap` and `concentrated-liquidity` pool has its own implementation of `CreatePoolMsg`.
 
@@ -73,7 +74,7 @@ Assume `balancer` pool is being created.
 1. `CreatePoolMsg` is received by the `x/gamm` message server.
 
 2. `CreatePool` keeper method is called from `poolmanager`, propagating
-the appropriate implementation of the `CreatePoolMsg` interface.
+   the appropriate implementation of the `CreatePoolMsg` interface.
 
 ```go
 // x/poolmanager/creator.go CreatePool(...)
@@ -94,7 +95,7 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg types.CreatePoolMsg) (uint64, er
 ```
 
 3. The keeper utilizes `CreatePoolMsg` interface methods to execute the logic specific
-to each pool type.
+   to each pool type.
 
 4. Lastly, `poolmanager.CreatePool` routes the execution to the appropriate module.
 
@@ -192,7 +193,7 @@ Between, `MsgSwapExactAmountIn` and `MsgSwapExactAmountOut`, the implementation 
 
 `MsgSplitRouteSwapExactAmountIn` and `MsgSplitRouteSwapExactAmountOut` support split routes where for each split route they call the respective
 `MsgSwapExactAmountIn` or `MsgSwapExactAmountOut` message. When using the split routes, the slippage protection is disabled on the per-route basis.
-For swap exact amount in, we provide zero for the min amount out. For swap exact amount out, we provide the max amount in which is 1 << 256 - 1.
+For swap exact amount in, we provide zero for the min amount out. For swap exact amount out, we provide the max amount in which is `1 << 256 - 1`.
 Read more about route splitting in the "Route Splitting" section.
 
 Once the message is received, it calls `RouteExactAmountIn`
@@ -229,6 +230,7 @@ swapModule := k.routes[moduleRoute.PoolType]
 
 _ := swapModule.SwapExactAmountIn(...)
 ```
+
 - note that error checks and other details are omitted for brevity.
 
 Similar to pool creation logic, we are able to call `SwapExactAmountIn` on any of the swap
@@ -270,6 +272,7 @@ user should be putting in is done through the following formula:
 `tokenBalanceIn * [{tokenBalanceOut / (tokenBalanceOut - tokenAmountOut)} ^ (tokenWeightOut / tokenWeightIn) -1] / tokenAmountIn`
 
 Existing Swap types:
+
 - SwapExactAmountIn
 - SwapExactAmountOut
 
@@ -318,15 +321,15 @@ Here's a detailed explanation of these advantages:
 - **Reduced slippage**: When a large trade is executed in a single pool, it can be significantly affected if someone else executes a large swap against that pool.
 
 - **Lower price impact**: When executing a large trade in a single pool, the price impact can be substantial, leading to a less favorable exchange rate for the trader.
-By splitting the swap across multiple pools, the price impact in each pool is minimized, resulting in a better overall exchange rate.
+  By splitting the swap across multiple pools, the price impact in each pool is minimized, resulting in a better overall exchange rate.
 
 - **Improved liquidity utilization**: Different pools may have varying levels of liquidity, spreads, and price curves. By splitting swaps across multiple pools,
-the router can utilize liquidity from various sources, allowing for more efficient execution of trades. This is particularly useful when the liquidity in
-a single pool is not sufficient to handle a large trade or when the price curve of one pool becomes less favorable as the trade size increases.
+  the router can utilize liquidity from various sources, allowing for more efficient execution of trades. This is particularly useful when the liquidity in
+  a single pool is not sufficient to handle a large trade or when the price curve of one pool becomes less favorable as the trade size increases.
 
 - **Potentially lower spreads**: In some cases, splitting swaps across multiple pools may result in lower overall spreads. This can happen when different pools
-have different spread structures, or when the total spread paid across multiple pools is lower than the spread for executing the entire trade in a single pool with
-higher slippage.
+  have different spread structures, or when the total spread paid across multiple pools is lower than the spread for executing the entire trade in a single pool with
+  higher slippage.
 
 Note, that the actual split happens off-chain. The router is only responsible for executing the swaps in the order and quantities of token in provided
 by the routes.

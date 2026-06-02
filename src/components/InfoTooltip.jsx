@@ -1,13 +1,16 @@
 import React from 'react';
-import { DyteTooltip } from '@dytesdk/react-ui-kit';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 
+// Native-tooltip replacement for the former DyteTooltip-based component.
+// Uses the title attribute so there is no third-party UI dependency.
 export default function InfoTooltip({ label }) {
   return (
-    <span style={{ verticalAlign: 'middle' }}>
-      <DyteTooltip variant="primary" label={label} kind="inline">
-        <InfoCircledIcon />
-      </DyteTooltip>
+    <span
+      style={{ verticalAlign: 'middle', cursor: 'help' }}
+      title={label}
+      aria-label={label}
+    >
+      <InfoCircledIcon />
     </span>
   );
 }

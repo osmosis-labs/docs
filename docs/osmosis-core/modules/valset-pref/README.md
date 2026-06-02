@@ -13,14 +13,14 @@ eases frontend code burden.
 
 How does this module work? 
 
-- Allow a user to set a list of {val-addr, weight} in the state, called their validator-set preference.
-- Allow a user to update a list of {val-addr, weight} in the state, then do the following; 
+- Allow a user to set a list of `{val-addr, weight}` in the state, called their validator-set preference.
+- Allow a user to update a list of `{val-addr, weight}` in the state, then do the following; 
   - Unstake the existing tokens (run the same unbond logic as cosmos-sdk staking).
   - Update the validator distribution weights.
   - Stake the tokens based on the new weights.
   - Redelegate their current delegation to the currently configured set.
-- Give users a single message to delegate {X} tokens, according to their validator-set preference distribution.
-- Give users a single message to undelegate {X} tokens, according to their validator-set preference distribution.
+- Give users a single message to delegate `{X}` tokens, according to their validator-set preference distribution.
+- Give users a single message to undelegate `{X}` tokens, according to their validator-set preference distribution.
 - Give users a single message to claim rewards from everyone on their preference list.
 - If the delegator has not set a validator-set preference list then the validator set, then it defaults to their current validator set.
 - If a user has no preference list and has not staked, then these messages / queries return errors.
@@ -30,19 +30,19 @@ How does this module work?
 Staking Calculation 
 
 - The user provides an amount to delegate and our `MsgDelegateToValidatorSet` divides the amount based on validator weight distribution.
-  For example: Stake 100osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
+  For example: Stake 100osmo with validator-set `{ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}`
   our delegate logic will attempt to delegate (100 * 0.5) 50osmo for ValA , (100 * 0.3) 30osmo from ValB and (100 * 0.2) 20osmo from ValC.
 
 UnStaking Calculation 
 
 - The user provides an amount to undelegate and our `MsgUnDelegateToValidatorSet` divides the amount based on validator weight distribution.
 - Here, the user can either undelegate the entire amount or partial amount 
-  - Entire amount unstaking: UnStake 100osmo from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
+  - Entire amount unstaking: UnStake 100osmo from validator-set `{ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}`,
     our undelegate logic will attempt to undelegate 50osmo from ValA , 30osmo from ValB, 20osmo from ValC
-  - Partial amount unstaking: UnStake 27osmo from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}, 
+  - Partial amount unstaking: UnStake 27osmo from validator-set `{ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}`, 
     our undelegate logic will attempt to undelegate (27 * 0.5) 13.5osmos from ValA, (27 * 0.3), 8.1osmo from ValB, 
     and (50 * 0.2) 5.4smo from ValC where 13.5osmo + 8.1osmo + 5.4osmo = 27osmo
-  - The user will then have 73osmo remaining with unchanged weights {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
+  - The user will then have 73osmo remaining with unchanged weights `{ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}`,
 
 ## Messages
 
@@ -76,8 +76,8 @@ If the user does not have an existing validator set use delegators' current stak
 ```go
     string delegator = 1 [ (gogoproto.moretags) = "yaml:\"delegator\"" ];
     // the amount of tokens the user is trying to delegate.
-    // For ex: delegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC
-    // -> 0.2} our staking logic would attempt to delegate 5osmo to A , 3osmo to
+    // For ex: delegate 10osmo with validator-set `{ValA -> 0.5, ValB -> 0.3, ValC
+    // -> 0.2}` our staking logic would attempt to delegate 5osmo to A , 3osmo to
     // B, 2osmo to C.
     cosmos.base.v1beta1.Coin coin = 2 [
       (gogoproto.nullable) = false,
@@ -103,9 +103,9 @@ The given amount will be divided based on the weights distributed to the validat
 ```go
     string delegator = 1 [ (gogoproto.moretags) = "yaml:\"delegator\"" ];
     // the amount the user wants to undelegate
-    // For ex: Undelegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3,
+    // For ex: Undelegate 10osmo with validator-set `{ValA -> 0.5, ValB -> 0.3,
     // ValC
-    // -> 0.2} our undelegate logic would attempt to undelegate 5osmo from A ,
+    // -> 0.2}` our undelegate logic would attempt to undelegate 5osmo from A ,
     // 3osmo from B, 2osmo from C
     cosmos.base.v1beta1.Coin coin = 3 [
       (gogoproto.nullable) = false,
@@ -118,7 +118,7 @@ The given amount will be divided based on the weights distributed to the validat
 - Check if the user has a validator-set and if so, get the users validator-set from `KVStore`. 
 - The unbonding logic will be follow the `UnDelegate` logic from the cosmos-sdk. 
 - Safety Checks 
-  - check that the amount of funds to undelegate is <= to the funds the user has in the address.
+  - check that the amount of funds to undelegate is &lt;= to the funds the user has in the address.
   - `UnDelegate` method takes `sdk.Dec` as tokenAmount, so check if overflow/underflow case is relevant.
 - use the [UnDelegate](https://github.com/cosmos/cosmos-sdk/blob/main/x/staking/keeper/delegation.go#L614) method from the cosmos-sdk to handle delegation. 
 
@@ -180,6 +180,7 @@ to convert it into a staking delegation without manually unlocking first.
 
 ## Redelegate algorithm logic pseudocode
 
+```text
 Existing ValSet   20osmos {ValA-> 0.5, ValB-> 0.3, ValC-> 0.2} [ValA-> 10osmo, ValB-> 6osmo, ValC-> 4osmo]
 New ValSet        20osmos {ValD-> 0.2, ValE-> 0.2, ValF-> 0.6} [ValD-> 4osmo, ValE-> 4osmo, ValF-> 12osmo]
 
@@ -216,6 +217,7 @@ New ValSet        20osmos {ValD-> 0.2, ValE-> 0.2, ValF-> 0.6} [ValD-> 4osmo, Va
 - Result 
   1. diff_arr = [ValA: 0, ValB: 0, ValC: 0, ValD: 0, ValE: 0, ValF: 0]
   2. [ValA: 0, ValB: 0, ValC: 0, ValD: 4, ValE: 4, ValF: 12] // final result
+```
 
 
 ## Redelegation Constraints 

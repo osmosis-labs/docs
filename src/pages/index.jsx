@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import { useHistory } from '@docusaurus/router';
-import { DyteButton } from '@dytesdk/react-ui-kit';
 
 import {
   HomepageCard as Card,
@@ -39,9 +38,13 @@ export default function Homepage() {
             <p>
               The Osmosis blockchain is a decentralized network of validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
             </p>
-            <DyteButton onClick={() => router.push('/osmosis-core/')}>
+            <button
+              type="button"
+              className="button button--primary button--lg"
+              onClick={() => router.push('/osmosis-core/')}
+            >
               Get Started &rarr;
-            </DyteButton>
+            </button>
           </div>
 
           <Section title="What's the latest">

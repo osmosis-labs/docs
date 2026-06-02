@@ -19,13 +19,13 @@ beaker
 
 ### extendWith
 
-▸ **extendWith**(`properties`): (`context`: `Record`<`string`, `unknown`\>) => `void`
+▸ **extendWith**(`properties`): (`context`: `Record`&lt;`string`, `unknown`>) => `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `properties` | `Record`<`string`, `unknown`\> |
+| `properties` | `Record`&lt;`string`, `unknown`> |
 
 #### Returns
 
@@ -37,7 +37,7 @@ beaker
 
 | Name | Type |
 | :------ | :------ |
-| `context` | `Record`<`string`, `unknown`\> |
+| `context` | `Record`&lt;`string`, `unknown`> |
 
 ##### Returns
 
@@ -51,7 +51,7 @@ ___
 
 ### getAccounts
 
-▸ **getAccounts**(`conf`, `network`): `Promise`<{ `[k: string]`: `T`;  }\>
+▸ **getAccounts**(`conf`, `network`): `Promise`&lt;&#123; `[k: string]`: `T`;  &#125;>
 
 #### Parameters
 
@@ -62,7 +62,7 @@ ___
 
 #### Returns
 
-`Promise`<{ `[k: string]`: `T`;  }\>
+`Promise`&lt;&#123; `[k: string]`: `T`;  &#125;>
 
 #### Defined in
 
@@ -72,19 +72,19 @@ ___
 
 ### getContracts
 
-▸ **getContracts**(`client`, `state`, `sdk`): `Record`<`string`, `unknown`\>
+▸ **getContracts**(`client`, `state`, `sdk`): `Record`&lt;`string`, `unknown`>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `client` | `CosmWasmClient` |
-| `state` | `Record`<`string`, `unknown`\> |
-| `sdk` | `Record`<`string`, `Record`<`string`, `Function`\>\> |
+| `state` | `Record`&lt;`string`, `unknown`> |
+| `sdk` | `Record`&lt;`string`, `Record`&lt;`string`, `Function`>> |
 
 #### Returns
 
-`Record`<`string`, `unknown`\>
+`Record`&lt;`string`, `unknown`>
 
 #### Defined in
 

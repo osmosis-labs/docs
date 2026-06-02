@@ -6,62 +6,63 @@ The Tendermint Key Management System (or TMKMS) should be used by any validator 
 
 Start by opening the node you intend to run TMKMS (not the node you validate on) and install the following dependencies:
 
-
 **Rust**
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+
 ```sh
 source $HOME/.cargo/env
 ```
 
-
 **GCC**
-::::: tabs :options="{ useUrlFragment: false }"
-:::: tab Ubuntu
+
+<Tabs>
+<TabItem value="ubuntu" label="Ubuntu" default>
 
 ```sh
 sudo apt update
 ```
+
 ```sh
 sudo apt install git build-essential ufw curl jq snapd --yes
 ```
 
-::::
-:::: tab Mac
+</TabItem>
+<TabItem value="mac" label="Mac">
 
 ```sh
 brew install gcc
 ```
-::::
-:::::
 
+</TabItem>
+</Tabs>
 
 **Libusb**
 
+<Tabs>
+<TabItem value="ubuntu" label="Ubuntu" default>
 
-::::: tabs :options="{ useUrlFragment: false }"
-:::: tab Ubuntu
 ```sh
 apt install libusb-1.0-0-dev
 ```
-::::
 
-:::: tab Mac
+</TabItem>
+<TabItem value="mac" label="Mac">
+
 ```sh
 brew install libusb
 ```
-::::
-:::::
 
+</TabItem>
+</Tabs>
 
 If on x86_64 architecture:
 
 ```sh
 export RUSTFLAGS=-Ctarget-feature=+aes,+ssse3
 ```
-
 
 ## Setup TMKMS
 
@@ -95,6 +96,7 @@ Now, modify the `tmkms.toml` file
 ```sh
 nano $HOME/tmkms/config/tmkms.toml
 ```
+
 In this example, my validator has the IP address of 123.456.32.123 and we will be using port 26659 to feed the validator key to the validator. We will also be using chain_id `osmosis-1`, but if you are doing this on the testnet be sure to use `osmo-test-5` instead:
 
 ```toml

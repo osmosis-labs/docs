@@ -77,7 +77,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `by` | (`account`: [`Account`](Account.md)) => `Promise`<`ExecuteResult`\> |
+| `by` | (`account`: [`Account`](Account.md)) => `Promise`&lt;`ExecuteResult`> |
 
 #### Defined in
 
@@ -87,11 +87,11 @@ ___
 
 ### getCode
 
-▸ **getCode**(): `Promise`<`CodeDetails`\>
+▸ **getCode**(): `Promise`&lt;`CodeDetails`>
 
 #### Returns
 
-`Promise`<`CodeDetails`\>
+`Promise`&lt;`CodeDetails`>
 
 #### Defined in
 
@@ -101,11 +101,11 @@ ___
 
 ### getInfo
 
-▸ **getInfo**(): `Promise`<`Contract`\>
+▸ **getInfo**(): `Promise`&lt;`Contract`>
 
 #### Returns
 
-`Promise`<`Contract`\>
+`Promise`&lt;`Contract`>
 
 #### Defined in
 
@@ -115,7 +115,7 @@ ___
 
 ### query
 
-▸ **query**(`qmsg`): `Promise`<`unknown`\>
+▸ **query**(`qmsg`): `Promise`&lt;`unknown`>
 
 #### Parameters
 
@@ -125,7 +125,7 @@ ___
 
 #### Returns
 
-`Promise`<`unknown`\>
+`Promise`&lt;`unknown`>
 
 #### Defined in
 

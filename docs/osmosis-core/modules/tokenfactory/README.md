@@ -207,7 +207,7 @@ osmosisd tx tokenfactory create-denom ufoo --keyring-backend=test --from mylocal
 ```
 
 ## Mint a new token
-Once a new token is created, it can be minted using the mint command in the tokenfactory module. Note that the complete tokenfactory address, in the format of factory/{creator address}/{subdenom}, must be used to mint the token.
+Once a new token is created, it can be minted using the mint command in the tokenfactory module. Note that the complete tokenfactory address, in the format of `factory/{creator address}/{subdenom}`, must be used to mint the token.
 
 ```sh
 osmosisd tx tokenfactory mint 100000000000factory/osmo1c584m4lq25h83yp6ag8hh4htjr92d954vklzja/ufoo --keyring-backend=test --from mylocalwallet

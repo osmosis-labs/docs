@@ -7,7 +7,6 @@ import TabItem from '@theme/TabItem';
 import ColorCode from '../components/ColorCode';
 import ColorPalette from '../components/ColorPalette';
 import InfoTooltip from '../components/InfoTooltip';
-import PropsTable from '../components/PropsTable';
 import ComponentsGrid from '../components/ComponentsGrid';
 
 export default {
@@ -20,6 +19,5 @@ export default {
   color: ColorCode,
   ColorPalette,
   InfoTooltip,
-  PropsTable,
   ComponentsGrid
 };

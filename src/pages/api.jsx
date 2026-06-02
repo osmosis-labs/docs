@@ -2,49 +2,147 @@ import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { DyteSpinner, DyteTooltip } from '@dytesdk/react-ui-kit';
 import { useHistory } from '@docusaurus/router';
 import clsx from 'clsx';
 
 import useBreakpoint from '../lib/useBreakpoint';
 import SectionsMenu from '../components/SectionsMenu';
 
-const API_TOOLTIP_KEY = 'dyte-api-v2-tooltip-shown';
+// Load the Stoplight Elements web-components bundle once, client-side. We use
+// the custom-element build rather than the React <API> export because the
+// React build calls react-router's useLocation() and, under Docusaurus 3
+// (which ships its own react-router v5), the router-context detection in
+// Stoplight's bundled react-router v6 misfires and crashes the page. The
+// web-component encapsulates its own router internally, so there is no
+// context conflict with the host app.
+const WEB_COMPONENTS_SRC = '/assets/js/elements-web-components.min.js';
+
+// Upper bound on how long we wait for <elements-api> to register before
+// treating the load as failed. customElements.whenDefined only ever resolves,
+// never rejects, so without a timeout a bundle that loads but never registers
+// the element (or an orphaned waiter on a tag that later errored) would leave
+// the page stuck on the spinner forever.
+const ELEMENTS_DEFINE_TIMEOUT_MS = 15000;
+
+// Resolves once <elements-api> is defined, or rejects on timeout.
+function whenElementsApiDefined() {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reject(new Error('elements-api did not register in time'));
+    }, ELEMENTS_DEFINE_TIMEOUT_MS);
+    window.customElements.whenDefined('elements-api').then(() => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve();
+    });
+  });
+}
+
+// Injects the bundle once and resolves when the <elements-api> custom element
+// is defined, or rejects if the script fails to load or never registers the
+// element within the timeout. Reused across version switches: if the element
+// is already defined we resolve immediately, and a previously-failed <script>
+// tag is removed so a retry can re-inject it.
+function loadElementsWebComponent() {
+  if (typeof window === 'undefined' || !window.customElements) {
+    return Promise.reject(new Error('No window/customElements'));
+  }
+  if (window.customElements.get('elements-api')) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(
+      `script[src="${WEB_COMPONENTS_SRC}"]`
+    );
+    if (existing) {
+      // A tag is already present: wait for the element to define rather than
+      // re-injecting. The timeout guards against the tag having errored out
+      // from under us (its waiter would otherwise never settle).
+      whenElementsApiDefined().then(resolve, reject);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = WEB_COMPONENTS_SRC;
+    script.async = true;
+    script.onload = () => whenElementsApiDefined().then(resolve, reject);
+    script.onerror = () => {
+      // Drop the failed tag so a later attempt can re-inject and retry.
+      script.remove();
+      reject(new Error(`Failed to load ${WEB_COMPONENTS_SRC}`));
+    };
+    document.head.appendChild(script);
+  });
+}
 
 function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
   return (
     <BrowserOnly
       fallback={
         <div className="loading-container">
-          <DyteSpinner />
+          <span className="api-loading-spinner" aria-label="Loading" />
         </div>
       }
     >
-      {() => {
-        // eslint-disable-next-line no-undef
-        const { API } = require('@stoplight/elements');
-
-        return (
-          <div className={clsx('elements-container', layout)}>
-            <API
-              apiDescriptionUrl={`/api/${currentVersion}.yaml`}
-              basePath="/"
-              router="hash"
-              layout={layout}
-              hideSchemas={false}
-              className="stacked"
-            />
-          </div>
-        );
-      }}
+      {() => <APIElementClient layout={layout} currentVersion={currentVersion} />}
     </BrowserOnly>
+  );
+}
+
+// 'loading' until the web-component is defined, then 'ready'; 'error' if the
+// bundle fails to load (otherwise the page would render an empty, unupgraded
+// <elements-api> with no feedback).
+function APIElementClient({ layout, currentVersion }) {
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    let active = true;
+    setStatus('loading');
+    loadElementsWebComponent().then(
+      () => active && setStatus('ready'),
+      () => active && setStatus('error')
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (status === 'error') {
+    return (
+      <div className="loading-container">
+        <p role="alert">
+          The API reference failed to load. Please refresh the page, or view the{' '}
+          <a href={`/api/${currentVersion}.yaml`}>raw OpenAPI specification</a>.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'loading') {
+    return (
+      <div className="loading-container">
+        <span className="api-loading-spinner" aria-label="Loading" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={clsx('elements-container', layout)}>
+      <elements-api
+        apiDescriptionUrl={`/api/${currentVersion}.yaml`}
+        router="hash"
+        layout={layout}
+      />
+    </div>
   );
 }
 
 export default function Home() {
   const router = useHistory();
   const size = useBreakpoint();
-  const [showV2Tooltip, setShowV2Tooltip] = useState(false);
 
   const location = router.location;
 
@@ -53,13 +151,6 @@ export default function Home() {
   );
 
   const currentVersion = url.searchParams.get('v') || 'RPC';
-
-  useEffect(() => {
-    // show V2 tooltip only if user hasn't seen it yet
-    if (localStorage.getItem(API_TOOLTIP_KEY) !== 'true') {
-      setShowV2Tooltip(true);
-    }
-  }, []);
 
   return (
     <Layout
@@ -78,18 +169,7 @@ export default function Home() {
         <div className="aside">
           <a className="navbar__item navbar__link dev-portal-signup dev-postman-link" target='_blank' href='https://www.postman.com/flight-astronomer-81853429/workspace/osmosis' rel="noreferrer">Open Postman Collection</a>
 
-          <DyteTooltip
-            placement="bottom"
-            variant="primary"
-            label="Please note there are APIs available from this dropdown menu."
-            open={showV2Tooltip}
-            onDyteOpenChange={(open) => {
-              if (!open) {
-                localStorage.setItem(API_TOOLTIP_KEY, 'true');
-              }
-            }}
-            disabled={!showV2Tooltip}
-          >
+          <span title="Select an API set (RPC, LCD, DATA, IBCGO) from this menu.">
             <SectionsMenu
               defaultValue={currentVersion}
               values={[
@@ -99,16 +179,12 @@ export default function Home() {
                 { name: 'IBCGO', id: 'IBCGO' },
               ]}
               onValueChange={(version) => {
-                if (showV2Tooltip) {
-                  setShowV2Tooltip(false);
-                  localStorage.setItem(API_TOOLTIP_KEY, 'true');
-                }
                 router.push(`/api/?v=${version}`);
               }}
               className="compact"
               slot="trigger"
             />
-          </DyteTooltip>
+          </span>
         </div>
       </div>
       <APIElement

@@ -142,7 +142,7 @@ In the lowerbound case, we leave it as lower-bounded by $0$, otherwise we would 
 
 Great, we have a binary search to finding an input `new_y_reserve`, such that we get a value `k` within some error bound close to the true desired `k`! We can prove that an error by a factor of `e` in `k`, implies an error of a factor less than `e` in `new_y_reserve`. So we could set `e` to be close to some correctness bound we want. Except... `new_y_reserve >> y_in`, so we'd need an extremely high error tolerance for this to work. So we actually want to adapt the equations, to reduce the "common terms" in `k` that we need to binary search over, to help us search. To do this, we open up what are we doing again, and re-expose `y_out` as a variable we explicitly search over (and therefore get error terms in `k` implying error in `y_out`)
 
-What we are doing above in the binary search is setting `k_target` and searching over `y_f` until we get `k_iter` {within tolerance} to `k_target`. Sine we want to change to iterating over $y_{out}$, we unroll that $y_f = y_0 - y_{out}$ where they are defined as:
+What we are doing above in the binary search is setting `k_target` and searching over `y_f` until we get `k_iter` within tolerance to `k_target`. Sine we want to change to iterating over $y_{out}$, we unroll that $y_f = y_0 - y_{out}$ where they are defined as:
 $$k_{target} = x_0 y_0 (x_0^2 + y_0^2 + w)$$
 $$k_{iter}(y_0 - y_{out}) = h(x_f, y_0 - y_{out}, w) = x_f (y_0 - y_{out}) (x_f^2 + (y_0 - y_{out})^2 + w)$$
 
@@ -177,7 +177,7 @@ We target an error of less than `10^{-8}` in `y_{out}`, so we conservatively set
 Now we want to wrap this binary search into `solve_cfmm`. We changed the API slightly, from what was previously denoted, to have this "y_0" term, in order to derive initial bounds.
 
 One complexity is that in the iterative search, we iterate over $y_f$, but then translate to $y_0$ in the internal equations.
-So we also use the 
+So we also use the
 
 ```python
 # solve_y returns y_out s.t. CFMM_eq(x_f, y_f, w) = k = CFMM_eq(x_0, y_0, w)
@@ -255,8 +255,8 @@ And therefore we round up in both cases.
 ##### Further optimization
 
 - The astute observer may notice that the equation we are solving in $\text{solve cfmm}$ is actually a cubic polynomial in $y$, with an always-positive derivative.
-We should then be able to use newton's root finding algorithm to solve for the solution with quadratic convergence.
-We do not pursue this today, due to other engineering tradeoffs, and insufficient analysis being done.
+  We should then be able to use newton's root finding algorithm to solve for the solution with quadratic convergence.
+  We do not pursue this today, due to other engineering tradeoffs, and insufficient analysis being done.
 
 #### Using this in swap methods
 
@@ -316,13 +316,11 @@ We see correctness of the swap fee, by imagining what happens if we took this re
 
 #### Precision handling
 
-{Something we have to be careful of is precision handling, notes on why and how we deal with it.}
+Something we have to be careful of is precision handling, notes on why and how we deal with it.
 
-<a name="err_proof">
+<a id="err_proof" />
 
-#### Proof that |e_y| < 100|e_k|
-
-</a>
+#### Proof that |e_y| &lt; 100|e_k|
 
 The function $f(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out}$ is monotonically increasing over the reals.
 You can prove this, by seeing that its [derivative's](https://www.wolframalpha.com/input?i=d%2Fdx+-x%5E3+%2B+3a+x%5E2+-+%28b+%2B+3a%5E2%29+x+) 0 values are both imaginary, and therefore has no local minima or maxima in the reals.
@@ -331,7 +329,6 @@ Via binary search, we solve for a value $y_{out}^{\*}$ such that $\left|\frac{ k
 
 **Theorem**: $e_y < 100 e_k$ as long as $|y_{out}| <= .9y_0$.
 **Informal**, we claim that for $.9y_0 < |y_{out}| < y_0$, `e_y` is "close" to `e_k` under expected parameterizations. And for $y_{out}$ significantly less than $.9y_0$, the error bounds are much better. (Often better than $e_k$)
-
 
 Let $y_{out} - y_{out}^* = a_y$, we are going to assume that $a_y << y_{out}$, and will justify this later. But due to this, we treat $a_y^c = 0$ for $c > 1$. This then implies that $y_{out}^2 - y_{out}^{*2} = y_{out}^2 - (y_{out} - a_y)^2 \approx 2y_{out}a_y$, and similarly $y_{out}^3 - y_{out}^{*3} \approx 3y_{out}^2 a_y$
 
@@ -352,22 +349,22 @@ $$e_k > e_y\left|\frac{(-3y_{out}^2 + 6y_0y_{out} - (x_f^2 + w + 3y_0^2))}{(-y_{
 
 We bound the right hand side, with the assistance of wolfram alpha. Let $a = y_{out}, b = y_0, c = x_f^2 + w$. Then we see from [wolfram alpha here](https://www.wolframalpha.com/input?i=%7C%28-3a%5E2+%2B+6ab+-+%28c+%2B+3b%5E2%29%29+%2F+%28-a%5E2+%2B+3ab+-+%28c+%2B+3b%5E2%29%29+%7C+%3E+.01), that this right hand expression is provably greater than `.01` if some set of decisions hold. We describe the solution set that satisfies our use case here:
 
-* When $y_{out} > 0$
-  * Use solution set: $a > 0, b > \frac{2}{3} a, c > \frac{1}{99} (-299a^2 + 597ab - 297b^2)$
-    * $a > 0$ by definition.
-    * $b > \frac{2}{3} a$, as that's equivalent to $y_0 > \frac{2}{3} y_{out}$. We already assume that $y_0 >= y_{out}$.
-    * Set $y_{out} = .9y_0$, per our theorem assumption. So $b = .9a$. Take $c = x^2 + w = 0$. Then [we can show that](https://www.wolframalpha.com/input?i=0+%3E+-299a%5E2+%2B+597ab+-+297b%5E2%2C+when+b%3D+.90a) $(-299a^2 + 597ab - 297b^2) < 0$ for all $a$. This completes the constraint set.
-* When $y_{out} < 0$
-  * Use solution set: $a < 0, b > \frac{2}{3} a, c > -a^2 + 3ab - 3b^2$
-    * $a < 0$ by definition.
-    * $b > \frac{2}{3} a$, as $y_0$ is positive.
-    * $c > 0$ is by definition, so we just need to bound when $-a^2 + 3ab - 3b^2 < 0$. This is always the case as long as one of $a$ or $b$ is non-zero, per [here](https://www.wolframalpha.com/input?i=-a%5E2+%2B+3ab+-+3b%5E2+%3C+0).
+- When $y_{out} > 0$
+  - Use solution set: $a > 0, b > \frac{2}{3} a, c > \frac{1}{99} (-299a^2 + 597ab - 297b^2)$
+    - $a > 0$ by definition.
+    - $b > \frac{2}{3} a$, as that's equivalent to $y_0 > \frac{2}{3} y_{out}$. We already assume that $y_0 >= y_{out}$.
+    - Set $y_{out} = .9y_0$, per our theorem assumption. So $b = .9a$. Take $c = x^2 + w = 0$. Then [we can show that](https://www.wolframalpha.com/input?i=0+%3E+-299a%5E2+%2B+597ab+-+297b%5E2%2C+when+b%3D+.90a) $(-299a^2 + 597ab - 297b^2) < 0$ for all $a$. This completes the constraint set.
+- When $y_{out} < 0$
+  - Use solution set: $a < 0, b > \frac{2}{3} a, c > -a^2 + 3ab - 3b^2$
+    - $a < 0$ by definition.
+    - $b > \frac{2}{3} a$, as $y_0$ is positive.
+    - $c > 0$ is by definition, so we just need to bound when $-a^2 + 3ab - 3b^2 < 0$. This is always the case as long as one of $a$ or $b$ is non-zero, per [here](https://www.wolframalpha.com/input?i=-a%5E2+%2B+3ab+-+3b%5E2+%3C+0).
 
 Tying this all together, we have that $e_k > .01e_y$. Therefore $e_y < 100 e_k$, satisfying our theoerem!
 
 To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $y_{out}$. When $y_{out}$ is smaller, the error is far lower. (Often to the case that $e_y < e_k$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $y_{out}$ is bigger than $.9y_0$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $x_f$ term must be large relative to $y_0$, which would yield a far better error bound.
 
-TODO: Justify a_y << y_out. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
+TODO: Justify `a_y << y_out`. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
 
 ### Spot Price
 
@@ -401,7 +398,7 @@ The JoinPool API only supports JoinPoolNoSwap if
 There are a couple ways to define `JoinPoolSingleAssetIn`. The simplest way is to define it from its intended relation from the CFMM, with Exit pool. We describe this below under the zero swap fee case.
 
 Let `pool_{L, S}` represent a pool with liquidity `L`, and `S` total LP shares.
-If we call `pool_{L, S}.JoinPoolSingleAssetIn(tokensIn) -> (N, pool_{L + tokensIn, S + N})`, or in others we get out `N` new LP shares, and a pool with with tokensIn added to liquidity. 
+If we call `pool_{L, S}.JoinPoolSingleAssetIn(tokensIn) -> (N, pool_{L + tokensIn, S + N})`, or in others we get out `N` new LP shares, and a pool with with tokensIn added to liquidity.
 It must then be the case that `pool_{L+tokensIn, S+N}.ExitPool(N) -> (tokensExited, pool_{L + tokensIn - tokensExited, S})`.
 Then if we swap all of `tokensExited` back to tokensIn, under 0 swap fee, we should get back to `pool_{L, S}` under the CFMM property.
 

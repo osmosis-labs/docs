@@ -34,7 +34,7 @@ Arguments:
 
 * `--rust-flags <rust-flags>`: RUST_FLAGS that passed while compiling to wasm If building with Beaker, it's usually "-C link-arg=-s"
 
-* `--optimizer <optimizer>`: Type and version of the [optimizer](https://github.com/CosmWasm/rust-optimizer), either: rust-optimizer:<version> or workspace-optimizer:</version>. Beaker use workspace-optimizer, the version, if not manually configured, can be found in `wasm` config doc
+* `--optimizer <optimizer>`: Type and version of the [optimizer](https://github.com/CosmWasm/rust-optimizer), either: `rust-optimizer:<version>` or `workspace-optimizer:<version>`. Beaker use workspace-optimizer, the version, if not manually configured, can be found in `wasm` config doc
 
 * `-n/--network <network>`: Name of the network to broadcast transaction to, the actual endpoint / chain-id are defined in config (default: `local`)
 

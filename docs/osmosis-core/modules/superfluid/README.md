@@ -542,37 +542,37 @@ It consists of the following attributes:
 
 | Type                | Attribute Key | Attribute Value |
 | ------------------- | ------------- | --------------- |
-| superfluid_delegate | lock_id       | {lock_id}       |
-| superfluid_delegate | validator     | {validator}     |
+| superfluid_delegate | lock_id       | `{lock_id}`       |
+| superfluid_delegate | validator     | `{validator}`     |
 
 ### MsgSuperfluidUndelegate
 
 | Type                  | Attribute Key | Attribute Value |
 | --------------------- | ------------- | --------------- |
-| superfluid_undelegate | lock_id       | {lock_id}       |
+| superfluid_undelegate | lock_id       | `{lock_id}`       |
 
 ### MsgSuperfluidUnbondLock
 
 | Type                   | Attribute Key | Attribute Value |
 | ---------------------- | ------------- | --------------- |
-| superfluid_unbond_lock | lock_id       | {lock_id}       |
+| superfluid_unbond_lock | lock_id       | `{lock_id}`       |
 
 ### MsgLockAndSuperfluidDelegate
 
 | Type                | Attribute Key  | Attribute Value |
 | ------------------- | -------------- | --------------- |
-| lock_tokens         | period_lock_id | {periodLockID}  |
-| lock_tokens         | owner          | {owner}         |
-| lock_tokens         | amount         | {amount}        |
-| lock_tokens         | duration       | {duration}      |
-| lock_tokens         | unlock_time    | {unlockTime}    |
+| lock_tokens         | period_lock_id | `{periodLockID}`  |
+| lock_tokens         | owner          | `{owner}`         |
+| lock_tokens         | amount         | `{amount}`        |
+| lock_tokens         | duration       | `{duration}`      |
+| lock_tokens         | unlock_time    | `{unlockTime}`    |
 | message             | action         | lock_tokens     |
-| message             | sender         | {owner}         |
-| transfer            | recipient      | {moduleAccount} |
-| transfer            | sender         | {owner}         |
-| transfer            | amount         | {amount}        |
-| superfluid_delegate | lock_id        | {lock_id}       |
-| superfluid_delegate | validator      | {validator}     |
+| message             | sender         | `{owner}`         |
+| transfer            | recipient      | `{moduleAccount}` |
+| transfer            | sender         | `{owner}`         |
+| transfer            | amount         | `{amount}`        |
+| superfluid_delegate | lock_id        | `{lock_id}`       |
+| superfluid_delegate | validator      | `{validator}`     |
 
 ## Proposals
 
@@ -580,14 +580,14 @@ It consists of the following attributes:
 
 | Type                 | Attribute Key         | Attribute Value |
 | -------------------- | --------------------- | --------------- |
-| set_superfluid_asset | denom                 | {denom}         |
-| set_superfluid_asset | superfluid_asset_type | {asset_type}    |
+| set_superfluid_asset | denom                 | `{denom}`         |
+| set_superfluid_asset | superfluid_asset_type | `{asset_type}`    |
 
 ### RemoveSuperfluidAssetsProposal
 
 | Type                    | Attribute Key | Attribute Value |
 | ----------------------- | ------------- | --------------- |
-| remove_superfluid_asset | denom         | {denom}         |
+| remove_superfluid_asset | denom         | `{denom}`         |
 
 ## Queries
 
@@ -895,7 +895,7 @@ period, but this is not considered a near-term problem.
 
 The overslashing possibility stems from a problem in the SDKs slashing
 module, that really is a bug there, and superfluid is doing the correct
-thing. <https://github.com/cosmos/cosmos-sdk/issues/1440>
+thing. [https://github.com/cosmos/cosmos-sdk/issues/1440](https://github.com/cosmos/cosmos-sdk/issues/1440)
 
 Basically, slashes to unbondings and redelegations can lower the amount
 that gets slashed from live delegations in the staking module today.

@@ -22,6 +22,6 @@ See the module dependence graph below for further information:
 
 This is done in addition to updates to several modules within the SDK.
 
-* `gov` - {Voting period changes}
-* `vesting` - {vesting changes}
+* `gov` - Voting period changes
+* `vesting` - vesting changes
 * Various binding & performance improvements to other modules

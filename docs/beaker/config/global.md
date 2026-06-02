@@ -44,7 +44,7 @@
   
   
 
-* **`networks`** : Map < String, Network >  
+* **`networks`** : Map &lt; String, Network >  
   
    > 
    > Map of the available network configuration to interact with via beaker  
@@ -96,7 +96,7 @@
     
     
 
-* **`accounts`** : Map < String, Account >  
+* **`accounts`** : Map &lt; String, Account >  
   
    > 
    > Predefined account used for interacting with the chain  

@@ -131,7 +131,7 @@ Information on Osmosis' incentive mining program can be found in this
 ## LP Tokens
 
 When users deposit assets into a liquidity pool, they receive LP tokens. These tokens represent their share of the total pool.
-For example, if Pool #1 is the OSMO< >ATOM pool, users can deposit OSMO and ATOM tokens into the pool and receive back Pool1 share tokens. These tokens do not correspond to an exact quantity of tokens, but rather the proportional ownership of the pool.
+For example, if Pool #1 is the OSMO&lt; >ATOM pool, users can deposit OSMO and ATOM tokens into the pool and receive back Pool1 share tokens. These tokens do not correspond to an exact quantity of tokens, but rather the proportional ownership of the pool.
 When users remove their liquidity from the pool, they get back the percentage of liquidity that their LP tokens represent.
 Since buying and selling from the pool changes the quantities of assets within a pool, users are highly unlikely to withdraw the same amount of each token that they initially deposited. They usually receive more of one and less of another, based on the trades executed from the pool.
 

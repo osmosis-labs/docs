@@ -10,11 +10,11 @@ Other advantages include superior performance with multiple RPC endpoint configu
 
 ## Useful resources
 
-- SubQuery General Docs: <https://academy.subquery.network/>
-- Quick Start Guide: <https://academy.subquery.network/quickstart/quickstart.html>
-- Osmosis Starter Project: <https://github.com/subquery/cosmos-subql-starter/tree/main/Osmosis>
-- SubQuery Osmosis Example Project: <https://academy.subquery.network/quickstart/quickstart_chains/cosmos-osmosis.html> and article <https://blog.subquery.network/subquery-example-project-osmosis/?lng=en?>
-- SubQuery Osmosis Workshop Recording: <https://www.youtube.com/watch?v=t6QfK8g5sCw&t=39s>
+- SubQuery General Docs: [https://academy.subquery.network/](https://academy.subquery.network/)
+- Quick Start Guide: [https://academy.subquery.network/quickstart/quickstart.html](https://academy.subquery.network/quickstart/quickstart.html)
+- Osmosis Starter Project: [https://github.com/subquery/cosmos-subql-starter/tree/main/Osmosis](https://github.com/subquery/cosmos-subql-starter/tree/main/Osmosis)
+- SubQuery Osmosis Example Project: [https://academy.subquery.network/quickstart/quickstart_chains/cosmos-osmosis.html](https://academy.subquery.network/quickstart/quickstart_chains/cosmos-osmosis.html) and article [https://blog.subquery.network/subquery-example-project-osmosis/?lng=en?](https://blog.subquery.network/subquery-example-project-osmosis/?lng=en?)
+- SubQuery Osmosis Workshop Recording: [https://www.youtube.com/watch?v=t6QfK8g5sCw&t=39s](https://www.youtube.com/watch?v=t6QfK8g5sCw&t=39s)
 
 # Getting started
 
