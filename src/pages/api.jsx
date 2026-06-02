@@ -8,6 +8,25 @@ import clsx from 'clsx';
 import useBreakpoint from '../lib/useBreakpoint';
 import SectionsMenu from '../components/SectionsMenu';
 
+// Load the Stoplight Elements web-components bundle once, client-side. We use
+// the custom-element build rather than the React <API> export because the
+// React build calls react-router's useLocation() and, under Docusaurus 3
+// (which ships its own react-router v5), the router-context detection in
+// Stoplight's bundled react-router v6 misfires and crashes the page. The
+// web-component encapsulates its own router internally, so there is no
+// context conflict with the host app.
+const WEB_COMPONENTS_SRC = '/assets/js/elements-web-components.min.js';
+
+function loadElementsWebComponent() {
+  if (typeof window === 'undefined') return;
+  if (window.customElements && window.customElements.get('elements-api')) return;
+  if (document.querySelector(`script[src="${WEB_COMPONENTS_SRC}"]`)) return;
+  const script = document.createElement('script');
+  script.src = WEB_COMPONENTS_SRC;
+  script.async = true;
+  document.head.appendChild(script);
+}
+
 function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
   return (
     <BrowserOnly
@@ -18,18 +37,14 @@ function APIElement({ layout = 'stacked', currentVersion = 'RPC' }) {
       }
     >
       {() => {
-        // eslint-disable-next-line no-undef
-        const { API } = require('@stoplight/elements');
+        loadElementsWebComponent();
 
         return (
           <div className={clsx('elements-container', layout)}>
-            <API
+            <elements-api
               apiDescriptionUrl={`/api/${currentVersion}.yaml`}
-              basePath="/"
               router="hash"
               layout={layout}
-              hideSchemas={false}
-              className="stacked"
             />
           </div>
         );
