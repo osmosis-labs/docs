@@ -18,61 +18,34 @@ const rehypeKatex = esmDefault(require('rehype-katex'));
   remarkPlugins: [[npm2yarn, { sync: true }]],
 };
 
-// KaTeX is enabled per-section, not globally. remark-math (v3) treats every
-// unescaped paired `$...$` as inline math and offers no option to disable that,
-// so enabling it everywhere would mangle currency ($500) and shell vars ($HOME,
-// $OSMO) in prose across the cosmwasm, validate, and endpoints pages. Only the
-// osmosis-core and overview sections carry real math (concentrated-liquidity,
-// stableswap, twap, apr), so the math plugins are scoped to just those two.
-// Within those sections, inline math uses `$...$` and display math uses
-// `$$...$$` (remark-math v3 supports no other delimiter). Prose dollar
-// amounts and shell vars in these sections are escaped as `\$` so they are
-// not parsed as math.
-const mathSettings = {
-  remarkPlugins: [remarkMath],
-  rehypePlugins: [rehypeKatex],
-};
+// Math (KaTeX) is applied globally to the single docs instance. remark-math 6
+// supports `singleDollarTextMath: false`, which requires `$$...$$` for inline
+// math and leaves a single `$` as literal text, so bare dollar signs in prose
+// and code (currency like $500, shell vars like $HOME / $CODE_ID across the
+// cosmwasm and validate pages) are NOT parsed as math. This removes the old
+// per-section scoping (a remark-math v3 limitation) that previously forced the
+// docs to be split into separate plugin instances. Inline math uses `$$...$$`
+// on the same line; display math uses `$$...$$` as its own block.
+const mathRemark = [remarkMath, { singleDollarTextMath: false }];
 
-/**
- * Defines a section with overridable defaults
- * @param {string} section
- * @param {import('@docusaurus/plugin-content-docs').Options} options
- */
-function defineSection(section, options = {}) {
-  return [
-    '@docusaurus/plugin-content-docs',
-    /** @type {import('@docusaurus/plugin-content-docs').Options} */
-    ({
-      path: `docs/${section}`,
-      routeBasePath: section,
-      id: section,
-      sidebarPath: require.resolve('./sidebars-default.js'),
-      breadcrumbs: false,
-      editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
-      ...defaultSettings,
-      ...options,
-      // Concatenate plugin arrays rather than letting `options` clobber the
-      // defaults, so a section can add math plugins without dropping npm2yarn.
-      remarkPlugins: [
-        ...(defaultSettings.remarkPlugins || []),
-        ...(options.remarkPlugins || []),
-      ],
-      rehypePlugins: [
-        ...(defaultSettings.rehypePlugins || []),
-        ...(options.rehypePlugins || []),
-      ],
-    }),
-  ];
-}
-
-const SECTIONS = [
-  defineSection('osmosis-core', mathSettings),
-  defineSection('cosmwasm'),
-  defineSection('frontend'),
-  defineSection('beaker'),
-  defineSection('telescope'),
-  defineSection('osmojs'),
-  defineSection('overview', mathSettings),
+// Single docs instance rooted at `docs/`, served at the site root so existing
+// URLs are preserved (docs/osmosis-core/... -> /osmosis-core/...). One sidebar
+// follows the reader across all sections (the fix for the former per-section
+// isolated sidebars). MTN-88 Phase 1: collapse only; the folder->taxonomy
+// reorganization and redirects come in a later phase.
+const docsPlugin = [
+  '@docusaurus/plugin-content-docs',
+  /** @type {import('@docusaurus/plugin-content-docs').Options} */
+  ({
+    path: 'docs',
+    routeBasePath: '/',
+    id: 'default',
+    sidebarPath: require.resolve('./sidebars-default.js'),
+    breadcrumbs: false,
+    editUrl: 'https://github.com/osmosis-labs/docs/tree/main/',
+    remarkPlugins: [...defaultSettings.remarkPlugins, mathRemark],
+    rehypePlugins: [rehypeKatex],
+  }),
 ];
 
 /** @type {import('@docusaurus/types').Config} */
@@ -122,7 +95,7 @@ const config = {
   ],
 
   plugins: [
-    ...SECTIONS,
+    docsPlugin,
     webpackPlugin,
   ],
 
