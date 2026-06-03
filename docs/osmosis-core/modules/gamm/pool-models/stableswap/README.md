@@ -5,9 +5,9 @@ There is a price ratio they are expected to be at, and the AMM offers low slippa
 There is still price impact for each trade, and as the liquidity becomes more lop-sided, the slippage drastically increases.
 
 This package implements the Solidly stableswap curve, namely a CFMM with
-invariant: $f(x, y) = xy(x^2 + y^2) = k$
+invariant: $$f(x, y) = xy(x^2 + y^2) = k$$
 
-It is generalized to the multi-asset setting as $f(a_1, ..., a_n) = a_1 * ... * a_n (a_1^2 + ... + a_n^2)$
+It is generalized to the multi-asset setting as $$f(a_1, ..., a_n) = a_1 * ... * a_n (a_1^2 + ... + a_n^2)$$
 
 ## Pool configuration
 
@@ -69,7 +69,7 @@ Then we show how these are used to give all of the swqp equations. --->
 
 Most operations we do only need to reason about two of the assets in a pool, and sometimes only one.
 We wish to have a simpler CFMM function to work within these cases.
-Due to the CFMM equation $f$ being a symmetric function, we can without loss of generality reorder the arguments to the function. Thus we put the assets of relevance at the beginning of the function. So if two assets $x, y$, we write: $f(x,y, a_3, ... a_n) = xy * a_3 * ... a_n (x^2 + y^2 + a_3^2 + ... + a_n^2)$.
+Due to the CFMM equation $$f$$ being a symmetric function, we can without loss of generality reorder the arguments to the function. Thus we put the assets of relevance at the beginning of the function. So if two assets $$x, y$$, we write: $$f(x,y, a_3, ... a_n) = xy * a_3 * ... a_n (x^2 + y^2 + a_3^2 + ... + a_n^2)$$.
 
 We then take a more convenient expression to work with, via variable substitution.
 
@@ -97,26 +97,26 @@ $$
 
 $$\text{then } g(x,y,v,w) = xyv(x^2 + y^2 + w) = f(x,y, a_3, ... a_n)$$
 
-As a corollary, notice that $g(x,y,v,w) = v * g(x,y,1,w)$, which will be useful when we have to compare before and after quantities. We will use $h(x,y,w) := g(x,y,1,w)$ as short-hand for this.
+As a corollary, notice that $$g(x,y,v,w) = v * g(x,y,1,w)$$, which will be useful when we have to compare before and after quantities. We will use $$h(x,y,w) := g(x,y,1,w)$$ as short-hand for this.
 
 ### Swaps
 
-The question we need to answer for a swap is "suppose I want to swap $a$ units of $x$, how many units $b$ of $y$ would I get out".
+The question we need to answer for a swap is "suppose I want to swap $$a$$ units of $$x$$, how many units $$b$$ of $$y$$ would I get out".
 
-Since we only deal with two assets at a time, we can then work with our prior definition of $g$. Let the input asset's reserves be $x$, the output asset's reserves be $y$, and we compute $v$ and $w$ given the other asset reserves, whose reserves are untouched throughout the swap.
+Since we only deal with two assets at a time, we can then work with our prior definition of $$g$$. Let the input asset's reserves be $$x$$, the output asset's reserves be $$y$$, and we compute $$v$$ and $$w$$ given the other asset reserves, whose reserves are untouched throughout the swap.
 
 First we note the direct way of solving this, its limitation, and then an iterative approximation approach that we implement.
 
 #### Direct swap solution
 
 The method to compute this under 0 swap fee is implied by the CFMM equation itself, since the constant refers to:
-$g(x_0, y_0, v, w) = k = g(x_0 + a, y_0 - b, v, w)$. As $k$ is linearly related to $v$, and $v$ is unchanged throughout the swap, we can simplify the equation to be reasoning about $k' = \frac{k}{v}$ as the constant, and $h$ instead of $g$
+$$g(x_0, y_0, v, w) = k = g(x_0 + a, y_0 - b, v, w)$$. As $$k$$ is linearly related to $$v$$, and $$v$$ is unchanged throughout the swap, we can simplify the equation to be reasoning about $$k' = \frac{k}{v}$$ as the constant, and $$h$$ instead of $$g$$
 
-We then model the solution by finding a function $\text{solve cfmm}(x, w, k') = y\text{ s.t. }h(x, y, w) = k'$.
-Then we can solve the swap amount out by first computing $k'$ as $k' = h(x_0, y_0, w)$, and
-computing $y_f := \text{solve cfmm}(x_0 + a, w, k')$. We then get that $b = y_0 - y_f$.
+We then model the solution by finding a function $$\text{solve cfmm}(x, w, k') = y\text{ s.t. }h(x, y, w) = k'$$.
+Then we can solve the swap amount out by first computing $$k'$$ as $$k' = h(x_0, y_0, w)$$, and
+computing $$y_f := \text{solve cfmm}(x_0 + a, w, k')$$. We then get that $$b = y_0 - y_f$$.
 
-So all we need is an equation for $\text{solve cfmm}$! Its essentially inverting a multi-variate polynomial, and in this case is solvable: [wolfram alpha link](https://www.wolframalpha.com/input?i=solve+for+y+in+x+*+y+*+%28x%5E2+%2B+y%5E2+%2B+w%29+%3D+k)
+So all we need is an equation for $$\text{solve cfmm}$$! Its essentially inverting a multi-variate polynomial, and in this case is solvable: [wolfram alpha link](https://www.wolframalpha.com/input?i=solve+for+y+in+x+*+y+*+%28x%5E2+%2B+y%5E2+%2B+w%29+%3D+k)
 
 Or if were clever with simplification in the two asset case, we can reduce it to: [desmos link](https://www.desmos.com/calculator/hag1f0wieg).
 
@@ -126,23 +126,23 @@ Instead there is a more generic way to compute these, which we detail in the nex
 
 #### Iterative search solution
 
-Instead of using the direct solution for $\text{solve cfmm}(x, w, k')$, instead notice that $h(x, y, w)$ is an increasing function in $y$.
-So we can simply binary search for $y$ such that $h(x, y, w) = k'$, and we are guaranteed convergence within some error bound.
+Instead of using the direct solution for $$\text{solve cfmm}(x, w, k')$$, instead notice that $$h(x, y, w)$$ is an increasing function in $$y$$.
+So we can simply binary search for $$y$$ such that $$h(x, y, w) = k'$$, and we are guaranteed convergence within some error bound.
 
-In order to do a binary search, we need bounds on $y$.
-The lowest lowerbound is $0$, and the largest upperbound is $\infty$.
-The maximal upperbound is obviously unworkable, and in general binary searching around wide ranges is unfortunate, as we expect most trades to be centered around $y_0$.
+In order to do a binary search, we need bounds on $$y$$.
+The lowest lowerbound is $$0$$, and the largest upperbound is $$\infty$$.
+The maximal upperbound is obviously unworkable, and in general binary searching around wide ranges is unfortunate, as we expect most trades to be centered around $$y_0$$.
 This would suggest that we should do something smarter to iteratively approach the right value for the upperbound at least.
-Notice that $h$ is super-linearly related in $y$, and at most cubically related to $y$.
-This means that $\forall c \in \mathbb{R}^+, c * h(x,y,w) < h(x,c*y,w) < c^3 * h(x,y,w)$.
-We can use this fact to get a pretty-good initial upperbound guess for $y$ using the linear estimate.
-In the lowerbound case, we leave it as lower-bounded by $0$, otherwise we would need to take a cubed root to get a better estimate.
+Notice that $$h$$ is super-linearly related in $$y$$, and at most cubically related to $$y$$.
+This means that $$\forall c \in \mathbb{R}^+, c * h(x,y,w) < h(x,c*y,w) < c^3 * h(x,y,w)$$.
+We can use this fact to get a pretty-good initial upperbound guess for $$y$$ using the linear estimate.
+In the lowerbound case, we leave it as lower-bounded by $$0$$, otherwise we would need to take a cubed root to get a better estimate.
 
 ##### Altering binary search equations due to error tolerance
 
 Great, we have a binary search to finding an input `new_y_reserve`, such that we get a value `k` within some error bound close to the true desired `k`! We can prove that an error by a factor of `e` in `k`, implies an error of a factor less than `e` in `new_y_reserve`. So we could set `e` to be close to some correctness bound we want. Except... `new_y_reserve >> y_in`, so we'd need an extremely high error tolerance for this to work. So we actually want to adapt the equations, to reduce the "common terms" in `k` that we need to binary search over, to help us search. To do this, we open up what are we doing again, and re-expose `y_out` as a variable we explicitly search over (and therefore get error terms in `k` implying error in `y_out`)
 
-What we are doing above in the binary search is setting `k_target` and searching over `y_f` until we get `k_iter` within tolerance to `k_target`. Sine we want to change to iterating over $y_{out}$, we unroll that $y_f = y_0 - y_{out}$ where they are defined as:
+What we are doing above in the binary search is setting `k_target` and searching over `y_f` until we get `k_iter` within tolerance to `k_target`. Sine we want to change to iterating over $$y_{out}$$, we unroll that $$y_f = y_0 - y_{out}$$ where they are defined as:
 $$k_{target} = x_0 y_0 (x_0^2 + y_0^2 + w)$$
 $$k_{iter}(y_0 - y_{out}) = h(x_f, y_0 - y_{out}, w) = x_f (y_0 - y_{out}) (x_f^2 + (y_0 - y_{out})^2 + w)$$
 
@@ -152,7 +152,7 @@ $$k_{target} = x_0 y_0 (x_0^2 + y_0^2 + w) / x_f$$
 
 $$k_{iter}(y_{out}) = (y_0 - y_{out}) (x_f^2 + (y_0 - y_{out})^2 + w) = (y_0 - y_{out}) (x_f^2 + w) + (y_0 - y_{out})^3$$
 
-So $k_{iter}(y_{out})$ is a cubic polynomial in $y_{out}$. Next we remove the terms that have no dependence on `y_{delta}` (the constant term in the polynomial). To do this first we rewrite this to make the polynomial clearer:
+So $$k_{iter}(y_{out})$$ is a cubic polynomial in $$y_{out}$$. Next we remove the terms that have no dependence on `y_{delta}` (the constant term in the polynomial). To do this first we rewrite this to make the polynomial clearer:
 
 $$k_{iter}(y_{out}) = (y_0 - y_{out}) (x_f^2 + w) + y_0^3 - 3y_0^2 y_{out} + 3 y_0 y_{out}^2 - y_{out}^3$$
 
@@ -176,7 +176,7 @@ We target an error of less than `10^{-8}` in `y_{out}`, so we conservatively set
 
 Now we want to wrap this binary search into `solve_cfmm`. We changed the API slightly, from what was previously denoted, to have this "y_0" term, in order to derive initial bounds.
 
-One complexity is that in the iterative search, we iterate over $y_f$, but then translate to $y_0$ in the internal equations.
+One complexity is that in the iterative search, we iterate over $$y_f$$, but then translate to $$y_0$$ in the internal equations.
 So we also use the
 
 ```python
@@ -254,7 +254,7 @@ And therefore we round up in both cases.
 
 ##### Further optimization
 
-- The astute observer may notice that the equation we are solving in $\text{solve cfmm}$ is actually a cubic polynomial in $y$, with an always-positive derivative.
+- The astute observer may notice that the equation we are solving in $$\text{solve cfmm}$$ is actually a cubic polynomial in $$y$$, with an always-positive derivative.
   We should then be able to use newton's root finding algorithm to solve for the solution with quadratic convergence.
   We do not pursue this today, due to other engineering tradeoffs, and insufficient analysis being done.
 
@@ -322,15 +322,15 @@ Something we have to be careful of is precision handling, notes on why and how w
 
 #### Proof that |e_y| &lt; 100|e_k|
 
-The function $f(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out}$ is monotonically increasing over the reals.
+The function $$f(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out}$$ is monotonically increasing over the reals.
 You can prove this, by seeing that its [derivative's](https://www.wolframalpha.com/input?i=d%2Fdx+-x%5E3+%2B+3a+x%5E2+-+%28b+%2B+3a%5E2%29+x+) 0 values are both imaginary, and therefore has no local minima or maxima in the reals.
-Therefore, there exists exactly one real $y_{out}$ s.t. $f(y_{out}) = k$.
-Via binary search, we solve for a value $y_{out}^{\*}$ such that $\left|\frac{ k - k^{\*} }{k}\right| < e_k$, where $k^{\*} = f(y_{out}^{\*})$. We seek to then derive bounds on $e_y = \left|\frac{ y_{out} - y_{out}^{\*} }{y_{out}}\right|$ in relation to $e_k$.
+Therefore, there exists exactly one real $$y_{out}$$ s.t. $$f(y_{out}) = k$$.
+Via binary search, we solve for a value $$y_{out}^{\*}$$ such that $$\left|\frac{ k - k^{\*} }{k}\right| < e_k$$, where $$k^{\*} = f(y_{out}^{\*})$$. We seek to then derive bounds on $$e_y = \left|\frac{ y_{out} - y_{out}^{\*} }{y_{out}}\right|$$ in relation to $$e_k$$.
 
-**Theorem**: $e_y < 100 e_k$ as long as $|y_{out}| <= .9y_0$.
-**Informal**, we claim that for $.9y_0 < |y_{out}| < y_0$, `e_y` is "close" to `e_k` under expected parameterizations. And for $y_{out}$ significantly less than $.9y_0$, the error bounds are much better. (Often better than $e_k$)
+**Theorem**: $$e_y < 100 e_k$$ as long as $$|y_{out}| <= .9y_0$$.
+**Informal**, we claim that for $$.9y_0 < |y_{out}| < y_0$$, `e_y` is "close" to `e_k` under expected parameterizations. And for $$y_{out}$$ significantly less than $$.9y_0$$, the error bounds are much better. (Often better than $$e_k$$)
 
-Let $y_{out} - y_{out}^* = a_y$, we are going to assume that $a_y << y_{out}$, and will justify this later. But due to this, we treat $a_y^c = 0$ for $c > 1$. This then implies that $y_{out}^2 - y_{out}^{*2} = y_{out}^2 - (y_{out} - a_y)^2 \approx 2y_{out}a_y$, and similarly $y_{out}^3 - y_{out}^{*3} \approx 3y_{out}^2 a_y$
+Let $$y_{out} - y_{out}^* = a_y$$, we are going to assume that $$a_y << y_{out}$$, and will justify this later. But due to this, we treat $$a_y^c = 0$$ for $$c > 1$$. This then implies that $$y_{out}^2 - y_{out}^{*2} = y_{out}^2 - (y_{out} - a_y)^2 \approx 2y_{out}a_y$$, and similarly $$y_{out}^3 - y_{out}^{*3} \approx 3y_{out}^2 a_y$$
 
 Now we are prepared to start bounding this.
 $$k - k^{\*} = -(y_{out}^3 - y_{out}^{3\*}) + 3y_0(y_{out}^2 - y_{out}^{2\*}) - (x_f^2 + w + 3y_0^2)(y_{out} - y_{out}^{\*})$$
@@ -339,30 +339,30 @@ $$k - k^{\*} \approx -(3y_{out}^2 a_y) + 3y_0 (2y_{out}a_y) - (x_f^2 + w + 3y_0^
 
 $$k - k^{\*} \approx a_y(-3y_{out}^2 + 6y_0y_{out} - (x_f^2 + w + 3y_0^2))$$
 
-Rewrite $k = y_{out}(-y_{out}^2 + 3y_0y_{out} - (x_f^2 + w + 3y_0^2))$
+Rewrite $$k = y_{out}(-y_{out}^2 + 3y_0y_{out} - (x_f^2 + w + 3y_0^2))$$
 
 $$e_k > \left|\frac{ k - k^{\*} }{k}\right| = \left|\frac{a_y}{y_{out}} \frac{(-3y_{out}^2 + 6y_0y_{out} - (x_f^2 + w + 3y_0^2))}{(-y_{out}^2 + 3y_0y_{out} - (x_f^2 + w + 3y_0^2))}\right|$$
 
-Notice that $\left|\frac{a_y}{y_{out}}\right| = e_y$! Therefore
+Notice that $$\left|\frac{a_y}{y_{out}}\right| = e_y$$! Therefore
 
 $$e_k > e_y\left|\frac{(-3y_{out}^2 + 6y_0y_{out} - (x_f^2 + w + 3y_0^2))}{(-y_{out}^2 + 3y_0y_{out} - (x_f^2 + w + 3y_0^2))}\right|$$
 
-We bound the right hand side, with the assistance of wolfram alpha. Let $a = y_{out}, b = y_0, c = x_f^2 + w$. Then we see from [wolfram alpha here](https://www.wolframalpha.com/input?i=%7C%28-3a%5E2+%2B+6ab+-+%28c+%2B+3b%5E2%29%29+%2F+%28-a%5E2+%2B+3ab+-+%28c+%2B+3b%5E2%29%29+%7C+%3E+.01), that this right hand expression is provably greater than `.01` if some set of decisions hold. We describe the solution set that satisfies our use case here:
+We bound the right hand side, with the assistance of wolfram alpha. Let $$a = y_{out}, b = y_0, c = x_f^2 + w$$. Then we see from [wolfram alpha here](https://www.wolframalpha.com/input?i=%7C%28-3a%5E2+%2B+6ab+-+%28c+%2B+3b%5E2%29%29+%2F+%28-a%5E2+%2B+3ab+-+%28c+%2B+3b%5E2%29%29+%7C+%3E+.01), that this right hand expression is provably greater than `.01` if some set of decisions hold. We describe the solution set that satisfies our use case here:
 
-- When $y_{out} > 0$
-  - Use solution set: $a > 0, b > \frac{2}{3} a, c > \frac{1}{99} (-299a^2 + 597ab - 297b^2)$
-    - $a > 0$ by definition.
-    - $b > \frac{2}{3} a$, as that's equivalent to $y_0 > \frac{2}{3} y_{out}$. We already assume that $y_0 >= y_{out}$.
-    - Set $y_{out} = .9y_0$, per our theorem assumption. So $b = .9a$. Take $c = x^2 + w = 0$. Then [we can show that](https://www.wolframalpha.com/input?i=0+%3E+-299a%5E2+%2B+597ab+-+297b%5E2%2C+when+b%3D+.90a) $(-299a^2 + 597ab - 297b^2) < 0$ for all $a$. This completes the constraint set.
-- When $y_{out} < 0$
-  - Use solution set: $a < 0, b > \frac{2}{3} a, c > -a^2 + 3ab - 3b^2$
-    - $a < 0$ by definition.
-    - $b > \frac{2}{3} a$, as $y_0$ is positive.
-    - $c > 0$ is by definition, so we just need to bound when $-a^2 + 3ab - 3b^2 < 0$. This is always the case as long as one of $a$ or $b$ is non-zero, per [here](https://www.wolframalpha.com/input?i=-a%5E2+%2B+3ab+-+3b%5E2+%3C+0).
+- When $$y_{out} > 0$$
+  - Use solution set: $$a > 0, b > \frac{2}{3} a, c > \frac{1}{99} (-299a^2 + 597ab - 297b^2)$$
+    - $$a > 0$$ by definition.
+    - $$b > \frac{2}{3} a$$, as that's equivalent to $$y_0 > \frac{2}{3} y_{out}$$. We already assume that $$y_0 >= y_{out}$$.
+    - Set $$y_{out} = .9y_0$$, per our theorem assumption. So $$b = .9a$$. Take $$c = x^2 + w = 0$$. Then [we can show that](https://www.wolframalpha.com/input?i=0+%3E+-299a%5E2+%2B+597ab+-+297b%5E2%2C+when+b%3D+.90a) $$(-299a^2 + 597ab - 297b^2) < 0$$ for all $$a$$. This completes the constraint set.
+- When $$y_{out} < 0$$
+  - Use solution set: $$a < 0, b > \frac{2}{3} a, c > -a^2 + 3ab - 3b^2$$
+    - $$a < 0$$ by definition.
+    - $$b > \frac{2}{3} a$$, as $$y_0$$ is positive.
+    - $$c > 0$$ is by definition, so we just need to bound when $$-a^2 + 3ab - 3b^2 < 0$$. This is always the case as long as one of $$a$$ or $$b$$ is non-zero, per [here](https://www.wolframalpha.com/input?i=-a%5E2+%2B+3ab+-+3b%5E2+%3C+0).
 
-Tying this all together, we have that $e_k > .01e_y$. Therefore $e_y < 100 e_k$, satisfying our theoerem!
+Tying this all together, we have that $$e_k > .01e_y$$. Therefore $$e_y < 100 e_k$$, satisfying our theoerem!
 
-To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $y_{out}$. When $y_{out}$ is smaller, the error is far lower. (Often to the case that $e_y < e_k$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $y_{out}$ is bigger than $.9y_0$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $x_f$ term must be large relative to $y_0$, which would yield a far better error bound.
+To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $$y_{out}$$. When $$y_{out}$$ is smaller, the error is far lower. (Often to the case that $$e_y < e_k$$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $$y_{out}$$ is bigger than $$.9y_0$$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $$x_f$$ term must be large relative to $$y_0$$, which would yield a far better error bound.
 
 TODO: Justify `a_y << y_out`. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
 
@@ -373,9 +373,9 @@ However for the stableswap equation, this is painful: [wolfram alpha link](https
 
 So instead we compute the spot price by approximating the derivative via a small swap.
 
-Let $\epsilon$ be a sentinel very small swap in amount.
+Let $$\epsilon$$ be a sentinel very small swap in amount.
 
-Then $\text{spot price} = \frac{\text{CalculateOutAmountGivenIn}(\epsilon)}{\epsilon}$.
+Then $$\text{spot price} = \frac{\text{CalculateOutAmountGivenIn}(\epsilon)}{\epsilon}$$.
 
 ### LP equations
 

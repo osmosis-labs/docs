@@ -25,7 +25,7 @@ The traditional Balancer AMM relies on the following curve that tracks current r
 
 $$xy = k$$
 
-This formula allows for distributing liquidity along the $xy=k$ curve and across
+This formula allows for distributing liquidity along the $$xy=k$$ curve and across
 the entire price range of (0, &infin;).
 
 With the new architecture, we introduce the concept of a `position` that allows
@@ -41,9 +41,9 @@ Where `P_l` is the lower tick, `P_u` is the upper tick, and `L` is the amount
 of liquidity provided,
 $$L = \sqrt k$$
 
-This formula stems from the original $xy = k$ but with a limited range. In the
+This formula stems from the original $$xy = k$$ but with a limited range. In the
 traditional design, a pool's `x` and `y` tokens are tracked directly. However,
-with the concentrated design, we only track $L$ and $\sqrt P$, which can be
+with the concentrated design, we only track $$L$$ and $$\sqrt P$$, which can be
 calculated with:
 
 $$L = \sqrt {xy}$$
@@ -62,7 +62,7 @@ $$L = \Delta y / \Delta \sqrt{P}$$
 
 Since only one of the following changes at a time:
 
-- $L$: When an LP adds or removes liquidity
+- $$L$$: When an LP adds or removes liquidity
 - sqrt P: When a trader swaps
 
 We can use the above relationship to calculate the outcome of swaps as well as
@@ -108,7 +108,7 @@ In the current design, we hardcode `exponentAtPriceOne` as -6. When used with a
 tick spacing of 100, this effectively acts as an `exponentAtPriceOne` of -4,
 since only every 100 ticks are able to be initialized.
 
-When $exponentAtPriceOne = -6$ (and tick spacing is 100), each tick starting at
+When $$exponentAtPriceOne = -6$$ (and tick spacing is 100), each tick starting at
 0 and ending at the first factor of 10 will represents a spot price increase of 0.0001:
 
 - `tick_{0} = 1`
@@ -151,7 +151,7 @@ price and is less than gamm's max spot price which satisfies the initial design 
 
 After we define tick spacing (which effectively defines the `exponentAtPriceOne`,
 since `exponentAtPriceOne` is fixed), we can then calculate how many ticks must
-be crossed in order for $k$ to be incremented
+be crossed in order for $$k$$ to be incremented
 ( `geometricExponentIncrementDistanceInTicks` ).
 
 ![eq-10](./img/eq-10.png)
