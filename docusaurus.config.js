@@ -292,7 +292,11 @@ const config = {
         appId: 'O18C1RUI3F',
         apiKey: '7e6702351d8d0157591e9c8d417f47dd',
         indexName: 'Docs',
-        contextualSearch: true,
+        // Disabled: the deployed index has no `attributesForFaceting`, so the
+        // `docusaurus_tag` facet filter that contextual search appends to every
+        // query matches zero records and search returns nothing. Re-enable only
+        // once the index is crawled with faceting settings applied.
+        contextualSearch: false,
         searchParameters: {},
       },
     }),
