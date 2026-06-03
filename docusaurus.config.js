@@ -302,6 +302,11 @@ const config = {
         // from per-section to `docs-default-current` on that merge and lag the
         // index by one crawl. Re-enable once the structure has settled.
         contextualSearch: false,
+        // Send click/conversion events to the Algolia Insights API so the
+        // dashboard can report which results users actually open. DocSearch
+        // emits these itself; the dashboard's "automatic events collection"
+        // toggle does not apply (it targets raw InstantSearch/Autocomplete).
+        insights: true,
         searchParameters: {},
       },
     }),
