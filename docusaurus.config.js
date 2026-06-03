@@ -289,13 +289,18 @@ const config = {
         ],
       },
       algolia: {
-        appId: 'O18C1RUI3F',
-        apiKey: '7e6702351d8d0157591e9c8d417f47dd',
+        // App 6QKGHF2S6F is the index the docsearch-scraper GitHub Action
+        // (BETA_APPLICATION_ID / BETA_API_KEY) actually populates. The previous
+        // app (O18C1RUI3F) was a stale, unmaintained index in a lost account
+        // that the scraper no longer wrote to, so live search served old data.
+        // This key is search-only (search/listIndexes/settings/browse).
+        appId: '6QKGHF2S6F',
+        apiKey: '85c9d989b84d2b73fce5c8d1fccb6415',
         indexName: 'Docs',
-        // Disabled: the deployed index has no `attributesForFaceting`, so the
-        // `docusaurus_tag` facet filter that contextual search appends to every
-        // query matches zero records and search returns nothing. Re-enable only
-        // once the index is crawled with faceting settings applied.
+        // Kept off through the MTN-88 single-instance migration: the new index
+        // has faceting configured, but page `docusaurus_tag` values will flip
+        // from per-section to `docs-default-current` on that merge and lag the
+        // index by one crawl. Re-enable once the structure has settled.
         contextualSearch: false,
         searchParameters: {},
       },
