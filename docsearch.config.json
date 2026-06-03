@@ -5,11 +5,6 @@
   ],
   "start_urls": [
     {
-      "url": "https://docs.osmosis.zone/guides",
-      "tags": "guides",
-      "selectors_key": "guides"
-    },
-    {
       "url": "https://docs.osmosis.zone/osmosis-core",
       "tags": "osmosis-core",
       "selectors_key": "osmosis-core"
@@ -41,41 +36,16 @@
     },
     "https://docs.osmosis.zone"
   ],
-  "stop_urls": [],
+  "stop_urls": [
+    "https://docs.osmosis.zone/api",
+    "https://docs.osmosis.zone/search"
+  ],
   "selectors": {
     "default": {
       "lvl0": {
         "selector": "",
         "global": true,
         "default_value": "Documentation"
-      },
-      "lvl1": "article h1",
-      "lvl2": "article h2",
-      "lvl3": "article h3",
-      "lvl4": "article h4",
-      "lvl5": "article h5, article td:first-child",
-      "lvl6": "article h6",
-      "text": "article p, article li, article td:last-child"
-    },
-    "guides": {
-      "lvl0": {
-        "selector": "",
-        "global": true,
-        "default_value": "Guides"
-      },
-      "lvl1": "article h1",
-      "lvl2": "article h2",
-      "lvl3": "article h3",
-      "lvl4": "article h4",
-      "lvl5": "article h5, article td:first-child",
-      "lvl6": "article h6",
-      "text": "article p, article li, article td:last-child"
-    },
-    "networks": {
-      "lvl0": {
-        "selector": "",
-        "global": true,
-        "default_value": "Networks"
       },
       "lvl1": "article h1",
       "lvl2": "article h2",
