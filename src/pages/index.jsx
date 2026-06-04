@@ -51,7 +51,7 @@ export default function Homepage() {
             <Card
               title="Osmosis Testnet-5 is live"
               description="Now live and ready for exploration. Join the testnet to gain hands-on experience with the newest features and take advantage of the expanded network options available."
-              to="/overview/endpoints"
+              to="/integrate/endpoints"
             />
 
             <Card
@@ -67,13 +67,13 @@ export default function Homepage() {
             <Card
               title="What is Osmosis?"
               description="Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond."
-              to="/overview/educate/osmosis"
+              to="/learn/educate/osmosis"
               icon={<OsmosisCore />}
             />
             <Card
               title="How to use the Osmosis DEX"
               description="Learn about how to swap, provide liquidity and more."
-              to="/overview/educate/getting-started"
+              to="/learn/get-started"
             />
             <Card
               title="Explore the Ecosystem"
@@ -83,12 +83,12 @@ export default function Homepage() {
             <Card
               title="List on Osmosis"
               description="Learn how to list your project's token on Osmosis"
-              to="/overview/integrate"
+              to="/integrate"
             />
             <Card
               title="Join the Chain"
               description="Learn how to run an Osmosis node or validator"
-              to="/overview/validate"
+              to="/validate"
             />
           </Section>
 
@@ -108,59 +108,59 @@ export default function Homepage() {
               <Card
                 title="Build and Test Osmosis Source Code"
                 description="Getting started with building and testing Osmosis codebase"
-                to="/osmosis-core/build"
+                to="/build/chain/build"
                 icon={<OsmosisCore />}
               />
               <Card
                 title="IDE Setup"
                 description="Recommended IDE setup for developing on Osmosis in Go"
-                to="/osmosis-core/ide-guide"
+                to="/build/chain/ide-guide"
                 icon={<IDEIcon />}
               />
               <Card
                 title="Osmosisd CLI"
                 description="Install osmosisd to join the network or simple query it."
-                to="/osmosis-core/osmosisd"
+                to="/validate/osmosisd"
                 icon={<TerminalIcon />}
                 svgFile="/icons/cli.svg"
               />
               <Card
                 title="Modules"
                 description="Osmosis modules and their respective CLI commands"
-                to="/osmosis-core/modules"
+                to="/build/chain/modules"
                 icon={<ModulesIcon />}
                 svgFile="/icons/modules.svg"
               />
               <Card
                 title="Relaying"
                 description=" Relay IBC packets between Osmosis and other chains"
-                to="/osmosis-core/relaying"
+                to="/learn/relaying"
                 icon=""
                 svgFile="/icons/relayer.svg"
               />
               <Card
                 title="Assets"
                 description="     Currently supported assets on Osmosis with their corresponding channels and IBC denoms."
-                to="/osmosis-core/asset-info"
+                to="/learn/asset-info"
                 icon={<AssetIcon />}
               />
               <Card
                 title="Key Management"
                 description="Managing keys via CLI and advanced operations such as multisig wallets"
-                to="/osmosis-core/category/keys-management"
+                to="/learn/keys/keys-cli"
                 icon={<KeysIcon />}
               />
               <Card
                 title="Transaction Structure"
                 description=" Understanding the structure of a transaction on the Osmosis blockchain"
-                to="/osmosis-core/guides/structure"
+                to="/integrate/transaction-structure"
                 icon={<Transaction />}
                 svgFile="/icons/transaction.svg"
               />
               <Card
                 title="Contributing"
                 description=" Guidelines to contributing to Osmosis core development."
-                to="/osmosis-core/contributing"
+                to="/community/contributing"
                 icon={<Contribute />}
                 svgFile="/icons/octocat.svg"
               />
@@ -175,14 +175,14 @@ export default function Homepage() {
               <Card
                 title="Osmosis Frontend"
                 description="Web interface for Osmosis Zone"
-                to="/frontend/osmosis-frontend"
+                to="/build/frontend/osmosis-frontend"
                 icon=""
                 svgFile="/icons/osmo.svg" />
 
               <Card
                 title="OsmoJS"
                 description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
-                to="/osmojs"
+                to="/build/frontend/osmojs"
                 icon={<Osmojs />}
                 svgFile=""
               />
@@ -225,7 +225,7 @@ export default function Homepage() {
               <Card
                 title="Telescope"
                 description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
-                to="/telescope"
+                to="/build/frontend/telescope"
                 icon={<Telescope />}
                 svgFile=""
               />
@@ -261,14 +261,14 @@ export default function Homepage() {
             <Card
               title="Osmosisd CLI"
               description="A command line tool to get things done quick!"
-              to="/osmosis-core/osmosisd"
+              to="/validate/osmosisd"
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
             />
             <Card
               title="Cw-orchestrator"
               description="All-in-one Rust-based CosmWasm contracts testing, scripting, and deployment tool"
-              to="/cosmwasm/cw-orch"
+              to="/build/cosmwasm/cw-orch"
               icon={<TerminalIcon />}
               svgFile="/icons/cw-orch.svg"
             />

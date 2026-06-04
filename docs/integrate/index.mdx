@@ -1,0 +1,18 @@
+---
+title: Integrate
+description: Connect your application, protocol, or asset to Osmosis.
+---
+
+import DocCardList from '@theme/DocCardList';
+
+# Integrate with Osmosis
+
+This section is for teams connecting their own software or assets to Osmosis: wallets, aggregators, bots, analytics platforms, and projects bringing a token to the exchange. It covers the data and transaction surfaces you consume (it does not cover writing contracts or chain modules, which live under Build).
+
+For querying and trading programmatically, the **Sidecar Query Server (SQS)** is the production routing and quote service that powers the Osmosis frontend, and the **RPC**, **REST**, and **gRPC** pages document the chain endpoints directly. The **Endpoints** directory lists public infrastructure for mainnet and testnet. If you are constructing or parsing transactions, the **Transaction Structure** pages break down real Osmosis blocks and transactions so you can see how messages and events are laid out on the wire.
+
+To bring a token to Osmosis, follow the **List an Asset** workflow, an ordered path from connecting the asset over IBC through registration, sourcing liquidity, creating a pool, adding incentives, and ensuring frontend visibility.
+
+Beyond those, you will find guides for APR calculation, liquidity incentives, smart accounts and authenticators, the onchain orderbook, alloyed assets, and integrations with external data providers.
+
+<DocCardList />

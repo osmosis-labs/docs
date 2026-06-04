@@ -1,0 +1,18 @@
+---
+title: Chain Development
+description: Develop the Osmosis chain and read the module specifications.
+---
+
+import DocCardList from '@theme/DocCardList';
+
+# Chain Development
+
+Everything for working on the Osmosis chain itself, whether you are contributing to the protocol or just want to understand how a module behaves.
+
+Start with the environment: **Build and Test** compiles Osmosis from source, **IDE Setup** configures a Go development environment, and **Local Testing** spins up a containerized LocalOsmosis chain to develop against. To run the `osmosisd` binary itself (specs and installation), see Osmosisd under Validate, the same binary serves node operators and developers.
+
+The **Modules** section documents every `x/` module: the AMM and pool types (GAMM, concentrated liquidity, stableswap, CosmWasm pools, pool manager), incentives and staking (incentives, pool incentives, lockup, superfluid, valset preference), economics (mint, txfees, ProtoRev), governance, TWAP, epochs, the token factory, and the IBC middleware (hooks, rate limiting). Each module page describes its messages, state, and parameters.
+
+To see how these messages look in real blocks on the wire, the Transaction Structure pages (under Integrate) break down actual Osmosis transactions and events.
+
+<DocCardList />
