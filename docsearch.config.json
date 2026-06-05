@@ -4,36 +4,11 @@
     "https://docs.osmosis.zone/sitemap.xml"
   ],
   "start_urls": [
-    {
-      "url": "https://docs.osmosis.zone/osmosis-core",
-      "tags": "osmosis-core",
-      "selectors_key": "osmosis-core"
-    },
-    {
-      "url": "https://docs.osmosis.zone/cosmwasm",
-      "tags": "cosmwasm",
-      "selectors_key": "cosmwasm"
-    },
-    {
-      "url": "https://docs.osmosis.zone/beaker",
-      "tags": "beaker",
-      "selectors_key": "beaker"
-    },
-    {
-      "url": "https://docs.osmosis.zone/telescope",
-      "tags": "telescope",
-      "selectors_key": "telescope"
-    },
-    {
-      "url": "https://docs.osmosis.zone/osmojs",
-      "tags": "osmojs",
-      "selectors_key": "osmojs"
-    },
-    {
-      "url": "https://docs.osmosis.zone/overview",
-      "tags": "overview",
-      "selectors_key": "overview"
-    },
+    "https://docs.osmosis.zone/learn",
+    "https://docs.osmosis.zone/integrate",
+    "https://docs.osmosis.zone/build",
+    "https://docs.osmosis.zone/validate",
+    "https://docs.osmosis.zone/community",
     "https://docs.osmosis.zone"
   ],
   "stop_urls": [

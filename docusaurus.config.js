@@ -48,6 +48,18 @@ const docsPlugin = [
   }),
 ];
 
+// In-repo backstop for the URL changes from the IA restructure (MTN-88).
+// Vercel serves the canonical 301s (vercel.json `redirects`), but this client
+// redirect keeps old paths resolving on local/preview builds where Vercel rules
+// do not apply. The full old->new map is generated from the page move plan.
+const redirectsPlugin = [
+  '@docusaurus/plugin-client-redirects',
+  /** @type {import('@docusaurus/plugin-client-redirects').Options} */
+  ({
+    redirects: require('./redirects.json'),
+  }),
+];
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Osmosis Docs',
@@ -96,6 +108,7 @@ const config = {
 
   plugins: [
     docsPlugin,
+    redirectsPlugin,
     webpackPlugin,
   ],
 
@@ -124,48 +137,32 @@ const config = {
         },
         items: [
           {
-            label: 'Overview',
-            to: 'overview/educate',
+            label: 'Learn',
+            to: 'learn',
             position: 'left',
           },
           {
             label: 'Integrate',
-            to: 'overview/integrate',
+            to: 'integrate',
             position: 'left',
           },
           {
-            label: 'Develop',
-            to: 'osmosis-core',
-            position: 'left',
-          },
-          {
-            label: 'CosmWasm',
-            to: 'cosmwasm',
-            position: 'left',
-          },
-          {
-            label: 'SDKs',
+            label: 'Build',
             position: 'left',
             items: [
-              { label: 'Frontend', to: 'frontend' },
-              { label: 'OsmoJS', to: 'osmojs' },
-              { label: 'Telescope', to: 'telescope' },
-              { label: 'Beaker', to: 'beaker' },
+              { label: 'Chain Development', to: 'build/chain' },
+              { label: 'CosmWasm', to: 'build/cosmwasm' },
+              { label: 'Frontend & SDKs', to: 'build/frontend' },
             ],
           },
           {
-            label: 'Validate & Run your Node',
-            to: 'overview/validate',
+            label: 'Validate',
+            to: 'validate',
             position: 'left',
           },
           {
-            label: 'Endpoints',
-            to: 'overview/endpoints',
-            position: 'left',
-          },
-          {
-            label: 'Features',
-            to: 'overview/features',
+            label: 'Community',
+            to: 'community',
             position: 'left',
           },
           {

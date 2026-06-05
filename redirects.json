@@ -1,0 +1,638 @@
+[
+  {
+    "to": "/build/cosmwasm/beaker/commands/beaker_key",
+    "from": "/beaker/commands/beaker_key"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/commands/beaker_wasm",
+    "from": "/beaker/commands/beaker_wasm"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/commands/beaker_wasm_proposal",
+    "from": "/beaker/commands/beaker_wasm_proposal"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/commands/beaker_wasm_proposal_query",
+    "from": "/beaker/commands/beaker_wasm_proposal_query"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/commands",
+    "from": "/beaker/commands"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/config/console",
+    "from": "/beaker/config/console"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/config/global",
+    "from": "/beaker/config/global"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/config",
+    "from": "/beaker/config"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/config/wasm",
+    "from": "/beaker/config/wasm"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/config/workspace",
+    "from": "/beaker/config/workspace"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/console/classes/Account",
+    "from": "/beaker/console/classes/Account"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/console/classes/Contract",
+    "from": "/beaker/console/classes/Contract"
+  },
+  {
+    "to": "/build/cosmwasm/beaker/console",
+    "from": "/beaker/console"
+  },
+  {
+    "to": "/build/cosmwasm/beaker",
+    "from": "/beaker"
+  },
+  {
+    "to": "/build/cosmwasm/cosmwasm-verify-contract",
+    "from": "/cosmwasm/cosmwasm-verify-contract"
+  },
+  {
+    "to": "/build/cosmwasm/cw-orch",
+    "from": "/cosmwasm/cw-orch"
+  },
+  {
+    "to": "/build/cosmwasm/javascript",
+    "from": "/cosmwasm/javascript"
+  },
+  {
+    "to": "/build/cosmwasm/localosmosis",
+    "from": "/cosmwasm/local/localosmosis"
+  },
+  {
+    "to": "/build/cosmwasm/submit-wasm-proposal",
+    "from": "/cosmwasm/local/submit-wasm-proposal"
+  },
+  {
+    "to": "/build/cosmwasm",
+    "from": "/cosmwasm"
+  },
+  {
+    "to": "/build/cosmwasm/cosmwasm-beaker",
+    "from": "/cosmwasm/testnet/cosmwasm-beaker"
+  },
+  {
+    "to": "/build/cosmwasm/cosmwasm-deployment",
+    "from": "/cosmwasm/testnet/cosmwasm-deployment"
+  },
+  {
+    "to": "/build/frontend/cosmos-kit",
+    "from": "/frontend/cosmos-kit"
+  },
+  {
+    "to": "/build/frontend/osmosis-frontend",
+    "from": "/frontend/osmosis-frontend"
+  },
+  {
+    "to": "/build/frontend",
+    "from": "/frontend"
+  },
+  {
+    "to": "/community/translating",
+    "from": "/frontend/translating"
+  },
+  {
+    "to": "/build/frontend/osmojs",
+    "from": "/osmojs"
+  },
+  {
+    "to": "/integrate/channels",
+    "from": "/osmosis-core/asset-info"
+  },
+  {
+    "to": "/build/developer-environment/osmosisd",
+    "from": "/osmosis-core/build"
+  },
+  {
+    "to": "/community/contributing",
+    "from": "/osmosis-core/contributing"
+  },
+  {
+    "to": "/integrate/list-asset/pool-setup",
+    "from": "/osmosis-core/guides/create-ibc-pool"
+  },
+  {
+    "to": "/validate/performance",
+    "from": "/osmosis-core/guides/performance"
+  },
+  {
+    "to": "/integrate/transaction-structure/arb",
+    "from": "/osmosis-core/guides/structure/arb"
+  },
+  {
+    "to": "/integrate/transaction-structure/block-2836990",
+    "from": "/osmosis-core/guides/structure/block-2836990"
+  },
+  {
+    "to": "/integrate/transaction-structure",
+    "from": "/osmosis-core/guides/structure"
+  },
+  {
+    "to": "/integrate/transaction-structure/txs-block-2836990",
+    "from": "/osmosis-core/guides/structure/txs-block-2836990"
+  },
+  {
+    "to": "/learn/ibc",
+    "from": "/osmosis-core/ibc"
+  },
+  {
+    "to": "/build/developer-environment/ide-guide",
+    "from": "/osmosis-core/ide-guide"
+  },
+  {
+    "to": "/build/developer-environment/keys/keys-cli",
+    "from": "/osmosis-core/keys/keys-cli"
+  },
+  {
+    "to": "/build/developer-environment/keys/multisig",
+    "from": "/osmosis-core/keys/multisig"
+  },
+  {
+    "to": "/validate/tmkms",
+    "from": "/osmosis-core/keys/tmkms"
+  },
+  {
+    "to": "/build/developer-environment/localtesting",
+    "from": "/osmosis-core/localtesting"
+  },
+  {
+    "to": "/build/chain/concentrated-liquidity",
+    "from": "/osmosis-core/modules/concentrated-liquidity"
+  },
+  {
+    "to": "/build/chain/cosmwasmpool",
+    "from": "/osmosis-core/modules/cosmwasmpool"
+  },
+  {
+    "to": "/build/chain/downtime-detector",
+    "from": "/osmosis-core/modules/downtime-detector"
+  },
+  {
+    "to": "/build/chain/epochs",
+    "from": "/osmosis-core/modules/epochs"
+  },
+  {
+    "to": "/build/chain/gamm/client/docs/create-lbp-pool",
+    "from": "/osmosis-core/modules/gamm/client/docs/create-lbp-pool"
+  },
+  {
+    "to": "/build/chain/gamm/client/docs/create-pool",
+    "from": "/osmosis-core/modules/gamm/client/docs/create-pool"
+  },
+  {
+    "to": "/build/chain/gamm/client/docs",
+    "from": "/osmosis-core/modules/gamm/client/docs"
+  },
+  {
+    "to": "/build/chain/gamm/pool-models/stableswap",
+    "from": "/osmosis-core/modules/gamm/pool-models/stableswap"
+  },
+  {
+    "to": "/build/chain/gamm",
+    "from": "/osmosis-core/modules/gamm"
+  },
+  {
+    "to": "/build/chain/gov",
+    "from": "/osmosis-core/modules/gov"
+  },
+  {
+    "to": "/build/chain/ibc-hooks",
+    "from": "/osmosis-core/modules/ibc-hooks"
+  },
+  {
+    "to": "/build/chain/ibc-rate-limit",
+    "from": "/osmosis-core/modules/ibc-rate-limit"
+  },
+  {
+    "to": "/build/chain/incentives",
+    "from": "/osmosis-core/modules/incentives"
+  },
+  {
+    "to": "/build/chain/lockup",
+    "from": "/osmosis-core/modules/lockup"
+  },
+  {
+    "to": "/build/chain/mint",
+    "from": "/osmosis-core/modules/mint"
+  },
+  {
+    "to": "/build/chain/pool-incentives",
+    "from": "/osmosis-core/modules/pool-incentives"
+  },
+  {
+    "to": "/build/chain/pool-manager",
+    "from": "/osmosis-core/modules/pool-manager"
+  },
+  {
+    "to": "/build/chain",
+    "from": "/osmosis-core/modules"
+  },
+  {
+    "to": "/build/chain/superfluid",
+    "from": "/osmosis-core/modules/superfluid"
+  },
+  {
+    "to": "/build/chain/tokenfactory",
+    "from": "/osmosis-core/modules/tokenfactory"
+  },
+  {
+    "to": "/build/chain/twap",
+    "from": "/osmosis-core/modules/twap"
+  },
+  {
+    "to": "/build/chain/txfees",
+    "from": "/osmosis-core/modules/txfees"
+  },
+  {
+    "to": "/build/chain/valset-pref",
+    "from": "/osmosis-core/modules/valset-pref"
+  },
+  {
+    "to": "/build/developer-environment/osmosisd",
+    "from": "/osmosis-core/osmosisd"
+  },
+  {
+    "to": "/learn",
+    "from": "/osmosis-core"
+  },
+  {
+    "to": "/integrate/channels",
+    "from": "/osmosis-core/relaying/channels"
+  },
+  {
+    "to": "/community/ibc-relayers-list",
+    "from": "/osmosis-core/relaying/ibc-relayers-list"
+  },
+  {
+    "to": "/learn/ibc",
+    "from": "/osmosis-core/relaying"
+  },
+  {
+    "to": "/validate/relayer-guide",
+    "from": "/osmosis-core/relaying/relayer-guide"
+  },
+  {
+    "to": "/learn/get-started",
+    "from": "/overview/educate/getting-started"
+  },
+  {
+    "to": "/learn",
+    "from": "/overview/educate"
+  },
+  {
+    "to": "/learn/osmo",
+    "from": "/overview/educate/osmo"
+  },
+  {
+    "to": "/learn/osmosis",
+    "from": "/overview/educate/osmosis"
+  },
+  {
+    "to": "/learn/terminology",
+    "from": "/overview/educate/terminology"
+  },
+  {
+    "to": "/integrate/endpoints",
+    "from": "/overview/endpoints"
+  },
+  {
+    "to": "/learn/features/concentrated-liquidity",
+    "from": "/overview/features/concentrated-liquidity"
+  },
+  {
+    "to": "/learn/features/eip-1559",
+    "from": "/overview/features/eip-1559"
+  },
+  {
+    "to": "/learn/features/fee-abstraction",
+    "from": "/overview/features/fee-abstraction"
+  },
+  {
+    "to": "/learn/features/ibc-hooks",
+    "from": "/overview/features/ibc-hooks"
+  },
+  {
+    "to": "/learn/features/ibc-rate-limit",
+    "from": "/overview/features/ibc-rate-limit"
+  },
+  {
+    "to": "/learn/features",
+    "from": "/overview/features"
+  },
+  {
+    "to": "/learn/features/protorev",
+    "from": "/overview/features/protorev"
+  },
+  {
+    "to": "/learn/features/tokenfactory",
+    "from": "/overview/features/tokenfactory"
+  },
+  {
+    "to": "/integrate/data-recipes/airdrops",
+    "from": "/overview/integrate/airdrops"
+  },
+  {
+    "to": "/integrate/data-recipes/apr",
+    "from": "/overview/integrate/apr"
+  },
+  {
+    "to": "/build/developer-environment/cli",
+    "from": "/overview/integrate/cli"
+  },
+  {
+    "to": "/integrate",
+    "from": "/overview/integrate/earn-risk"
+  },
+  {
+    "to": "/integrate/external_projects/pyth",
+    "from": "/overview/integrate/external_projects/pyth"
+  },
+  {
+    "to": "/integrate/external_projects",
+    "from": "/overview/integrate/external_projects"
+  },
+  {
+    "to": "/integrate/external_projects/subquery",
+    "from": "/overview/integrate/external_projects/subquery"
+  },
+  {
+    "to": "/integrate/list-asset/frontend",
+    "from": "/overview/integrate/frontend"
+  },
+  {
+    "to": "/integrate/endpoints/grpc",
+    "from": "/overview/integrate/grpc"
+  },
+  {
+    "to": "/integrate/list-asset/incentives",
+    "from": "/overview/integrate/incentives"
+  },
+  {
+    "to": "/integrate",
+    "from": "/overview/integrate"
+  },
+  {
+    "to": "/integrate/list-asset/liquidity",
+    "from": "/overview/integrate/liquidity"
+  },
+  {
+    "to": "/integrate/features/concentrated-liquidity-integration",
+    "from": "/overview/integrate/on-chain"
+  },
+  {
+    "to": "/build/chain/orderbook",
+    "from": "/overview/integrate/orderbook"
+  },
+  {
+    "to": "/integrate/list-asset/pool-setup",
+    "from": "/overview/integrate/pool-setup"
+  },
+  {
+    "to": "/integrate/list-asset/registration",
+    "from": "/overview/integrate/registration"
+  },
+  {
+    "to": "/integrate/endpoints/rest",
+    "from": "/overview/integrate/rest"
+  },
+  {
+    "to": "/integrate/endpoints/rpc",
+    "from": "/overview/integrate/rpc"
+  },
+  {
+    "to": "/integrate/features/smart-accounts",
+    "from": "/overview/integrate/smart-accounts"
+  },
+  {
+    "to": "/integrate/endpoints/sqs",
+    "from": "/overview/integrate/sqs"
+  },
+  {
+    "to": "/integrate/list-asset/transfer",
+    "from": "/overview/integrate/transfer"
+  },
+  {
+    "to": "/integrate/features/transmuter",
+    "from": "/overview/integrate/transmuter"
+  },
+  {
+    "to": "/validate",
+    "from": "/overview/validate"
+  },
+  {
+    "to": "/validate/joining-mainnet",
+    "from": "/overview/validate/joining-mainnet"
+  },
+  {
+    "to": "/validate/joining-testnet",
+    "from": "/overview/validate/joining-testnet"
+  },
+  {
+    "to": "/validate/validating-mainnet",
+    "from": "/overview/validate/validating-mainnet"
+  },
+  {
+    "to": "/validate/validating-testnet",
+    "from": "/overview/validate/validating-testnet"
+  },
+  {
+    "to": "/build/frontend/telescope",
+    "from": "/telescope"
+  },
+  {
+    "to": "/build/developer-environment/cli",
+    "from": "/integrate/cli"
+  },
+  {
+    "to": "/integrate/endpoints/rest",
+    "from": "/integrate/rest"
+  },
+  {
+    "to": "/integrate/endpoints/rpc",
+    "from": "/integrate/rpc"
+  },
+  {
+    "to": "/integrate/endpoints/grpc",
+    "from": "/integrate/grpc"
+  },
+  {
+    "to": "/build/chain/orderbook",
+    "from": "/integrate/orderbook"
+  },
+  {
+    "to": "/integrate/features/concentrated-liquidity-integration",
+    "from": "/integrate/on-chain"
+  },
+  {
+    "to": "/integrate",
+    "from": "/integrate/earn-risk"
+  },
+  {
+    "to": "/integrate/list-asset/pool-setup",
+    "from": "/integrate/list-asset/create-ibc-pool"
+  },
+  {
+    "to": "/integrate/channels",
+    "from": "/integrate/asset-info"
+  },
+  {
+    "to": "/integrate/features/concentrated-liquidity-integration",
+    "from": "/integrate/concentrated-liquidity-integration"
+  },
+  {
+    "to": "/integrate/features/transmuter",
+    "from": "/integrate/transmuter"
+  },
+  {
+    "to": "/integrate/features/smart-accounts",
+    "from": "/integrate/smart-accounts"
+  },
+  {
+    "to": "/integrate/data-recipes/airdrops",
+    "from": "/integrate/airdrops"
+  },
+  {
+    "to": "/integrate/data-recipes/apr",
+    "from": "/integrate/apr"
+  },
+  {
+    "to": "/build/developer-environment/osmosisd",
+    "from": "/validate/osmosisd"
+  },
+  {
+    "to": "/build/developer-environment/cli",
+    "from": "/validate/osmosisd/cli"
+  },
+  {
+    "to": "/build/developer-environment/osmosisd",
+    "from": "/build/chain/build"
+  },
+  {
+    "to": "/build/developer-environment/ide-guide",
+    "from": "/build/chain/ide-guide"
+  },
+  {
+    "to": "/build/developer-environment/localtesting",
+    "from": "/build/chain/localtesting"
+  },
+  {
+    "to": "/build/developer-environment/keys/keys-cli",
+    "from": "/build/chain/keys/keys-cli"
+  },
+  {
+    "to": "/build/developer-environment/keys/multisig",
+    "from": "/build/chain/keys/multisig"
+  },
+  {
+    "to": "/build/developer-environment/osmosisd",
+    "from": "/build/developer-environment/build"
+  },
+  {
+    "from": "/build/chain/modules/concentrated-liquidity",
+    "to": "/build/chain/concentrated-liquidity"
+  },
+  {
+    "from": "/build/chain/modules/cosmwasmpool",
+    "to": "/build/chain/cosmwasmpool"
+  },
+  {
+    "from": "/build/chain/modules/downtime-detector",
+    "to": "/build/chain/downtime-detector"
+  },
+  {
+    "from": "/build/chain/modules/epochs",
+    "to": "/build/chain/epochs"
+  },
+  {
+    "from": "/build/chain/modules/gamm",
+    "to": "/build/chain/gamm"
+  },
+  {
+    "from": "/build/chain/modules/gov",
+    "to": "/build/chain/gov"
+  },
+  {
+    "from": "/build/chain/modules/ibc-hooks",
+    "to": "/build/chain/ibc-hooks"
+  },
+  {
+    "from": "/build/chain/modules/ibc-rate-limit",
+    "to": "/build/chain/ibc-rate-limit"
+  },
+  {
+    "from": "/build/chain/modules/incentives",
+    "to": "/build/chain/incentives"
+  },
+  {
+    "from": "/build/chain/modules/lockup",
+    "to": "/build/chain/lockup"
+  },
+  {
+    "from": "/build/chain/modules/mint",
+    "to": "/build/chain/mint"
+  },
+  {
+    "from": "/build/chain/modules/orderbook",
+    "to": "/build/chain/orderbook"
+  },
+  {
+    "from": "/build/chain/modules/pool-incentives",
+    "to": "/build/chain/pool-incentives"
+  },
+  {
+    "from": "/build/chain/modules/pool-manager",
+    "to": "/build/chain/pool-manager"
+  },
+  {
+    "from": "/build/chain/modules/superfluid",
+    "to": "/build/chain/superfluid"
+  },
+  {
+    "from": "/build/chain/modules/tokenfactory",
+    "to": "/build/chain/tokenfactory"
+  },
+  {
+    "from": "/build/chain/modules/twap",
+    "to": "/build/chain/twap"
+  },
+  {
+    "from": "/build/chain/modules/txfees",
+    "to": "/build/chain/txfees"
+  },
+  {
+    "from": "/build/chain/modules/valset-pref",
+    "to": "/build/chain/valset-pref"
+  },
+  {
+    "from": "/build/chain/modules",
+    "to": "/build/chain"
+  },
+  {
+    "to": "/build/cosmwasm/localosmosis",
+    "from": "/build/cosmwasm/local/localosmosis"
+  },
+  {
+    "to": "/build/cosmwasm/submit-wasm-proposal",
+    "from": "/build/cosmwasm/local/submit-wasm-proposal"
+  },
+  {
+    "to": "/build/cosmwasm/cosmwasm-beaker",
+    "from": "/build/cosmwasm/testnet/cosmwasm-beaker"
+  },
+  {
+    "to": "/build/cosmwasm/cosmwasm-deployment",
+    "from": "/build/cosmwasm/testnet/cosmwasm-deployment"
+  }
+]
