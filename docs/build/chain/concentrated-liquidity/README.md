@@ -90,7 +90,7 @@ This results in a .01% difference between adjacent tick prices. This does not,
 however, allow for control over the specific prices that the ticks correspond
 to. For example, if a user wants to make a limit order at the $17,100.50 price point,
 they would have to interact with either tick 97473 (corresponding to price
-$17,099.60) or tick 97474 (price $17101.30).
+$17,099.60) or tick 97474 (price $17,101.30).
 
 Since we know what range a pair will generally trade in, how can we provide more
 granularity at that range and provide a more optimal price range between ticks
