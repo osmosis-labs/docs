@@ -88,9 +88,9 @@ $$p(t) = 1.0001^t$$
 
 This results in a .01% difference between adjacent tick prices. This does not,
 however, allow for control over the specific prices that the ticks correspond
-to. For example, if a user wants to make a limit order at the \$17,100.50 price point,
+to. For example, if a user wants to make a limit order at the $17,100.50 price point,
 they would have to interact with either tick 97473 (corresponding to price
-\$17,099.60) or tick 97474 (price \$17101.30).
+$17,099.60) or tick 97474 (price $17,101.30).
 
 Since we know what range a pair will generally trade in, how can we provide more
 granularity at that range and provide a more optimal price range between ticks
@@ -219,11 +219,11 @@ $$numAdditiveTicks = 36650010 - (4 * 9000000) = 650010$$
 
 $$price = (10^{4}) + (650010 * 0.01) = 16,500.10$$ -->
 
-Bob set his limit order at price \$16,500.10
+Bob set his limit order at price $16,500.10
 
 ### Tick Spacing Example: Price to Tick
 
-Bob sets a limit order on the `USD<>BTC` pool at price \$16,500.10. This pool's
+Bob sets a limit order on the `USD<>BTC` pool at price $16,500.10. This pool's
 `exponentAtPriceOne` is -6. What tick did Bob set his limit order at?
 
 ![eq-17](./img/eq-17.png)
@@ -318,8 +318,8 @@ $$D=P-(\frac{baseAssetInUSD}{quoteAssetInUSD+desiredIncrementOfQuoteInUSD})$$
 
 ### Example 1
 
-SHIB is trading at \$0.00001070 per SHIB
-BTC is trading at \$28,000 per BTC
+SHIB is trading at $0.00001070 per SHIB
+BTC is trading at $28,000 per BTC
 
 We want to create a SHIB/BTC concentrated liquidity pool where SHIB is the
 baseAsset (asset0) and BTC is the quoteAsset (asset1). In terms of the quoteAsset,

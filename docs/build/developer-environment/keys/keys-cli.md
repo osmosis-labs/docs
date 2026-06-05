@@ -11,7 +11,8 @@ keys add <wallet_name>
 ```
 
 You can create a new key with the name `Default` as in the following example:
-::: details Example: Create a new address
+<details>
+<summary>Example: Create a new address</summary>
 
 ```bash
 $ osmosisd keys add Default
@@ -29,7 +30,7 @@ It is the only way to recover your account if you ever forget your password.
 spare leopard potato hospital series salt model myself bronze print despair please mutual rival battle lumber crater brain food artwork goose west talent ritual
 ```
 
-:::
+</details>
 The key comes with a "mnemonic phrase", which is serialized into a human-readable 24-word mnemonic. User can recover their associated addresses with the mnemonic phrase.
 
 :::danger
@@ -44,7 +45,8 @@ keys add <key_name> --recover
 
 You can restore an existing key with the mnemonic.
 
-::: details Example: Restore an existing key
+<details>
+<summary>Example: Restore an existing key</summary>
 
 ```bash
 $ osmosisd keys add Default_restore --recover
@@ -52,7 +54,7 @@ $ osmosisd keys add Default_restore --recover
 ## Enter your 24-word mnemonic here ##
 ```
 
-:::
+</details>
 
 
 ## List your keys
@@ -63,7 +65,8 @@ keys list
 
 Multiple keys can be created when needed. You can list all keys saved under the storage path.
 
-::: details Example: List all of your keys
+<details>
+<summary>Example: List all of your keys</summary>
 
 ```bash
 $ osmosisd keys list
@@ -83,7 +86,7 @@ $ osmosisd keys list
     pubkeys: []
 ```
 
-:::
+</details>
 
 ## Retrieve key information
 
@@ -93,7 +96,8 @@ keys show <key_name>
 
 You can retrieve key information by its name:
 
-::: details Example: Retrieve key information - Account Address and its public key
+<details>
+<summary>Example: Retrieve key information - Account Address and its public key</summary>
 
 ```bash
 $ osmosisd keys show Default --bech acc
@@ -106,9 +110,10 @@ $ osmosisd keys show Default --bech acc
   pubkeys: []
 ```
 
-:::
+</details>
 
-::: details Example: Retrieve key information - Validator Address and its public key
+<details>
+<summary>Example: Retrieve key information - Validator Address and its public key</summary>
 
 ```bash
 $ osmosisd keys show Default --bech val
@@ -121,9 +126,10 @@ $ osmosisd keys show Default --bech val
   pubkeys: []
 ```
 
-:::
+</details>
 
-::: details Example: Retrieve key information - Consensus nodes Address and its public key
+<details>
+<summary>Example: Retrieve key information - Consensus nodes Address and its public key</summary>
 
 ```bash
 $ osmosisd keys show Default --bech cons
@@ -136,7 +142,7 @@ $ osmosisd keys show Default --bech cons
   pubkeys: []
 ```
 
-:::
+</details>
 
 
 ## Delete a key
@@ -151,7 +157,8 @@ You can delete a key in your storage path.
 Make sure you have backed up the key mnemonic before removing any of your keys, as there will be no way to recover your key without the mnemonic.
 :::
 
-::: details Example: Remove a key
+<details>
+<summary>Example: Remove a key</summary>
 
 ```bash
 $ osmosisd keys delete Default_restore1
@@ -159,7 +166,7 @@ Key reference will be deleted. Continue? [y/N]: y
 Key deleted forever (uh oh!)
 ```
 
-:::
+</details>
 
 ## Export private keys
 
@@ -169,7 +176,8 @@ keys export <key_name>
 
 You can export and backup your key by using the `export` subcommand:
 
-::: details Example: Export your keys
+<details>
+<summary>Example: Export your keys</summary>
 Exporting the key _Default_ :
 
 ```bash
@@ -184,7 +192,7 @@ type: secp256k1
 -----END TENDERMINT PRIVATE KEY-----
 ```
 
-:::
+</details>
 
 ## The keyring-backend option
 Interacting with a node requires a public-private key pair. Keyring is the place holding the keys. The keys can be stored in different locations with specified backend type. 

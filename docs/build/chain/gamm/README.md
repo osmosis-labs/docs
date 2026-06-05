@@ -9,7 +9,7 @@ The ``GAMM`` module (**G**eneralized **A**utomated **M**arket **M**aker) provide
 3. **[Pool Parameters](#network-parameters)**
 4. **[Messages](#messages)**
 5. **[Transactions](#transactions)**
-6. **[Queries and Transactions](#queries-and-transactions)**
+6. **[Queries](#queries)**
 
 ## Concepts
 
@@ -251,7 +251,8 @@ Create a new liquidity pool and provide initial liquidity to it.
 osmosisd tx gamm create-pool [config-file] --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 The JSON [config-file] must specify the following parameters:
 
 ```json
@@ -282,9 +283,9 @@ The configuration json file contains the following parameters:
 }
 ```
 
-:::
+</details>
 
-::: warning
+:::warning
 There is now a 20 USDC fee for creating pools.
 :::
 
@@ -296,7 +297,8 @@ Add liquidity to a specified pool to get an **exact** amount of LP shares while 
 osmosisd tx gamm join-pool --pool-id --max-amounts-in --share-amount-out --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Join `pool 3` with a **maximum** of `.037753 AKT` and the corresponding amount of `OSMO` to get an **exact** share amount of `1.227549469722224220 gamm/pool/3` using `WALLET_NAME` on the osmosis mainnet:
 
@@ -304,7 +306,7 @@ Join `pool 3` with a **maximum** of `.037753 AKT` and the corresponding amount o
 osmosisd tx gamm join-pool --pool-id 3 --max-amounts-in 37753ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 --share-amount-out 1227549469722224220 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Exit pool
 
@@ -314,7 +316,8 @@ Remove liquidity from a specified pool with an **exact** amount of LP shares whi
 osmosisd tx gamm exit-pool --pool-id --min-amounts-out --share-amount-in --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Exit `pool 3` with for **exactly** `1.136326462628731195 gamm/pool/3` in order to receive a **minimum** of `.033358 AKT` and the corresponding amount of `OSMO` using `WALLET_NAME` on the osmosis mainnet:
 
@@ -322,7 +325,7 @@ Exit `pool 3` with for **exactly** `1.136326462628731195 gamm/pool/3` in order t
 osmosisd tx gamm exit-pool --pool-id 3 --min-amounts-out 33358ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 --share-amount-in 1136326462628731195 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Join-swap-extern-amount-in
 
@@ -334,7 +337,8 @@ This command essentially swaps an **exact** amount of an asset for the required 
 osmosisd tx gamm join-swap-extern-amount-in [token-in] [share-out-min-amount] --from --pool-id --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Join `pool 3` with **exactly** `.200000 AKT` (and `0 OSMO`) to get a **minimum** of `3.234812471272883046 gamm/pool/3` using `WALLET_NAME` on the osmosis mainnet:
 
@@ -342,7 +346,7 @@ Join `pool 3` with **exactly** `.200000 AKT` (and `0 OSMO`) to get a **minimum**
 osmosisd tx gamm join-swap-extern-amount-in 200000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 3234812471272883046 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Exit-swap-extern-amount-out
 
@@ -354,7 +358,8 @@ This command essentially converts an LP share into the corresponding share of to
 osmosisd tx gamm exit-swap-extern-amount-out [token-out] [share-in-max-amount] --pool-id --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Exit `pool 3` by removing a **maximum** of `3.408979387886193586 gamm/pool/3` and swap the `OSMO` portion of the LP share to receive 100% AKT in the **exact** amount of `0.199430 AKT`:
 
@@ -362,7 +367,7 @@ Exit `pool 3` by removing a **maximum** of `3.408979387886193586 gamm/pool/3` an
 osmosisd tx gamm exit-swap-extern-amount-out 199430ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 3408979387886193586 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Join-swap-share-amount-out
 
@@ -372,7 +377,8 @@ Swap a **maximum** amount of a specified token for another token, similar to swa
 osmosisd tx gamm join-swap-share-amount-out [token-in-denom] [share-out-amount] [token-in-max-amount] --pool-id --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Swap a **maximum** of `0.312466 OSMO` for the corresponding amount of `AKT`, then join `pool 3` and receive **exactly** `1.4481270389710236872 gamm/pool/3`:
 
@@ -380,7 +386,7 @@ Swap a **maximum** of `0.312466 OSMO` for the corresponding amount of `AKT`, the
 osmosisd tx gamm join-swap-share-amount-out uosmo 14481270389710236872 312466 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Exit-swap-share-amount-in
 
@@ -390,7 +396,8 @@ Remove an **exact** amount of LP shares from a specified pool, swap the LP share
 osmosisd tx gamm exit-swap-share-amount-in [token-out-denom] [share-in-amount] [token-out-min-amount] --pool-id --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Exit `pool 3` by removing **exactly** `14.563185400026723131 gamm/pool/3` and swap the `AKT` portion of the LP share to receive 100% OSMO in the **minimum** amount of `.298548 OSMO`:
 
@@ -398,7 +405,7 @@ Exit `pool 3` by removing **exactly** `14.563185400026723131 gamm/pool/3` and sw
 osmosisd tx gamm exit-swap-share-amount-in uosmo 14563185400026723131 298548 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Swap-exact-amount-in
 
@@ -408,7 +415,8 @@ Swap an **exact** amount of tokens for a **minimum** of another token, similar t
 osmosisd tx gamm swap-exact-amount-in [token-in] [token-out-min-amount] --pool-id --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Swap **exactly** `.407239 AKT` through `pool 3` into a **minimum** of `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
 
@@ -416,7 +424,7 @@ Swap **exactly** `.407239 AKT` through `pool 3` into a **minimum** of `.140530 O
 osmosisd tx gamm swap-exact-amount-in 407239ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 140530 --swap-route-pool-ids 3 --swap-route-denoms uosmo --from WALLET_NAME --chain-id osmosis-1
 ```
 
-:::
+</details>
 
 ### Swap-exact-amount-out
 
@@ -426,7 +434,8 @@ Swap a **maximum** amount of tokens for an **exact** amount of another token, si
 osmosisd tx gamm swap-exact-amount-out [token-out] [token-out-max-amount] --swap-route-pool-ids --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Swap a **maximum** of `.407239 AKT` through `pool 3` into **exactly** `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
 
@@ -435,9 +444,7 @@ osmosisd tx gamm swap-exact-amount-out 140530uosmo 407239 --swap-route-pool-ids 
 ```
 
 [comment]: `<>` (Other resources Creating a liquidity bootstrapping pool and Creating a pool with a pool file)
-:::
-
-## Queries
+</details>
 
 ## Queries
 

@@ -231,7 +231,7 @@ categories.
 - [Epoch](#epochs)
 - [Hooks](#superfluid-hooks)
 
-# Messages
+## Messages
 
 ### Superfluid Delegate
 

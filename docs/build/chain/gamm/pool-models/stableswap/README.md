@@ -318,9 +318,7 @@ We see correctness of the swap fee, by imagining what happens if we took this re
 
 Something we have to be careful of is precision handling, notes on why and how we deal with it.
 
-<a id="err_proof" />
-
-#### Proof that |e_y| &lt; 100|e_k|
+#### Proof that |e_y| &lt; 100|e_k| {#err_proof}
 
 The function $$f(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out}$$ is monotonically increasing over the reals.
 You can prove this, by seeing that its [derivative's](https://www.wolframalpha.com/input?i=d%2Fdx+-x%5E3+%2B+3a+x%5E2+-+%28b+%2B+3a%5E2%29+x+) 0 values are both imaginary, and therefore has no local minima or maxima in the reals.

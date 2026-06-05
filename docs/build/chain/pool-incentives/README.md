@@ -119,7 +119,8 @@ osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200
 osmosisd tx poolincentives replace-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
-::: details Example 
+<details>
+<summary>Example</summary>
 
 Fully replace records for pool incentives:
 
@@ -151,7 +152,7 @@ The proposal.json would look as follows:
 }
 ```
 
-:::
+</details>
 
 ### update-pool-incentives  
 
@@ -161,7 +162,8 @@ Update the weight of specified pool gauges in regards to their share of incentiv
 osmosisd tx poolincentives update-pool-incentives [gaugeIds] [weights] [flags] --from --chain-id
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Update the pool incentives for `gauge_id` 0 and 1:
 
@@ -188,7 +190,7 @@ The proposal.json would look as follows:
 }
 ```
 
-:::
+</details>
 
 ## Queries
 
@@ -200,7 +202,8 @@ Query distribution info for all pool gauges
 osmosisd query poolincentives distr-info
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 ```bash
 osmosisd query poolincentives distr-info
@@ -222,7 +225,7 @@ An example output:
 ...
 ```
 
-:::
+</details>
 
 ### external-incentivized-gauges 
 
@@ -232,7 +235,8 @@ Query externally incentivized gauges (gauges distributing rewards on top of the 
 osmosisd query poolincentives external-incentivized-gauges
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 ```bash
 osmosisd query poolincentives external-incentivized-gauges
@@ -276,7 +280,7 @@ An example output:
 ...
 ```
 
-:::
+</details>
 
 ### gauge-ids                    
 
@@ -286,7 +290,8 @@ Query the gauge ids (by duration) by pool id
 osmosisd query poolincentives gauge-ids [pool-id] [flags]
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 Find out what the gauge IDs are for pool 1:
 
@@ -307,7 +312,7 @@ gauge_ids_with_duration:
 ```
 
 In this example, we see that gauge IDs 1,2, and 3 are for the one day, one week, and two week lockup periods respectively for the OSMO/ATOM pool.
-:::
+</details>
 
 ### incentivized-pools           
 
@@ -317,7 +322,8 @@ Query all incentivized pools with their respective gauge IDs and lockup duration
 osmosisd query poolincentives incentivized-pools [flags]
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 ```bash
 osmosisd query poolincentives incentivized-pools
@@ -338,7 +344,7 @@ An example output:
 ...
 ```
 
-:::
+</details>
 
 ### lockable-durations           
 
@@ -348,7 +354,8 @@ Query incentivized lockup durations
 osmosisd query poolincentives lockable-durations [flags]
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 ```bash
 osmosisd query poolincentives lockable-durations
@@ -363,7 +370,7 @@ lockable_durations:
 - 1209600s
 ```
 
-:::
+</details>
 
 ### params                       
 
@@ -373,7 +380,8 @@ Query pool-incentives module parameters
 osmosisd query poolincentives params [flags]
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 ```bash
 osmosisd query poolincentives params
@@ -386,4 +394,4 @@ params:
   minted_denom: uosmo
 ```
 
-:::
+</details>
