@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 
 
 # Running a Node on Mainnet
@@ -19,7 +23,7 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 ## Or Install Osmosis Binary manually
 
-Make sure you have [installed the Osmosis Binary CLI](./osmosisd#minimum-requirements) prior to following the below instructions.
+Make sure you have [installed the Osmosis Binary CLI](/build/developer-environment/osmosisd#minimum-requirements) prior to following the below instructions.
 
 
 ## Initialize Osmosis Node

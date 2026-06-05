@@ -1,1 +1,1 @@
-{ "label": "Chain Development", "position": 1, "collapsible": true, "collapsed": true, "link": { "type": "doc", "id": "build/chain/index" } }
+{"label": "Chain Development", "position": 2, "collapsible": true, "collapsed": true, "link": {"type": "doc", "id": "build/chain/index"}}

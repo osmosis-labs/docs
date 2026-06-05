@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 # Verifying Smart Contracts
@@ -8,7 +8,7 @@ The following are the steps needed to verify any contract from the chain. In thi
 
 
 ### Create new contract
-Follow [this guide](../cosmwasm/testnet/cosmwasm-beaker) to create a new contract with Beaker.
+Follow [this guide](./cosmwasm-beaker) to create a new contract with Beaker.
 
 Output:
 

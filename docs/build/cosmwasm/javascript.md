@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # Javascript & Smart Contracts
 
 This guide describes interacting with Osmosis Smart contracts via JavaScript runtimes such as Node.js and the browser.
@@ -120,7 +124,7 @@ moreExamples();
 # Querying Smart Contracts
 
 :::warning
-Before we query smart contracts in localOsmosis we must [deploy one by following this guide](local/localosmosis.md).
+Before we query smart contracts in localOsmosis we must [deploy one by following this guide](./localosmosis.md).
 :::
 
 Once you have deployed the smart contract you can get the `<CONTRACT-ID>` by running:
@@ -175,7 +179,7 @@ The output should look like this:
 The contract we are interacting with has a few simple functions. 'get_count', 'increment' and 'reset'. These two functions can be called by using the `queryContractSmart` method.
 
 :::tip
-Please note there is a complete guide on how to upload the example contract on localOsmosis [here](./local/localosmosis.md).
+Please note there is a complete guide on how to upload the example contract on localOsmosis [here](./localosmosis.md).
 :::
 
 ```javascript

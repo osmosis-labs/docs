@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Validating On Mainnet
 
 ## Synced Node

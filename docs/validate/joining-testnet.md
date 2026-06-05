@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Running a Node on Testnet
 
 ## Osmosis Installer
@@ -17,9 +21,9 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 ## Osmosis CLI
 
-Make sure you have [installed the Osmosis Binary (CLI)](./osmosisd) prior to following the below instructions.
+Make sure you have [installed the Osmosis Binary (CLI)](/build/developer-environment/osmosisd) prior to following the below instructions.
 
-You may also [use the Osmosis installer](./osmosisd) if you want everything to be done automatically.
+You may also [use the Osmosis installer](/build/developer-environment/osmosisd) if you want everything to be done automatically.
 
 ## Faucet 
 In order to get testnet tokens use  [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/)

@@ -1,6 +1,6 @@
 ---
 title: Performance and Profiling
-sidebar_position: 9
+sidebar_position: 5
 ---
 # Performance & Profiling
 

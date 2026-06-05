@@ -1,6 +1,6 @@
 ---
 title: Relayer Guide
-sidebar_position: 2
+sidebar_position: 8
 ---
 # Relayer Guide
 

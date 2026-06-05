@@ -215,6 +215,6 @@ osmosisd tx tokenfactory set-denom-metadata \
 - **Metadata Overwrite:** Executing this transaction will overwrite the existing metadata associated with the denom.
     
 
-For more detailed information, you can refer to the [Osmosis Token Factory module documentation](/build/chain/modules/tokenfactory).
+For more detailed information, you can refer to the [Osmosis Token Factory module documentation](/build/chain/tokenfactory).
 
 If you encounter any issues or need further assistance, consider reaching out to the Osmosis community or checking the [Osmosis GitHub repository](https://github.com/osmosis-labs/osmosis) for additional resources.

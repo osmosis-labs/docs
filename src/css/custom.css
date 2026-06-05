@@ -805,29 +805,26 @@ img[src$='#terminal'] {
 }
 
 /* Force the mobile-style hamburger navbar earlier than Docusaurus's
-   default 996px breakpoint. With ~8 left navbar items + dropdown +
-   search, the desktop layout runs out of room well before 996px and the
-   navbar was visibly clipping. Switch to the hamburger at 1500px instead.
+   default 996px breakpoint. After the IA restructure (MTN-88) the navbar
+   has only 5 short left items (Learn, Integrate, Build, Validate,
+   Community) plus the right-side icons, search, and Launch Dex, so it
+   fits much further down than the old 8-item bar did. The early-hamburger
+   cutoff is therefore lowered to 1080px: above that the full bar fits;
+   below it the left items collapse into the hamburger drawer before the
+   right-side controls would crowd the search box.
 
-   1500px is chosen so the hamburger triggers just before the longest
-   item ("Validate & Run your Node") starts wrapping to two lines: that
-   wrap already happens around 1470-1480px, so the cutoff sits a touch
-   above it for headroom.
-
-   In this 997-1500px range:
+   In this 997-1080px range:
    - The desktop docs sidebar (left-hand page TOC) keeps its normal
      position by Docusaurus default (only hidden below 996px).
-   - The left-hand nav pills collapse into the hamburger drawer. The
+   - The left-hand nav items collapse into the hamburger drawer. The
      GitHub/Discord icons and Launch Dex button are hidden from the top
-     bar by a separate `max-width: 1500px` rule below (which also covers
+     bar by a separate `max-width: 1080px` rule below (which also covers
      standard mobile), so they appear only in the drawer. Search stays.
 
-   The drawer itself is left at Docusaurus's native full-width styling at
-   every breakpoint. An earlier version constrained it to a 320px side
-   panel in this range, but that made the drawer width jump (320px panel
-   above 996px, full-width below) as the window was resized across the
-   996px boundary. Keeping it full-width throughout removes that jump. */
-@media (min-width: 997px) and (max-width: 1500px) {
+   The drawer is left at Docusaurus's native full-width styling at every
+   breakpoint, so the open drawer does not change width as the window is
+   resized across the 996px boundary. */
+@media (min-width: 997px) and (max-width: 1080px) {
   .navbar__toggle {
     display: inherit;
   }
@@ -836,12 +833,12 @@ img[src$='#terminal'] {
   }
 }
 
-/* Below the 1500px hamburger breakpoint (including standard mobile at
+/* Below the 1080px hamburger breakpoint (including standard mobile at
    <=996px, where Docusaurus's own mobile navbar takes over), the
    GitHub/Discord icons and the Launch Dex button live in the hamburger
    drawer, so hide their top-bar copies to avoid duplication. Search
    stays visible in the top bar. */
-@media (max-width: 1500px) {
+@media (max-width: 1080px) {
   .navbar__items--right .pseudo-icon,
   .navbar__items--right .dev-portal-link {
     display: none;

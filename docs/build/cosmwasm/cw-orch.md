@@ -1,6 +1,6 @@
 ---
 title: Scripts and Tests with cw-orchestrator
-sidebar_position: 9
+sidebar_position: 8
 ---
 # Speed up your development with cw-orchestrator <!-- omit in toc -->
 

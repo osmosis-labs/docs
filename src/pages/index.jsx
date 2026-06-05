@@ -7,15 +7,11 @@ import {
   HomepageSection as Section,
 } from '../components/HomepageComponents';
 import {
-  APIReferenceIcon,
   TerminalIcon,
-  IDEIcon,
   ModulesIcon,
   AssetIcon,
   Telescope,
   Osmojs,
-  Createapp,
-  Cosmoskit,
   Tscodegen,
   KeysIcon,
   Transaction,
@@ -41,245 +37,193 @@ export default function Homepage() {
             <button
               type="button"
               className="button button--primary button--lg"
-              onClick={() => router.push('/osmosis-core/')}
+              onClick={() => router.push('/learn')}
             >
               Get Started &rarr;
             </button>
           </div>
 
-          <Section title="What's the latest">
-            <Card
-              title="Osmosis Testnet-5 is live"
-              description="Now live and ready for exploration. Join the testnet to gain hands-on experience with the newest features and take advantage of the expanded network options available."
-              to="/integrate/endpoints"
-            />
-
-            <Card
-              title="Introducing the Osmosis Web CLI"
-              description=" Whether you're a seasoned developer or a curious enthusiast, this user-friendly interface provides a quick and intuitive way to access and leverage the power of Osmosis."
-              to="https://cli.osmosis.zone/"
-            />
-          </Section>
-
-
-
-          <Section title="Learn about Osmosis">
+          <Section title="Learn">
             <Card
               title="What is Osmosis?"
               description="Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond."
-              to="/learn/educate/osmosis"
+              to="/learn/osmosis"
               icon={<OsmosisCore />}
             />
             <Card
-              title="How to use the Osmosis DEX"
-              description="Learn about how to swap, provide liquidity and more."
-              to="/learn/get-started"
+              title="The OSMO Token"
+              description="Tokenomics, staking, and governance of the OSMO token."
+              to="/learn/osmo"
+              icon={<OsmosisCore />}
+              svgFile="/icons/osmo.svg"
             />
             <Card
-              title="Explore the Ecosystem"
-              description="Osmosis is home to a wide array of protocols and tools, find documentation relating to these on their sites"
-              to="https://app.osmosis.zone/apps"
-            />
-            <Card
-              title="List on Osmosis"
-              description="Learn how to list your project's token on Osmosis"
-              to="/integrate"
-            />
-            <Card
-              title="Join the Chain"
-              description="Learn how to run an Osmosis node or validator"
-              to="/validate"
+              title="Features"
+              description="Concentrated liquidity, the EIP-1559 fee market, fee abstraction, ProtoRev, and more."
+              to="/learn/features"
+              icon={<ModulesIcon />}
+              svgFile="/icons/modules.svg"
             />
           </Section>
 
-          <Section title="Developers" id="web-sdks" hasSubSections>
-            <Section
-              title="⚙️ Chain Development"
-              id="core-sdks"
-              HeadingTag="h4"
-              description={
-                <>
-                  Everything that is needed to learn about the Osmosis core chain development.
-                </>
-              }
-            >
+          <Section title="Integrate">
+            <Card
+              title="List an Asset"
+              description="The end-to-end workflow for bringing a token to Osmosis."
+              to="/integrate/list-asset"
+              icon={<AssetIcon />}
+            />
+            <Card
+              title="Endpoints"
+              description="Public RPC, REST, gRPC, and SQS infrastructure for mainnet and testnet."
+              to="/integrate/endpoints"
+              icon={<TerminalIcon />}
+              svgFile="/icons/cli.svg"
+            />
+            <Card
+              title="Feature Integrations"
+              description="Integrate against concentrated liquidity, alloyed assets, and smart accounts."
+              to="/integrate/features"
+              icon={<Transaction />}
+              svgFile="/icons/transaction.svg"
+            />
+          </Section>
 
-
+          <Section title="Build" id="build" hasSubSections>
+            <Section id="build-main" HeadingTag="h4">
               <Card
-                title="Build and Test Osmosis Source Code"
-                description="Getting started with building and testing Osmosis codebase"
-                to="/build/chain/build"
-                icon={<OsmosisCore />}
-              />
-              <Card
-                title="IDE Setup"
-                description="Recommended IDE setup for developing on Osmosis in Go"
-                to="/build/chain/ide-guide"
-                icon={<IDEIcon />}
-              />
-              <Card
-                title="Osmosisd CLI"
-                description="Install osmosisd to join the network or simple query it."
-                to="/validate/osmosisd"
+                title="Install osmosisd"
+                description="Minimum specs, installation, building from source, and the osmosisd command reference."
+                to="/build/developer-environment/osmosisd"
                 icon={<TerminalIcon />}
                 svgFile="/icons/cli.svg"
               />
               <Card
-                title="Modules"
-                description="Osmosis modules and their respective CLI commands"
-                to="/build/chain/modules"
+                title="Key Management"
+                description="Manage keys via the CLI, including multisig wallets."
+                to="/build/developer-environment/keys/keys-cli"
+                icon={<KeysIcon />}
+              />
+              <Card
+                title="Local Testing"
+                description="Spin up a containerized LocalOsmosis chain to develop against."
+                to="/build/developer-environment/localtesting"
+                icon={<TerminalIcon />}
+                svgFile="/icons/cli.svg"
+              />
+              <Card
+                title="Chain Development"
+                description="Specifications for every x/ module: messages, state, and parameters."
+                to="/build/chain"
                 icon={<ModulesIcon />}
                 svgFile="/icons/modules.svg"
               />
               <Card
-                title="Relaying"
-                description=" Relay IBC packets between Osmosis and other chains"
-                to="/learn/relaying"
-                icon=""
-                svgFile="/icons/relayer.svg"
+                title="CosmWasm"
+                description="Write, deploy, and interact with CosmWasm smart contracts on Osmosis."
+                to="/build/cosmwasm"
+                icon={<TerminalIcon />}
+                svgFile="/icons/cw-orch.svg"
               />
               <Card
-                title="Assets"
-                description="     Currently supported assets on Osmosis with their corresponding channels and IBC denoms."
-                to="/learn/asset-info"
-                icon={<AssetIcon />}
+                title="cw-orchestrator"
+                description="All-in-one Rust-based CosmWasm testing, scripting, and deployment tool."
+                to="/build/cosmwasm/cw-orch"
+                icon={<TerminalIcon />}
+                svgFile="/icons/cw-orch.svg"
               />
-              <Card
-                title="Key Management"
-                description="Managing keys via CLI and advanced operations such as multisig wallets"
-                to="/learn/keys/keys-cli"
-                icon={<KeysIcon />}
-              />
-              <Card
-                title="Transaction Structure"
-                description=" Understanding the structure of a transaction on the Osmosis blockchain"
-                to="/integrate/transaction-structure"
-                icon={<Transaction />}
-                svgFile="/icons/transaction.svg"
-              />
-              <Card
-                title="Contributing"
-                description=" Guidelines to contributing to Osmosis core development."
-                to="/community/contributing"
-                icon={<Contribute />}
-                svgFile="/icons/octocat.svg"
-              />
-
             </Section>
-          </Section>
 
-
-          <Section title="Osmosis Frontend" id="web-sdks" hasSubSections >
-
-            <Section>
+            <Section
+              title="🖥 Frontend & SDKs"
+              id="build-frontend"
+              HeadingTag="h4"
+              description={<>TypeScript and JavaScript libraries for building on Osmosis.</>}
+            >
               <Card
                 title="Osmosis Frontend"
-                description="Web interface for Osmosis Zone"
+                description="Architecture of the app.osmosis.zone web interface."
                 to="/build/frontend/osmosis-frontend"
                 icon=""
-                svgFile="/icons/osmo.svg" />
-
+                svgFile="/icons/osmo.svg"
+              />
               <Card
                 title="OsmoJS"
-                description="Compose and broadcast Osmosis and Cosmos messages, with all of the proto and amino encoding handled for you."
+                description="Compose and broadcast Osmosis and Cosmos messages, with proto and amino encoding handled for you."
                 to="/build/frontend/osmojs"
                 icon={<Osmojs />}
-                svgFile=""
               />
-
+              <Card
+                title="Telescope"
+                description="TypeScript transpiler for Cosmos protobufs, used to generate chain libraries."
+                to="/build/frontend/telescope"
+                icon={<Telescope />}
+              />
+              <Card
+                title="CosmosKit"
+                description="A wallet adapter for React with mobile WalletConnect support for the Cosmos ecosystem."
+                to="/build/frontend/cosmos-kit"
+                icon=""
+                svgFile="/icons/bag.svg"
+              />
               <Card
                 title="Osmosis-Labs Math"
-                description="NPM package with math functions related to Osmosis AMM. Useful for estimating state changes to propose reasonable min/max amounts in transactions."
+                description="NPM package with math functions for the Osmosis AMM, useful for estimating state changes."
                 to="https://www.npmjs.com/package/@osmosis-labs/math"
                 icon={<Tscodegen />}
                 svgFile="/icons/math.svg"
               />
               <Card
                 title="Osmosis-Labs Pools"
-                description="NPM package that defines pool interface and pool routing logic for the Osmosis Dex."
+                description="NPM package defining the pool interface and routing logic for the Osmosis DEX."
                 to="https://www.npmjs.com/package/@osmosis-labs/pools"
                 icon={<Tscodegen />}
                 svgFile="/icons/pools.svg"
               />
-              <Card
-                title="Osmosis-Labs Stores"
-                description="NPM package which contains observable stores via mobx data storage framework for the Osmosis front-end"
-                to="https://www.npmjs.com/package/@osmosis-labs/stores"
-                icon={<Tscodegen />}
-                svgFile="/icons/store.svg"
-              />
             </Section>
           </Section>
 
-          <Section title="Frontend SDK Libraries & Utilities" id="web-sdks" hasSubSections >
-
-            <Section>
-
-              <Card
-                title="Cosmos Kit"
-                description="A wallet adapter for react with mobile WalletConnect support for the Cosmos ecosystem."
-                to="https://github.com/cosmology-tech/cosmos-kit"
-                icon=""
-                svgFile="/icons/bag.svg"
-              />
-              <Card
-                title="Telescope"
-                description="TypeScript Transpiler for Cosmos Protobufs. Telescope is used to generate libraries for Cosmos blockchains."
-                to="/build/frontend/telescope"
-                icon={<Telescope />}
-                svgFile=""
-              />
-              <Card
-                title="Create Cosmos App"
-                description="Set up a modern Cosmos app by running one command"
-                to="https://github.com/cosmology-tech/create-cosmos-app"
-                icon={<Createapp />}
-                svgFile="/icons/create-cosmos-app.svg"
-              />
-              <Card
-                title="Chain Registry"
-                description="The npm package for the Official Cosmos chain registry"
-                to="https://github.com/cosmology-tech/chain-registry"
-                icon={<Cosmoskit />}
-                svgFile="/icons/registry.svg"
-              />
-              <Card
-                title="TS Codegen"
-                description="The quickest and easiest way to interact with CosmWasm Contracts"
-                to="https://github.com/CosmWasm/ts-codegen"
-                icon={<Tscodegen />}
-                svgFile="/icons/tscodegen.svg"
-              />
-
-
-
-            </Section>
-          </Section>
-
-
-          <Section title="🛠 Tools">
+          <Section title="Validate">
             <Card
-              title="Osmosisd CLI"
-              description="A command line tool to get things done quick!"
-              to="/validate/osmosisd"
+              title="Running a Node on Mainnet"
+              description="Sync and run a full Osmosis node on mainnet."
+              to="/validate/joining-mainnet"
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
             />
             <Card
-              title="Cw-orchestrator"
-              description="All-in-one Rust-based CosmWasm contracts testing, scripting, and deployment tool"
-              to="/build/cosmwasm/cw-orch"
+              title="Validating on Mainnet"
+              description="Create a validator and go live on mainnet."
+              to="/validate/validating-mainnet"
               icon={<TerminalIcon />}
-              svgFile="/icons/cw-orch.svg"
+              svgFile="/icons/cli.svg"
+            />
+            <Card
+              title="Relayer Guide"
+              description="Run IBC relaying infrastructure (Hermes) between Osmosis and other chains."
+              to="/validate/relayer-guide"
+              icon=""
+              svgFile="/icons/relayer.svg"
             />
           </Section>
 
-          <Section title="📜 API Reference">
+          <Section title="Community">
             <Card
-              title="API Reference"
-              description="Osmosis RPC and LCD API Reference"
-              to="/api/"
-              icon={<APIReferenceIcon />}
+              title="Contributing"
+              description="Guidelines for contributing to Osmosis development."
+              to="/community/contributing"
+              icon={<Contribute />}
+              svgFile="/icons/octocat.svg"
+            />
+            <Card
+              title="Translations"
+              description="Help translate the Osmosis interface into new languages."
+              to="/community/translating"
+            />
+            <Card
+              title="IBC Relayer List"
+              description="Directory of relaying operators connecting Osmosis to the Cosmos ecosystem."
+              to="/community/ibc-relayers-list"
             />
           </Section>
 
