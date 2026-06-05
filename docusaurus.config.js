@@ -259,13 +259,11 @@ const config = {
         ],
       },
       algolia: {
-        // App 6QKGHF2S6F is the index the docsearch-scraper GitHub Action
-        // (BETA_APPLICATION_ID / BETA_API_KEY) actually populates. The previous
-        // app (O18C1RUI3F) was a stale, unmaintained index in a lost account
-        // that the scraper no longer wrote to, so live search served old data.
+        // Org-owned Algolia account. The docsearch-scraper GitHub Action
+        // (APPLICATION_ID / API_KEY secrets) populates the `Docs` index.
         // This key is search-only (search/listIndexes/settings/browse).
-        appId: '6QKGHF2S6F',
-        apiKey: '85c9d989b84d2b73fce5c8d1fccb6415',
+        appId: 'F26GLV8TNU',
+        apiKey: '0c5c06782dec165349c88655f2de36b6',
         indexName: 'Docs',
         // Kept off through the MTN-88 single-instance migration: the new index
         // has faceting configured, but page `docusaurus_tag` values will flip
