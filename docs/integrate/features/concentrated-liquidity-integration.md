@@ -15,43 +15,9 @@ Concentrated liquidity also opens up new opportunities for providing liquidity r
 
 The following information is meant to provide Vaul Creators with all the information needed to interact and develop concentrated liquidity vaults. 
 
-# Index
-
-1. [Concentrated liquidity for On-chain Vault Creators](#On-chain-Vault-Creators)
-3. [Clients](#clients)
-   - [JS Client - (OsmoJS)](#js-client---osmojs)
-     - [Install OsmoJS](#install-osmojs)
-     - [Start Client](#start-client)
-   - [CosmWasm - (`osmosis-std`)](#CosmWasm---osmosis-std)
-   - [Hummingbot client](#hummingbot-client)
-4. [Concentrated Liquidity Module Messages](#concentrated-liquidity-module-messages)
-   - [MsgCreatePosition](#msgcreateposition)
-   - [MsgWithdrawPosition](#msgwithdrawposition)
-   - [MsgCreatePool](#msgcreatepool)
-   - [MsgCollectSpreadRewards](#msgcollectspreadrewards)
-   - [MsgFungifyChargedPositions](#msgfungifychargedpositions)
-5. [Incentives](#incentives)
-   - [Incentive Creation and Querying](#incentive-creation-and-querying)
-   - [Reward Splitting Between Classic and CL Pools](#reward-splitting-between-classic-and-cl-pools)
-6. [Parameters](#parameters)
-7. [Listeners](#listeners)
-   - [AfterConcentratedPoolCreated](#afterconcentratedpoolcreated)
-   - [AfterInitialPoolPositionCreated](#afterinitialpoolpositioncreated)
-   - [AfterLastPoolPositionRemoved](#afterlastpoolpositionremoved)
-   - [AfterConcentratedPoolSwap](#afterconcentratedpoolswap)
-8. [State Entries and KV Store Management](#state-entries-and-kv-store-management)
-9. [Terminology](#terminology)
-10. [TWAP Integration](#twap-integration)
-11. [External Sources](#external-sources)
-
-
-
 # Clients
-The following clients are available to interact with the Concentrated liquidity modules in Osmosis.
- - [JS Client - (OsmoJS)](#js-client---osmojs)
- - [Osmosis-rust Client (Cosmwasm)](#osmosis-rust-client-cosmwasm)
- - [Hummingbot client](#hummingbot-client)
-   
+The following clients are available to interact with the concentrated liquidity module on Osmosis: the JavaScript client (OsmoJS) and the CosmWasm client (`osmosis-std`), both covered below.
+
 ## JS Client - (OsmoJS)
 Concentrated liquidity is available on the OsmoJS package. For more information please visit: https://github.com/osmosis-labs/osmojs
 

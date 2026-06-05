@@ -155,7 +155,8 @@ Query all the current mint parameter values
 query mint params
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 List all current min parameters in json format by:
 
@@ -244,7 +245,7 @@ An example of the output:
 }
 ```
 
-:::
+</details>
 
 ### epoch-provisions
 
@@ -254,7 +255,8 @@ Query the current epoch provisions
 query mint epoch-provisions
 ```
 
-::: details Example
+<details>
+<summary>Example</summary>
 
 List the current epoch provisions:
 
@@ -263,7 +265,7 @@ osmosisd query mint epoch-provisions
 ```
 
 As of this writing, this number will be equal to the `genesis-epoch-provisions`. Once the `reduction_period_in_epochs` is reached, the `reduction_factor` will be initiated and reduce the amount of OSMO minted per epoch.
-:::
+</details>
 
 ## Appendix
 
