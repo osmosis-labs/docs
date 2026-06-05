@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Source Initial Liquidity
 
-When integrating a new asset, Osmosis Zone recommends at least USD $1000-worth of liquidity in a pool before it is listed onto [osmosis.zone](https://app.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
+When integrating a new asset, Osmosis Zone recommends at least USD $1,000-worth of liquidity in a pool before it is listed onto [osmosis.zone](https://app.osmosis.zone). There are a few ways to go about setting up the minimum liquidity requirement.
 
 *Note that the Osmosis Foundation will **not** consider any OTC token transfers or loans*
 
