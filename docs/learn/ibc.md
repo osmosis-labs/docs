@@ -6,31 +6,25 @@ sidebar_position: 7
 
 # Inter-Blockchain Communication Protocol (IBC)
 
-## What is IBC? Enabling Seamless Cross-Chain Communication
-Blockchain technology has revolutionized various industries, but the lack of interoperability between different blockchains remains a significant challenge. The Inter-Blockchain Communication Protocol (IBC) offers a standardized solution to address this challenge, enabling seamless communication and data transfer between blockchains. In this article, we'll delve into the fundamentals of IBC, its underlying principles, functionality, security guarantees, and its significance within the Interchain ecosystem. The information presented in this document is sourced from the official Cosmos Network tutorials.
+The Inter-Blockchain Communication Protocol (IBC) is how sovereign blockchains move tokens and data between each other in a trust-minimized way. It is the foundation of the interchain, and it is how almost every asset on Osmosis arrives here. This page covers what IBC is and how Osmosis uses it; for the protocol internals, see the [Cosmos IBC documentation](https://ibc.cosmos.network/).
 
-## Summary
-Inter-Blockchain Communication Protocol (IBC) serves as a standardized protocol for authenticating and transporting data between two blockchains, providing a seamless solution for cross-chain communication. Unlike traditional bridging technologies, IBC offers a permissionless approach to relay data packets, fostering interoperability across different blockchain platforms. The security of IBC relies on the security measures implemented by the participating chains, ensuring trust and reliability.
+## How IBC works
 
-Cross-chain communication is a widespread challenge in both public and application-specific blockchains. IBC addresses this problem by introducing a common protocol and framework for standardized inter-blockchain communication. While the Cosmos SDK, which powers many chains in the Interchain ecosystem, seamlessly supports IBC, the protocol itself is not limited to Cosmos blockchains. It can be implemented across various blockchain platforms, accommodating different network topologies and consensus algorithms.
+IBC is a standardized protocol for authenticating and transporting packets between two chains. Unlike a trusted bridge, it does not introduce a third-party validator set: each chain runs a light client of the other and verifies the counterparty's consensus directly, so the security of an IBC transfer reduces to the security of the two chains involved.
 
-IBC facilitates the creation of an "internet of blockchains" by enabling independent chains to communicate and exchange information and assets in a secure and efficient manner. Its design features offer high horizontal scalability, transaction finality, and address common issues such as high transaction costs, limited network capacity, and transaction confirmation delays.
+The protocol is structured in two layers:
 
-The IBC protocol is structured into two layers: the transport layer (TAO) and the application layer. The transport layer establishes secure connections and provides authentication for data packets transmitted between chains, while the application layer defines the packaging and interpretation of these data packets by the sending and receiving chains.
+- **Transport (TAO):** establishes clients, connections, and channels, and authenticates the packets sent over them.
+- **Application:** defines how a packet's contents are encoded and interpreted. Token transfers use the ICS-20 application; other applications carry arbitrary data (for example, [IBC hooks](/learn/features/ibc-hooks) trigger a contract call on arrival).
 
-Security is a critical aspect of IBC, and it is achieved through a combination of trust in the participating chains and the implementation of fault isolation mechanisms. IBC clients, light clients, and relayers play pivotal roles in verifying and ensuring the validity of cross-chain transactions. The protocol also incorporates dynamic capabilities and the ability to submit misbehavior, further enhancing the security and resilience of the ecosystem.
+Because it is a standard rather than a Cosmos-specific feature, IBC can be implemented on any chain whose consensus a light client can verify.
 
-Implementing IBC requires the development of essential components, including the IBC transport layer, light client implementations, and consensus-specific integrations. The Cosmos SDK, which includes native IBC support, offers a comprehensive solution for building chains with seamless IBC integration. However, developers can also explore custom implementations to enable IBC functionality in their preferred blockchain frameworks.
+## IBC assets on Osmosis
 
-## Osmosis IBC Assets
-Osmosis, a prominent platform within the Interchain ecosystem, has extended IBC functionality to support various assets with corresponding IBC denominations and channels. When assets are transferred through IBC, they obtain a new IBC denomination, which is used to identify them within the Osmosis frontend. Additionally, the IBC channel is utilized to identify the chain from which the asset originated. For example, channel-0 is used for ATOMs transferred from the Cosmos Hub to Osmosis. For detailed information on the supported assets and corresponding IBC denominations and channels in Osmosis, please refer to the [IBC Channels](/integrate/channels) page.
+When an asset is transferred to Osmosis over IBC, it takes on an **IBC denomination** of the form `ibc/<HASH>`, derived from the channel path it travelled. The channel identifies the chain the asset came from: for example, ATOM from the Cosmos Hub arrives over `channel-0`. Always match assets on the full `ibc/<HASH>` denom, since the same symbol (for example, multiple bridged versions of USDC) can map to different denoms.
+
+For the live list of supported assets and their channels, see the [IBC Channels](/integrate/channels) page. Several bridged versions of the same underlying asset can be unified into a single tradable denom; see [Alloyed Assets](/learn/features/alloyed-assets).
 
 ## Relaying
-In IBC, blockchains do not directly pass messages to each other over the network. This is where a `relayer` comes in. A relayer process monitors for updates on open paths between sets of IBC-enabled chains, and submits these updates in the form of specific message types to the counterparty chain. Clients are then used to track and verify the consensus state.
 
-In addition to relaying packets, a relayer can open paths across chains, creating clients, connections, and channels. For details on running relaying infrastructure, see the [Relayer Guide](/validate/relayer-guide). Additional information on how IBC works can be found in the [Cosmos IBC documentation](https://ibc.cosmos.network/).
-
-## Conclusion
-The Inter-Blockchain Communication Protocol (IBC) serves as a foundational pillar for achieving seamless cross-chain communication within the blockchain ecosystem. By providing a standardized protocol for authentication and data transport, IBC promotes interoperability and unlocks new possibilities for decentralized applications. Developers can leverage IBC to establish an "internet of blockchains," facilitating independent and interoperable chains that can exchange information and assets securely and efficiently. With IBC, developers can unlock increased scalability, transaction finality, and harness the full potential of blockchain technology.
-
-For comprehensive tutorials and detailed information on implementing IBC, please refer to the official Cosmos Network tutorials available [here](https://tutorials.cosmos.network/academy/3-ibc/1-what-is-ibc.html).
+Chains do not push IBC packets to each other directly. A **relayer** is an off-chain process that watches for packets on open channels and submits them, along with the proofs the receiving chain's light client needs to verify them. Relayers are permissionless: anyone can run one, and they can also open new paths by creating clients, connections, and channels. For running relaying infrastructure, see the [Relayer Guide](/validate/relayer-guide).

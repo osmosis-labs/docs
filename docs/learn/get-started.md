@@ -32,9 +32,9 @@ Always make sure you are connected to app.osmosis.zone name and network (osmosis
 
 ## Deposit Funds
 
-![](@site/docs/assets/started-assets-page.png)
+![](@site/docs/assets/started-portfolio-page.png)
 
-Click Assets. Then click on the deposit link next to the asset name. For this example we are clicking the ATOM deposit link. 
+Go to the Portfolio page. Then click the deposit link next to the asset name. For this example we are clicking the ATOM deposit link.
 
 Accept connection to cosmoshub-4
 
