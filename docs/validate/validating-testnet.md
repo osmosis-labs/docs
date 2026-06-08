@@ -1,6 +1,6 @@
 ---
 description: Create a validator and go live on testnet.
-sidebar_position: 6
+sidebar_position: 11
 ---
 
 # Validating On Testnet

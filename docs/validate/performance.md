@@ -1,7 +1,7 @@
 ---
 description: Profile and diagnose the performance of a running node.
 title: Performance and Profiling
-sidebar_position: 5
+sidebar_position: 8
 ---
 # Performance & Profiling
 

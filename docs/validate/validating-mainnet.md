@@ -1,6 +1,6 @@
 ---
 description: Create a validator and go live on mainnet.
-sidebar_position: 7
+sidebar_position: 12
 ---
 
 # Validating On Mainnet
