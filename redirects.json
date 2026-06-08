@@ -312,8 +312,12 @@
     "from": "/overview/features/concentrated-liquidity"
   },
   {
-    "to": "/learn/features/eip-1559",
+    "to": "/learn/features/fee-market",
     "from": "/overview/features/eip-1559"
+  },
+  {
+    "to": "/learn/features/fee-market",
+    "from": "/learn/features/eip-1559"
   },
   {
     "to": "/learn/features/fee-abstraction",

@@ -399,7 +399,12 @@
     },
     {
       "source": "/overview/features/eip-1559",
-      "destination": "/learn/features/eip-1559",
+      "destination": "/learn/features/fee-market",
+      "permanent": true
+    },
+    {
+      "source": "/learn/features/eip-1559",
+      "destination": "/learn/features/fee-market",
       "permanent": true
     },
     {

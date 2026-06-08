@@ -22,7 +22,7 @@ Currently the only supported metadata & spot price calculator is using a GAMM po
   * The osmo-equivalent price for determining sufficiency is rechecked after every block. (During the mempools RecheckTx)
     * TODO: further consider if we want to take this tradeoff. Allows someone who manipulates price for one block to flush txs using that asset as fee from most of the networks' mempools.
     * The simple alternative is only check fee equivalency at a txs entry into the mempool, which allows someone to manipulate price down to have many txs enter the chain at low cost.
-    * Another alternative is to use TWAP instead of Spot Price once it is available on-chain
+    * Another alternative is to use TWAP instead of Spot Price once it is available onchain
     * The former concern isn't very worrisome as long as some nodes have 0 min tx fees.
 * A separate min-gas-fee can be set on every node for arbitrage txs. Methods of detecting an arb tx atm
   * does start token of a swap = final token of swap (definitionally correct)
@@ -34,6 +34,23 @@ Currently the only supported metadata & spot price calculator is using a GAMM po
   * These false positives seem like they primarily will get hit during batching of many distinct operations, not really in one atomic action.
 * A max wanted gas per any tx can be set to filter out attack txes.
 * If tx wanted gas > than predefined threshold of 1M, then separate 'min-gas-price-for-high-gas-tx' option used to calculate min gas price.
+
+## Base fee adjustment (EIP-1559 style)
+
+The module maintains a dynamic base fee (the minimum gas price to enter a block) that adjusts each block with congestion. The adjustment is:
+
+```
+baseFeeMultiplier = 1 + (gasUsed - targetGas) / targetGas * maxChangeRate
+newBaseFee = curBaseFee * baseFeeMultiplier
+```
+
+- `gasUsed`: total gas used in the block.
+- `targetGas`: target gas per block, `187,500,000` (0.625 of the block gas limit). Below target, the base fee falls; above it, the base fee rises.
+- `maxChangeRate`: the maximum per-block change, `1/10`.
+
+The result is clamped to a fixed range, `MinBaseFee` (`0.03`) to `MaxBaseFee` (`5`), so it can neither fall to zero nor spike without bound.
+
+Query the current base fee with `osmosisd query txfees base-fee`, or over LCD at `/osmosis/txfees/v1beta1/cur_eip_base_fee`. For the integrator view (setting gas prices against it), see [Fees and Gas](/integrate).
 
 ## Queries
 

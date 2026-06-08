@@ -168,7 +168,7 @@ Example creation of an OSMO/USDC orderbook:
 osmosisd tx cosmwasmpool create-pool 885 '{"base_denom":"uosmo","quote_denom":"ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4"}' --from poolcreator --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-The `--gas-prices` value is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/learn/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
+The `--gas-prices` value is illustrative. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 
 Order books have a built-in moderator account that can freeze and unfreeze liquidity in the pools in the event of a security issue. This may be viewed [here](https://daodao.zone/dao/osmo1peuxfjj66n2qt2v5jmqlvzz8neakjgduez7vttvemw58uug6546sr60ngl)
 

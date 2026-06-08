@@ -13,4 +13,6 @@ Most of the assets on Osmosis arrive over IBC, so a bug or exploit, whether in O
 
 The limits are configurable by governance per asset, and are set as a percentage of the asset's total on Osmosis, with separate inflow and outflow thresholds. Under normal conditions the limits are well above ordinary volume, so regular users never notice them; they only bite during abnormal, potentially malicious spikes.
 
+You can monitor the current rate limits and how close each asset is to its threshold at [ibc.range.org/rate-limits](https://ibc.range.org/rate-limits).
+
 For the module specification (rate limit types, parameterization, and how the quotas are tracked), see the [IBC Rate Limit module page](/build/chain/ibc-rate-limit) under Build.

@@ -67,7 +67,7 @@ export default function Homepage() {
             />
             <Card
               title="Features"
-              description="Concentrated liquidity, the EIP-1559 fee market, fee abstraction, ProtoRev, and more."
+              description="Concentrated liquidity, the fee market, fee abstraction, ProtoRev, and more."
               to="/learn/features"
               icon={<ModulesIcon />}
               svgFile="/icons/modules.svg"
