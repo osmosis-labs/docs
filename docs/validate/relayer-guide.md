@@ -1,4 +1,5 @@
 ---
+description: Run IBC relaying infrastructure (Hermes) between chains.
 title: Relayer Guide
 sidebar_position: 8
 ---

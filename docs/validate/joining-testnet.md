@@ -1,4 +1,5 @@
 ---
+description: Sync and run a full Osmosis node on testnet.
 sidebar_position: 2
 ---
 

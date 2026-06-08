@@ -1,4 +1,5 @@
 ---
+description: Install the osmosisd binary, build from source, and the command reference.
 title: Install osmosisd
 sidebar_position: 3
 ---

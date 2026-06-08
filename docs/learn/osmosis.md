@@ -1,4 +1,5 @@
 ---
+description: The cross-chain DEX and liquidity hub.
 sidebar_position: 1
 ---
 # What is Osmosis?

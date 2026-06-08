@@ -286,6 +286,11 @@ const config = {
         'sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV',
       crossorigin: 'anonymous',
     },
+    // Poppins for headings (Inter remains for body, Fira Code for mono).
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap',
+      type: 'text/css',
+    },
   ],
 };
 

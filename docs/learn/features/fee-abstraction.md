@@ -1,4 +1,5 @@
 ---
+description: Pay transaction fees in many tokens, not only OSMO.
 sidebar_position: 4
 ---
 

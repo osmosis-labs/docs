@@ -1,4 +1,5 @@
 ---
+description: Connect a wallet and make your first trade on Osmosis.
 sidebar_position: 3
 ---
 # Getting Started

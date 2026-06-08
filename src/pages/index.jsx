@@ -17,6 +17,8 @@ import {
   Transaction,
   OsmosisCore,
   Contribute,
+  Network,
+  RelayerIcon,
 } from '../icons';
 
 export default function Homepage() {
@@ -30,9 +32,9 @@ export default function Homepage() {
       <div className="pad">
         <div className="center homepage-content">
           <div className='margin-bottom--lg'>
-            <h2>Osmosis Docs</h2>
+            <h2>Osmosis Documentation</h2>
             <p>
-              The Osmosis blockchain is a decentralized network of validators and full nodes, with many front-ends and development teams on it. Explore our docs and examples to quickly learn, develop & integrate with the Osmosis blockchain.
+              Osmosis is the cross-chain DEX and liquidity hub. Whether you want to understand how the protocol works, connect your app or assets, build on the chain, or run a node, these docs cover it. Use the sections below to find your path, or jump straight in.
             </p>
             <button
               type="button"
@@ -45,17 +47,25 @@ export default function Homepage() {
 
           <Section title="Learn">
             <Card
+              featured
               title="What is Osmosis?"
-              description="Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond."
+              description="Osmosis is the premier cross-chain DEX and DeFi hub for the Cosmos ecosystem and beyond. Start here for the concepts behind the protocol."
               to="/learn/osmosis"
               icon={<OsmosisCore />}
             />
             <Card
               title="The OSMO Token"
-              description="Tokenomics, staking, and governance of the OSMO token."
+              description="Tokenomics, staking, governance, and fees of the OSMO token."
               to="/learn/osmo"
               icon={<OsmosisCore />}
               svgFile="/icons/osmo.svg"
+            />
+            <Card
+              title="Get Started"
+              description="Connect a wallet and make your first trade on Osmosis."
+              to="/learn/get-started"
+              icon={<AssetIcon />}
+              svgFile="/icons/store.svg"
             />
             <Card
               title="Features"
@@ -64,12 +74,20 @@ export default function Homepage() {
               icon={<ModulesIcon />}
               svgFile="/icons/modules.svg"
             />
+            <Card
+              title="Glossary"
+              description="Definitions for the DeFi and Cosmos terms used throughout the docs."
+              to="/learn/terminology"
+              icon={<ModulesIcon />}
+              svgFile="/icons/registry.svg"
+            />
           </Section>
 
           <Section title="Integrate">
             <Card
+              featured
               title="List an Asset"
-              description="The end-to-end workflow for bringing a token to Osmosis."
+              description="The end-to-end workflow for bringing a token to Osmosis: connect over IBC, register, source liquidity, create a pool, and add incentives."
               to="/integrate/list-asset"
               icon={<AssetIcon />}
             />
@@ -84,16 +102,30 @@ export default function Homepage() {
               title="Feature Integrations"
               description="Integrate against concentrated liquidity, alloyed assets, and smart accounts."
               to="/integrate/features"
+              icon={<ModulesIcon />}
+              svgFile="/icons/modules.svg"
+            />
+            <Card
+              title="Transaction Structure"
+              description="How messages and events are laid out in Osmosis transactions."
+              to="/integrate/transaction-structure"
               icon={<Transaction />}
               svgFile="/icons/transaction.svg"
+            />
+            <Card
+              title="IBC Channels"
+              description="How assets reach Osmosis over IBC, and where to find the canonical channel and denom mappings."
+              to="/integrate/channels"
+              icon={<Network />}
             />
           </Section>
 
           <Section title="Build" id="build" hasSubSections>
             <Section id="build-main" HeadingTag="h4">
               <Card
+                featured
                 title="Install osmosisd"
-                description="Minimum specs, installation, building from source, and the osmosisd command reference."
+                description="Minimum specs, installation, building from source, and the osmosisd command reference. The starting point for chain development."
                 to="/build/developer-environment/osmosisd"
                 icon={<TerminalIcon />}
                 svgFile="/icons/cli.svg"
@@ -122,13 +154,6 @@ export default function Homepage() {
                 title="CosmWasm"
                 description="Write, deploy, and interact with CosmWasm smart contracts on Osmosis."
                 to="/build/cosmwasm"
-                icon={<TerminalIcon />}
-                svgFile="/icons/cw-orch.svg"
-              />
-              <Card
-                title="cw-orchestrator"
-                description="All-in-one Rust-based CosmWasm testing, scripting, and deployment tool."
-                to="/build/cosmwasm/cw-orch"
                 icon={<TerminalIcon />}
                 svgFile="/icons/cw-orch.svg"
               />
@@ -185,9 +210,17 @@ export default function Homepage() {
 
           <Section title="Validate">
             <Card
+              featured
               title="Running a Node on Mainnet"
-              description="Sync and run a full Osmosis node on mainnet."
+              description="Sync and run a full Osmosis node on mainnet, the foundation for validating and relaying."
               to="/validate/joining-mainnet"
+              icon={<TerminalIcon />}
+              svgFile="/icons/cli.svg"
+            />
+            <Card
+              title="Install osmosisd"
+              description="Minimum specs and installation for the osmosisd binary."
+              to="/validate/install-osmosisd"
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
             />
@@ -197,6 +230,12 @@ export default function Homepage() {
               to="/validate/validating-mainnet"
               icon={<TerminalIcon />}
               svgFile="/icons/cli.svg"
+            />
+            <Card
+              title="Using TMKMS"
+              description="Production key security for a validator with the Tendermint KMS."
+              to="/validate/tmkms"
+              icon={<KeysIcon />}
             />
             <Card
               title="Relayer Guide"
@@ -219,11 +258,15 @@ export default function Homepage() {
               title="Translations"
               description="Help translate the Osmosis interface into new languages."
               to="/community/translating"
+              icon={<Contribute />}
+              svgFile="/icons/registry.svg"
             />
             <Card
               title="IBC Relayer List"
               description="Directory of relaying operators connecting Osmosis to the Cosmos ecosystem."
               to="/community/ibc-relayers-list"
+              icon={<RelayerIcon />}
+              svgFile="/icons/relayer.svg"
             />
           </Section>
 

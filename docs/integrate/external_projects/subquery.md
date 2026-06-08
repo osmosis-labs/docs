@@ -1,3 +1,7 @@
+---
+description: Index Osmosis data with SubQuery.
+---
+
 # SubQuery
 
 ## Intro

@@ -1,4 +1,5 @@
 ---
+description: Script, test, and deploy CosmWasm contracts with cw-orchestrator.
 title: Scripts and Tests with cw-orchestrator
 sidebar_position: 8
 ---

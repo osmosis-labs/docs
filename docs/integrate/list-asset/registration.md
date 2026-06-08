@@ -1,4 +1,5 @@
 ---
+description: Register your asset so Osmosis recognizes its metadata.
 sidebar_position: 4
 ---
 # Register your Asset

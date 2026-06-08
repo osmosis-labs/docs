@@ -1,4 +1,5 @@
 ---
+description: How Osmosis uses IBC to move assets across the interchain.
 title: IBC Protocol
 sidebar_position: 7
 ---

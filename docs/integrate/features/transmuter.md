@@ -1,4 +1,5 @@
 ---
+description: The contract surface for alloyed assets and the transmuter.
 sidebar_position: 15
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: Sync and run a full Osmosis node on mainnet.
 sidebar_position: 3
 ---
 

@@ -1,3 +1,7 @@
+---
+description: Ecosystem projects and libraries built around Osmosis.
+---
+
 # External Projects
 
 Osmosis integrates with a range of external projects and is supported by a wider ecosystem of open-source tooling. This page collects the integration guides maintained here alongside the external libraries most useful when building on Osmosis.

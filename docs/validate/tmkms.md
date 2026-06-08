@@ -1,4 +1,5 @@
 ---
+description: Production validator key security with the Tendermint KMS.
 sidebar_position: 4
 ---
 

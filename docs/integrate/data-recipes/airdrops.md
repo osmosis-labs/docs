@@ -1,4 +1,5 @@
 ---
+description: Snapshot Osmosis accounts at a height to derive airdrop balances.
 title: Airdrop Snapshots
 sidebar_position: 3
 ---

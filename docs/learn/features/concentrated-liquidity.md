@@ -1,4 +1,5 @@
 ---
+description: Provide liquidity in a chosen price range for far higher capital efficiency.
 sidebar_position: 2
 ---
 

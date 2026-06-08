@@ -1,3 +1,7 @@
+---
+description: Create, import, and manage keys with the CLI.
+---
+
 # Basic Key Management
 
 Create, import, export and delete keys using the CLI keyring. 

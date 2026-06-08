@@ -1,4 +1,5 @@
 ---
+description: Source the initial liquidity needed to list and trade your asset.
 sidebar_position: 6
 ---
 

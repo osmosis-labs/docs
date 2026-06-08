@@ -1,4 +1,5 @@
 ---
+description: Spin up a containerized LocalOsmosis chain to develop against.
 title: Local Testing
 sidebar_position: 6
 ---

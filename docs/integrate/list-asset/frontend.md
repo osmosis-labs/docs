@@ -1,4 +1,5 @@
 ---
+description: Ensure your asset is visible and correctly displayed on the frontend.
 sidebar_position: 8
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: Create a validator and go live on testnet.
 sidebar_position: 6
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: A configurable safety cap on how much of an asset can move over IBC.
 sidebar_position: 6
 ---
 

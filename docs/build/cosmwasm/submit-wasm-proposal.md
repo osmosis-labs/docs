@@ -1,4 +1,5 @@
 ---
+description: Store a contract via a CosmWasm governance proposal.
 sidebar_position: 6
 ---
 

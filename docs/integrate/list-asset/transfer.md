@@ -1,4 +1,5 @@
 ---
+description: Connect your asset to Osmosis over an IBC transfer channel.
 sidebar_position: 3
 ---
 

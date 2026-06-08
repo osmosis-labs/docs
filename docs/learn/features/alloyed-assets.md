@@ -1,4 +1,5 @@
 ---
+description: One canonical denom that unifies several bridged versions of an asset.
 sidebar_position: 9
 ---
 

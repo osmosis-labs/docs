@@ -1,3 +1,7 @@
+---
+description: Integrate Pyth price feeds with Osmosis.
+---
+
 # Pyth
 
 ## Introduction

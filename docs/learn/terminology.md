@@ -1,4 +1,5 @@
 ---
+description: Definitions for the DeFi and Cosmos terms used throughout the docs.
 sidebar_position: 90
 ---
 

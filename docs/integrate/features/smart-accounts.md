@@ -1,4 +1,5 @@
 ---
+description: The integrator surface for smart accounts and authenticators.
 sidebar_position: 17
 ---
 

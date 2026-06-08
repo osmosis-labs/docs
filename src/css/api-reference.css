@@ -34,7 +34,7 @@
 
 html[data-theme='dark'] .elements-container {
   --color-canvas-200: var(--docs-color-background-200) !important;
-  --ifm-pre-background: #1e1e1e;
+  --ifm-pre-background: var(--docs-color-code-background);
 }
 
 html[data-theme='dark'] .TryItPanel {

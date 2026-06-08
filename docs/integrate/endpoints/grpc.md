@@ -1,4 +1,5 @@
 ---
+description: Query Osmosis over gRPC.
 sidebar_position: 10
 ---
 
