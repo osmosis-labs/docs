@@ -13,6 +13,7 @@ This section is for teams connecting their own software or assets to Osmosis: wa
 
 Most integrations follow one of a few paths. Find yours and start there:
 
+- **Executing swaps?** **[Swap Integration](/integrate/swap)** walks through the full flow: get a routed quote from SQS, build the swap message, and broadcast it.
 - **Bringing a token to Osmosis?** Follow the **[List an Asset](/integrate/list-asset)** workflow, an ordered path from connecting the asset over IBC through registration, sourcing liquidity, creating a pool, adding incentives, and ensuring frontend visibility.
 - **Reading prices, pools, or routing quotes?** Start with **[Endpoints](/integrate/endpoints)**. The **[Sidecar Query Server (SQS)](/integrate/endpoints/sqs)** is the production routing and quote service that powers the Osmosis frontend; the **RPC**, **REST**, and **gRPC** pages document the chain endpoints directly, and the Endpoints index lists public infrastructure for mainnet and testnet.
 - **Constructing or parsing transactions?** The **[Transaction Structure](/integrate/transaction-structure)** pages break down real Osmosis blocks and transactions so you can see how messages and events are laid out on the wire. Pair them with the RPC endpoints for signing and broadcasting.
