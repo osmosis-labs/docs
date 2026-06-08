@@ -1,4 +1,5 @@
 ---
+description: Create a validator and go live on mainnet.
 sidebar_position: 7
 ---
 

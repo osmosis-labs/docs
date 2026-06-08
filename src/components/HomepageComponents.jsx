@@ -27,9 +27,20 @@ export function HomepageSection({
   );
 }
 
-export function HomepageCard({ id, icon, svgFile, title, description, to }) {
+export function HomepageCard({
+  id,
+  icon,
+  svgFile,
+  title,
+  description,
+  to,
+  featured = false,
+}) {
   return (
-    <Link to={to} className="homepage-card">
+    <Link
+      to={to}
+      className={clsx('homepage-card', featured && 'homepage-card--featured')}
+    >
       {svgFile
         ?  <div className="icon"><img src={svgFile}/></div>
         :  icon && <div className="icon">{icon}</div>

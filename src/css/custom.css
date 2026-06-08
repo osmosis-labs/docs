@@ -36,43 +36,88 @@ body {
   --dyte-colors-video-bg: 50 50 50;
 }
 
-/* Dyte Docs Tokens */
+/* Docs tokens, remapped to the Osmosis frontend palette
+   (wosmongton purple + bullish teal). Legacy --docs-color-* names kept. */
 :root {
-  --docs-color-primary: #322DC2;
-  --docs-color-secondary: #db5224;
-  --docs-color-primary-100: #4540D8;
-  --docs-color-primary-tint: rgba(33, 96, 253, 0.16);
-  --docs-color-primary-tint-light: rgba(33 96 253/0.24);
+  --docs-color-primary: #462adf; /* wosmongton-700 */
+  --docs-color-secondary: #29d0b2; /* bullish-500 */
+  --docs-color-primary-100: #361fb2; /* wosmongton-800 */
+  --docs-color-primary-tint: rgba(70, 42, 223, 0.12);
+  --docs-color-primary-tint-light: rgba(70, 42, 223, 0.2);
 
-  --docs-color-border: #dadde1;
+  --docs-color-border: #e4e1fb; /* osmoverse-100 */
 
-  --docs-color-text: #000000;
-  --docs-color-text-100: #646464;
+  --docs-color-text: #140f34; /* osmoverse-900, purple-tinted near-black */
+  --docs-color-text-100: #565081; /* osmoverse-600 */
 
   --docs-color-background: #ffffff;
-  --docs-color-background-100: #f8f8f8;
-  --docs-color-background-200: #efefef;
-  --docs-color-background-300: #dcdcdc;
+  --docs-color-background-100: #f8f8fa;
+  --docs-color-background-200: #e4e1fb; /* osmoverse-100 */
+  --docs-color-background-300: #cec8f3; /* osmoverse-200 */
 
   /* Color from prism themes */
-  --docs-color-code-background: #f6f8fa;
+  --docs-color-code-background: #f6f5ff;
 
   --docs-color-android: #44db85;
   --docs-color-apple: var(--docs-color-text) !important;
+
+  /* Card surfaces (light) */
+  --docs-color-card-background: #ffffff;
+  --docs-color-card-background-hover: #f8f8fa;
+  --docs-color-card-border: #e4e1fb; /* osmoverse-100 */
+  --docs-color-card-border-hover: #462adf; /* wosmongton-700 */
+
+  /* shadow-md from the app, tinted to osmoverse-1000. */
+  --docs-card-shadow: 0px 6px 8px rgba(9, 5, 36, 0.2);
+  /* gradient-neutral from the app (featured/hero surfaces). */
+  --docs-gradient-neutral: linear-gradient(96.42deg, #462adf -0.59%, #8a86ff 100%);
+
+  /* Primary CTA fill is theme-fixed in the app (wosmongton-700 -> 400 on
+     hover), so it does NOT follow --ifm-color-primary, which flips light
+     in dark mode. */
+  --docs-cta-background: #462adf; /* wosmongton-700 */
+  --docs-cta-background-hover: #6a67ea; /* wosmongton-400 */
+
+  /* Scrollbar thumb (light): osmoverse-200 / -300 on hover. */
+  --docs-scrollbar-thumb: #cec8f3; /* osmoverse-200 */
+  --docs-scrollbar-thumb-hover: #b0aadc; /* osmoverse-300 */
+
+  /* Route the Infima `.thin-scrollbar` (sidebar/TOC) webkit vars through
+     the themed thumb token. */
+  --ifm-scrollbar-track-background-color: transparent;
+  --ifm-scrollbar-thumb-background-color: var(--docs-scrollbar-thumb);
+  --ifm-scrollbar-thumb-hover-background-color: var(--docs-scrollbar-thumb-hover);
 }
 
 [data-theme='dark'] {
-  --docs-color-border: #2e2e2e;
+  --docs-color-border: #282750; /* osmoverse-800, purple-tinted */
 
   --docs-color-text: #ffffff;
-  --docs-color-text-100: #b4b4b4;
+  --docs-color-text-100: #b0aadc; /* osmoverse-300 */
 
-  --docs-color-background: #161616;
-  --docs-color-background-100: #1c1c1c;
-  --docs-color-background-200: #2a2a2a;
-  --docs-color-background-300: #2e2e2e;
+  --docs-color-background: #090524; /* osmoverse-1000, the app body background */
+  --docs-color-background-100: #140f34; /* osmoverse-900, raised surface */
+  --docs-color-background-200: #201b43; /* osmoverse-850 */
+  --docs-color-background-300: #282750; /* osmoverse-800 */
 
-  --docs-color-code-background: #1e1e1e;
+  /* Code sits one step above the canvas so it reads as a distinct surface. */
+  --docs-color-code-background: #140f34;
+
+  --docs-color-primary: #8c8af9; /* wosmongton-300, accent/link */
+  --docs-color-primary-100: #6a67ea; /* wosmongton-400 */
+  --docs-color-primary-tint: rgba(140, 138, 249, 0.16);
+  --docs-color-primary-tint-light: rgba(140, 138, 249, 0.24);
+
+  /* Card surfaces, matching the Osmosis app (filled osmoverse panels with
+     an osmoverse-700 border that brightens to wosmongton-200 on hover). */
+  --docs-color-card-background: #282750; /* osmoverse-800 */
+  --docs-color-card-background-hover: #3c356d; /* osmoverse-700 */
+  --docs-color-card-border: #3c356d; /* osmoverse-700 */
+  --docs-color-card-border-hover: #b3b1fd; /* wosmongton-200 */
+
+  /* Scrollbar thumb (dark): osmoverse-600 / -500 on hover. */
+  --docs-scrollbar-thumb: #565081; /* osmoverse-600 */
+  --docs-scrollbar-thumb-hover: #736ca3; /* osmoverse-500 */
 }
 
 /* Docusaurus Theming */
@@ -87,44 +132,78 @@ body {
     'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
 
+  --ifm-heading-font-family: 'Poppins', 'Inter var', system-ui, -apple-system,
+    Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  --ifm-heading-font-weight: 600; /* matches the app's Poppins headings */
+
   --ifm-font-family-monospace: 'Fira Code VF', SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;
 
-  /* Theme colors */
-  --ifm-color-primary: #110D8B;
-  --ifm-color-primary-dark: #0A0674;
-  --ifm-color-primary-darker: #080559;
-  --ifm-color-primary-darkest: #02003F;
-  --ifm-color-primary-light: #1D18A8;
-  --ifm-color-primary-lighter: #2722BB;
-  --ifm-color-primary-lightest: #322DC2;
+  /* Theme colors, wosmongton ramp */
+  --ifm-color-primary: #462adf;
+  --ifm-color-primary-dark: #361fb2;
+  --ifm-color-primary-darker: #2d1b8f;
+  --ifm-color-primary-darkest: #1f1366;
+  --ifm-color-primary-light: #5b57fa;
+  --ifm-color-primary-lighter: #6a67ea;
+  --ifm-color-primary-lightest: #8c8af9;
+
+  --ifm-link-color: var(--docs-color-primary);
 
   --ifm-navbar-shadow: none;
-  --ifm-toc-border-color: #dedede;
+  --ifm-toc-border-color: var(--docs-color-border);
 
   --ifm-table-border-color: var(--docs-color-border);
   --code-border-color: var(--docs-color-border);
 
+  /* Larger, frontend-matching radii */
+  --ifm-button-border-radius: 0.75rem;
+  --ifm-card-border-radius: 1rem;
+
   --ifm-code-font-size: 92%;
-  --docusaurus-highlighted-code-line-bg: rgba(147, 178, 244, 0.38);
+  --docusaurus-highlighted-code-line-bg: rgba(140, 138, 249, 0.25);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Headings: Poppins with tighter tracking */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ifm-heading-font-family);
+  letter-spacing: -0.02em;
+}
+
+/* Dark mode uses a lighter wosmongton accent for contrast. */
 html[data-theme='dark'] {
-  --ifm-link-color: #1a90ff;
-  --ifm-tabs-color-active-border: #1a90ff;
-  --ifm-tabs-color-active: #1a90ff;
+  --ifm-link-color: #8c8af9; /* wosmongton-300 */
+  --ifm-tabs-color-active-border: #8c8af9;
+  --ifm-tabs-color-active: #8c8af9;
 
-  --ifm-color-primary: #1a90ff;
+  --ifm-color-primary: #8c8af9;
+  --ifm-color-primary-dark: #6a67ea;
+  --ifm-color-primary-darker: #5b57fa;
+  --ifm-color-primary-darkest: #462adf;
+  --ifm-color-primary-light: #a3a1fb;
+  --ifm-color-primary-lighter: #b4b2fc;
+  --ifm-color-primary-lightest: #cdccfd;
 
-  --ifm-footer-background-color: #1c1c1c;
-  --ifm-background-surface-color: #161616;
-  --ifm-background-color: #161616;
-  --ifm-toc-border-color: #2e2e2e;
+  --ifm-footer-background-color: #140f34;
+  --ifm-background-surface-color: #090524;
+  --ifm-background-color: #090524;
+  --ifm-toc-border-color: var(--docs-color-border);
 
   --ifm-color-content: #e7e7e7;
 
-  --docusaurus-highlighted-code-line-bg: rgba(105, 105, 105, 0.3);
+  --docusaurus-highlighted-code-line-bg: rgba(140, 138, 249, 0.2);
+
+  /* Sidebar + other `.thin-scrollbar` containers style their webkit
+     scrollbar through these Infima vars; route them through the themed
+     thumb token. */
+  --ifm-scrollbar-track-background-color: transparent;
+  --ifm-scrollbar-thumb-background-color: var(--docs-scrollbar-thumb);
+  --ifm-scrollbar-thumb-hover-background-color: var(--docs-scrollbar-thumb-hover);
 }
 
 nav.navbar {
@@ -201,14 +280,15 @@ nav.menu {
   margin-top: 0.25rem;
   display: inline-block;
   padding: 0.25rem 1.5rem;
-  border-radius: 4px;
-  background-color: var(--docs-color-primary);
+  border-radius: 0.75rem;
+  background-color: var(--docs-cta-background); /* wosmongton-700 */
   color: #ffffff;
   text-decoration: none;
+  transition: background-color 0.15s;
 }
 
 .footer__cta a:hover {
-  background-color: var(--ifm-color-primary-darker);
+  background-color: var(--docs-cta-background-hover); /* wosmongton-400 */
 }
 
 .footer__data {
@@ -314,18 +394,26 @@ html[data-theme='dark'] .discord-icon::before {
   content: 'Discord';
 }
 
+/* Primary CTA, matching the app's <Button mode="primary">: 2px
+   wosmongton-700 fill that BRIGHTENS to wosmongton-400 on hover. */
 .dev-portal-link {
-  background-color: var(--docs-color-primary);
-  border-radius: 4px;
+  background-color: var(--docs-cta-background); /* wosmongton-700 */
+  border: 2px solid var(--docs-cta-background);
+  border-radius: 0.75rem; /* rounded-xl */
   margin-right: 12px;
-  transition-property: all;
+  transition-property: background-color, border-color;
+  transition-duration: 0.15s;
 }
 
 .dev-postman-link {
-  background-color: var(--docs-color-secondary);
-  border-radius: 4px;
+  /* bullish-600, dark enough for white label text to pass AA (bullish-500
+     fails). */
+  background-color: #00a399;
+  border: 2px solid #00a399;
+  border-radius: 0.75rem;
   margin-right: 12px;
-  transition-property: all;
+  transition-property: background-color, border-color;
+  transition-duration: 0.15s;
 }
 
 .dev-portal-link svg {
@@ -341,7 +429,8 @@ html[data-theme='dark'] .discord-icon::before {
 }
 
 .dev-portal-signup:hover {
-  background-color: var(--ifm-color-primary-darker);
+  background-color: var(--docs-cta-background-hover); /* wosmongton-400 */
+  border-color: var(--docs-cta-background-hover);
 }
 
 .dev-portal-login {
@@ -764,14 +853,50 @@ img[src$='#terminal'] {
   --ifm-link-hover-color: inherit;
   cursor: pointer;
 
-  transition-property: background-color, color;
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.15s;
 
-  border: 1px solid var(--docs-color-border);
-  border-radius: 8px;
+  background-color: var(--docs-color-card-background);
+  border: 1px solid var(--docs-color-card-border);
+  border-radius: 1rem; /* rounded-2xl, matches the app */
+  box-shadow: var(--docs-card-shadow);
 }
 
-.homepage-card:hover {
-  background-color: var(--docs-color-background-100);
+/* On hover (dark mode), every card reveals the app's signature
+   gradient-neutral surface with white text. */
+[data-theme='dark'] .homepage-card:hover {
+  background-color: transparent;
+  background-image: var(--docs-gradient-neutral);
+  border-color: var(--docs-color-card-border-hover);
+  color: #fff;
+}
+
+[data-theme='dark'] .homepage-card:hover .card-content .title {
+  color: #fff;
+}
+
+[data-theme='dark'] .homepage-card:hover .card-content .description {
+  color: rgba(255, 255, 255, 0.87); /* white-emphasis */
+}
+
+/* Light mode keeps a softer hover (surface fill + accent border, dark
+   text) since the saturated gradient on a white page is too strong. */
+[data-theme='light'] .homepage-card:hover {
+  background-color: var(--docs-color-card-background-hover);
+  border-color: var(--docs-color-card-border-hover);
+}
+
+/* Featured card: spans 2 of the 3 grid columns. Its only resting cue is
+   the wosmongton border (otherwise it's a normal card) plus the larger
+   title; the gradient hover is shared by all cards. One per section;
+   pair with 4 regular cards so the 3-col grid fills two clean rows. */
+.homepage-card--featured {
+  grid-column: span 2;
+  border-color: var(--docs-color-card-border-hover);
+}
+
+.homepage-card--featured .card-content .title {
+  font-size: 20px;
 }
 
 .icon svg {
@@ -852,29 +977,142 @@ img[src$='#terminal'] {
   .two-cols .section-content {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+  /* In the single-column grid a featured card cannot span 2. */
+  .homepage-card--featured {
+    grid-column: span 1;
+  }
 }
 
 
 /* OSMOSIS */
 
-/* Issue #210: render DocCardList items full-width on desktop. Infima
-   drives both flex-basis and max-width from --ifm-col-width on any
-   element matching .col[class*=col--], so override the variable
-   (scoped to <article class="col">, the DocCardList markup) to keep
-   the footer unaffected.
+/* DocCardList uses its default Infima grid (2-col `col col--6`).
+   Pages that opt into `single-column-cards` (via the category link
+   className or the DocCardList className prop) render one card per row. */
+.row.single-column-cards > article.col {
+  --ifm-col-width: 100%;
+}
 
-   Docusaurus's DocCategoryGeneratedIndexPage zeros margin-bottom on
-   the last two articles (`article:nth-last-child(-n + 2)`) on the
-   assumption of a 2-col grid where they share a row. Once we collapse
-   to a single column those two are stacked, so we need the gap back
-   between them — restore margin-bottom on every article except the
-   actual last one. */
-@media (min-width: 997px) {
-  article.col {
-    --ifm-col-width: 100%;
-  }
+/* Reading measure: cap flowing prose at ~72ch for readability. Code
+   blocks, tables, admonitions, card grids, and images opt back out to
+   full width so wide content is never clipped. Scoped to the doc
+   article body so the homepage and generated-index card grids are
+   unaffected. */
+.theme-doc-markdown.markdown > p,
+.theme-doc-markdown.markdown > ul,
+.theme-doc-markdown.markdown > ol,
+.theme-doc-markdown.markdown > h1,
+.theme-doc-markdown.markdown > h2,
+.theme-doc-markdown.markdown > h3,
+.theme-doc-markdown.markdown > h4,
+.theme-doc-markdown.markdown > h5,
+.theme-doc-markdown.markdown > h6,
+.theme-doc-markdown.markdown > blockquote {
+  max-width: 72ch;
+}
 
-  article.col.margin-bottom--lg:not(:last-child) {
-    margin-bottom: 2rem !important;
-  }
+/* Lede: the first paragraph (immediately after the page H1) renders one
+   size up, as documented in CONTRIBUTING.md "Docs page conventions". */
+.theme-doc-markdown.markdown > header + p,
+.theme-doc-markdown.markdown > h1 + p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--docs-color-text);
+}
+
+/* Full-width opt-outs. */
+.theme-doc-markdown.markdown > pre,
+.theme-doc-markdown.markdown > .theme-code-block,
+.theme-doc-markdown.markdown > .table-wrapper,
+.theme-doc-markdown.markdown > table,
+.theme-doc-markdown.markdown > .theme-admonition,
+.theme-doc-markdown.markdown > .admonition,
+.theme-doc-markdown.markdown > details,
+.theme-doc-markdown.markdown > div[class*='cardList'],
+.theme-doc-markdown.markdown > .row,
+.theme-doc-markdown.markdown > p > img,
+.theme-doc-markdown.markdown > img {
+  max-width: 100%;
+}
+
+/* DocCardList: restyle the built-in card grid (used on the section index
+   pages: Learn, Integrate, Build, Validate, Community, List an Asset, etc.)
+   to match HomepageCard and the Osmosis app. The card is the <a> element
+   itself, which carries `.theme-doc-card-container`. */
+.theme-doc-card-container.card {
+  background-color: var(--docs-color-card-background);
+  border: 1px solid var(--docs-color-card-border);
+  border-radius: 1rem;
+  box-shadow: var(--docs-card-shadow);
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.15s;
+}
+
+/* Dark mode: gradient hover with white text (matches the homepage cards). */
+[data-theme='dark'] .theme-doc-card-container.card:hover {
+  background-color: transparent;
+  background-image: var(--docs-gradient-neutral);
+  border-color: var(--docs-color-card-border-hover);
+  color: #fff;
+}
+
+[data-theme='dark'] .theme-doc-card-container.card:hover .theme-doc-card-title,
+[data-theme='dark'] .theme-doc-card-container.card:hover h2,
+[data-theme='dark'] .theme-doc-card-container.card:hover p {
+  color: #fff;
+}
+
+/* Light mode: softer surface-fill hover, dark text. */
+[data-theme='light'] .theme-doc-card-container.card:hover {
+  background-color: var(--docs-color-card-background-hover);
+  border-color: var(--docs-color-card-border-hover);
+}
+
+/* Hide the generic doc/folder glyph: DocCardList has no per-card custom
+   icons, so the cards read as text-only (title + summary). */
+.theme-doc-card-container .theme-doc-card-icon {
+  display: none;
+}
+
+/* Docusaurus applies `text--truncate` (single-line ellipsis) to the card
+   description, which clips multi-sentence summaries. Let it wrap instead,
+   clamped to two lines so cards stay roughly even. With proper concise
+   frontmatter descriptions, two lines should be enough. */
+.theme-doc-card-container .theme-doc-card-description {
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Scrollbar, matching the app. The thumb token is themed (osmoverse-600
+   in dark, osmoverse-200 in light) so both modes get a styled scrollbar. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--docs-scrollbar-thumb);
+  border-radius: 18px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--docs-scrollbar-thumb-hover);
+}
+
+/* Docusaurus's `.thin-scrollbar` (sidebar menu + right-hand TOC) sets
+   `scrollbar-width: thin` but no `scrollbar-color`, so Firefox falls back
+   to the browser-default grey thumb. Set the Firefox property explicitly,
+   and route the Infima webkit vars through the same token. */
+.thin-scrollbar {
+  scrollbar-color: var(--docs-scrollbar-thumb) transparent;
+}
+
+/* Text selection picks up the wosmongton accent. */
+::selection {
+  background: var(--docs-color-primary-tint-light);
 }

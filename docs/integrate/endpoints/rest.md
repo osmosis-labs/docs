@@ -1,4 +1,5 @@
 ---
+description: Query Osmosis over the REST (LCD) gateway.
 sidebar_position: 11
 ---
 

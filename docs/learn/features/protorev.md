@@ -1,4 +1,5 @@
 ---
+description: In-protocol MEV capture that returns arbitrage value to the ecosystem.
 sidebar_position: 8
 ---
 

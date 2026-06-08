@@ -1,1 +1,1 @@
-{ "label": "Feature Integrations", "position": 6, "collapsible": true, "collapsed": true, "link": { "type": "generated-index", "slug": "/integrate/features", "description": "Integrate against specific Osmosis features: concentrated liquidity, alloyed assets, and smart accounts." } }
+{"label": "Feature Integrations", "position": 6, "collapsible": true, "collapsed": true, "link": {"type": "doc", "id": "integrate/features/index"}}

@@ -1,4 +1,5 @@
 ---
+description: Trigger a smart contract call from an IBC transfer, enabling cross-chain swaps.
 sidebar_position: 5
 ---
 

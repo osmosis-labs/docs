@@ -1,3 +1,7 @@
+---
+description: Anatomy of an arbitrage transaction on Osmosis.
+---
+
 # Arbitrage
 
 The transaction at index 1 of block 2836990 is an arbitrage transaction, swapping an exact amount in and (hopefully) getting a larger

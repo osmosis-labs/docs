@@ -1,4 +1,5 @@
 ---
+description: Reproducibly verify a deployed CosmWasm contract.
 sidebar_position: 7
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: Call deployed CosmWasm contracts from a JavaScript runtime.
 sidebar_position: 9
 ---
 

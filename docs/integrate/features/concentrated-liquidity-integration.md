@@ -1,4 +1,5 @@
 ---
+description: Integrate against concentrated liquidity pools and positions.
 title: Concentrated Liquidity Integration
 sidebar_position: 5
 ---

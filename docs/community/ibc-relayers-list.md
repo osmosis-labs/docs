@@ -1,4 +1,5 @@
 ---
+description: A directory of relaying operators connecting Osmosis to the interchain.
 title: IBC Relayer List
 sidebar_position: 4
 ---

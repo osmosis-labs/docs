@@ -1,4 +1,5 @@
 ---
+description: Query and submit transactions with the osmosisd CLI.
 title: Interact with the CLI
 sidebar_position: 4
 ---

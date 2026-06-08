@@ -84,3 +84,14 @@ Others will give constructive feedback.
 This is a time for discussion and improvements,
 and making the necessary changes will be required before we can
 merge the contribution.
+
+# Docs page conventions
+
+A few conventions keep pages scannable and consistent with the site styling.
+
+- **Open with a lede.** The first paragraph should frame what the page covers in one or two sentences, before any subheading. It renders one size up.
+- **Break up walls of text.** Pull important caveats, warnings, and tips into admonitions (`:::tip`, `:::info`, `:::warning`, `:::danger`) rather than burying them in prose.
+- **Keep heading density reasonable.** Use headings to chunk content, but avoid a heading for every paragraph. Flowing prose is capped at a comfortable reading measure; code blocks, tables, admonitions, and card grids stay full width.
+- **Intro before card grids.** A landing page with a `<DocCardList />` (or `HomepageCard` grid) should have a short intro paragraph above the cards explaining what the cards lead to.
+- **Featured cards.** On the homepage, each section may feature one card (`featured` prop) that spans two of the three columns. A featured card pairs with four regular cards so the grid fills two clean rows; only feature a section when it has the cards to balance.
+- **House style.** No em-dashes (use commas, parentheses, or colons). Write "onchain", not "on-chain". Do not put issue-tracker IDs or PR numbers in page content.

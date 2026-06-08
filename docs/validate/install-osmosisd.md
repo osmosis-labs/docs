@@ -1,4 +1,5 @@
 ---
+description: Install the osmosisd binary (specs and setup live under Build).
 title: Install osmosisd
 sidebar_position: 1
 ---

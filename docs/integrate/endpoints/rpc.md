@@ -1,4 +1,5 @@
 ---
+description: Sign, broadcast, and subscribe over the chain's RPC endpoints.
 sidebar_position: 12
 ---
 

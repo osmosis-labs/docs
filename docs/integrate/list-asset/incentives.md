@@ -1,4 +1,5 @@
 ---
+description: Add liquidity incentives to your pool to bootstrap depth.
 sidebar_position: 7
 ---
 # Liquidity Incentives

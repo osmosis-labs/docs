@@ -1,4 +1,5 @@
 ---
+description: Calculate pool APRs from incentives and swap fees.
 sidebar_position: 11
 ---
 

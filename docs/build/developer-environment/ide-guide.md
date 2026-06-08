@@ -1,4 +1,5 @@
 ---
+description: Recommended IDE setup for developing on Osmosis in Go.
 title: IDE Setup
 sidebar_position: 2
 ---

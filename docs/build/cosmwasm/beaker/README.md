@@ -1,3 +1,7 @@
+---
+description: Scaffold, deploy, and interact with contracts using Beaker.
+---
+
 # Beaker
 
 <p align="center">

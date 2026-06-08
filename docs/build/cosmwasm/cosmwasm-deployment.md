@@ -1,4 +1,5 @@
 ---
+description: Deploy a CosmWasm contract to a public testnet with osmosisd.
 sidebar_position: 4
 ---
 

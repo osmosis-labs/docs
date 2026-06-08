@@ -1,3 +1,7 @@
+---
+description: How messages and events are laid out in Osmosis transactions.
+---
+
 # Transaction Structure
 
 Each block on a blockchain, including Cosmos-based ones like Osmosis, are constructed of a series

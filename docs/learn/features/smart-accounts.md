@@ -1,4 +1,5 @@
 ---
+description: "Custom transaction authentication: session keys, spend limits, and more."
 sidebar_position: 10
 ---
 

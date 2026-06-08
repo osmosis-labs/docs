@@ -1,4 +1,5 @@
 ---
+description: Permissionlessly create native tokens namespaced to your address.
 sidebar_position: 7
 ---
 

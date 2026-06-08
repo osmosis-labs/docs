@@ -1,4 +1,5 @@
 ---
+description: Develop and test a contract against a local Osmosis chain.
 title: Cosmwasm & LocalOsmosis
 sidebar_position: 3
 ---
