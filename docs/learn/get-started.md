@@ -28,17 +28,33 @@ Connect your wallet and click Approve. This confirms you are connecting to app.o
 
 ## Deposit Funds
 
-Most assets reach Osmosis over IBC from their home chain. To bring funds in:
+Most assets reach Osmosis over IBC from their home chain. To bring funds in, go to the Portfolio page and click Deposit next to the asset you want to bring in. For this example we deposit ATOM.
 
-1. Go to the Portfolio page and click the deposit link next to the asset you want to bring in. For this example we deposit ATOM.
-2. Accept the connection to the asset's home chain (here, `cosmoshub-4`).
+![The Portfolio page with the deposit action](@site/docs/assets/started-portfolio-page.png)
 
-![Depositing an asset from the Portfolio page](@site/docs/assets/started-portfolio-page.png)
+Select the asset and the source chain it is coming from.
 
-3. Choose the amount to deposit and click Deposit, then approve the transaction in your wallet.
-4. Once the transfer completes, a series of confirmation notifications appears, including the IBC confirmation. Your balance is then available on Osmosis.
+![Selecting the asset to deposit](@site/docs/assets/started-deposit-page.png)
 
-![A completed deposit with IBC confirmation](@site/docs/assets/confirm-2.png)
+Enter the amount you want to transfer.
+
+![Entering the deposit amount](@site/docs/assets/started-deposit-page2.png)
+
+Review the transfer details and confirm.
+
+![Reviewing the deposit](@site/docs/assets/started-deposit-page3.png)
+
+Approve the transaction in your wallet.
+
+![Approving the transfer in Keplr](@site/docs/assets/confirm-deposit.png)
+
+A progress indicator appears in the top right while the IBC transfer completes.
+
+![Deposit progress indicator](@site/docs/assets/deposit-progress.png)
+
+Once the transfer finishes, your balance is available on Osmosis and ready to trade.
+
+![The completed deposit](@site/docs/assets/deposit-complete.png)
 
 ## Next steps
 
