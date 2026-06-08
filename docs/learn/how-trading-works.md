@@ -1,4 +1,5 @@
 ---
+description: How pools, swaps, price impact, slippage, and fees work, in plain language.
 sidebar_position: 4
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: "What it means to provide liquidity: position types, impermanent loss, and rewards."
 sidebar_position: 5
 ---
 

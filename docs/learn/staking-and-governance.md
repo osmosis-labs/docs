@@ -1,4 +1,5 @@
 ---
+description: Delegation, rewards, unbonding, and how governance proposals work.
 sidebar_position: 6
 ---
 

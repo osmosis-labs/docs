@@ -1,3 +1,7 @@
+---
+description: "The x/protorev module: in-protocol MEV capture via cyclic arbitrage."
+---
+
 # ProtoRev
 
 ## Abstract
