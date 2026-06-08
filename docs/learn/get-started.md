@@ -3,6 +3,14 @@ description: Connect a wallet and make your first trade on Osmosis.
 sidebar_position: 3
 ---
 # Getting Started
+
+<!-- TODO(accuracy, MTN-113): every screenshot on this page dates to 2022 and shows
+     the pre-redesign app UI, which no longer matches app.osmosis.zone. They need
+     recapturing against the current UI. The flow below is also stale: the
+     "Adding Liquidity" / "Bonding LP Tokens (choose a bonding length)" steps
+     predate concentrated liquidity and the current earn model. Recapture the
+     screenshots and rewrite the LP/bonding sections to the current app flow. -->
+
 ## Set up a Wallet
 Before opening the Osmosis AMM App, make sure to install a wallet such as [Keplr Wallet](https://www.keplr.app/).
 
@@ -33,9 +41,7 @@ Accept connection to cosmoshub-4
  ![](@site/docs/assets/connect-cosmoshub.png)
 
 
-Once connected, select how much you would like to deposit, then click the deposit button
-
-[](@site/docs/assets/deposit-dialog.png)
+Once connected, select how much you would like to deposit, then click the deposit button.
 
 Approve the transaction
 
