@@ -25,8 +25,14 @@ Staked OSMO is also voting power. [Governance](/learn/terminology#governance) is
 
 The lifecycle of a [governance proposal](/learn/terminology#governance-proposal) is:
 
-1. **Deposit.** A proposal must reach a minimum OSMO deposit to enter the voting period. Anyone can contribute to the deposit.
-2. **Voting.** Stakers vote `Yes`, `No`, `No with veto`, or `Abstain`. Your vote is weighted by your staked OSMO. If you do not vote, your validator votes on your behalf, and you can always override your validator's vote with your own.
-3. **Tally.** At the end of the voting period the result is decided by quorum (enough participation), a majority threshold, and a veto threshold. If it passes, parameter and software changes take effect per the proposal.
+1. **Forum.** Before going onchain, a proposal is posted to the [governance forum](https://forum.osmosis.zone/) for discussion, with a required minimum of three days for the community to review and give feedback. This refines the proposal and surfaces objections before anyone is asked to vote.
+2. **Deposit.** A proposal must reach a minimum OSMO deposit to enter the voting period. Anyone can contribute to the deposit.
+3. **Voting.** Stakers vote `Yes`, `No`, `No with veto`, or `Abstain`. Your vote is weighted by your staked OSMO. If you do not vote, your validator votes on your behalf, and you can always override your validator's vote with your own.
+4. **Tally.** At the end of the voting period the result is decided by quorum (enough participation), a majority threshold, and a veto threshold.
+5. **Execute.** If it passes, the proposal's parameter or software changes take effect as specified.
+
+<p align="center">
+  <img src="/img/proposal.png" alt="The governance proposal lifecycle: forum, deposit, voting, tally, execute" width="90%" />
+</p>
 
 Because voting power comes from staked OSMO, staking and governance are two sides of the same role: securing the chain and steering it. To start, delegate your OSMO from a wallet on [app.osmosis.zone](https://app.osmosis.zone). For the operator's side (running a validator or a node), see [Validate](/validate).
