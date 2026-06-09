@@ -5,6 +5,10 @@ sidebar_position: 4
 ---
 # Osmosis IBC Relayer List
 
+This is a community-contributed directory of relaying operators. Entries are maintained by the operators themselves and some may be out of date (contact details, supported chains, and handles change over time). Verify an operator's current details with them directly before relying on them, and open a PR to add, update, or remove an entry.
+
+<!-- TODO(community, accuracy): this list is largely from ~2022 and references operators/chains that have since changed or shut down (e.g. Terra, Microtick, deprecated Discord name#0000 handles). Needs a refresh pass with current operators; do not fabricate entries. -->
+
 | Relayer | Contact | How to Support | Support for new relayers | Chains Relaying with Osmosis |
 | -------- 						| -------- 		| ---								 | --- 																							 | --- 							|
 | [3ventures.io](https://www.3ventures.io/)	| team@3ventures.io <br/> <img src="https://user-images.githubusercontent.com/95667791/163506878-e7e278b2-1cf6-4dac-bc13-e92f63600ee0.png" alt="Twitter" width="18"/> Twitter [@3venturesio](https://twitter.com/3venturesio) <br/> <img src="https://user-images.githubusercontent.com/95667791/163505650-fe08f2a7-8419-4a2f-97b7-e5182dd386e1.png" alt="Discord" width="18"/> Discord 3venturesio#8876 <br/> <img src="https://user-images.githubusercontent.com/95667791/163506639-7d27e947-94c7-4740-bb46-8e5791e9fc6c.png" alt="Telegram" width="18"/> Telegram [Threeventures chat](https://t.me/threeventures), @ossca, @ElonMuscleMoon, @VitalikButter | :lock: Delegate to 3ventures.io on: Chihuahua, Stargaze, Deweb, Axelar, Gravity Bridge, Umee, Comdex, Evmos <br/> :pray: Donations accepted @ <sup><sub>`osmo1mlzgx9zsncyrhzl23w9dt6c9zphsx5h87033xz`</sub></sup> | :information_desk_person: Supports new relayers | Umee, Stargaze, Gravity Bridge, Chihuahua, Comdex, Evmos |
