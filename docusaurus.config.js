@@ -110,6 +110,7 @@ const config = {
     docsPlugin,
     redirectsPlugin,
     webpackPlugin,
+    'docusaurus-plugin-copy-page-button',
   ],
 
   themeConfig:
