@@ -247,7 +247,7 @@ The Osmosis node software. The same `osmosisd` binary runs a full node or valida
 
 ## Superfluid Staking
 
-Staking that lets the OSMO portion of an eligible bonded liquidity position simultaneously help secure the chain. The position keeps earning trading fees and pool incentives, and the underlying OSMO is also delegated to a validator to earn staking rewards, so the same capital both provides liquidity and contributes to consensus.
+Staking that lets the OSMO portion of an eligible bonded liquidity position simultaneously help secure the chain. The position keeps earning trading fees and pool incentives, and the underlying OSMO is also delegated to a validator to earn staking rewards, so the same capital both provides liquidity and contributes to consensus. The chain module is still deployed, but the feature is not currently active for users: no pools are superfluid-enabled and it has been removed from the Osmosis frontend.
 
 ## Testnet
 
