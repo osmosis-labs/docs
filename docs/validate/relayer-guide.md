@@ -141,7 +141,7 @@ Check hermes version & config dir setup
 ```sh
 hermes version
 INFO ThreadId(01) using default configuration from '/home/relay/.hermes/config.toml'
-hermes 1.0.0
+hermes 1.13.1
 ```
 
 Edit Hermes config (use ports according to the port configuration we set above, add only chains you want to relay).
@@ -191,7 +191,7 @@ address_type = { derivation = 'cosmos' }
 store_prefix = 'ibc'
 default_gas = 5000000
 max_gas = 15000000
-gas_price = { price = 0.0026, denom = 'uosmo' }
+gas_price = { price = 0.03, denom = 'uosmo' }
 gas_multiplier = 1.1
 max_msg_num = 20
 max_tx_size = 209715
@@ -207,6 +207,10 @@ list = [
 ]
 
 ```
+
+:::note
+Osmosis uses a dynamic fee market, so the minimum gas price moves with congestion. Set the Osmosis `gas_price` at or above the current base fee (query it with `osmosisd query txfees base-fee`) rather than a fixed low value, or the relayer's transactions will be rejected.
+:::
 
 Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
 
