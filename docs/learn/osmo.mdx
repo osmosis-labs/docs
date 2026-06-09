@@ -10,16 +10,14 @@ OSMO is the native token of Osmosis. It secures the chain through staking, gover
 
 OSMO has a maximum supply of 1 billion. New OSMO is minted each day as staking and ecosystem rewards, on a declining schedule: every reduction period the daily emission is multiplied by a reduction factor of two-thirds, cutting it by a third. This is known as the **thirdening**. The reduction period is currently 730 days (roughly two years), so emissions step down toward the supply cap over time.
 
-Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. As of writing, the split is weighted toward staking rewards, developer rewards, and the community pool (which governance then allocates, including to liquidity incentives). Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
+Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. As of writing, the split is weighted toward staking rewards, developer rewards, and the community pool. Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
 
 ## Staking
 
 Staking OSMO secures the network and earns a share of emissions and fees. When you stake (delegate) to a validator, your OSMO backs that validator's voting power, and you earn rewards in return. Unstaking goes through an unbonding period during which the OSMO earns nothing and cannot be transferred. Staked OSMO also carries governance voting power. For how delegation, rewards, unbonding, and voting work, see [Staking and Governance](/learn/staking-and-governance).
 
 ## Voting
-Governance is the critical component of how Osmosis evolves. Active stakeholders of the network will be responsible for proposing, vetting, and passing protocol upgrades.
-
-The pools eligible for liquidity rewards are selected by OSMO governance participants, allowing the stakeholders to formulate an incentivization strategy that best aligns with the long-term interests of the protocol.
+Governance is the critical component of how Osmosis evolves. Active stakeholders of the network are responsible for proposing, vetting, and passing protocol upgrades and parameter changes. Voting power is proportional to staked OSMO. See [Staking and Governance](/learn/staking-and-governance) for how a proposal becomes a protocol change.
 
 ## Transaction Fees
 Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. Minimum gas costs are determined by the proposer of a block in which the transaction is included. This transaction fee is distributed to OSMO stakers on the network.
@@ -29,7 +27,7 @@ Validators can choose which assets to accept for fees in the blocks that they pr
 :::info
 
 The list of tokens accepted for tx fees is **permissionless**. Head to the [Fee Token Whitelist Controller DAO](https://daodao.zone/dao/osmo17eqe9dpglajwd48r65lasq3mftra5q4uxce525htyvjdp0q037vqpurhve/proposals).  
-_the token must have reasonable liquidity, paired with $OSMO as a minimum requirement_
+_The token must have reasonable liquidity, paired with $OSMO as a minimum requirement._
 
 :::
 
@@ -52,7 +50,7 @@ If OSMO is recovered from this arbitrage, it is burned as specified in [Proposal
 All permanent burns can be tracked by viewing the [Null Address](https://www.mintscan.io/osmosis/address/osmo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmcn030).
 
 ## Other Fees
-The OSMO token is required as fees for several tasks on chain to prevent spam and encourage considered usage of features. All fees paid go to the Community Pool.
+The OSMO token is required as fees for several tasks onchain to prevent spam and encourage considered usage of features. All fees paid go to the Community Pool.
 
 * Adding External Incentives to a pool: 50 OSMO
 * Topping up External Incentives on an existing stream: 25 OSMO

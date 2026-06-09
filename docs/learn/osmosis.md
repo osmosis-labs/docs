@@ -12,24 +12,29 @@ As IBC connects more and more chains, Osmosis is where their assets and users me
   <img src="/img/homepage.png" alt="The Osmosis app" width="90%" />
 </p>
 
-The [Osmosis Zone Apps Page](https://app.osmosis.zone/apps) is a suite of dApps that are tightly integrated into the Osmosis AMMs and IBC routing capabilities. Many developer teams are building index tokens, options, perps, stops and limit orders, automated trading, yield vaults, NFTs, and more.
-With new apps and features like stableswap, concentrated liquidity, rate-limiting, in-protocol MEV capture, and more going live all the time, Osmosis is continuing to expand its moat as the only full-service, cross-chain exchange and DeFi hub, one that rivals the smooth user experience of a CEX without compromising on the benefits of decentralized finance: self-custody, trust-minimized transactions, direct onchain access, and privacy.
-
+Osmosis pairs the experience of a centralized exchange with the guarantees of decentralized finance: self-custody, trust-minimized transactions, and direct onchain access. The things that matter, the trading logic, the liquidity, and the governance, all live onchain and in the open.
 
 # Why Osmosis?
 
-## On customizability of liquidity pools
-Most major AMMs limit the changeable parameters of liquidity pools. For example, Uniswap only allows the creation of a two-token pool of equal ratio with the swap fee of 0.3%. The simplicity of Uniswap protocol allowed quick onboarding of the average user that previously had little to no experience in market making.
+## Permissionless at the core
 
-However, as the DeFi market size grows and market participants such as arbitrageurs and liquidity providers mature, the need for liquidity pools to react to market conditions becomes apparent. The optimal swap fee for a AMM trade may depend on various factors such as block times, slippage, transaction fee, market volatility and more. There is no one-size-fits-all solution as the mix of characteristics of blockchain protocol, tokens in the liquidity pool, market conditions, and others can change the optimal strategy for the liquidity providers and the market makers to carry out.
+The core market actions on Osmosis are permissionless: anyone can [create a pool](/learn/how-trading-works), [create a native token](/learn/features/tokenfactory), or open an [orderbook market](/learn/features/orderbook) directly, without anyone approving it first. This is what lets the long tail of assets and strategies live on Osmosis rather than waiting on a listing committee.
 
-The tools Osmosis provides allow the market participants to self-identify opportunities and allow them to react by adjusting the various parameters. An optimal equilibrium between fee and liquidity can be reached through autonomous experiments and iterations, rather than setting a centrally planned 'most acceptable compromise' value. This extends the addressable market for AMMs and bonding curves beyond simple token swaps, as a limitation on the customizability of liquidity pools may have been the inhibiting factor for more experimental use-cases of AMMs.
+A few surfaces do involve a process rather than a single transaction. Getting an asset fully [listed and verified](/integrate/list-asset) on the Osmosis frontend goes through the asset-list pipeline (basic listing is automatic once an asset is in the Cosmos Chain Registry; verified status and advanced configuration take a pull request and review). Adding a token to the set accepted for [transaction fees](/learn/features/fee-abstraction) is managed by a governance-controlled DAO. So the protocol itself does not gatekeep what you can build, but a few shared, user-facing settings are curated.
 
-## AMM as serviced infrastructure
-The number and complexity of decentralized financial products are consistently increasing. Instruments such as pegged assets, derivatives, options, and tokenized leveraged positions each have their own characteristics that produce optimal market efficiency when paired with the correct bonding curve. That being said, the traditional notion of AMMs have evolved around putting the AMM first, and the financial product being traded second.
+## Many pool types, one router
 
-As AMMs substantially increase the market accessibility for these instruments, assets with diverse characteristics either had to:
-1. Compromise efficiency and trade on existing AMMs with non-optimal bonding curves or
-2. Take on the massive task of building one's own AMM that is able to maximize efficiency
+A swap on most AMMs runs against a single curve. Osmosis supports several pool types, each suited to different assets, and routes across all of them through one module, the [pool manager](/build/chain/pool-manager):
 
-To solve this issue, Osmosis introduces the idea of an 'AMM as a serviced infrastructure'. Fairly often, adjustment of the value function and a few additional parameters are all that's needed to provide a highly-efficient, highly-accessible AMM for the majority of decentralized financial instruments. By providing the ability for the creator of the pool to simply define the bonding curve value function and reuse the majority of the key AMM infrastructure, the barrier to creating a tailor-made and efficient automated market maker can be reduced.
+- **Weighted pools** for general pairs.
+- **Stableswap pools** for assets that should trade near a fixed ratio.
+- **[Concentrated liquidity](/learn/features/concentrated-liquidity) pools** for capital-efficient ranges.
+- **CosmWasm pools**, including the onchain [orderbook](/learn/features/orderbook), where the pool logic is a smart contract.
+
+Because every pool type is a swap entrypoint behind the same router, a single trade can compose across them, splitting and hopping through whichever pools give the best price. New pool types can be added as contracts and immediately participate in routing, so the exchange extends without re-plumbing the core.
+
+## Customizable liquidity pools
+
+Many AMMs lock the parameters of a pool: fixed two-token pairs, a single swap fee, one curve for everything. But the optimal setup depends on the assets in the pool and on market conditions, which change. There is no single fee or curve that is right for every market.
+
+Osmosis lets pool creators tune these parameters rather than accept a centrally chosen compromise. The right balance between fees and liquidity can be found through experimentation and iteration, which extends what an AMM can serve beyond simple token swaps to more specialized markets, from stable pairs to assets that need their own curve.
