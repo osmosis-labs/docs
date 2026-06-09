@@ -27,7 +27,7 @@ In this example, block height 2138101 happened on 25 November 2021 at 12:59:55AM
 Change this value until you have a block height at the time you want to perform the snapshot.
 
 ### Choosing pool IDs
-If your organization also wants to airdrop tokens to liquidity providers of specific Osmosis pools, you must first determine the pool IDs of the pools in question. The easiest way to find the pool ID is to go to the [info.osmosis.zone pools page](https://info.osmosis.zone/pools) and note the number in the furthest left column for all the desired pools. You will need these pool IDs later.
+If your organization also wants to airdrop tokens to liquidity providers of specific Osmosis pools, you must first determine the pool IDs of the pools in question. You can find a pool's ID on the [Pools page](https://app.osmosis.zone/pools) (open the pool; its ID appears on the pool's page and in its URL), or query the pool list programmatically from SQS (`GET https://sqs.osmosis.zone/pools`), where each entry includes its `id`. You will need these pool IDs later.
 
 ![](@site/docs/assets/osmosis_pools.png)
 
