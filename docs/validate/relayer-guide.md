@@ -121,12 +121,12 @@ sudo apt install librust-openssl-dev build-essential git
 
 ## Build & setup Hermes
 
-Make the directory where you'll place the binary, clone the hermes source repository and build it using the latest release.
+Make the directory where you'll place the binary, clone the hermes source repository and build it using the latest release (replace `v1.13.3` below with the latest tag from the [Hermes releases](https://github.com/informalsystems/hermes/releases) page):
 ```sh
 mkdir -p $HOME/hermes
 git clone https://github.com/informalsystems/hermes
 cd hermes
-git checkout v1.0.0
+git checkout v1.13.3
 cargo install ibc-relayer-cli --bin hermes --locked
 ```
 
