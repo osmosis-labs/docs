@@ -40,11 +40,15 @@ You also pay a network [gas](/learn/terminology#fees) fee to include the transac
 
 To trade, go to the Trade page, pick the asset you are paying with and the one you want to receive, and enter an amount. Osmosis shows the expected output, the price impact, and the fees before you confirm.
 
-![Setting up a swap on the Trade page](@site/docs/assets/trade-start.png)
+<p align="center">
+  <img src="/img/trade-start.png" alt="Setting up a swap on the Trade page" width="388" />
+</p>
 
 Review the details and confirm the swap.
 
-![Confirming a swap](@site/docs/assets/trade-confirm.png)
+<p align="center">
+  <img src="/img/trade-confirm.png" alt="Confirming a swap" width="388" />
+</p>
 
 :::tip One-click trading
 Approving every swap in your wallet adds friction. Osmosis offers **one-click trading**: enable it once to authorize a session with a spending limit, and subsequent swaps execute without a separate wallet approval each time, until the session expires or the limit is reached. It is built on Osmosis [smart accounts](/learn/features/smart-accounts), so the authorization is scoped and revocable.
