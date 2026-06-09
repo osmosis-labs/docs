@@ -24,6 +24,10 @@ Osmosis offers more than one way to provide liquidity, with different effort-and
 
 The main risk of providing liquidity is **[impermanent loss](/learn/terminology#impermanent-loss)**. When the prices of the pooled assets diverge from where they were when you deposited, the pool automatically rebalances by selling the asset that went up and buying the one that went down. The result is that you can end up with less value than if you had simply held the two assets in your wallet. It is called "impermanent" because the gap narrows if prices return to their original ratio, but it becomes permanent the moment you withdraw.
 
+<p align="center">
+  <img src="/img/impermanentloss.png" alt="Value of an LP position versus simply holding the two assets as their prices diverge" width="90%" />
+</p>
+
 Fees earned offset impermanent loss, and whether providing liquidity is net profitable depends on how much volume the pool sees versus how much its assets' prices diverge. Stable pairs (assets that track each other) have little impermanent loss; volatile pairs have more.
 
 ## Incentives

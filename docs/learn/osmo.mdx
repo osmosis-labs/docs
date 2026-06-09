@@ -4,7 +4,17 @@ sidebar_position: 2
 ---
 # The OSMO Token
 
-The OSMO token is a governance token that allows staked token holders to decide the future of the protocol, including every implementation detail. OSMO is currently used for the following (although governance is free to add or remove these functions):
+OSMO is the native token of Osmosis. It secures the chain through staking, governs the protocol, and pays for transactions. OSMO is currently used for the following (although governance is free to add or remove these functions):
+
+## Supply and emissions
+
+OSMO has a maximum supply of 1 billion. New OSMO is minted each day as staking and ecosystem rewards, on a declining schedule: every reduction period the daily emission is multiplied by a reduction factor of two-thirds, cutting it by a third. This is known as the **thirdening**. The reduction period is currently 730 days (roughly two years), so emissions step down toward the supply cap over time.
+
+Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. As of writing, the split is weighted toward staking rewards, developer rewards, and the community pool (which governance then allocates, including to liquidity incentives). Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
+
+## Staking
+
+Staking OSMO secures the network and earns a share of emissions and fees. When you stake (delegate) to a validator, your OSMO backs that validator's voting power, and you earn rewards in return. Unstaking goes through an unbonding period during which the OSMO earns nothing and cannot be transferred. Staked OSMO also carries governance voting power. For how delegation, rewards, unbonding, and voting work, see [Staking and Governance](/learn/staking-and-governance).
 
 ## Voting
 Governance is the critical component of how Osmosis evolves. Active stakeholders of the network will be responsible for proposing, vetting, and passing protocol upgrades.

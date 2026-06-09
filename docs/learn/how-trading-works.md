@@ -11,6 +11,10 @@ Osmosis is an [automated market maker](/learn/terminology#defi) (AMM): there is 
 
 A pool holds reserves of the assets in a market, for example OSMO and USDC. The pool's formula sets a spot price from the ratio of those reserves. When you swap OSMO for USDC, you add OSMO to the pool and take USDC out; that shifts the ratio, so the price moves slightly against you as your trade executes. The bigger your trade is relative to the pool's depth, the more the price moves.
 
+<p align="center">
+  <img src="/img/ammcurve.png" alt="A swap moving along the constant-product curve, with the resulting price impact" width="90%" />
+</p>
+
 Osmosis supports more than one kind of pool, because different assets trade best under different curves:
 
 - **Weighted (Balancer-style) pools** spread liquidity across the entire price range. They are simple and robust for volatile pairs.
@@ -19,6 +23,10 @@ Osmosis supports more than one kind of pool, because different assets trade best
 - **Orderbook markets** add limit orders to the mix. See [Orderbook](/learn/features/orderbook) for the concept.
 
 You do not have to choose a pool yourself. Osmosis routes each trade across whichever pools give the best result, including splitting a single swap across several pools and hopping through intermediate assets when that is cheaper.
+
+<p align="center">
+  <img src="/img/poolrouting.png" alt="A swap routed and split across multiple pools from input to output" width="90%" />
+</p>
 
 ## Price impact and slippage
 
