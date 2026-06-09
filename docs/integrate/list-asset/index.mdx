@@ -7,16 +7,16 @@ import DocCardList from '@theme/DocCardList';
 
 # List an Asset on Osmosis
 
-Bringing a token to Osmosis is a sequence of steps: get the asset onto the chain, register its metadata so it displays correctly, create a market with enough liquidity to trade, and make it discoverable on the frontend. This section orders those steps so you can work through them start to finish.
+Bringing a token to Osmosis is a sequence of steps: get the asset onto the chain, register its metadata so it displays correctly, create a market with liquidity to trade against, and get it verified so it shows by default on the frontend. This section orders those steps so you can work through them start to finish.
 
 The typical path is:
 
 1. **Connect with Osmosis** : move the asset to Osmosis over IBC.
 2. **Register your Asset** : add it to the chain registry and asset list so it shows with the right name, symbol, and decimals.
-3. **Source Initial Liquidity** : meet the minimum liquidity needed for a usable market.
-4. **Pool Setup** : create the pool (concentrated, weighted, stableswap, or CosmWasm) and, for IBC assets, the create-a-pool walkthrough.
+3. **Source Initial Liquidity** : decide where the liquidity comes from (team-provided, crowdsourced, a StreamSwap stream, or a community launch such as Start Cooking).
+4. **Pool Setup** : create the pool (concentrated, weighted, stableswap, or CosmWasm), via the Osmosis app or the CLI.
 5. **Liquidity Incentives** : optionally add external incentives to attract liquidity providers.
-6. **Ensure Visibility** : meet the criteria for the asset to appear (and be verified) on the Osmosis frontend.
+6. **Ensure Visibility** : a registered asset is already searchable on the frontend (as unverified); meet the verification criteria to have it show by default.
 
 Work through them in order; each step assumes the previous one is done.
 
