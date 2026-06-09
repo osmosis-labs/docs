@@ -18,7 +18,7 @@ Before opening the app, install a Cosmos wallet such as [Keplr](https://www.kepl
 
 Go to [app.osmosis.zone](https://app.osmosis.zone/).
 
-![The Osmosis app](@site/docs/assets/started-trade-page.png)
+![The Osmosis app](@site/docs/assets/welcome.png)
 
 ## Connect Wallet
 
