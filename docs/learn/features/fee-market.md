@@ -13,6 +13,10 @@ A fixed minimum fee has to be set high enough to deter spam at peak load, which 
 
 A transaction whose gas price is below the current base fee is rejected, so wallets and apps read the current base fee at submission time and price slightly above it. Because the fee floats, you do not hardcode a gas price.
 
+<p align="center">
+  <img src="/img/feemarket.png" alt="The base fee rising after blocks exceed the target fullness and falling after blocks below it" width="90%" />
+</p>
+
 ## What you need to know
 
 - The base fee moves block by block within a fixed minimum and maximum, so it cannot spike without bound or fall to zero.
