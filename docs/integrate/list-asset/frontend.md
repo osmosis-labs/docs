@@ -7,7 +7,7 @@ sidebar_position: 8
 
 ## List onto the Osmosis Frontend
 
-As long as the asset has been properly registered according to the [registration documentation](https://docs.osmosis.zone/overview/integrate/registration) and there is a pool with USD $1,000 of [initial liquidity](https://docs.osmosis.zone/overview/integrate/liquidity) then the pool will be visible on this frontend.
+As long as the asset has been properly registered according to the [registration documentation](/integrate/list-asset/registration) and there is a pool with USD $1,000 of [initial liquidity](/integrate/list-asset/liquidity) then the pool will be visible on this frontend.
 
 :::info Frontend data dependencies
 The production frontend at [app.osmosis.zone](https://app.osmosis.zone) reads pool state, routing quotes, and token prices from the [Sidecar Query Server (SQS)](../endpoints/sqs) (`sqs.osmosis.zone`), not directly from chain RPC. If you are running a fork of the frontend or building anything that needs to mirror its data, point at SQS first.

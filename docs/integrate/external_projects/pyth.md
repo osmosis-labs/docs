@@ -24,7 +24,7 @@ Pyth publishes prices for two kinds of feeds:
 
 ## Examples
 
-- A minimal on-chain [contract example](https://github.com/pyth-network/pyth-crosschain/tree/main/target_chains/cosmwasm/examples/cw-contract) which queries the Pyth contract.
+- A minimal onchain [contract example](https://github.com/pyth-network/pyth-crosschain/tree/main/target_chains/cosmwasm/examples/cw-contract) which queries the Pyth contract.
 
 ## Contract Address for `Osmosis Test 5`
 

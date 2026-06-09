@@ -22,7 +22,7 @@ Other advantages include superior performance with multiple RPC endpoint configu
 
 # Getting started
 
-Take a look at this SubQuery starter project that indexes all swaps on Osmosis' on-chain DEX.
+Take a look at this SubQuery starter project that indexes all swaps on Osmosis' onchain DEX.
 
 You can also follow along with this step-by-step guide to get familiar with SubQuery.
 
