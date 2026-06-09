@@ -36,6 +36,20 @@ A swap on Osmosis carries two kinds of fee:
 
 You also pay a network [gas](/learn/terminology#fees) fee to include the transaction in a block, like any onchain action. Thanks to [fee abstraction](/learn/features/fee-abstraction), you can pay that gas in many tokens, not only OSMO.
 
+## Making a swap
+
+To trade, go to the Trade page, pick the asset you are paying with and the one you want to receive, and enter an amount. Osmosis shows the expected output, the price impact, and the fees before you confirm.
+
+![Setting up a swap on the Trade page](@site/docs/assets/trade-start.png)
+
+Review the details and confirm the swap.
+
+![Confirming a swap](@site/docs/assets/trade-confirm.png)
+
+:::tip One-click trading
+Approving every swap in your wallet adds friction. Osmosis offers **one-click trading**: enable it once to authorize a session with a spending limit, and subsequent swaps execute without a separate wallet approval each time, until the session expires or the limit is reached. It is built on Osmosis [smart accounts](/learn/features/smart-accounts), so the authorization is scoped and revocable.
+:::
+
 ## What you get out
 
 Put together: when you swap, the router finds the best path across pools, your trade moves the price by some price impact, the spread factor and taker fee are taken, and the result must land within your slippage tolerance or the trade reverts. The next step from here is [providing liquidity](/learn/providing-liquidity), which is the other side of the same mechanism: supplying the assets that traders swap against, and earning the spread factor in return.

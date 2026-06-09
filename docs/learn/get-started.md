@@ -18,7 +18,7 @@ Before opening the app, install a Cosmos wallet such as [Keplr](https://www.kepl
 
 Go to [app.osmosis.zone](https://app.osmosis.zone/).
 
-![The Osmosis app](@site/docs/assets/welcome.png)
+![The Osmosis app](@site/docs/assets/homepage.png)
 
 ## Connect Wallet
 
@@ -30,19 +30,19 @@ Connect your wallet and click Approve. This confirms you are connecting to app.o
 
 Most assets reach Osmosis over IBC from their home chain. To bring funds in, go to the Portfolio page and click Deposit next to the asset you want to bring in. For this example we deposit ATOM.
 
-![The Portfolio page with the deposit action](@site/docs/assets/started-portfolio-page.png)
+![The Portfolio page with the deposit action](@site/docs/assets/portfolio-start.png)
 
 Select the asset and the source chain it is coming from.
 
-![Selecting the asset to deposit](@site/docs/assets/started-deposit-page.png)
+![Selecting the asset to deposit](@site/docs/assets/deposit-start.png)
 
 Enter the amount you want to transfer.
 
-![Entering the deposit amount](@site/docs/assets/started-deposit-page2.png)
+![Entering the deposit amount](@site/docs/assets/deposit-start2.png)
 
 Review the transfer details and confirm.
 
-![Reviewing the deposit](@site/docs/assets/started-deposit-page3.png)
+![Reviewing the deposit](@site/docs/assets/deposit-start3.png)
 
 Approve the transaction in your wallet.
 
