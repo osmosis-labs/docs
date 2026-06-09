@@ -59,7 +59,7 @@ Review the transfer details and confirm.
 Approve the transaction in your wallet.
 
 <p align="center">
-  <img src="/img/confirm-deposit.png" alt="Approving the transfer in Keplr" width="360" />
+  <img src="/img/confirm-deposit.png" alt="Approving the transfer in Keplr" width="256" />
 </p>
 
 A progress indicator appears in the top right while the IBC transfer completes.
