@@ -1,6 +1,6 @@
 # Gov
 
-The `gov` module enables on-chain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
+The `gov` module enables onchain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
 
 - Form an idea and seek feedback
 - Create a proposal and adjust according to feedback as needed
