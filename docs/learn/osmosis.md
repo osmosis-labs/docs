@@ -8,7 +8,9 @@ Osmosis is the premier cross-chain DeFi hub. As the liquidity center and primary
 
 As IBC connects more and more chains, Osmosis is where their assets and users meet: a single venue to trade, provide liquidity, and move value across the interchain.
 
-![](@site/docs/assets/homepage.png)
+<p align="center">
+  <img src="/img/homepage.png" alt="The Osmosis app" width="90%" />
+</p>
 
 The [Osmosis Zone Apps Page](https://app.osmosis.zone/apps) is a suite of dApps that are tightly integrated into the Osmosis AMMs and IBC routing capabilities. Many developer teams are building index tokens, options, perps, stops and limit orders, automated trading, yield vaults, NFTs, and more.
 With new apps and features like stableswap, concentrated liquidity, rate-limiting, in-protocol MEV capture, and more going live all the time, Osmosis is continuing to expand its moat as the only full-service, cross-chain exchange and DeFi hub, one that rivals the smooth user experience of a CEX without compromising on the benefits of decentralized finance: self-custody, trust-minimized transactions, direct onchain access, and privacy.

@@ -18,43 +18,61 @@ Before opening the app, install a Cosmos wallet such as [Keplr](https://www.kepl
 
 Go to [app.osmosis.zone](https://app.osmosis.zone/).
 
-![The Osmosis app](@site/docs/assets/homepage.png)
+<p align="center">
+  <img src="/img/homepage.png" alt="The Osmosis app" width="90%" />
+</p>
 
 ## Connect Wallet
 
 Connect your wallet and click Approve. This confirms you are connecting to app.osmosis.zone on the chain `osmosis-1`. Always check the app name and network (`osmosis-1`) in the approval popup before approving.
 
-![Connecting a wallet to Osmosis](@site/docs/assets/connect-wallet.png)
+<p align="center">
+  <img src="/img/connect-wallet.png" alt="Connecting a wallet to Osmosis" width="90%" />
+</p>
 
 ## Deposit Funds
 
 Most assets reach Osmosis over IBC from their home chain. To bring funds in, go to the Portfolio page and click Deposit next to the asset you want to bring in. For this example we deposit ATOM.
 
-![The Portfolio page with the deposit action](@site/docs/assets/portfolio-start.png)
+<p align="center">
+  <img src="/img/portfolio-start.png" alt="The Portfolio page with the deposit action" width="90%" />
+</p>
 
 Select the asset and the source chain it is coming from.
 
-![Selecting the asset to deposit](@site/docs/assets/deposit-start.png)
+<p align="center">
+  <img src="/img/deposit-start.png" alt="Selecting the asset to deposit" width="90%" />
+</p>
 
 Enter the amount you want to transfer.
 
-![Entering the deposit amount](@site/docs/assets/deposit-start2.png)
+<p align="center">
+  <img src="/img/deposit-start2.png" alt="Entering the deposit amount" width="90%" />
+</p>
 
 Review the transfer details and confirm.
 
-![Reviewing the deposit](@site/docs/assets/deposit-start3.png)
+<p align="center">
+  <img src="/img/deposit-start3.png" alt="Reviewing the deposit" width="90%" />
+</p>
 
 Approve the transaction in your wallet.
 
-![Approving the transfer in Keplr](@site/docs/assets/confirm-deposit.png)
+<p align="center">
+  <img src="/img/confirm-deposit.png" alt="Approving the transfer in Keplr" width="360" />
+</p>
 
 A progress indicator appears in the top right while the IBC transfer completes.
 
-![Deposit progress indicator](@site/docs/assets/deposit-progress.png)
+<p align="center">
+  <img src="/img/deposit-progress.png" alt="Deposit progress indicator" width="300" />
+</p>
 
 Once the transfer finishes, your balance is available on Osmosis and ready to trade.
 
-![The completed deposit](@site/docs/assets/deposit-complete.png)
+<p align="center">
+  <img src="/img/deposit-complete.png" alt="The completed deposit" width="90%" />
+</p>
 
 ## Next steps
 
