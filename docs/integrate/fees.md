@@ -1,7 +1,7 @@
 ---
 title: Fees and Gas
 description: Set transaction fees, estimate gas, and pay in alternative fee tokens.
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Fees and Gas

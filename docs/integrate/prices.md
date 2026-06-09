@@ -1,7 +1,7 @@
 ---
 title: Prices and Oracles
 description: How to get a USD or spot price for an asset, and when to use each source.
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Prices and Oracles

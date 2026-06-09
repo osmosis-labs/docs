@@ -1,7 +1,7 @@
 ---
 description: How assets reach Osmosis over IBC and where to find channel and denom mappings.
 title: IBC Channels
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # IBC Channels
