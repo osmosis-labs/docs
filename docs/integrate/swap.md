@@ -74,7 +74,7 @@ Map the quote onto the message:
 - `sender`: the address signing and paying.
 - `routes`: one `SwapAmountInRoute { pool_id, token_out_denom }` per entry in `route[].pools[]`, in order. The quote's `pools[].id` is the `pool_id` and `pools[].token_out_denom` is the `token_out_denom`.
 - `token_in`: the quote's `amount_in` (`{ denom, amount }`).
-- `token_out_min_amount`: your slippage guard: `amount_out` reduced by your tolerance, computed in the output denom's base units. For a 1% tolerance, `floor(amount_out * 0.99)`.
+- `token_out_min_amount`: your slippage guard: `amount_out` reduced by your tolerance, computed in the output denom's base units. Do this with integer (`BigInt`) math, not floating point, because `amount_out` is an integer string that can exceed `Number.MAX_SAFE_INTEGER`. For a 1% tolerance, `amount_out * 99 / 100`.
 
 :::danger Always set a real minimum
 `token_out_min_amount` is the only onchain protection against the price moving between quote and execution. Never set it to `0` or `1`. Compute it from the quote's `amount_out` and an explicit slippage tolerance, in the output asset's base (minimal) denom. Read the output asset's exponent from its metadata; do not assume 6 decimals.
@@ -82,20 +82,29 @@ Map the quote onto the message:
 
 Composing the message with [OsmoJS](/build/frontend/osmojs) (which ships the `poolmanager` message composers):
 
+The example below handles the single-route case (one entry in `quote.route`). SQS can also return a **split route** (more than one entry), where each entry swaps a portion of the input through its own path; handle that separately (see below) rather than collapsing it into one message.
+
 ```ts
 import { osmosis } from 'osmojs';
 
 const { swapExactAmountIn } =
   osmosis.poolmanager.v1beta1.MessageComposer.withTypeUrl;
 
-const slippage = 0.01; // 1%
-const tokenOutMinAmount = Math.floor(
-  Number(quote.amount_out) * (1 - slippage)
+// This example assumes a single (non-split) route.
+if (quote.route.length !== 1) {
+  throw new Error('Split route: use MsgSplitRouteSwapExactAmountIn instead.');
+}
+const route = quote.route[0];
+
+// Slippage guard in integer base units (BigInt, never Number/float):
+// 1% tolerance -> keep 99/100 of the quoted output, rounded down.
+const tokenOutMinAmount = (
+  (BigInt(quote.amount_out) * 99n) / 100n
 ).toString();
 
 const msg = swapExactAmountIn({
   sender: address,
-  routes: quote.route[0].pools.map((p) => ({
+  routes: route.pools.map((p) => ({
     poolId: BigInt(p.id),
     tokenOutDenom: p.token_out_denom,
   })),
@@ -104,7 +113,44 @@ const msg = swapExactAmountIn({
 });
 ```
 
-For a split route (more than one entry in `quote.route`), each entry is a separate swap of a portion of the input; use `MsgSplitRouteSwapExactAmountIn` instead, which takes a list of routes each with its own `token_in_amount`.
+### Split routes
+
+SQS often returns a **split route**: `quote.route` has more than one entry, and the input is divided across several paths to get a better overall price. Each entry carries its own `in_amount` (the portion of the total input routed through it). Do not collapse this into a single `MsgSwapExactAmountIn` with the total `amount_in`, it will not match the quote and can fail or mis-execute.
+
+Use `osmosis.poolmanager.v1beta1.MsgSplitRouteSwapExactAmountIn` instead:
+
+```protobuf
+message MsgSplitRouteSwapExactAmountIn {
+  string sender = 1;
+  repeated SwapAmountInSplitRoute routes = 2; // each: { pools[], token_in_amount }
+  string token_in_denom = 3;
+  string token_out_min_amount = 4; // one overall minimum across all routes
+}
+```
+
+Map the quote onto it: one `SwapAmountInSplitRoute` per entry in `quote.route`, where `pools` is that entry's hops and `token_in_amount` is its `in_amount`. The `token_in_denom` is the input denom, and `token_out_min_amount` is a single overall guard derived from the quote's total `amount_out` (the same integer-math reduction as above).
+
+```ts
+const { splitRouteSwapExactAmountIn } =
+  osmosis.poolmanager.v1beta1.MessageComposer.withTypeUrl;
+
+const tokenOutMinAmount = ((BigInt(quote.amount_out) * 99n) / 100n).toString();
+
+const msg = splitRouteSwapExactAmountIn({
+  sender: address,
+  tokenInDenom: quote.amount_in.denom,
+  tokenOutMinAmount,
+  routes: quote.route.map((r) => ({
+    tokenInAmount: r.in_amount,
+    pools: r.pools.map((p) => ({
+      poolId: BigInt(p.id),
+      tokenOutDenom: p.token_out_denom,
+    })),
+  })),
+});
+```
+
+A robust integration handles both shapes: branch on `quote.route.length` and build `MsgSwapExactAmountIn` for a single route or `MsgSplitRouteSwapExactAmountIn` for a split one.
 
 ## 3. Sign and broadcast
 

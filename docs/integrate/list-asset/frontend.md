@@ -18,7 +18,9 @@ The production frontend at [app.osmosis.zone](https://app.osmosis.zone) reads po
 
 Listing an asset as unverified is close to permissionless: nearly any registered asset is accepted, subject to anti-scam screening (it cannot imitate another asset's name, symbol, or logo, and the submitting GitHub account should have a real contribution history). An unverified asset is hidden by default; users see it only after toggling **Show Unverified Assets** on in the settings (Cog) menu.
 
-![](@site/docs/assets/asset_list.png)
+<p align="center">
+  <img src="/img/asset_list.png" alt="The Show Unverified Assets toggle in the settings menu" width="90%" />
+</p>
 
 ## Verified assets
 
