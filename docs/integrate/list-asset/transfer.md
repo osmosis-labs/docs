@@ -31,7 +31,7 @@ Recommended readings:
 * [How to Upgrade IBC Chains and their Clients](https://ibc.cosmos.network/main/ibc/upgrades/quick-guide)
 
 ### Not on a Cosmos-SDK chain?
-Assets from non-Cosmos ecosystems (such as EVM chains) reach Osmosis through bridges rather than a direct IBC connection. Osmosis supports several bridge providers, including [Axelar](https://axelar.network/) (adopted via [Proposal 206](https://www.mintscan.io/osmosis/proposals/206)), Squid, Wormhole, and others, which between them cover Ethereum and other major networks.
+Assets from non-Cosmos ecosystems (such as EVM chains) reach Osmosis through bridges rather than a direct IBC connection. Osmosis supports bridging via [Axelar](https://axelar.network/), adopted as a canonical bridge via [Proposal 206](https://www.mintscan.io/osmosis/proposals/206), which covers Ethereum and other major networks.
 
 A token bridged in this way arrives on Osmosis as a fungible denom and can then be listed and traded like any other asset.
 
