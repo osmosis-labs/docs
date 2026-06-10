@@ -209,7 +209,7 @@ list = [
 ```
 
 :::note
-Osmosis uses a dynamic fee market, so the minimum gas price moves with congestion. Set the Osmosis `gas_price` at or above the current base fee (query it with `osmosisd query txfees base-fee`) rather than a fixed low value, or the relayer's transactions will be rejected.
+Osmosis uses a dynamic [fee market](/learn/features/fee-market), so the minimum gas price moves with congestion. Set the Osmosis `gas_price` at or above the current base fee (query it with `osmosisd query txfees base-fee`) rather than a fixed low value, or the relayer's transactions will be rejected.
 :::
 
 Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
