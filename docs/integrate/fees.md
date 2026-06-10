@@ -10,7 +10,7 @@ When you submit a transaction to Osmosis you pay a **gas fee** to get it include
 
 ## The dynamic base fee
 
-Osmosis uses an [EIP-1559-style fee market](/learn/features/eip-1559): the minimum gas price adjusts with network congestion rather than being a fixed constant. A transaction whose gas price is below the current base fee is rejected for insufficient fee.
+Osmosis uses an [EIP-1559 style fee market](/learn/features/fee-market): the minimum gas price adjusts with network congestion rather than being a fixed constant. A transaction whose gas price is below the current base fee is rejected for insufficient fee.
 
 Query the current base fee before setting your gas price:
 

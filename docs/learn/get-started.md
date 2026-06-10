@@ -1,94 +1,83 @@
 ---
-description: Connect a wallet and make your first trade on Osmosis.
+description: Set up a wallet and deposit your first funds onto Osmosis.
 sidebar_position: 3
 ---
 # Getting Started
+
+<!-- TODO(accuracy, MTN-113): the screenshots on this page date to 2022 and show
+     the pre-redesign app UI, which no longer matches app.osmosis.zone. They need
+     recapturing against the current UI (see the PR description for the list). -->
+
+This page gets you set up: install a wallet, connect to the app, and deposit funds onto Osmosis over IBC. Once you have funds, see [How Trading Works](/learn/how-trading-works) to make your first swap and [Providing Liquidity](/learn/providing-liquidity) to start earning.
+
 ## Set up a Wallet
-Before opening the Osmosis AMM App, make sure to install a wallet such as [Keplr Wallet](https://www.keplr.app/).
+
+Before opening the app, install a Cosmos wallet such as [Keplr](https://www.keplr.app/).
 
 ## Open the App
-Go to [https://app.osmosis.zone/](https://app.osmosis.zone/)
 
-![](@site/docs/assets/started-trade-page.png)
+Go to [app.osmosis.zone](https://app.osmosis.zone/).
+
+<p align="center">
+  <img src="/img/homepage.png" alt="The Osmosis app" width="90%" />
+</p>
 
 ## Connect Wallet
-![](@site/docs/assets/connect-wallet.png)
 
-Click Approve. This confirms that you are connecting to the app.osmosis.zone and the chain osmosis-1.
+Connect your wallet and click Approve. This confirms you are connecting to app.osmosis.zone on the chain `osmosis-1`. Always check the app name and network (`osmosis-1`) in the approval popup before approving.
 
-![](@site/docs/assets/keplr-connect.png)
-
-
-Always make sure you are connected to app.osmosis.zone name and network (osmosis-1)
-
+<p align="center">
+  <img src="/img/connect-wallet.png" alt="Connecting a wallet to Osmosis" width="90%" />
+</p>
 
 ## Deposit Funds
 
-![](@site/docs/assets/started-assets-page.png)
+Most assets reach Osmosis over IBC from their home chain. To bring funds in, go to the Portfolio page and click Deposit next to the asset you want to bring in. For this example we deposit ATOM.
 
-Click Assets. Then click on the deposit link next to the asset name. For this example we are clicking the ATOM deposit link. 
+<p align="center">
+  <img src="/img/portfolio-start.png" alt="The Portfolio page with the deposit action" width="90%" />
+</p>
 
-Accept connection to cosmoshub-4
+Select the asset and the source chain it is coming from.
 
- ![](@site/docs/assets/connect-cosmoshub.png)
+<p align="center">
+  <img src="/img/deposit-start.png" alt="Selecting the asset to deposit" width="90%" />
+</p>
 
+Enter the amount you want to transfer.
 
-Once connected, select how much you would like to deposit, then click the deposit button
+<p align="center">
+  <img src="/img/deposit-start2.png" alt="Entering the deposit amount" width="90%" />
+</p>
 
-[](@site/docs/assets/deposit-dialog.png)
+Review the transfer details and confirm.
 
-Approve the transaction
+<p align="center">
+  <img src="/img/deposit-start3.png" alt="Reviewing the deposit" width="90%" />
+</p>
 
-![](@site/docs/assets/approve-tramsaction.png)
+Approve the transaction in your wallet.
 
-Once the transaction is completed a series if confirmations notifications will  be displayed including the IBC confirmation.
+<p align="center">
+  <img src="/img/confirm-deposit.png" alt="Approving the transfer in Keplr" width="256" />
+</p>
 
-![](@site/docs/assets/confirm-2.png)
+A progress indicator appears in the top right while the IBC transfer completes.
 
-## Swapping Tokens
+<p align="center">
+  <img src="/img/deposit-progress.png" alt="Deposit progress indicator" width="300" />
+</p>
 
-Trading tokens is as easy as clicking on the Trade link and then selecting the pair you would like to trade.  Check out the [glossary](terminology.md) to learn about terms such as [slipage](terminology.md#slippage). 
-![](@site/docs/assets/swap.png)
+Once the transfer finishes, your balance is available on Osmosis and ready to trade.
 
+<p align="center">
+  <img src="/img/deposit-complete.png" alt="The completed deposit" width="90%" />
+</p>
 
-## Adding Liquidity to a Pool
-Select a pool from the [Pools](https://app.osmosis.zone/pools) page.
-![](@site/docs/assets/add-liquidity.png)
+## Next steps
 
-Then click Add/Remove Liquidity
-![](@site/docs/assets/add-remove-liquidity.png)
+You are ready to use Osmosis. From here:
 
-Input a quantity of one of the assets. The quantity of the other asset(s) will auto-complete. (Pools require assets to be deposited in pre-determined weights.)
-
-:::warning Warning
-Please note that simply adding liquidity will not give you rewards. In order to get rewards you must bond LP tokens. 
-:::
-
-![](@site/docs/assets/add-liquidity.png)
-
-To remove liquidity, input the percentage amount to withdraw.
-
-![](@site/docs/assets/remove-liquidity.png)
-
-Incentivized pools receive OSMO liquidity mining rewards. Rewards are distributed to bonded LP tokens in these pools that meeting the bonding length criteria.
-
-Swap fees are fees charged for making a swap in an LP pool. The fee is paid by the trader in the form of the input asset. Pool creators specify the swap fee when establishing the pool. The total fee for a particular trade is calculated as percentage of swap size. Fees are added to the pool, effectively resulting in pro-rata distribution to LPs proportional to their share of the total pool.
-
-## Bonding LP Tokens
- Start Earning! Users can choose to bond their LP tokens after depositing liquidity. LP tokens remain bonded for a length of their time of their choosing. Bonded LP tokens are eligible for liquidity mining rewards if they meet the minimum bonding length requirement.
-
-Click Start Earning and choose a bonding length.
-
-![](@site/docs/assets/start-earning.png)
-
-
-### External Incentives
-
-Osmosis not only allows the community to add incentives to gauges. Anyone can deposit tokens into a gauge to be distributed. This feature allows outside parties to augment Osmosis’ own liquidity incentive program.
-
-For example, there may be an ATOM&lt; >FOOCOIN pool that has a one-day gauge incentivized by governance OSMO rewards. However, the Foo Foundation may also choose to add additional incentives to the one-day gauge or even add incentives to a new gauge (such as one-week gauge).
-
-These external incentive providers can also set up long-lasting incentive programs that distribute rewards over an extended time period. For example, the Foo Foundation can deposit 30,000 Foocoins to be distributed over a one-month liquidity program. The program will automatically distribute 1000 Foocoins per day to the gauge.
-
-
-
+- **Trade:** [How Trading Works](/learn/how-trading-works) explains pools, price impact, slippage, and fees, then make a swap from the Trade page.
+- **Earn:** [Providing Liquidity](/learn/providing-liquidity) covers supplying assets to a pool and earning fees and incentives.
+- **Stake and vote:** [Staking and Governance](/learn/staking-and-governance) covers delegating OSMO and participating in governance.

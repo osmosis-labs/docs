@@ -11,4 +11,6 @@ An alloyed asset collapses that fragmentation into one trading unit. `allBTC` is
 
 The primitive is implemented by a CosmWasm contract called the **transmuter**, which custodies the basket of backing versions and mints the alloyed denom against deposits at parity. Joining with one backing version and exiting with another is a swap between the two at a 1:1 rate, mediated by the alloyed unit, which is where the "transmuter" name comes from. Per-asset rate limiters keep any single bridge or version from dominating the pool.
 
+You can monitor the alloyed assets and the composition of their backing baskets at [alloyed.osmosis.zone](https://alloyed.osmosis.zone/).
+
 For the contract surface (instantiation, messages and queries, normalization factors, routing through SQS, and IBC implications), see [Alloyed Assets](/integrate/features/transmuter) in the Integrate section.

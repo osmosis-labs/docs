@@ -56,7 +56,7 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
 }' --amount "1000000uusdc" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/learn/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
+The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
 
 Fields:
 

@@ -112,7 +112,7 @@ osmosisd tx wasm execute <TRANSMUTER_CONTRACT_ADDR> '{
 }' --amount "100000000ibc/<BACKING_DENOM>" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/learn/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
+The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
 
 The contract mints alloyed tokens equal to the deposit converted into normalised units, which is **not** the same as the raw deposited amount unless the backing asset's normalization factor matches the alloyed asset's. Size redemptions off the minted (normalised) amount, not the raw deposit. For example, on the live `allBTC` pool one backing denom has a normalization factor of `1000000` while others have `1`, so depositing `1000000` base units of the high-factor denom mints `1` unit of `allBTC`, whereas `1000000` base units of a factor-`1` denom mints `1000000`. Query `list_asset_configs` for the factors before sizing a deposit or redemption. `--amount` can include multiple coins in one call as long as every coin's denom is in the pool's asset list.
 

@@ -299,7 +299,7 @@
     },
     {
       "source": "/osmosis-core/modules/protorev",
-      "destination": "https://github.com/osmosis-labs/osmosis/blob/main/x/protorev/protorev.md",
+      "destination": "/build/chain/protorev",
       "permanent": true
     },
     {
@@ -399,7 +399,12 @@
     },
     {
       "source": "/overview/features/eip-1559",
-      "destination": "/learn/features/eip-1559",
+      "destination": "/learn/features/fee-market",
+      "permanent": true
+    },
+    {
+      "source": "/learn/features/eip-1559",
+      "destination": "/learn/features/fee-market",
       "permanent": true
     },
     {
@@ -574,7 +579,7 @@
     },
     {
       "source": "/build/chain/modules/protorev",
-      "destination": "https://github.com/osmosis-labs/osmosis/blob/main/x/protorev/protorev.md",
+      "destination": "/build/chain/protorev",
       "permanent": true
     },
     {

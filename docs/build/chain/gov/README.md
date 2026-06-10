@@ -72,7 +72,7 @@ osmosisd tx gov submit-proposal [flags]
 
 typical flags would be:
 
-- `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [EIP-1559 fee market](/learn/features/eip-1559), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
+- `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 - `--from WALLET_ADDRESS` to set the running wallet
 - `--deposit=400000000uosmo` to provide the initial 400 OSMO (25% of total) deposit for putting a proposal on chain
 
