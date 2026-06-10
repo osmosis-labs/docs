@@ -21,5 +21,5 @@ A transaction whose gas price is below the current base fee is rejected, so wall
 
 - The base fee moves block by block within a fixed minimum and maximum, so it cannot spike without bound or fall to zero.
 - You can pay it in tokens other than OSMO thanks to [fee abstraction](/learn/features/fee-abstraction).
-- If you are building an integration and need to query the base fee and set gas prices, see [Fees and Gas](/integrate) under Integrate.
+- If you are building an integration and need to query the base fee and set gas prices, see [Fees and Gas](/integrate/fees) under Integrate.
 - For the exact adjustment formula and the current parameters (target block gas, change rate, and the min/max base fee), see the [Txfees module page](/build/chain/txfees) under Build.

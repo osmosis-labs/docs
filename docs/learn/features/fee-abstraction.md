@@ -15,7 +15,7 @@ Normally every chain requires its own native token to pay for gas. That is frict
 
 A governance-managed allowlist defines which tokens are accepted for fees. When you pay a fee in an accepted non-OSMO token, the network values it against OSMO using an onchain price and accepts the equivalent amount. The collected non-OSMO fees are periodically swapped back to the native token, so validators and stakers are still ultimately paid in OSMO.
 
-The same primitive also lets other Cosmos chains accept their users' fees in IBC tokens and settle them through Osmosis liquidity, using Osmosis as the conversion venue. To pay a fee in an alternative token, set your gas price in that token's denom; see [Fees and Gas](/integrate) for the integrator detail.
+The same primitive also lets other Cosmos chains accept their users' fees in IBC tokens and settle them through Osmosis liquidity, using Osmosis as the conversion venue. To pay a fee in an alternative token, set your gas price in that token's denom; see [Fees and Gas](/integrate/fees) for the integrator detail.
 
 ## Reference
 

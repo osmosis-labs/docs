@@ -50,7 +50,7 @@ newBaseFee = curBaseFee * baseFeeMultiplier
 
 The result is clamped to a fixed range, `MinBaseFee` (`0.03`) to `MaxBaseFee` (`5`), so it can neither fall to zero nor spike without bound.
 
-Query the current base fee with `osmosisd query txfees base-fee`, or over LCD at `/osmosis/txfees/v1beta1/cur_eip_base_fee`. For the integrator view (setting gas prices against it), see [Fees and Gas](/integrate).
+Query the current base fee with `osmosisd query txfees base-fee`, or over LCD at `/osmosis/txfees/v1beta1/cur_eip_base_fee`. For the integrator view (setting gas prices against it), see [Fees and Gas](/integrate/fees).
 
 ## Queries
 
