@@ -1,9 +1,10 @@
 ---
-description: Ensure your asset is visible and correctly displayed on the frontend.
+title: Verify
+description: Get your asset verified so it shows by default on the Osmosis frontend.
 sidebar_position: 8
 ---
 
-# Ensure Visibility
+# Verify
 
 ## List onto the Osmosis Frontend
 
