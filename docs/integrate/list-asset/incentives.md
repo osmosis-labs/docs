@@ -31,7 +31,7 @@ Wosmongton receives 0.1 FOO per block, while Amelia receives 0.9 FOO per block. 
 
 
 ### Creating an External Incentives Gauge
-Currently, the only way to create an external incentive gauge is to use the [CLI](https://docs.osmosis.zone/osmosis-core/osmosisd).
+Currently, the only way to create an external incentive gauge is to use the [CLI](/build/developer-environment/osmosisd).
 
 The command to run takes the format:
 `osmosisd tx incentives create-gauge [lockup_denom] [reward] [poolId] [flags]`

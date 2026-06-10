@@ -14,10 +14,8 @@ import {
   Osmojs,
   Tscodegen,
   KeysIcon,
-  Transaction,
   OsmosisCore,
   Contribute,
-  Network,
   RelayerIcon,
 } from '../icons';
 
@@ -106,17 +104,18 @@ export default function Homepage() {
               svgFile="/icons/modules.svg"
             />
             <Card
-              title="Transaction Structure"
-              description="How messages and events are laid out in Osmosis transactions."
-              to="/integrate/transaction-structure"
-              icon={<Transaction />}
-              svgFile="/icons/transaction.svg"
+              title="Swap Integration"
+              description="Get a routed quote from SQS, build the swap message, and broadcast it."
+              to="/integrate/swap"
+              icon={<ModulesIcon />}
+              svgFile="/icons/swap.svg"
             />
             <Card
-              title="IBC Channels"
-              description="How assets reach Osmosis over IBC, and where to find the canonical channel and denom mappings."
-              to="/integrate/channels"
-              icon={<Network />}
+              title="Prices and Oracles"
+              description="Get a USD or spot price for an asset, and when to use each source."
+              to="/integrate/prices"
+              icon={<ModulesIcon />}
+              svgFile="/icons/gauge.svg"
             />
           </Section>
 

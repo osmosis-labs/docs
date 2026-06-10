@@ -13,8 +13,11 @@ This section is for teams connecting their own software or assets to Osmosis: wa
 
 Most integrations follow one of a few paths. Find yours and start there:
 
+- **Executing swaps?** **[Swap Integration](/integrate/swap)** walks through the full flow: get a routed quote from SQS, build the swap message, and broadcast it.
+- **Swapping across chains?** **[Cross-chain Swaps](/integrate/crosschain-swaps)** covers routing an asset from another chain through a trade on Osmosis, via Skip:Go or the underlying IBC-hooks primitive.
 - **Bringing a token to Osmosis?** Follow the **[List an Asset](/integrate/list-asset)** workflow, an ordered path from connecting the asset over IBC through registration, sourcing liquidity, creating a pool, adding incentives, and ensuring frontend visibility.
-- **Reading prices, pools, or routing quotes?** Start with **[Endpoints](/integrate/endpoints)**. The **[Sidecar Query Server (SQS)](/integrate/endpoints/sqs)** is the production routing and quote service that powers the Osmosis frontend; the **RPC**, **REST**, and **gRPC** pages document the chain endpoints directly, and the Endpoints index lists public infrastructure for mainnet and testnet.
+- **Reading prices, pools, or routing quotes?** Start with **[Endpoints](/integrate/endpoints)**. The **[Sidecar Query Server (SQS)](/integrate/endpoints/sqs)** is the production routing and quote service that powers the Osmosis frontend; the **RPC**, **REST**, and **gRPC** pages document the chain endpoints directly, and the Endpoints index lists public infrastructure for mainnet and testnet. For choosing a price source, see **[Prices and Oracles](/integrate/prices)**.
+- **Sizing fees and gas?** **[Fees and Gas](/integrate/fees)** covers the dynamic base fee, gas estimation, and paying fees in alternative tokens.
 - **Constructing or parsing transactions?** The **[Transaction Structure](/integrate/transaction-structure)** pages break down real Osmosis blocks and transactions so you can see how messages and events are laid out on the wire. Pair them with the RPC endpoints for signing and broadcasting.
 - **Integrating against a specific feature?** **Feature Integrations** covers concentrated liquidity, alloyed assets, and smart accounts at the integrator level.
 

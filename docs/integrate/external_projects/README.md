@@ -13,10 +13,12 @@ Osmosis integrates with a range of external projects and is supported by a wider
 
 ## Osmosis packages
 
-Published npm packages maintained by Osmosis Labs:
+Osmosis Labs maintains several TypeScript packages in the [osmosis-frontend monorepo](https://github.com/osmosis-labs/osmosis-frontend/tree/master/packages), including:
 
-- [`@osmosis-labs/math`](https://www.npmjs.com/package/@osmosis-labs/math): math functions for the Osmosis AMM, useful for estimating state changes.
-- [`@osmosis-labs/pools`](https://www.npmjs.com/package/@osmosis-labs/pools): the pool interface and routing logic for the Osmosis DEX.
+- [`@osmosis-labs/math`](https://github.com/osmosis-labs/osmosis-frontend/tree/master/packages/math): math functions for the Osmosis AMM, useful for estimating state changes.
+- [`@osmosis-labs/pools`](https://github.com/osmosis-labs/osmosis-frontend/tree/master/packages/pools): the pool interface and routing logic for the Osmosis DEX.
+
+These are developed in the monorepo; the standalone npm publishes can lag, so check the repo for the current source.
 
 ## Ecosystem tooling
 

@@ -644,7 +644,7 @@ for the transaction to succeed, i.e. a transaction. Most of the transactions are
 
 The fields of message always will contain at least two fields:
 
-* `@type`: the specific type of the message within the application, for example, `/osmosis.gamm.v1beta1.MsgSwapEactAmountIn`
+* `@type`: the specific type of the message within the application, for example, `/osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn`
 * `sender`: the sender of the message
 
 The rest of the fields are specific to the `@type` of message. Once you know the type of message, you can look in the

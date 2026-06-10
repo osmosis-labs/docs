@@ -1,26 +1,29 @@
 ---
-description: Ensure your asset is visible and correctly displayed on the frontend.
+title: Verify
+description: Get your asset verified so it shows by default on the Osmosis frontend.
 sidebar_position: 8
 ---
 
-# Ensure Visibility
+# Verify
 
 ## List onto the Osmosis Frontend
 
-As long as the asset has been properly registered according to the [registration documentation](https://docs.osmosis.zone/overview/integrate/registration) and there is a pool with USD $1,000 of [initial liquidity](https://docs.osmosis.zone/overview/integrate/liquidity) then the pool will be visible on this frontend.
+Once an asset is [registered](/integrate/list-asset/registration) and auto-listed, it appears on the frontend as an **unverified** asset. From there, meeting the verification criteria upgrades it to **verified**, which is what makes it visible by default. The two tiers are described below.
 
 :::info Frontend data dependencies
 The production frontend at [app.osmosis.zone](https://app.osmosis.zone) reads pool state, routing quotes, and token prices from the [Sidecar Query Server (SQS)](../endpoints/sqs) (`sqs.osmosis.zone`), not directly from chain RPC. If you are running a fork of the frontend or building anything that needs to mirror its data, point at SQS first.
 :::
 
-## Verify Assets
+## Unverified assets
 
-An asset will initially show as an Unverified asset. This will require users to toggle on the Unverified Assets setting in the Cog Menu in the top right of their screen to see the asset.
+Listing an asset as unverified is close to permissionless: nearly any registered asset is accepted, subject to anti-scam screening (it cannot imitate another asset's name, symbol, or logo, and the submitting GitHub account should have a real contribution history). An unverified asset is hidden by default; users see it only after toggling **Show Unverified Assets** on in the settings (Cog) menu.
 
-Approval requires meeting the requirements in the assetlist repo that can be seen here: https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md
+<p align="center">
+  <img src="/img/asset_list.png" alt="The Show Unverified Assets toggle in the settings menu" width="90%" />
+</p>
 
-![](@site/docs/assets/asset_list.png)
+## Verified assets
 
-## Swap Page
+**Verified** status is what makes an asset visible by default, including on the Swap page, without the unverified toggle. It is permissioned: a maintainer validates the asset, and it must meet liquidity and quality criteria. As of writing, these include sufficient onchain liquidity (on the order of $10k total, with at least $1,000-worth of each asset in the pool and a minimum bid/ask depth) and a pool of an approved type (concentrated liquidity, stableswap, or an alloyed-asset transmuter).
 
-Although any asset in a liquidity pool can be traded when a user specifies the pool, an asset will only be listed on the Swap page if it is has a pool containing liquidity of USD $1,000.
+Because these criteria change, treat [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) in the assetlists repo as the source of truth, and see [Liquidity](/integrate/list-asset/liquidity) for how to source the required liquidity. To request the upgrade, open a PR setting `osmosis_verified: true` for the asset, citing a qualifying pool ID.

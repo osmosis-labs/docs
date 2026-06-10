@@ -5,18 +5,18 @@ sidebar_position: 3
 
 # Connect with Osmosis
 
-Osmosis is a automated market maker blockchain. This means any IBC-enabled zone can add its token as an asset to be traded on Osmosis AMM completely permissionlessly. Because Osmosis is fundamentally designed as an IBC-native AMM that trades IBC tokens, rather than tokens issued on the Osmosis zone, there are additional nuances to understand and steps to be taken in order to ensure your asset is supported by Osmosis.
+Osmosis is a automated market maker blockchain. This means any IBC-enabled zone can add its token as an asset to be traded on Osmosis AMM completely permissionlessly. Because Osmosis is fundamentally designed as an cross-chain AMM that trades tokens issued on the Osmosis chain as well as across IBC and other bridges, there are additional nuances to understand and steps to be taken in order to ensure your asset is supported by Osmosis.
 
-This document lays out the prerequisites and the process that is needed to ensure that your token meets the interchain UX standards set by Osmosis.
+This document lays out the prerequisites and the process that is needed to ensure that your token meets the interchain UX standards set by Osmosis. This primarily refers to tokens that are connecting via IBC. Alternative bridges may have their own permissioned transfer methods.
 
 ## Prerequisites
-1. Zone must have IBC token transferred enabled (ICS20 standard).
-2. Assets to be traded should be a fungible `sdk.Coins` asset.
+1. Zone must have IBC token transferred enabled (ICS20 standard) or reach Osmosis via a contract mint for alternative bridges.
+2. The asset must be fungible. Osmosis trades fungible tokens, and the asset reaches Osmosis as an IBC, tokenfactory, or bridged denom regardless of its source type (the Cosmos Chain Registry classifies assets as `sdk.coin`, `cw20`, `erc20`, `ics20`, and others). Non-fungible assets cannot be traded on the AMM.
 3. Highly reliable, highly available altruistic (as in relay tx fees paid on behalf of user) relayer service.
 4. Highly reliable, highly available, and scalable RPC/REST endpoint infrastructure.
 
 ## Enabling IBC transfers
-Because only IBC assets that have been transferred to Osmosis can be traded on Osmosis, the native chain of the asset must have IBC transfers enabled. Cosmos defines the fungible IBC token transfer standard in [ICS20](https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer) specification.
+Because only assets that have been transferred to Osmosis can be traded on Osmosis, the native chain of the asset must have IBC transfers enabled. Cosmos defines the fungible IBC token transfer standard in [ICS20](https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer) specification.
 
 The counterparty chain must support IBC transfers (any IBC-enabled Cosmos chain does).
 
@@ -31,29 +31,24 @@ Recommended readings:
 * [How to Upgrade IBC Chains and their Clients](https://ibc.cosmos.network/main/ibc/upgrades/quick-guide)
 
 ### Not on a Cosmos-SDK chain?
-Several intermediary chains are in use or being developed that link the IBC enabled Cosmos with other ecosystems.
+Assets from non-Cosmos ecosystems (such as EVM chains) reach Osmosis through bridges rather than a direct IBC connection. Osmosis supports bridging via [Axelar](https://axelar.network/), adopted as a canonical bridge via [Proposal 206](https://www.mintscan.io/osmosis/proposals/206), which covers Ethereum and other major networks.
 
-For EVM chains, Osmosis [voted](https://www.mintscan.io/osmosis/proposals/206) to use [Axelar](https://axelar.network/) as its canonical bridge. This connects Osmosis to networks such as Ethereum, Avalanche, Arbitrum, Binance Smart Chain, Celo, Fantom, Polkadot and Polygon.
-
-Any token added to the Axelar bridge is enabled for transfer to Osmosis and gains access to permissionless listing.
+A token bridged in this way arrives on Osmosis as a fungible denom and can then be listed and traded like any other asset.
 
 ## Setting up and operating a relayer to Osmosis
 Relayers are responsible of transferring IBC packets between Osmosis chain and the native chain of an asset. All Osmosis 'deposits' and 'withdrawals' are IBC transfers which dedicated relayers process.
 
 To ensure fungibility amongst IBC assets, the frontend will assume social consensus have been achieved and designate one specific channel between Osmosis and the native chain as the primary channel for all IBC token transfers. Multiple relayers can be active on the same channel, and for the sake of redundancy and increased resilience we recommend having multiple relayers actively relaying packets. It is recommended to initialize the channel as an unordered IBC channel, rather than an ordered IBC channel.
 
-Currently, there are three main Cosmos-SDK IBC relayer implementations:
-* [Go relayer](https://github.com/cosmos/relayer): A Golang implementation of IBC relayer.
-* [Hermes](https://hermes.informal.systems/): A Rust implementation of IBC relayer.
-* [ts-relayer](https://github.com/confio/ts-relayer): A TypeScript implementation of IBC relayer.
-* 
-**Note: We are actively investigating issues regarding ts-relayer not working with Osmosis. In the meantime, we recommend using Hermes/Go relayer**
+The two actively maintained Cosmos-SDK IBC relayer implementations are:
+* [Hermes](https://hermes.informal.systems/): a Rust implementation of an IBC relayer.
+* [Go relayer](https://github.com/cosmos/relayer) (`rly`): a Go implementation of an IBC relayer.
 
-All relayers are compatible with IBC token transfers on the same channel. Each relayer implementation may have different configuration requirements, and have various configuration customizability.
+Both are compatible with IBC token transfers on the same channel. Each relayer implementation may have different configuration requirements, and have various configuration customizability.
 
 At this time, Osmosis requires that all relayers to pay for the transaction fees for IBC relay transactions, and not the user.
 
-If you prefer not to run your own chain's relayer to Osmosis, there may be various entities ([Cephalopod Equipment Corp.](https://cephalopod.equipment/), [Vitwit](https://www.vitwit.com/), etc) that provide relayers-as-a-service, or you may reach out to various validators in your ecosystem that may be able to operate a relayer. The Osmosis team does **not** provide relayer services for IBC assets.
+If you prefer not to run your own chain's relayer to Osmosis, [Solva](https://solva.solutions/) provides relaying-as-a-service and is a good first point of contact. Other providers exist, and you can also reach out to validators in your ecosystem who may be able to operate a relayer. The Osmosis team does **not** provide relayer services for IBC assets.
 
 ## Register a bech32 Prefix onto SLIP173
 

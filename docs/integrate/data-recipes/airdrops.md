@@ -20,16 +20,16 @@ This document lays out the process of creating a state export to derive all Osmo
 ### Choosing a block height
 The current Osmosis block height can be found on the [Mintscan blocks page](https://www.mintscan.io/osmosis/blocks). To find the date/time of a specific block height in the past, type the desired block height in the Mintscan search bar and press enter. Here is the Mintscan block height page for block 2138101:
 
-![](@site/docs/assets/mintscan_height.png)
+<p align="center">
+  <img src="/img/mintscan_height.png" alt="Finding a block height's date on Mintscan" width="90%" />
+</p>
 
 In this example, block height 2138101 happened on 25 November 2021 at 12:59:55AM local time.
 
 Change this value until you have a block height at the time you want to perform the snapshot.
 
 ### Choosing pool IDs
-If your organization also wants to airdrop tokens to liquidity providers of specific Osmosis pools, you must first determine the pool IDs of the pools in question. The easiest way to find the pool ID is to go to the [info.osmosis.zone pools page](https://info.osmosis.zone/pools) and note the number in the furthest left column for all the desired pools. You will need these pool IDs later.
-
-![](@site/docs/assets/osmosis_pools.png)
+If your organization also wants to airdrop tokens to liquidity providers of specific Osmosis pools, you must first determine the pool IDs of the pools in question. You can find a pool's ID on the [Pools page](https://app.osmosis.zone/pools) (open the pool; its ID appears on the pool's page and in its URL), or query the pool list programmatically from SQS (`GET https://sqs.osmosis.zone/pools`), where each entry includes its `id`. You will need these pool IDs later.
 
 
 ### Determine Osmosis node type requirement

@@ -10,7 +10,7 @@ This guide intends to support teams looking to enlist their tokenized crypto ass
 At a very high level, the process is:
 
 1. **Register chain and asset metadata to the Cosmos Chain Registry** (required), and ensure an IBC connection to Osmosis is registered there as well.
-2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs twice weekly (Tuesdays and Fridays at 15:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
+2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs daily (around 15:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
 3. *(Optional)* **Submit a PR to `osmosis-labs/assetlists`** to configure advanced properties (categories, transfer methods, override metadata, etc.) and/or to request an upgrade to **verified status** once onchain liquidity criteria are met.
 
 Note that the overall process may require collaboration from technical teams (to provide chain services and IBC relaying) and market-making entities (to provide initial liquidity needed for verified status).
@@ -76,7 +76,7 @@ The Osmosis Labs' Assetlist Registry ([osmosis-labs/assetlists](https://github.c
 
 ### How auto-detection works
 
-- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs regularly, currently twice weekly.
+- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs regularly, currently daily at around 15:00 UTC.
 - It scans the Cosmos Chain Registry for assets whose source chain has an IBC connection to Osmosis.
 - For each newly detected asset, the workflow generates an entry in `osmosis-1/osmosis.zone_assets.json` (and stubs the source chain into `osmosis.zone_chains.json` if it is not already present), opens a PR to the `update/assetlist_all` branch, runs validation, and auto-merges on success.
 - The asset is then shipped to Osmosis Zone as **unverified**. Unverified assets are visible only to users who have toggled "Show Unverified Assets" on in the Osmosis Zone app.
@@ -88,7 +88,7 @@ For the full workflow detail (validation steps, IBC client health checks, endpoi
 - Registered onto the Cosmos Chain Registry (see [Step 1](#step-1-register-to-the-cosmos-chain-registry)).
 - An IBC connection exists between the source chain and Osmosis, and is **registered at the Cosmos Chain Registry** under `_IBC/`.
   - All native assets from a chain should normally go through a single connection, although some token types (e.g., CW20 tokens) may require another connection.
-  - See: [Enabling IBC transfers](https://docs.osmosis.zone/overview/integrate/transfer#enabling-ibc-transfers) and [Setting up and operating a relayer to Osmosis](https://docs.osmosis.zone/overview/integrate/transfer#setting-up-and-operating-a-relayer-to-osmosis).
+  - See: [Enabling IBC transfers](/integrate/list-asset/transfer#enabling-ibc-transfers) and [Setting up and operating a relayer to Osmosis](/integrate/list-asset/transfer#setting-up-and-operating-a-relayer-to-osmosis).
 
 ### Optional: Submit a manual PR for advanced configuration
 
@@ -102,12 +102,12 @@ You only need to open a PR against `osmosis-labs/assetlists` if you want to conf
 
 #### Where the changes go
 
-- `osmosis-1/osmosis.zone_assets.json` — the asset entry.
-- `osmosis-1/osmosis.zone_chains.json` — only when you need to provide custom chain services (RPC/REST/explorer); otherwise leave it alone.
+- `osmosis-1/osmosis.zone_assets.json`: the asset entry.
+- `osmosis-1/osmosis.zone_chains.json`: only when you need to provide custom chain services (RPC/REST/explorer); otherwise leave it alone.
 
 #### Field reference
 
-See [assetlists README — Asset Object Structure](https://github.com/osmosis-labs/assetlists/blob/main/README.md) for a full field-by-field reference, defaults, and decision guidance.
+See [assetlists README, Asset Object Structure](https://github.com/osmosis-labs/assetlists/blob/main/README.md) for a full field-by-field reference, defaults, and decision guidance.
 
 The minimum required shape for an asset object is:
 
@@ -123,7 +123,7 @@ All other fields are optional and default to safe values (e.g., `osmosis_verifie
 
 #### Submitting the PR
 
-- New Pull Requests will automatically initialize with a description template that includes a checklist — complete it as thoroughly as possible.
+- New Pull Requests will automatically initialize with a description template that includes a checklist, complete it as thoroughly as possible.
 - Validation checks run automatically on the PR; address any failures before requesting review.
 - Maintainers will review and merge once validation passes and the configuration is sound.
 
@@ -140,7 +140,7 @@ The authoritative criteria live in [LISTING.md](https://github.com/osmosis-labs/
 ### How to request the upgrade
 
 1. Ensure your asset meets every criterion listed in LISTING.md (liquidity, metadata completeness, etc.).
-2. Create at least one liquidity pool on Osmosis that satisfies the liquidity requirements. A Supercharged pool type is recommended over a Weighted pool. See the [Pool Setup Guide](https://docs.osmosis.zone/overview/integrate/pool-setup).
+2. Create at least one liquidity pool on Osmosis that satisfies the liquidity requirements. A Supercharged pool type is recommended over a Weighted pool. See the [Pool Setup Guide](/integrate/list-asset/pool-setup).
 3. Open a PR against [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) that sets `"osmosis_verified": true` on the asset entry in `osmosis-1/osmosis.zone_assets.json`.
 4. In the PR description, include the **Pool ID(s)** that satisfy the liquidity requirements, and any other evidence requested by the PR template.
 

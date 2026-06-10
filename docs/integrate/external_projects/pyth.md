@@ -24,12 +24,15 @@ Pyth publishes prices for two kinds of feeds:
 
 ## Examples
 
-- A minimal on-chain [contract example](https://github.com/pyth-network/pyth-crosschain/tree/main/target_chains/cosmwasm/examples/cw-contract) which queries the Pyth contract.
+- A minimal onchain [contract example](https://github.com/pyth-network/pyth-crosschain/tree/main/target_chains/cosmwasm/examples/cw-contract) which queries the Pyth contract.
 
-## Contract Address for `Osmosis Test 5`
+## Contract Address
 
-- Stable: `osmo1hpdzqku55lmfmptpyj6wdlugqs5etr6teqf7r4yqjjrxjznjhtuqqu5kdh`
-- Beta: `osmo1lltupx02sj99suakmuk4sr4ppqf34ajedaxut3ukjwkv6469erwqtpg9t3`
+The Pyth contract on Osmosis mainnet (`osmosis-1`) is:
+
+- `osmo13ge29x4e2s63a8ytz2px8gurtyznmue4a69n5275692v3qn3ks8q7cwck7`
+
+Pyth maintains the deployed addresses for every network (including testnet) on its [CosmWasm contract addresses page](https://docs.pyth.network/price-feeds/contract-addresses/cosmwasm); query the address there rather than hardcoding it, since it can change across contract versions.
 
 ## Price Feed IDs
 
