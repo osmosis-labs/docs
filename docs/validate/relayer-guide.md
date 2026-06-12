@@ -141,7 +141,7 @@ Check hermes version & config dir setup
 ```sh
 hermes version
 INFO ThreadId(01) using default configuration from '/home/relay/.hermes/config.toml'
-hermes 1.13.1
+hermes 1.13.3
 ```
 
 Edit Hermes config (use ports according to the port configuration we set above, add only chains you want to relay).
@@ -171,7 +171,7 @@ max_tx_size = 180000
 clock_drift = '10s'
 max_block_time = '10s'
 trusting_period = '14days'
-memo_prefix = 'Osmosis Docs Rocks'
+memo_prefix = 'relayed by <your-relayer-name>'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'
@@ -198,7 +198,7 @@ max_tx_size = 209715
 clock_drift = '20s'
 max_block_time = '10s'
 trusting_period = '10days'
-memo_prefix = 'Osmosis Docs Rocks'
+memo_prefix = 'relayed by <your-relayer-name>'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'

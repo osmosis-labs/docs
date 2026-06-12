@@ -3,7 +3,7 @@ description: Create a validator and go live on testnet.
 sidebar_position: 11
 ---
 
-# Validating On Testnet
+# Validating on Testnet
 
 ## Synced Node
 
@@ -18,7 +18,7 @@ While you can add an existing wallet through your seed phrase, we will create a 
 ```bash
 osmosisd keys add KEY_NAME
 ```
-Ensure you write down the mnemonic as you can not recover the wallet without it. To ensure your wallet was saved to your keyring, the WALLET_NAME is in your keys list:
+Ensure you write down the mnemonic as you can not recover the wallet without it. To ensure your wallet was saved to your keyring, check that KEY_NAME is in your keys list:
 
 ```bash
 osmosisd keys list
@@ -68,7 +68,7 @@ osmosisd tx staking create-validator \
 --amount=400000000uosmo \
 --pubkey=$(osmosisd tendermint show-validator)  \
 --moniker="Wosmongton" \
---security-contact="wosmongton@osmosis.labs" \
+--security-contact="wosmongton@osmosis.team" \
 --chain-id="osmo-test-5" \
 --commission-rate="0.1" \
 --commission-max-rate="0.2" \
@@ -78,15 +78,15 @@ osmosisd tx staking create-validator \
 
 If you need further explanation for each of these command flags:
 - the `from` flag is the KEY_NAME you created when initializing the key on your keyring
-- the `amount` flag is the amount you will place in your own validator in uosmo (in the example, 500000000uosmo is 500osmo)
+- the `amount` flag is the amount you will place in your own validator in uosmo (in the example, 400000000uosmo is 400osmo)
 - the `pubkey` is the validator public key found earlier
 - the `moniker` is a human readable name you choose for your validator
 - the `security-contact` is an email your delegates are able to contact you at
-- the `chain-id` is whatever chain-id you are working with (in the osmosis mainnet case it is osmosis-1)
+- the `chain-id` is whatever chain-id you are working with (in the osmosis testnet case it is osmo-test-5)
 - the `commission-rate` is the rate you will charge your delegates (in the example above, 10 percent)
 - the `commission-max-rate` is the most you are allowed to charge your delegates (in the example above, 20 percent)
 - the `commission-max-change-rate` is how much you can increase your commission rate in a 24 hour period (in the example above, 5 percent per day until reaching the max rate)
-- the `min-self-delegation` is the lowest amount of personal funds the validator is required to have in their own validator to stay bonded (in the example above, 500osmo)
+- the `min-self-delegation` is the lowest amount of personal funds the validator is required to have in their own validator to stay bonded (in the example above, 400osmo)
 - the `gas-prices` is the amount of gas used to send this create-validator transaction
 
 ### Troubleshooting
@@ -141,11 +141,11 @@ osmosisd tendermint show-validator
 Use your validators public key queried above:
 
 ```bash
-osmosisd query slashing signing-info [validator-pubkey] --chain-id osmo-test-5
+osmosisd query slashing signing-info [validator-pubkey]
 ```
 
 Example:
 
 ```bash
-osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}' --chain-id osmo-test-5
+osmosisd query slashing signing-info '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"HlixoxNZBPq4pBOYEimtSq9Ak4peBISVsIbI5ZHrEAU="}'
 ```
