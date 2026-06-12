@@ -32,7 +32,7 @@ Make sure you have [installed the Osmosis Binary CLI](/build/developer-environme
 Use osmosisd to initialize your node (replace the ```NODE_NAME``` with a name of your choosing):
 
 ```bash
-osmosisd init NODE_NAME
+osmosisd init NODE_NAME --chain-id=osmosis-1
 ```
 
 Download and place the genesis file in the osmosis config folder:
@@ -61,7 +61,7 @@ rm go1.23.4.linux-amd64.tar.gz
 ```
 ### Memory Requirements
 
-As always, we recommend having 64GB of memory. 
+The [minimum recommended specs](/build/developer-environment/osmosisd) are 32 GB of RAM. For a mainnet validator, 64 GB is recommended to give headroom under load. 
 
 ### Set Up Cosmovisor
 

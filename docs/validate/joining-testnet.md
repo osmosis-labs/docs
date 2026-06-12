@@ -44,7 +44,11 @@ cd $HOME/.osmosisd/config
 nano config.toml
 ```
 
-Use page down or arrow keys to get to the line that says seeds = "" and replace it with the following:
+:::caution
+Seed and peer addresses rotate as nodes are added or retired. Confirm the current `osmo-test-5` values from the [Cosmos Chain Registry testnet entry](https://github.com/cosmos/chain-registry/blob/master/testnets/osmosistestnet/chain.json) before applying; the values below are illustrative.
+:::
+
+Use page down or arrow keys to get to the line that says seeds = "" and replace it with the current seed list, for example:
 
 ```bash
 seeds = "0f9a9c694c46bd28ad9ad6126e923993fc6c56b1@137.184.181.105:26656"
