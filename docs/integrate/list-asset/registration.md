@@ -10,7 +10,7 @@ This guide intends to support teams looking to enlist their tokenized crypto ass
 At a very high level, the process is:
 
 1. **Register chain and asset metadata to the Cosmos Chain Registry** (required), and ensure an IBC connection to Osmosis is registered there as well.
-2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs daily (around 15:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
+2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs daily (around 17:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
 3. *(Optional)* **Submit a PR to `osmosis-labs/assetlists`** to configure advanced properties (categories, transfer methods, override metadata, etc.) and/or to request an upgrade to **verified status** once onchain liquidity criteria are met.
 
 Note that the overall process may require collaboration from technical teams (to provide chain services and IBC relaying) and market-making entities (to provide initial liquidity needed for verified status).
@@ -76,7 +76,7 @@ The Osmosis Labs' Assetlist Registry ([osmosis-labs/assetlists](https://github.c
 
 ### How auto-detection works
 
-- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs regularly, currently daily at around 15:00 UTC.
+- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs daily at around 17:00 UTC.
 - It scans the Cosmos Chain Registry for assets whose source chain has an IBC connection to Osmosis.
 - For each newly detected asset, the workflow generates an entry in `osmosis-1/osmosis.zone_assets.json` (and stubs the source chain into `osmosis.zone_chains.json` if it is not already present), opens a PR to the `update/assetlist_all` branch, runs validation, and auto-merges on success.
 - The asset is then shipped to Osmosis Zone as **unverified**. Unverified assets are visible only to users who have toggled "Show Unverified Assets" on in the Osmosis Zone app.

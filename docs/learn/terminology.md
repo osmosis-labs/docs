@@ -13,7 +13,7 @@ The validators in the active set (currently the top 70, set by governance) that 
 
 ## Airdrop
 
-A transfer of free cryptocurrency from a crypto project into users’ wallets in order to increase interest and incentivize the use of a new token.
+A transfer of free cryptocurrency from a crypto project into users' wallets in order to increase interest and incentivize the use of a new token.
 
 ## Alloyed asset
 
@@ -46,7 +46,7 @@ The permanent destruction of coins from the total supply.
 
 ## Commission
 
-The percentage of staking rewards a validator will keep before distributing the rest of the rewards to delegators. Commission is a validator’s income. Validators set their own commission rates. As of this writing, commission must be greater than or equal to 5% 
+The percentage of staking rewards a validator will keep before distributing the rest of the rewards to delegators. Commission is a validator's income. Validators set their own commission rates. As of this writing, commission must be greater than or equal to 5% 
 
 ## Community pool
 
@@ -137,7 +137,7 @@ Liquidity providers earn through fees and special pool rewards. However, they ar
 Impermanent loss is the net difference between holding the asset verses providing liquidity. Liquidity provider (LP) rewards helps to offset impermanent loss for LPs.
 When the price of the assets in the pool change at different rates, LPs end up owning larger amounts of the asset that increased less in price (or decreased more in price). For example, if the price of OSMO goes up relative to ATOM, LPs in the OSMO-ATOM pool end up with larger portions of the less valuable asset (ATOM).
 
-Impermanent loss is mitigated in part by the transaction fees earned by LPs. When the profits made from swap fees outweigh an LP’s impermanent loss, the pool is self-sustainable.
+Impermanent loss is mitigated in part by the transaction fees earned by LPs. When the profits made from swap fees outweigh an LP's impermanent loss, the pool is self-sustainable.
 
 To further offset impermanent loss, particularly in the early stages of a protocol when volatility is high, AMMs utilize liquidity mining rewards. Liquidity rewards bootstrap the ecosystem as usage and fee revenues are still ramping up.
 
@@ -190,7 +190,7 @@ Revenue generated from fees given to validators and delegators.
 The path a swap takes through one or more pools to get from the input asset to the output asset. When there is no direct pool, or when combining pools is cheaper, Osmosis routes through intermediate assets and can split a single swap across multiple paths (a split route) to get the best overall price.
 
 ## Scaling Factor
-Scaling factors are introduced to set the expected price ratio for Stableswaps. Precision of pegged coins, differences in staking derivatives, and other issues make it difficult to simply rely on x_reserves ~= y_reserves. Scaling factors are used to map from raw coin units to AMM math units by dividing the raw units by the scaling factor. This mapping is done by rounding the result based on the rounding mode which has three options: RoundUp, RoundDown, and RoundBankers. All token inputs are scaled and the AMM equations must ensure that rounding is done correctly. The details of scaling and rounding are described in the relevant sections of the specification. [here](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/pool-models/stableswap/README.md)
+Scaling factors are introduced to set the expected price ratio for Stableswaps. Precision of pegged coins, differences in staking derivatives, and other issues make it difficult to simply rely on x_reserves ~= y_reserves. Scaling factors are used to map from raw coin units to AMM math units by dividing the raw units by the scaling factor. This mapping is done by rounding the result based on the rounding mode which has three options: RoundUp, RoundDown, and RoundBankers. All token inputs are scaled and the AMM equations must ensure that rounding is done correctly. The details of scaling and rounding are described in the [stableswap specification](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/pool-models/stableswap/README.md).
 
 ## Self-bond
 

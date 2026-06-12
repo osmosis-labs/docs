@@ -379,7 +379,7 @@ The third event is simply of type `message`, indicating the message that is sent
 
 #### Fourth Event
 
-The fourth event is `tokens_swapped`. It summarizes the actual swaps that took place. Each set of 4 consecutive
+The fourth event is `token_swapped`. It summarizes the actual swaps that took place. Each set of 4 consecutive
 attribute pairs goes together:
 
 ```json

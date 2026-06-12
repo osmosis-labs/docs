@@ -1,6 +1,6 @@
 ---
 description: Source the initial liquidity needed to list and trade your asset.
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # Source Initial Liquidity
@@ -25,4 +25,4 @@ The stream also helps to define an appropriate ratio of the two assets that shou
 
 # Additional Liquidity
 
-As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Incentives Docs page](./incentives.md) to learn more about how you can .
+As more liquidity becomes available to users, either through mining, airdrops, or giveaways, it could be strategic to incentivize more liquidity to be added to Osmosis liquidity pools to ensure there is a healthy, consistent market for the new asset. See the [Liquidity Incentives Docs page](./incentives.md) to learn more about how you can incentivize additional liquidity for your asset.

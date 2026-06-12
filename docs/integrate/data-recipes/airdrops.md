@@ -73,8 +73,7 @@ osmosisd export 2138101 > state_export.json
 
 This process may take 30 minutes or more.
 
-NOTE: Some cosmos sdk versions write to STDERR instead of STDOUT. If the above command does not work for you, try to replace the > with 2>
-As of this writing, v5 and later will require 2> while anything before v5 will just use >
+NOTE: Depending on your Cosmos SDK version, the export may be written to stderr instead of stdout. If the redirect above produces an empty file, replace `>` with `2>` to capture stderr.
 
 
 ### Export accounts in JSON format
