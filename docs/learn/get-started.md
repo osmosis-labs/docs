@@ -4,9 +4,9 @@ sidebar_position: 3
 ---
 # Getting Started
 
-<!-- TODO(accuracy, MTN-113): the screenshots on this page date to 2022 and show
+<!-- TODO(accuracy): the screenshots on this page date to 2022 and show
      the pre-redesign app UI, which no longer matches app.osmosis.zone. They need
-     recapturing against the current UI (see the PR description for the list). -->
+     recapturing against the current UI. -->
 
 This page gets you set up: install a wallet, connect to the app, and deposit funds onto Osmosis over IBC. Once you have funds, see [How Trading Works](/learn/how-trading-works) to make your first swap and [Providing Liquidity](/learn/providing-liquidity) to start earning.
 

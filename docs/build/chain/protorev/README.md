@@ -141,7 +141,7 @@ message Trade {
 
 ### DenomPairToPool
 
-DenomPairToPool takes in a base denomination (read below) – denom that is used to build routes (ex. osmo, atom, usdc) – and a denom to match (akash, juno) and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) —> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
+DenomPairToPool takes in a base denomination (read below), the denom that is used to build routes (ex. osmo, atom, usdc), and a denom to match (akash, juno), and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) -> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
 
 ### BaseDenoms
 
@@ -167,7 +167,7 @@ These stores allow users and researchers to query the number of cyclic arbitrage
 
 ### AdminAccount
 
-The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live on-chain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
+The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live onchain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
 
 ### DeveloperAccount
 
@@ -219,7 +219,7 @@ type PoolWeights struct {
 
 ### GenesisState
 
-There is only one configurable parameter for the genesis state —> whether protorev is enabled or not.
+There is only one configurable parameter for the genesis state -> whether protorev is enabled or not.
 
 ```go
 // GenesisState defines the protorev module's genesis state.
@@ -250,13 +250,13 @@ BaseDenoms
 - Osmosis
 - Atom
 
-Lets say the `postHandler` receives a transaction that contains a swap of **Juno** —> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
+Lets say the `postHandler` receives a transaction that contains a swap of **Juno** -> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
 
-- Osmosis —> Akash (on pool 1), Akash —> Juno (on pool 4), Juno —> Osmosis (on pool 2)
+- Osmosis -> Akash (on pool 1), Akash -> Juno (on pool 4), Juno -> Osmosis (on pool 2)
 
-It does so by finding the highest liquidity pool between (Osmosis, Akash) —> pool 1 and the highest liquidity pool between (Osmosis, Juno) —> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
+It does so by finding the highest liquidity pool between (Osmosis, Akash) -> pool 1 and the highest liquidity pool between (Osmosis, Juno) -> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
 
-**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno —> Akash so we know that the route must include a swap of Akash —> Juno.**
+**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno -> Akash so we know that the route must include a swap of Akash -> Juno.**
 
 The same line of reasoning exists for Atom. `x/protorev` will attempt to find the highest liquidity pool between (Atom, Akash) and (Atom, Juno). If these pools exist, they will be added to the list of routes that can be simulated later in the pipeline. If not, the route is discarded.
 

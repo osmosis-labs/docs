@@ -23,7 +23,7 @@ The following is a quick guide that shows the basics of deploying a contract to 
 - Contract explorer
 
 :::tip
-Please note this is a detailed guide on how to deploy via `osmosisd`, it also covers additional tooling and useful tips.  You can also deploy to testnet with [Beaker](./cosmwasm-beaker.md) with a couple of commands. 
+This is a detailed guide on how to deploy via `osmosisd`, covering additional tooling and useful tips. For the recommended scripted workflow, see [cw-orchestrator](/build/cosmwasm/cw-orch) and the [Quickstart](/build/cosmwasm/quickstart).
 :::
 
 
@@ -43,7 +43,7 @@ Then run the following commands:
 # 1. Set 'stable' as the default release channel:
 rustup default stable
 cargo version
-# If this is lower than 1.50.0+, update
+# Update to a recent stable toolchain (CosmWasm and the optimizer track current Rust)
 rustup update stable
 
 # 2. Add WASM as the compilation target:
@@ -64,7 +64,7 @@ Run the following and choose option #2 (Client Node) and #2 (Testnet) in order.
 ```bash
 curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 ```
-Now you have successfully completed setting up an Osmosis client node in Testnet. In order to use `osmosisd` from the cli, either reload your terminal or refresh your profile with : `‘source ~/.profile’`
+Now you have successfully completed setting up an Osmosis client node in Testnet. In order to use `osmosisd` from the cli, either reload your terminal or refresh your profile with `source ~/.profile`
 
 ### Setup the Client
 
@@ -216,7 +216,7 @@ Run the following command to set the `CODE_ID` as a variable:
 
 ```bash
 # get CODE_ID
-CODE_ID=$(echo $RES | jq -r '.logs[0].events[-1].attributes[0].value')
+CODE_ID=$(echo $RES | jq -r '.events[] | select(.type=="store_code") | .attributes[] | select(.key=="code_id") | .value')
 echo $CODE_ID
 ```
 

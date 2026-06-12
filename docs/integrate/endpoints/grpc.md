@@ -18,7 +18,7 @@ If you are running your own node. It's also possible to enable them by editing  
 ## Grpc endpoints
 An overview of all available gRPC endpoints shipped with Osmosis is available in the [Osmosis Protobuf documentation](https://buf.build/osmosis-labs/osmosis). There is also a Cosmos SDK is [Protobuf documentation](https://buf.build/cosmos/cosmos-sdk).
 
-You can send requests to the gRPC server using a gRPC client such as [grpcurl](#grpcurl) or from [Buf Studio](#buf-studio).
+You can send requests to the gRPC server using a gRPC client such as [grpcurl](#grpcurl) or by browsing the [Buf Schema Registry](#buf-schema-registry).
 
 Since the code generation library largely depends on your own tech stack, we will only present three alternatives:
 

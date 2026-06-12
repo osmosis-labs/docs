@@ -281,4 +281,4 @@ The following tables show overall effects on different configurations of the `mi
 | Higher                | N/A              | Higher inflation rate              | Increases time to reduction_period       |
 | Lower                 | N/A              | Lower inflation rate               | Decreases time to reduction_period       |
 | Constraints           | N/A              | Value has to be a positive integer | String must be day, week, month, or year |
-| Current configuration | uosmo            | 821917808219.178 (821,9178 OSMO)   | day                                      |
+| Current configuration | uosmo            | 821917808219.178 (821,917.808 OSMO) | day                                     |

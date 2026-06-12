@@ -123,8 +123,8 @@ $ osmosisd keys show Default --bech acc
 $ osmosisd keys show Default --bech val
 - name: Default
   type: local
-  address: osmocncl1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s3prz35z
-  pubkey: osmocnclpub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ck5ad5l
+  address: osmovaloper1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s3prz35z
+  pubkey: osmovaloperpub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ck5ad5l
   mnemonic: ""
   threshold: 0
   pubkeys: []
@@ -139,8 +139,8 @@ $ osmosisd keys show Default --bech val
 $ osmosisd keys show Default --bech cons
 - name: Default
   type: local
-  address: osmocnclcons1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s34pfmlc
-  pubkey: osmocnclconspub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ch6kdrc
+  address: osmovalcons1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s34pfmlc
+  pubkey: osmovalconspub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ch6kdrc
   mnemonic: ""
   threshold: 0
   pubkeys: []

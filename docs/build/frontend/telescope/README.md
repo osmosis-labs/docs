@@ -423,12 +423,12 @@ To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/
 Likely you'll want to use the Amino, so unless you need proto, you should use this one:
 
 ```js
-import { getOfflineSigner as getOfflineSignerAmino } from 'cosmjs-utils';
+import { getOfflineSigner as getOfflineSignerAmino } from 'osmojs';
 ```
 ### Proto Signer
 
 ```js
-import { getOfflineSigner as getOfflineSignerProto } from 'cosmjs-utils';
+import { getOfflineSigner as getOfflineSignerProto } from 'osmojs';
 ```
 
 WARNING: NOT RECOMMENDED TO USE PLAIN-TEXT MNEMONICS. Please take care of your security and use best practices such as AES encryption and/or methods from 12factor applications.
@@ -450,7 +450,7 @@ const mnemonic =
 Now that you have your `client`, you can broadcast messages:
 
 ```js
-import { signAndBroadcast } from '@osmosnauts/helpers';
+import { signAndBroadcast } from 'osmojs';
 
 const res = await signAndBroadcast({
   client, // SigningStargateClient

@@ -102,7 +102,7 @@ MYACCOUNT=$(osmosisd keys show testaccount -a --keyring-backend test)
 ```
 
 The command above creates a local key-pair that is not yet registered on the chain. An account is created the first time it receives tokens from another account.
- You can now send some tokens to this enw account. If you are connected to the testnet, you can get tokens from [https://faucet.osmosis.zone](https://faucet.osmosis.zone)
+ You can now send some tokens to this new account. If you are connected to the testnet, you can get tokens from [https://faucet.osmosis.zone](https://faucet.osmosis.zone)
 
 ```bash
 # Check that the testaccount account did receive the tokens.
