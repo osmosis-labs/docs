@@ -11,7 +11,7 @@ As shown on the RPC specifications, there are different endpoints to communicate
 RPC is the right path for signing, broadcasting, and per-block subscriptions, but for routing quotes and batched pool state you almost certainly want the [Sidecar Query Server (SQS)](./sqs), the query path used by the production frontend.
 :::
 
-For more information please read generating, [signing and boradcasting transactions.] https://docs.cosmos.network/v0.46/run-node/txs.html on the cosmos-sdk docs. 
+For more information, read about [generating, signing, and broadcasting transactions](https://docs.cosmos.network/v0.50/learn/advanced/transactions) in the cosmos-sdk docs.
 
 ## Querying the ABCI Query with Javascript via Telescope
 
@@ -22,7 +22,7 @@ If you are looking to query, sign and broadcast transactions using Javascript. T
 # Install dependencies
 yarn install
 # Install Telescope
-npm install -g @osmonauts/telescope
+npm install -g @cosmology/telescope
 # Select the chains you would like to interact with
 telescope install
 # Generate types 
@@ -59,7 +59,7 @@ getBalance().catch(console.error);
 Run the code and see the responses from the rpc endpoint. 
 ```bash
 yarn dev
-````
+```
 
 For extended details and documentations, see the documentation for Telescope. 
 

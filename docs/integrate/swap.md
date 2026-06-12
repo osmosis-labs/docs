@@ -54,7 +54,7 @@ The fields you need to build the swap:
 - `route[].pools[]`: the ordered hops. Each pool's `id` and `token_out_denom` map directly to the swap message's route.
 - `amount_out`: the expected output. Use it with your slippage tolerance to set the minimum acceptable output.
 
-`effective_fee` (combined spread factor + taker fee) and `price_impact` are returned for display and decision-making; they are already reflected in `amount_out`. See the [SQS page](/integrate/endpoints/sqs#get-a-swap-quote) for the full parameter and field reference, including split routes (where `route` has more than one entry).
+`effective_fee` (combined spread factor + taker fee across the route) and `price_impact` are returned for display and decision-making; they are already reflected in `amount_out`. Each pool's `taker_fee` is read from chain state for that pool and can differ from (and exceed) the chain-wide default, so use the per-pool values and `effective_fee` from the quote rather than assuming a default. See the [SQS page](/integrate/endpoints/sqs#get-a-swap-quote) for the full parameter and field reference, including split routes (where `route` has more than one entry).
 
 ## 2. Build the swap message
 
@@ -157,11 +157,14 @@ A robust integration handles both shapes: branch on `quote.route.length` and bui
 Sign the message and broadcast it over RPC like any Cosmos SDK transaction. With OsmoJS and a connected signer:
 
 ```ts
-const fee = { amount: [{ denom: 'uosmo', amount: '5000' }], gas: '350000' };
+// The fee amount must cover gas_limit * gas_price, where gas_price is at or
+// above the current dynamic base fee. The values below are illustrative: at a
+// 0.03 uosmo base fee, 350000 gas needs at least 10500 uosmo (350000 * 0.03).
+const fee = { amount: [{ denom: 'uosmo', amount: '10500' }], gas: '350000' };
 const res = await client.signAndBroadcast(address, [msg], fee);
 ```
 
-Estimate gas rather than hardcoding it for production, and pay fees in any accepted fee token (see [Fee Abstraction](/learn/features/fee-abstraction)). For the lower-level signing and broadcasting flow over raw RPC, see [Interact with RPC endpoints](/integrate/endpoints/rpc).
+Estimate gas rather than hardcoding it for production, and size the fee against the live base fee at submission time: Osmosis runs a dynamic fee market, and a transaction whose gas price is below the current base fee is rejected (see [Fees and Gas](/integrate/fees)). Pay fees in any accepted fee token (see [Fee Abstraction](/learn/features/fee-abstraction)). For the lower-level signing and broadcasting flow over raw RPC, see [Interact with RPC endpoints](/integrate/endpoints/rpc).
 
 ## Hazards checklist
 

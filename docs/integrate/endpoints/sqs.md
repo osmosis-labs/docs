@@ -58,7 +58,10 @@ curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=u
       "out_amount": "2366",
       "in_amount": "1000000"
     }
-  ]
+  ],
+  "effective_fee": "0.013000000000000000",
+  "price_impact": "0.012345678901234567",
+  "in_base_out_quote_spot_price": "0.002400000000000000"
 }
 ```
 
@@ -83,7 +86,7 @@ The response has `amount_in` as a string (the required input) and `amount_out` a
 
 ### Fees
 
-`amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side.
+`amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side. The top-level `effective_fee` is the combined spread factor and taker fee across the whole route, `price_impact` is the route's price impact, and `in_base_out_quote_spot_price` is the spot price in base/quote terms. Each pool's `taker_fee` is read from chain state for that specific pool and can differ from (and exceed) the chain-wide default.
 
 ## Quote a specific route
 

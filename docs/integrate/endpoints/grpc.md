@@ -5,7 +5,7 @@ sidebar_position: 10
 
 # Interact with gRPC Server
 
-A gRPC endpoint is available on the public Osmosis nodes so that you can start playing and intreacting with it right away.
+A gRPC endpoint is available on the public Osmosis nodes so that you can start playing and interacting with it right away.
 
 ## Enabling gRPC on a node
 If you are running your own node. It's also possible to enable them by editing  `~/.osmosisd/config/app.toml`: 
@@ -16,9 +16,9 @@ If you are running your own node. It's also possible to enable them by editing  
 
 
 ## Grpc endpoints
-An overview of all available gRPC endpoints shipped with Osmosis is available in the [Osmosis Protobuf documentation](https://buf.build/osmosis-labs/osmosis). There is also a Cosmos SDK is [Protobuf documentation](https://buf.build/cosmos/cosmos-sdk).
+An overview of all available gRPC endpoints shipped with Osmosis is available in the [Osmosis Protobuf documentation](https://buf.build/osmosis-labs/osmosis). There is also Cosmos SDK [Protobuf documentation](https://buf.build/cosmos/cosmos-sdk).
 
-You can send requests to the gRPC server using a gRPC client such as [grpcurl](#grpcurl) or from [Buf Studio](#buf-studio).
+You can send requests to the gRPC server using a gRPC client such as [grpcurl](#grpcurl) or by browsing the [Buf Schema Registry](#buf-schema-registry).
 
 Since the code generation library largely depends on your own tech stack, we will only present three alternatives:
 
@@ -131,6 +131,7 @@ import (
     "fmt"
 
     "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials/insecure"
 
     "github.com/cosmos/cosmos-sdk/codec"
     sdk "github.com/cosmos/cosmos-sdk/types"
@@ -146,7 +147,7 @@ func queryState() error {
     // Create a connection to the gRPC server.
     grpcConn, err := grpc.Dial(
         "127.0.0.1:9090", // your gRPC server address.
-        grpc.WithInsecure(), // The Cosmos SDK doesn't support any transport security mechanism. 
+        grpc.WithTransportCredentials(insecure.NewCredentials()), // The Cosmos SDK doesn't support any transport security mechanism. 
         // This instantiates a general gRPC codec which handles proto bytes. We pass in a nil interface registry
         // if the request/response types contain interface instead of 'nil' you should pass the application specific codec.
 		grpc.WithDefaultCallOptions(grpc.ForceCodec(codec.NewProtoCodec(nil).GRPCCodec())),
@@ -172,7 +173,7 @@ func queryState() error {
 }
 ```
 
-You can replace the query client (here we are using `x/bank`'s) with one generated from any other Protobuf service. The list of all available gRPC query endpoints is [coming soon](https://github.com/cosmos/cosmos-sdk/issues/7786).
+You can replace the query client (here we are using `x/bank`'s) with one generated from any other Protobuf service. The list of all available gRPC query endpoints is published to the [Osmosis Buf Schema Registry](https://buf.build/osmosis-labs/osmosis).
 
 #### Query for historical state using Go
 

@@ -20,7 +20,7 @@ Staking OSMO secures the network and earns a share of emissions and fees. When y
 Governance is the critical component of how Osmosis evolves. Active stakeholders of the network are responsible for proposing, vetting, and passing protocol upgrades and parameter changes. Voting power is proportional to staked OSMO. See [Staking and Governance](/learn/staking-and-governance) for how a proposal becomes a protocol change.
 
 ## Transaction Fees
-Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. Minimum gas costs are determined by the proposer of a block in which the transaction is included. This transaction fee is distributed to OSMO stakers on the network.
+Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. The network-wide minimum gas price is set algorithmically by Osmosis's [EIP-1559 style fee market](/learn/features/fee-market), which adjusts the base fee with network load. This transaction fee is distributed to OSMO stakers on the network.
 
 Validators can choose which assets to accept for fees in the blocks that they propose, allowing users to pay for gas in almost any token listed on Osmosis. All accepted assets are converted back to OSMO before distribution, retaining this utility.
 
