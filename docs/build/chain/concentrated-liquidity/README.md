@@ -1460,7 +1460,7 @@ some [clever accumulator tricks](https://www.paradigm.xyz/2021/05/liquidity-mini
 this can be designed to ensure that each LP only receives incentives for liquidity they contribute
 to the active tick. This approach is incredible for liquidity depth, which is arguably the most
 important property we need incentives to be able to accommodate. It is also a user flow that
-on-chain market makers are already somewhat familiar with and has enough live examples where
+onchain market makers are already somewhat familiar with and has enough live examples where
 we roughly know that it functions as intended.
 
 ## Our Implementation
@@ -1735,7 +1735,7 @@ the quote asset that has precision of 6 (e.g `uosmo` or `uusdc`).
 
 The true price of PEPE in USDC terms is `0.0000009749`.
 
-In the "on-chain representation", this would be:
+In the "onchain representation", this would be:
 `0.0000009749 * 10**6 / 10**18 = 9.749e-19`
 
 Note that this is below the minimum precision of `sdk.Dec`.

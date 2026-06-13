@@ -6,7 +6,7 @@ Validator-Set preference is a new module which gives users and contracts a
 better UX for staking to a set of validators. For example: a one click button
 that delegates to multiple validators. Then the user can set (or realistically a frontend provides) 
 a list of recommended defaults (Ex: active governors, relayers, core stack contributors etc).
-Currently this can be done on-chain with frontends, but having a preference list stored locally 
+Currently this can be done onchain with frontends, but having a preference list stored locally 
 eases frontend code burden. 
 
 ## Design 

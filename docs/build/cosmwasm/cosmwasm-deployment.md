@@ -147,7 +147,7 @@ cargo wasm
     wasm = "build --release --target wasm32-unknown-unknown"
     ```
     
-    So when we run the `cargo wasm` command, the `cargo build --release —-target wasm32-unknown-unknown` command is executed according to the option in the config file above.
+    So when we run the `cargo wasm` command, the `cargo build --release --target wasm32-unknown-unknown` command is executed according to the option in the config file above.
     
 
 After this compiles, it should produce a file in `target/wasm32-unknown-unknown/release/cw_tpl_osmosis.wasm`.  If you check the size of the file by using the `ls -lh` command, it shows around `1.8M`. This is a release build, but not stripped of all unneeded code. To produce a much smaller version, you can run this which tells the compiler to strip all unused code out:
@@ -194,7 +194,7 @@ RES=$(osmosisd query tx "$TXHASH" --output json)
 - `--gas-adjustment` : adjustment factor to be multiplied against the estimate returned by the tx simulation.
 - `-y` : to skip tx broadcasting prompt confirmation.
 - `--output` : output format.
-- `-b sync` : broadcast the transaction synchronously and return immediately with the txhash. The `block` mode used in older Cosmos SDK versions is no longer supported — query the tx by hash after the next block to fetch the result.
+- `-b sync` : broadcast the transaction synchronously and return immediately with the txhash. The `block` mode used in older Cosmos SDK versions is no longer supported, so query the tx by hash after the next block to fetch the result.
 
 ![](https://user-images.githubusercontent.com/70956926/172293654-7beba11b-ce5f-4979-94e2-19156c6e5b27.png)
 

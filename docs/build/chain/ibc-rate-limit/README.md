@@ -297,7 +297,7 @@ Not yet highlighted
 * Making monitoring tooling to know when approaching rate limiting and when they're hit
 * Making tooling to easily give us summaries we can use, to reason about "bug or not bug" in event of rate limit being hit
 * Enabling ways to pre-declare large transfers so as to not hit rate limits.
-   * Perhaps you can on-chain declare intent to send these assets with a large delay, that raises monitoring but bypasses rate limits?
+   * Perhaps you can onchain declare intent to send these assets with a large delay, that raises monitoring but bypasses rate limits?
    * Maybe contract-based tooling to split up the transfer suffices?
 * Strategies to account for high volatility periods without hitting rate limits
    * Can imagine "Hop network" style markets emerging
