@@ -27,6 +27,7 @@
     "@radix-ui/react-select": "^0.1.1",
     "@stoplight/elements": "^9.0.21",
     "clsx": "^2.0.0",
+    "docusaurus-plugin-copy-page-button": "^0.8.1",
     "katex": "0.16",
     "param-case": "^3.0.4",
     "prism-react-renderer": "^2.3.0",
