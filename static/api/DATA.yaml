@@ -1,1137 +1,2169 @@
-openapi: 3.0.2
-info:
-  title: Osmosis Historical Data
-  description: REST API to get the historical data for Osmosis
-  version: 1.1.1
+openapi: 3.0.0
 servers:
-  - url: https://api.osmosis.zone/
-    description: Osmosis Historical Data
+- url: https://osmosis.numia.xyz
+  description: Numia Osmosis API (full, requires API key)
+- url: https://public-osmosis-api.numia.xyz
+  description: Numia public tier (light use, no key)
+info:
+  title: Osmosis Data API (Numia)
+  description: 'Historical and market data for Osmosis, provided by Numia. This API succeeds the former
+    Imperator data API (api.osmosis.zone), which has been retired.
+
+
+    Two hosts are available:
+
+    - `https://public-osmosis-api.numia.xyz` — a public tier for light use, no API key required.
+
+    - `https://osmosis.numia.xyz` — the full API; requires a Numia API key (generate one at https://numia.xyz).
+    Send it as a Bearer token in the `Authorization` header.
+
+
+    The endpoints below are documented against the full host. For light, keyless use, the same paths are
+    served by the public host where available. See the [Numia API reference](https://api-docs.numia.xyz/osmosis)
+    for the canonical, always-current spec.'
+  version: 1.0.0
+components:
+  schemas: {}
+  parameters: {}
+  securitySchemes:
+    NumiaApiKey:
+      type: http
+      scheme: bearer
+      description: Numia API key as a Bearer token. Required for the osmosis.numia.xyz host; not required
+        for the public-osmosis-api.numia.xyz host.
 paths:
-  /health/v1/check:
+  /v2/pools_apr_range:
     get:
-      tags:
-        - health
-      summary: Check Health
-      operationId: check_health
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /overview/v1/metrics:
-    get:
-      tags:
-        - overview
-      summary: Metrics
-      operationId: metrics
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /overview/v1/message:
-    get:
-      tags:
-        - overview
-      summary: Message
-      operationId: message
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /ibc/v1/info:
-    get:
-      tags:
-        - ibc
-      summary: Ibc Info
-      description: List all existing paths that have been manually set up on the config
-      operationId: ibc_info
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /ibc/v1/all:
-    get:
-      tags:
-        - ibc
-      summary: Ibc All
-      description: |-
-        List all existing paths with pending packets, last tx and since when (in minutes)
-           
-        optional: filter by dex
-      operationId: ibc_all
+      operationId: getPoolsAprRangeV2
+      summary: Get Pools APR Range V2
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
       parameters:
-        - required: false
-          schema:
-            title: Dex
-            type: string
-          name: dex
-          in: query
+      - schema:
+          type: string
+        required: false
+        name: pool
+        in: query
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /ibc/v1/source/{source}/destination{destination}:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pool_id:
+                      type: string
+                    swap_fees:
+                      type: object
+                      properties:
+                        lower:
+                          type: number
+                        upper:
+                          type: number
+                      required:
+                      - lower
+                      - upper
+                    superfluid:
+                      type: object
+                      properties:
+                        lower:
+                          type: number
+                        upper:
+                          type: number
+                      required:
+                      - lower
+                      - upper
+                    osmosis:
+                      type: object
+                      properties:
+                        lower:
+                          type: number
+                        upper:
+                          type: number
+                      required:
+                      - lower
+                      - upper
+                    boost:
+                      type: object
+                      properties:
+                        lower:
+                          type: number
+                        upper:
+                          type: number
+                      required:
+                      - lower
+                      - upper
+                    total_apr:
+                      type: object
+                      properties:
+                        lower:
+                          type: number
+                        upper:
+                          type: number
+                      required:
+                      - lower
+                      - upper
+                  required:
+                  - pool_id
+                  - swap_fees
+                  - superfluid
+                  - osmosis
+                  - boost
+                  - total_apr
+  /cl/v2/apr/rewards/{pool}:
     get:
-      tags:
-        - ibc
-      summary: Ibc Source Destination
-      description: List chosen source and destination paths with pending packets, last tx and since when (in minutes) strictly superior to trigger option
-      operationId: ibc_source_destination
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getClPoolsPositionAprV2
+      summary: Get CL Pools Position APR V2
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
       parameters:
-        - required: true
-          schema:
-            title: Source
-            type: string
-          name: source
-          in: path
-        - required: true
-          schema:
-            title: Destination
-            type: string
-          name: destination
-          in: path
-        - required: true
-          schema:
-            title: Minutes Trigger
-            type: integer
-          name: minutes_trigger
-          in: query
+      - schema:
+          type: string
+        required: true
+        name: pool
+        in: path
+      - schema:
+          type: string
+        required: true
+        name: lower_tick
+        in: query
+      - schema:
+          type: string
+        required: true
+        name: upper_tick
+        in: query
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /ibc/v1/source/{source}:
-    get:
-      tags:
-        - ibc
-      summary: Ibc Source
-      description: List chosen source paths with pending packets, last tx and since when (in minutes) strictly superior to trigger option
-      operationId: ibc_source
-      parameters:
-        - required: true
-          schema:
-            title: Source
-            type: string
-          name: source
-          in: path
-        - required: true
-          schema:
-            title: Minutes Trigger
-            type: integer
-          name: minutes_trigger
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /ibc/v1/destination/{destination}:
-    get:
-      tags:
-        - ibc
-      summary: Ibc Destination
-      operationId: ibc_destination
-      parameters:
-        - required: true
-          schema:
-            title: Destination
-            type: string
-          name: destination
-          in: path
-        - required: true
-          schema:
-            title: Minutes Trigger
-            type: integer
-          name: minutes_trigger
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /ibc/v1/raw:
-    get:
-      tags:
-        - ibc
-      summary: Ibc Raw
-      operationId: ibc_raw
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /pairs/v1/summary:
-    get:
-      tags:
-        - pairs
-      summary: Pairs Summary
-      operationId: pairs_summary
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
+                type: object
+                properties:
+                  APR:
+                    type: number
+                required:
+                - APR
   /pairs/v1/historical/{pool_id}/chart:
     get:
-      tags:
-        - pairs
-      summary: Pairs Historical Chart
-      description: |-
-        - **pool_id**: ID of pool to return
-        - **asset_in**: First name asset of PAIR (ex for ATOM/USDT, asset_out=ATOM (symbol) or asset_out=ibc/1XX (denom))
-        - **asset_out**: Second name asset of PAIR (ex for ATOM/USDT, asset_out=USDT (symbol) or asset_out=ibc/2XX (denom))
-        - **range**: Range of historical Data (Available values : 7d, 1mo, 1y, all)
-        - **asset_type**: Type of asset in asset_in and asset_out (Available values : symbol, denom)
-      operationId: pairs_historical_chart
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getTokenPairHistoricalChart
+      tags: []
+      sidebar: pools
+      attributes:
+        x-credits: 25
+        x-sidebar: pools
       parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-        - required: true
-          schema:
-            title: Asset In
-            type: string
-          name: asset_in
-          in: query
-        - required: true
-          schema:
-            title: Asset Out
-            type: string
-          name: asset_out
-          in: query
-        - required: true
-          schema:
-            title: Range
-            type: string
-          name: range
-          in: query
-        - required: true
-          schema:
-            title: Asset Type
-            type: string
-          name: asset_type
-          in: query
+      - schema:
+          type: string
+          pattern: ^\d+$
+        required: true
+        name: pool_id
+        in: path
+      - schema:
+          type: string
+        required: true
+        name: asset_in
+        in: query
+      - schema:
+          type: string
+        required: true
+        name: asset_out
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 1h
+          - 1d
+          - 7d
+          - 1mo
+          - 1y
+          - all
+          default: 7d
+        required: true
+        name: range
+        in: query
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /pools/v2/all:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    time:
+                      type: number
+                      minimum: 0
+                      exclusiveMinimum: true
+                    open:
+                      type: number
+                      description: Open Price of the Period
+                    close:
+                      type: number
+                      description: Close Price of the Period
+                    high:
+                      type: number
+                      description: Highest Price of the Period
+                    low:
+                      type: number
+                      description: Lowest Price of the Period
+                  required:
+                  - time
+                  - open
+                  - close
+                  - high
+                  - low
+  /tokens/v2/historical/{asset}/chart:
     get:
-      tags:
-        - pools
-      summary: Pools All
-      operationId: pools_all
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getTokenHistoricalChart
+      tags: []
+      sidebar: tokens
+      attributes:
+        x-credits: 25
+        x-sidebar: tokens
       parameters:
-        - required: true
-          schema:
-            title: Low Liquidity
-            type: boolean
-          name: low_liquidity
-          in: query
+      - schema:
+          type: string
+          description: Token denom or symbol
+        required: true
+        name: asset
+        in: path
+      - schema:
+          type: string
+          enum:
+          - '1'
+          - '5'
+          - '10'
+          - '15'
+          - '30'
+          - '60'
+          - '120'
+          - '240'
+          - '480'
+          - '720'
+          - '1440'
+          - '10080'
+          - '43800'
+          default: '60'
+        required: true
+        name: tf
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          default: 'false'
+        required: true
+        name: realtime
+        in: query
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /pools/v2/{pool_id}:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    time:
+                      type: number
+                      minimum: 0
+                      exclusiveMinimum: true
+                    open:
+                      type: number
+                      description: Open Price of the Period
+                    close:
+                      type: number
+                      description: Close Price of the Period
+                    high:
+                      type: number
+                      description: Highest Price of the Period
+                    low:
+                      type: number
+                      description: Lowest Price of the Period
+                    volume:
+                      type: number
+                      description: Volume of the Period
+                  required:
+                  - time
+                  - open
+                  - close
+                  - high
+                  - low
+                  - volume
+  /tokens/v2/real-time/{asset}/price:
     get:
-      tags:
-        - pools
-      summary: Pool By Id
-      description: '- **pool_id**: ID of pool to return'
-      operationId: pool_by_id
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getTokenRealTimePrice
+      tags: []
+      sidebar: tokens
+      attributes:
+        x-sidebar: tokens
       parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
+      - schema:
+          type: string
+          description: The asset denom of the token
+        required: true
+        name: asset
+        in: path
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /pools/v2/liquidity/{pool_id}/chart:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  usd_price:
+                    type: number
+                required:
+                - denom
+                - usd_price
+  /tokens/v2/{asset}:
     get:
-      tags:
-        - pools
-      summary: Liquidity By Pools
-      operationId: liquidity_by_pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getTokenData
+      tags: []
+      sidebar: tokens
+      attributes:
+        x-sidebar: tokens
       parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
+      - schema:
+          type: string
+        required: true
+        name: asset
+        in: path
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /pools/v2/volume/{pool_id}/chart:
-    get:
-      tags:
-        - pools
-      summary: Volume By Pools
-      operationId: volume_by_pools
-      parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/all:
-    get:
-      tags:
-        - tokens
-      summary: Tokens All
-      operationId: tokens_all
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /tokens/v2/mcap:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Mcap
-      operationId: tokens_mcap
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /tokens/v2/{symbol}:
-    get:
-      tags:
-        - tokens
-      summary: Tokens By Symbol
-      operationId: tokens_by_symbol
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/historical/{symbol}/chart:
-    get:
-      tags:
-        - tokens
-      summary: Token Price Historical Chart V2
-      description: |-
-        - **symbol**: Symbol of token to return
-        - **range**: Range of historical Data (Available values : 5,15,30,60,120,240,720,1440,10080,43800)
-      operationId: token_price_historical_chart_v2
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-        - required: true
-          schema:
-            title: Tf
-            type: integer
-          name: tf
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/liquidity/{symbol}/chart:
-    get:
-      tags:
-        - tokens
-      summary: Liquidity By Tokens V2
-      operationId: liquidity_by_tokens_v2
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/volume/{symbol}/chart:
-    get:
-      tags:
-        - tokens
-      summary: Volume By Tokens
-      operationId: volume_by_tokens
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/price/{symbol}:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Price
-      description: |-
-        Available tokens are:
-        - ** SYMBOL : https://info.osmosis.zone/tokens**
-      operationId: tokens_price
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/top/{type}:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Top Gainers Or Losers
-      description: 'type can be either ''gainers'' or ''losers'' '
-      operationId: tokens_top_gainers_or_losers
-      parameters:
-        - required: true
-          schema:
-            title: Type
-            type: string
-          name: type
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/count/{pool_id}:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Count V2
-      operationId: tokens_count_v2
-      parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-        - required: true
-          schema:
-            title: Range Start
-            type: string
-          name: range_start
-          in: query
-        - required: true
-          schema:
-            title: Range Stop
-            type: string
-          name: range_stop
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/volume/global:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Volume Global
-      operationId: tokens_volume_global
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /tokens/v2/volume/coin/{symbol}/chart:
-    get:
-      tags:
-        - tokens
-      summary: Volume By Tokens Chart V2
-      operationId: volume_by_tokens_chart_v2
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/volume/{pool_id}/coin/chart:
-    get:
-      tags:
-        - tokens
-      summary: Token Volume By Pool
-      operationId: token_volume_by_pool
-      parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tokens/v2/dominance/all:
-    get:
-      tags:
-        - tokens
-      summary: Tokens Dominance
-      description: '**REPLACE BY**: Nothing'
-      operationId: tokens_dominance
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-      deprecated: true
-  /liquidity/v2/historical/chart:
-    get:
-      tags:
-        - liquidity
-      summary: Liquidity Historical All Chart
-      operationId: liquidity_historical_all_chart
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /volume/v2/historical/chart:
-    get:
-      tags:
-        - volume
-      summary: Volume Historical All Chart V2
-      operationId: volume_historical_all_chart_v2
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /volume/v2/total:
-    get:
-      tags:
-        - volume
-      summary: Total Volume
-      operationId: total_volume
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /fees/v1/total:
-    get:
-      tags:
-        - fees
-      summary: Fees Total
-      description: 'total fees paid from all pools since beginning '
-      operationId: fees_total
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                    denom:
+                      type: string
+                    name:
+                      type: string
+                    display:
+                      type: string
+                    main:
+                      anyOf:
+                      - type: boolean
+                      - type: number
+                        minimum: 0
+                        maximum: 1
+                    exponent:
+                      type: number
+                    coingecko_id:
+                      type: string
+                      nullable: true
+                    volume_24h:
+                      type: number
+                      nullable: true
+                    volume_24h_change:
+                      type: number
+                      nullable: true
+                    price:
+                      type: number
+                      nullable: true
+                    price_1h_change:
+                      type: number
+                      nullable: true
+                    price_24h_change:
+                      type: number
+                      nullable: true
+                    price_7d_change:
+                      type: number
+                      nullable: true
+                    liquidity:
+                      type: number
+                      nullable: true
+                    liquidity_24h_change:
+                      type: number
+                      nullable: true
+                    coingecko_mcap:
+                      type: number
+                      nullable: true
+                  required:
+                  - symbol
+                  - denom
+                  - name
+                  - display
+                  - main
+                  - exponent
+                  - coingecko_id
+                  - volume_24h
+                  - volume_24h_change
+                  - price
+                  - price_1h_change
+                  - price_24h_change
+                  - price_7d_change
+                  - liquidity
+                  - liquidity_24h_change
+                  - coingecko_mcap
   /fees/v1/pools:
     get:
-      tags:
-        - fees
-      summary: Fees Spent Pools All
-      description: fees paid on 24h and 7d timeframe for all pools
-      operationId: fees_spent_pools_all
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getPoolsFees
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /fees/v1/{pool_id}:
-    get:
-      tags:
-        - fees
-      summary: Fees Spent Pool
-      description: fees paid on 24h and 7d timeframe from a chosen pools
-      operationId: fees_spent_pool
-      parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /fees/v1/total/historical:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pool_id:
+                          type: string
+                          description: Pool id
+                        volume_24h:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 24 hours
+                        volume_7d:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 7 days
+                        fees_spent_24h:
+                          type: number
+                          description: Total amount of USD spent in fees in the last 24 hours
+                        fees_spent_7d:
+                          type: number
+                          description: Total amount of USD spent in fees in the last 7 days
+                        fees_percentage:
+                          type: string
+                          description: Actual swap fees percetage of the pool
+                      required:
+                      - pool_id
+                      - volume_24h
+                      - volume_7d
+                      - fees_spent_24h
+                      - fees_spent_7d
+                      - fees_percentage
+                  last_update_at:
+                    type: number
+                required:
+                - data
+                - last_update_at
+  /stream/pool/v1/all:
     get:
-      tags:
-        - fees
-      summary: Fees Historical
-      description: total fees historically paid daily since the beginning
-      operationId: fees_historical
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /fees/v1/historical/{pool_id}:
-    get:
-      tags:
-        - fees
-      summary: Fees Historical Pool
-      description: total fees historically paid daily since the beginning for a given pool
-      operationId: fees_historical_pool
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getPoolStreamData
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
       parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /search/v1/supply/osmo:
-    get:
-      tags:
-        - search
-      summary: Search Amount Total Supply Osmo
-      operationId: search_amount_total_supply_osmo
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-      deprecated: true
-  /search/v1/denom:
-    get:
-      tags:
-        - search
-      summary: Search Denom By Given Symbol
-      description: '- **symbol**: symbol to return in denom'
-      operationId: search_denom_by_given_symbol
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /search/v1/symbol:
-    get:
-      tags:
-        - search
-      summary: Search Symbol By Given Denom
-      description: '- **denom**: denom to return in symbol'
-      operationId: search_symbol_by_given_denom
-      parameters:
-        - required: true
-          schema:
-            title: Denom
-            type: string
-          name: denom
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /search/v1/exponent:
-    get:
-      tags:
-        - search
-      summary: Search Exponent By Given Symbol
-      description: '- **symbol**: symbol to return is exponent'
-      operationId: search_exponent_by_given_symbol
-      parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /apr/v2/staking:
-    get:
-      tags:
-        - apr
-      summary: Apr Staking Osmo
-      operationId: apr_staking_osmo
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /apr/v2/all:
-    get:
-      tags:
-        - apr
-      summary: Apr All
-      operationId: apr_all
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /apr/v2/{pool_id}:
-    get:
-      tags:
-        - apr
-      summary: Apr Per Pool Id
-      operationId: apr_per_pool_id
-      parameters:
-        - required: true
-          schema:
-            title: Pool Id
-            type: integer
-          name: pool_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /supply/v1/osmo:
-    get:
-      tags:
-        - supply
-      summary: Supply Osmo
-      operationId: supply_osmo
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /supply/v1/ion:
-    get:
-      tags:
-        - supply
-      summary: Supply Ion
-      operationId: supply_ion
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-  /tradingview/v1/authorize:
-    post:
-      tags:
-        - tradingview
-      summary: Token
-      operationId: token
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Body_token_tradingview_v1_authorize_post'
+      - schema:
+          type: string
+          default: '1'
+          description: If pool_ids is defined, limit is ignored.
         required: true
+        name: min_liquidity
+        in: query
+      - schema:
+          type: string
+          enum:
+          - volume_24h
+          - liquidity
+          - volume_24h_change
+          - liquidity_change
+          default: liquidity
+        required: true
+        name: order_key
+        in: query
+      - schema:
+          type: string
+          enum:
+          - desc
+          - asc
+          default: desc
+        required: true
+        name: order_by
+        in: query
+      - schema:
+          type: string
+          default: '100'
+          description: If pool_ids is defined, limit is ignored.
+        required: true
+        name: limit
+        in: query
+      - schema:
+          type: string
+          default: '0'
+          description: If pool_ids is defined, limit is ignored.
+        required: true
+        name: offset
+        in: query
+      - schema:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        required: false
+        name: pool_ids
+        in: query
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /tradingview/v1/symbol_info:
+                type: object
+                properties:
+                  pagination:
+                    type: object
+                    properties:
+                      next_offset:
+                        anyOf:
+                        - type: number
+                        - nullable: true
+                        - nullable: true
+                      total_pools:
+                        type: number
+                    required:
+                    - next_offset
+                    - total_pools
+                  pools:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        main:
+                          type: boolean
+                        type:
+                          type: string
+                          enum:
+                          - osmosis.gamm.v1beta1.Pool
+                          - osmosis.gamm.poolmodels.stableswap.v1beta1.Pool
+                          - osmosis.concentratedliquidity.v1beta1.Pool
+                          - osmosis.cosmwasmpool.v1beta1.CosmWasmPool
+                        pool_id:
+                          type: number
+                        swap_fees:
+                          type: number
+                        exit_fees:
+                          type: number
+                        total_weight_or_scaling:
+                          type: number
+                        total_shares:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                              nullable: true
+                            amount:
+                              type: string
+                              nullable: true
+                          required:
+                          - denom
+                          - amount
+                        pool_tokens:
+                          anyOf:
+                          - type: array
+                            items:
+                              type: object
+                              properties:
+                                denom:
+                                  type: string
+                                amount:
+                                  type: string
+                                name:
+                                  type: string
+                                  nullable: true
+                                symbol:
+                                  type: string
+                                  nullable: true
+                                display:
+                                  type: string
+                                  nullable: true
+                                exponent:
+                                  type: string
+                                  nullable: true
+                                coingecko_id:
+                                  type: string
+                                  nullable: true
+                                weight_or_scaling:
+                                  type: string
+                                percent:
+                                  type: string
+                                price:
+                                  type: string
+                                  nullable: true
+                                price_24h_change:
+                                  type: string
+                                  nullable: true
+                              required:
+                              - denom
+                              - amount
+                              - name
+                              - symbol
+                              - display
+                              - exponent
+                              - coingecko_id
+                              - weight_or_scaling
+                              - percent
+                              - price
+                              - price_24h_change
+                          - type: object
+                            properties:
+                              asset0:
+                                type: object
+                                properties:
+                                  denom:
+                                    type: string
+                                  amount:
+                                    type: string
+                                  name:
+                                    type: string
+                                    nullable: true
+                                  symbol:
+                                    type: string
+                                    nullable: true
+                                  display:
+                                    type: string
+                                    nullable: true
+                                  exponent:
+                                    type: string
+                                    nullable: true
+                                  coingecko_id:
+                                    type: string
+                                    nullable: true
+                                  weight_or_scaling:
+                                    type: string
+                                  percent:
+                                    type: string
+                                  price:
+                                    type: string
+                                    nullable: true
+                                  price_24h_change:
+                                    type: string
+                                    nullable: true
+                                required:
+                                - denom
+                                - amount
+                                - name
+                                - symbol
+                                - display
+                                - exponent
+                                - coingecko_id
+                                - weight_or_scaling
+                                - percent
+                                - price
+                                - price_24h_change
+                              asset1:
+                                type: object
+                                properties:
+                                  denom:
+                                    type: string
+                                  amount:
+                                    type: string
+                                  name:
+                                    type: string
+                                    nullable: true
+                                  symbol:
+                                    type: string
+                                    nullable: true
+                                  display:
+                                    type: string
+                                    nullable: true
+                                  exponent:
+                                    type: string
+                                    nullable: true
+                                  coingecko_id:
+                                    type: string
+                                    nullable: true
+                                  weight_or_scaling:
+                                    type: string
+                                  percent:
+                                    type: string
+                                  price:
+                                    type: string
+                                    nullable: true
+                                  price_24h_change:
+                                    type: string
+                                    nullable: true
+                                required:
+                                - denom
+                                - amount
+                                - name
+                                - symbol
+                                - display
+                                - exponent
+                                - coingecko_id
+                                - weight_or_scaling
+                                - percent
+                                - price
+                                - price_24h_change
+                            required:
+                            - asset0
+                            - asset1
+                        liquidity:
+                          type: number
+                          nullable: true
+                        liquidity_24h_change:
+                          type: number
+                          nullable: true
+                        volume_24h:
+                          type: number
+                          nullable: true
+                        volume_24h_change:
+                          type: number
+                          nullable: true
+                        volume_7d:
+                          type: number
+                          nullable: true
+                        address:
+                          type: string
+                        exponent_at_price_one:
+                          type: string
+                          nullable: true
+                        spread_factor:
+                          type: string
+                          nullable: true
+                        current_sqrt_price:
+                          type: string
+                          nullable: true
+                        tick_spacing:
+                          type: string
+                          nullable: true
+                        current_tick:
+                          type: string
+                          nullable: true
+                        current_tick_liquidity:
+                          type: string
+                          nullable: true
+                        code_id:
+                          type: string
+                          nullable: true
+                        instantiate_msg:
+                          type: string
+                          nullable: true
+                      required:
+                      - main
+                      - type
+                      - pool_id
+                      - swap_fees
+                      - exit_fees
+                      - total_weight_or_scaling
+                      - pool_tokens
+                      - liquidity
+                      - liquidity_24h_change
+                      - volume_24h
+                      - volume_24h_change
+                      - volume_7d
+                      - address
+                required:
+                - pagination
+                - pools
+  /lp/v1/rewards/estimation/{bech32Address}:
     get:
-      tags:
-        - tradingview
-      summary: Get Symbol Info
-      operationId: get_symbol_info
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-      security:
-        - OAuth2PasswordBearer: []
-  /tradingview/v1/history:
-    get:
-      tags:
-        - tradingview
-      summary: Token Price Historical Chart V2
-      operationId: token_price_historical_chart_v2
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getRewardsEstimationForBech32Address
+      tags: []
+      sidebar: users
+      attributes:
+        x-sidebar: users
       parameters:
-        - required: true
-          schema:
-            title: Symbol
-            type: string
-          name: symbol
-          in: query
-        - required: true
-          schema:
-            title: To
-            type: integer
-          name: to
-          in: query
-        - required: true
-          schema:
-            title: Resolution
-            type: string
-          name: resolution
-          in: query
-        - required: true
-          schema:
-            title: From
-            type: integer
-          name: from
-          in: query
+      - schema:
+          type: string
+        required: true
+        name: bech32Address
+        in: path
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: 'Status: 200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - OAuth2PasswordBearer: []
-  /tradingview/v1/streaming:
+                type: object
+                properties:
+                  pools:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        day_usd:
+                          type: number
+                        month_usd:
+                          type: number
+                        year_usd:
+                          type: number
+                      required:
+                      - day_usd
+                      - month_usd
+                      - year_usd
+                  total_day_usd:
+                    type: number
+                  total_month_usd:
+                    type: number
+                  total_year_usd:
+                    type: number
+                required:
+                - pools
+                - total_day_usd
+                - total_month_usd
+                - total_year_usd
+  /rewards/token/{address}/{denom}:
     get:
-      tags:
-        - tradingview
-      summary: Streaming
-      operationId: streaming
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getRewardsEstimationForAddressAndDenom
+      tags: []
+      sidebar: users
+      attributes:
+        x-sidebar: users
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: address
+        in: path
+      - schema:
+          type: string
+        required: true
+        name: denom
+        in: path
       responses:
         '200':
-          description: Successful Response
+          description: 'Status: 200'
           content:
             application/json:
-              schema: {}
-      security:
-        - OAuth2PasswordBearer: []
-components:
-  schemas:
-    Body_token_tradingview_v1_authorize_post:
-      title: Body_token_tradingview_v1_authorize_post
-      required:
-        - login
-        - password
-      type: object
-      properties:
-        login:
-          title: Login
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp:
+                      type: string
+                    cl_amount:
+                      type: string
+                    gamm_amount:
+                      type: string
+                    staking_amount:
+                      type: string
+                  required:
+                  - timestamp
+                  - cl_amount
+                  - gamm_amount
+                  - staking_amount
+  /rewards/token/{address}:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getRewardsEstimationForAddress
+      tags: []
+      sidebar: users
+      attributes:
+        x-sidebar: users
+      parameters:
+      - schema:
           type: string
-        password:
-          title: Password
+        required: true
+        name: address
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  denoms:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - denoms
+  /cl/v1/position/last/id/{positionId}:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getPositionInfo
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
+      parameters:
+      - schema:
           type: string
-        scope:
-          title: Scope
+        required: true
+        name: positionId
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_spread_rewards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        denom:
+                          type: string
+                        amount:
+                          type: string
+                      required:
+                      - denom
+                      - amount
+                  total_incentives_rewards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        denom:
+                          type: string
+                        amount:
+                          type: string
+                      required:
+                      - denom
+                      - amount
+                  total_forfeit_rewards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        denom:
+                          type: string
+                        amount:
+                          type: string
+                      required:
+                      - denom
+                      - amount
+                  principal:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                      address:
+                        type: string
+                      tx_hash:
+                        type: string
+                      block:
+                        type: number
+                      tx_time:
+                        type: string
+                        description: Date in the format YYYY-MM-DD HH:MM:SS
+                      value:
+                        type: number
+                      position:
+                        type: object
+                        properties:
+                          position_id:
+                            type: number
+                          pool_id:
+                            type: number
+                          lower_tick:
+                            type: number
+                          upper_tick:
+                            type: number
+                        required:
+                        - position_id
+                        - pool_id
+                        - lower_tick
+                        - upper_tick
+                      assets:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                            value:
+                              type: number
+                          required:
+                          - denom
+                          - amount
+                          - value
+                    required:
+                    - action
+                    - address
+                    - tx_hash
+                    - block
+                    - tx_time
+                    - value
+                    - position
+                    - assets
+                required:
+                - total_spread_rewards
+                - total_incentives_rewards
+                - total_forfeit_rewards
+                - principal
+  /ibc/v1/source/{source}/destination/{destination}:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getIBcChainStatus
+      summary: Get IBC Chain Status
+      tags: []
+      deprecated: true
+      sidebar: chain
+      attributes:
+        x-sidebar: chain
+      parameters:
+      - schema:
           type: string
-          default: ''
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    ValidationError:
-      title: ValidationError
-      required:
-        - loc
-        - msg
-        - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            type: string
-        msg:
-          title: Message
+        required: true
+        name: source
+        in: path
+      - schema:
           type: string
-        type:
-          title: Error Type
+        required: true
+        name: destination
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    source:
+                      type: string
+                    destination:
+                      type: string
+                    channel_id:
+                      type: string
+                    size_queue:
+                      type: number
+                    duration_minutes:
+                      type: number
+                  required:
+                  - source
+                  - destination
+                  - channel_id
+                  - size_queue
+                  - duration_minutes
+  /pools/liquidity/{pool_id}/over_time:
+    get:
+      operationId: getPoolsLiquidityOverTime
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
+      parameters:
+      - schema:
           type: string
-  securitySchemes:
-    OAuth2PasswordBearer:
-      type: oauth2
-      flows:
-        password:
-          scopes: {}
-          tokenUrl: /tradingview/v1/authorize
-tags:
-  - name: health
-    description: health metrics
-  - name: overview
-    description: Overview metrics
-  - name: ibc
-    description: Returns IBC congestionned routes
-  - name: pairs
-    description: Returns the historical data for pairs
-  - name: pools
-    description: Returns the historical data for pools
-  - name: tokens
-    description: Returns the historical data for tokens
-  - name: liquidity
-    description: Returns the liquidity data
-  - name: volume
-    description: Returns the volume data
-  - name: fees
-    description: Returns the fees data
-  - name: search
-    description: Returns denom, symbol, price native token
-  - name: apr
-    description: Returns APR data for each token for each pool
-  - name: supply
-    description: Returns data related to supply
-  - name: tradingview
-    description: Returns data related to TradingView
+        required: true
+        name: pool_id
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp:
+                      type: string
+                    liquidity_usd:
+                      type: number
+                  required:
+                  - timestamp
+                  - liquidity_usd
+  /pools/depth/{pool_id}/current:
+    get:
+      operationId: getPoolsDepthCurrent
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: pool_id
+        in: path
+      - schema:
+          type: string
+          default: '2'
+          description: Percentage of depth to calculate on both sides
+        required: true
+        name: percent
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  base_sell_depth:
+                    type: object
+                    properties:
+                      token_denom:
+                        type: string
+                      token_amount:
+                        type: string
+                      usd_amount:
+                        type: string
+                      depth:
+                        type: number
+                    required:
+                    - token_denom
+                    - token_amount
+                    - usd_amount
+                    - depth
+                  quote_sell_depth:
+                    type: object
+                    properties:
+                      token_denom:
+                        type: string
+                      token_amount:
+                        type: string
+                      usd_amount:
+                        type: string
+                      depth:
+                        type: number
+                    required:
+                    - token_denom
+                    - token_amount
+                    - usd_amount
+                    - depth
+                required:
+                - base_sell_depth
+                - quote_sell_depth
+  /pools/depth/{pool_id}/over_time:
+    get:
+      operationId: getPoolsDepthOverTime
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: pool_id
+        in: path
+      - schema:
+          type: string
+          enum:
+          - '10'
+          - '5'
+          - '2'
+          - '1'
+          - '0.1'
+        required: true
+        name: percent
+        in: query
+      - schema:
+          type: string
+        required: true
+        name: start_date
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: end_date
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    hour:
+                      type: string
+                      description: Date in the format YYYY-MM-DD HH:MM:SS
+                    base_sell_depth:
+                      type: object
+                      properties:
+                        token_denom:
+                          type: string
+                        token_amount:
+                          type: number
+                        usd_amount:
+                          type: number
+                        depth:
+                          type: number
+                      required:
+                      - token_denom
+                      - token_amount
+                      - usd_amount
+                      - depth
+                    quote_sell_depth:
+                      type: object
+                      properties:
+                        token_denom:
+                          type: string
+                        token_amount:
+                          type: number
+                        usd_amount:
+                          type: number
+                        depth:
+                          type: number
+                      required:
+                      - token_denom
+                      - token_amount
+                      - usd_amount
+                      - depth
+                  required:
+                  - hour
+                  - base_sell_depth
+                  - quote_sell_depth
+  /apr:
+    get:
+      operationId: getApr
+      summary: Get staking APR
+      tags: []
+      sidebar: chain
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: chain
+      parameters:
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: start_date
+        in: query
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: end_date
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 1d
+          - 7d
+          - 30d
+        required: false
+        name: trailing_period
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    labels:
+                      type: string
+                      description: Date in the format YYYY-MM-DD HH:MM:SS
+                    symbol:
+                      type: string
+                    apr:
+                      type: number
+                  required:
+                  - labels
+                  - symbol
+                  - apr
+  /pools_apr:
+    get:
+      operationId: getPoolsApr
+      summary: Get Pools APR
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
+      responses: {}
+  /pools_apr_range:
+    get:
+      operationId: getPoolsAprRange
+      summary: Get Pools APR Range
+      tags: []
+      sidebar: pools
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: pools
+      responses: {}
+  /cl/v1/apr/rewards/{pool}:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getClPoolsPositionApr
+      summary: Get CL Pools Position APR
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: pool
+        in: path
+      - schema:
+          type: string
+        required: true
+        name: lower_tick
+        in: query
+      - schema:
+          type: string
+        required: true
+        name: upper_tick
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  APR:
+                    type: number
+                required:
+                - APR
+  /supply/v1/metrics:
+    get:
+      operationId: getSupplyMetrics
+      tags: []
+      sidebar: chain
+      servers:
+      - url: https://cosmos.numia.xyz
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: chain
+      parameters:
+      - schema:
+          type: string
+          enum:
+          - totalSupply
+          - circulatingSupply
+          - burntSupply
+        required: false
+        name: metric
+        in: query
+      responses: {}
+  /users/portfolio/over_time:
+    get:
+      operationId: getPortfolioOverTime
+      tags: []
+      sidebar: users
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: users
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: address
+        in: query
+      - schema:
+          type: string
+          enum:
+          - 1d
+          - 7d
+          - 1mo
+          - 1y
+          - all
+        required: true
+        name: range
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp:
+                      type: string
+                      description: Date in the format YYYY-MM-DD HH:MM:SS
+                    usd:
+                      type: number
+                  required:
+                  - timestamp
+                  - usd
+  /users/portfolio/current:
+    get:
+      operationId: getPortfolioCurrent
+      tags: []
+      sidebar: users
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: users
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: address
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  usd:
+                    type: number
+                required:
+                - usd
+  /users/limit_orders/history/closed:
+    get:
+      operationId: getClosedLimitOrdersHistory
+      tags: []
+      sidebar: users
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: users
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: address
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    place_timestamp:
+                      type: string
+                      description: Date in the format YYYY-MM-DD HH:MM:SS
+                    place_tx_hash:
+                      type: string
+                    order_denom:
+                      type: string
+                    output_denom:
+                      type: string
+                    quantity:
+                      type: string
+                    claimed_quantity:
+                      type: string
+                    tick_id:
+                      type: string
+                    order_id:
+                      type: string
+                    order_direction:
+                      type: string
+                      enum:
+                      - ask
+                      - bid
+                    price:
+                      type: string
+                    status:
+                      type: string
+                      enum:
+                      - fullyClaimed
+                      - cancelled
+                    contract:
+                      type: string
+                  required:
+                  - place_timestamp
+                  - place_tx_hash
+                  - order_denom
+                  - output_denom
+                  - quantity
+                  - claimed_quantity
+                  - tick_id
+                  - order_id
+                  - order_direction
+                  - price
+                  - status
+                  - contract
+  /pairs/v1/summary:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getPairsSummaryV1
+      deprecated: true
+      description: Only for CoinGecko integration
+      tags: []
+      private: true
+      sidebar: pools
+      attributes:
+        x-private: true
+        x-sidebar: pools
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pool_address:
+                          type: string
+                          description: Pool address
+                        pool_id:
+                          type: string
+                          description: Pool id
+                        base_name:
+                          type: string
+                          description: Name of the base asset
+                        base_symbol:
+                          type: string
+                          description: Symbol of the base asset
+                        base_address:
+                          type: string
+                          description: Denom of the base asset
+                        quote_name:
+                          type: string
+                          description: Name of the quote asset
+                        quote_symbol:
+                          type: string
+                          description: Symbol of the quote asset
+                        quote_address:
+                          type: string
+                          description: Denom of the quote asset
+                        price:
+                          type: number
+                          description: Price of the pair inside the pool
+                        base_volume_24h:
+                          type: number
+                          description: Total amount of base asset swapped in the pool in the last 24 hours
+                        quote_volume_24h:
+                          type: number
+                          description: Total amount of quote asset swapped in the pool in the last 24
+                            hours
+                        volume_24h:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 24 hours
+                        volume_7d:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 7 days
+                        liquidity:
+                          type: number
+                          description: Total value locked in USD in the pool
+                        liquidity_atom:
+                          type: number
+                          description: Total value locked in ATOM in the pool
+                      required:
+                      - pool_address
+                      - pool_id
+                      - base_name
+                      - base_symbol
+                      - base_address
+                      - quote_name
+                      - quote_symbol
+                      - quote_address
+                      - price
+                      - base_volume_24h
+                      - quote_volume_24h
+                      - volume_24h
+                      - volume_7d
+                      - liquidity
+                      - liquidity_atom
+                  last_update_at:
+                    type: number
+                required:
+                - data
+                - last_update_at
+  /pairs/v2/summary:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getPairsSummaryV2
+      tags: []
+      sidebar: pools
+      attributes:
+        x-sidebar: pools
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pool_address:
+                          type: string
+                          description: Pool address
+                        pool_id:
+                          type: string
+                          description: Pool id
+                        base_name:
+                          type: string
+                          description: Name of the base asset
+                        base_symbol:
+                          type: string
+                          description: Symbol of the base asset
+                        base_address:
+                          type: string
+                          description: Denom of the base asset
+                        quote_name:
+                          type: string
+                          description: Name of the quote asset
+                        quote_symbol:
+                          type: string
+                          description: Symbol of the quote asset
+                        quote_address:
+                          type: string
+                          description: Denom of the quote asset
+                        price:
+                          type: number
+                          description: Price of the pair inside the pool
+                        base_volume_24h:
+                          type: number
+                          description: Total amount of base asset swapped in the pool in the last 24 hours
+                        quote_volume_24h:
+                          type: number
+                          description: Total amount of quote asset swapped in the pool in the last 24
+                            hours
+                        volume_24h:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 24 hours
+                        volume_7d:
+                          type: number
+                          description: Total amount of USD swapped in the pool in the last 7 days
+                        liquidity:
+                          type: number
+                          description: Total value locked in USD in the pool
+                        liquidity_atom:
+                          type: number
+                          description: Total value locked in ATOM in the pool
+                      required:
+                      - pool_address
+                      - pool_id
+                      - base_name
+                      - base_symbol
+                      - base_address
+                      - quote_name
+                      - quote_symbol
+                      - quote_address
+                      - price
+                      - base_volume_24h
+                      - quote_volume_24h
+                      - volume_24h
+                      - volume_7d
+                      - liquidity
+                      - liquidity_atom
+                  last_update_at:
+                    type: number
+                required:
+                - data
+                - last_update_at
+  /tokenomics/chain_revenue:
+    get:
+      operationId: getChainRevenue
+      tags: []
+      sidebar: chain
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: chain
+      parameters:
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: start_date
+        in: query
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: end_date
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    labels:
+                      type: string
+                    source:
+                      type: string
+                    amount:
+                      type: number
+                  required:
+                  - labels
+                  - source
+                  - amount
+  /trading_metrics:
+    get:
+      operationId: getTradingMetrics
+      tags: []
+      sidebar: chain
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-sidebar: chain
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assets_in_chain:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      growth_rate_seconds:
+                        type: number
+                  traders_last_30_days:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      growth_rate_seconds:
+                        type: number
+                  cumulative_volume:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      growth_rate_seconds:
+                        type: number
+                  volume_24h:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      growth_rate_seconds:
+                        type: number
+                required:
+                - assets_in_chain
+                - traders_last_30_days
+                - cumulative_volume
+                - volume_24h
+  /external/defillama/chain_fees_and_revenue:
+    get:
+      operationId: getDefillamaOsmosisChainFeesAndRevenue
+      tags: []
+      private: true
+      sidebar: chain
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-private: true
+        x-sidebar: chain
+      parameters:
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: start_date
+        in: query
+      - schema:
+          type: string
+          description: Date in the format YYYY-MM-DD HH:MM:SS
+        required: false
+        name: end_date
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp:
+                      type: string
+                      nullable: true
+                    dailyFees:
+                      type: number
+                      nullable: true
+                    totalFees:
+                      type: number
+                      nullable: true
+                    dailyRevenue:
+                      type: number
+                      nullable: true
+                    totalRevenue:
+                      type: number
+                      nullable: true
+                  required:
+                  - timestamp
+                  - dailyFees
+                  - totalFees
+                  - dailyRevenue
+                  - totalRevenue
+  /external/coingecko/native_factory_assets_supply:
+    get:
+      operationId: getCoingeckoOsmosisNativeFactoryAssetsSupply
+      tags: []
+      private: true
+      sidebar: tokens
+      servers:
+      - url: https://osmosis.numia.xyz
+      attributes:
+        x-private: true
+        x-sidebar: tokens
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: asset
+        in: query
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lastUpdated:
+                    type: string
+                  denom:
+                    type: string
+                  symbol:
+                    type: string
+                  circulatingSupply:
+                    type: number
+                  totalSupply:
+                    type: number
+                  maxSupply:
+                    type: number
+                    nullable: true
+                required:
+                - lastUpdated
+                - denom
+                - symbol
+                - circulatingSupply
+                - totalSupply
+                - maxSupply
+  /earn/strategies:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getEarnStrategies
+      tags:
+      - earn
+      sidebar: earn
+      attributes:
+        x-sidebar: earn
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Identifier of the strategy e.g. smart contract address for the vault
+                    type:
+                      type: string
+                      enum:
+                      - osmosis-staking
+                      - liquid-osmosis-staking
+                      - levana-pool-lp
+                      - levana-pool-xlp
+                      - umee-lending
+                      - mars-lending
+                      - ondo
+                      description: Internal type, to know how to fetch the metrics
+                    name:
+                      type: string
+                      description: Name of the strategy e.g. 'ATOM Pro M+ Vault'
+                    provider:
+                      type: string
+                      description: Provider of the strategy e.g. Osmosis, Quasar, Levana etc.
+                    category:
+                      type: string
+                      description: Category of the strategy e.g. 'Staking', 'Lending' etc.
+                    link:
+                      type: string
+                      description: Link to the strategy on the provider site
+                    tvl:
+                      type: object
+                      properties:
+                        tvlUsd:
+                          type: string
+                        maxTvlUsd:
+                          type: string
+                        assets:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              coinMinimalDenom:
+                                type: string
+                              tvl:
+                                type: string
+                              maxTvl:
+                                type: string
+                            required:
+                            - coinMinimalDenom
+                            - tvl
+                      required:
+                      - tvlUsd
+                      - assets
+                    apr:
+                      type: number
+                    tokenDenoms:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          denom:
+                            type: string
+                          name:
+                            type: string
+                          symbol:
+                            type: string
+                      description: List of tokens of the underlying balance
+                    rewardDenoms:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          denom:
+                            type: string
+                          name:
+                            type: string
+                          symbol:
+                            type: string
+                      description: Denoms that are rewarded by the strategy
+                    lockDuration:
+                      type: number
+                  required:
+                  - id
+                  - type
+                  - name
+                  - provider
+                  - category
+                  - link
+                  - tvl
+                  - apr
+                  - tokenDenoms
+                  - rewardDenoms
+  /earn/strategies/{strategy}/balance/{address}:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getBalancesForEarnStrategies
+      tags:
+      - earn
+      sidebar: earn
+      attributes:
+        x-sidebar: earn
+      parameters:
+      - schema:
+          type: string
+          description: Identifier of the strategy e.g. smart contract address for the vault
+        required: true
+        name: strategy
+        in: path
+      - schema:
+          type: string
+          description: User Address e.g. 'osmo1...'
+        required: true
+        name: address
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategy:
+                    type: string
+                    description: References the strategy.id field. which is e.g. the smart contract for
+                      the vault
+                  balance:
+                    type: object
+                    properties:
+                      amount:
+                        type: string
+                        description: Total balance of the token representing the share or position
+                      usd:
+                        type: number
+                        description: Total USD value of the user balance
+                    required:
+                    - amount
+                    - usd
+                  token:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      symbol:
+                        type: string
+                      decimals:
+                        type: number
+                      total_supply:
+                        type: string
+                    required:
+                    - total_supply
+                  unclaimed_rewards:
+                    type: object
+                    properties:
+                      total_usd:
+                        type: number
+                    required:
+                    - total_usd
+                required:
+                - strategy
+                - balance
+                - unclaimed_rewards
+  /earn/strategies/{strategy}/apr:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getAprForEarnStrategies
+      tags:
+      - earn
+      sidebar: earn
+      attributes:
+        x-sidebar: earn
+      parameters:
+      - schema:
+          type: string
+          description: Identifier of the strategy e.g. smart contract address for the vault
+        required: true
+        name: strategy
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apr:
+                    type: number
+                required:
+                - apr
+  /earn/strategies/{strategy}/tvl:
+    get:
+      servers:
+      - url: https://osmosis.numia.xyz
+      operationId: getTvlForEarnStrategies
+      tags:
+      - earn
+      sidebar: earn
+      attributes:
+        x-sidebar: earn
+      parameters:
+      - schema:
+          type: string
+          description: Identifier of the strategy e.g. smart contract address for the vault
+        required: true
+        name: strategy
+        in: path
+      responses:
+        '200':
+          description: 'Status: 200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tvlUsd:
+                    type: string
+                  maxTvlUsd:
+                    type: string
+                  assets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        coinMinimalDenom:
+                          type: string
+                        tvl:
+                          type: string
+                        maxTvl:
+                          type: string
+                      required:
+                      - coinMinimalDenom
+                      - tvl
+                required:
+                - tvlUsd
+                - assets
