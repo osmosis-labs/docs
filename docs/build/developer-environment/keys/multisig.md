@@ -75,7 +75,7 @@ osmosisd tx bank send \
     --chain-id=osmosis-1 \
     --gas=auto \
     --fees=1000000uosmo \
-    --broadcast-mode=block
+    --broadcast-mode=sync
 ```
 
 ### Step 2: Create the multisig transaction
@@ -259,5 +259,5 @@ The TX is now signed:
 ```sh
 osmosisd tx broadcast signedTx.json \
     --chain-id=osmosis-1 \
-    --broadcast-mode=block
+    --broadcast-mode=sync
 ```
