@@ -4,9 +4,9 @@
 
 Lockup module provides an interface for users to lock tokens (also known as bonding) into the module to get incentives.
 
-After tokens have been added to a specific pool and turned into LP shares through the GAMM module, users can then lock these LP shares with a specific duration in order to begin earing rewards.
+The module is denom-agnostic: `MsgLockTokens` accepts any token. The most common case is GAMM LP shares (`gamm/pool/N` denoms), which a user receives after adding liquidity to a pool through the GAMM module and can then lock with a specific duration in order to begin earning rewards. The module also issues synthetic lock denoms used by superfluid and delegated staking.
 
-To unlock these LP shares, users must trigger the unlock timer and wait for the unlock period that was set initially to be completed. After the unlock period is over, users can turn LP shares back into their respective share of tokens.
+To unlock locked tokens, users must trigger the unlock timer and wait for the unlock period that was set initially to be completed. After the unlock period is over, the tokens are returned to the owner.
 
 This module provides interfaces for other modules to iterate the locks efficiently and grpc query to check the status of locked coins.
 
@@ -210,7 +210,7 @@ already finished, we manage a separate time basis queue at
 
 ``` {.go}
 type MsgLockTokens struct {
- Owner    sdk.AccAddress
+ Owner    string
  Duration time.Duration
  Coins    sdk.Coins
 }
@@ -264,6 +264,59 @@ type MsgBeginUnlocking struct {
 
 Note: If another module needs past `PeriodLock` item, it can log the
 details themselves using the hooks.
+
+### Extend Lockup
+
+`MsgExtendLockup` extends the duration of an existing, not-yet-unlocking lock to a longer duration.
+
+``` {.go}
+type MsgExtendLockup struct {
+ Owner    string
+ ID       uint64
+ Duration time.Duration
+}
+```
+
+**State modifications:**
+
+- Check the `PeriodLock` with `ID` is owned by `Owner` and has not started unlocking
+- Update the lock's `Duration` to the new (longer) value
+- Update the duration-based reference queues for the lock
+
+### Force Unlock
+
+`MsgForceUnlock` unlocks a lock without the time check. The sender must be in the `ForceUnlockAllowedAddresses` parameter allowlist.
+
+``` {.go}
+type MsgForceUnlock struct {
+ Owner string
+ ID    uint64
+ Coins sdk.Coins
+}
+```
+
+**State modifications:**
+
+- Verify the sender is in the `ForceUnlockAllowedAddresses` allowlist
+- Unlock the `PeriodLock` with `ID` (full amount if `Coins` is empty, otherwise the specified `Coins`)
+- Transfer the unlocked tokens from the lockup `ModuleAccount` to the `Owner`
+
+### Set Reward Receiver Address
+
+`MsgSetRewardReceiverAddress` sets the address that receives lockup incentive rewards for a given lock, allowing rewards to be redirected away from the lock owner.
+
+``` {.go}
+type MsgSetRewardReceiverAddress struct {
+ Owner          string
+ LockID         uint64
+ RewardReceiver string
+}
+```
+
+**State modifications:**
+
+- Check the `PeriodLock` with `LockID` is owned by `Owner`
+- Set the lock's reward receiver address to `RewardReceiver`
 
 ## Events
 
@@ -323,8 +376,8 @@ The lockup module emits the following events:
 |  transfer\[\]    | recipient         | `{owner}`          |
 |  transfer\[\]    | sender            | `{moduleAccount}`  |
 |  transfer\[\]    | amount            | `{unlockAmount}`   |
-|  unlock\[\]      | period\_lock\_id  | `{owner}`          |
-|  unlock\[\]      | owner             | `{lockID}`         |
+|  unlock\[\]      | period\_lock\_id  | `{periodLockID}`   |
+|  unlock\[\]      | owner             | `{owner}`          |
 |  unlock\[\]      | duration          | `{lockDuration}`   |
 |  unlock\[\]      | unlock\_time      | `{unlockTime}`     |
 |  unlock\_tokens  | owner             | `{owner}`          |
@@ -432,11 +485,9 @@ make following actions.
 
 The lockup module contains the following parameters:
 
-| Key                    | Type            | Example |
-| ---------------------- | --------------- | ------- |
-
-Note: Currently no parameters are set for `lockup` module, we will need
-to move lockable durations from incentives module to lockup module.
+| Key                              | Type       | Description                                                                                              |
+| -------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------- |
+| `force_unlock_allowed_addresses` | `[]string` | Governance-managed allowlist of addresses permitted to call `MsgForceUnlock` (unlock without time check). |
 
 ## Endblocker
 
@@ -468,7 +519,7 @@ reference queues are removed.
 
 ### lock-tokens
 
-Bond tokens in a LP for a set duration
+Lock tokens (typically LP shares, or any other lockable denom) for a set duration
 
 ```sh
 osmosisd tx lockup lock-tokens [tokens] --duration --from --chain-id
@@ -565,8 +616,18 @@ service Query {
 
  // Returns lock records by address, timestamp, denom
  rpc AccountLockedPastTimeDenom(AccountLockedPastTimeDenomRequest) returns (AccountLockedPastTimeDenomResponse);
+ // Returns total locked per denom with longer past given time
+ rpc LockedDenom(LockedDenomRequest) returns (LockedDenomResponse);
  // Returns lock record by id
  rpc LockedByID(LockedRequest) returns (LockedResponse);
+ // Returns lock record by id
+ rpc LockRewardReceiver(LockRewardReceiverRequest) returns (LockRewardReceiverResponse);
+ // Returns next lock ID
+ rpc NextLockID(NextLockIDRequest) returns (NextLockIDResponse);
+ // Returns synthetic lockups by native lockup id (Deprecated: use SyntheticLockupByLockupID instead)
+ rpc SyntheticLockupsByLockupID(SyntheticLockupsByLockupIDRequest) returns (SyntheticLockupsByLockupIDResponse);
+ // Returns synthetic lockup by native lockup id
+ rpc SyntheticLockupByLockupID(SyntheticLockupByLockupIDRequest) returns (SyntheticLockupByLockupIDResponse);
 
  // Returns account locked records with longer duration
  rpc AccountLockedLongerDuration(AccountLockedLongerDurationRequest) returns (AccountLockedLongerDurationResponse);
@@ -577,6 +638,8 @@ service Query {
 
  // Returns account locked records with a specific duration
  rpc AccountLockedDuration(AccountLockedDurationRequest) returns (AccountLockedDurationResponse);
+ // Params returns lockup params
+ rpc Params(QueryParamsRequest) returns (QueryParamsResponse);
 }
 ```
 
@@ -1137,10 +1200,11 @@ osmosisd tx lockup lock-tokens 100stake --duration="5s" --from=validator --chain
 # begin unlock tokens, NOTE: add more gas when unlocking more than two locks in a same command
 osmosisd tx lockup begin-unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
 
-# unlock tokens, NOTE: add more gas when unlocking more than two locks in a same command
+# DEPRECATED (retained only for indexing; use begin-unlock-tokens instead). Unlocking now completes
+# automatically at the EndBlocker once the lock duration elapses after begin-unlock.
 osmosisd tx lockup unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
 
-# unlock specific period lock
+# DEPRECATED (retained only for indexing; use begin-unlock-by-id <id> instead).
 osmosisd tx lockup unlock-by-id 1 --from=validator --chain-id=testing --keyring-backend=test --yes
 
 # account balance

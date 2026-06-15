@@ -15,7 +15,7 @@ The ``GAMM`` module (**G**eneralized **A**utomated **M**arket **M**aker) provide
 
 The `x/gamm` module implements an AMM using:
 - Balancer style pools with varying amounts and weights of assets in pools.
-- Stableswap pools have liquidity centered around a given spot price. See [here](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/pool-models/stableswap/README.md) for the spec of the Osmosis implementation.
+- Stableswap pools have liquidity centered around a given spot price. See [here](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/gamm/pool-models/stableswap/README.md) for the spec of the Osmosis implementation.
 
 Here we will explain basic GAMM concepts and give an overview of how GAMM module's code is organized to support both type of pools.
 
@@ -36,7 +36,7 @@ us safe when it comes to the malicious creation of unneeded pools.
 
 #### Joining Pool
 
-When joining a pool without swapping - with `JoinPool`, a user can provide the maximum amount of tokens `TokenInMaxs'
+When joining a pool without swapping - with `JoinPool`, a user can provide the maximum amount of tokens `TokenInMaxs`
 they're willing to deposit. This argument must contain all the denominations from the pool or no tokens at all, 
 otherwise, the tx will be aborted.
 If `TokenInMaxs` contains no tokens, the calculations are done based on the user's balance as the only constraint.
@@ -119,13 +119,13 @@ the following formula:
 
 `(tokenBalanceIn / tokenWeightIn) / (tokenBalanceOut / tokenWeightOut)`
 
-[Spot price](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/keeper/swap.go)
+[Spot price](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/gamm/keeper/swap.go)
 
 #### Multi-Hop
 
 The multi-hop logic is handled via `x/poolmanager` module.
 Please see for details:
-- https://github.com/osmosis-labs/osmosis/blob/main/x/poolmanager/README.md
+- https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/poolmanager/README.md
 
 ## Weights
 
@@ -165,7 +165,7 @@ Pools have the following parameters:
 |  FutureGovernor            | \*FutureGovernor            |
 |  Weights                   | \*Weights                   |
 |  SmoothWeightChangeParams  | \*SmoothWeightChangeParams  |
-|  PoolCreationFee           | sdk.Coins                   |
+|  PoolCreationFee (deprecated, see x/poolmanager `pool_creation_fee`) | sdk.Coins                   |
 
 1. **SwapFee** -
     The swap fee is the cut of all swaps that goes to the Liquidity Providers (LPs) for a pool. Suppose a pool has a swap fee `s`. Then if a user wants to swap `T` tokens in the pool, `sT` tokens go to the LP's, and then `(1 - s)T` tokens are swapped according to the AMM swap function.
@@ -182,7 +182,7 @@ Pools have the following parameters:
     This allows pool governance to smoothly change the weights of the assets it holds in the pool. So it can slowly move from a 2:1 ratio, to a 1:1 ratio.
     Currently, smooth weight changes are implemented as a linear change in weight ratios over a given duration of time. So weights changed from 4:1 to 2:2 over 2 days, then at day 1 of the change, the weights would be 3:1.5, and at day 2 its 2:2, and will remain at these weight ratios.
 
-The pool creation fee is currently set to `20000000 uusdc` (20 USDC). Note that this fee is now a parameter of the `poolmanager` module (`pool_creation_fee`), which is the authoritative module for pool creation across all pool types; the legacy `gamm` `PoolCreationFee` parameter is obsolete.
+The pool creation fee is governed by the `poolmanager` module's `pool_creation_fee` parameter, which is authoritative for pool creation across all pool types. The legacy `gamm` `PoolCreationFee` parameter is obsolete. Query the current value with `osmosisd query poolmanager params` rather than relying on a hardcoded figure.
 
 [comment]: `<>` (TODO Add better description of how the weights affect things)
 
@@ -197,7 +197,7 @@ Migration records are used to track a canonical link between a single balancer p
 
 The `x/gamm` module supports the following message types:
 
-Message definitions live in [`proto/osmosis/gamm/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/v1beta1/tx.proto), with `MsgCreateBalancerPool` in [`proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto).
+Message definitions live in [`proto/osmosis/gamm/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/gamm/v1beta1/tx.proto), with `MsgCreateBalancerPool` in [`proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto).
 
 ### MsgCreateBalancerPool
 
@@ -229,15 +229,15 @@ in `x/poolmanager` instead.
 
 Joins a pool by supplying a single asset; the module internally swaps part of it to match the pool's weights.
 
-#### MsgJoinSwapShareAmountOut
+### MsgJoinSwapShareAmountOut
 
 Joins a pool with a single asset such that the pool mints an exact number of shares to the joiner.
 
-#### MsgExitSwapShareAmountIn
+### MsgExitSwapShareAmountIn
 
 Burns an exact number of pool shares and withdraws the proceeds entirely in a single chosen asset.
 
-#### MsgExitSwapExternAmountOut
+### MsgExitSwapExternAmountOut
 
 Withdraws an exact amount of a single asset from a pool, burning as many shares as required.
 
@@ -286,7 +286,7 @@ The configuration json file contains the following parameters:
 </details>
 
 :::warning
-There is now a 20 USDC fee for creating pools.
+Creating a pool requires paying the pool creation fee. This fee is set by the `poolmanager` module's `pool_creation_fee` parameter (not `gamm`); query the current value with `osmosisd query poolmanager params`.
 :::
 
 ### Join pool
@@ -507,17 +507,25 @@ Query the number of active pools.
 osmosisd query gamm num-pools
 ```
 
-## Pool
+#### Example
+
+Query the number of active pools.
+
+```sh
+osmosisd query gamm num-pools
+```
+
+### Pool
 
 Query the parameter and assets of a specific pool.
 
-### Usage
+#### Usage
 
 ```sh
 osmosisd query gamm pool <poolID> [flags]
 ```
 
-### Example
+#### Example
 
 Query parameters and assets from pool 1.
 
@@ -566,6 +574,30 @@ osmosisd query gamm pool-params 1
 Query parameters and assets of all active pools.
 
 #### Usage
+
+```sh
+osmosisd query gamm pools
+```
+
+#### Example
+
+Query parameters and assets of all active pools.
+
+```sh
+osmosisd query gamm pools
+```
+
+### Spot Price
+
+Query the spot price of a pool. Note that this command is legacy; the canonical spot-price query lives in `x/poolmanager`.
+
+#### Usage
+
+```sh
+osmosisd query gamm spot-price <poolID> <tokenInDenom> <tokenOutDenom> [flags]
+```
+
+#### Example
 
 Query the price of OSMO based on the price of ATOM in pool 1.
 
@@ -630,11 +662,11 @@ It consists of the following attributes:
 * `sdk.AttributeKeyModule` - "module"
   * The value is the module's name - "gamm".
 * `sdk.AttributeKeySender`
-  * The value is the address of the sender who created the swap message.
+  * The value is the address of the sender who joined the pool.
 * `types.AttributeKeyPoolId`
-  * The value is the pool id of the pool where swap occurs.
+  * The value is the pool id of the pool that was joined.
 * `types.AttributeKeyTokensIn`
-  * The value is the string representation of the tokens being swapped in.
+  * The value is the string representation of the tokens deposited into the pool.
 
 ### `types.TypeEvtPoolExited`
 
@@ -646,11 +678,11 @@ It consists of the following attributes:
 * `sdk.AttributeKeyModule` - "module"
   * The value is the module's name - "gamm".
 * `sdk.AttributeKeySender`
-  * The value is the address of the sender who created the swap message.
+  * The value is the address of the sender who exited the pool.
 * `types.AttributeKeyPoolId`
-  * The value is the pool id of the pool where swap occurs.
+  * The value is the pool id of the pool that was exited.
 * `types.AttributeKeyTokensOut`
-  * The value is the string representation of the tokens being swapped out.
+  * The value is the string representation of the tokens withdrawn from the pool.
 
 ### `types.TypeEvtPoolCreated`
 

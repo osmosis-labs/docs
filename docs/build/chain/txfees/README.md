@@ -3,7 +3,7 @@
 The txfees modules allows nodes to easily support many tokens for usage as txfees, while letting node operators only specify their tx fee parameters for a single "base" asset.
 This is done by having this module maintain an allow-list of token denoms which can be used as tx fees, each with some associated metadata.
 Then this metadata is used in tandem with a "Spot Price Calculator" provided to the module, to convert the provided tx fees into their equivalent value in the base denomination.
-Currently the only supported metadata & spot price calculator is using a GAMM pool ID & the GAMM keeper.
+Each fee token is associated with a pool ID, and the spot price is calculated through the poolmanager's `RouteCalculateSpotPrice`, which abstracts over the underlying pool type rather than depending on the GAMM keeper directly.
 
 ## State Changes
 
@@ -13,22 +13,21 @@ Currently the only supported metadata & spot price calculator is using a GAMM po
         not the base denom will be collected in a separate module
         account to be batched and swapped into the base denom at the end
         of each epoch.
-* Adds a new SDK message for creating governance proposals for adding new TxFee denoms.
+* Fee tokens are added or removed with the `MsgSetFeeTokens` message, which is gated to the addresses in the `WhitelistedFeeTokenSetters` parameter.
 
 ## Local Mempool Filters Added
 
 * If you specify a min-tx-fee in the $BASEDENOM then
   * Your node will allow any tx w/ tx fee in the whitelist of fees, and a sufficient osmo-equivalent price to enter your mempool
   * The osmo-equivalent price for determining sufficiency is rechecked after every block. (During the mempools RecheckTx)
-    * TODO: further consider if we want to take this tradeoff. Allows someone who manipulates price for one block to flush txs using that asset as fee from most of the networks' mempools.
+    * This rechecking is a deliberate tradeoff: it allows someone who manipulates price for one block to flush txs using that asset as fee from most of the networks' mempools.
     * The simple alternative is only check fee equivalency at a txs entry into the mempool, which allows someone to manipulate price down to have many txs enter the chain at low cost.
-    * Another alternative is to use TWAP instead of Spot Price once it is available onchain
     * The former concern isn't very worrisome as long as some nodes have 0 min tx fees.
 * A separate min-gas-fee can be set on every node for arbitrage txs. Methods of detecting an arb tx atm
   * does start token of a swap = final token of swap (definitionally correct)
   * does it have multiple swap messages, with different tx ins. If so, we assume its an arb.
     * This has false positives, but is intended to avoid the obvious solution of splitting an arb into multiple messages.
-  * We record all denoms seen across all swaps, and see if any duplicates. (TODO)
+  * We record all denoms seen across all swaps, and see if any duplicates.
   * Contains both JoinPool and ExitPool messages in one tx.
     * Has some false positives.
   * These false positives seem like they primarily will get hit during batching of many distinct operations, not really in one atomic action.

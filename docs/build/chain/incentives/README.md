@@ -30,7 +30,7 @@ There are two kinds of `gauges`, perpetual and non-perpetual ones.
 The purpose of `incentives` module is to provide incentives to the users
 who lock specific token for specific period of time.
 
-Locked tokens can be of any denomination, including LP tokens (gamm/pool/x), IBC tokens (tokens sent through IBC such as ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2), and native tokens (such as ATOM or LUNA).
+Locked tokens can be of any denomination, including LP tokens (gamm/pool/x), IBC tokens (tokens sent through IBC such as ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2), and native tokens (such as uosmo).
 
 The incentive amount is entered by the gauge creator. Rewards for a given pool of locked up tokens are pooled into a gauge until the disbursement time. At the disbursement time, they are distributed pro-rata (proportionally) to members of the pool.
 
@@ -74,10 +74,13 @@ message QueryCondition {
 
 message Gauge {
   uint64 id = 1; // unique ID of a Gauge
-  QueryCondition distribute_to = 2; // distribute condition of a lock which meets one of these conditions
-  repeated cosmos.base.v1beta1.Coin coins = 3; // can distribute multiple coins
-  google.protobuf.Timestamp start_time = 4; // condition for lock start time, not valid if unset value
-  uint64 num_epochs_paid_over = 5; // number of epochs distribution will be done
+  bool is_perpetual = 2; // flag to show if it's a perpetual or non-perpetual gauge
+  QueryCondition distribute_to = 3; // distribute condition of a lock which meets one of these conditions
+  repeated cosmos.base.v1beta1.Coin coins = 4; // can distribute multiple coins
+  google.protobuf.Timestamp start_time = 5; // condition for lock start time, not valid if unset value
+  uint64 num_epochs_paid_over = 6; // number of epochs distribution will be done
+  uint64 filled_epochs = 7; // number of epochs distribution has been completed already
+  repeated cosmos.base.v1beta1.Coin distributed_coins = 8; // coins that have been distributed already
 }
 ```
 
@@ -130,11 +133,13 @@ message GenesisState {
 
 ```go
 type MsgCreateGauge struct {
- Owner             sdk.AccAddress
+  IsPerpetual       bool // perpetual gauge flag (set by the --perpetual flag)
+  Owner             sdk.AccAddress
   DistributeTo      QueryCondition
-  Rewards           sdk.Coins
+  Coins             sdk.Coins
   StartTime         time.Time // start time to start distribution
   NumEpochsPaidOver uint64 // number of epochs distribution will be done
+  PoolId            uint64 // pool the gauge is associated with (NoLock gauges)
 }
 ```
 
@@ -164,6 +169,30 @@ type MsgAddToGauge struct {
 - Modify the `Gauge` record by adding `msg.Rewards`
 - Transfer the tokens from the `Owner` to incentives `ModuleAccount`.
 
+### Create Group
+
+`MsgCreateGroup` can be submitted by any account to create a `Group` that
+distributes rewards across a set of pools. The group is 1:1 mapped to a group
+gauge that allocates rewards dynamically across the internal gauges of its
+member pools based on a volume splitting policy. Only perpetual pool gauges can
+be associated with a group, and the group must contain at least two pools.
+
+```go
+type MsgCreateGroup struct {
+  Coins             sdk.Coins
+  NumEpochsPaidOver uint64 // number of epochs distribution will be done; 0 means perpetual
+  Owner             sdk.AccAddress
+  PoolIds           []uint64 // pools the group is comprised of
+}
+```
+
+**State modifications:**
+
+- Create the `Group` and its 1:1 group `Gauge`
+- For each `PoolId`, use the pool's main internal gauge to create the gauge records associated with the `Group`
+- Sync the group's weights, failing creation if any pool is invalid or has no associated volume
+- Charge the group creation fee and transfer the tokens from the `Owner` to incentives `ModuleAccount`
+
 ## Transactions
 
 ### create-gauge
@@ -177,7 +206,7 @@ osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
 **Example 1**
 
 I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 14 days. [this is currently the only valid bonding period]
-I want to reward 100 AKT to this pool over 2 days (2 epochs). (50 rewarded on each day)
+I want to reward 10000 base units of ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 to this pool over 2 days (2 epochs). (5000 rewarded on each day)
 I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
 
 ```bash
@@ -239,8 +268,8 @@ The incentives module emits the following events:
 | Type         | Attribute Key | Attribute Value |
 | ------------ | ------------- | --------------- |
 | add_to_gauge | gauge_id      | `{gaugeID}`       |
-| create_gauge | rewards       | `{rewards}`       |
-| message      | action        | create_gauge    |
+| add_to_gauge | rewards       | `{rewards}`       |
+| message      | action        | add_to_gauge    |
 | message      | sender        | `{owner}`         |
 | transfer     | recipient     | `{moduleAccount}` |
 | transfer     | sender        | `{owner}`         |

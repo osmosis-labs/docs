@@ -404,8 +404,8 @@ type MsgCreatePosition struct {
  UpperTick       int64
  TokenDesired0   types.Coin
  TokenDesired1   types.Coin
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -417,10 +417,10 @@ create the liquidityCreated number of shares in the given range.
 ```go
 type MsgCreatePositionResponse struct {
  PositionId  uint64
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
  JoinTime time.Time
- LiquidityCreated sdk.Dec
+ LiquidityCreated osmomath.Dec
 
 }
 ```
@@ -444,7 +444,7 @@ associated with the position are still retained until a user claims them manuall
 type MsgWithdrawPosition struct {
  PositionId      uint64
  Sender          string
- LiquidityAmount sdk.Dec
+ LiquidityAmount osmomath.Dec
 }
 ```
 
@@ -455,8 +455,8 @@ for the provided share liquidity amount.
 
 ```go
 type MsgWithdrawPositionResponse struct {
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
 }
 ```
 
@@ -468,7 +468,7 @@ in the `"Liquidity Provision"` section of this document.
 This message is responsible for creating a concentrated-liquidity pool.
 The RPC is registered on the `x/concentrated-liquidity` module's
 pool-creation message service (in the
-[`model` package](https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity/model)),
+[`model` package](https://github.com/osmosis-labs/osmosis/tree/v31.0.1/x/concentrated-liquidity/model)),
 not on `x/poolmanager`'s `Msg` service. Its handler delegates to the
 `x/poolmanager` keeper for pool-id allocation and swap-route registration.
 
@@ -478,7 +478,7 @@ type MsgCreateConcentratedPool struct {
  Denom0                    string
  Denom1                    string
  TickSpacing               uint64
- SpreadFactor                   sdk.Dec
+ SpreadFactor                   osmomath.Dec
 }
 ```
 
@@ -530,10 +530,10 @@ the original join time so charging is preserved.
 type MsgAddToPosition struct {
  PositionId     uint64
  Sender         string
- Amount0        sdk.Int
- Amount1        sdk.Int
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ Amount0        osmomath.Int
+ Amount1        osmomath.Int
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -569,7 +569,7 @@ type MsgTransferPositions struct {
 
 :::caution Not in the active Msg service
 The `MsgFungifyChargedPositions` message type is defined in
-[`tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/concentratedliquidity/v1beta1/tx.proto)
+[`tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/concentratedliquidity/v1beta1/tx.proto)
 but is not currently wired into the module's Msg service, so it cannot be
 submitted onchain. The description below documents the intended
 semantics for the type as it exists in proto.
@@ -676,7 +676,7 @@ and token1 as a result the one that had higher liquidity will end up smaller
 than originally given by the user.
 
 Note that the liquidity used here does not represent an amount of a specific
-token, but the liquidity of the pool itself, represented in `sdk.Dec`.
+token, but the liquidity of the pool itself, represented in `osmomath.Dec`.
 
 Using the provided liquidity, now we calculate the delta amount of both token0
 and token1, using the following equations, where L is the liquidity calculated above:
@@ -695,9 +695,6 @@ Given the parameters needed for calculating the tokens needed for creating a
 position for a given tick, the API in the keeper layer would look like the following:
 
 ```go
-ctx sdk.Context, poolId uint64, owner sdk.AccAddress, amount0Desired,
-amount1Desired, amount0Min, amount1Min sdk.Int,
-lowerTick, upperTick int64, frozenUntil time.Time
 func createPosition(
     ctx sdk.Context,
     poolId uint64,
@@ -705,9 +702,9 @@ func createPosition(
     amount0Desired,
     amount1Desired,
     amount0Min,
-    amount1Min sdk.Int
+    amount1Min osmomath.Int,
     lowerTick,
-    upperTick int64) (amount0, amount1 sdk.Int, sdk.Dec, error) {
+    upperTick int64) (amount0, amount1 osmomath.Int, liquidity osmomath.Dec, err error) {
         ...
 }
 ```
@@ -730,9 +727,8 @@ func (k Keeper) withdrawPosition(
     owner sdk.AccAddress,
     lowerTick,
     upperTick int64,
-    frozenUntil time.Time,
-    requestedLiquidityAmountToWithdraw sdk.Dec)
-    (amtDenom0, amtDenom1 sdk.Int, err error) {
+    requestedLiquidityAmountToWithdraw osmomath.Dec)
+    (amtDenom0, amtDenom1 osmomath.Int, err error) {
     ...
 }
 ```
@@ -788,8 +784,8 @@ From the user perspective, there are two ways to swap:
 Each case has a corresponding message discussed previously in the `x/poolmanager`
 section.
 
-- `MsgSwapExactIn`
-- `MsgSwapExactOut`
+- `MsgSwapExactAmountIn`
+- `MsgSwapExactAmountOut`
 
 Once a message is received by the `x/poolmanager`, it is propagated into a
 corresponding keeper
@@ -856,32 +852,32 @@ type SwapState struct {
  // if in given out, amount of token being swapped out.
  // Initialized to the amount of the token specified by the user.
  // Updated after every swap step.
- amountSpecifiedRemaining sdk.Dec
+ amountSpecifiedRemaining osmomath.Dec
 
  // Amount of the other token that is calculated from the specified token.
  // if out given in, amount of token swapped out.
  // if in given out, amount of token swapped in.
  // Initialized to zero.
  // Updated after every swap step.
- amountCalculated sdk.Dec
+ amountCalculated osmomath.Dec
 
  // Current sqrt price while calculating swap.
  // Initialized to the pool's current sqrt price.
  // Updated after every swap step.
- sqrtPrice sdk.Dec
+ sqrtPrice osmomath.BigDec
  // Current tick while calculating swap.
  // Initialized to the pool's current tick.
  // Updated each time a tick is crossed.
- tick sdk.Int
+ tick int64
  // Current liqudiity within the active tick.
  // Initialized to the pool's current tick's liquidity.
  // Updated each time a tick is crossed.
- liquidity sdk.Dec
+ liquidity osmomath.Dec
 
  // Global spread reward growth per-current swap.
  // Initialized to zero.
  // Updated after every swap step.
- spreadRewardGrowthGlobal sdk.Dec
+ spreadRewardGrowthGlobal osmomath.Dec
 }
 ```
 
@@ -1164,15 +1160,6 @@ tick tracked by the pool is 11_000. The global spread reward growth per unit of 
 has increased by 50 units of token one. See more details about the spread reward growth
 in the "Spread Rewards" section.
 
-TODO: Swapping, Appendix B: Compute Swap Step Internals and Math
-
-## Range Orders
-
-> As a trader, I want to be able to execute ranger orders so that I have better
-> control of the price at which I trade
-
-TODO
-
 ## Spread Rewards
 
 > As a an LP, I want to earn spread rewards on my capital so that I am incentivized to
@@ -1197,7 +1184,7 @@ layers of state:
 // Note that this is proto-generated.
 type Pool struct {
     ...
-    SpreadFactor sdk.Dec
+    SpreadFactor osmomath.Dec
 }
 ```
 

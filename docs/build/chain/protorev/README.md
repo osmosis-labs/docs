@@ -78,15 +78,15 @@ The `x/protorev` module keeps the following objects in state:
 | State Object | Description | Key | Values | Store |
 | --- | --- | --- | --- | --- |
 | TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | `[]byte{1}` + `[]byte{inputDenom}` +`[]byte{outputDenom}` | `[]byte{TokenPairArbRoutes}` | KV |
-| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom`[]byte{2}` | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
-| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenoms{}`} | KV |
+| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
+| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenom{}}` | KV |
 | NumberOfTrades | Tracks the number of trades protorev has executed | `[]byte{4}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByDenom | Tracks the profits protorev has made | `[]byte{5}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | TradesByRoute | Tracks the number of trades the module has executed on a given route | `[]byte{6}` + `[]byte{route}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByRoute | Tracks the profits the module has accumulated after trading on a given route | `[]byte{7}` + `[]byte{route}` | `[]byte{sdk.Coin}` | KV |
 | DeveloperAccount | Tracks the developer account for protorev | `[]byte{8}` | `[]byte{sdk.AccAddress}` | KV |
 | DaysSinceModuleGenesis | Tracks the number of days since the module was initialized. Used to track profits that can be withdrawn by the developer account | `[]byte{9}` | `[]byte{uint}` | KV |
-| DeveloperFees | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
+| DeveloperFees (deprecated in v16) | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | MaxPoolPointsPerTx | Tracks the maximum number of pool points that can be consumed per tx | `[]byte{11}` | `[]byte{uint64}` | KV |
 | MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | `[]byte{12}` | `[]byte{uint64}` | KV |
 | PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | `[]byte{13}` | `[]byte{uint64}` | KV |
@@ -275,20 +275,6 @@ Now that we have a list of cyclic routes for each pool swapped by the user’s t
 Each swap will generate its own set of routes and `x/protorev` will execute only the most profitable route.
 
 The module mints the optimal input amount of the coin to swap in from the `bankkeeper` to the `x/protorev` module account, executes the MultiHopSwap by interacting with the `x/poolmanager` module, burns the optimal input amount of the coin minted to execute the MultiHopSwap, and sends subsequent profits to the module account.
-
-## Governance Proposals
-
-`x/protorev` implements two different governance proposals. 
-
-**SetProtoRevAdminAccountProposal**
-
-As the landscape of pools on Osmosis evolves, an admin account will be able to add and remove routes for `x/protorev` to check for cyclic arbitrage opportunities along with several other optimization txs. Largely, the purpose of maintaining hot routes is to reduce the amount of computation that would otherwise be required to determine optimal paths at runtime. 
-
-This proposal is put in place in case the admin account needs to be transferred over. However, as mentioned above, it will be initialized to a trusted address on genesis.
-
-**SetProtoRevEnabledProposal**
-
-This proposal type allows the chain to turn the module on or off. This is meant to be used as a fail safe in the case stakers and the chain decide to turn the module off. This might be used to halt the execution of trades in the case that the `x/gamm` module has significant upgrades that might produce unexpected behavior from the module.
 
 ## PostHandler
 
