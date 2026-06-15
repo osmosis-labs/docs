@@ -54,7 +54,7 @@ info:
 
         ws ws://localhost:26657/websocket
         > { "jsonrpc": "2.0", "method": "subscribe", "params": ["tm.event='NewBlock'"], "id": 1 }
-  version: "Master"
+  version: "CometBFT v0.38"
   license:
     name: Apache 2.0
     url: https://github.com/tendermint/tendermint/blob/master/LICENSE
@@ -278,121 +278,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /remove_tx:
-    get:
-      summary: Removes a transaction from the mempool.
-      tags:
-        - TxKey
-      operationId: remove_tx
-      parameters:
-        - in: query
-          name: txKey
-          required: true
-          schema:
-            type: string
-            example: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          description: The transaction key
-      responses:
-        "200":
-          description: empty response.
-        "500":
-          description: empty error.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /events:
-    get:
-      summary: Fetch events posted by the consensus node.
-      tags:
-        - Events
-      operationId: events
-      description: |
-        Fetch a batch of events posted by the consensus node and matching a
-        specified query string.
-
-        The query grammar is defined in [pubsub/query/syntax](https://godoc.org/github.com/tendermint/tendermint/internal/pubsub/query/syntax).
-        An empty query matches all events; otherwise a query comprises one or
-        more terms comparing event metadata to target values. For example, to
-        select new block events:
-
-            tm.event = 'NewBlock'
-
-        Multiple terms can be combined with AND, for example to match the
-        transaction event with a given hash, use:
-
-            tm.event = 'Tx' AND tx.hash = 'EA7B33F'
-
-        The comparison operators include `=`, `<`, `<=`, `>`, `>=`, and
-        `CONTAINS`. Operands may be strings (in single quotes), numbers, dates,
-        or timestamps. In addition, the `EXISTS` operator allows you to check
-        for the presence of an attribute regardless of its value.
-
-        Tendermint defines a `tm.event` attribute for all events. Transactions
-        are also assigned `tx.hash` and `tx.height` attributes. Other attributes
-        are provided by the application as ABCI Event records. The name of the
-        event in the query is formed by combining the type and attribute key
-        with a period. For example, given:
-
-            []abci.Event{{
-                Type: "reward",
-                Attributes: []abci.EventAttribute{
-                    {Key: "address", Value: "cosmos1xyz012pdq"},
-                    {Key: "amount", Value: "45.62"},
-                    {Key: "balance", Value: "100.390001"},
-                },
-            }}
-
-        the query may refer to the names`"reward.address`,`"reward.amount`, and
-        `reward.balance`, as in:
-
-            reward.address EXISTS AND reward.balance > 45
-
-        The node maintains a log of all events within an operator-defined time
-        window. The /events method returns the most recent items from the log
-        that match the query. Each item returned includes a cursor that marks
-        its location in the log. Cursors can be passed via the `before` and
-        `after` parameters to fetch events earlier in the log.
-      parameters:
-        - in: query
-          name: filter
-          schema:
-            $ref: "#/components/schemas/EventFilter"
-        - in: query
-          name: maxItems
-          schema:
-            type: integer
-            example: 10
-        - in: query
-          name: after
-          schema:
-            type: string
-            example: "0005d7c09065e9a7-01cf"
-        - in: query
-          name: before
-          schema:
-            type: string
-            example: "0005d7c09065e9a7-01cf"
-        - in: query
-          name: waitTime
-          schema:
-            type: integer
-            example: 5000000000
-      responses:
-        "200":
-          description: Reports a batch of matching events
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EventsResponse"
-        "500":
-          description: Reports an error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
   /subscribe:
     get:
       summary: Subscribe for events via WebSocket.
@@ -488,10 +373,10 @@ paths:
         query.MustParse("tm.event = 'Tx' AND rewards.withdraw.source = 'W'")
 
         See list of all possible events here
-        https://godoc.org/github.com/tendermint/tendermint/types#pkg-constants
+        https://pkg.go.dev/github.com/cometbft/cometbft/types#pkg-constants
 
         For complete query syntax, check out
-        https://godoc.org/github.com/tendermint/tendermint/libs/pubsub/query.
+        https://pkg.go.dev/github.com/cometbft/cometbft/libs/pubsub/query.
 
         ```go
         import rpchttp "github.com/tendermint/rpc/client/http"
@@ -1110,7 +995,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
 
   /dump_consensus_state:
     get:

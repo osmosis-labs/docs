@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
   title: IBC-GO - gRPC Gateway docs
-  description: A REST interface for state queries
-  version: 1.0.0
+  description: A REST interface for IBC state queries (ibc-go v8.x, as deployed on Osmosis v31).
+  version: ibc-go v8
 servers:
 - url: /
 paths:
@@ -2665,7 +2665,7 @@ paths:
                               "@type": "type.googleapis.com/google.protobuf.Duration",
                               "value": "1.212s"
                             }
-  /ibc/client/v1/params:
+  /ibc/core/client/v1/params:
     get:
       tags:
       - Query
