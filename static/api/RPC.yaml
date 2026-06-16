@@ -42,13 +42,10 @@ info:
 
     ## JSONRPC/websockets
 
-    In Tendermint v0.35 and earlier, JSONRPC requests can be also made via
-    websocket.  The websocket interface is deprecated in Tendermint v0.36, and
-    will be removed in v0.37.
-
     The websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.
     The RPC methods for event subscription (`subscribe`, `unsubscribe`, and
-    `unsubscribe_all`) are only available via websockets.
+    `unsubscribe_all`) are only available over websockets, so they are not
+    listed as HTTP operations in this reference.
 
     Example using https://github.com/hashrocket/ws:
 
@@ -68,20 +65,14 @@ servers:
   - url: http://localhost:26657
     description: Interact with the Tendermint RPC locally on your device
 tags:
-  - name: Websocket
-    description: Subscribe/unsubscribe are reserved for websocket events.
   - name: Info
     description: Information about the node APIs
   - name: Tx
     description: Transactions broadcast APIs
   - name: ABCI
     description: ABCI APIs
-  - name: Events
-    description: Event subscription APIs
   - name: Evidence
     description: Evidence APIs
-  - name: Unsafe
-    description: Unsafe APIs
 paths:
   /broadcast_tx_sync:
     get:
@@ -278,236 +269,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /subscribe:
-    get:
-      summary: Subscribe for events via WebSocket.
-      tags:
-        - Events
-        - Websocket
-      operationId: subscribe
-      description: |
-        To tell which events you want, you need to provide a query. query is a
-        string, which has a form: "condition AND condition ..." (no OR at the
-        moment). condition has a form: "key operation operand". key is a string with
-        a restricted set of possible symbols ( \t\n\r\\()"'=>< are not allowed).
-        operation can be "=", "<", "<=", ">", ">=", "CONTAINS" AND "EXISTS". operand
-        can be a string (escaped with single quotes), number, date or time.
-
-        Examples:
-              tm.event = 'NewBlock'               # new blocks
-              tm.event = 'CompleteProposal'       # node got a complete proposal
-              tm.event = 'Tx' AND tx.hash = 'XYZ' # single transaction
-              tm.event = 'Tx' AND tx.height = 5   # all txs of the fifth block
-              tx.height = 5                       # all txs of the fifth block
-
-        Tendermint provides a few predefined keys: tm.event, tx.hash and tx.height.
-        Note for transactions, you can define additional keys by providing events with
-        DeliverTx response.
-
-        import (
-            abci "github.com/tendermint/tendermint/abci/types"
-            "github.com/tendermint/tendermint/libs/pubsub/query"
-        )
-
-        abci.ResponseDeliverTx{
-          Events: []abci.Event{
-              {
-                  Type: "rewards.withdraw",
-                  Attributes: []abci.EventAttribute{
-                      {Key: "address", Value: "AddrA", Index: true},
-                      {Key: "source", Value: "SrcX", Index: true},
-                      {Key: "amount", Value: "...", Index: true},
-                      {Key: "balance", Value: "...", Index: true},
-                  },
-              },
-              {
-                  Type: "rewards.withdraw",
-                  Attributes: []abci.EventAttribute{
-                      {Key: "address", Value: "AddrB", Index: true},
-                      {Key: "source", Value: "SrcY", Index: true},
-                      {Key: "amount", Value: "...", Index: true},
-                      {Key: "balance", Value: "...", Index: true},
-                  },
-              },
-              {
-                  Type: "transfer",
-                  Attributes: []abci.EventAttribute{
-                      {Key: "sender", Value: "AddrC", Index: true},
-                      {Key: "recipient", Value: "AddrD", Index: true},
-                      {Key: "amount", Value: "...", Index: true},
-                  },
-              },
-          },
-        }
-
-        All events are indexed by a composite key of the form {eventType}.{evenAttrKey}.
-        In the above examples, the following keys would be indexed:
-           - rewards.withdraw.address
-           - rewards.withdraw.source
-           - rewards.withdraw.amount
-           - rewards.withdraw.balance
-           - transfer.sender
-           - transfer.recipient
-           - transfer.amount
-
-        Multiple event types with duplicate keys are allowed and are meant to
-        categorize unique and distinct events. In the above example, all events
-        indexed under the key `rewards.withdraw.address` will have the following
-        values stored and queryable:
-
-           - AddrA
-           - AddrB
-
-        To create a query for txs where address AddrA withdrew rewards:
-        query.MustParse("tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA'")
-
-        To create a query for txs where address AddrA withdrew rewards from source Y:
-        query.MustParse("tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA' AND rewards.withdraw.source = 'Y'")
-
-        To create a query for txs where AddrA transferred funds:
-        query.MustParse("tm.event = 'Tx' AND transfer.sender = 'AddrA'")
-
-        The following queries would return no results:
-        query.MustParse("tm.event = 'Tx' AND transfer.sender = 'AddrZ'")
-        query.MustParse("tm.event = 'Tx' AND rewards.withdraw.address = 'AddrZ'")
-        query.MustParse("tm.event = 'Tx' AND rewards.withdraw.source = 'W'")
-
-        See list of all possible events here
-        https://pkg.go.dev/github.com/cometbft/cometbft/types#pkg-constants
-
-        For complete query syntax, check out
-        https://pkg.go.dev/github.com/cometbft/cometbft/libs/pubsub/query.
-
-        ```go
-        import rpchttp "github.com/tendermint/rpc/client/http"
-        import "github.com/tendermint/tendermint/types"
-
-        client, err := rpchttp.New("tcp://0.0.0.0:26657", "/websocket")
-        if err != nil {
-          // handle error
-        }
-
-        err = client.Start()
-        if err != nil {
-          // handle error
-        }
-        defer client.Stop()
-        ctx, cancel := context.WithTimeout(context.Background(), 1 * time.Second)
-        defer cancel()
-        query := "tm.event = 'Tx' AND tx.height = 3"
-        txs, err := client.Subscribe(ctx, "test-client", query)
-        if err != nil {
-          // handle error
-        }
-
-        go func() {
-         for e := range txs {
-           fmt.Println("got ", e.Data.(types.EventDataTx))
-           }
-        }()
-        ```
-
-        NOTE: if you're not reading events fast enough, Tendermint might
-        terminate the subscription.
-      parameters:
-        - in: query
-          name: query
-          required: true
-          schema:
-            type: string
-            example: tm.event = 'Tx' AND tx.height = 5
-          description: |
-            query is a string, which has a form: "condition AND condition ..." (no OR at the
-            moment). condition has a form: "key operation operand". key is a string with
-            a restricted set of possible symbols ( \t\n\r\\()"'=>< are not allowed).
-            operation can be "=", "<", "<=", ">", ">=", "CONTAINS". operand can be a
-            string (escaped with single quotes), number, date or time.
-      responses:
-        "200":
-          description: empty answer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EmptyResponse"
-        "500":
-          description: empty error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-  /unsubscribe:
-    get:
-      summary: Unsubscribe from event on Websocket
-      tags:
-        - Events
-        - Websocket
-      operationId: unsubscribe
-      description: |
-        ```go
-        client, err := rpchttp.New("tcp://0.0.0.0:26657", "/websocket")
-        if err != nil {
-          // handle error
-        }
-
-        err := client.Start()
-        if err != nil {
-          // handle error
-        }
-        defer client.Stop()
-        query := "tm.event = 'Tx' AND tx.height = 3"
-        err = client.Unsubscribe(context.Background(), "test-client", query)
-        if err != nil {
-          // handle error
-        }
-        ```
-      parameters:
-        - in: query
-          name: query
-          required: true
-          schema:
-            type: string
-            example: tm.event = 'Tx' AND tx.height = 5
-          description: |
-            query is a string, which has a form: "condition AND condition ..." (no OR at the
-            moment). condition has a form: "key operation operand". key is a string with
-            a restricted set of possible symbols ( \t\n\r\\()"'=>< are not allowed).
-            operation can be "=", "<", "<=", ">", ">=", "CONTAINS". operand can be a
-            string (escaped with single quotes), number, date or time.
-      responses:
-        "200":
-          description: Answer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EmptyResponse"
-        "500":
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-  /unsubscribe_all:
-    get:
-      summary: Unsubscribe from all events via WebSocket
-      tags:
-        - Events
-        - Websocket
-      operationId: unsubscribe_all
-      description: |
-        Unsubscribe from all events via WebSocket
-      responses:
-        "200":
-          description: empty answer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EmptyResponse"
-        "500":
-          description: empty error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
   /health:
     get:
       summary: Node heartbeat
@@ -557,7 +318,10 @@ paths:
       tags:
         - Info
       description: |
-        Get network info.
+        Get network info (connected peers and listeners).
+
+        Note: this endpoint is firewalled on the public `rpc.osmosis.zone` node
+        and returns 403 there. It works against your own node.
       responses:
         "200":
           description: empty answer
@@ -571,114 +335,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /dial_seeds:
-    get:
-      summary: Dial Seeds (Unsafe)
-      operationId: dial_seeds
-      tags:
-        - Unsafe
-      description: |
-        Dial a peer, this route in under unsafe, and has to manually enabled to use
-
-          **Example:** curl 'localhost:26657/dial_seeds?seeds=\["f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656","0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656"\]'
-      parameters:
-        - in: query
-          name: peers
-          description: list of seed nodes to dial
-          schema:
-            type: array
-            items:
-              type: string
-              example: "f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656"
-      responses:
-        "200":
-          description: Dialing seeds in progress. See /net_info for details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/dialResp"
-        "500":
-          description: empty error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-  /dial_peers:
-    get:
-      summary: Add Peers/Persistent Peers (unsafe)
-      operationId: dial_peers
-      tags:
-        - Unsafe
-      description: |
-        Set a persistent peer, this route in under unsafe, and has to manually enabled to use.
-
-        **Example:** curl 'localhost:26657/dial_peers?peers=\["f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656","0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656"\]&persistent=false'
-      parameters:
-        - in: query
-          name: persistent
-          description: Have the peers you are dialing be persistent
-          schema:
-            type: boolean
-            example: true
-        - in: query
-          name: unconditional
-          description: Have the peers you are dialing be unconditional
-          schema:
-            type: boolean
-            example: true
-        - in: query
-          name: private
-          description: Have the peers you are dialing be private
-          schema:
-            type: boolean
-            example: true
-        - in: query
-          name: peers
-          description: array of peers to dial
-          schema:
-            type: array
-            items:
-              type: string
-              example: "f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656"
-      responses:
-        "200":
-          description: Dialing seeds in progress. See /net_info for details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/dialResp"
-        "500":
-          description: empty error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-  /unsafe_flush_mempool:
-    get:
-      summary: Flush mempool of all unconfirmed transactions
-      operationId: unsafe_flush_mempool
-      tags:
-        - Unsafe
-      description: |
-        Flush flushes out the mempool. It acquires a read-lock, fetches all the
-        transactions currently in the transaction store and removes each transaction
-        from the store and all indexes and finally resets the cache.
-
-        Note, flushing the mempool may leave the mempool in an inconsistent state.
-      responses:
-        "200":
-          description: empty answer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EmptyResponse"
-        "500":
-          description: empty error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
   /blockchain:
     get:
       summary: "Get block headers (max: 20) for minHeight <= height <= maxHeight."
@@ -1139,7 +795,7 @@ paths:
       description: |
         Search for transactions w/ their results.
 
-        See /subscribe for the query syntax.
+        For the query grammar, see the CometBFT pubsub query syntax: https://pkg.go.dev/github.com/cometbft/cometbft/libs/pubsub/query.
       operationId: tx_search
       parameters:
         - in: query
@@ -1202,7 +858,7 @@ paths:
       description: |
         Search for blocks by BeginBlock and EndBlock events.
 
-        See /subscribe for the query syntax.
+        For the query grammar, see the CometBFT pubsub query syntax: https://pkg.go.dev/github.com/cometbft/cometbft/libs/pubsub/query.
       operationId: block_search
       parameters:
         - in: query
