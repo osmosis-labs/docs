@@ -132,6 +132,7 @@ function APIElementClient({ layout, currentVersion }) {
   return (
     <div className={clsx('elements-container', layout)}>
       <elements-api
+        key={currentVersion}
         apiDescriptionUrl={`/api/${currentVersion}.yaml`}
         router="hash"
         layout={layout}
@@ -140,17 +141,29 @@ function APIElementClient({ layout, currentVersion }) {
   );
 }
 
+// Valid API sets. Anything else in `?v=` falls back to the default.
+const API_VERSIONS = ['RPC', 'LCD', 'DATA', 'IBCGO'];
+const DEFAULT_VERSION = 'RPC';
+
+function getVersionFromSearch(search) {
+  const v = new URLSearchParams(search || '').get('v');
+  return API_VERSIONS.includes(v) ? v : DEFAULT_VERSION;
+}
+
 export default function Home() {
   const router = useHistory();
   const size = useBreakpoint();
-
   const location = router.location;
 
-  const url = new URL(
-    `https://docs.osmosis.zone/${location.pathname}${location.search}`
-  );
-
-  const currentVersion = url.searchParams.get('v') || 'RPC';
+  // The page is statically prerendered with no query string, so SSR always
+  // resolves to DEFAULT_VERSION. Reading `?v=` during render would make the
+  // first client render disagree with the server HTML (hydration mismatch:
+  // React #418/#423). Start at the SSR-stable default, then sync to the URL
+  // after mount and on subsequent navigations.
+  const [currentVersion, setCurrentVersion] = useState(DEFAULT_VERSION);
+  useEffect(() => {
+    setCurrentVersion(getVersionFromSearch(location.search));
+  }, [location.search]);
 
   return (
     <Layout
@@ -171,7 +184,7 @@ export default function Home() {
 
           <span title="Select an API set (RPC, LCD, DATA, IBCGO) from this menu.">
             <SectionsMenu
-              defaultValue={currentVersion}
+              value={currentVersion}
               values={[
                 { name: 'RPC', id: 'RPC' },
                 { name: 'LCD', id: 'LCD' },
@@ -179,7 +192,7 @@ export default function Home() {
                 { name: 'IBCGO', id: 'IBCGO' },
               ]}
               onValueChange={(version) => {
-                router.push(`/api/?v=${version}`);
+                router.push(`/api?v=${version}`);
               }}
               className="compact"
               slot="trigger"
