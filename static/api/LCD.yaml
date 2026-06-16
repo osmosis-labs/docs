@@ -48,7 +48,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Epochs (osmosis)
   /osmosis/epochs/v1beta1/epochs:
     get:
       summary: EpochInfos provide running epochInfos
@@ -166,7 +166,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Epochs (osmosis)
   /osmosis/gamm/v1beta1/cfmm_concentrated_pool_links:
     get:
       summary: 'CFMMConcentratedPoolLinks returns migration links between CFMM and
@@ -268,7 +268,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/concentrated_pool_id_link_from_cfmm/{cfmm_pool_id}:
     get:
       summary: 'ConcentratedPoolIdLinkFromBalancer returns the pool id of the concentrated
@@ -351,7 +351,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/filtered_pools:
     get:
       summary: 'PoolsWithFilter allows you to query specific pools with requested
@@ -550,7 +550,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/num_pools:
     get:
       summary: 'Deprecated: please use the alternative in x/poolmanager'
@@ -625,7 +625,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pool_type/{pool_id}:
     get:
       summary: 'PoolType returns the type of the pool.
@@ -709,7 +709,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools:
     get:
       operationId: Pools
@@ -894,7 +894,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}:
     get:
       summary: 'Deprecated: please use the alternative in x/poolmanager'
@@ -1018,7 +1018,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/exit_swap_share_amount_in:
     get:
       operationId: CalcExitPoolCoinsFromShares
@@ -1114,7 +1114,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/join_swap_exact_in:
     get:
       operationId: CalcJoinPoolShares
@@ -1208,7 +1208,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/params:
     get:
       operationId: PoolParams
@@ -1330,7 +1330,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/prices:
     get:
       summary: 'SpotPrice defines a gRPC query handler that returns the spot price given
@@ -1424,7 +1424,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/total_pool_liquidity:
     get:
       summary: 'Deprecated: please use the alternative in x/poolmanager'
@@ -1518,7 +1518,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/pools/{pool_id}/total_shares:
     get:
       operationId: TotalShares
@@ -1608,7 +1608,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/total_liquidity:
     get:
       operationId: TotalLiquidity
@@ -1694,7 +1694,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/{pool_id}/estimate/swap_exact_amount_in:
     get:
       summary: 'Deprecated: please use the alternative in x/poolmanager'
@@ -1782,7 +1782,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/gamm/v1beta1/{pool_id}/estimate/swap_exact_amount_out:
     get:
       summary: 'Deprecated: please use the alternative in x/poolmanager'
@@ -1870,7 +1870,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - GAMM (osmosis)
   /osmosis/incentives/v1beta1/active_gauges:
     get:
       summary: ActiveGauges returns active gauges
@@ -2090,7 +2090,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/active_gauges_per_denom:
     get:
       summary: ActiveGaugesPerDenom returns active gauges by denom
@@ -2315,7 +2315,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/all_groups:
     get:
       summary: AllGroups returns all groups
@@ -2408,7 +2408,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/all_groups_gauges:
     get:
       summary: AllGroupsGauges returns all group gauges
@@ -2558,7 +2558,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/all_groups_with_gauge:
     get:
       summary: AllGroupsWithGauge returns all groups with their group gauge
@@ -2771,7 +2771,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/current_weight_by_group_gauge_id/{group_gauge_id}:
     get:
       summary: 'CurrentWeightByGroupGaugeID returns the current weight since the
@@ -2823,7 +2823,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/gauge_by_id/{id}:
     get:
       summary: GaugeByID returns gauges by their respective ID
@@ -2979,7 +2979,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/gauges:
     get:
       summary: Gauges returns both upcoming and active gauges
@@ -3199,7 +3199,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/group_by_group_gauge_id/{id}:
     get:
       summary: GroupByGroupGaugeID returns a group given its group gauge ID
@@ -3296,7 +3296,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/lockable_durations:
     get:
       summary: 'LockableDurations returns lockable durations that are valid to distribute
@@ -3337,7 +3337,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/module_to_distribute_coins:
     get:
       summary: ModuleToDistributeCoins returns coins that are going to be distributed
@@ -3387,7 +3387,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/rewards_est/{owner}:
     get:
       summary: 'RewardsEst returns an estimate of the rewards from now until a specified
@@ -3466,7 +3466,7 @@ paths:
         type: string
         format: int64
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/upcoming_gauges:
     get:
       summary: Returns scheduled gauges that have not yet occurred
@@ -3686,7 +3686,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/incentives/v1beta1/upcoming_gauges_per_denom:
     get:
       summary: 'UpcomingGaugesPerDenom returns scheduled gauges that have not yet occurred
@@ -3913,7 +3913,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Incentives (osmosis)
   /osmosis/lockup/v1beta1/account_locked_coins/{owner}:
     get:
       summary: Return a locked coins that can't be withdrawn
@@ -3967,7 +3967,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_duration/{owner}:
     get:
       summary: Returns account locked records with a specific duration
@@ -4073,7 +4073,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_longer_duration/{owner}:
     get:
       summary: Returns account locked records with longer duration
@@ -4179,7 +4179,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_longer_duration_denom/{owner}:
     get:
       summary: Returns account's locked records for a denom with longer duration
@@ -4289,7 +4289,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}:
     get:
       summary: 'Returns account locked records with longer duration excluding tokens
@@ -4397,7 +4397,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_pasttime/{owner}:
     get:
       summary: Returns locked records of an account with unlock time beyond timestamp
@@ -4504,7 +4504,7 @@ paths:
         type: string
         format: date-time
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_pasttime_denom/{owner}:
     get:
       summary: Returns lock records by address, timestamp, denom
@@ -4615,7 +4615,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}:
     get:
       summary: 'Returns locked records of an account with unlock time beyond timestamp
@@ -4724,7 +4724,7 @@ paths:
         type: string
         format: date-time
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_unlockable_coins/{owner}:
     get:
       summary: Returns unlockable coins which are not withdrawn yet
@@ -4778,7 +4778,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_unlocked_before_time/{owner}:
     get:
       summary: Returns unlocked records with unlock time before timestamp
@@ -4885,7 +4885,7 @@ paths:
         type: string
         format: date-time
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/account_unlocking_coins/{owner}:
     get:
       summary: Returns unlocking coins
@@ -4939,7 +4939,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/lock_reward_receiver/{lock_id}:
     get:
       summary: Returns lock record by id
@@ -4981,7 +4981,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/locked_by_id/{lock_id}:
     get:
       summary: Returns lock record by id
@@ -5082,7 +5082,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/locked_denom:
     get:
       summary: Returns total locked per denom with longer past given time
@@ -5127,7 +5127,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/module_balance:
     get:
       summary: Return full balance of the module
@@ -5176,7 +5176,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/module_locked_amount:
     get:
       summary: Return locked balance of the module
@@ -5225,7 +5225,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/next_lock_id:
     get:
       summary: Returns next lock ID
@@ -5262,7 +5262,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/params:
     get:
       summary: Params returns lockup params.
@@ -5303,7 +5303,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/synthetic_lockup_by_lock_id/{lock_id}:
     get:
       summary: Returns synthetic lockup by native lockup id
@@ -5375,7 +5375,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}:
     get:
       summary: 'Returns synthetic lockup by native lockup id
@@ -5451,7 +5451,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Lockup (osmosis)
   /osmosis/mint/v1beta1/epoch_provisions:
     get:
       summary: EpochProvisions returns the current minting epoch provisions value.
@@ -5530,7 +5530,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Mint (osmosis)
   /osmosis/mint/v1beta1/params:
     get:
       summary: Params returns the total set of minting parameters.
@@ -5682,7 +5682,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Mint (osmosis)
   /osmosis/pool-incentives/v1beta1/distr_info:
     get:
       summary: DistrInfo returns the pool's matching gauge ids and weights.
@@ -5731,7 +5731,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/pool-incentives/v1beta1/external_incentive_gauges:
     get:
       summary: ExternalIncentiveGauges returns external incentive gauges.
@@ -5881,7 +5881,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/pool-incentives/v1beta1/gauge-ids/{pool_id}:
     get:
       summary: GaugeIds takes the pool id and returns the matching gauge ids and durations
@@ -5933,7 +5933,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/pool-incentives/v1beta1/incentivized_pools:
     get:
       summary: IncentivizedPools returns currently incentivized pools
@@ -5980,7 +5980,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/pool-incentives/v1beta1/lockable_durations:
     get:
       summary: LockableDurations returns lock durations for pools.
@@ -6018,7 +6018,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/pool-incentives/v1beta1/params:
     get:
       summary: Params returns pool incentives params.
@@ -6064,7 +6064,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Pool Incentives (osmosis)
   /osmosis/superfluid/v1beta1/account_delegated_cl_positions/{delegator_address}:
     get:
       summary: Returns all of a user's full range CL positions that are superfluid staked.
@@ -6212,7 +6212,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/account_undelegating_cl_positions/{delegator_address}:
     get:
       operationId: UserConcentratedSuperfluidPositionsUndelegating
@@ -6359,7 +6359,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/all_assets:
     get:
       summary: Returns all registered superfluid assets.
@@ -6449,7 +6449,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/all_intermediary_accounts:
     get:
       summary: Returns all superfluid intermediary accounts.
@@ -6603,7 +6603,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/all_superfluid_delegations:
     get:
       summary: 'Returns the total amount of osmo superfluidly staked.
@@ -6679,7 +6679,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/asset_multiplier:
     get:
       summary: Returns the osmo equivalent multiplier used in the most recent epoch.
@@ -6780,7 +6780,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/asset_type:
     get:
       summary: 'Returns superfluid asset type, whether if it''s a native asset or an lp
@@ -6869,7 +6869,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/connected_intermediary_account/{lock_id}:
     get:
       summary: Returns intermediary account connected to a superfluid staked lock by id
@@ -6959,7 +6959,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/estimate_superfluid_delegation_amount_by_validator_denom:
     get:
       summary: 'Returns the amount of a specific denom delegated to a specific validator
@@ -7059,7 +7059,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/params:
     get:
       summary: Params returns the total set of superfluid parameters.
@@ -7145,7 +7145,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/superfluid_delegation_amount:
     get:
       summary: 'Returns the coins superfluid delegated for the delegator, validator, denom
@@ -7247,7 +7247,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/superfluid_delegations/{delegator_address}:
     get:
       summary: Returns all the delegated superfluid positions for a specific delegator.
@@ -7390,7 +7390,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/superfluid_delegations_by_validator_denom:
     get:
       summary: 'Returns all the superfluid positions of a specific denom delegated to one
@@ -7511,7 +7511,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/superfluid_undelegations_by_delegator/{delegator_address}:
     get:
       summary: Returns all the undelegating superfluid positions for a specific delegator.
@@ -7679,7 +7679,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/supply:
     get:
       operationId: RestSupply
@@ -7768,7 +7768,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/total_delegation_by_delegator/{delegator_address}:
     get:
       summary: Returns the specified delegations for a specific delegator
@@ -7949,7 +7949,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/superfluid/v1beta1/unpool_whitelist:
     get:
       summary: Returns a list of whitelisted pool ids to unpool.
@@ -8026,7 +8026,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Superfluid (osmosis)
   /osmosis/tokenfactory/v1beta1/denoms/{denom}/authority_metadata:
     get:
       summary: 'DenomAuthorityMetadata defines a gRPC query method for fetching
@@ -8081,7 +8081,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Tokenfactory (osmosis)
   /osmosis/tokenfactory/v1beta1/denoms/{denom}/before_send_hook:
     get:
       summary: 'BeforeSendHookAddress defines a gRPC query method for
@@ -8127,7 +8127,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Tokenfactory (osmosis)
   /osmosis/tokenfactory/v1beta1/denoms_from_creator/{creator}:
     get:
       summary: 'DenomsFromCreator defines a gRPC query method for fetching all
@@ -8175,7 +8175,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Tokenfactory (osmosis)
   /osmosis/tokenfactory/v1beta1/params:
     get:
       summary: 'Params defines a gRPC query method that returns the tokenfactory module''s
@@ -8245,7 +8245,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Tokenfactory (osmosis)
   /osmosis/txfees/v1beta1/base_denom:
     get:
       summary: Returns a list of all base denom tokens and their corresponding pools.
@@ -8281,7 +8281,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Txfees (osmosis)
   /osmosis/txfees/v1beta1/cur_eip_base_fee:
     get:
       summary: Returns a list of all base denom tokens and their corresponding pools.
@@ -8317,7 +8317,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Txfees (osmosis)
   /osmosis/txfees/v1beta1/denom_pool_id/{denom}:
     get:
       summary: Returns the poolID for a specified denom input.
@@ -8359,7 +8359,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Txfees (osmosis)
   /osmosis/txfees/v1beta1/fee_tokens:
     get:
       summary: 'FeeTokens returns a list of all the whitelisted fee tokens and their
@@ -8414,7 +8414,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Txfees (osmosis)
   /osmosis/txfees/v1beta1/spot_price_by_denom:
     get:
       summary: DenomSpotPrice returns all spot prices by each registered token denom.
@@ -8461,7 +8461,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Txfees (osmosis)
   /cosmos/auth/v1beta1/account_info/{address}:
     get:
       summary: AccountInfo queries account info which is common to all account types.
@@ -8602,7 +8602,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/accounts:
     get:
       summary: Accounts returns all the existing accounts.
@@ -8799,7 +8799,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/accounts/{address}:
     get:
       summary: Account returns account details based on address.
@@ -8923,7 +8923,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/address_by_id/{id}:
     get:
       summary: AccountAddressByID returns account address based on account number.
@@ -9023,7 +9023,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/bech32:
     get:
       summary: Bech32Prefix queries bech32Prefix
@@ -9102,7 +9102,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/bech32/{address_bytes}:
     get:
       summary: AddressBytesToString converts Account Address bytes to string
@@ -9187,7 +9187,7 @@ paths:
         type: string
         format: byte
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/bech32/{address_string}:
     get:
       summary: AddressStringToBytes converts Address string to bytes
@@ -9272,7 +9272,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/module_accounts:
     get:
       summary: ModuleAccounts returns all the existing module accounts.
@@ -9397,7 +9397,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/module_accounts/{name}:
     get:
       summary: ModuleAccountByName returns the module account info by module name
@@ -9520,7 +9520,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/auth/v1beta1/params:
     get:
       summary: Params queries all parameters.
@@ -9612,7 +9612,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Auth (cosmos)
   /cosmos/authz/v1beta1/grants:
     get:
       summary: Returns list of `Authorization`, granted to the grantee by the granter.
@@ -9829,7 +9829,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Authz (cosmos)
   /cosmos/authz/v1beta1/grants/grantee/{grantee}:
     get:
       summary: GranteeGrants returns a list of `GrantAuthorization` by grantee.
@@ -10037,7 +10037,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Authz (cosmos)
   /cosmos/authz/v1beta1/grants/granter/{granter}:
     get:
       summary: GranterGrants returns list of `GrantAuthorization`, granted by granter.
@@ -10245,7 +10245,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Authz (cosmos)
   /cosmos/bank/v1beta1/balances/{address}:
     get:
       summary: AllBalances queries the balance of all coins for a single account.
@@ -10380,7 +10380,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/balances/{address}/by_denom:
     get:
       summary: Balance queries the balance of a single coin for a single account.
@@ -10439,7 +10439,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/denom_owners/{denom}:
     get:
       summary: 'DenomOwners queries for all account addresses that own a particular token
@@ -10585,7 +10585,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/denoms_metadata:
     get:
       summary: 'DenomsMetadata queries the client metadata for all registered coin
@@ -10764,7 +10764,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/denoms_metadata/{denom}:
     get:
       summary: DenomsMetadata queries the client metadata of a given coin denomination.
@@ -10878,7 +10878,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/denoms_metadata_by_query_string:
     get:
       summary: DenomsMetadata queries the client metadata of a given coin denomination.
@@ -10992,7 +10992,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/params:
     get:
       summary: Params queries the parameters of x/bank module.
@@ -11053,7 +11053,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/send_enabled:
     get:
       summary: SendEnabled queries for SendEnabled entries.
@@ -11187,7 +11187,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/spendable_balances/{address}:
     get:
       summary: 'SpendableBalances queries the spendable balance of all coins for a single
@@ -11322,7 +11322,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/spendable_balances/{address}/by_denom:
     get:
       summary: 'SpendableBalanceByDenom queries the spendable balance of a single denom for
@@ -11394,7 +11394,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/supply:
     get:
       summary: TotalSupply queries the total supply of all coins.
@@ -11519,7 +11519,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/bank/v1beta1/supply/by_denom:
     get:
       summary: SupplyOf queries the supply of a single coin.
@@ -11576,7 +11576,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Bank (cosmos)
   /cosmos/base/tendermint/v1beta1/abci_query:
     get:
       summary: 'ABCIQuery defines a query handler that supports ABCI queries directly to the
@@ -11727,7 +11727,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/blocks/latest:
     get:
       summary: GetLatestBlock returns the latest block.
@@ -12874,7 +12874,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/blocks/{height}:
     get:
       summary: GetBlockByHeight queries block for given height.
@@ -14027,7 +14027,7 @@ paths:
         type: string
         format: int64
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/node_info:
     get:
       summary: GetNodeInfo queries the current node info.
@@ -14169,7 +14169,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/syncing:
     get:
       summary: GetSyncing queries node syncing.
@@ -14244,7 +14244,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/validatorsets/latest:
     get:
       summary: GetLatestValidatorSet queries latest validator-set.
@@ -14448,7 +14448,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/base/tendermint/v1beta1/validatorsets/{height}:
     get:
       summary: GetValidatorSetByHeight queries validator-set at a given height.
@@ -14657,7 +14657,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Service
+      - Base (cosmos)
   /cosmos/distribution/v1beta1/community_pool:
     get:
       summary: CommunityPool queries the community pool coins.
@@ -14718,7 +14718,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards:
     get:
       summary: 'DelegationTotalRewards queries the total rewards accrued by each
@@ -14805,7 +14805,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards/{validator_address}:
     get:
       summary: DelegationRewards queries the total rewards accrued by a delegation.
@@ -14869,7 +14869,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/delegators/{delegator_address}/validators:
     get:
       summary: DelegatorValidators queries the validators of a delegator.
@@ -14917,7 +14917,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/delegators/{delegator_address}/withdraw_address:
     get:
       summary: DelegatorWithdrawAddress queries withdraw address of a delegator.
@@ -14963,7 +14963,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/params:
     get:
       summary: Params queries params of the distribution module.
@@ -15016,7 +15016,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/validators/{validator_address}:
     get:
       summary: ValidatorDistributionInfo queries validator commission and self-delegation rewards for validator
@@ -15093,7 +15093,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/validators/{validator_address}/commission:
     get:
       summary: ValidatorCommission queries accumulated commission for a validator.
@@ -15155,7 +15155,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/validators/{validator_address}/outstanding_rewards:
     get:
       summary: ValidatorOutstandingRewards queries rewards of a validator address.
@@ -15219,7 +15219,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/distribution/v1beta1/validators/{validator_address}/slashes:
     get:
       summary: ValidatorSlashes queries slash events of a validator.
@@ -15357,7 +15357,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Distribution (cosmos)
   /cosmos/evidence/v1beta1/evidence:
     get:
       summary: AllEvidence queries all evidence.
@@ -15547,7 +15547,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Evidence (cosmos)
   /cosmos/evidence/v1beta1/evidence/{hash}:
     get:
       summary: Evidence queries evidence based on evidence hash.
@@ -15682,7 +15682,7 @@ paths:
         type: string
         format: byte
       tags:
-      - Query
+      - Evidence (cosmos)
   /cosmos/feegrant/v1beta1/allowance/{granter}/{grantee}:
     get:
       summary: Allowance returns granted allowance to the grantee by the granter.
@@ -15801,7 +15801,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Feegrant (cosmos)
   /cosmos/feegrant/v1beta1/allowances/{grantee}:
     get:
       summary: Allowances returns all the grants for the given grantee address.
@@ -15982,7 +15982,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Feegrant (cosmos)
   /cosmos/feegrant/v1beta1/issued/{granter}:
     get:
       summary: AllowancesByGranter returns all the grants given by an address
@@ -16167,7 +16167,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Feegrant (cosmos)
   /cosmos/gov/v1beta1/params/{params_type}:
     get:
       summary: Params queries all parameters of the gov module.
@@ -16300,7 +16300,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals:
     get:
       summary: Proposals queries all proposals based on given status.
@@ -16592,7 +16592,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}:
     get:
       summary: Proposal queries proposal details based on ProposalID.
@@ -16789,7 +16789,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}/deposits:
     get:
       summary: Deposits queries all deposits of a single proposal.
@@ -16966,7 +16966,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}/deposits/{depositor}:
     get:
       summary: Deposit queries single deposit information based on proposalID, depositor address.
@@ -17080,7 +17080,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}/tally:
     get:
       summary: TallyResult queries the tally of a proposal vote.
@@ -17176,7 +17176,7 @@ paths:
         type: string
         format: uint64
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}/votes:
     get:
       summary: Votes queries votes of a given proposal.
@@ -17377,7 +17377,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/gov/v1beta1/proposals/{proposal_id}/votes/{voter}:
     get:
       summary: 'Vote queries voted information based on proposalID, voterAddr.
@@ -17517,7 +17517,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Gov (cosmos)
   /cosmos/mint/v1beta1/annual_provisions:
     get:
       summary: AnnualProvisions current minting annual provisions value.
@@ -17558,7 +17558,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Mint (cosmos)
   /cosmos/mint/v1beta1/inflation:
     get:
       summary: Inflation returns the current minting inflation value.
@@ -17599,7 +17599,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Mint (cosmos)
   /cosmos/mint/v1beta1/params:
     get:
       summary: Params returns the total set of minting parameters.
@@ -17657,7 +17657,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Mint (cosmos)
   /cosmos/params/v1beta1/params:
     get:
       summary: 'Params queries a specific parameter of a module, given its subspace and
@@ -17715,7 +17715,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Params (cosmos)
   /cosmos/params/v1beta1/subspaces:
     get:
       summary: Subspaces queries for all registered subspaces and all keys for a subspace.
@@ -17773,7 +17773,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Params (cosmos)
   /cosmos/slashing/v1beta1/params:
     get:
       summary: Params queries the parameters of slashing module
@@ -17826,7 +17826,7 @@ paths:
                       type: string
                       format: byte
       tags:
-      - Query
+      - Slashing (cosmos)
   /cosmos/slashing/v1beta1/signing_infos:
     get:
       summary: SigningInfos queries signing info of all validators
@@ -17971,7 +17971,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Slashing (cosmos)
   /cosmos/slashing/v1beta1/signing_infos/{cons_address}:
     get:
       summary: SigningInfo queries the signing info of given cons address
@@ -18052,7 +18052,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Slashing (cosmos)
   /cosmos/staking/v1beta1/delegations/{delegator_addr}:
     get:
       summary: DelegatorDelegations queries all delegations of a given delegator address.
@@ -18240,7 +18240,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/delegators/{delegator_addr}/redelegations:
     get:
       summary: Redelegations queries redelegations of given address.
@@ -18491,7 +18491,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/delegators/{delegator_addr}/unbonding_delegations:
     get:
       summary: 'DelegatorUnbondingDelegations queries all unbonding delegations of a given
@@ -18685,7 +18685,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/delegators/{delegator_addr}/validators:
     get:
       summary: 'DelegatorValidators queries all validators info for given delegator
@@ -18992,7 +18992,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/delegators/{delegator_addr}/validators/{validator_addr}:
     get:
       summary: 'DelegatorValidator queries validator info for given delegator validator
@@ -19231,7 +19231,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/historical_info/{height}:
     get:
       summary: HistoricalInfo queries the historical info for given height.
@@ -19569,7 +19569,7 @@ paths:
         type: string
         format: int64
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/params:
     get:
       summary: Parameters queries the staking parameters.
@@ -19684,7 +19684,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/pool:
     get:
       summary: Pool queries the pool info.
@@ -19765,7 +19765,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators:
     get:
       summary: Validators queries all validators that match the given status.
@@ -20068,7 +20068,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators/{validator_addr}:
     get:
       summary: Validator queries validator info for given validator address.
@@ -20298,7 +20298,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators/{validator_addr}/delegations:
     get:
       summary: ValidatorDelegations queries delegate info for given validator.
@@ -20485,7 +20485,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}:
     get:
       summary: Delegation queries delegate info for given validator delegator pair.
@@ -20605,7 +20605,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}/unbonding_delegation:
     get:
       summary: 'UnbondingDelegation queries unbonding info for given validator delegator
@@ -20734,7 +20734,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/staking/v1beta1/validators/{validator_addr}/unbonding_delegations:
     get:
       summary: ValidatorUnbondingDelegations queries unbonding delegations of a validator.
@@ -20926,7 +20926,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Query
+      - Staking (cosmos)
   /cosmos/tx/v1beta1/decode:
     post:
       summary: TxDecode decodes the transaction.
@@ -21015,7 +21015,7 @@ paths:
 
             Since: cosmos-sdk 0.47'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/decode/amino:
     post:
       summary: TxDecodeAmino decodes an Amino transaction from encoded bytes to JSON.
@@ -21112,7 +21112,7 @@ paths:
 
             Since: cosmos-sdk 0.47'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/encode:
     post:
       summary: TxEncode encodes the transaction.
@@ -21201,7 +21201,7 @@ paths:
         schema:
           $ref: '#/definitions/cosmos.tx.v1beta1.TxEncodeRequest'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/encode/amino:
     post:
       summary: TxEncodeAmino encodes an Amino transaction from JSON to encoded bytes.
@@ -21298,7 +21298,7 @@ paths:
 
             Since: cosmos-sdk 0.47'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/simulate:
     post:
       summary: Simulate simulates executing a transaction for estimating gas usage.
@@ -21489,7 +21489,7 @@ paths:
         schema:
           $ref: '#/definitions/cosmos.tx.v1beta1.SimulateRequest'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/txs:
     get:
       summary: GetTxsEvent fetches txs by event.
@@ -21658,7 +21658,7 @@ paths:
         required: false
         type: string
       tags:
-      - Service
+      - Tx (cosmos)
     post:
       summary: BroadcastTx broadcast transaction.
       operationId: BroadcastTx
@@ -21922,7 +21922,7 @@ paths:
 
             RPC method.'
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/txs/block/{height}:
     get:
       summary: GetBlockWithTxs fetches a block with decoded txs.
@@ -22048,7 +22048,7 @@ paths:
         required: false
         type: boolean
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/tx/v1beta1/txs/{hash}:
     get:
       summary: GetTx fetches a tx by hash.
@@ -22125,7 +22125,7 @@ paths:
         required: true
         type: string
       tags:
-      - Service
+      - Tx (cosmos)
   /cosmos/upgrade/v1beta1/applied_plan/{name}:
     get:
       summary: AppliedPlan queries a previously applied upgrade plan by its name.
@@ -22210,7 +22210,7 @@ paths:
         required: true
         type: string
       tags:
-      - Query
+      - Upgrade (cosmos)
   /cosmos/upgrade/v1beta1/authority:
     get:
       summary: Returns the account with authority to conduct upgrades
@@ -22287,7 +22287,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Upgrade (cosmos)
   /cosmos/upgrade/v1beta1/current_plan:
     get:
       summary: CurrentPlan queries the current upgrade plan.
@@ -22444,7 +22444,7 @@ paths:
                     \n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\
                     \n    }"
       tags:
-      - Query
+      - Upgrade (cosmos)
   /cosmos/upgrade/v1beta1/module_versions:
     get:
       summary: ModuleVersions queries the list of module versions from state.
@@ -22550,7 +22550,7 @@ paths:
         required: false
         type: string
       tags:
-      - Query
+      - Upgrade (cosmos)
   /cosmos/upgrade/v1beta1/upgraded_consensus_state/{last_height}:
     get:
       summary: 'UpgradedConsensusState queries the consensus state that will serve
@@ -22648,7 +22648,7 @@ paths:
         type: string
         format: int64
       tags:
-      - Query
+      - Upgrade (cosmos)
 definitions:
   google.protobuf.Any:
     type: object
@@ -41540,3 +41540,27 @@ host: lcd.osmosis.zone
 schemes:
 - https
 basePath: /
+tags:
+- name: Epochs (osmosis)
+- name: GAMM (osmosis)
+- name: Incentives (osmosis)
+- name: Lockup (osmosis)
+- name: Mint (osmosis)
+- name: Pool Incentives (osmosis)
+- name: Superfluid (osmosis)
+- name: Tokenfactory (osmosis)
+- name: Txfees (osmosis)
+- name: Auth (cosmos)
+- name: Authz (cosmos)
+- name: Bank (cosmos)
+- name: Base (cosmos)
+- name: Distribution (cosmos)
+- name: Evidence (cosmos)
+- name: Feegrant (cosmos)
+- name: Gov (cosmos)
+- name: Mint (cosmos)
+- name: Params (cosmos)
+- name: Slashing (cosmos)
+- name: Staking (cosmos)
+- name: Tx (cosmos)
+- name: Upgrade (cosmos)
