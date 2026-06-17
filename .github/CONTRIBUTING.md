@@ -7,7 +7,7 @@ Contributions come in the form of writing documentation, raising issues, and any
 Please don't submit a pull request to ask a question. Instead, join us in the following communities, and ask all your questions.
 
 - [Osmo Telegram community](https://t.me/osmosis_chat)
-- [Osmo Discord community](https://discord.gg/bYfyhUT)
+- [Osmo Discord community](https://discord.com/invite/osmosis)
 
 
 ## First steps
@@ -22,7 +22,7 @@ Osmo Docs requires everyone, without exception, to submit doc-change proposals b
 
 To contribute a doc-change proposal, use the following workflow:
 
-1. [Fork the repository](https://github.com/osmosis-labs/osmosis).
+1. [Fork the repository](https://github.com/osmosis-labs/docs).
 2. [Add an upstream](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) so that you can update your fork.
 3. Clone your fork to your computer.
 4. Create a branch and name it appropriately.
