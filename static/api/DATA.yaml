@@ -31,6 +31,12 @@ components:
       scheme: bearer
       description: Numia API key as a Bearer token. Required for the osmosis.numia.xyz host; not required
         for the public-osmosis-api.numia.xyz host.
+security:
+# Optional auth: the public host needs no key (the empty requirement), the
+# keyed host takes a Bearer token. Applying it at the top level is what makes
+# the API reference render the token field in Try-It.
+- {}
+- NumiaApiKey: []
 paths:
   /v2/pools_apr_range:
     get:
