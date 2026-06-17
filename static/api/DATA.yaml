@@ -1382,9 +1382,6 @@ paths:
       operationId: getSupplyMetrics
       tags: []
       sidebar: chain
-      servers:
-      - url: https://cosmos.numia.xyz
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: chain
       parameters:
