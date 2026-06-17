@@ -1,9 +1,9 @@
 openapi: 3.0.0
 servers:
-- url: https://osmosis.numia.xyz
-  description: Numia Osmosis API (full, requires API key)
 - url: https://public-osmosis-api.numia.xyz
-  description: Numia public tier (light use, no key)
+  description: Numia public tier (light use, no key) — default for Try-It
+- url: https://osmosis.numia.xyz
+  description: Numia Osmosis API (full, requires an API key sent as a Bearer token)
 info:
   title: Osmosis Data API (Numia)
   description: 'Historical and market data for Osmosis, provided by Numia. This API succeeds the former
@@ -38,8 +38,6 @@ paths:
       summary: Get Pools APR Range V2
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       parameters:
@@ -119,8 +117,6 @@ paths:
                   - total_apr
   /cl/v2/apr/rewards/{pool}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getClPoolsPositionAprV2
       summary: Get CL Pools Position APR V2
       tags: []
@@ -157,8 +153,6 @@ paths:
                 - APR
   /pairs/v1/historical/{pool_id}/chart:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getTokenPairHistoricalChart
       tags: []
       sidebar: pools
@@ -229,8 +223,6 @@ paths:
                   - low
   /tokens/v2/historical/{asset}/chart:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getTokenHistoricalChart
       tags: []
       sidebar: tokens
@@ -311,8 +303,6 @@ paths:
                   - volume
   /tokens/v2/real-time/{asset}/price:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getTokenRealTimePrice
       tags: []
       sidebar: tokens
@@ -342,8 +332,6 @@ paths:
                 - usd_price
   /tokens/v2/{asset}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getTokenData
       tags: []
       sidebar: tokens
@@ -430,8 +418,6 @@ paths:
                   - coingecko_mcap
   /fees/v1/pools:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getPoolsFees
       tags: []
       sidebar: pools
@@ -482,8 +468,6 @@ paths:
                 - last_update_at
   /stream/pool/v1/all:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getPoolStreamData
       tags: []
       sidebar: pools
@@ -795,8 +779,6 @@ paths:
                 - pools
   /lp/v1/rewards/estimation/{bech32Address}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getRewardsEstimationForBech32Address
       tags: []
       sidebar: users
@@ -844,8 +826,6 @@ paths:
                 - total_year_usd
   /rewards/token/{address}/{denom}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getRewardsEstimationForAddressAndDenom
       tags: []
       sidebar: users
@@ -887,8 +867,6 @@ paths:
                   - staking_amount
   /rewards/token/{address}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getRewardsEstimationForAddress
       tags: []
       sidebar: users
@@ -916,8 +894,6 @@ paths:
                 - denoms
   /cl/v1/position/last/id/{positionId}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getPositionInfo
       tags: []
       sidebar: pools
@@ -1036,8 +1012,6 @@ paths:
                 - principal
   /ibc/v1/source/{source}/destination/{destination}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getIBcChainStatus
       summary: Get IBC Chain Status
       tags: []
@@ -1087,8 +1061,6 @@ paths:
       operationId: getPoolsLiquidityOverTime
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       parameters:
@@ -1119,8 +1091,6 @@ paths:
       operationId: getPoolsDepthCurrent
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       parameters:
@@ -1184,8 +1154,6 @@ paths:
       operationId: getPoolsDepthOverTime
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       parameters:
@@ -1270,8 +1238,6 @@ paths:
       summary: Get staking APR
       tags: []
       sidebar: chain
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: chain
       parameters:
@@ -1323,8 +1289,6 @@ paths:
       summary: Get Pools APR
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       responses: {}
@@ -1334,15 +1298,11 @@ paths:
       summary: Get Pools APR Range
       tags: []
       sidebar: pools
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: pools
       responses: {}
   /cl/v1/apr/rewards/{pool}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getClPoolsPositionApr
       summary: Get CL Pools Position APR
       tags: []
@@ -1400,8 +1360,6 @@ paths:
       operationId: getPortfolioOverTime
       tags: []
       sidebar: users
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: users
       parameters:
@@ -1444,8 +1402,6 @@ paths:
       operationId: getPortfolioCurrent
       tags: []
       sidebar: users
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: users
       parameters:
@@ -1471,8 +1427,6 @@ paths:
       operationId: getClosedLimitOrdersHistory
       tags: []
       sidebar: users
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: users
       parameters:
@@ -1537,8 +1491,6 @@ paths:
                   - contract
   /pairs/v1/summary:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getPairsSummaryV1
       deprecated: true
       description: Only for CoinGecko integration
@@ -1630,8 +1582,6 @@ paths:
                 - last_update_at
   /pairs/v2/summary:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getPairsSummaryV2
       tags: []
       sidebar: pools
@@ -1722,8 +1672,6 @@ paths:
       operationId: getChainRevenue
       tags: []
       sidebar: chain
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: chain
       parameters:
@@ -1764,8 +1712,6 @@ paths:
       operationId: getTradingMetrics
       tags: []
       sidebar: chain
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-sidebar: chain
       responses:
@@ -1815,8 +1761,6 @@ paths:
       tags: []
       private: true
       sidebar: chain
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-private: true
         x-sidebar: chain
@@ -1870,8 +1814,6 @@ paths:
       tags: []
       private: true
       sidebar: tokens
-      servers:
-      - url: https://osmosis.numia.xyz
       attributes:
         x-private: true
         x-sidebar: tokens
@@ -1911,8 +1853,6 @@ paths:
                 - maxSupply
   /earn/strategies:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getEarnStrategies
       tags:
       - earn
@@ -2020,8 +1960,6 @@ paths:
                   - rewardDenoms
   /earn/strategies/{strategy}/balance/{address}:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getBalancesForEarnStrategies
       tags:
       - earn
@@ -2091,8 +2029,6 @@ paths:
                 - unclaimed_rewards
   /earn/strategies/{strategy}/apr:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getAprForEarnStrategies
       tags:
       - earn
@@ -2120,8 +2056,6 @@ paths:
                 - apr
   /earn/strategies/{strategy}/tvl:
     get:
-      servers:
-      - url: https://osmosis.numia.xyz
       operationId: getTvlForEarnStrategies
       tags:
       - earn
