@@ -467,7 +467,7 @@ paths:
                           description: Total amount of USD spent in fees in the last 7 days
                         fees_percentage:
                           type: string
-                          description: Actual swap fees percetage of the pool
+                          description: Actual swap fees percentage of the pool
                       required:
                       - pool_id
                       - volume_24h
