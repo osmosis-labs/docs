@@ -192,6 +192,12 @@ export default function Home() {
                 { name: 'IBCGO', id: 'IBCGO' },
               ]}
               onValueChange={(version) => {
+                // Update the controlled value optimistically so the trigger and
+                // the keyed <elements-api> switch on the same frame as the
+                // click. router.push then updates the URL, and the
+                // [location.search] effect reconciles from it (idempotent here,
+                // so no extra visible render).
+                setCurrentVersion(version);
                 router.push(`/api?v=${version}`);
               }}
               className="compact"
