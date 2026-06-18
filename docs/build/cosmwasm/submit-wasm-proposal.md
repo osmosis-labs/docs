@@ -61,11 +61,12 @@ VAL=$(osmosisd keys show -a validator --keyring-backend test)
 
 ## Submit proposal
 
-Storing code on a permissioned network goes through `x/wasm`'s own governance proposal command, `tx wasm submit-proposal store-wasm` (the older `tx gov submit-proposal wasm-store` form, and the `--description` flag, were removed in newer SDK/wasmd versions; metadata is now `--title` plus `--summary`):
+Storing code on a permissioned network goes through `x/wasm`'s own governance proposal command, `tx wasm submit-proposal wasm-store` (the older `tx gov submit-proposal wasm-store` form, and the `--description` flag, were removed in newer SDK/wasmd versions; metadata is now `--title` plus `--summary`, and the stored message's `--authority` is the gov module address):
 
 ```
-osmosisd tx wasm submit-proposal store-wasm $CONTRACT.wasm \
-  --title "Add $CONTRACT" --summary "Let's upload this contract" --run-as $VAL \
+osmosisd tx wasm submit-proposal wasm-store $CONTRACT.wasm \
+  --title "Add $CONTRACT" --summary "Let's upload this contract" \
+  --authority osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp \
   --from validator --keyring-backend test --chain-id $CHAIN_ID -y -b sync \
   --gas 9000000 --gas-prices 0.05uosmo
 ```

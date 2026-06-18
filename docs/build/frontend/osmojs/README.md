@@ -57,8 +57,6 @@ const msg = swapExactAmountIn({
 });
 ```
 
-(If you want to see an example of calculating `routes` and `tokenOutMinAmount` cosmology uses osmojs and has an [example here](https://github.com/cosmology-tech/cosmology/tree/main/packages/core#lookuproutesfortrade).)
-
 ### Calculating Fees
 
 Make sure to create a `fee` object in addition to your message.
@@ -309,7 +307,7 @@ const {
 
 ### Further examples
 
-Examples in [`create-cosmos-app` repo's examples directory](https://github.com/cosmology-tech/create-cosmos-app/tree/main/examples) gives you a great guideline on how osmojs can be used at its full extent.
+Examples in [`create-cosmos-app` repo's examples directory](https://github.com/hyperweb-io/create-cosmos-app/tree/main/examples) gives you a great guideline on how osmojs can be used at its full extent.
 
 You can also refer to the [osmojs documentation](https://github.com/osmosis-labs/osmojs/tree/main/packages/osmojs/docs) for further documentations on osmojs usage.
 

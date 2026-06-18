@@ -22,13 +22,13 @@ This gives you a cargo project with a sample contract (the standard `counter`), 
 
 ## 2. Add cw-orchestrator
 
-[cw-orchestrator](/build/cosmwasm/cw-orch) is the actively maintained tool for building, deploying, and testing CosmWasm contracts, and the recommended path on Osmosis. Add it to the contract crate:
+[cw-orchestrator](/build/cosmwasm/cw-orch) is the actively maintained tool for building, deploying, and testing CosmWasm contracts, and the recommended path on Osmosis. Add it to the contract crate as an optional dependency:
 
 ```bash
-cargo add cw-orch
+cargo add --optional cw-orch
 ```
 
-`cw-orch` is gated so it is not compiled into the wasm artifact. You then define a typed interface for the contract and use it to write deploy and test scripts that run unchanged against a local chain, a testnet, or mainnet. See [Scripts and Tests with cw-orchestrator](/build/cosmwasm/cw-orch) for the interface macro and the full setup.
+Adding it as optional and enabling it behind an `interface` feature flag keeps `cw-orch` out of the compiled wasm artifact. You then define a typed interface for the contract and use it to write deploy and test scripts that run unchanged against a local chain, a testnet, or mainnet. See [Scripts and Tests with cw-orchestrator](/build/cosmwasm/cw-orch) for the feature setup, the interface macro, and the full workflow.
 
 ## 3. Build and test locally
 
