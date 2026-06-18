@@ -20,7 +20,7 @@ Recommended values for peers, seeds, and minimum gas prices change over time and
 
 ## `config.toml`
 
-- **`persistent_peers` / `seeds`** define who your node connects to. <!-- TODO(operator): list current recommended seeds/peers once confirmed. -->
+- **`persistent_peers` / `seeds`** define who your node connects to. `osmosisd init` writes the official Osmosis seeds (`seed.osmosis.zone:26656` and `seeds.polkachu.com:12556`). For the current full set of seeds and persistent peers, use the [Osmosis entry in the Cosmos chain registry](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json) (its `peers` section), which is kept up to date by the community; peer addresses rotate, so prefer the registry over a hardcoded list.
 - **`pex`**, **`max_num_inbound_peers` / `max_num_outbound_peers`** tune peer discovery and connection counts.
 - **`[consensus]`** timeouts are network-tuned; do not change them on a validator without reason.
 

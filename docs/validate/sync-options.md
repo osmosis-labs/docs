@@ -8,8 +8,8 @@ sidebar_position: 5
 
 A new node has to acquire the chain's state before it can validate. Syncing from genesis block by block is slow; in practice operators use a snapshot or state sync, and choose a pruning setting that matches what the node is for. This page covers the options and how to choose; for the install itself see [Install osmosisd](/validate/install-osmosisd).
 
-:::caution Operator verification required
-The recommended snapshot providers, their URLs, and the current state-sync RPC servers change over time. Confirm the current sources before using them. The mechanisms below are stable; the specific endpoints are not.
+:::caution Endpoints change over time
+Snapshot contents and state-sync RPC servers change frequently. The snapshot providers below are current; always take the latest snapshot height from the provider's page, and confirm state-sync RPC servers before relying on them.
 :::
 
 ## The options
@@ -37,7 +37,14 @@ Choose pruned unless you specifically need history. Switching a node from pruned
 - **Public RPC / indexer:** snapshot restore, pruning sized to the queries you serve.
 - **Archive (historical queries, old-height exports):** genesis sync or an archive snapshot, `pruning = "nothing"`.
 
-<!-- TODO(operator): list the current recommended snapshot provider(s) and URLs, and the current state-sync RPC servers, once confirmed. -->
+## Snapshot providers
+
+- **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)** — the official Osmosis snapshots.
+- **[Polkachu](https://www.polkachu.com/tendermint_snapshots/osmosis)** — community-maintained snapshots with restore instructions.
+
+Each provider's page lists the current snapshot height, download URL, and the extract command for the latest data. Match the snapshot's pruning profile to your node's role (a pruned snapshot for a validator, an archive snapshot only if you need full history).
+
+<!-- TODO(operator): list the current recommended state-sync RPC servers (trust height/hash + rpc_servers) once confirmed. -->
 
 ## Reference
 
