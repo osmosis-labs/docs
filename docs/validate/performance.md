@@ -1,7 +1,7 @@
 ---
 description: Profile and diagnose the performance of a running node.
 title: Performance and Profiling
-sidebar_position: 5
+sidebar_position: 8
 ---
 # Performance & Profiling
 
@@ -9,10 +9,10 @@ sidebar_position: 5
 
 1. Query the pprof cpu endpoint on the node host: 
    * **CPU**: `curl -X GET localhost:6060/debug/pprof/profile?seconds=<number> > <filename>`
-   * **Heap**: `curl -X GET localhost:6060/debug/pprof/heap?seconds=<number> > <filename>`
+   * **Heap**: `curl -X GET localhost:6060/debug/pprof/heap > <filename>`
    * can query from your local machine by substituting localhost with the IP of the node, depending on your network setup. By doing this, can skip step 2.
 2. If querying on the node host, SCP the file to yourself: `scp <filename> <user>@<host>:<path>`
-   * E.g. `scp <filename> root@143.182.133.71:/home/roman/osmosis/pprof`
+   * E.g. `scp <filename> <user>@<host>:<dest-path>`
    * ensure that your ISP or firewall is not blocking the file transfer
 3. Run a web server and open up a browser`go tool pprof -http=localhost:8080 <filename>`
    * `graphviz` must be installed
@@ -20,25 +20,25 @@ sidebar_position: 5
 
 #### Causes
 The following cause memory issues in Go
-– Creating substrings and subslices.
-– Wrong use of the defer statement.
-– Unclosed HTTP response bodies (or unclosed resources in general).
-– Orphaned hanging go routines.
-– Global variables.
+- Creating substrings and subslices.
+- Wrong use of the defer statement.
+- Unclosed HTTP response bodies (or unclosed resources in general).
+- Orphaned hanging go routines.
+- Global variables.
 
 #### Interpreting Output
-– `inuse_space`: Means pprof is showing the amount of memory allocated
+- `inuse_space`: Means pprof is showing the amount of memory allocated
 and not yet released.
-– `inuse_objects`: Means pprof is showing the amount of objects allocated
+- `inuse_objects`: Means pprof is showing the amount of objects allocated
 and not yet released.
-– `alloc_space`: Means pprof is showing the amount of memory allocated,
+- `alloc_space`: Means pprof is showing the amount of memory allocated,
 regardless if it was released or not.
-– `alloc_objects`: Means pprof is showing the amount of objects allocated,
+- `alloc_objects`: Means pprof is showing the amount of objects allocated,
 regardless if they were released or not.
 
-– `flat`: Represents the memory allocated by a function and still held by that
+- `flat`: Represents the memory allocated by a function and still held by that
 function.
-– `cum`: Represents the memory allocated by a function or any other function
+- `cum`: Represents the memory allocated by a function or any other function
 that is called down the stack.
 
 
@@ -72,9 +72,6 @@ For benchstat specifically:
    * if you do, might take longer since you need multiple runs to get a good sample size
    * people recommend 5 as a good enough sample size
 
-
-Adding -run='$^' or -run=- to each go test command to avoid running the tests too
-
 ### Example
 Let's assume that we are working on branch `osmosis/string` and added some performance improvements to `tree.String()`.
 
@@ -91,7 +88,7 @@ go test -benchmem -run=^$ -bench ^BenchmarkTreeString$ -benchmem -count 5 github
 
 2. Checkout our `osmosis/string` branch and get the output of the benchmark:
 ```
-git checkout master
+git checkout osmosis/string
 
 go test -benchmem -run=^$ -bench ^BenchmarkTreeString$ -benchmem -count 5 github.com/cosmos/iavl > bench_string_new.txt
 ```
