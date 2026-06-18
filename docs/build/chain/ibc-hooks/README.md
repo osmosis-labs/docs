@@ -299,7 +299,7 @@ Note: the sudo call is required to potentially allow anyone to send the `MsgEmit
 this is artificially limited so that the message can only be sent by the same contract. This could be expanded in
 the future if needed.
 
-The `MsgEmitIBCAck` message is defined in the [`osmosis.ibchooks` proto](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/ibchooks/tx.proto) at the `v31.0.1` tag.
+The `MsgEmitIBCAck` message is defined in the [`osmosis.ibchooks` proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/ibchooks/tx.proto) at the `v31.0.1` tag.
 
 # Testing strategy
 

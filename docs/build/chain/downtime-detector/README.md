@@ -40,4 +40,4 @@ The module exposes a single gRPC query, `RecoveredSinceDowntimeOfLength`:
 * Response `RecoveredSinceDowntimeOfLengthResponse`
     * `succesfully_recovered` (`bool`): true if it has been at least `recovery` since the last downtime of length `downtime`. (The misspelling is part of the deployed proto field name.)
 
-Source: [`proto/osmosis/downtimedetector/v1beta1/query.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/downtimedetector/v1beta1/query.proto) and [`downtime_duration.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/downtimedetector/v1beta1/downtime_duration.proto).
+Source: [`proto/osmosis/downtimedetector/v1beta1/query.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/downtimedetector/v1beta1/query.proto) and [`downtime_duration.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/downtimedetector/v1beta1/downtime_duration.proto).

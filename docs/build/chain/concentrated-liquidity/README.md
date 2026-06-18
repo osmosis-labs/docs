@@ -468,7 +468,7 @@ in the `"Liquidity Provision"` section of this document.
 This message is responsible for creating a concentrated-liquidity pool.
 The RPC is registered on the `x/concentrated-liquidity` module's
 pool-creation message service (in the
-[`model` package](https://github.com/osmosis-labs/osmosis/tree/v31.0.1/x/concentrated-liquidity/model)),
+[`model` package](https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity/model)),
 not on `x/poolmanager`'s `Msg` service. Its handler delegates to the
 `x/poolmanager` keeper for pool-id allocation and swap-route registration.
 
@@ -569,7 +569,7 @@ type MsgTransferPositions struct {
 
 :::caution Not in the active Msg service
 The `MsgFungifyChargedPositions` message type is defined in
-[`tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/concentratedliquidity/v1beta1/tx.proto)
+[`tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/concentratedliquidity/v1beta1/tx.proto)
 but is not currently wired into the module's Msg service, so it cannot be
 submitted onchain. The description below documents the intended
 semantics for the type as it exists in proto.

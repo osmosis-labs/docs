@@ -48,7 +48,7 @@ the following formula:
 
 ### Minter
 
-The [`Minter`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/mint/v1beta1/mint.proto#L12) is an abstraction for holding current rewards information.
+The [`Minter`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/mint/v1beta1/mint.proto#L12) is an abstraction for holding current rewards information.
 
 ```go
 type Minter struct {

@@ -15,7 +15,7 @@ The ``GAMM`` module (**G**eneralized **A**utomated **M**arket **M**aker) provide
 
 The `x/gamm` module implements an AMM using:
 - Balancer style pools with varying amounts and weights of assets in pools.
-- Stableswap pools have liquidity centered around a given spot price. See [here](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/gamm/pool-models/stableswap/README.md) for the spec of the Osmosis implementation.
+- Stableswap pools have liquidity centered around a given spot price. See [here](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/pool-models/stableswap/README.md) for the spec of the Osmosis implementation.
 
 Here we will explain basic GAMM concepts and give an overview of how GAMM module's code is organized to support both type of pools.
 
@@ -119,13 +119,13 @@ the following formula:
 
 `(tokenBalanceIn / tokenWeightIn) / (tokenBalanceOut / tokenWeightOut)`
 
-[Spot price](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/gamm/keeper/swap.go)
+[Spot price](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/keeper/swap.go)
 
 #### Multi-Hop
 
 The multi-hop logic is handled via `x/poolmanager` module.
 Please see for details:
-- https://github.com/osmosis-labs/osmosis/blob/v31.0.1/x/poolmanager/README.md
+- https://github.com/osmosis-labs/osmosis/blob/main/x/poolmanager/README.md
 
 ## Weights
 
@@ -197,7 +197,7 @@ Migration records are used to track a canonical link between a single balancer p
 
 The `x/gamm` module supports the following message types:
 
-Message definitions live in [`proto/osmosis/gamm/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/gamm/v1beta1/tx.proto), with `MsgCreateBalancerPool` in [`proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/v31.0.1/proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto).
+Message definitions live in [`proto/osmosis/gamm/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/v1beta1/tx.proto), with `MsgCreateBalancerPool` in [`proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/gamm/poolmodels/balancer/v1beta1/tx.proto).
 
 ### MsgCreateBalancerPool
 
