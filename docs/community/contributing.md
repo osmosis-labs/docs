@@ -1,7 +1,7 @@
 ---
 description: Guidelines for contributing to the Osmosis repositories.
 title: Contributing
-sidebar_position: 6
+sidebar_position: 5
 ---
 # Contributing
 

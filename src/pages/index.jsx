@@ -254,13 +254,6 @@ export default function Homepage() {
               svgFile="/icons/octocat.svg"
             />
             <Card
-              title="Translations"
-              description="Help translate the Osmosis interface into new languages."
-              to="/community/translating"
-              icon={<Contribute />}
-              svgFile="/icons/registry.svg"
-            />
-            <Card
               title="IBC Relayer List"
               description="Directory of relaying operators connecting Osmosis to the Cosmos ecosystem."
               to="/community/ibc-relayers-list"
