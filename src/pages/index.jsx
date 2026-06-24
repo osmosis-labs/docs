@@ -17,6 +17,7 @@ import {
   OsmosisCore,
   Contribute,
   RelayerIcon,
+  Guide,
 } from '../icons';
 
 export default function Homepage() {
@@ -246,6 +247,27 @@ export default function Homepage() {
           </Section>
 
           <Section title="Community">
+            <Card
+              featured
+              title="Governance Participation"
+              description="How to discuss, vote on, and submit Osmosis governance proposals. Osmosis is governed by its stakers, and proposals decide everything from parameters to upgrades to treasury spending."
+              to="/community/governance"
+              icon={<OsmosisCore />}
+              svgFile="/icons/osmo.svg"
+            />
+            <Card
+              title="Grants and Ecosystem Funding"
+              description="Funding paths for building on Osmosis: the Osmosis Grants Program and community-pool spend proposals."
+              to="/community/grants"
+              icon={<AssetIcon />}
+              svgFile="/icons/store.svg"
+            />
+            <Card
+              title="Support"
+              description="Where to get help as a user, developer, or node operator, plus network status and security disclosure."
+              to="/community/support"
+              icon={<Guide />}
+            />
             <Card
               title="Contributing"
               description="Guidelines for contributing to Osmosis development."
