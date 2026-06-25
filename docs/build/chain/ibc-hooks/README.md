@@ -46,11 +46,12 @@ msg := MsgExecuteContract{
 	// Sender is the that actor that signed the messages
 	Sender: "osmo1-hash-of-channel-and-sender",
 	// Contract is the address of the smart contract
-	Contract: packet.data.memo["wasm"]["ContractAddress"],
+	Contract: packet.data.memo["wasm"]["contract"],
 	// Msg json encoded message to be passed to the contract
-	Msg: packet.data.memo["wasm"]["Msg"],
+	Msg: packet.data.memo["wasm"]["msg"],
 	// Funds coins that are transferred to the contract on execution
-	Funds: sdk.NewCoin{Denom: ibc.ConvertSenderDenomToLocalDenom(packet.data.Denom), Amount: packet.data.Amount}
+	Funds: sdk.NewCoins(sdk.NewCoin(ibc.ConvertSenderDenomToLocalDenom(packet.data.Denom), packet.data.Amount)),
+}
 ```
 
 ### ICS20 packet structure
@@ -70,7 +71,7 @@ ICS20 is JSON native, so we use JSON for the memo format.
            "wasm": {
               "contract": "osmo1contractAddr",
               "msg": {
-                "raw_message_fields": "raw_message_data",
+                "raw_message_fields": "raw_message_data"
               }
             }
         }
@@ -82,7 +83,7 @@ An ICS20 packet is formatted correctly for wasmhooks iff the following all hold:
 
 * `memo` is not blank
 * `memo` is valid JSON
-* `memo` has at least one key, with value `"wasm"`
+* `memo` has at least one key, with name `"wasm"`
 * `memo["wasm"]` has exactly two entries, `"contract"` and `"msg"`
 * `memo["wasm"]["msg"]` is a valid JSON object
 * `receiver == "" || receiver == memo["wasm"]["contract"]`
@@ -100,7 +101,7 @@ If an ICS20 packet is directed towards wasmhooks, and is formatted incorrectly, 
 
 Pre wasm hooks:
 
-* Ensure the incoming IBC packet is cryptogaphically valid
+* Ensure the incoming IBC packet is cryptographically valid
 * Ensure the incoming IBC packet is not timed out.
 
 In Wasm hooks, pre packet execution:
@@ -132,7 +133,7 @@ Crucially, _only_ the IBC packet sender can set the callback.
 The crosschain swaps implementation sends an IBC transfer. If the transfer were to fail, we want to allow the sender
 to be able to retrieve their funds (which would otherwise be stuck in the contract). To do this, we allow users to 
 retrieve the funds after the timeout has passed, but without the ack information, we cannot guarantee that the send 
-hasn't failed (i.e.: returned an error ack notifying that the receiving change didn't accept it)
+hasn't failed (i.e.: returned an error ack notifying that the receiving chain didn't accept it)
 
 ### Implementation
 
@@ -160,7 +161,7 @@ pub enum IBCLifecycleComplete {
         sequence: u64,
         /// String encoded version of the ack as seen by OnAcknowledgementPacket(..)
         ack: String,
-        /// Weather an ack is a success of failure according to the transfer spec
+        /// Whether an ack is a success or failure according to the transfer spec
         success: bool,
     },
     #[serde(rename = "ibc_timeout")]
@@ -179,6 +180,126 @@ pub enum SudoMsg {
     IBCLifecycleComplete(IBCLifecycleComplete),
 }
 ```
+
+### Async Acks
+
+IBC supports the ability to send an ack back to the sender of the packet asynchronously. This is useful for
+cases where the packet is received, but the ack is not immediately known. For example, if the packet is being
+forwarded to another chain, the ack may not be known until the packet is received on the other chain.
+
+Note this ACK does not imply full revertability. It is possible that unrevertable actions have occurred
+even if there is an Ack Error. (This is distinct from the behavior of ICS-20 transfers). If you want to ensure
+revertability, your contract should be implemented in a way that actions are not finalized until a success ack
+is received.
+
+#### Use case
+
+Async acks are useful in cases where the contract needs to wait for a response from another chain before
+returning a result to the caller.
+
+For example, if you want to send tokens to another chain after the contract is executed you need to
+add a new ibc packet and wait for its ack.
+
+In the synchronous acks case, the caller will receive an ack from the contract before the second packet
+has been processed. This means that the caller will have to wait (and potentially track) if the second
+packet has been processed successfully or not.
+
+With async acks, your contract can take this responsibility and only send an ack to the caller once the
+second packet has been processed.
+
+#### Making contract Acks async
+
+To support this, we allow contracts to return an `IBCAsync` response from the function being executed when the
+packet is received. That response specifies that the ack should be handled asynchronously.
+
+Concretely the contract should return:
+
+```rust
+#[cw_serde]
+pub struct OnRecvPacketAsyncResponse {
+    pub is_async_ack: bool,
+}
+```
+
+If `is_async_ack` is set to true, `OnRecvPacket` will return `nil` and the ack will not be written. Instead, the
+contract will be stored as the "ack actor" for the packet so that only that contract is allowed to send an ack
+for it.
+
+It is up to the contract developers to decide which conditions will trigger the ack to be sent.
+
+#### Sending an async ack
+
+To send the async ack, the contract needs to send the `MsgEmitIBCAck` message to the chain. This message will
+then make a sudo call to the contract requesting the ack and write the ack to state.
+
+That message can be specified in the contract as:
+
+```rust
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/osmosis.ibchooks.MsgEmitIBCAck")]
+pub struct MsgEmitIBCAck {
+    #[prost(string, tag = "1")]
+    pub sender: ::prost::alloc::string::String,
+    #[prost(uint64, tag = "2")]
+    pub packet_sequence: u64,
+    #[prost(string, tag = "3")]
+    pub channel: ::prost::alloc::string::String,
+}
+```
+
+The contract is expected to implement the following sudo message handler:
+
+```rust
+#[cw_serde]
+pub enum IBCAsyncOptions {
+    #[serde(rename = "request_ack")]
+    RequestAck {
+        /// The source channel (osmosis side) of the IBC packet
+        source_channel: String,
+        /// The sequence number that the packet was sent with
+        packet_sequence: u64,
+    },
+}
+
+#[cw_serde]
+pub enum SudoMsg {
+    #[serde(rename = "ibc_async")]
+    IBCAsync(IBCAsyncOptions),
+}
+```
+
+and that sudo call should return an `IBCAckResponse`:
+
+```rust
+#[cw_serde]
+#[serde(tag = "type", content = "content")]
+pub enum IBCAck {
+    AckResponse{
+        packet: Packet,
+        contract_ack: ContractAck,
+    },
+    AckError {
+        packet: Packet,
+        error_description: String,
+        error_response: String,
+    }
+}
+```
+
+Note: the sudo call is required to potentially allow anyone to send the `MsgEmitIBCAck` message. For now, however,
+this is artificially limited so that the message can only be sent by the same contract. This could be expanded in
+the future if needed.
+
+The `MsgEmitIBCAck` message is defined in the [`osmosis.ibchooks` proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/ibchooks/tx.proto) at the `v31.0.1` tag.
 
 # Testing strategy
 

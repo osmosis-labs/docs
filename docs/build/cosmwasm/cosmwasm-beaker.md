@@ -98,7 +98,7 @@ deposit: 500000000uosmo
 code:
     repo:   https://github.com/osmosis-labs/beaker/
     rust_flags: -C link-arg=-s
-    roptimizer: workspace-optimizer:0.12.6
+    optimizer: workspace-optimizer:0.12.6
 ```
 
 ```sh
@@ -166,12 +166,12 @@ Great! Your proposal should have passed now!
 
 ### Signers
 
-In the examples above we used the test1 account to sign transactions. However, Bekaer supports 3 options for signing transactions as shown on the official [README](https://github.com/osmosis-labs/beaker#Signers).
+In the examples above we used the test1 account to sign transactions. However, Beaker supports 3 options for signing transactions as shown on the official [README](https://github.com/osmosis-labs/beaker#Signers).
 
-- `--signer-account` input of this option refer to the accounts defined in the [config file](./beaker/config/global), which is not encrypted, so it should be used only for testing
+- `--signer-account` input of this option refer to the accounts defined in the [config file](./beaker/config/global.md), which is not encrypted, so it should be used only for testing
 - `--signer-mnemonic` input of this option is the raw mnemonic string to construct a signer
 - `--signer-private-key` input of this option is the same as `--signer-mnemonic` except it expects base64 encoded private key
-- `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](./beaker/commands/beaker_key).
+- `--signer-keyring` use the OS secure store as backend to securely store your key. To manage them, you can find more information [here](./beaker/commands/beaker_key.md).
 
 ### Using the OS keyring
 Let's dive a little deeper on how to use the OS keyring in order to sign a transaction with your OS keyring. 

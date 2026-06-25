@@ -11,7 +11,7 @@ It is generalized to the multi-asset setting as $$f(a_1, ..., a_n) = a_1 * ... *
 
 ## Pool configuration
 
-One key concept, is that the pool has a native concept of
+One key concept is that the pool has a native concept of a scaling factor per asset, used to map raw coin units to AMM math units (detailed below).
 
 ### Scaling factor handling
 
@@ -384,12 +384,11 @@ From this, we then derive what we'd expect for `JoinPool`.
 
 #### JoinPoolNoSwap and ExitPool
 
-Both of these methods can be implemented via generic AMM techniques.
-(Link to them or describe the idea)
+Both of these methods can be implemented via generic AMM techniques: liquidity is added or removed in proportion to the existing reserves, so the ratio of reserves (and therefore the CFMM invariant up to scale) is preserved and no swap occurs.
 
 #### JoinPool
 
-The JoinPool API only supports JoinPoolNoSwap if
+The JoinPool API falls back to JoinPoolNoSwap when the provided tokens are already in the pool's reserve ratio, so that no swap is needed. Otherwise it is decomposed into a JoinPoolNoSwap on the in-ratio portion of the input, followed by a single-asset join (see below) on the remainder.
 
 #### Join pool single asset in
 

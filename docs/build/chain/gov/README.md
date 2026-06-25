@@ -1,6 +1,6 @@
 # Gov
 
-The `gov` module enables on-chain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
+The `gov` module enables onchain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
 
 - Form an idea and seek feedback
 - Create a proposal and adjust according to feedback as needed
@@ -74,7 +74,7 @@ typical flags would be:
 
 - `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 - `--from WALLET_ADDRESS` to set the running wallet
-- `--deposit=400000000uosmo` to provide the initial 400 OSMO (25% of total) deposit for putting a proposal on chain
+- `--deposit=1500000000uosmo` to provide the initial 1500 OSMO (25% of the `min_deposit`) deposit for putting a proposal on chain
 
 There are different types of proposal submission types, including
 
@@ -94,7 +94,7 @@ We will go over each of these submission types in detail now:
 Text proposals differ from other proposal submission types in that after it passes, no logic is automatically executed. This is good for proposing changes to Osmosis that are not linked to a specific daemon parameter.
 
 ```bash
-osmosisd tx gov submit-proposal --type=text --title="" --description="" --from WALLET_ADDRESS --deposit=400000000uosmo [flags]
+osmosisd tx gov submit-proposal --type=text --title="" --description="" --from WALLET_ADDRESS --deposit=1500000000uosmo [flags]
 ```
 
 **Example**
@@ -102,7 +102,7 @@ osmosisd tx gov submit-proposal --type=text --title="" --description="" --from W
 Create a text signaling proposals to match external incentives for a `DOGE/OSMO` and `DOGE/ATOM` pair.
 
 ```bash
-osmosisd tx gov submit-proposal --type=text --title="Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs" --description="Input description" --from WALLET_ADDRESS --deposit=400000000uosmo --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal --type=text --title="Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs" --description="Input description" --from WALLET_ADDRESS --deposit=1500000000uosmo --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 ### submit-proposal (param change)
@@ -134,7 +134,7 @@ The proposal.json file would look as follows:
       "value": 150
     }
   ],
-  "deposit": "400000000uosmo"
+  "deposit": "1500000000uosmo"
 }
 ```
 
@@ -162,7 +162,7 @@ The proposal.json would look as follows:
   "description": "Establish a DAO for Osmosis. Potentially add external links for more information or allow discussion",
   "recipient": "osmo1r9pjvsuahxwkxg8cnhacd6alkmxq330fl9pqqt",
   "amount": "10000000000uosmo",
-  "deposit": "400000000uosmo"
+  "deposit": "1500000000uosmo"
 }
 ```
 
@@ -451,14 +451,14 @@ Which outputs:
     "min_deposit": [
       {
         "denom": "uosmo",
-        "amount": "1600000000"
+        "amount": "6000000000"
       }
     ],
     "max_deposit_period": "1209600000000000",
     "min_expedited_deposit": [
       {
         "denom": "uosmo",
-        "amount": "5000000000"
+        "amount": "20000000000"
       }
     ],
     "min_initial_deposit_ratio": "0.250000000000000000"
@@ -482,7 +482,7 @@ The following tables show overall effects on different configurations of the `go
 | Higher                | More collateral required to bring a proposal to vote | More time to solicit funds to reach `min_deposit` | Longer voting period       |
 | Lower                 | Less collateral required to bring a proposal to vote | Less time to solicit funds to reach `min_deposit` | Shorter voting period      |
 | Constraints           | Value has to be a positive integer                   | Value has to be positive                          | Value has to be positive   |
-| Current configuration | `1600000000` (1600 OSMO)                             | `1209600000000000` (2 weeks)                      | `432000000000000` (5 days) |
+| Current configuration | `6000000000` (6000 OSMO)                             | `1209600000000000` (2 weeks)                      | `432000000000000` (5 days) |
 
 |                       | `quorum`                             | `threshold`                          | `veto`                               |
 | --------------------- | ------------------------------------ | ------------------------------------ | ------------------------------------ |
@@ -494,8 +494,8 @@ The following tables show overall effects on different configurations of the `go
 
 |                       | `min_expedited_deposit`                                         | `expedited_threshold`                         | `expedited_voting_period`       |
 | --------------------- | --------------------------------------------------------------- | --------------------------------------------- | ------------------------------- |
-| Type                  | string (time ns)                                                | string (dec)                                  | string (dec)                    |
+| Type                  | array (coins)                                                   | string (dec)                                  | string (dec)                    |
 | Higher                | More collateral required to bring an expedited proposal to vote | Easier for an expedited proposal to be passed | Longer expedited voting period  |
 | Lower                 | Less collateral required to bring an expedited proposal to vote | Harder for an expedited proposal to be passed | Shorter expedited voting period |
 | Constraints           | Value has to be a positive integer                              | Value has to be less or equal to `1`          | Value has to be positive        |
-| Current configuration | `5000000000` (5000 OSMO)                                        | `0.666666666666666667` (66.6%)                | `86400000000000` (1 day)        |
+| Current configuration | `20000000000` (20000 OSMO)                                      | `0.666666666666666667` (66.6%)                | `86400000000000` (1 day)        |

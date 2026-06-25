@@ -48,7 +48,7 @@ the following formula:
 
 ### Minter
 
-The [`Minter`](https://github.com/osmosis-labs/osmosis/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L30) is an abstraction for holding current rewards information.
+The [`Minter`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/mint/v1beta1/mint.proto#L12) is an abstraction for holding current rewards information.
 
 ```go
 type Minter struct {
@@ -158,7 +158,7 @@ query mint params
 <details>
 <summary>Example</summary>
 
-List all current min parameters in json format by:
+List all current mint parameters in json format by:
 
 ```bash
 osmosisd query mint params -o json | jq
@@ -281,4 +281,4 @@ The following tables show overall effects on different configurations of the `mi
 | Higher                | N/A              | Higher inflation rate              | Increases time to reduction_period       |
 | Lower                 | N/A              | Lower inflation rate               | Decreases time to reduction_period       |
 | Constraints           | N/A              | Value has to be a positive integer | String must be day, week, month, or year |
-| Current configuration | uosmo            | 821917808219.178 (821,9178 OSMO)   | day                                      |
+| Current configuration | uosmo            | 821917808219.178 (821,917.808 OSMO) | day                                     |

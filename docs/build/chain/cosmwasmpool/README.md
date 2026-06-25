@@ -9,8 +9,9 @@ The module is built on top of the CosmWasm smart contracting platform, which pro
 
 Having pools in CosmWasm provides several benefits, one of which is avoiding the need for chain upgrades when introducing new functionalities or modifying existing ones related to liquidity pools. This advantage is particularly important in the context of speed of development and iteration.
 
-An example of a CosmWasm pool type:
-- [transmuter](https://github.com/osmosis-labs/transmuter)
+Examples of CosmWasm pool types:
+- [transmuter](https://github.com/osmosis-labs/transmuter) (the constant-sum pools behind alloyed assets)
+- [orderbook](https://github.com/osmosis-labs/orderbook) (the SumTree-based onchain orderbook markets)
 
 ## Key Components
 
@@ -46,7 +47,7 @@ To create new CosmWasm Pool, there are 3 modules involved: `x/cosmwasmpool`, `x/
 graph TD;
   Sender((Sender))
 
-  Sender -- create poool --> x/cosmwasmpool
+  Sender -- create pool --> x/cosmwasmpool
   x/cosmwasmpool -- get next & set pool id --> x/poolmanager
   x/cosmwasmpool -- instantiate contract --> x/wasm
 ```
@@ -304,7 +305,7 @@ Ok(Response::new()
 ```rs
 #[cw_serde]
 pub struct AfterPoolCreated {
-    pub create_pool_guages: Option<CreatePoolGauges>,
+    pub create_pool_gauges: Option<CreatePoolGauges>,
 }
 
 #[cw_serde]
@@ -387,7 +388,7 @@ Note, that in both cases, x/cosmwasmpool module account will act as the admin an
 Proposal Name: `UploadCosmWasmPoolCodeAndWhiteListProposal`
 
 On successful passing of this proposal, the code id of the pool contract will be added to the whitelist.
-As a result, anyone would be able to instantiate a pool contract with this code id when creating a pol.
+As a result, anyone would be able to instantiate a pool contract with this code id when creating a pool.
 No address will be able to maliciously upload a new code id and instantiate a pool contract with it without
 governance approval.
 
@@ -413,7 +414,7 @@ In both cases, if one of the pools specified by the given `poolID` does not exis
 
 The reason for having `poolID`s be a slice of ids is to account for the potential need for emergency migration of all old code ids to new code ids, or simply having the flexibility of migrating multiple older pool contracts to a new one at once when there is a release.
 
-`poolD`s must be at the most size of `PoolMigrationLimit` module parameter. It is configured to 20 at launch.
+`poolID`s must be at the most size of `PoolMigrationLimit` module parameter. It is configured to 20 at launch.
 The proposal fails if more. Note that 20 was chosen arbitrarily to have a constant bound on the number of pools migrated at once.
 
 Inputs

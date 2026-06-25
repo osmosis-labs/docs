@@ -6,7 +6,9 @@ Superfluid Staking provides the consensus layer more security with a
 sort of "Proof of Useful Stake". Each person gets an amount of Osmo
 representative of the value of their share of liquidity pool tokens
 staked and delegated to validators, resulting in the security guarantee
-of the consensus layer to also be based on GAMM LP shares. The OSMO
+of the consensus layer to also be based on liquidity provider positions.
+Superfluid staking supports both GAMM LP shares and full-range
+concentrated-liquidity positions as the underlying staked asset. The OSMO
 token is minted and burned in the context of Superfluid Staking.
 Throughout all of this, OSMO's supply is preserved in queries to the
 bank module.
@@ -54,7 +56,7 @@ modules](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid).
 
 ### Example
 
-If Alice has 500 GAMM tokens bonded to the ATOM \<\> OSMO, she will have
+If Alice has 500 GAMM tokens bonded to the ATOM/OSMO pool, she will have
 the equivalent value of OSMO minted, delegated to her chosen staker, and
 burned for her each day with Superfluid staking. On the user side, all
 she has to know is who she wants to delegate her tokens to. In order to
@@ -185,12 +187,15 @@ A superfluid asset is an alternative asset (non-OSMO) that is allowed by
 governance to be used for staking.
 
 It can only be updated by governance proposals. We validate at proposal
-creation time that the denom + pool exists. (Are we going to ignore edge
-cases around a reference pool getting deleted it)
+creation time that the denom + pool exists.
 
 ### Intermediary Accounts
 
-Lots of questions to be answered here
+An intermediary account exists for every (superfluid denom, validator)
+pair. It holds the minted OSMO that represents the value of the locks
+grouped under that pair and performs the actual delegation to the
+validator on their behalf. Each intermediary account has a dedicated
+perpetual gauge to which its delegation rewards are sent.
 
 ### Dedicated Gauges
 
@@ -347,6 +352,97 @@ lock until after the unstaking has finished.
 - This runs the functionality of `MsgSuperfluidUndelegate`
 - It then triggers a force unbond of the underlying lock id
 
+### Superfluid Undelegate and Unbond Lock
+
+```{.go}
+type MsgSuperfluidUndelegateAndUnbondLock struct {
+ Sender string
+ LockId uint64
+ Coin   sdk.Coin
+}
+```
+
+Undelegates and starts unbonding for the specified `Coin` amount of the
+given lock in a single message. Unlike `MsgSuperfluidUnbondLock`, the
+caller specifies a coin amount, which allows unbonding only part of the
+lock.
+
+### Create Full Range Position and Superfluid Delegate
+
+```{.go}
+type MsgCreateFullRangePositionAndSuperfluidDelegate struct {
+ Sender  string
+ Coins   sdk.Coins
+ ValAddr string
+ PoolId  uint64
+}
+```
+
+Creates a full-range position in the concentrated-liquidity pool
+identified by `PoolId` from `Coins`, then superfluid delegates the
+resulting position to `ValAddr`. This is the concentrated-liquidity
+analogue of `MsgLockAndSuperfluidDelegate`.
+
+### Add to Concentrated Liquidity Superfluid Position
+
+```{.go}
+type MsgAddToConcentratedLiquiditySuperfluidPosition struct {
+ PositionId    uint64
+ Sender        string
+ TokenDesired0 sdk.Coin
+ TokenDesired1 sdk.Coin
+}
+```
+
+Adds liquidity to an existing concentrated-liquidity superfluid position
+identified by `PositionId`, using up to `TokenDesired0` and
+`TokenDesired1`.
+
+### Unlock and Migrate Shares to Full Range Concentrated Position
+
+```{.go}
+type MsgUnlockAndMigrateSharesToFullRangeConcentratedPosition struct {
+ Sender         string
+ LockId         int64
+ SharesToMigrate sdk.Coin
+ TokenOutMins   sdk.Coins
+}
+```
+
+Unlocks `SharesToMigrate` GAMM shares from the lock identified by
+`LockId` and migrates them into a full-range position in the linked
+concentrated-liquidity pool. `TokenOutMins` sets minimum amounts out to
+guard against slippage during migration.
+
+### Unbond, Convert, and Stake
+
+```{.go}
+type MsgUnbondConvertAndStake struct {
+ LockId         uint64
+ Sender         string
+ ValAddr        string
+ MinAmtToStake  sdk.Int
+ SharesToConvert sdk.Coin
+}
+```
+
+Unbonds the lock identified by `LockId`, converts `SharesToConvert` GAMM
+shares into OSMO, and stakes the result to `ValAddr`, requiring at least
+`MinAmtToStake` OSMO to be staked.
+
+### Unpool Whitelisted Pool
+
+```{.go}
+type MsgUnPoolWhitelistedPool struct {
+ Sender string
+ PoolId uint64
+}
+```
+
+Exits a governance-whitelisted pool, unlocking the underlying assets so
+they can be withdrawn. This is the message that emits the
+`TypeEvtUnpoolId` event documented in the Events section.
+
 ## Epochs
 
 Overall Epoch sequence
@@ -392,7 +488,7 @@ active set.
 
 We expect the guarantee that there is an Intermediary account for every
 (active validator, superfluid denom) pair, and every (unbonding
-validator, superfluid denom) pair. (TODO: Where/why)
+validator, superfluid denom) pair.
 
 We also want to avoid resource exhaustion attacks. We relegate concerns
 around upper-bounding the number of active + unbonding validators to the
@@ -453,7 +549,7 @@ Disable multiple assets from being used for superfluid staking.
 
 ## Events
 
-There are 7 types of events that exist in Superfluid module:
+There are 11 types of events that exist in Superfluid module:
 
 * `types.TypeEvtSetSuperfluidAsset` - "set_superfluid_asset"
 * `types.TypeEvtRemoveSuperfluidAsset` - "remove_superfluid_asset"
@@ -461,6 +557,10 @@ There are 7 types of events that exist in Superfluid module:
 * `types.TypeEvtSuperfluidIncreaseDelegation` - "superfluid_increase_delegation"
 * `types.TypeEvtSuperfluidUndelegate` - "superfluid_undelegate"
 * `types.TypeEvtSuperfluidUnbondLock` - "superfluid_unbond_lock"
+* `types.TypeEvtSuperfluidUndelegateAndUnbondLock` - "superfluid_undelegate_and_unbond_lock"
+* `types.TypeEvtAddToConcentratedLiquiditySuperfluidPosition` - "add_to_concentrated_liquidity_superfluid_position"
+* `types.TypeEvtUnlockAndMigrateShares` - "unlock_and_migrate_shares"
+* `types.TypeEvtCreateFullRangePositionAndSFDelegate` - "full_range_position_and_delegate"
 * `types.TypeEvtUnpoolId` - "unpool_pool_id"
 
 ### `types.TypeEvtSetSuperfluidAsset`
@@ -523,6 +623,55 @@ It consists of the following attributes:
 * `types.AttributeLockId`
   * The value is the given lock ID.
 
+### `types.TypeEvtSuperfluidUndelegateAndUnbondLock`
+
+This event is emitted in the message server after undelegating and starting unbonding for the given lock in a single message.
+
+It consists of the following attributes:
+
+* `types.AttributeLockId`
+  * The value is the given lock ID.
+
+### `types.TypeEvtAddToConcentratedLiquiditySuperfluidPosition`
+
+This event is emitted in the message server after adding liquidity to an existing concentrated-liquidity superfluid position.
+
+It consists of the following attributes:
+
+* `types.AttributeKeySender`
+  * The value is the msg sender address.
+* `types.AttributeKeyPoolId`
+  * The value is the concentrated pool ID.
+* `types.AttributePositionId`
+  * The value is the previous position ID.
+* `types.AttributeNewPositionId`
+  * The value is the new position ID created after adding liquidity.
+* `types.AttributeAmount0`
+  * The value is the amount of token0 in the position.
+* `types.AttributeAmount1`
+  * The value is the amount of token1 in the position.
+* `types.AttributeConcentratedLockId`
+  * The value is the underlying concentrated lock ID.
+* `types.AttributeLiquidity`
+  * The value is the resulting position liquidity.
+
+### `types.TypeEvtUnlockAndMigrateShares`
+
+This event is emitted when GAMM shares are unlocked and migrated to a full-range concentrated-liquidity position.
+
+### `types.TypeEvtCreateFullRangePositionAndSFDelegate`
+
+This event is emitted in the message server after creating a full-range concentrated-liquidity position and superfluid delegating it.
+
+It consists of the following attributes:
+
+* `types.AttributeLockId`
+  * The value is the created lock ID.
+* `types.AttributePositionId`
+  * The value is the created full-range position ID.
+* `types.AttributeValidator`
+  * The value is the validator address to delegate to.
+
 ### `types.TypeEvtUnpoolId`
 
 This event is emitted in the message server `UnPoolWhitelistedPool`
@@ -531,7 +680,7 @@ It consists of the following attributes:
 
 * `types.AttributeKeySender`
   * The value is the msg sender address.
-* `types.AttributeLockId`
+* `types.AttributeDenom`
   * The value is the pool lpShareDenom.
 * `types.AttributeNewLockIds`
   * The value is the exited lock ids in byte[].
@@ -694,11 +843,11 @@ the spot price at the last epoch boundary, and this is reset every
 epoch. We currently don't store historical multipliers, so the epoch
 parameter is kind of meaningless for now.
 
-To calculate the staking power of the denom, one needs to multiply the
-amount of the denom with `OsmoEquivalentMultipler` from this query with
-the `MinimumRiskFactor` from the Params query endpoint.
+To calculate the staking power of the denom, multiply the amount of the denom
+by the `OsmoEquivalentMultiplier` from this query, then apply the risk discount
+using the `MinimumRiskFactor` from the Params query endpoint.
 
-`staking_power = amount * OsmoEquivalentMultipler * MinimumRiskFactor`
+`staking_power = amount * OsmoEquivalentMultiplier * (1 - MinimumRiskFactor)`
 
 ### ConnectedIntermediaryAccount
 
@@ -840,7 +989,7 @@ The superfluid module contains the following parameters:
 
 | Key                 | Type    | Example |
 | ------------------- | ------- | ------- |
-| minimum_risk_factor | decimal | 0.01    |
+| minimum_risk_factor | decimal | 0.25    |
 
 ## Slashing
 
@@ -982,6 +1131,5 @@ the `IntermediaryAccount` will be slashed by less than the
 
 ### GetTotalSyntheticAssetsLocked
 
-TODO - expand on this Uses `lockup` accumulator to find total amount of
-synthetic locks for a given `IntermediaryAccount` (Superfluid Asset +
-Validator pair)
+Uses the `lockup` accumulator to find the total amount of synthetic locks
+for a given `IntermediaryAccount` (Superfluid Asset + Validator pair).

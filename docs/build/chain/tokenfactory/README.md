@@ -54,13 +54,19 @@ message MsgMint {
     (gogoproto.moretags) = "yaml:\"amount\"",
     (gogoproto.nullable) = false
   ];
+  string mintToAddress = 3 [
+    (gogoproto.moretags) = "yaml:\"mint_to_address\"",
+    (amino.dont_omitempty) = true
+  ];
 }
 ```
+
+When `mintToAddress` is left empty, the module mints to the sender.
 
 **State Modifications:**
 
 - Safety check the following
-  - Check that the denom minting is created via `tokenfactory` module
+  - Check that the denom is created via the `tokenfactory` module
   - Check that the sender of the message is the admin of the denom
 - Mint designated amount of tokens for the denom via `bank` module
 
@@ -76,13 +82,19 @@ message MsgBurn {
     (gogoproto.moretags) = "yaml:\"amount\"",
     (gogoproto.nullable) = false
   ];
+  string burnFromAddress = 3 [
+    (gogoproto.moretags) = "yaml:\"burn_from_address\"",
+    (amino.dont_omitempty) = true
+  ];
 }
 ```
+
+When `burnFromAddress` is left empty, the module burns from the sender's own balance.
 
 **State Modifications:**
 
 - Safety check the following
-  - Check that the denom minting is created via `tokenfactory` module
+  - Check that the denom is created via the `tokenfactory` module
   - Check that the sender of the message is the admin of the denom
 - Burn designated amount of tokens for the denom via `bank` module
 
@@ -104,7 +116,7 @@ Setting of metadata for a specific denom is only allowed for the admin of the de
 It allows the overwriting of the denom metadata in the bank module.
 
 ```go
-message MsgChangeAdmin {
+message MsgSetDenomMetadata {
   string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
   cosmos.bank.v1beta1.Metadata metadata = 2 [ (gogoproto.moretags) = "yaml:\"metadata\"", (gogoproto.nullable)   = false ];
 }
@@ -113,7 +125,7 @@ message MsgChangeAdmin {
 **State Modifications:**
 
 - Check that sender of the message is the admin of denom
-- Modify `AuthorityMetadata` state entry to change the admin of the denom
+- Set/overwrite the bank-module `DenomMetadata` for the denom (via the bank keeper).
 
 ### SetBeforeSendHook
 

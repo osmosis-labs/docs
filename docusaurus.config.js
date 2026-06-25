@@ -31,7 +31,7 @@ const mathRemark = [remarkMath, { singleDollarTextMath: false }];
 // Single docs instance rooted at `docs/`, served at the site root so existing
 // URLs are preserved (docs/osmosis-core/... -> /osmosis-core/...). One sidebar
 // follows the reader across all sections (the fix for the former per-section
-// isolated sidebars). MTN-88 Phase 1: collapse only; the folder->taxonomy
+// isolated sidebars). This is the collapse-only step; the folder->taxonomy
 // reorganization and redirects come in a later phase.
 const docsPlugin = [
   '@docusaurus/plugin-content-docs',
@@ -48,7 +48,7 @@ const docsPlugin = [
   }),
 ];
 
-// In-repo backstop for the URL changes from the IA restructure (MTN-88).
+// In-repo backstop for the URL changes from the IA restructure.
 // Vercel serves the canonical 301s (vercel.json `redirects`), but this client
 // redirect keeps old paths resolving on local/preview builds where Vercel rules
 // do not apply. The full old->new map is generated from the page move plan.
@@ -155,6 +155,7 @@ const config = {
             label: 'Build',
             position: 'left',
             items: [
+              { label: 'Developer Environment', to: 'build/developer-environment' },
               { label: 'Chain Development', to: 'build/chain' },
               { label: 'CosmWasm', to: 'build/cosmwasm' },
               { label: 'Frontend & SDKs', to: 'build/frontend' },
@@ -270,7 +271,7 @@ const config = {
         appId: 'F26GLV8TNU',
         apiKey: '0c5c06782dec165349c88655f2de36b6',
         indexName: 'Docs',
-        // Kept off through the MTN-88 single-instance migration: the new index
+        // Kept off through the single-instance migration: the new index
         // has faceting configured, but page `docusaurus_tag` values will flip
         // from per-section to `docs-default-current` on that merge and lag the
         // index by one crawl. Re-enable once the structure has settled.

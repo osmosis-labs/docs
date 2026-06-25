@@ -938,7 +938,7 @@ img[src$='#terminal'] {
 }
 
 /* Force the mobile-style hamburger navbar earlier than Docusaurus's
-   default 996px breakpoint. After the IA restructure (MTN-88) the navbar
+   default 996px breakpoint. After the IA restructure the navbar
    has only 5 short left items (Learn, Integrate, Build, Validate,
    Community) plus the right-side icons, search, and Launch Dex, so it
    fits much further down than the old 8-item bar did. The early-hamburger

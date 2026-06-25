@@ -7,21 +7,21 @@ sidebar_position: 8
 
 ## Introduction
 
-cw-orchestrator is the most advanced scripting, testing, and deployment framework for CosmWasm smart-contracts. It makes it easy to write cross-environment compatible code for [cw-multi-test](https://github.com/CosmWasm/cw-multi-test), [Osmosis Test Tube](https://github.com/osmosis-labs/test-tube), [Starship](https://github.com/cosmology-tech/starship) (alpha), and **live networks**, significantly reducing code duplication and test-writing time. 
+cw-orchestrator is the most advanced scripting, testing, and deployment framework for CosmWasm smart-contracts. It makes it easy to write cross-environment compatible code for [cw-multi-test](https://github.com/CosmWasm/cw-multi-test), [Osmosis Test Tube](https://github.com/osmosis-labs/test-tube), [Starship](https://github.com/hyperweb-io/starship) (alpha), and **live networks**, significantly reducing code duplication and test-writing time. 
 
 
 Get ready to change the way you interact with contracts and simplify your smart-contracts journey. The following steps will allow you to integrate `cw-orch` and write clean code such as:
 
 ```rust
 counter.upload()?;
-counter.instantiate(&InstantiateMsg { count: 0 }, None, None)?;
+counter.instantiate(&InstantiateMsg { count: 0 }, None, &[])?;
 counter.increment()?;
 
 let count = counter.get_count()?;
 assert_eq!(count.count, 1);
 ```
 
-In this quick-start guide, we will review the necessary steps in order to integrate [`cw-orch`](https://github.com/AbstractSDK/cw-orchestrator) into a simple contract create. [We review integration of rust-workspaces (multiple contracts) at the end of this page](#integration-in-a-workspace).
+In this quick-start guide, we will review the necessary steps in order to integrate [`cw-orch`](https://github.com/AbstractSDK/cw-orchestrator) into a simple contract crate. [We review integration of rust-workspaces (multiple contracts) at the end of this page](#integration-in-a-workspace).
 
 > **NOTE**: *Quicker than the quick start*
 >
@@ -41,7 +41,7 @@ In this quick-start guide, we will review the necessary steps in order to integr
   - [Using the integration](#using-the-integration)
 - [Integration in a workspace](#integration-in-a-workspace)
   - [Handling dependencies and features](#handling-dependencies-and-features)
-  - [Creating an interface create](#creating-an-interface-create)
+  - [Creating an interface crate](#creating-an-interface-crate)
   - [Integrating single contracts](#integrating-single-contracts)
 - [More examples and scripts](#more-examples-and-scripts)
 
@@ -94,7 +94,7 @@ Then, inside that `interface.rs` file, you can define the interface for your con
 ```rust
 use cw_orch::{interface, prelude::*};
 
-use create::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
+use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 
 pub const CONTRACT_ID: &str = "counter_contract";
 
@@ -112,11 +112,11 @@ impl<Chain: CwEnv> Uploadable for CounterContract<Chain> {
     fn wrapper(&self) -> Box<dyn MockContract<Empty>> {
         Box::new(
             ContractWrapper::new_with_empty(
-                create::contract::execute,
-                create::contract::instantiate,
-                create::contract::query,
+                crate::contract::execute,
+                crate::contract::instantiate,
+                crate::contract::query,
             )
-            .with_migrate(create::contract::migrate),
+            .with_migrate(crate::contract::migrate),
         )
     }
 }
@@ -129,7 +129,7 @@ Learn more about the content of the interface creation specifics in the [`cw-orc
 >
 >    ```rust
 >    #[cfg(feature = "interface")]
->    pub use create::interface::CounterContract;
+>    pub use crate::interface::CounterContract;
 >    ```
 
 ### Interaction helpers
@@ -177,14 +177,14 @@ Find out more about the interaction helpers in the [`cw-orch` documentation](htt
 >
 >    ```rust
 >    #[cfg(feature = "interface")]
->    pub use create::msg::{ExecuteMsgFns as CounterExecuteMsgFns, QueryMsgFns as CounterQueryMsgFns};
+>    pub use crate::msg::{ExecuteMsgFns as CounterExecuteMsgFns, QueryMsgFns as CounterQueryMsgFns};
 >    ```
 
 ### Using the integration
 
 Now that all the setup is done, you can use your contract in tests, integration-tests or scripts.
 
-Start by importing your create, with the `interface` feature enabled. Depending on your use-case this will be in `[dependencies]` or `[dev-dependencies]`:
+Start by importing your crate, with the `interface` feature enabled. Depending on your use-case this will be in `[dependencies]` or `[dev-dependencies]`:
 
 ```toml
 counter-contract = { path = "../counter-contract", features = ["interface"] }
@@ -206,7 +206,7 @@ pub fn main() -> anyhow::Result<()> {
     pretty_env_logger::init(); // Used to log contract and chain interactions
 
     let rt = Runtime::new()?;
-    let network = networks::LOCAL_JUNO;
+    let network = networks::LOCAL_OSMOSIS;
     let chain = DaemonBuilder::default()
         .handle(rt.handle())
         .chain(network)
@@ -216,7 +216,7 @@ pub fn main() -> anyhow::Result<()> {
     let counter = CounterContract::new(chain);
 
     counter.upload()?;
-    counter.instantiate(&InstantiateMsg { count: 0 }, None, None)?;
+    counter.instantiate(&InstantiateMsg { count: 0 }, None, &[])?;
 
     counter.increment()?;
 
@@ -245,9 +245,9 @@ Refer above to [Adding `cw-orch` to your `Cargo.toml` file](#adding-cw-orch-to-y
 
 For instance, for the `cw20_base` contract, you need to execute those 2 steps on the `cw20-base` contract (where the `QueryMsg` are defined) as well as on the `cw20` package (where the `ExecuteMsg` are defined).
 
-### Creating an interface create
+### Creating an interface crate
 
-When using a workspace, we advise you to create a new create inside your workspace for defining your contract's interfaces. In order to do that, use:
+When using a workspace, we advise you to create a new crate inside your workspace for defining your contract's interfaces. In order to do that, use:
 
 ```shell
 cargo new interface --lib
@@ -261,7 +261,7 @@ Add the interface package to your workspace `Cargo.toml` file
 members = ["packages/*", "contracts/*", "interface"]
 ```
 
-Inside this `interface` create, we advise to integrate all your contracts 1 by 1 in separate files. Here is the structure of the `cw-plus` integration for reference:
+Inside this `interface` crate, we advise to integrate all your contracts 1 by 1 in separate files. Here is the structure of the `cw-plus` integration for reference:
 
 ```path
 interface (interface collection)

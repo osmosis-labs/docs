@@ -9,7 +9,7 @@ The following are the steps needed to verify any contract from the chain. In thi
 
 
 ### Create new contract
-Follow [this guide](./cosmwasm-beaker) to create a new contract with Beaker.
+Follow the [Quickstart](/build/cosmwasm/quickstart) to scaffold and deploy a contract.
 
 Output:
 
