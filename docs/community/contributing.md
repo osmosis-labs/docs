@@ -1,15 +1,15 @@
 ---
 description: Guidelines for contributing to the Osmosis repositories.
 title: Contributing
-sidebar_position: 6
+sidebar_position: 5
 ---
 # Contributing
 
-The following information provides a set of guidelines for contributing to the Osmo chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.
+The following guidelines are for contributing to the Osmosis chain repository ([osmosis-labs/osmosis](https://github.com/osmosis-labs/osmosis)). Use your best judgment, and, if you see room for improvement, please propose changes to this document.
 
-The contributing guide for Osmosis explains the branching structure, how to use the SDK fork, how to make / test updates to SDK branches and how to create release notes.
+This guide explains the branching structure, how to use the SDK fork, how to make and test updates to SDK branches, and how to create release notes.
 
-Contributions come in the form of writing documentation, raising issues / PRs, and any other actions that help develop the Osmo protocol documentation.
+To contribute to this documentation site itself, open an issue or PR against the [osmosis-labs/docs](https://github.com/osmosis-labs/docs) repository. Contributions come in the form of writing documentation, raising issues and PRs, and any other actions that help develop Osmosis and its docs.
 
 ## First steps
 
