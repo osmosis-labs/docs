@@ -260,13 +260,14 @@ export default function Homepage() {
               description="Funding paths for building on Osmosis: the Osmosis Grants Program and community-pool spend proposals."
               to="/community/grants"
               icon={<AssetIcon />}
-              svgFile="/icons/store.svg"
+              svgFile="/icons/grants.svg"
             />
             <Card
               title="Support"
               description="Where to get help as a user, developer, or node operator, plus network status and security disclosure."
               to="/community/support"
               icon={<Guide />}
+              svgFile="/icons/Supportbotsmall.png"
             />
             <Card
               title="Contributing"
