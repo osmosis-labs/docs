@@ -10,10 +10,10 @@ An end-to-end path for building a web app on Osmosis, tying the individual SDK p
 
 ## 1. Scaffold
 
-The quickest start is [create-cosmos-app](https://github.com/hyperweb-io/create-cosmos-app), which scaffolds a Cosmos dapp with wallet connection, signing, and proto support preconfigured:
+The quickest start is [Create Interchain App](https://github.com/hyperweb-io/create-interchain-app) (formerly create-cosmos-app, now Create Cosmos App 2.0), which scaffolds a Cosmos dapp with wallet connection, signing, and proto support preconfigured:
 
 ```bash
-npx create-cosmos-app
+npx create-interchain-app
 ```
 
 It wires up [CosmosKit](/build/frontend/cosmos-kit) and [OsmoJS](/build/frontend/osmojs) for you. You can also add them to an existing app:

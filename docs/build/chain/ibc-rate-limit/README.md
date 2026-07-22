@@ -13,9 +13,7 @@ The architecture of this package is a minimal go package which implements an [IB
 The cosmwasm contract then has all of the actual IBC rate limiting logic.
 The Cosmwasm code can be found in the [`contracts`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts) package, with bytecode findable in the [`bytecode`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/bytecode) directory. The cosmwasm VM usage allows Osmosis chain governance to choose to change this safety control with no hard forks, via a parameter change proposal, a great mitigation for faster threat adaptavity.
 
-The status of the module is being in a state suitable for some initial governance settable rate limits for high value bridged assets.
-Its not in its long term / end state for all channels by any means, but does act as a strong protection we
-can instantiate today for high value IBC connections.
+The module supports governance-settable rate limits for high value bridged assets, acting as a strong protection for high value IBC connections.
 
 ## Motivation
 
@@ -54,20 +52,13 @@ We currently envision creating two kinds of rate limits:
 * Per channel rate limits
    - Limit the total inflow and outflow on a given IBC channel, based on "USDC" equivalent, using Osmosis as the price oracle.
 
-We currently only implement per denomination rate limits for non-native assets. We do not yet implement channel based rate limits.
+We currently only implement per denomination rate limits for non-native assets. We do not implement channel based rate limits.
 
-Currently these rate limits automatically "expire" at the end of the quota duration. TODO: Think of better designs here. E.g. can we have a constant number of subsequent quotas start filled? Or perhaps harmonically decreasing amounts of next few quotas pre-filled? Halted until DAO override seems not-great.
+These rate limits automatically "expire" at the end of the quota duration.
 
 ## Instantiating rate limits
 
-Today all rate limit quotas must be set manually by governance.
-In the future, we should design towards some conservative rate limit to add as a safety-backstop automatically for channels.
-Ideas for how this could look:
-
-* One month after a channel has been created, automatically add in some USDC-based rate limit
-* One month after governance incentivizes an asset, add on a per-denomination rate limit.
-
-Definitely needs far more ideation and iteration!
+Rate limit quotas are set by governance. Governance can also delegate the authority to add, edit, and remove rate limits to a subDAO, so the quotas can be adjusted without a full governance proposal for each change.
 
 ## Parameterizing the rate limit
 
@@ -81,19 +72,14 @@ We would not like them to be able to "double extract funds" by timing their extr
 Admittedly, not a lot of thought has been put into how to deal with this well.
 Right now we envision simply handling this by saying if you want a quota of duration D, instead include two quotas of duration D, but offset by `D/2` from each other.
 
-Ideally we can change windows to be more 'rolling' in the future, to avoid this overhead and more cleanly handle the problem. (Perhaps rolling ~1 hour at a time)
-
 ### Inflow parameterization
 
 The "Inflow" side of a rate limit is essentially protection against unforeseen bug on a counterparty chain.
 This can be quite conservative (e.g. bridged amount doubling in one week). This covers a few cases:
 
 * Counter-party chain B having a token theft attack
-   - TODO: description of how this looks
 * Counter-party chain B runaway mint
-   - TODO: description of how this looks
 * IBC theft
-   - TODO: description of how this looks
 
 It does get more complex when the counterparty chain is itself a DEX, but this is still much more protection than nothing.
 
@@ -104,10 +90,6 @@ This has potential for much more user-frustrating issues, if set too low.
 E.g. if there's some event that causes many people to suddenly withdraw many STARS or many USDC.
 
 So this parameterization has to contend with being a tradeoff of withdrawal liveness in high volatility periods vs being a crucial safety rail, in event of on-Osmosis bug.
-
-TODO: Better fill out
-
-### Example suggested parameterization
 
 ## Code structure
 
@@ -150,11 +132,6 @@ Something to keep in mind with all of the code, is that we have to reason separa
 | Timeout Native Send  | Timeout Non-native Send  |
 
 (Error ACK can reuse the same code as timeout)
-
-TODO: Spend more time on sudo messages in the following description. We need to better describe how we map the quota concepts onto the code.
-Need to describe how we get the quota beginning balance, and that its different for sends and receives.
-Explain intracacies of tracking that a timeout and/or ErrorAck must appear from the same quota, else we ignore its update to the quotas.
-
 
 The tracking contract uses the following concepts
 
@@ -237,10 +214,9 @@ The later ensures the limits are lower and represent the amount of native tokens
 beneficial as we assume the majority of native tokens exist on the native chain and the amount "normal" ibc transfers is 
 proportional to the tokens that have left the chain. 
 
-This strategy cannot be implemented at the moment because IBC does not track the amount of tokens in escrow across 
-all channels ([github issue](https://github.com/cosmos/ibc-go/issues/2664)). Instead, we use the current supply on 
-Osmosis for all denoms (i.e.: treat native and non-native tokens the same way). Once that ticket is fixed, we will 
-update this strategy.
+This strategy is not currently implemented because IBC does not track the amount of tokens in escrow across 
+all channels ([github issue](https://github.com/cosmos/ibc-go/issues/2664)). Instead, the current supply on 
+Osmosis is used for all denoms (i.e.: native and non-native tokens are treated the same way).
 
 ##### Caching
 
@@ -282,26 +258,3 @@ For more comprehensive tests we can also:
 * Test that rate limit symmetries hold (i.e.: sending the a token through a rate-limited channel and then sending back 
   reduces the rate limits by the same amount that it was increased during the first send)
 * Ensure that the channels between the test chains have different names (A->B="channel-0", B->A="channel-1", for example)
-
-## Known Future work
-
-Items that have been highlighted above:
-
-* Making automated rate limits get added for channels, instead of manual configuration only
-* Improving parameterization strategies / data analysis
-* Adding the USDC based rate limits
-* We need better strategies for how rate limits "expire".
-
-Not yet highlighted
-
-* Making monitoring tooling to know when approaching rate limiting and when they're hit
-* Making tooling to easily give us summaries we can use, to reason about "bug or not bug" in event of rate limit being hit
-* Enabling ways to pre-declare large transfers so as to not hit rate limits.
-   * Perhaps you can onchain declare intent to send these assets with a large delay, that raises monitoring but bypasses rate limits?
-   * Maybe contract-based tooling to split up the transfer suffices?
-* Strategies to account for high volatility periods without hitting rate limits
-   * Can imagine "Hop network" style markets emerging
-   * Could imagine tieng it into looking at AMM volatility, or off-chain oracles
-      * but these are both things we should be wary of security bugs in.
-      * Maybe [constraint based programming with tracking of provenance](https://youtu.be/HB5TrK7A4pI?t=2852) as a solution
-* Analyze changing denom-based rate limits, to just overall withdrawal amount for Osmosis

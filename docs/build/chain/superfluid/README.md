@@ -221,10 +221,9 @@ The multiplier for OSMO is always 1.
 
 2. Gamm LP Shares
 
-Currently we use the spot price for an asset based on a designated
+The spot price for an asset is based on a designated
 osmo-basepair pool of an asset. The multiplier is set once per epoch, at
-the beginning of the epoch. In the future, we will switch this out to
-use a TWAP instead.
+the beginning of the epoch.
 
 ### State changes
 
@@ -324,7 +323,7 @@ outputted by `MsgLockTokens` as an input into the
 **State Modifications:**
 
 - Ensures that Coins has a length of only 1 (we use sdk.Coins instead
-  of sdk.Coin in order to allow more flexibility in the future)
+  of sdk.Coin to allow more flexibility)
 - Creates a lockup with Coins of a lock duration equivalent to the
   unstaking period from the staking module
   - Uses the lockup module's MsgServer
@@ -439,9 +438,14 @@ type MsgUnPoolWhitelistedPool struct {
 }
 ```
 
-Exits a governance-whitelisted pool, unlocking the underlying assets so
-they can be withdrawn. This is the message that emits the
-`TypeEvtUnpoolId` event documented in the Events section.
+Unpools a position in a governance-whitelisted pool. For each qualifying GAMM
+lock it superfluid undelegates (if delegated), force-unlocks the lock, and
+exits the pool with the freed LP shares. It then creates one new lock per
+constituent asset and begins unlocking each, preserving the lock's remaining
+duration (or remaining unbonding time). The assets are not immediately
+withdrawable: they become available once that remaining duration elapses. This
+is the message that emits the `TypeEvtUnpoolId` event documented in the Events
+section.
 
 ## Epochs
 
@@ -788,10 +792,9 @@ superfluid staking than just LP shares. Each AssetType has a different
 algorithm used to get its "Osmo equivalent value".
 
 We represent different types of superfluid assets as different enums.
-Currently, only enum `1` is actually used. Enum value `0` is reserved
-for the Native staking token for if we deprecate the legacy staking
-workflow to have native staking also go through the superfluid module.
-In the future, more enums will be added.
+Only enum `1` is actually used. Enum value `0` is reserved
+for the Native staking token, for if the legacy staking
+workflow is deprecated to have native staking also go through the superfluid module.
 
 If this query errors, that means that a denom is not allowed to be used
 for superfluid staking.
@@ -816,7 +819,7 @@ compatible assets. The return value includes a list of SuperfluidAssets,
 which are pairs of `denom` with `SuperfluidAssetType` which was
 described in the previous section.
 
-This query does not currently support pagination, but may in the future.
+This query does not support pagination.
 
 ### AssetMultiplier
 

@@ -206,7 +206,7 @@ pub fn main() -> anyhow::Result<()> {
     pretty_env_logger::init(); // Used to log contract and chain interactions
 
     let rt = Runtime::new()?;
-    let network = networks::LOCAL_OSMOSIS;
+    let network = networks::LOCAL_OSMO;
     let chain = DaemonBuilder::default()
         .handle(rt.handle())
         .chain(network)

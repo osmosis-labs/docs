@@ -321,7 +321,7 @@ pub enum CreatePoolGauges {
 ## Appendix
 
 ### TWAP
-`x/twap` is not implemented for cosmwasm pools but can be in the future if there is a need.
+`x/twap` is not implemented for cosmwasm pools.
 
 ### Rust de/serialization
 

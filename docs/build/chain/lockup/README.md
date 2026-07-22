@@ -1200,12 +1200,8 @@ osmosisd tx lockup lock-tokens 100stake --duration="5s" --from=validator --chain
 # begin unlock tokens, NOTE: add more gas when unlocking more than two locks in a same command
 osmosisd tx lockup begin-unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
 
-# DEPRECATED (retained only for indexing; use begin-unlock-tokens instead). Unlocking now completes
-# automatically at the EndBlocker once the lock duration elapses after begin-unlock.
-osmosisd tx lockup unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
-
-# DEPRECATED (retained only for indexing; use begin-unlock-by-id <id> instead).
-osmosisd tx lockup unlock-by-id 1 --from=validator --chain-id=testing --keyring-backend=test --yes
+# begin unlocking a specific lock by id
+osmosisd tx lockup begin-unlock-by-id 1 --from=validator --chain-id=testing --keyring-backend=test --yes
 
 # account balance
 osmosisd query bank balances $(osmosisd keys show -a validator --keyring-backend=test)

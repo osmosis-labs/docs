@@ -64,9 +64,3 @@ denom-pool-id
 fee-tokens
 
 - Query the list of non-basedenom fee tokens and their associated pool ids
-
-## Future directions
-
-* Want to add in a system to add in general "tx fee credits" for different onchain usages
-  * e.g. making 0 fee txs under certain usecases
-* If other chains would like to use this, we should brainstorm mechanisms for extending the metadata proto fields

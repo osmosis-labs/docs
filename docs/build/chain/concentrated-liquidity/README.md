@@ -402,8 +402,7 @@ type MsgCreatePosition struct {
  Sender          string
  LowerTick       int64
  UpperTick       int64
- TokenDesired0   types.Coin
- TokenDesired1   types.Coin
+ TokensProvided  sdk.Coins
  TokenMinAmount0 osmomath.Int
  TokenMinAmount1 osmomath.Int
 }
@@ -1327,7 +1326,6 @@ Then, to calculate the spread reward within a single tick, we perform the follow
 
 ```go
 // Update global spread reward accumulator tracking spread rewards for denom of tokenInAmt.
-// TODO: revisit to make sure if truncations need to happen.
 pool.SpreadRewardGrowthGlobalOutside.TokenX = pool.SpreadRewardGrowthGlobalOutside.TokenX.Add(tokenInAmt.Mul(pool.SpreadFactor))
 
 // Update tokenInAmt to account for spread factor.
@@ -1505,7 +1503,7 @@ To achieve this in a way that is difficult to game and efficient for the chain t
 
 One implication of this mechanism is that it moves the incentivization process to a higher level of abstraction (incentivizing _pairs_ instead of _pools_). For internal incentives (which are governance managed), this is in line with the goal of continuing to push governance to require less frequent actions, which this change ultimately does.
 
-To keep a small but meaningful incentive for LPs to still migrate their positions, we have added a **discount rate** to incentives that are redirected to Classic pools. This is initialized to 5% by default but is a governance-upgradable parameter that can be increased in the future. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
+To keep a small but meaningful incentive for LPs to still migrate their positions, a **discount rate** is applied to incentives that are redirected to Classic pools. This is initialized to 5% by default and is a governance-upgradable parameter. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
 
 ## TWAP Integration
 
