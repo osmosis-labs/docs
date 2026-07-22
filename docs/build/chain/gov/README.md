@@ -78,14 +78,14 @@ typical flags would be:
 
 There are different types of proposal submission types, including
 
-- [`text`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-text)
-- [`param-change`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-param-change)
-- [`community-pool-spend`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-community-pool-spend)
-- [`software-upgrade`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-software-upgrade) and [`cancel-software-upgrade`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-cancel-software-upgrade)
-- [`update-pool-incentives`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-update-pool-incentives)
-- [`set-superfluid-asset`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-set-superfluid-asset) and [`remove-superfluid-asset`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-community-pool-spend)
-- [`wasm-store`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-wasm-store)
-- [`update-unpool-whitelist`](https://docs.osmosis.zone/osmosis-core/modules/gov#submit-proposal-update-unpool-whitelist)
+- [`text`](#submit-proposal-text)
+- [`param-change`](#submit-proposal-param-change)
+- [`community-pool-spend`](#submit-proposal-community-pool-spend)
+- [`software-upgrade`](#submit-proposal-software-upgrade) and [`cancel-software-upgrade`](#submit-proposal-cancel-upgrade)
+- [`update-pool-incentives`](#submit-proposal-update-pool-incentives)
+- [`set-superfluid-asset`](#submit-proposal-set-superfluid-asset) and [`remove-superfluid-asset`](#submit-proposal-remove-superfluid-asset)
+- [`wasm-store`](#submit-proposal-wasm-store)
+- [`update-unpool-whitelist`](#submit-proposal-update-unpool-whitelist)
 
 We will go over each of these submission types in detail now:
 

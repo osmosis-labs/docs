@@ -17,6 +17,7 @@ import {
   OsmosisCore,
   Contribute,
   RelayerIcon,
+  Guide,
 } from '../icons';
 
 export default function Homepage() {
@@ -247,18 +248,33 @@ export default function Homepage() {
 
           <Section title="Community">
             <Card
+              featured
+              title="Governance Participation"
+              description="How to discuss, vote on, and submit Osmosis governance proposals. Osmosis is governed by its stakers, and proposals decide everything from parameters to upgrades to treasury spending."
+              to="/community/governance"
+              icon={<OsmosisCore />}
+              svgFile="/icons/osmo.svg"
+            />
+            <Card
+              title="Grants and Ecosystem Funding"
+              description="Funding paths for building on Osmosis: the Osmosis Grants Program and community-pool spend proposals."
+              to="/community/grants"
+              icon={<AssetIcon />}
+              svgFile="/icons/grants.svg"
+            />
+            <Card
+              title="Support"
+              description="Where to get help as a user, developer, or node operator, plus network status and security disclosure."
+              to="/community/support"
+              icon={<Guide />}
+              svgFile="/icons/Supportbotsmall.png"
+            />
+            <Card
               title="Contributing"
               description="Guidelines for contributing to Osmosis development."
               to="/community/contributing"
               icon={<Contribute />}
               svgFile="/icons/octocat.svg"
-            />
-            <Card
-              title="Translations"
-              description="Help translate the Osmosis interface into new languages."
-              to="/community/translating"
-              icon={<Contribute />}
-              svgFile="/icons/registry.svg"
             />
             <Card
               title="IBC Relayer List"

@@ -1,6 +1,6 @@
 ---
 description: Create a pool for your asset, from weighted to stableswap.
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Pool Setup Guide
@@ -27,7 +27,7 @@ Note: When specifying token denominations that are represented as `ibc/<hash>` v
 
 A Supercharged Pool is Osmosis’ Implementation of [Uniswap’s Concentrated Liquidity](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity). In addition to full-range positions, liquidity providers can also ‘concentrate’ their liquidity to only apply within a defined price range. When the market price is within the defined price range, the liquidity earns comparatively more swap fees and incentives at the cost of increased impermanent loss; but when the market price is outside of the defined price range, the position doesn’t earn any swap fees (or incentives).
 
-On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. These are the spread factor–-basically the same thing as swap fee–-and tick spacing–-used for refining the granularity of possible positions.
+On Osmosis, for technical and UX reasons, some parameters are restricted to a limited set of governance-approved values. These are the spread factor (basically the same thing as swap fee) and tick spacing (used for refining the granularity of possible positions).
 
 ### Create Pool
 
@@ -35,7 +35,7 @@ On Osmosis, for technical and UX reasons, some parameters are restricted to a li
 
 To create a Supercharge Liquidity Pool on Osmosis via the Osmosis Zone app:
 
-IMPORTANT: If it is desired to entirely complete the setup of a Supercharged pool via the Osmosis Zone app--.i.e., not using osmosisd CLI--then the pool creator must add an initial liquidity position immediately after creating the pool, without closing the modal. If the pool creation flow is disrupted before the initial liquidfity has been added, e.g., by closing the modal or navigating to a different page, then it will not be possible to add initial liquidity to the new pool via the Osmosis Zone app, in which case it can only be added via osmosisd CLI (see [Join Pool](#join-pool) for steps).
+The smoothest flow is to add an initial liquidity position immediately after creating the pool, without closing the modal. If the pool creation flow is interrupted before initial liquidity has been added (for example, by closing the modal or navigating away), you can still add liquidity afterward: locate the new pool from its asset page in the Osmosis Zone app and add a position there. Initial liquidity can also be added via the osmosisd CLI (see [Join Pool](#join-pool) for steps).
 
 - Go to app.osmosis.zone
 - Connect a Wallet
@@ -178,10 +178,12 @@ Formed from Transmuter Pools, a type of multi-asset constant sum zero-fee pool, 
 
 Each accepts an administrator address, which can add new assets denominations to the pool after creation, adjust internal rate limits, unfreeze the pool and set a moderator. The moderator in turn can freeze all swapping, joining, and exiting of the pool as well as declare a constituent of the pool to be corrupted and no longer able to be added. The moderator for all canonical Alloys can be viewed [here](https://daodao.zone/dao/osmo1ugrn8qgsvyr8zwrv8h2g4r8ascngxk7qeaz7e0htjq3znswkh4cqhjdpgy).
 
-The current code-id for Transmuter pools on Osmosis chains are as follows:
+Multiple alloyed-transmuter code IDs are whitelisted at once, and the most recent whitelisted ID should be used when creating a new pool. The code IDs current at the time of writing, for convenience, are:
 
 - osmosis-1 (mainnet): 996
 - osmo-test-5 (testnet): 8319
+
+Confirm the latest whitelisted ID before creating a pool rather than relying on these values (see [Finding the current code ID](/integrate/features/transmuter#finding-the-current-code-id)).
 
 These create an Alloyed Asset as a representative of the Transmuter pool contents. This Alloy can be used as a token itself, providing composability between multiple variants of the same base asset while bounding bridge risk through built-in rate limiters.
 

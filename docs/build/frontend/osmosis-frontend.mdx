@@ -92,4 +92,4 @@ yarn build:libs && npx lerna publish
 
 ## Localization 🌎🗺
 
-Translations live as JSON files under `packages/web/localizations` in the frontend repo. To add or edit a language, fork the repo, edit the relevant `{lang}.json` file, and open a PR. See [Frontend translations](../../community/translating) for the full step-by-step workflow.
+Translations live as JSON files under `packages/web/localizations` in the frontend repo. To add or edit a language, fork the repo, copy `en.json` to a new `{lang}.json` file (along with the matching dayjs locale file), register the language in the settings dropdown, then test locally and open a PR against [osmosis-labs/osmosis-frontend](https://github.com/osmosis-labs/osmosis-frontend).

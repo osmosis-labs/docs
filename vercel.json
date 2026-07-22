@@ -128,11 +128,6 @@
       "permanent": true
     },
     {
-      "source": "/frontend/translating",
-      "destination": "/community/translating",
-      "permanent": true
-    },
-    {
       "source": "/osmojs",
       "destination": "/build/frontend/osmojs",
       "permanent": true

@@ -14,7 +14,7 @@ For instance, a pool with stablecoin pairs like USDC/USDT has a spot price that 
 Concentrated liquidity also opens up new opportunities for providing liquidity rewards to desired strategies. For example, it's possible to incentivize LPs based on their position's proximity to the current price and the time spent within that position. This design also allows for a new "range order" type, similar to a limit order with order-books.
 
 
-The following information is meant to provide Vaul Creators with all the information needed to interact and develop concentrated liquidity vaults. 
+The following information is meant to provide Vault Creators with all the information needed to interact and develop concentrated liquidity vaults. 
 
 # Clients
 The following clients are available to interact with the concentrated liquidity module on Osmosis: the JavaScript client (OsmoJS) and the CosmWasm client (`osmosis-std`), both covered below.
@@ -25,7 +25,7 @@ Concentrated liquidity is available on the OsmoJS package. For more information 
 
 ## CosmWasm - (`osmosis-std`)
 
-Concentrated liquidity types and querier are available on [`osmosis-std` create.](https://crates.io/crates/osmosis-std/)
+Concentrated liquidity types and querier are available on [`osmosis-std` crate.](https://crates.io/crates/osmosis-std/)
 
 ### Install `osmosis-std`
 ```bash
@@ -175,7 +175,7 @@ type MsgWithdrawPositionResponse struct {
 This message should call the `withdrawPosition` keeper method that is introduced
 in the `"Liquidity Provision"` section of this document.
 
-### `MsgCreatePool`
+### `MsgCreateConcentratedPool`
 
 This message is responsible for creating a concentrated-liquidity pool.
 It propagates the execution flow to the `x/poolmanager` module for pool id
@@ -377,7 +377,7 @@ creates a position with amounts such that the current tick is 155 between ticks 
 Note, that the current tick of 155 is defined inside the bucket over a range of 100 to 200.
 
 # Liquidity Depths Calculation
-Please refer to https://github.com/osmosis-labs/osmosis/pull/5673 for liquidity depths calculation for CL Pools. (This is just a place holder, will link correct link for doc once merged to main)
+For how liquidity depths are calculated for concentrated-liquidity pools, see the [`x/concentrated-liquidity` module](https://github.com/osmosis-labs/osmosis/tree/main/x/concentrated-liquidity) in the Osmosis repo.
 
 
 # TWAP Integration

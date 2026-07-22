@@ -18,7 +18,7 @@ Osmosis pairs the experience of a centralized exchange with the guarantees of de
 
 ## Permissionless at the core
 
-The core market actions on Osmosis are permissionless: anyone can [create a pool](/learn/how-trading-works), [create a native token](/learn/features/tokenfactory), or open an [orderbook market](/learn/features/orderbook) directly, without anyone approving it first. This is what lets the long tail of assets and strategies live on Osmosis rather than waiting on a listing committee.
+The core market actions on Osmosis are permissionless: anyone can [create a pool](/integrate/list-asset/pool-setup), [create a native token](/learn/features/tokenfactory), or open an [orderbook market](/learn/features/orderbook) directly, without anyone approving it first. This is what lets the long tail of assets and strategies live on Osmosis rather than waiting on a listing committee.
 
 A few surfaces do involve a process rather than a single transaction. Getting an asset fully [listed and verified](/integrate/list-asset) on the Osmosis frontend goes through the asset-list pipeline (basic listing is automatic once an asset is in the Cosmos Chain Registry; verified status and advanced configuration take a pull request and review). Adding a token to the set accepted for [transaction fees](/learn/features/fee-abstraction) is managed by a governance-controlled DAO. So the protocol itself does not gatekeep what you can build, but a few shared, user-facing settings are curated.
 
