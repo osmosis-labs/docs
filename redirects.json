@@ -100,10 +100,6 @@
     "from": "/frontend"
   },
   {
-    "to": "/community/translating",
-    "from": "/frontend/translating"
-  },
-  {
     "to": "/build/frontend/osmojs",
     "from": "/osmojs"
   },

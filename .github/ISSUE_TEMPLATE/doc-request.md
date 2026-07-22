@@ -1,6 +1,6 @@
 ---
 name: Documentation Request
-about: Create a proposal to request a feature
+about: Request new or improved documentation
 ---
 
 <!--------------------------------------------------------------------------- ☺
@@ -23,7 +23,7 @@ about: Create a proposal to request a feature
 
 <!-- Why do we need this feature? 
 What problems may be addressed by introducing this feature?
-What benefits does Tendermint stand to gain by including this feature?
+What benefits does Osmosis stand to gain by including this feature?
 Are there any disadvantages of including this feature? -->
 
 ## Proposal

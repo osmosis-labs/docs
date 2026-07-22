@@ -127,7 +127,6 @@ The main outline is as follows:
 <p/>
 </details>
 
-
 As the purpose of this document is to describe the transaction structure, rather than the block structure, we
 will not spend too much time on the block structure.
 
@@ -457,101 +456,7 @@ Below is part of the transaction at index 1 of the above block.
 
 </details>
 
-Each transaction has an identical structure. The differences are in the details inside each structure:
-
-<details>
-<summary>transaction 2</summary>
-
-```json
-{
-  "height": "2836990",
-  "txhash": "5BBC27779EA33FC99C319D74CFE730DC2A3102277D75410E75F2F9F5ED259BFE",
-  "codespace": "",
-  "code": 0,
-  "data": "0A2C0A2A2F6F736D6F7369732E67616D6D2E763162657461312E4D7367537761704578616374416D6F756E74496E",
-  "raw_log": "<raw data>",
-  "logs": [
-    {
-      "msg_index": 0,
-      "log": "",
-      "events": [
-        { ... },
-        { ... },
-        ...
-      ]
-    }
-  ],
-  "info": "",
-  "gas_wanted": "2000000",
-  "gas_used": "183726",
-  "tx": {
-    "@type": "/cosmos.tx.v1beta1.Tx",
-    "body": {
-      "messages": [
-        {
-          "@type": "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
-          "sender": "osmo1l4u56l7cvx8n0n6c7w650k02vz67qudjlcut89",
-          "routes": [
-            {
-              "poolId": "604",
-              "tokenOutDenom": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
-            },
-            {
-              "poolId": "611",
-              "tokenOutDenom": "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
-            },
-            {
-              "poolId": "1",
-              "tokenOutDenom": "uosmo"
-            }
-          ],
-          "tokenIn": {
-            "denom": "uosmo",
-            "amount": "15000000"
-          },
-          "tokenOutMinAmount": "15000000"
-        }
-      ],
-      "memo": "",
-      "timeout_height": "0",
-      "extension_options": [],
-      "non_critical_extension_options": []
-    },
-    "auth_info": {
-      "signer_infos": [
-        {
-          "public_key": {
-            "@type": "/cosmos.crypto.secp256k1.PubKey",
-            "key": "ArVxHYy0VZ22LI7+o5HJwli+G4SoXVb2GjCejYUU//XX"
-          },
-          "mode_info": {
-            "single": {
-              "mode": "SIGN_MODE_DIRECT"
-            }
-          },
-          "sequence": "63948"
-        }
-      ],
-      "fee": {
-        "amount": [
-          {
-            "denom": "uosmo",
-            "amount": "0"
-          }
-        ],
-        "gas_limit": "2000000",
-        "payer": "",
-        "granter": ""
-      }
-    },
-    "signatures": []
-  },
-  "timestamp": "2022-01-17T17:14:01Z"
-}
-```
-
-</details>
-
+Every transaction in the block shares this same top-level structure; the differences are in the details inside each one.
 
 Each transaction is structured of the following key elements. The more complex ones will be described in detail below.
 

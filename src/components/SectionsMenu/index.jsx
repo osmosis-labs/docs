@@ -4,9 +4,13 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons
 import clsx from 'clsx';
 
 const SectionsMenu = forwardRef(
-  ({ defaultValue = '', values = [], children, className, ...props }, ref) => {
+  ({ defaultValue, values = [], children, className, ...props }, ref) => {
+    // Support both controlled (`value` via ...props) and uncontrolled
+    // (`defaultValue`) use. Only pass defaultValue when actually provided, so a
+    // controlled `value` does not collide with a defaulted `defaultValue=""`.
+    const rootProps = defaultValue !== undefined ? { defaultValue } : {};
     return (
-      <Select.Root defaultValue={defaultValue} ref={ref} {...props}>
+      <Select.Root {...rootProps} ref={ref} {...props}>
         <Select.Trigger
           aria-label="Select Section"
           className={clsx('sections-menu-trigger', className)}
