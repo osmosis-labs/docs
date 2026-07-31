@@ -6,10 +6,10 @@ sidebar_position: 8
 
 # Affiliate Fee Share
 
-If you send swap volume to Osmosis from your own app, aggregator, or frontend, you can take an affiliate fee on each swap. There is no Osmosis-native embeddable widget, but there are three supported paths, in increasing order of integration effort:
+If you send swap volume to Osmosis from your own app, aggregator, or frontend, you can take an affiliate fee on each swap. There is no Osmosis-native embeddable widget, but there are three supported paths:
 
-- The **Skip Go Widget**, a drop-in React or Web Component with built-in affiliate fee configuration. The fastest path if you want a ready-made swap surface.
 - The **`affiliate-swap` contract**, the self-contained path if you build your own surface and swap directly against Osmosis pools: send it a token, it takes your fee and swaps the rest.
+- The **Skip Go Widget**, a drop-in React or Web Component with built-in affiliate fee configuration. The fastest path if you want a ready-made swap surface.
 - The **Skip `swap_and_action` affiliates array**, if you build your own surface on Skip API routing.
 
 A note on why a contract is always involved: the native poolmanager swap message (`MsgSwapExactAmountIn` / `MsgSwapExactAmountOut`) has **no** affiliate or fee field. You cannot attach a cut to a plain Osmosis swap, so every affiliate path wraps the swap in a contract that performs the fee deduction.
@@ -18,33 +18,9 @@ A note on why a contract is always involved: the native poolmanager swap message
 
 | You are... | Use | Fee is taken... |
 | -- | -- | -- |
-| Embedding a ready-made swap UI in your app | Skip Go Widget | Per its `chainIdsToAffiliates` config |
 | Building your own surface, swapping Osmosis pools directly | `affiliate-swap` contract | From the input token, before the swap |
+| Embedding a ready-made swap UI in your app | Skip Go Widget | Per its `chainIdsToAffiliates` config |
 | Building your own surface on Skip API routing | Skip `affiliates` array | From `min_asset`, in the output token |
-
-## Drop-in: the Skip Go Widget
-
-The [Skip Go Widget](https://docs.skip.build/go/widget/getting-started) (`@skip-go/widget`) is an embeddable swap component, available as a React component or a Web Component, with affiliate fees as a first-class config option:
-
-```tsx
-import { Widget } from "@skip-go/widget";
-
-<Widget
-  chainIdsToAffiliates={{
-    "osmosis-1": {
-      affiliates: [
-        { basisPointsFee: "50", address: "osmo1youraffiliateaddress..." },
-      ],
-    },
-  }}
-/>;
-```
-
-- `basisPointsFee`: your fee in basis points (`50` is 0.5%).
-- `address`: the fee recipient, which must be valid for that chain.
-- The total `basisPointsFee` must be consistent across every chain you configure.
-
-The widget handles quoting, fee inclusion, and message construction for you. See the [widget configuration reference](https://docs.skip.build/go/widget/configuration) for theming and the full option set. The rest of this page covers the two lower-level paths for integrators building their own surface.
 
 ## The `affiliate-swap` contract
 
@@ -119,6 +95,52 @@ fee_amount    = floor(input_amount * effective_fee / 100)
 swap_amount   = input_amount - fee_amount
 ```
 
+### Disclose the fee in your UI
+
+The `affiliate-swap` contract deducts your fee silently: it does not surface anything to the user, because the swap runs from your own surface. Disclosing the fee is your responsibility. Before the user signs, show the fee amount and that it goes to you, so the quoted output and the fee are both clear. Users should never discover a cut only by comparing the received amount against the market rate. The same applies to fees you configure on the Skip paths.
+
+
+## Deep-linking the Osmosis app
+
+If instead of building your own surface you just want to hand users off to the Osmosis app with a pair pre-filled, the app reads the trading pair from URL query parameters:
+
+```
+https://app.osmosis.zone/?from=ATOM&to=OSMO
+```
+
+- `from`: the sell asset (defaults to ATOM).
+- `to`: the buy asset (defaults to OSMO).
+
+Both accept an asset symbol or a minimal denom. Symbols are ambiguous where multiple bridged variants of an asset exist, so prefer minimal denoms (`uosmo`, or the full `ibc/HASH` for IBC assets) for links you generate programmatically; the symbol form is fine for hand-written links to majors like ATOM and OSMO.
+
+This sets the default pair only. It swaps on the Osmosis app, not your surface, so no affiliate fee is taken. To earn a fee you use one of the mechanisms on this page.
+
+
+## Drop-in: the Skip Go Widget
+
+The [Skip Go Widget](https://docs.skip.build/go/widget/getting-started) (`@skip-go/widget`) is an embeddable swap component, available as a React component or a Web Component, with affiliate fees as a first-class config option:
+
+```tsx
+import { Widget } from "@skip-go/widget";
+
+<Widget
+  chainIdsToAffiliates={{
+    "osmosis-1": {
+      affiliates: [
+        { basisPointsFee: "50", address: "osmo1youraffiliateaddress..." },
+      ],
+    },
+  }}
+/>;
+```
+
+- `basisPointsFee`: your fee in basis points (`50` is 0.5%).
+- `address`: the fee recipient, which must be valid for that chain.
+- The total `basisPointsFee` must be consistent across every chain you configure.
+
+The widget handles quoting, fee inclusion, and message construction for you. See the [widget configuration reference](https://docs.skip.build/go/widget/configuration) for theming and the full option set. If you build your own surface instead, use the `affiliate-swap` contract above or the Skip `affiliates` array below.
+
+
 ## The Skip `affiliates` array
 
 Swaps built with the [Skip API](https://docs.skip.build/) execute through a Skip entry point contract and can carry affiliate fees. Two entry points exist on Osmosis:
@@ -144,7 +166,7 @@ Each affiliate entry is:
 - `basis_points_fee`: your fee in basis points (so `50` is 0.5%).
 - `address`: the address that receives the fee.
 
-In the executed `swap_and_action` message it sits alongside `user_swap`, `min_asset`, and `post_swap_action`. The `timeout_timestamp` is a Unix timestamp in **nanoseconds** and must be in the future; the entry point rejects anything at or before the current block time, so compute it at execution time (for example, now plus a few minutes). The value below is illustrative:
+In the executed `swap_and_action` message it sits alongside `user_swap`, `min_asset`, and `post_swap_action`. The `timeout_timestamp` is a Unix timestamp in **nanoseconds** and must not be earlier than the current block time: the entry point rejects it only once the block time has passed it, so a timestamp equal to the block time is accepted. In practice, compute it at execution time with a buffer (for example, now plus a few minutes). The value below is illustrative:
 
 ```json
 {
@@ -172,22 +194,3 @@ In the executed `swap_and_action` message it sits alongside `user_swap`, `min_as
 ```
 
 For the full message shape and venue names, use the [Skip API documentation](https://docs.skip.build/). The message format is Skip's; Osmosis hosts the deployed entry points.
-
-## Disclose the fee in your UI
-
-The `affiliate-swap` contract deducts your fee silently: it does not surface anything to the user, because the swap runs from your own surface. Disclosing the fee is your responsibility. Before the user signs, show the fee amount and that it goes to you, so the quoted output and the fee are both clear. Users should never discover a cut only by comparing the received amount against the market rate. The same applies to fees you configure on the Skip paths.
-
-## Deep-linking the Osmosis app
-
-If instead of building your own surface you just want to hand users off to the Osmosis app with a pair pre-filled, the app reads the trading pair from URL query parameters:
-
-```
-https://app.osmosis.zone/?from=ATOM&to=OSMO
-```
-
-- `from`: the sell asset (defaults to ATOM).
-- `to`: the buy asset (defaults to OSMO).
-
-Both accept an asset symbol or a minimal denom. Symbols are ambiguous where multiple bridged variants of an asset exist, so prefer minimal denoms (`uosmo`, or the full `ibc/HASH` for IBC assets) for links you generate programmatically; the symbol form is fine for hand-written links to majors like ATOM and OSMO.
-
-This sets the default pair only. It swaps on the Osmosis app, not your surface, so no affiliate fee is taken. To earn a fee you use one of the mechanisms above.
