@@ -48,7 +48,7 @@ The widget handles quoting, fee inclusion, and message construction for you. See
 
 ## The `affiliate-swap` contract
 
-Osmosis has a deployed `affiliate-swap` CosmWasm contract. You send it one token, it takes your fee, and it swaps the remainder on your behalf through the poolmanager. The fee goes to any address you name.
+Osmosis has a deployed `affiliate-swap` CosmWasm contract. You send it one token, it takes your fee, and it swaps the remainder on your behalf through the poolmanager. The fee goes to any valid Osmosis address you name.
 
 Use this instance:
 
@@ -111,7 +111,13 @@ You want to swap 1 ATOM to OSMO through pool 1, taking a 1% referral fee to your
 3. Onchain, `10000` ATOM-denom (1%) transfers to your address, and the remaining `990000` swaps to OSMO with `token_out_min_amount.amount` enforced.
 4. The OSMO output returns to the sender.
 
-Because the fee comes out of the input before the swap, quote the swap on the post-fee amount (`input * (1 - fee)`), not the gross input, or your displayed output will be too high.
+Because the fee comes out of the input before the swap, quote the swap on the post-fee amount, not the gross input, or your displayed output will be too high. Mirror the contract's integer math exactly (it caps the requested percentage, floors the fee amount, then subtracts), since an `input * (1 - fee)` approximation can differ by one minimal unit and ignores the cap:
+
+```
+effective_fee = min(requested_fee_percentage, instance_max_fee_percentage)
+fee_amount    = floor(input_amount * effective_fee / 100)
+swap_amount   = input_amount - fee_amount
+```
 
 ## The Skip `affiliates` array
 
