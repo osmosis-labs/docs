@@ -128,9 +128,3 @@ https://app.osmosis.zone/?from=ATOM&to=OSMO
 - `to`: the buy asset symbol (defaults to OSMO).
 
 This sets the default pair only. It swaps on the Osmosis app, not your surface, so no affiliate fee is taken. To earn a fee you build the swap yourself using one of the mechanisms above.
-
-## Summary
-
-- The native poolmanager swap message carries no fee field. To take a cut you build the swap yourself and use one of the two onchain mechanisms below.
-- Building your own swap surface against Osmosis: call the `affiliate-swap` contract with a `fee_percentage` and `fee_collector`. The fee comes from the input token and is capped (currently 1.5%). Disclose it in your UI and quote on the post-fee amount.
-- Already routing through the Skip entry point: populate the `affiliates` array in `swap_and_action` with your address and `basis_points_fee`.
