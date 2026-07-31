@@ -6,19 +6,21 @@ sidebar_position: 8
 
 # Affiliate Fee Share
 
-If you send swap volume to Osmosis from your own app, aggregator, or frontend, you can take an affiliate fee on each swap. There are two independent mechanisms, and which one you use depends on how the swap is routed:
+If you send swap volume to Osmosis from your own app, aggregator, or frontend, you can take an affiliate fee on each swap. You build the swap surface; Osmosis provides the onchain pieces that let you take a cut.
 
-- The **`affiliate-swap` contract**, for swaps you build and submit directly against Osmosis pools.
-- The **Skip `swap_and_action` affiliates array**, for swaps routed through the Skip entry point (the path used for inbound IBC swaps).
+There is no hosted embeddable widget to drop in. You construct and submit the swap yourself (from your UI, bot, or backend), and one of two onchain mechanisms carries the fee:
 
-They are not alternatives to configure on the same message: each belongs to a different swap path. This page covers both, with a worked example for each.
+- The **`affiliate-swap` contract**, the self-contained path: send it a token, it takes your fee and swaps the rest through Osmosis pools. This is the one to use if you are building your own swap surface against Osmosis directly.
+- The **Skip `swap_and_action` affiliates array**, if you already route swaps through the Skip entry point.
+
+A note on why a contract is involved: the native poolmanager swap message (`MsgSwapExactAmountIn` / `MsgSwapExactAmountOut`) has **no** affiliate or fee field. You cannot attach a cut to a plain Osmosis swap. The `affiliate-swap` contract exists precisely to wrap a swap with a fee deduction, which is why it, rather than a raw swap message, is the integrator path.
 
 ## Which path applies
 
 | You are... | Use | Fee is taken... |
 | -- | -- | -- |
-| Building a poolmanager swap yourself (CosmWasm or a bot) and want a cut | `affiliate-swap` contract | From the input token, before the swap |
-| Routing a swap through the Skip entry point (Skip API, inbound IBC) | Skip `affiliates` array | By Skip, per the entry point contract |
+| Building your own swap surface against Osmosis pools (app, bot, backend) | `affiliate-swap` contract | From the input token, before the swap |
+| Already routing swaps through the Skip entry point | Skip `affiliates` array | By Skip, per the entry point contract |
 
 ## The `affiliate-swap` contract
 
@@ -108,9 +110,15 @@ The Osmosis frontend builds exactly this message for IBC-hook swaps and currentl
 
 For the full Skip message shape, venue names, and the operations format, use the [Skip API documentation](https://docs.skip.build/). Osmosis only provides the deployed entry point; the message format is Skip's.
 
-## Embedding the swap tool
+## Disclose the fee in your UI
 
-There is no purpose-built embeddable swap widget with an affiliate parameter today. The swap tool on the Osmosis app does read the trading pair from URL query parameters, which lets you deep-link into a pre-filled swap:
+The `affiliate-swap` contract deducts your fee silently: it does not surface anything to the user, because the swap runs from your own surface. Disclosing the fee is your responsibility. Before the user signs, show the fee amount and that it goes to you, so the quoted output and the fee are both clear. Users should never discover a cut only by comparing the received amount against the market rate.
+
+For quoting, remember the fee is taken from the input before the swap, so quote the swap on the post-fee amount (`input * (1 - fee)`), not the gross input, or your displayed output will be too high.
+
+## Deep-linking the Osmosis app
+
+If instead of building your own surface you just want to hand users off to the Osmosis app with a pair pre-filled, the app reads the trading pair from URL query parameters:
 
 ```
 https://app.osmosis.zone/?from=ATOM&to=OSMO
@@ -119,10 +127,10 @@ https://app.osmosis.zone/?from=ATOM&to=OSMO
 - `from`: the sell asset symbol (defaults to ATOM).
 - `to`: the buy asset symbol (defaults to OSMO).
 
-These set the default pair only. There is no query parameter to attach an affiliate address or fee to a deep link. To earn an affiliate fee you must build the swap yourself using one of the two mechanisms above.
+This sets the default pair only. It swaps on the Osmosis app, not your surface, so no affiliate fee is taken. To earn a fee you build the swap yourself using one of the mechanisms above.
 
 ## Summary
 
-- To take a fee on a swap you build against Osmosis pools directly, call the `affiliate-swap` contract with a `fee_percentage` and `fee_collector`. The fee comes from the input token and is capped (currently 1.5%).
-- To take a fee on a swap routed through the Skip entry point, populate the `affiliates` array in `swap_and_action` with your address and `basis_points_fee`.
-- Deep links can pre-fill the swap pair but cannot carry an affiliate fee.
+- The native poolmanager swap message carries no fee field. To take a cut you build the swap yourself and use one of the two onchain mechanisms below.
+- Building your own swap surface against Osmosis: call the `affiliate-swap` contract with a `fee_percentage` and `fee_collector`. The fee comes from the input token and is capped (currently 1.5%). Disclose it in your UI and quote on the post-fee amount.
+- Already routing through the Skip entry point: populate the `affiliates` array in `swap_and_action` with your address and `basis_points_fee`.
