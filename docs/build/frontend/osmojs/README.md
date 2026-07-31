@@ -169,47 +169,36 @@ const client = await getSigningOsmosisClient({
 ## Creating Signers
 
 To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/api/cosmjs.html) or an `OfflineSigner` from `cosmjs` using mnemonics.
-### Amino Signer
 
-Likely you'll want to use the Amino, so unless you need proto, you should use this one:
+### Getting an offline signer
 
-```js
-import { getOfflineSigner as getOfflineSignerAmino } from 'osmojs';
-```
-### Proto Signer
-
-```js
-import { getOfflineSigner as getOfflineSignerProto } from 'osmojs';
-```
+`osmojs` does not export a signer helper. Get an `OfflineSigner` from the user's
+wallet (CosmosKit's `useChain` hook exposes `getOfflineSigner`) or, for a
+backend or script, construct one directly from `@cosmjs/proto-signing`.
 
 WARNING: NOT RECOMMENDED TO USE PLAIN-TEXT MNEMONICS. Please take care of your security and use best practices such as AES encryption and/or methods from 12factor applications.
 
 ```js
-import { chains } from 'chain-registry';
+import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
 
 const mnemonic =
   'unfold client turtle either pilot stock floor glow toward bullet car science';
-  const chain = chains.find(({ chain_name }) => chain_name === 'osmosis');
-  const signer = await getOfflineSigner({
-    mnemonic,
-    chain
-  });
+const signer = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+  prefix: 'osmo',
+});
 ```
+
 ### Broadcasting messages
 
-Now that you have your `client`, you can broadcast messages:
+Create a signing client with `getSigningOsmosisClient`, then sign and broadcast
+with the client's own methods (`osmojs` does not export a standalone
+`signAndBroadcast`):
 
 ```js
-import { signAndBroadcast } from 'osmojs';
+import { getSigningOsmosisClient } from 'osmojs';
 
-const res = await signAndBroadcast({
-  client, // SigningStargateClient
-  chainId: 'osmosis-1', // use 'osmo-test-5' for testnet
-  address,
-  msgs: [msg],
-  fee,
-  memo: ''
-});
+const client = await getSigningOsmosisClient({ rpcEndpoint, signer });
+const res = await client.signAndBroadcast(address, [msg], fee, '');
 ```
 
 ### Osmosis Messages
@@ -307,7 +296,7 @@ const {
 
 ### Further examples
 
-Examples in [`create-cosmos-app` repo's examples directory](https://github.com/hyperweb-io/create-cosmos-app/tree/main/examples) gives you a great guideline on how osmojs can be used at its full extent.
+The [Create Interchain App examples](https://github.com/hyperweb-io/create-interchain-app/tree/main/examples) demonstrate how to assemble generated clients, wallet integration, and transaction flows in complete applications.
 
 You can also refer to the [osmojs documentation](https://github.com/osmosis-labs/osmojs/tree/main/packages/osmojs/docs) for further documentations on osmojs usage.
 
