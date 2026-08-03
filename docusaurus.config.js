@@ -14,6 +14,44 @@ const npm2yarn = esmDefault(require('@docusaurus/remark-plugin-npm2yarn'));
 const remarkMath = esmDefault(require('remark-math'));
 const rehypeKatex = esmDefault(require('rehype-katex'));
 
+// Minimal .env loader (Docusaurus does not read .env, and we avoid adding a
+// dotenv dependency just for one var). Only fills vars not already set, so the
+// real process environment (Vercel, CI) always wins over the file.
+(() => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const envPath = path.join(__dirname, '.env');
+    if (!fs.existsSync(envPath)) return;
+    for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+      const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*)\s*$/);
+      if (!m || line.trimStart().startsWith('#')) continue;
+      const key = m[1];
+      let val = m[2].replace(/^["']|["']$/g, '');
+      if (process.env[key] === undefined) process.env[key] = val;
+    }
+  } catch {
+    /* best-effort; real env vars still apply */
+  }
+})();
+
+// Algolia DocSearch search-only API key. This key is public by design (it must
+// ship to the browser for the search box to work) and is read-only
+// (search/listIndexes/settings/browse; no write/admin ACL). It is read from an
+// env var rather than committed inline so org secret scanners stop flagging it
+// as an exposed credential; env-injecting it changes nothing about security.
+// Set ALGOLIA_SEARCH_KEY in Vercel (all environments) and in a local `.env`.
+// The scraper's write credentials (APPLICATION_ID / API_KEY) are separate
+// GitHub Action secrets and are correctly not in this repo.
+const ALGOLIA_SEARCH_KEY = process.env.ALGOLIA_SEARCH_KEY;
+if (!ALGOLIA_SEARCH_KEY) {
+  throw new Error(
+    'ALGOLIA_SEARCH_KEY is not set. Set it (Vercel env vars, or a local .env) ' +
+      'so the docs search box works. It is the public search-only DocSearch key, ' +
+      'not a secret; see docusaurus.config.js for details.'
+  );
+}
+
 /** @type {import('@docusaurus/preset-classic').Options} */ defaultSettings = {
   remarkPlugins: [[npm2yarn, { sync: true }]],
 };
@@ -267,9 +305,10 @@ const config = {
       algolia: {
         // Org-owned Algolia account. The docsearch-scraper GitHub Action
         // (APPLICATION_ID / API_KEY secrets) populates the `Docs` index.
-        // This key is search-only (search/listIndexes/settings/browse).
+        // apiKey is the public search-only key, read from ALGOLIA_SEARCH_KEY
+        // (see the const near the top of this file).
         appId: 'F26GLV8TNU',
-        apiKey: '0c5c06782dec165349c88655f2de36b6',
+        apiKey: ALGOLIA_SEARCH_KEY,
         indexName: 'Docs',
         // Kept off through the single-instance migration: the new index
         // has faceting configured, but page `docusaurus_tag` values will flip
