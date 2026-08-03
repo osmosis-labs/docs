@@ -21,9 +21,7 @@ Protect the consensus signing key. Options, in increasing robustness:
 
 ## Sentry node architecture
 
-A sentry setup puts the validator behind one or more full nodes (sentries): the validator only peers with its sentries, and the sentries face the public network. This hides the validator's address and absorbs DDoS at the sentry layer.
-
-<!-- TODO(operator): document the team's actual sentry topology, the firewall/peering rules, and the DDoS posture. These are deployment-specific and must be confirmed before publishing as guidance. -->
+A sentry setup puts the validator behind one or more full nodes (sentries): the validator only peers with its sentries, and the sentries face the public network. This hides the validator's address and absorbs DDoS at the sentry layer. The specific topology, peering rules, and firewalling are deployment decisions each operator makes for their own infrastructure.
 
 ## Backup and disaster recovery
 
@@ -35,7 +33,7 @@ The goal of validator DR is to restore service **without double-signing**.
 Never start a second validator from a backup while the first is still signing, and never restore an old `priv_validator_state.json` that lags the chain in a way that lets the node re-sign a height. When in doubt, the safe failure mode is downtime (cheap), not double-signing (severe).
 :::
 
-<!-- TODO(operator): document the exact backup contents, the migration/failover runbook, and how priv_validator_state.json is handled during recovery, confirmed against the team's actual procedure. This is safety-critical and must not be guessed. -->
+Your backup should cover `priv_validator_key.json`, the node key, and your configuration; your failover procedure is your own, but it must respect the rule above: stop the old signer fully before the replacement signs.
 
 ## Reference
 

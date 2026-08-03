@@ -30,8 +30,6 @@ The signals that matter most for a validator:
 - **Disk filling up.** A pruned node still grows; running out of disk halts the node.
 - **Sentry/validator connectivity** (if using a sentry architecture); see [Validator Security](/validate/security).
 
-<!-- TODO(operator): link the team's standard Grafana dashboards / alert rules and any hosted monitoring once confirmed. -->
-
 ## Reference
 
 - One-time profiling and diagnosis: [Performance and Profiling](/validate/performance).

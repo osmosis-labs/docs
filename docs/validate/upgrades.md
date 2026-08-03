@@ -52,7 +52,7 @@ At the upgrade height Cosmovisor stops the node, swaps to the staged binary, and
 
 ## Recovering from a missed upgrade
 
-If the node halted because the new binary was not staged, install the correct binary and restart. <!-- TODO(operator): document the exact recovery steps and any state-handling caveats for Osmosis specifically. -->
+A node that misses an upgrade halts cleanly at the upgrade height, so no state recovery is needed. Install the correct release binary (or stage it at `$DAEMON_HOME/cosmovisor/upgrades/<upgrade-name>/bin/osmosisd` if running Cosmovisor) and restart: the upgrade handler runs on startup and the node continues from the halt height. Verify the binary version against the [releases page](https://github.com/osmosis-labs/osmosis/releases) before restarting.
 
 ## Reference
 

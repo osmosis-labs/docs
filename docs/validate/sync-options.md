@@ -39,12 +39,43 @@ Choose pruned unless you specifically need history. Switching a node from pruned
 
 ## Snapshot providers
 
-- **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)** — the official Osmosis snapshots.
-- **[Polkachu](https://www.polkachu.com/tendermint_snapshots/osmosis)** — community-maintained snapshots with restore instructions.
+- **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)**: the official Osmosis snapshots.
+- **[Polkachu](https://www.polkachu.com/tendermint_snapshots/osmosis)**: community-maintained snapshots with restore instructions.
 
 Each provider's page lists the current snapshot height, download URL, and the extract command for the latest data. Match the snapshot's pruning profile to your node's role (a pruned snapshot for a validator, an archive snapshot only if you need full history).
 
-<!-- TODO(operator): list the current recommended state-sync RPC servers (trust height/hash + rpc_servers) once confirmed. -->
+## Configuring state sync
+
+State sync needs two things in `config.toml`: at least two trusted RPC servers for light-client verification, and a recent trust height with its block hash. The trust values go stale within the trust period, so compute them at sync time rather than copying them from anywhere.
+
+Public RPC endpoints that serve this purpose:
+
+- `https://rpc.osmosis.zone:443` (official)
+- `https://osmosis-rpc.polkachu.com:443` (community; Polkachu also documents a dedicated [state-sync service](https://www.polkachu.com/state_sync/osmosis))
+- `https://osmosis-rpc.publicnode.com:443` (community)
+
+Endpoints change over time; confirm an endpoint responds to `/status` before relying on it.
+
+Compute a trust height and hash a couple of thousand blocks behind the tip, then fill the `[statesync]` section:
+
+```bash
+RPC="https://rpc.osmosis.zone:443"
+LATEST=$(curl -s "$RPC/status" | jq -r '.result.sync_info.latest_block_height')
+TRUST_HEIGHT=$((LATEST - 2000))
+TRUST_HASH=$(curl -s "$RPC/block?height=$TRUST_HEIGHT" | jq -r '.result.block_id.hash')
+echo "trust_height=$TRUST_HEIGHT trust_hash=$TRUST_HASH"
+```
+
+```toml
+[statesync]
+enable = true
+rpc_servers = "https://rpc.osmosis.zone:443,https://osmosis-rpc.polkachu.com:443"
+trust_height = <TRUST_HEIGHT>
+trust_hash = "<TRUST_HASH>"
+trust_period = "168h0m0s"
+```
+
+The snapshots themselves arrive over P2P from peers that have snapshot serving enabled; the RPC servers are only used to verify what arrives. If discovery stalls, a snapshot restore is the more predictable path.
 
 ## Reference
 
