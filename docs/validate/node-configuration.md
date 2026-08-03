@@ -8,9 +8,7 @@ sidebar_position: 6
 
 A node is configured through two files in `$HOME/.osmosisd/config/`: `app.toml` (application settings) and `config.toml` (CometBFT/consensus and networking). This page covers the settings operators most often tune.
 
-:::caution Operator verification required
-Recommended values for peers, seeds, and minimum gas prices change over time and with the network. Confirm current values before applying. The keys below are stable; the values are illustrative.
-:::
+The keys below are stable, but peer and seed addresses rotate. Take those from the [Osmosis entry in the Cosmos chain registry](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json) rather than from any hardcoded list, including the examples here.
 
 ## `app.toml`
 

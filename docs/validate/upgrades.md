@@ -8,9 +8,7 @@ sidebar_position: 4
 
 Osmosis upgrades through governance: a software-upgrade proposal sets an upgrade height, and at that height every node must switch to the new `osmosisd` binary. If your node is still running the old binary at the upgrade height, it halts. [Cosmovisor](https://docs.cosmos.network/main/build/tooling/cosmovisor) automates the binary swap so you do not have to be awake at the block.
 
-:::caution Operator verification required
-The upgrade-height procedure, the exact binary versions, and the recovery steps for a missed upgrade are network- and release-specific. Confirm the current values for each upgrade against the [Osmosis releases](https://github.com/osmosis-labs/osmosis/releases) page and the governance proposal before acting. The commands below are the general Cosmovisor pattern, not a substitute for the per-upgrade instructions.
-:::
+Take the upgrade name, height, and binary version for each upgrade from the governance proposal and the [Osmosis releases](https://github.com/osmosis-labs/osmosis/releases) page. A release may also carry upgrade-specific instructions; read those before staging.
 
 ## How an upgrade works
 
