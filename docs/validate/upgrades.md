@@ -50,6 +50,20 @@ export DAEMON_RESTART_AFTER_UPGRADE=true
 
 At the upgrade height Cosmovisor stops the node, swaps to the staged binary, and restarts.
 
+## Verifying the binary
+
+Whether you build from source or download a release artifact, confirm what you are about to run before staging it. Each [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) publishes checksums alongside the binaries:
+
+```bash
+# Compare against the checksum published on the release page.
+sha256sum osmosisd
+
+# Confirm the staged binary reports the version you expect.
+~/.osmosisd/cosmovisor/upgrades/<UPGRADE_NAME>/bin/osmosisd version
+```
+
+A binary that reports an unexpected version is the most common cause of an upgrade that halts anyway. Verify snapshots the same way, against the checksum the snapshot provider publishes.
+
 ## Recovering from a missed upgrade
 
 A node that misses an upgrade halts cleanly at the upgrade height, so no state recovery is needed. Install the correct release binary (or stage it at `$DAEMON_HOME/cosmovisor/upgrades/<upgrade-name>/bin/osmosisd` if running Cosmovisor) and restart: the upgrade handler runs on startup and the node continues from the halt height. Verify the binary version against the [releases page](https://github.com/osmosis-labs/osmosis/releases) before restarting.

@@ -84,6 +84,46 @@ And the flags:
 - `--chain-id` is the network you are joining (`osmosis-1` for mainnet).
 - `--gas-prices` is the price per unit of gas in uosmo. It must be at or above the current fee-market base fee, which you can query with `osmosisd query txfees base-fee`.
 
+## Managing a Running Validator
+
+These are the transactions you send from the **operator account**, not the consensus key. Add the usual `--from`, `--chain-id`, and gas flags to each.
+
+**Edit your metadata or commission.** Only the fields you pass are changed; anything omitted is left as-is. Note that `commission-max-change-rate` limits how much you can raise `commission-rate` in a 24 hour period, and the max rate itself cannot be raised after creation:
+
+```bash
+osmosisd tx staking edit-validator \
+  --new-moniker="NewName" \
+  --website="https://example.com" \
+  --security-contact="security@example.com" \
+  --details="What your validator is about" \
+  --commission-rate="0.12" \
+  --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
+```
+
+**Unjail after downtime.** Once the jail period has elapsed and your node is signing again, send:
+
+```bash
+osmosisd tx slashing unjail --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
+```
+
+This fails if you are still jailed for the duration, if your node is not caught up, or if self-delegation is below `min-self-delegation`. Unjailing is not possible at all if the validator was tombstoned for double-signing.
+
+**Withdraw rewards and commission.** `--commission` adds your accumulated commission to the withdrawal:
+
+```bash
+osmosisd tx distribution withdraw-rewards [YOUR_VALOPER_ADDRESS] --commission \
+  --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
+```
+
+**Reduce your self-delegation or retire.** There is no "delete validator" transaction. Unbonding your self-delegation below `min-self-delegation` removes the validator from the active set, and it stays in an unbonding state until the unbonding period elapses:
+
+```bash
+osmosisd tx staking unbond [YOUR_VALOPER_ADDRESS] [AMOUNT]uosmo \
+  --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
+```
+
+Keep the consensus key and its state safe until unbonding completes: the validator can still be slashed for a double-sign committed while it was bonded.
+
 ## Track Validator Active Set
 
 To see the current validator active set:

@@ -42,7 +42,38 @@ Choose pruned unless you specifically need history. Switching a node from pruned
 - **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)**: the official Osmosis snapshots.
 - **[Polkachu](https://www.polkachu.com/tendermint_snapshots/osmosis)**: community-maintained snapshots with restore instructions.
 
-Each provider's page lists the current snapshot height, download URL, and the extract command for the latest data. Match the snapshot's pruning profile to your node's role (a pruned snapshot for a validator, an archive snapshot only if you need full history).
+Each provider's page lists the current snapshot height, download URL, and the extract command for the latest data. Match the snapshot's pruning profile to your node's role (a pruned snapshot for a validator, an archive snapshot only if you need full history). Verify the download against the checksum the provider publishes before extracting it.
+
+### Restoring a snapshot on a validator
+
+Extracting a snapshot over a validator's data directory can overwrite `priv_validator_state.json` with the snapshot author's signing state. If that state lags the chain, your node can sign a height it already signed, which is a double-sign. Follow this order:
+
+```bash
+# 1. Stop the node. Confirm it is actually stopped before touching data.
+sudo systemctl stop cosmovisor
+sudo systemctl status cosmovisor --no-pager
+
+# 2. Preserve your own signing state.
+cp ~/.osmosisd/data/priv_validator_state.json ~/priv_validator_state.json.bak
+
+# 3. Clear the state the snapshot replaces. Keep the config directory.
+rm -rf ~/.osmosisd/data ~/.osmosisd/wasm
+mkdir -p ~/.osmosisd/data
+
+# 4. Verify, then extract the snapshot.
+#    (Compare against the checksum published by the provider first.)
+wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C ~/.osmosisd -xf -
+
+# 5. Restore your signing state over whatever the snapshot supplied.
+cp ~/priv_validator_state.json.bak ~/.osmosisd/data/priv_validator_state.json
+
+# 6. Start exactly one signer.
+sudo systemctl start cosmovisor
+```
+
+:::danger One signer at a time
+Step 6 assumes nothing else is signing with the same key. If you are migrating to a new host, the old signer must be fully stopped, not merely idle, before the new one starts. Downtime costs rewards; double-signing slashes 5% and tombstones the validator permanently.
+:::
 
 ## Configuring state sync
 
