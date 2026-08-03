@@ -209,17 +209,42 @@ list = [
 ```
 
 :::note
-Osmosis uses a dynamic [fee market](/learn/features/fee-market), so the minimum gas price moves with congestion. Set the Osmosis `gas_price` at or above the current base fee (query it with `osmosisd query txfees base-fee`) rather than a fixed low value, or the relayer's transactions will be rejected.
+Osmosis uses a dynamic [fee market](/learn/features/fee-market), so the minimum gas price moves with congestion. A fixed `gas_price` is the usual cause of a relayer silently stalling: once the base fee rises above it, every transaction is rejected until congestion clears.
+
+Hermes can query the base fee instead of guessing. Enable dynamic gas pricing for the Osmosis chain:
+
+```toml
+[chains.dynamic_gas_price]
+enabled = true
+multiplier = 1.1
+max = 0.6
+```
+
+- `multiplier` is applied to the queried price, giving headroom while the transaction is in flight. Too tight a multiplier risks rejection as the fee moves.
+- `max` caps what the relayer will pay. If the queried price exceeds it, Hermes submits at `max`, which may still be rejected as insufficient, so treat `max` as a spend limit rather than a safety net.
+- If the query fails, Hermes falls back to the static `gas_price` configured above, so keep that value sane rather than removing it.
+
+Monitor for rejected transactions after congestion spikes: a relayer that has hit `max` looks idle rather than broken.
 :::
 
-Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
+Add your relayer wallet to Hermes' keyring (located in `$HOME/.hermes/keys`).
 
-Best practice is to use the same mnemonic over all networks. Do not use the relayer wallets for anything else because it will lead to account sequence errors.
+Use a **separate key per chain**. A compromised key then only affects the one chain it relays on. (Account sequence errors come from two processes using the *same account on one chain* concurrently, not from holding different keys on different chains, so separate keys do not cause them.) Do not use relayer wallets for anything else.
+
+:::caution Keep the mnemonic out of your shell history
+Pass the mnemonic in a file, never as a command argument. `keys restore` was removed in Hermes v1.0; `keys add` is the current subcommand.
+:::
 
 ```sh
-hermes keys restore cosmoshub-4 -m "24-word mnemonic seed"
-hermes keys restore osmosis-1 -m "24-word mnemonic seed"
+# One mnemonic file per chain, 24 words on a single line.
+# Restrict permissions, and delete the files once the keys are imported.
+umask 077
+hermes keys add --chain cosmoshub-4 --mnemonic-file ~/.hermes/hub.mnemonic
+hermes keys add --chain osmosis-1  --mnemonic-file ~/.hermes/osmosis.mnemonic
+shred -u ~/.hermes/hub.mnemonic ~/.hermes/osmosis.mnemonic
 ```
+
+The imported keys live unencrypted in `$HOME/.hermes/keys`; protect that directory as you would any hot wallet.
 
 Ensure this wallet has funds in both $OSMO and $ATOM in order to pay the fees required to relay.
 
