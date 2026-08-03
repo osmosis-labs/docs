@@ -14,7 +14,7 @@ Recommended values for peers, seeds, and minimum gas prices change over time and
 
 ## `app.toml`
 
-- **`minimum-gas-prices`** sets the lowest gas price your node accepts in the mempool. Osmosis runs an [EIP-1559 style fee market](/learn/features/fee-market), so set this at or above the current network base fee (query it with `osmosisd query txfees base-fee`). Example: `minimum-gas-prices = "0.03uosmo"`.
+- **`minimum-gas-prices`** is your node's own static mempool floor, not the network fee. It is separate from the [EIP-1559 style fee market](/learn/features/fee-market), which Osmosis applies independently during `CheckTx` using the live base fee (query it with `osmosisd query txfees base-fee`). v31 initializes this setting to `0uosmo`, which lets the dynamic fee do the work. Do not copy the current base fee into it: the base fee falls again after congestion, and a hardcoded elevated floor would leave your node rejecting transactions the network accepts. Set a non-zero value only as a deliberate local policy.
 - **`pruning`** controls how much historical state is kept. See [Sync Options](/validate/sync-options) for pruned vs archive.
 - **API and gRPC** (`[api]`, `[grpc]`) toggle the REST/gRPC endpoints. Enable only what you serve; a validator typically serves none publicly.
 

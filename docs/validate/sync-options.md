@@ -56,6 +56,10 @@ Public RPC endpoints that serve this purpose:
 
 Endpoints change over time; confirm an endpoint responds to `/status` before relying on it.
 
+:::caution Cross-check the trust hash
+The trust height and hash are the root of trust for the whole sync. Do not take them from the same endpoint you then list as an RPC server: a single compromised endpoint could serve both the asserted root of trust and the data verified against it. Fetch the hash for your chosen height from at least two unrelated providers (or a source you already trust, such as your own archive node) and confirm they match before enabling state sync.
+:::
+
 Compute a trust height and hash a couple of thousand blocks behind the tip, then fill the `[statesync]` section:
 
 ```bash

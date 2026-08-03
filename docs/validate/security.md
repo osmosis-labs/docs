@@ -6,7 +6,15 @@ sidebar_position: 9
 
 # Validator Security and Recovery
 
-Running a validator on mainnet has two failure modes that ordinary nodes do not: it can be **slashed for downtime**, and it can be **slashed for double-signing**. Double-signing slashing is severe and is the failure this page is most concerned with preventing.
+Running a validator on mainnet has two failure modes that ordinary nodes do not: it can be **jailed for downtime**, and it can be **slashed for double-signing**. The two penalties are not equivalent, and the difference matters when you decide how to run your setup.
+
+On mainnet at the time of writing, `slash_fraction_downtime` is `0`: missing too many blocks in the signing window jails the validator and costs it rewards while jailed, but does not slash stake. Double-signing is slashed at 5% (`slash_fraction_double_sign`) and tombstones the validator. Both are governance-mutable, so query the live values rather than trusting a figure in docs:
+
+```bash
+osmosisd query slashing params
+```
+
+Double-signing is the severe, irreversible failure, and it is what this page is most concerned with preventing.
 
 :::danger Double-signing is the cardinal risk
 A validator must never sign two blocks at the same height with the same key. The most common way this happens by accident is running two nodes with a copy of the same `priv_validator_key.json` (for example, a "backup" validator brought online while the primary is still running, or a restored snapshot that includes a stale `priv_validator_state.json`). Treat the validator key as singular: exactly one process may sign with it at any time.

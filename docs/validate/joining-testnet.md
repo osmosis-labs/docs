@@ -183,12 +183,12 @@ If dealing with a server that may have followed older instructions, you may cons
 
 ## Start Osmosis Service
 
-Reload and start the service:
+Reload, then enable and start the service. `enable` is what makes it come back after a reboot; starting it alone leaves the node down after the next restart of the host:
 
 ```bash
 sudo systemctl daemon-reload
 systemctl restart systemd-journald
-sudo systemctl start cosmovisor
+sudo systemctl enable --now cosmovisor
 ```
 
 Check the status of the service:

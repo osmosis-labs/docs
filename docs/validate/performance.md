@@ -7,12 +7,15 @@ sidebar_position: 8
 
 ## Profiling with pprof
 
-1. Query the pprof cpu endpoint on the node host: 
+:::caution Keep pprof private
+The pprof endpoint exposes internal process state and profiling it adds load. Leave it bound to loopback on the node and reach it over an SSH tunnel. Do not expose it on a public interface. CPU profiling in particular costs measurable performance while it runs, so profile deliberately rather than leaving it enabled.
+:::
+
+1. Query the pprof endpoint on the node host (bound to loopback):
    * **CPU**: `curl -X GET localhost:6060/debug/pprof/profile?seconds=<number> > <filename>`
    * **Heap**: `curl -X GET localhost:6060/debug/pprof/heap > <filename>`
-   * can query from your local machine by substituting localhost with the IP of the node, depending on your network setup. By doing this, can skip step 2.
-2. If querying on the node host, SCP the file to yourself: `scp <filename> <user>@<host>:<path>`
-   * E.g. `scp <filename> <user>@<host>:<dest-path>`
+   * To query from your own machine instead, forward the port over SSH rather than binding pprof publicly: `ssh -L 6060:localhost:6060 <user>@<host>`, then curl `localhost:6060` locally.
+2. If querying on the node host, SCP the file to yourself: `scp <user>@<host>:<path>/<filename> .`
    * ensure that your ISP or firewall is not blocking the file transfer
 3. Run a web server and open up a browser`go tool pprof -http=localhost:8080 <filename>`
    * `graphviz` must be installed

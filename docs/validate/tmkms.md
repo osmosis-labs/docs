@@ -141,10 +141,15 @@ Now, modify your validators `config.toml` to use the port you selected in the `t
 nano $HOME/.osmosisd/config/config.toml
 ```
 
-```toml
-priv_validator_laddr = "tcp://0.0.0.0:26659"
+Bind this listener to the private address the TMKMS host connects over, not to every interface:
 
+```toml
+priv_validator_laddr = "tcp://10.0.0.5:26659"
 ```
+
+:::danger This is the consensus signing interface
+`priv_validator_laddr` is how the signer is fed consensus votes. Never bind it to `0.0.0.0`, which exposes it on every interface including the public one. Bind it to a private or VPN interface reachable only by the TMKMS host, and add a default-deny firewall rule that permits `26659` only from that host's address. Treat the firewall rule as part of the setup, not an optional hardening step afterwards.
+:::
 
 It is also recommended to comment out the `priv_validator_key_file` line and the `priv_validator_state_file` line:
 
