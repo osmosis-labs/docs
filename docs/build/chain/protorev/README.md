@@ -78,15 +78,15 @@ The `x/protorev` module keeps the following objects in state:
 | State Object | Description | Key | Values | Store |
 | --- | --- | --- | --- | --- |
 | TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | `[]byte{1}` + `[]byte{inputDenom}` +`[]byte{outputDenom}` | `[]byte{TokenPairArbRoutes}` | KV |
-| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom`[]byte{2}` | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
-| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenoms{}`} | KV |
+| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
+| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenom{}}` | KV |
 | NumberOfTrades | Tracks the number of trades protorev has executed | `[]byte{4}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByDenom | Tracks the profits protorev has made | `[]byte{5}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | TradesByRoute | Tracks the number of trades the module has executed on a given route | `[]byte{6}` + `[]byte{route}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByRoute | Tracks the profits the module has accumulated after trading on a given route | `[]byte{7}` + `[]byte{route}` | `[]byte{sdk.Coin}` | KV |
 | DeveloperAccount | Tracks the developer account for protorev | `[]byte{8}` | `[]byte{sdk.AccAddress}` | KV |
 | DaysSinceModuleGenesis | Tracks the number of days since the module was initialized. Used to track profits that can be withdrawn by the developer account | `[]byte{9}` | `[]byte{uint}` | KV |
-| DeveloperFees | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
+| DeveloperFees (deprecated in v16) | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | MaxPoolPointsPerTx | Tracks the maximum number of pool points that can be consumed per tx | `[]byte{11}` | `[]byte{uint64}` | KV |
 | MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | `[]byte{12}` | `[]byte{uint64}` | KV |
 | PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | `[]byte{13}` | `[]byte{uint64}` | KV |
@@ -141,7 +141,7 @@ message Trade {
 
 ### DenomPairToPool
 
-DenomPairToPool takes in a base denomination (read below) – denom that is used to build routes (ex. osmo, atom, usdc) – and a denom to match (akash, juno) and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) —> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
+DenomPairToPool takes in a base denomination (read below), the denom that is used to build routes (ex. osmo, atom, usdc), and a denom to match (akash, juno), and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) -> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
 
 ### BaseDenoms
 
@@ -167,7 +167,7 @@ These stores allow users and researchers to query the number of cyclic arbitrage
 
 ### AdminAccount
 
-The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live on-chain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
+The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live onchain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
 
 ### DeveloperAccount
 
@@ -219,7 +219,7 @@ type PoolWeights struct {
 
 ### GenesisState
 
-There is only one configurable parameter for the genesis state —> whether protorev is enabled or not.
+There is only one configurable parameter for the genesis state -> whether protorev is enabled or not.
 
 ```go
 // GenesisState defines the protorev module's genesis state.
@@ -250,13 +250,13 @@ BaseDenoms
 - Osmosis
 - Atom
 
-Lets say the `postHandler` receives a transaction that contains a swap of **Juno** —> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
+Lets say the `postHandler` receives a transaction that contains a swap of **Juno** -> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
 
-- Osmosis —> Akash (on pool 1), Akash —> Juno (on pool 4), Juno —> Osmosis (on pool 2)
+- Osmosis -> Akash (on pool 1), Akash -> Juno (on pool 4), Juno -> Osmosis (on pool 2)
 
-It does so by finding the highest liquidity pool between (Osmosis, Akash) —> pool 1 and the highest liquidity pool between (Osmosis, Juno) —> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
+It does so by finding the highest liquidity pool between (Osmosis, Akash) -> pool 1 and the highest liquidity pool between (Osmosis, Juno) -> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
 
-**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno —> Akash so we know that the route must include a swap of Akash —> Juno.**
+**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno -> Akash so we know that the route must include a swap of Akash -> Juno.**
 
 The same line of reasoning exists for Atom. `x/protorev` will attempt to find the highest liquidity pool between (Atom, Akash) and (Atom, Juno). If these pools exist, they will be added to the list of routes that can be simulated later in the pipeline. If not, the route is discarded.
 
@@ -275,20 +275,6 @@ Now that we have a list of cyclic routes for each pool swapped by the user’s t
 Each swap will generate its own set of routes and `x/protorev` will execute only the most profitable route.
 
 The module mints the optimal input amount of the coin to swap in from the `bankkeeper` to the `x/protorev` module account, executes the MultiHopSwap by interacting with the `x/poolmanager` module, burns the optimal input amount of the coin minted to execute the MultiHopSwap, and sends subsequent profits to the module account.
-
-## Governance Proposals
-
-`x/protorev` implements two different governance proposals. 
-
-**SetProtoRevAdminAccountProposal**
-
-As the landscape of pools on Osmosis evolves, an admin account will be able to add and remove routes for `x/protorev` to check for cyclic arbitrage opportunities along with several other optimization txs. Largely, the purpose of maintaining hot routes is to reduce the amount of computation that would otherwise be required to determine optimal paths at runtime. 
-
-This proposal is put in place in case the admin account needs to be transferred over. However, as mentioned above, it will be initialized to a trusted address on genesis.
-
-**SetProtoRevEnabledProposal**
-
-This proposal type allows the chain to turn the module on or off. This is meant to be used as a fail safe in the case stakers and the chain decide to turn the module off. This might be used to halt the execution of trades in the case that the `x/gamm` module has significant upgrades that might produce unexpected behavior from the module.
 
 ## PostHandler
 

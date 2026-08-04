@@ -3,7 +3,7 @@
 The poolmanager module exists as a swap entrypoint for any pool model
 that exists on the chain. The poolmanager module is responsible for routing
 swaps across various pools. It also performs pool-id management for
-any on-chain pool.
+any onchain pool.
 
 The user-stories for this module follow:
 

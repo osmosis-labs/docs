@@ -11,7 +11,7 @@ It is generalized to the multi-asset setting as $$f(a_1, ..., a_n) = a_1 * ... *
 
 ## Pool configuration
 
-One key concept, is that the pool has a native concept of
+One key concept is that the pool has a native concept of a scaling factor per asset, used to map raw coin units to AMM math units (detailed below).
 
 ### Scaling factor handling
 
@@ -40,8 +40,6 @@ The AMM equations need to each ensure that rounding happens correctly,
 for cases where the scaling factor doesn't perfectly divide into the liquidity.
 We detail rounding modes and scaling details as pseudocode in the relevant sections of the spec.
 (And rounding modes for 'descaling' from AMM eq output to real liquidity amounts, via multiplying by the respective scaling factor)
-
-<!-- TODO come back and revise the scaling factor section for clarity -->
 
 ## Algorithm details
 
@@ -72,8 +70,6 @@ We wish to have a simpler CFMM function to work within these cases.
 Due to the CFMM equation $$f$$ being a symmetric function, we can without loss of generality reorder the arguments to the function. Thus we put the assets of relevance at the beginning of the function. So if two assets $$x, y$$, we write: $$f(x,y, a_3, ... a_n) = xy * a_3 * ... a_n (x^2 + y^2 + a_3^2 + ... + a_n^2)$$.
 
 We then take a more convenient expression to work with, via variable substitution.
-
-<!-- It took several very silly hacks to get github to compile this. Editors in the future, be aware of spacing in the equation wrt how it GH renders -->
 
 $$
 \begin{equation}
@@ -276,8 +272,6 @@ The amount of tokens that we treat as going into the "0-swap fee" pool we define
 
 Then we simply call `solve_y` with the input reserves, and `amm_in`.
 
-<!-- TODO: Maybe we just use normal pseudocode syntax -->
-
 ```python
 def CalcOutAmountGivenExactAmountIn(pool, in_coin, out_denom, swap_fee):
   in_reserve, out_reserve, rem_reserves = pool.ScaledLiquidity(in_coin, out_denom, RoundingMode.RoundDown)
@@ -290,16 +284,12 @@ def CalcOutAmountGivenExactAmountIn(pool, in_coin, out_denom, swap_fee):
 
 ##### SwapExactAmountOut
 
-<!-- TODO: Explain overall context of this section -->
-
 When we scale liquidity, we round down, as lower reserves -> higher slippage.
 Similarly when we scale the exact token out, we round up to increase required token in.
 
 We model the `solve_y` call as we are doing a known change to the `out_reserve`, and solving for the implied unknown change to `in_reserve`.
 To handle the swapfee, we apply the swapfee on the resultant needed input amount.
 We do this by having `token_in = amm_in / (1 - swapfee)`.
-
-<!-- TODO: Maybe we just use normal pseudocode syntax -->
 
 ```python
 def CalcInAmountGivenExactAmountOut(pool, out_coin, in_denom, swap_fee):
@@ -362,8 +352,6 @@ Tying this all together, we have that $$e_k > .01e_y$$. Therefore $$e_y < 100 e_
 
 To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $$y_{out}$$. When $$y_{out}$$ is smaller, the error is far lower. (Often to the case that $$e_y < e_k$$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $$y_{out}$$ is bigger than $$.9y_0$$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $$x_f$$ term must be large relative to $$y_0$$, which would yield a far better error bound.
 
-TODO: Justify `a_y << y_out`. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
-
 ### Spot Price
 
 Spot price for an AMM pool is the derivative of its `CalculateOutAmountGivenIn` equation.
@@ -384,12 +372,11 @@ From this, we then derive what we'd expect for `JoinPool`.
 
 #### JoinPoolNoSwap and ExitPool
 
-Both of these methods can be implemented via generic AMM techniques.
-(Link to them or describe the idea)
+Both of these methods can be implemented via generic AMM techniques: liquidity is added or removed in proportion to the existing reserves, so the ratio of reserves (and therefore the CFMM invariant up to scale) is preserved and no swap occurs.
 
 #### JoinPool
 
-The JoinPool API only supports JoinPoolNoSwap if
+Multi-asset JoinPool is a no-swap join. It joins the maximal portion of the provided tokens that matches the pool's exact reserve ratio, and returns the remainder to the sender rather than performing a follow-up single-asset join. A single-asset join is a separate path (see below), taken only when exactly one token is provided.
 
 #### Join pool single asset in
 

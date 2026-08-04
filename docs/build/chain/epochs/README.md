@@ -20,7 +20,7 @@ they can easily be signalled upon such events.
 
 ## Concepts
 
-The epochs module defines on-chain timers, that execute at fixed time intervals.
+The epochs module defines onchain timers, that execute at fixed time intervals.
 Other SDK modules can then register logic to be executed at the timer ticks.
 We refer to the period in between two timer ticks as an "epoch".
 

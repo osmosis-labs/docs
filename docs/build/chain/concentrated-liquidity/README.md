@@ -402,10 +402,9 @@ type MsgCreatePosition struct {
  Sender          string
  LowerTick       int64
  UpperTick       int64
- TokenDesired0   types.Coin
- TokenDesired1   types.Coin
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ TokensProvided  sdk.Coins
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -417,10 +416,10 @@ create the liquidityCreated number of shares in the given range.
 ```go
 type MsgCreatePositionResponse struct {
  PositionId  uint64
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
  JoinTime time.Time
- LiquidityCreated sdk.Dec
+ LiquidityCreated osmomath.Dec
 
 }
 ```
@@ -444,7 +443,7 @@ associated with the position are still retained until a user claims them manuall
 type MsgWithdrawPosition struct {
  PositionId      uint64
  Sender          string
- LiquidityAmount sdk.Dec
+ LiquidityAmount osmomath.Dec
 }
 ```
 
@@ -455,8 +454,8 @@ for the provided share liquidity amount.
 
 ```go
 type MsgWithdrawPositionResponse struct {
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
 }
 ```
 
@@ -478,7 +477,7 @@ type MsgCreateConcentratedPool struct {
  Denom0                    string
  Denom1                    string
  TickSpacing               uint64
- SpreadFactor                   sdk.Dec
+ SpreadFactor                   osmomath.Dec
 }
 ```
 
@@ -530,10 +529,10 @@ the original join time so charging is preserved.
 type MsgAddToPosition struct {
  PositionId     uint64
  Sender         string
- Amount0        sdk.Int
- Amount1        sdk.Int
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ Amount0        osmomath.Int
+ Amount1        osmomath.Int
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -676,7 +675,7 @@ and token1 as a result the one that had higher liquidity will end up smaller
 than originally given by the user.
 
 Note that the liquidity used here does not represent an amount of a specific
-token, but the liquidity of the pool itself, represented in `sdk.Dec`.
+token, but the liquidity of the pool itself, represented in `osmomath.Dec`.
 
 Using the provided liquidity, now we calculate the delta amount of both token0
 and token1, using the following equations, where L is the liquidity calculated above:
@@ -695,9 +694,6 @@ Given the parameters needed for calculating the tokens needed for creating a
 position for a given tick, the API in the keeper layer would look like the following:
 
 ```go
-ctx sdk.Context, poolId uint64, owner sdk.AccAddress, amount0Desired,
-amount1Desired, amount0Min, amount1Min sdk.Int,
-lowerTick, upperTick int64, frozenUntil time.Time
 func createPosition(
     ctx sdk.Context,
     poolId uint64,
@@ -705,9 +701,9 @@ func createPosition(
     amount0Desired,
     amount1Desired,
     amount0Min,
-    amount1Min sdk.Int
+    amount1Min osmomath.Int,
     lowerTick,
-    upperTick int64) (amount0, amount1 sdk.Int, sdk.Dec, error) {
+    upperTick int64) (amount0, amount1 osmomath.Int, liquidity osmomath.Dec, err error) {
         ...
 }
 ```
@@ -730,9 +726,8 @@ func (k Keeper) withdrawPosition(
     owner sdk.AccAddress,
     lowerTick,
     upperTick int64,
-    frozenUntil time.Time,
-    requestedLiquidityAmountToWithdraw sdk.Dec)
-    (amtDenom0, amtDenom1 sdk.Int, err error) {
+    requestedLiquidityAmountToWithdraw osmomath.Dec)
+    (amtDenom0, amtDenom1 osmomath.Int, err error) {
     ...
 }
 ```
@@ -788,8 +783,8 @@ From the user perspective, there are two ways to swap:
 Each case has a corresponding message discussed previously in the `x/poolmanager`
 section.
 
-- `MsgSwapExactIn`
-- `MsgSwapExactOut`
+- `MsgSwapExactAmountIn`
+- `MsgSwapExactAmountOut`
 
 Once a message is received by the `x/poolmanager`, it is propagated into a
 corresponding keeper
@@ -856,32 +851,32 @@ type SwapState struct {
  // if in given out, amount of token being swapped out.
  // Initialized to the amount of the token specified by the user.
  // Updated after every swap step.
- amountSpecifiedRemaining sdk.Dec
+ amountSpecifiedRemaining osmomath.Dec
 
  // Amount of the other token that is calculated from the specified token.
  // if out given in, amount of token swapped out.
  // if in given out, amount of token swapped in.
  // Initialized to zero.
  // Updated after every swap step.
- amountCalculated sdk.Dec
+ amountCalculated osmomath.Dec
 
  // Current sqrt price while calculating swap.
  // Initialized to the pool's current sqrt price.
  // Updated after every swap step.
- sqrtPrice sdk.Dec
+ sqrtPrice osmomath.BigDec
  // Current tick while calculating swap.
  // Initialized to the pool's current tick.
  // Updated each time a tick is crossed.
- tick sdk.Int
+ tick int64
  // Current liqudiity within the active tick.
  // Initialized to the pool's current tick's liquidity.
  // Updated each time a tick is crossed.
- liquidity sdk.Dec
+ liquidity osmomath.Dec
 
  // Global spread reward growth per-current swap.
  // Initialized to zero.
  // Updated after every swap step.
- spreadRewardGrowthGlobal sdk.Dec
+ spreadRewardGrowthGlobal osmomath.Dec
 }
 ```
 
@@ -1164,15 +1159,6 @@ tick tracked by the pool is 11_000. The global spread reward growth per unit of 
 has increased by 50 units of token one. See more details about the spread reward growth
 in the "Spread Rewards" section.
 
-TODO: Swapping, Appendix B: Compute Swap Step Internals and Math
-
-## Range Orders
-
-> As a trader, I want to be able to execute ranger orders so that I have better
-> control of the price at which I trade
-
-TODO
-
 ## Spread Rewards
 
 > As a an LP, I want to earn spread rewards on my capital so that I am incentivized to
@@ -1197,7 +1183,7 @@ layers of state:
 // Note that this is proto-generated.
 type Pool struct {
     ...
-    SpreadFactor sdk.Dec
+    SpreadFactor osmomath.Dec
 }
 ```
 
@@ -1340,7 +1326,6 @@ Then, to calculate the spread reward within a single tick, we perform the follow
 
 ```go
 // Update global spread reward accumulator tracking spread rewards for denom of tokenInAmt.
-// TODO: revisit to make sure if truncations need to happen.
 pool.SpreadRewardGrowthGlobalOutside.TokenX = pool.SpreadRewardGrowthGlobalOutside.TokenX.Add(tokenInAmt.Mul(pool.SpreadFactor))
 
 // Update tokenInAmt to account for spread factor.
@@ -1460,7 +1445,7 @@ some [clever accumulator tricks](https://www.paradigm.xyz/2021/05/liquidity-mini
 this can be designed to ensure that each LP only receives incentives for liquidity they contribute
 to the active tick. This approach is incredible for liquidity depth, which is arguably the most
 important property we need incentives to be able to accommodate. It is also a user flow that
-on-chain market makers are already somewhat familiar with and has enough live examples where
+onchain market makers are already somewhat familiar with and has enough live examples where
 we roughly know that it functions as intended.
 
 ## Our Implementation
@@ -1518,7 +1503,7 @@ To achieve this in a way that is difficult to game and efficient for the chain t
 
 One implication of this mechanism is that it moves the incentivization process to a higher level of abstraction (incentivizing _pairs_ instead of _pools_). For internal incentives (which are governance managed), this is in line with the goal of continuing to push governance to require less frequent actions, which this change ultimately does.
 
-To keep a small but meaningful incentive for LPs to still migrate their positions, we have added a **discount rate** to incentives that are redirected to Classic pools. This is initialized to 5% by default but is a governance-upgradable parameter that can be increased in the future. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
+To keep a small but meaningful incentive for LPs to still migrate their positions, a **discount rate** is applied to incentives that are redirected to Classic pools. This is initialized to 5% by default and is a governance-upgradable parameter. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
 
 ## TWAP Integration
 
@@ -1735,7 +1720,7 @@ the quote asset that has precision of 6 (e.g `uosmo` or `uusdc`).
 
 The true price of PEPE in USDC terms is `0.0000009749`.
 
-In the "on-chain representation", this would be:
+In the "onchain representation", this would be:
 `0.0000009749 * 10**6 / 10**18 = 9.749e-19`
 
 Note that this is below the minimum precision of `sdk.Dec`.

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The `pool-incentives` module is separate but related to the `incentives` module. When a pool is created using the `GAMM` module, the `pool-incentives` module automatically creates individual gauges in the `incentives` module for every lock duration that exists in that pool. 
+The `pool-incentives` module is separate but related to the `incentives` module. When a pool is created (pool creation is handled by the `poolmanager` module), the `pool-incentives` module automatically creates gauges in the `incentives` module. For GAMM/balancer pools it creates one gauge per lock duration that exists in that pool; for concentrated liquidity pools it creates a single gauge.
 The `pool-incentives` module also takes the `pool_incentives` distributed from the `gov` module and distributes it to the various incentivized gauges.
 
 ## Contents
@@ -10,7 +10,7 @@ The `pool-incentives` module also takes the `pool_incentives` distributed from t
 1. **[Concept](#concepts)**
 2. **[State](#state)**
 3. **[Governance](#gov)**
-4. **[Transactions](#transactions)**
+4. **[Governance proposals](#governance-proposals)**
 5. **[Queries](#queries)**
 
 ## Concepts
@@ -33,9 +33,13 @@ selected gauges.
 ```go
 type GenesisState struct {
  // params defines all the parameters of the module.
- Params            Params          
- LockableDurations []time.Duration 
- DistrInfo         *DistrInfo      
+ Params                         Params
+ LockableDurations              []time.Duration
+ DistrInfo                      *DistrInfo
+ // any_pool_to_internal_gauges links every pool to its internal gauges.
+ AnyPoolToInternalGauges        *AnyPoolToInternalGauges
+ // concentrated_pool_to_no_lock_gauges links concentrated pools to their no-lock gauges.
+ ConcentratedPoolToNoLockGauges *ConcentratedPoolToNoLockGauges
 }
 
 type Params struct {
@@ -44,9 +48,6 @@ type Params struct {
  // Pool-incentives module doesn’t actually mint the coin itself, 
  // but rather manages the distribution of coins that matches the defined minted_denom.
  MintedDenom string 
- // allocation_ratio defines the proportion of the minted minted_denom 
- // that is to be allocated as pool incentives.
- AllocationRatio github_com_cosmos_cosmos_sdk_types.Dec 
 }
 ```
 
@@ -56,13 +57,11 @@ same amount of 'gauge' as there are lockable durations for the pool.
 
 Also in regards to the `Params`, when the mint module mints new tokens
 to the fee collector at Begin Block, the `pool incentives` module takes
-the token which matches the 'minted denom' from the fee collector.
-Tokens are taken according to the 'allocationRatio', and are distributed
-to each `DistrRecord` of the DistrInfo. For example, if the fee
-collector holds 1000uatom and 2000 uosmo at Begin Block, and Params'
-mintedDenom is set to uosmo, and AllocationRatio is set to 0.1, 200uosmo
-will be taken from the fee collector and distributed to the
-`DistrRecord`s.
+the token which matches the 'minted denom' from the fee collector and
+distributes it to each `DistrRecord` of the DistrInfo. The share of the
+minted inflation routed to pool incentives is governed by the mint
+module's `pool_incentives` distribution proportion, not by a
+pool-incentives parameter.
 
 ## Gov
 
@@ -111,83 +110,43 @@ gauge id 3, the following command can be used.
 osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200
 ```
 
-## Transactions
+## Governance proposals
 
-### replace-pool-incentives 
+The `pool-incentives` module registers no `tx poolincentives` subcommands (`GetTxCmd` returns `nil`). `DistrInfo` is modified through governance, using the `ReplacePoolIncentivesProposal` and `UpdatePoolIncentivesProposal` content types submitted via `x/gov`. Both proposals carry the same payload (`title`, `description`, and a list of `DistrRecord`s); they differ only in how the records are applied:
+
+- **replace-pool-incentives** (`ReplacePoolIncentivesProposal`): the proposal's records override the existing `DistrRecord`s in the module (a full overwrite).
+- **update-pool-incentives** (`UpdatePoolIncentivesProposal`): the proposal edits or adds only the `DistrRecord`s it specifies, leaving other records in place.
+
+### replace-pool-incentives
 
 ```sh
-osmosisd tx poolincentives replace-pool-incentives [gaugeIds] [weights] [flags]
+osmosisd tx gov submit-proposal replace-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
 <details>
 <summary>Example</summary>
 
-Fully replace records for pool incentives:
+Fully replace the records for pool incentives, designating 100 weight to gauge id 2 and 200 weight to gauge id 3:
 
 ```bash
-osmosisd tx poolincentives replace-pool-incentives proposal.json --from --chain-id
-```
-
-The proposal.json would look as follows:
-
-```json
-{
-  "title": "Pool Incentive Adjustment",
-  "description": "Adjust pool incentives",
-  "records": [
-    {
-      "gauge_id": "0",
-      "weight": "100000"
-    },
-    {
-      "gauge_id": "1",
-      "weight": "1766249"
-    },
-    {
-      "gauge_id": "XXX",
-      "weight": "XXXXXXXX"
-    },
-    ...
-  ]
-}
+osmosisd tx gov submit-proposal replace-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
 ```
 
 </details>
 
-### update-pool-incentives  
-
-Update the weight of specified pool gauges in regards to their share of incentives (by creating a proposal)
+### update-pool-incentives
 
 ```sh
-osmosisd tx poolincentives update-pool-incentives [gaugeIds] [weights] [flags] --from --chain-id
+osmosisd tx gov submit-proposal update-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
 <details>
 <summary>Example</summary>
 
-Update the pool incentives for `gauge_id` 0 and 1:
+Update only the specified gauges, designating 100 weight to gauge id 2 and 200 weight to gauge id 3:
 
 ```bash
-osmosisd tx gov submit-proposal update-pool-incentives proposal.json --from WALLET_NAME --chain-id CHAIN_ID
-```
-
-The proposal.json would look as follows:
-
-```json
-{
-  "title": "Pool Incentive Adjustment",
-  "description": "Adjust pool incentives",
-  "records": [
-    {
-      "gauge_id": "0",
-      "weight": "100000"
-    },
-    {
-      "gauge_id": "1",
-      "weight": "1766249"
-    },
-  ]
-}
+osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
 ```
 
 </details>
