@@ -4,19 +4,14 @@ description: Scaffold, deploy, and interact with contracts using Beaker.
 
 # Beaker
 
+:::warning Beaker is no longer actively maintained
+Beaker's last release was v0.1.8 (November 2023). For new contracts, use [cw-orchestrator](/build/cosmwasm/cw-orch) with the [Quickstart](/build/cosmwasm/quickstart). These pages remain as a reference for projects already built on Beaker.
+:::
+
 <p align="center">
-<a href="https://docs.osmosis.zone/cosmwasm/">
+<a href="/build/cosmwasm">
     <img src="/icons/beaker.svg" alt="Beaker logo" title="Beaker" width="150" align="center" height="150" />
 </a>
-</p>
-
-<p align="center" width="100%">
-    <img  height="20" src="https://github.com/osmosis-labs/beaker/actions/workflows/doctest.yml/badge.svg"/>
-    <img height="20" src="https://github.com/osmosis-labs/beaker/actions/workflows/lint.yml/badge.svg"/>
-    <a href="https://github.com/osmosis-labs/beaker/blob/main/LICENSE-APACHE"><img height="20" src="https://img.shields.io/badge/license-APACHE-blue.svg"/></a>
-    <a href="https://github.com/osmosis-labs/beaker/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
-    <a href="https://deps.rs/repo/github/osmosis-labs/beaker"><img height="20" src="https://deps.rs/repo/github/osmosis-labs/beaker/status.svg"/></a>
-    <a href="https://crates.io/crates/beaker"><img height="20" src="https://img.shields.io/crates/v/beaker.svg"/></a>
 </p>
 
 [Beaker](https://github.com/osmosis-labs/beaker) makes it easy to scaffold a new cosmwasm app, with all of the dependencies for osmosis hooked up, interactive console, and a sample front-end at the ready.
@@ -161,7 +156,7 @@ template_repo = "https://github.com/osmosis-labs/cw-tpl-osmosis.git"
 
 ### Deploy contract on LocalOsmosis
 
-LocalOsmosis, as its name suggest, is Osmosis for local development. In the upcoming release, Beaker will have more complete integration with LocalOsmosis, it has to be installed and run separately.
+LocalOsmosis, as its name suggests, is Osmosis for local development. It has to be installed and run separately.
 
 You can install from source by following the instruction at [osmosis-labs/LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis), or use the official installer and select option 3:
 
@@ -229,10 +224,10 @@ To create the contract entrypoint for migration, first, define `MigrateMsg` in `
 pub struct MigrateMsg {}
 ```
 
-With MigrateMsg defined we need to update `contract.rs`. First update the import from `create::msg` to include `MigrateMsg`:
+With MigrateMsg defined we need to update `contract.rs`. First update the import from `crate::msg` to include `MigrateMsg`:
 
 ```rust
-use create::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
+use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
 ```
 
 ```rust
@@ -346,8 +341,8 @@ await contract.counter.query({ get_count: {} });
 
 You can find available methods for the aforementioned instances here:
 
-- [Account](console/classes//Account.md#methods-1)
-- [Contract](./console/classes//Contract.md#methods-1)
+- [Account](./console/classes/Account.md#methods-1)
+- [Contract](./console/classes/Contract.md#methods-1)
 
 You can remove `contract` and/or `account` namespace by changing config.
 
@@ -366,7 +361,7 @@ await counter.query({ get_count: {} });
 
 
 
-With the Typescript SDK which was previously mentioned, it is used to extend the `Contract` instance with method generated ftom execute and query messages. For example:
+With the Typescript SDK which was previously mentioned, it is used to extend the `Contract` instance with methods generated from execute and query messages. For example:
 
 ```js
 await counter.getCount()
@@ -379,13 +374,13 @@ await sc.getCount()
 
 With this, it's more convenient than the previous interaction method since you can use tab completion for the methods as well.
 
-Beaker console is also allowed to deploy contract, so that you don't another terminal tab to do so.
+Beaker console is also allowed to deploy contracts, so that you don't need another terminal tab to do so.
 
 ```js
 .deploy counter -- --signer-account test1 --raw '{ "count": 999 }'
 ```
 
-`.build`, `.storeCode`, `.instantiate` commands are also available and has the same options as Beaker cli command, except that `--no-wasm-opt` are in by default since it is being intended to use in the development phase.
+`.build`, `.storeCode`, `.instantiate` commands are also available and have the same options as the Beaker CLI commands, except that `--no-wasm-opt` is on by default since it is intended for use in the development phase.
 
 `.help` to see all available commands.
 

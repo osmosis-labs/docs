@@ -27,14 +27,12 @@ npm i cosmwasm
 
 Open the package.json file in a code editor and add
 
-```json=
-"type": "module",.
-
-  {
-        // ...
-        "type": "module",
-        // ...
-    }
+```json
+{
+  // ...
+  "type": "module"
+  // ...
+}
 ```
 
 Create a new index.ts file
@@ -45,7 +43,7 @@ touch index.ts
 
 The class CosmWasmClient is exported from the CosmJS package @cosmjs/cosmwasm-stargate. Learn more in the [official docs](https://cosmwasm.github.io/CosmWasmJS/clients/reading/CosmWasmClient.html).
 
-```javascript=
+```javascript
 import { CosmWasmClient } from "cosmwasm";
 
 // This is your rpc endpoint
@@ -59,14 +57,14 @@ async function main() {
 main();
 ```
 
-:: tip
-You can also connect to the mainnet by replacing rpcEndpoint to https://rpc.osmosis.zone/
-::
+:::tip
+You can also connect to the mainnet by replacing rpcEndpoint with https://rpc.osmosis.zone/
+:::
 
 ## Run it
 
 ```
-npm index.js
+node index.js
 ```
 
 You should see something like:
@@ -76,7 +74,7 @@ You should see something like:
 
 As documented on the [official docs](https://cosmwasm.github.io/CosmWasmJS/clients/reading/CosmWasmClient.html#available-methods).
 
-```javascript=
+```javascript
 async function moreExamples() {
   const client = await CosmWasmClient.connect(rpcEndpoint);
   const chainId = await client.getChainId()
@@ -173,7 +171,7 @@ node index.js
 ```
 
 The output should look like this:
-![](contract_details.png)
+![](./contract_details.png)
 
 ## Get the count from the contract
 

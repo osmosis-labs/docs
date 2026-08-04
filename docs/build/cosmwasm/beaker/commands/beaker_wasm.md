@@ -88,13 +88,13 @@ Arguments:
 
 * ` <contract-name>`Name of the contract to store
 
-* `--schema-gen-cmd <schema-gen-cmd>`: Sschema generation command, default: `cargo run -p {contract_name} --example schema`
+* `--schema-gen-cmd <schema-gen-cmd>`: Schema generation command, default: `cargo run -p {contract_name} --example schema`
 
 * `--schema-dir <schema-dir>`: Directory of input schema for ts generation
 
 * `--out-dir <out-dir>`: Code output directory, ignore remaining ts build process if custom out_dir is specified
 
-* `--node-package-manager <node-package-manager>`: Code output directory (default: `yarn`)
+* `--node-package-manager <node-package-manager>`: Node package manager to use (default: `yarn`)
 
 ---
 
@@ -166,7 +166,7 @@ Arguments:
 
 ### `beaker wasm instantiate`
 
-Instanitate .wasm stored on chain
+Instantiate .wasm stored on chain
 
 Arguments:
 
@@ -208,7 +208,7 @@ Arguments:
 
 ### `beaker wasm migrate`
 
-Migrated instanitate contract to use other code stored on chain
+Migrate an instantiated contract to use other code stored on chain
 
 Arguments:
 
