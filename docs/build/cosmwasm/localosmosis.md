@@ -6,11 +6,11 @@ sidebar_position: 3
 
 # CosmWasm & LocalOsmosis 
 
-:::tip  
-You can now deploy contracts to LocalOsmosis with [Beaker](https://github.com/osmosis-labs/beaker). The official tooling to deploy Osmosis Smartcontracts.
+:::tip
+For new contracts, the recommended workflow is [cw-orchestrator](/build/cosmwasm/cw-orch) with the [Quickstart](/build/cosmwasm/quickstart). This page shows the underlying manual steps, which use Beaker (no longer actively maintained) and `osmosisd` directly.
 :::
 
-The following is detailed guide that shows the basics of manually deploying a contract to a Osmosis local environment. It covers: 
+The following is a detailed guide that shows the basics of manually deploying a contract to an Osmosis local environment. It covers: 
 
 - Initial Setup
     - Rust
@@ -75,7 +75,7 @@ Install the following packages to generate the contract:
 
 ```bash
 cargo install cargo-generate --features vendored-openssl
-cargo install cargo-run-scrip
+cargo install cargo-run-script
 ```
 
 #### Beaker
@@ -148,7 +148,7 @@ This produces a file about 149kB. We will do further optimisation below.
 
 ### Optimized Compilation
 
-To reduce gas costs, the binary size should be as small as possible. This will result in a less costly deployment, and lower fees on every interaction. Luckily, there is tooling to help with this. You can optimize production code using rust-optimizer. rust-optimizer produces reproducible builds of CosmWasm smart contracts. This means third parties can verify the contract is actually the claimed code.
+To reduce gas costs, the binary size should be as small as possible. This will result in a less costly deployment, and lower fees on every interaction. Luckily, there is tooling to help with this. You can optimize production code using the CosmWasm optimizer (`cosmwasm/optimizer`), which produces reproducible builds of CosmWasm smart contracts. This means third parties can verify the contract is actually the claimed code.
 
 
 ```
@@ -159,7 +159,7 @@ sudo docker run --rm -v "$(pwd)":/code \
  
 ```
 
-Binary will be at artifacts/osmosis_cw_tpl.wasm folder and its size will be 138k
+Binary will be at artifacts/cw_tpl_osmosis.wasm and its size will be 138k
 
 ### Created a local key 
 Create a key using one of the seeds provided in localOsmosis. 
@@ -179,7 +179,7 @@ You can deploy the contract to localOsmosis or a testnet.  In this example we wi
 
 ```
 cd artifacts
-osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y
+osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b sync -y
 ```
 
 `<unsafe-test-key-name>` = Name of your local key.
@@ -193,8 +193,8 @@ Save the CODE_ID from the output of the command above as a local variable `CODE_
 Instead of looking for the code_id the command above, you can also run the following command to set the CODE_ID as a variable.
     
 ```
-TX=$(osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
-CODE_ID=$(osmosisd query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')
+TX=$(osmosisd tx wasm store cw_tpl_osmosis.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b sync --output json -y | jq -r '.txhash')
+CODE_ID=$(osmosisd query tx $TX --output json | jq -r '.events[] | select(.type=="store_code") | .attributes[] | select(.key=="code_id") | .value')
 echo "Your contract code_id is $CODE_ID"
 ```
 
@@ -205,13 +205,13 @@ If this is a brand new localOsmosis instance it should be `1`
  
 ```
 INITIAL_STATE='{"count":100}'
-osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from <unsafe-test-key-name> --chain-id <chain-id> --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b sync -y --no-admin
 ```
 
 Example
 ```
 INITIAL_STATE='{"count":100}'
-osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from c1 --chain-id localosmosis --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b block -y --no-admin
+osmosisd tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uosmo  --label "Counter Contract" --from c1 --chain-id localosmosis --gas-prices 0.05uosmo --gas auto --gas-adjustment 1.3 -b sync -y --no-admin
 ```
 
 ### Get contract address
