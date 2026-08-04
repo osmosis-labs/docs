@@ -106,11 +106,11 @@ const config = {
   url: 'https://docs.osmosis.zone',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  // onBrokenAnchors is left at its default ('warn'): the /api reference page
-  // uses Stoplight Elements with hash routing, so links like
-  // /api?v=RPC#/operations/abci_query resolve at runtime but cannot be verified
-  // by the static anchor checker. Throwing on anchors would fail the build on
-  // that false positive.
+  // Anchors throw so a genuinely broken in-page link fails the build rather than
+  // scrolling past in the log. The /api reference page uses Stoplight Elements with
+  // hash routing, and those fragments cannot be verified statically, so links into
+  // it are written without a fragment instead of being exempted wholesale.
+  onBrokenAnchors: 'throw',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
