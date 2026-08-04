@@ -1,7 +1,7 @@
 ---
 description: Run IBC relaying infrastructure (Hermes) between chains.
 title: Relayer Guide
-sidebar_position: 8
+sidebar_position: 13
 ---
 # Relayer Guide
 
@@ -38,7 +38,7 @@ nano $HOME/.osmosisd/config/app.toml
 enable = true
 
 # Address defines the gRPC server address to bind to.
-address = "0.0.0.0:9090"
+address = "127.0.0.1:9090"
 ```
 
 Here I will leave the `pprof_laddr` set to port 6060, `rpc laddr` to port 26657, and `p2p laddr` to 26656 in the `config.toml` directory:
@@ -77,7 +77,7 @@ nano $HOME/.gaiad/config/app.toml
 enable = true
 
 # Address defines the gRPC server address to bind to.
-address = "0.0.0.0:9092"
+address = "127.0.0.1:9092"
 ```
 
 Here I will set the `pprof_laddr` to port 6062, `rpc laddr` to port 26757, and `p2p laddr` to 26756 in the `config.toml` directory:
@@ -121,12 +121,12 @@ sudo apt install librust-openssl-dev build-essential git
 
 ## Build & setup Hermes
 
-Make the directory where you'll place the binary, clone the hermes source repository and build it using the latest release.
+Make the directory where you'll place the binary, clone the hermes source repository and build it using the latest release (replace `v1.13.3` below with the latest tag from the [Hermes releases](https://github.com/informalsystems/hermes/releases) page):
 ```sh
 mkdir -p $HOME/hermes
 git clone https://github.com/informalsystems/hermes
 cd hermes
-git checkout v1.0.0
+git checkout v1.13.3
 cargo install ibc-relayer-cli --bin hermes --locked
 ```
 
@@ -141,7 +141,7 @@ Check hermes version & config dir setup
 ```sh
 hermes version
 INFO ThreadId(01) using default configuration from '/home/relay/.hermes/config.toml'
-hermes 1.0.0
+hermes 1.13.3
 ```
 
 Edit Hermes config (use ports according to the port configuration we set above, add only chains you want to relay).
@@ -171,7 +171,7 @@ max_tx_size = 180000
 clock_drift = '10s'
 max_block_time = '10s'
 trusting_period = '14days'
-memo_prefix = 'Osmosis Docs Rocks'
+memo_prefix = 'relayed by <your-relayer-name>'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'
@@ -191,14 +191,14 @@ address_type = { derivation = 'cosmos' }
 store_prefix = 'ibc'
 default_gas = 5000000
 max_gas = 15000000
-gas_price = { price = 0.0026, denom = 'uosmo' }
+gas_price = { price = 0.03, denom = 'uosmo' }
 gas_multiplier = 1.1
 max_msg_num = 20
 max_tx_size = 209715
 clock_drift = '20s'
 max_block_time = '10s'
 trusting_period = '10days'
-memo_prefix = 'Osmosis Docs Rocks'
+memo_prefix = 'relayed by <your-relayer-name>'
 trust_threshold = { numerator = '1', denominator = '3' }
 [chains.packet_filter]
 policy = 'allow'
@@ -208,14 +208,43 @@ list = [
 
 ```
 
-Add your relayer wallet to Hermes' keyring (located in $HOME/.hermes/keys)
+:::note
+Osmosis uses a dynamic [fee market](/learn/features/fee-market), so the minimum gas price moves with congestion. A fixed `gas_price` is the usual cause of a relayer silently stalling: once the base fee rises above it, every transaction is rejected until congestion clears.
 
-Best practice is to use the same mnemonic over all networks. Do not use the relayer wallets for anything else because it will lead to account sequence errors.
+Hermes can query the base fee instead of guessing. Enable dynamic gas pricing for the Osmosis chain:
+
+```toml
+[chains.dynamic_gas_price]
+enabled = true
+multiplier = 1.1
+max = 0.6
+```
+
+- `multiplier` is applied to the queried price, giving headroom while the transaction is in flight. Too tight a multiplier risks rejection as the fee moves.
+- `max` caps what the relayer will pay. If the queried price exceeds it, Hermes submits at `max`, which may still be rejected as insufficient, so treat `max` as a spend limit rather than a safety net.
+- If the query fails, Hermes falls back to the static `gas_price` configured above, so keep that value sane rather than removing it.
+
+Monitor for rejected transactions after congestion spikes: a relayer that has hit `max` looks idle rather than broken.
+:::
+
+Add your relayer wallet to Hermes' keyring (located in `$HOME/.hermes/keys`).
+
+Use a **separate key per chain**. A compromised key then only affects the one chain it relays on. (Account sequence errors come from two processes using the *same account on one chain* concurrently, not from holding different keys on different chains, so separate keys do not cause them.) Do not use relayer wallets for anything else.
+
+:::caution Keep the mnemonic out of your shell history
+Pass the mnemonic in a file, never as a command argument. `keys restore` was removed in Hermes v1.0; `keys add` is the current subcommand.
+:::
 
 ```sh
-hermes keys restore cosmoshub-4 -m "24-word mnemonic seed"
-hermes keys restore osmosis-1 -m "24-word mnemonic seed"
+# One mnemonic file per chain, 24 words on a single line.
+# Restrict permissions, and delete the files once the keys are imported.
+umask 077
+hermes keys add --chain cosmoshub-4 --mnemonic-file ~/.hermes/hub.mnemonic
+hermes keys add --chain osmosis-1  --mnemonic-file ~/.hermes/osmosis.mnemonic
+shred -u ~/.hermes/hub.mnemonic ~/.hermes/osmosis.mnemonic
 ```
+
+The imported keys live unencrypted in `$HOME/.hermes/keys`; protect that directory as you would any hot wallet.
 
 Ensure this wallet has funds in both $OSMO and $ATOM in order to pay the fees required to relay.
 
