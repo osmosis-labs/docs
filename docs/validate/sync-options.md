@@ -46,33 +46,10 @@ Each provider's page lists the current snapshot height, download URL, and the ex
 
 ### Restoring a snapshot on a validator
 
-Extracting a snapshot over a validator's data directory can overwrite `priv_validator_state.json` with the snapshot author's signing state. If that state lags the chain, your node can sign a height it already signed, which is a double-sign. Follow this order:
-
-```bash
-# 1. Stop the node. Confirm it is actually stopped before touching data.
-sudo systemctl stop cosmovisor
-sudo systemctl status cosmovisor --no-pager
-
-# 2. Preserve your own signing state.
-cp ~/.osmosisd/data/priv_validator_state.json ~/priv_validator_state.json.bak
-
-# 3. Clear the state the snapshot replaces. Keep the config directory.
-rm -rf ~/.osmosisd/data ~/.osmosisd/wasm
-mkdir -p ~/.osmosisd/data
-
-# 4. Verify, then extract the snapshot.
-#    (Compare against the checksum published by the provider first.)
-wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C ~/.osmosisd -xf -
-
-# 5. Restore your signing state over whatever the snapshot supplied.
-cp ~/priv_validator_state.json.bak ~/.osmosisd/data/priv_validator_state.json
-
-# 6. Start exactly one signer.
-sudo systemctl start cosmovisor
-```
+Extracting a snapshot over a validator's data directory can overwrite `priv_validator_state.json` with the snapshot author's signing state. Before following a provider's restore instructions, stop the validator, preserve your own signing state, and verify the downloaded archive against the checksum published by the provider. Restore your signing state before restarting the validator.
 
 :::danger One signer at a time
-Step 6 assumes nothing else is signing with the same key. If you are migrating to a new host, the old signer must be fully stopped, not merely idle, before the new one starts. Downtime costs rewards; double-signing slashes 5% and tombstones the validator permanently.
+If you are migrating to a new host, the old signer must be fully stopped, not merely idle, before the new one starts. Downtime costs rewards; double-signing slashes 5% and tombstones the validator permanently.
 :::
 
 ## Configuring state sync

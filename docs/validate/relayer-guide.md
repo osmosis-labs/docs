@@ -38,7 +38,7 @@ nano $HOME/.osmosisd/config/app.toml
 enable = true
 
 # Address defines the gRPC server address to bind to.
-address = "0.0.0.0:9090"
+address = "127.0.0.1:9090"
 ```
 
 Here I will leave the `pprof_laddr` set to port 6060, `rpc laddr` to port 26657, and `p2p laddr` to 26656 in the `config.toml` directory:
@@ -77,7 +77,7 @@ nano $HOME/.gaiad/config/app.toml
 enable = true
 
 # Address defines the gRPC server address to bind to.
-address = "0.0.0.0:9092"
+address = "127.0.0.1:9092"
 ```
 
 Here I will set the `pprof_laddr` to port 6062, `rpc laddr` to port 26757, and `p2p laddr` to 26756 in the `config.toml` directory:

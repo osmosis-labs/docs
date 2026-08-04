@@ -100,13 +100,13 @@ osmosisd tx staking edit-validator \
   --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
 ```
 
-**Unjail after downtime.** Once the jail period has elapsed and your node is signing again, send:
+**Unjail after downtime.** Once the jail period has elapsed and your node is caught up and ready to sign again, send:
 
 ```bash
 osmosisd tx slashing unjail --from=[KEY_NAME] --chain-id=osmosis-1 --gas=auto --gas-adjustment=1.3 --gas-prices=0.03uosmo
 ```
 
-This fails if you are still jailed for the duration, if your node is not caught up, or if self-delegation is below `min-self-delegation`. Unjailing is not possible at all if the validator was tombstoned for double-signing.
+This fails if the jail period has not elapsed or self-delegation is below `min-self-delegation`. Unjailing is not possible if the validator was tombstoned for double-signing. Catch up and resolve the cause of the downtime before unjailing, otherwise the validator may miss blocks and be jailed again.
 
 **Withdraw rewards and commission.** `--commission` adds your accumulated commission to the withdrawal:
 

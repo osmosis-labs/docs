@@ -91,7 +91,6 @@ And the flags:
 - `--from` is the KEY_NAME you created when initializing the key on your keyring.
 - `--chain-id` is the network you are joining (`osmo-test-5` for this testnet).
 - `--gas-prices` is the price per unit of gas in uosmo.
-- the `gas-prices` is the amount of gas used to send this create-validator transaction
 
 ### Troubleshooting
 
@@ -100,19 +99,13 @@ If you inspect your `create-validator` transaction in the explorer, and see the 
 out of gas in location: WritePerByte; gasWanted: 177140, gasUsed: 177979: out of gas
 ```
 
-Please try substituting:
-```
---gas="auto" \
---gas-prices="0.05uosmo"
-```
-
-The `--gas-prices` value is illustrative. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
-
-with
+The simulated gas limit was too low. Increase `--gas-adjustment`, or replace `--gas="auto"` with a fixed limit above the reported `gasUsed` value. For the example above:
 
 ```
---gas=<value significantly larger than gasUsed value from the error>
+--gas=220000
 ```
+
+`--gas-prices` controls the transaction fee, not the gas limit. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 
 ## Track Validator Active Set
 
