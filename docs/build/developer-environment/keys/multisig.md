@@ -75,16 +75,16 @@ osmosisd tx bank send \
     --chain-id=osmosis-1 \
     --gas=auto \
     --fees=1000000uosmo \
-    --broadcast-mode=block
+    --broadcast-mode=sync
 ```
 
 ### Step 2: Create the multisig transaction
 
-We want to send 5 OSMO from our multisig account to `osmo1rgjxswhuxhcrhmyxlval0qa70vxwvqn2e0srft`.
+We want to send 5 OSMO from our multisig account `osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m` to `osmo157g6rn6t6k5rl0dl57zha2wx72t633axqyvvwq`.
 
 ```bash
 osmosisd tx bank send \
-    osmo1rgjxswhuxhcrhmyxlval0qa70vxwvqn2e0srft \
+    osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m \
     osmo157g6rn6t6k5rl0dl57zha2wx72t633axqyvvwq \
     5000000uosmo \
     --gas=200000 \
@@ -101,12 +101,12 @@ The file `unsignedTx.json` contains the unsigned transaction encoded in JSON.
     "messages": [
       {
         "@type": "/cosmos.bank.v1beta1.MsgSend",
-        "from_address": "osmo1rgjxswhuxhcrhmyxlval0qa70vxwvqn2e0srft",
+        "from_address": "osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m",
         "to_address": "osmo157g6rn6t6k5rl0dl57zha2wx72t633axqyvvwq",
         "amount": [
           {
             "denom": "uosmo",
-            "amount": "5000000000000000000"
+            "amount": "5000000"
           }
         ]
       }
@@ -177,12 +177,12 @@ The TX is now signed:
     "messages": [
       {
         "@type": "/cosmos.bank.v1beta1.MsgSend",
-        "from_address": "osmo1rgjxswhuxhcrhmyxlval0qa70vxwvqn2e0srft",
+        "from_address": "osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m",
         "to_address": "osmo157g6rn6t6k5rl0dl57zha2wx72t633axqyvvwq",
         "amount": [
           {
             "denom": "uosmo",
-            "amount": "5000000000000000000"
+            "amount": "5000000"
           }
         ]
       }
@@ -259,5 +259,5 @@ The TX is now signed:
 ```sh
 osmosisd tx broadcast signedTx.json \
     --chain-id=osmosis-1 \
-    --broadcast-mode=block
+    --broadcast-mode=sync
 ```
