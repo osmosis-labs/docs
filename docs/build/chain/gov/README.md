@@ -1,4 +1,4 @@
-# Gov
+# Governance
 
 The `gov` module enables onchain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
 
@@ -170,8 +170,8 @@ A text (signaling) proposal file:
 
 ```json
 {
-  "title": "Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs",
-  "description": "Signaling proposal description",
+  "title": "ProtoRev usage: OSMO revenue as Burn Mechanism",
+  "description": "This proposal signals that OSMO revenue generated from the ProtoRev module should be permanently removed from circulating supply by transfer to the null address. Nothing is executed onchain if this passes; it records community direction for follow-up work.",
   "type": "Text",
   "deposit": "7500000000uosmo"
 }

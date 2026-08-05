@@ -164,11 +164,11 @@
     "from": "/osmosis-core/localtesting"
   },
   {
-    "to": "/build/chain/concentrated-liquidity",
+    "to": "/build/chain/pool-manager/concentrated-liquidity",
     "from": "/osmosis-core/modules/concentrated-liquidity"
   },
   {
-    "to": "/build/chain/cosmwasmpool",
+    "to": "/build/chain/pool-manager/cosmwasmpool",
     "from": "/osmosis-core/modules/cosmwasmpool"
   },
   {
@@ -180,23 +180,23 @@
     "from": "/osmosis-core/modules/epochs"
   },
   {
-    "to": "/build/chain/gamm/client/docs/create-lbp-pool",
+    "to": "/build/chain/pool-manager/gamm",
     "from": "/osmosis-core/modules/gamm/client/docs/create-lbp-pool"
   },
   {
-    "to": "/build/chain/gamm/client/docs/create-pool",
+    "to": "/build/chain/pool-manager/gamm",
     "from": "/osmosis-core/modules/gamm/client/docs/create-pool"
   },
   {
-    "to": "/build/chain/gamm/client/docs",
+    "to": "/build/chain/pool-manager/gamm",
     "from": "/osmosis-core/modules/gamm/client/docs"
   },
   {
-    "to": "/build/chain/gamm/pool-models/stableswap",
+    "to": "/build/chain/pool-manager/stableswap",
     "from": "/osmosis-core/modules/gamm/pool-models/stableswap"
   },
   {
-    "to": "/build/chain/gamm",
+    "to": "/build/chain/pool-manager/gamm",
     "from": "/osmosis-core/modules/gamm"
   },
   {
@@ -541,11 +541,11 @@
   },
   {
     "from": "/build/chain/modules/concentrated-liquidity",
-    "to": "/build/chain/concentrated-liquidity"
+    "to": "/build/chain/pool-manager/concentrated-liquidity"
   },
   {
     "from": "/build/chain/modules/cosmwasmpool",
-    "to": "/build/chain/cosmwasmpool"
+    "to": "/build/chain/pool-manager/cosmwasmpool"
   },
   {
     "from": "/build/chain/modules/downtime-detector",
@@ -557,7 +557,7 @@
   },
   {
     "from": "/build/chain/modules/gamm",
-    "to": "/build/chain/gamm"
+    "to": "/build/chain/pool-manager/gamm"
   },
   {
     "from": "/build/chain/modules/gov",
@@ -634,5 +634,33 @@
   {
     "to": "/build/cosmwasm/cosmwasm-deployment",
     "from": "/build/cosmwasm/testnet/cosmwasm-deployment"
+  },
+  {
+    "to": "/build/chain/pool-manager/gamm",
+    "from": "/build/chain/gamm"
+  },
+  {
+    "to": "/build/chain/pool-manager/concentrated-liquidity",
+    "from": "/build/chain/concentrated-liquidity"
+  },
+  {
+    "to": "/build/chain/pool-manager/cosmwasmpool",
+    "from": "/build/chain/cosmwasmpool"
+  },
+  {
+    "to": "/build/chain/pool-manager/stableswap",
+    "from": "/build/chain/gamm/pool-models/stableswap"
+  },
+  {
+    "to": "/build/chain/pool-manager/gamm",
+    "from": "/build/chain/gamm/client/docs"
+  },
+  {
+    "to": "/build/chain/pool-manager/gamm",
+    "from": "/build/chain/gamm/client/docs/create-pool"
+  },
+  {
+    "to": "/build/chain/pool-manager/gamm",
+    "from": "/build/chain/gamm/client/docs/create-lbp-pool"
   }
 ]

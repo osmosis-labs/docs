@@ -1,4 +1,4 @@
-# Pool Manager Module
+# Pool Manager
 
 The poolmanager module exists as a swap entrypoint for any pool model
 that exists on the chain. The poolmanager module is responsible for routing

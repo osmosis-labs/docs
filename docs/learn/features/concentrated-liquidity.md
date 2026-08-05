@@ -47,4 +47,4 @@ Across many LPs all running different strategies, liquidity becomes more dynamic
   <img src="/img/cl-step5.gif" alt="Many liquidity providers with overlapping ranges" width="600" />
 </p>
 
-For the full mechanics (the math, tick handling, fee and incentive accounting, and precision details), see the [Concentrated Liquidity module page](/build/chain/concentrated-liquidity) under Build. To integrate against CL pools, see [Concentrated Liquidity Integration](/integrate/features/concentrated-liquidity-integration).
+For the full mechanics (the math, tick handling, fee and incentive accounting, and precision details), see the [Concentrated Liquidity module page](/build/chain/pool-manager/concentrated-liquidity) under Build. To integrate against CL pools, see [Concentrated Liquidity Integration](/integrate/features/concentrated-liquidity-integration).

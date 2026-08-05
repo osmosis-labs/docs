@@ -1,4 +1,4 @@
-# Generalized Solidly Stableswap
+# Stableswap
 
 Stableswaps are pools that offer low slippage for two assets that are intended to be tightly correlated.
 There is a price ratio they are expected to be at, and the AMM offers low slippage around this price.

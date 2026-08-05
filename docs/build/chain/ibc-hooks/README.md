@@ -1,4 +1,4 @@
-# IBC-hooks
+# IBC Hooks
 
 ## Wasm Hooks
 

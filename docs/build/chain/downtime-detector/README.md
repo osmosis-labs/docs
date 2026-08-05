@@ -1,4 +1,4 @@
-# Downtime-detector
+# Downtime Detector
 
 For several use cases, we need a module that can detect when the chain is recovering from downtime. We want to be able to efficiently know "Has it been `RECOVERY_PERIOD` minutes since the chain has been down for `DOWNTIME_PERIOD`", and expose this as a query to contracts.
 
