@@ -1159,6 +1159,112 @@ tick tracked by the pool is 11_000. The global spread reward growth per unit of 
 has increased by 50 units of token one. See more details about the spread reward growth
 in the "Spread Rewards" section.
 
+## Swapping. Appendix B: Compute Swap Step Internals and Math
+
+Appendix A walked a swap at the level of whole buckets. This appendix covers the single
+step inside one bucket, where liquidity is constant. That step is implemented by
+`ComputeSwapWithinBucketOutGivenIn` and `ComputeSwapWithinBucketInGivenOut` on the swap
+strategy, with one implementation per direction
+([`zero_for_one.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/swapstrategy/zero_for_one.go),
+[`one_for_zero.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/swapstrategy/one_for_zero.go)).
+
+Each call takes the current sqrt price, a target sqrt price, the bucket's liquidity, and the
+amount still remaining to swap. It returns the next sqrt price, the amount of the input
+consumed, the amount of the output produced, and the spread reward charged.
+
+### Direction
+
+`zeroForOne` swaps token zero in for token one out and moves the price **down**;
+`oneForZero` is the mirror and moves the price **up**. The target sqrt price is the
+next initialized tick's sqrt price, unless the price limit supplied for slippage
+protection is hit first, in which case it is that limit.
+
+The two directions are exact mirrors, differing only in which token is the input and
+therefore which delta function is rounded up:
+
+| | `zeroForOne` (price down) | `oneForZero` (price up) |
+|---|---|---|
+| Input token | zero | one |
+| Output token | one | zero |
+| Input amount, rounded **up** | $$\Delta_0$$ | $$\Delta_1$$ |
+| Output amount, rounded **down** | $$\Delta_1$$ | $$\Delta_0$$ |
+
+### Token amounts across a sqrt price range
+
+Both deltas follow from the constant-product invariant over a range where $$L$$ is fixed.
+For sqrt prices $$\sqrt{P_a} < \sqrt{P_b}$$:
+
+$$\Delta_0 = \frac{L (\sqrt{P_b} - \sqrt{P_a})}{\sqrt{P_b} \cdot \sqrt{P_a}}$$
+
+$$\Delta_1 = L (\sqrt{P_b} - \sqrt{P_a})$$
+
+Token one is linear in sqrt price, so its delta is a plain multiplication. Token zero
+divides by both sqrt prices. The implementation divides by the **larger** sqrt price
+first and the smaller second, which reduces error amplification when either sqrt price
+is below one.
+
+### Solving for the next sqrt price
+
+If the amount remaining is at least the amount needed to reach the target, the step ends
+exactly at the target and the remainder carries to the next bucket. Otherwise the amount
+remaining is exhausted inside this bucket and the next sqrt price is solved from it by
+inverting the relevant delta above:
+
+$$\sqrt{P_{next}} = \frac{L \sqrt{P_{cur}}}{L + \Delta_0 \sqrt{P_{cur}}} \qquad \text{(token zero in)}$$
+
+$$\sqrt{P_{next}} = \sqrt{P_{cur}} + \frac{\Delta_1}{L} \qquad \text{(token one in)}$$
+
+$$\sqrt{P_{next}} = \frac{L \sqrt{P_{cur}}}{L - \Delta_0 \sqrt{P_{cur}}} \qquad \text{(token zero out)}$$
+
+$$\sqrt{P_{next}} = \sqrt{P_{cur}} - \frac{\Delta_1}{L} \qquad \text{(token one out)}$$
+
+When the target is **not** reached, the input amount is recomputed from the newly solved
+$$\sqrt{P_{next}}$$ rather than reusing the earlier estimate to the target. The recomputation
+must keep rounding the input up: rounding it down instead lets the loop fail to make
+progress and spin.
+
+### Rounding always favours the pool
+
+Every rounding decision in a swap step is made so that any error accrues to the pool and
+never to the trader:
+
+* The **input** is rounded up, at each intermediate division as well as at the end, so the
+  trader pays at least the true amount.
+* The **output** is truncated, so the trader receives at most the true amount.
+* Solving for $$\sqrt{P_{next}}$$ rounds in the direction that keeps the resulting amounts
+  conservative for the pool.
+
+One asymmetry follows from this. On an exact-out swap that does not reach the target,
+$$\sqrt{P_{next}}$$ is rounded *away* from the current price so the output is certainly
+reached, and recomputing the output from it can exceed the amount requested. The consumed
+output is therefore capped at the amount remaining. No such cap is needed on exact-in,
+where $$\sqrt{P_{next}}$$ is rounded toward the current price and the overshoot cannot occur.
+
+### Spread reward for the step
+
+The spread reward is always charged on the input token, never the output. With spread
+factor $$f$$:
+
+* When the step **reaches** the target (a tick or the price limit), the charge is computed
+  from the input actually consumed:
+
+  $$\text{reward} = \text{amountIn} \cdot \frac{f}{1 - f}$$
+
+* When the step does **not** reach the target, the bucket had enough liquidity to fill the
+  rest of the swap. The charge is the leftover:
+
+  $$\text{reward} = \text{amountRemaining} - \text{amountIn}$$
+
+  This works because the next sqrt price was solved from the amount remaining *after*
+  deducting the spread reward, that is from $$\text{amountRemaining} \cdot (1 - f)$$, so
+  the difference is exactly the reward.
+
+The $$\frac{f}{1-f}$$ form is what makes the two branches agree: the reward is a share of
+the pre-fee input, so charging it on the post-fee amount consumed requires grossing up
+rather than multiplying by $$f$$ directly. The multiplication rounds up, again in the pool's
+favour. A zero spread factor short-circuits to a zero charge, and a negative one panics as
+a defence-in-depth check.
+
 ## Spread Rewards
 
 > As a an LP, I want to earn spread rewards on my capital so that I am incentivized to
