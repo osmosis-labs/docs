@@ -144,10 +144,6 @@ capped at 2\^20. However, within the state machine they are stored with
 an extra 30 bits of precision, allowing for smooth changes between two
 weights to happen with sufficient granularity.
 
-(Note, these docs are intended to get shuffled around as we write more
-of the spec for x/gamm. I just wanted to document this along with the
-PR, to save work for our future selves)
-
 ## Network Parameters
 
 Pools have the following parameters:

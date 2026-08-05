@@ -404,20 +404,3 @@ def JoinPoolSingleAssetIn(pool, tokenIn):
 We leave the rounding mode for the scaling factor division unspecified.
 This is because its expected to be tiny (as the denominator is larger than the numerator, and we are operating in BigDec),
 and it should be dominated by the later step of rounding down.
-
-## Code structure
-
-## Testing strategy
-
-- Unit tests for every pool interface method
-- Msg tests for custom messages
-  - CreatePool
-  - SetScalingFactors
-- Simulator integrations:
-  - Pool creation
-  - JoinPool + ExitPool gives a token amount out that is lte input
-  - SingleTokenIn + ExitPool + Swap to base token gives a token amount that is less than input
-  - CFMM k adjusting in the correct direction after every action
-- Fuzz test binary search algorithm, to see that it still works correctly across wide scale ranges
-- Fuzz test approximate equality of iterative approximation swap algorithm and direct equation swap.
-- Flow testing the entire stableswap scaling factor update process

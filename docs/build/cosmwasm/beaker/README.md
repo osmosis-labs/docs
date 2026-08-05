@@ -496,7 +496,6 @@ Beaker project template also comes with frontend template. But in order to inter
     The account `test1` can be added by copy-pasting `notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius` to the Import account screen on Keplr. It contains 100,000 test OSMOs.
   - [List of test accounts and its mnemonics in LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis#accounts)
 
-Now we are good to go! Let's dive in
 
 ```sh
 cd frontend

@@ -306,7 +306,3 @@ Only the contract stored as the packet's ack actor can send its
 acknowledgement for that packet.
 
 The `MsgEmitIBCAck` message is defined in the [`osmosis.ibchooks` proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/ibchooks/tx.proto).
-
-# Testing strategy
-
-See go tests.

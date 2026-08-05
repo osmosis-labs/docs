@@ -329,9 +329,6 @@ The representation of `google.protobuf.Timestamp` is configurable by the `protot
 | --------------------------- | ---------------------- | ----------------------------------|
 | `google.protobuf.Timestamp` | `Date`                 | `{ seconds: Long, nanos: number }`|
 
-TODO
-- [ ] add `date='string'` option
-
 ### Duration
 
 The representation of `google.protobuf.Duration` is configurable by the `prototypes.typingsFormat.duration` option.
