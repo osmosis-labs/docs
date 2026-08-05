@@ -235,6 +235,8 @@ Withdraws an exact amount of a single asset from a pool, burning as many shares 
 
 ## Transactions
 
+The examples below use `OSMO` (`uosmo`) and `ATOM` (`ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`), and refer to them by symbol from here on. Amounts in commands are always base units.
+
 ### Create pool
 
 Create a new liquidity pool and provide initial liquidity to it.
@@ -275,7 +277,7 @@ The configuration json file contains the following parameters:
 }
 ```
 
-Set `initial-deposit` to match the intended starting price as closely as possible: the deposit and the weights together determine the pool's opening spot prices. With equal weights the deposit ratio *is* the opening price, so the example above opens at `1 ATOM = 5 OSMO`. Amounts are in base units and exponents differ per asset (ATOM and OSMO use 6, `allBTC` uses 8), so convert before choosing a ratio rather than assuming the raw numbers are comparable.
+Set `initial-deposit` to match the intended starting price as closely as possible: the deposit and the weights together determine the pool's opening spot prices. With equal weights the deposit ratio *is* the opening price, so the example above opens at `1 ATOM = 5 OSMO`. Exponents differ per asset, so convert to base units before choosing a ratio rather than assuming the raw numbers are comparable across denoms.
 
 </details>
 
@@ -291,7 +293,16 @@ Weights typically begin unbalanced, favouring the token being sold, and shift to
 
 `start-time` controls when the shift begins. The pool is live and tradeable at the initial `weights` from creation, but the weights hold until `start-time` is reached. Omit it and the shift starts when the creation transaction executes.
 
-There is no separate LBP command. A pool file carrying valid `lbp-params` is created as a liquidity bootstrapping pool by the same `create-pool` command:
+There is no separate LBP command. A pool file carrying valid `lbp-params` is created as a liquidity bootstrapping pool by the same `create-pool` command.
+
+```sh
+osmosisd tx gamm create-pool --pool-file [config-file] --from --chain-id
+```
+
+<details>
+<summary>Example</summary>
+
+Create a pool that starts at a 10:1 weighting favouring `OSMO` and shifts to an even 1:1 weighting against `ATOM` over 72 hours:
 
 ```json
 {
@@ -307,6 +318,8 @@ There is no separate LBP command. A pool file carrying valid `lbp-params` is cre
 ```
 
 Add `"start-time": "2006-01-02T15:04:05Z"` inside `lbp-params` to delay the shift to a specific time.
+
+</details>
 
 ### Join pool
 
