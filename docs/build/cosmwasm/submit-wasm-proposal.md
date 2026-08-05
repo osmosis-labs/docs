@@ -20,23 +20,22 @@ curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 
 ### Start localOsmosis
 
-Inside a separate bash window start your localOsmosis which was installed in ~/localosmosis
+Inside a separate bash window, start LocalOsmosis from a checkout of the Osmosis repo:
 
 ```
-cd ~/localosmosis
-docker-compose up
-
+cd ~/osmosis
+make localnet-start
 ```
 You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOsmosis running while you perform the next steps in a new terminal window.
 
 :::tip
-If you had previously installed localOsmosis, it's a good idea to start fresh and delete ~/localosmosis `rm -rf ~/localosmosis` before installing it again.
+See [CosmWasm & LocalOsmosis](/build/cosmwasm/localosmosis) for the full local setup, including the automatic installer option.
 ::: 
 
 ## Download sample contract
 
 ``` 
-curl -s -L -O https://github.com/CosmWasm/cw-plus/releases/download/v0.12.1/cw20_base.wasm
+curl -s -L -O https://github.com/CosmWasm/cw-plus/releases/download/v1.1.2/cw20_base.wasm
 ```
 
 ## Define variables 
@@ -62,12 +61,13 @@ VAL=$(osmosisd keys show -a validator --keyring-backend test)
 
 ## Submit proposal
 
-Storing code by governance is a `wasm` subcommand, not a `gov` one. The stored code is owned by the governance account, so `--authority` defaults to the gov module account and does not need to be set.
+Storing code on a permissioned network goes through `x/wasm`'s own governance proposal command, `tx wasm submit-proposal wasm-store` (the older `tx gov submit-proposal wasm-store` form, and the `--description` flag, were removed in newer SDK/wasmd versions; metadata is now `--title` plus `--summary`, and the stored message's `--authority` is the gov module address):
 
 ```
-osmosisd tx wasm submit-proposal wasm-store $CONTRACT.wasm --title "Add $CONTRACT" \
-  --summary "Upload the $CONTRACT contract" --deposit 7500000000uosmo \
-  --from validator --keyring-backend test --chain-id $CHAIN_ID -y \
+osmosisd tx wasm submit-proposal wasm-store $CONTRACT.wasm \
+  --title "Add $CONTRACT" --summary "Let's upload this contract" \
+  --authority osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp \
+  --from validator --keyring-backend test --chain-id $CHAIN_ID -y -b sync \
   --gas 9000000 --gas-prices 0.05uosmo
 ```
 
@@ -79,13 +79,13 @@ osmosisd query gov proposal $PROPOSAL
 ## Deposit on proposal
 ```
 osmosisd tx gov deposit $PROPOSAL 10000000uosmo --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y --gas 6000000 --gas-prices 0.05uosmo
+    --chain-id $CHAIN_ID -y -b sync --gas 6000000 --gas-prices 0.05uosmo
 ```
 
 ## Vote
 ```
 osmosisd tx gov vote $PROPOSAL yes --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y --gas 600000 --gas-prices 0.05uosmo
+    --chain-id $CHAIN_ID -y -b sync --gas 600000 --gas-prices 0.05uosmo
 ```
 
 ## Check the results

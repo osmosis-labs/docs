@@ -32,7 +32,7 @@ Make sure you have [installed the Osmosis Binary CLI](/build/developer-environme
 Use osmosisd to initialize your node (replace the ```NODE_NAME``` with a name of your choosing):
 
 ```bash
-osmosisd init NODE_NAME
+osmosisd init NODE_NAME --chain-id=osmosis-1
 ```
 
 Download and place the genesis file in the osmosis config folder:
@@ -61,7 +61,7 @@ rm go1.23.4.linux-amd64.tar.gz
 ```
 ### Memory Requirements
 
-As always, we recommend having 64GB of memory. 
+The [minimum recommended specs](/build/developer-environment/osmosisd) are 32 GB of RAM. For a mainnet validator, 64 GB is recommended to give headroom under load. 
 
 ### Set Up Cosmovisor
 
@@ -167,12 +167,12 @@ If dealing with a server that may have followed older instructions, you may cons
 
 ## Start Osmosis Service
 
-Reload and start the service:
+Reload, then enable and start the service. `enable` is what makes it come back after a reboot; starting it alone leaves the node down after the next restart of the host:
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl restart systemd-journald
-sudo systemctl start cosmovisor
+sudo systemctl enable --now cosmovisor
 ```
 
 Check the status of the service:
@@ -189,17 +189,21 @@ journalctl -u cosmovisor -f
 
 ## Updating Cosmovisor for the Next Chain Upgrade
 
-To allow osmosisd to upgrade automatically when the chain hits the next upgrade height, prepare the upgrade binary in advance. Replace `<UPGRADE_VERSION>` and `<UPGRADE_HEIGHT>` below with the values from the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) and the corresponding onchain governance proposal.
+To allow osmosisd to upgrade automatically when the chain hits the next upgrade height, prepare the upgrade binary in advance. Two different names are involved, and mixing them up is the usual reason Cosmovisor fails to switch:
+
+- `<UPGRADE_NAME>`: the upgrade **plan name** from the onchain software-upgrade proposal. Cosmovisor looks for the staged binary under exactly this name (normalized to lowercase). This is what the directory must be called.
+- `<RELEASE_TAG>`: the git tag of the [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) you build. It often resembles the plan name but is not guaranteed to match it.
+
+Take `<UPGRADE_NAME>` and `<UPGRADE_HEIGHT>` from the governance proposal, and `<RELEASE_TAG>` from the release page:
 
 ```{.sh}
-# Example: upgrading from v31 -> v32 at height 99999999
-# Replace the placeholders with the values for the next upgrade.
-mkdir -p ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
+# Example: upgrade plan "v32" at height 99999999, built from tag v32.0.0
+mkdir -p ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_NAME>/bin
 cd $HOME/osmosis
 git pull
-git checkout <UPGRADE_VERSION>
+git checkout <RELEASE_TAG>
 make build
-cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_VERSION>/bin
+cp build/osmosisd ~/.osmosisd/cosmovisor/upgrades/<UPGRADE_NAME>/bin
 ```
 
 Cosmovisor will switch to the new binary automatically when the chain reaches `<UPGRADE_HEIGHT>`.

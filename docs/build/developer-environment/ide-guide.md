@@ -42,7 +42,7 @@ These are the VSCode extensions that are in daily use by the teams working on Os
 
 ## Vscode configuration
 
-To make your environment run tests automatically every time you save"
+To make your environment run tests automatically every time you save:
 
 Go to: `VSCode -> Preferences -> settings -> Extensions -> Go`
 

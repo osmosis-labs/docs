@@ -44,7 +44,11 @@ cd $HOME/.osmosisd/config
 nano config.toml
 ```
 
-Use page down or arrow keys to get to the line that says seeds = "" and replace it with the following:
+:::caution
+Seed and peer addresses rotate as nodes are added or retired. Confirm the current `osmo-test-5` values from the [Cosmos Chain Registry testnet entry](https://github.com/cosmos/chain-registry/blob/master/testnets/osmosistestnet/chain.json) before applying; the values below are illustrative.
+:::
+
+Use page down or arrow keys to get to the line that says seeds = "" and replace it with the current seed list, for example:
 
 ```bash
 seeds = "0f9a9c694c46bd28ad9ad6126e923993fc6c56b1@137.184.181.105:26656"
@@ -179,12 +183,12 @@ If dealing with a server that may have followed older instructions, you may cons
 
 ## Start Osmosis Service
 
-Reload and start the service:
+Reload, then enable and start the service. `enable` is what makes it come back after a reboot; starting it alone leaves the node down after the next restart of the host:
 
 ```bash
 sudo systemctl daemon-reload
 systemctl restart systemd-journald
-sudo systemctl start cosmovisor
+sudo systemctl enable --now cosmovisor
 ```
 
 Check the status of the service:

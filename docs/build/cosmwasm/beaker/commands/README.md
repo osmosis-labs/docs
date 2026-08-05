@@ -4,7 +4,7 @@
 
 CosmWasm development tooling
 
-Version: 0.0.6
+Version: 0.1.8 (last release, November 2023)
 
 Arguments:
 
