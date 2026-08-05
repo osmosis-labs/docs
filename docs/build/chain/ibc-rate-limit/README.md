@@ -42,9 +42,34 @@ Only per-denomination limits for non-native assets are implemented. Channel-base
 
 These rate limits automatically "expire" at the end of the quota duration.
 
-## Instantiating rate limits
+## Denom restrictions
 
-Rate limit quotas are set by governance. Governance can also delegate the authority to add, edit, and remove rate limits to a subDAO, so the quotas can be adjusted without a full governance proposal for each change.
+Quotas cap *how much* of a denom can move. A separate control caps *where* it can move: a denom
+can be restricted to an allowlist of source channels, and outbound transfers over any other
+channel are rejected outright regardless of quota headroom.
+
+The restriction is set with `SetDenomRestrictions { denom, allowed_channels }` and removed with
+`UnsetDenomRestrictions { denom }`. Three properties follow from the implementation:
+
+* **Outbound only.** Inbound packets are never checked against the allowlist; the check returns
+  early for receives.
+* **Empty means unrestricted.** A denom with no entry, or an entry with an empty channel list, is
+  not constrained. Restriction is opt-in per denom.
+* **Allowlist, not a blocklist.** Once a denom has a non-empty list, only the channels in that
+  list can send it. Everything else fails with a channel-blocked error.
+
+This is the control to reach for when a denom is only ever meant to leave over the one channel it
+arrived on, which is the common case for an asset whose issuer lives on a single counterparty
+chain. It is enforced independently of quotas, so a restricted denom with no quota is still
+channel-locked.
+
+Query the current allowlist for a denom:
+
+```bash
+osmosisd query wasm contract-state smart osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg \
+  '{"get_denom_restrictions":{"denom":"transfer/channel-6897/usat"}}'
+```
+
 
 ## Parameterizing the rate limit
 
@@ -73,6 +98,65 @@ The "Outflow" side of a rate limit is protection against a bug on Osmosis OR IBC
 Set too low, it blocks legitimate withdrawals during periods when many users withdraw the same asset at once, such as a volatility event.
 
 Outflow parameterization therefore trades withdrawal liveness in high-volatility periods against protection in the event of an on-Osmosis bug.
+
+## Deployed contract
+
+The middleware holds a single `ContractAddress` parameter pointing at the CosmWasm contract that
+carries the logic. On mainnet:
+
+| | |
+|---|---|
+| Contract | [`osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg) |
+| Code ID | `1383` |
+| cw2 name and version | `crates.io:rate-limiter` `0.1.1` |
+| Creator and admin | `osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp` (gov module account) |
+| Source | [`x/ibc-rate-limit/contracts/rate-limiter`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts/rate-limiter) |
+
+Because the logic lives in a contract rather than the state machine, quotas and restrictions can
+be changed by transaction rather than by chain upgrade.
+
+### Roles
+
+Management messages are gated by role-based access control rather than a single owner. Query who
+holds roles, and what a given account may do:
+
+```bash
+osmosisd query wasm contract-state smart osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg '"get_role_owners"'
+
+osmosisd query wasm contract-state smart osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg \
+  '{"get_roles":{"owner":"<address>"}}'
+```
+
+Note that `get_role_owners` and `get_message_ids` take no arguments and are encoded as bare JSON
+strings, not as objects.
+
+On mainnet the roles are held by the gov module account and by a rate-limit subDAO
+(`osmo186stuv8d8wt38a7n3mfldmjw34u0srq2p7sjhz84sdv38nefua0s0ysu5l`), which carries `AddRateLimit`, `RemoveRateLimit`, `ResetPathQuota`,
+`EditPathQuota`, and `ManageDenomRestrictions`. The subDAO can therefore adjust limits without a
+full governance proposal for each change.
+
+An account with a configured timelock delay has its management messages queued rather than
+executed immediately. Authorization is checked when the message enters the queue; once the delay
+expires, `ProcessMessages` is permissionless and any account may trigger execution.
+
+### Inspecting live quotas
+
+`GetQuotas` takes a channel and a denom and returns each quota on that path together with its
+current flow. Most live limits are registered against the pseudo-channel `any`, which is checked
+on every transfer regardless of the channel actually used:
+
+```bash
+osmosisd query wasm contract-state smart osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg \
+  '{"get_quotas":{"channel_id":"any","denom":"<denom>"}}'
+```
+
+Each entry reports the quota (`name`, `max_percentage_send`, `max_percentage_recv`, `duration` in
+seconds, and the `channel_value` cached at the start of the period) alongside the `inflow`,
+`outflow`, and `period_end` of the current window. Quota names on mainnet follow the asset and
+window, and the paired offset windows described under
+[Handling rate limit boundaries](#handling-rate-limit-boundaries) are visible in practice: an
+asset commonly carries both a `DAY-1` quota of 86400s and a `DAY-2` quota of 129600s, so the two
+daily windows do not end at the same moment.
 
 ## Code structure
 
@@ -155,16 +239,10 @@ The deployed contract interface is defined in
 | `SetTimelockDelay` | Sets the delay, in hours, applied to management messages submitted by an account. |
 | `ProcessMessages` | Executes eligible messages from the timelock queue. This operation is permissionless. |
 
-Management executes are protected by role-based access control. Roles separate
-path management, quota editing, denom restrictions, role administration,
-timelock configuration, and message removal. A signer with a configured timelock
-queues its management message instead of executing it immediately. Authorization
-is checked before the message enters the queue. Once the stored delay expires,
-any account can call `ProcessMessages` to execute it.
-
-Denom restrictions apply to outbound sends. A restricted denom can leave only
-through its configured source channels. An unset restriction, or a restriction
-with no channels, does not constrain that denom.
+Management executes are protected by role-based access control, and a signer with a
+configured timelock has its message queued rather than executed immediately. See
+[Roles](#roles) for the role list and the queue behaviour, and
+[Denom restrictions](#denom-restrictions) for the channel allowlist semantics.
 
 ##### Sudo
 
