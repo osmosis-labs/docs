@@ -224,7 +224,7 @@
     "from": "/osmosis-core/modules/mint"
   },
   {
-    "to": "/build/chain/pool-incentives",
+    "to": "/build/chain/incentives/pool-incentives",
     "from": "/osmosis-core/modules/pool-incentives"
   },
   {
@@ -392,7 +392,7 @@
     "from": "/overview/integrate/on-chain"
   },
   {
-    "to": "/build/chain/orderbook",
+    "to": "/build/chain/pool-manager/cosmwasmpool/orderbook",
     "from": "/overview/integrate/orderbook"
   },
   {
@@ -468,7 +468,7 @@
     "from": "/integrate/grpc"
   },
   {
-    "to": "/build/chain/orderbook",
+    "to": "/build/chain/pool-manager/cosmwasmpool/orderbook",
     "from": "/integrate/orderbook"
   },
   {
@@ -585,11 +585,11 @@
   },
   {
     "from": "/build/chain/modules/orderbook",
-    "to": "/build/chain/orderbook"
+    "to": "/build/chain/pool-manager/cosmwasmpool/orderbook"
   },
   {
     "from": "/build/chain/modules/pool-incentives",
-    "to": "/build/chain/pool-incentives"
+    "to": "/build/chain/incentives/pool-incentives"
   },
   {
     "from": "/build/chain/modules/pool-manager",
@@ -662,5 +662,13 @@
   {
     "to": "/build/chain/pool-manager/gamm",
     "from": "/build/chain/gamm/client/docs/create-lbp-pool"
+  },
+  {
+    "to": "/build/chain/pool-manager/cosmwasmpool/orderbook",
+    "from": "/build/chain/orderbook"
+  },
+  {
+    "to": "/build/chain/incentives/pool-incentives",
+    "from": "/build/chain/pool-incentives"
   }
 ]

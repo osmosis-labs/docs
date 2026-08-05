@@ -96,23 +96,12 @@ type UpdatePoolIncentivesProposal struct {
 ```
 
 `UpdatePoolIncentivesProposal` can be used by governance to update
-`DistrRecord`s.
-
-```shell
-osmosisd tx gov submit-proposal update-pool-incentives [gaugeIds] [weights]
-```
-
-Proposals can be proposed in using the CLI command format above.\
-For example, to designate 100 weight to gauge id 2 and 200 weight to
-gauge id 3, the following command can be used.
-
-```shell
-osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200
-```
+`DistrRecord`s. See [Governance proposals](#governance-proposals) below
+for the submission commands.
 
 ## Governance proposals
 
-The `pool-incentives` module registers no `tx poolincentives` subcommands (`GetTxCmd` returns `nil`). `DistrInfo` is modified through governance, using the `ReplacePoolIncentivesProposal` and `UpdatePoolIncentivesProposal` content types submitted via `x/gov`. Both proposals carry the same payload (`title`, `description`, and a list of `DistrRecord`s); they differ only in how the records are applied:
+The `pool-incentives` module registers no `tx poolincentives` subcommands (`GetTxCmd` returns `nil`). `DistrInfo` is modified through governance, using the `ReplacePoolIncentivesProposal` and `UpdatePoolIncentivesProposal` content types submitted via `x/gov`. Both register as legacy content handlers mounted under `submit-legacy-proposal`, not the gov v1 `submit-proposal`. Both proposals carry the same payload (`title`, `description`, and a list of `DistrRecord`s); they differ only in how the records are applied:
 
 - **replace-pool-incentives** (`ReplacePoolIncentivesProposal`): the proposal's records override the existing `DistrRecord`s in the module (a full overwrite).
 - **update-pool-incentives** (`UpdatePoolIncentivesProposal`): the proposal edits or adds only the `DistrRecord`s it specifies, leaving other records in place.
@@ -120,7 +109,7 @@ The `pool-incentives` module registers no `tx poolincentives` subcommands (`GetT
 ### replace-pool-incentives
 
 ```sh
-osmosisd tx gov submit-proposal replace-pool-incentives [gaugeIds] [weights] [flags]
+osmosisd tx gov submit-legacy-proposal replace-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
 <details>
@@ -129,7 +118,7 @@ osmosisd tx gov submit-proposal replace-pool-incentives [gaugeIds] [weights] [fl
 Fully replace the records for pool incentives, designating 100 weight to gauge id 2 and 200 weight to gauge id 3:
 
 ```bash
-osmosisd tx gov submit-proposal replace-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
+osmosisd tx gov submit-legacy-proposal replace-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
 ```
 
 </details>
@@ -137,7 +126,7 @@ osmosisd tx gov submit-proposal replace-pool-incentives 2,3 100,200 --from WALLE
 ### update-pool-incentives
 
 ```sh
-osmosisd tx gov submit-proposal update-pool-incentives [gaugeIds] [weights] [flags]
+osmosisd tx gov submit-legacy-proposal update-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
 <details>
@@ -146,7 +135,7 @@ osmosisd tx gov submit-proposal update-pool-incentives [gaugeIds] [weights] [fla
 Update only the specified gauges, designating 100 weight to gauge id 2 and 200 weight to gauge id 3:
 
 ```bash
-osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
+osmosisd tx gov submit-legacy-proposal update-pool-incentives 2,3 100,200 --from WALLET_NAME --chain-id CHAIN_ID
 ```
 
 </details>

@@ -82,7 +82,7 @@ If you need further explanation for each of these command flags:
 - the `pubkey` is the validator public key found earlier
 - the `moniker` is a human readable name you choose for your validator
 - the `security-contact` is an email your delegates are able to contact you at
-- the `chain-id` is whatever chain-id you are working with (in the osmosis mainnet case it is osmosis-1)
+- the `chain-id` is whatever chain-id you are working with (in the Osmosis mainnet case it is osmosis-1)
 - the `commission-rate` is the rate you will charge your delegates (in the example above, 10 percent)
 - the `commission-max-rate` is the most you are allowed to charge your delegates (in the example above, 20 percent)
 - the `commission-max-change-rate` is how much you can increase your commission rate in a 24 hour period (in the example above, 5 percent per day until reaching the max rate)

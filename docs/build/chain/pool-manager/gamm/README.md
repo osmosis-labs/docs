@@ -332,7 +332,7 @@ osmosisd tx gamm join-pool --pool-id --max-amounts-in --share-amount-out --from 
 <details>
 <summary>Example</summary>
 
-Join `pool 3` with a **maximum** of `.037753 ATOM` and the corresponding amount of `OSMO` to get an **exact** share amount of `1.227549469722224220 gamm/pool/3` using `WALLET_NAME` on the osmosis mainnet:
+Join `pool 3` with a **maximum** of `.037753 ATOM` and the corresponding amount of `OSMO` to get an **exact** share amount of `1.227549469722224220 gamm/pool/3` using `WALLET_NAME` on the Osmosis mainnet:
 
 ```sh
 osmosisd tx gamm join-pool --pool-id 3 --max-amounts-in 37753ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --share-amount-out 1227549469722224220 --from WALLET_NAME --chain-id osmosis-1
@@ -351,7 +351,7 @@ osmosisd tx gamm exit-pool --pool-id --min-amounts-out --share-amount-in --from 
 <details>
 <summary>Example</summary>
 
-Exit `pool 3` with for **exactly** `1.136326462628731195 gamm/pool/3` in order to receive a **minimum** of `.033358 ATOM` and the corresponding amount of `OSMO` using `WALLET_NAME` on the osmosis mainnet:
+Exit `pool 3` with for **exactly** `1.136326462628731195 gamm/pool/3` in order to receive a **minimum** of `.033358 ATOM` and the corresponding amount of `OSMO` using `WALLET_NAME` on the Osmosis mainnet:
 
 ```sh
 osmosisd tx gamm exit-pool --pool-id 3 --min-amounts-out 33358ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --share-amount-in 1136326462628731195 --from WALLET_NAME --chain-id osmosis-1
@@ -372,7 +372,7 @@ osmosisd tx gamm join-swap-extern-amount-in [token-in] [share-out-min-amount] --
 <details>
 <summary>Example</summary>
 
-Join `pool 3` with **exactly** `.200000 ATOM` (and `0 OSMO`) to get a **minimum** of `3.234812471272883046 gamm/pool/3` using `WALLET_NAME` on the osmosis mainnet:
+Join `pool 3` with **exactly** `.200000 ATOM` (and `0 OSMO`) to get a **minimum** of `3.234812471272883046 gamm/pool/3` using `WALLET_NAME` on the Osmosis mainnet:
 
 ```sh
 osmosisd tx gamm join-swap-extern-amount-in 200000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 3234812471272883046 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
@@ -450,7 +450,7 @@ osmosisd tx gamm swap-exact-amount-in [token-in] [token-out-min-amount] --pool-i
 <details>
 <summary>Example</summary>
 
-Swap **exactly** `.407239 ATOM` through `pool 3` into a **minimum** of `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
+Swap **exactly** `.407239 ATOM` through `pool 3` into a **minimum** of `.140530 OSMO` using `WALLET_NAME` on the Osmosis mainnet:
 
 ```sh
 osmosisd tx gamm swap-exact-amount-in 407239ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 140530 --swap-route-pool-ids 3 --swap-route-denoms uosmo --from WALLET_NAME --chain-id osmosis-1
@@ -469,7 +469,7 @@ osmosisd tx gamm swap-exact-amount-out [token-out] [token-out-max-amount] --swap
 <details>
 <summary>Example</summary>
 
-Swap a **maximum** of `.407239 ATOM` through `pool 3` into **exactly** `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
+Swap a **maximum** of `.407239 ATOM` through `pool 3` into **exactly** `.140530 OSMO` using `WALLET_NAME` on the Osmosis mainnet:
 
 ```sh
 osmosisd tx gamm swap-exact-amount-out 140530uosmo 407239 --swap-route-pool-ids 3 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --from WALLET_NAME --chain-id osmosis-1

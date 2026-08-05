@@ -1,23 +1,20 @@
 # IBC Rate Limit
 
-The IBC Rate Limit module is responsible for adding a governance-configurable rate limit to IBC transfers.
-This is a safety control, intended to protect assets on osmosis in event of:
+The IBC Rate Limit module adds a governance-configurable rate limit to IBC transfers. It is a safety control intended to protect assets on Osmosis in the event of:
 
-* a bug/hack on osmosis
-* a bug/hack on the counter-party chain
-* a bug/hack in IBC itself
+* a bug or exploit on Osmosis
+* a bug or exploit on the counterparty chain
+* a bug or exploit in IBC itself
 
-This is done in exchange for a potential (one-way) bridge liveness tradeoff, in periods of high deposits or withdrawals.
+The protection comes at the cost of a potential one-way bridge liveness tradeoff during periods of unusually high deposits or withdrawals.
 
-The architecture of this package is a minimal go package which implements an [IBC Middleware](https://github.com/cosmos/ibc-go/blob/f57170b1d4dd202a3c6c1c61dcf302b6a9546405/docs/ibc/middleware/develop.md) that wraps the [ICS20 transfer](https://ibc.cosmos.network/main/apps/transfer/overview.html) app, and calls into a cosmwasm contract.
-The cosmwasm contract then has all of the actual IBC rate limiting logic.
-The Cosmwasm code can be found in the [`contracts`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts) package, with bytecode findable in the [`bytecode`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/bytecode) directory. The cosmwasm VM usage allows Osmosis chain governance to choose to change this safety control with no hard forks, via a parameter change proposal, a great mitigation for faster threat adaptavity.
+The module is a minimal Go package implementing an [IBC Middleware](https://github.com/cosmos/ibc-go/blob/f57170b1d4dd202a3c6c1c61dcf302b6a9546405/docs/ibc/middleware/develop.md) that wraps the [ICS20 transfer](https://ibc.cosmos.network/main/apps/transfer/overview.html) app and calls into a CosmWasm contract, which holds all of the rate limiting logic. The contract source is in the [`contracts`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts) package and its bytecode in the [`bytecode`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/bytecode) directory. Implementing the logic in CosmWasm lets Osmosis governance change this safety control by parameter change proposal rather than a hard fork, so limits can be adapted quickly as threats change.
 
-The module supports governance-settable rate limits for high value bridged assets, acting as a strong protection for high value IBC connections.
+The module supports governance-settable rate limits for high value bridged assets, providing protection for high value IBC connections.
 
 ## Motivation
 
-The motivation of IBC-rate-limit comes from the empirical observations of blockchain bridge hacks that a rate limit would have massively reduced the stolen amount of assets in:
+Rate limiting is motivated by bridge hacks where a rate limit would have substantially reduced the amount stolen:
 
 - [Polynetwork Bridge Hack ($611 million)](https://rekt.news/polynetwork-rekt/)
 - [BNB Bridge Hack ($586 million)](https://rekt.news/bnb-bridge-rekt/)
@@ -26,33 +23,22 @@ The motivation of IBC-rate-limit comes from the empirical observations of blockc
 - [Harmony Bridge Hack ($100 million)](https://rekt.news/harmony-rekt/) - (Would require rate limit + monitoring)
 - [Dragonberry IBC bug](https://forum.cosmos.network/t/ibc-security-advisory-dragonberry/7702) (can't yet disclose amount at risk, but was saved due to being found first by altruistic Osmosis core developers)
 
-In the presence of a software bug on Osmosis, IBC itself, or on a counterparty chain, we would like to prevent the bridge from being fully depegged.
-This stems from the idea that a 30% asset depeg is ~infinitely better than a 100% depeg.
-Its _crazy_ that today these complex bridged assets can instantly go to 0 in event of bug.
-The goal of a rate limit is to raise an alert that something has potentially gone wrong, allowing validators and developers to have time to analyze, react, and protect larger portions of user funds.
+Given a software bug on Osmosis, in IBC itself, or on a counterparty chain, the objective is to prevent a bridged asset from fully depegging. A partial depeg is recoverable in a way that a total loss is not, and without a rate limit a bridged asset can go to zero as soon as a bug is exploited. A rate limit caps the damage and signals that something may have gone wrong, giving validators and developers time to analyse the situation and protect the remaining funds.
 
-The thesis of this is that, it is worthwhile to sacrifice liveness in the case of legitimate demand to send extreme amounts of funds, to prevent the terrible long-tail full fund risks.
-Rate limits aren't the end-all of safety controls, they're merely the simplest automated one. More should be explored and added onto IBC!
+The tradeoff is deliberate: liveness is sacrificed in the rare case of legitimate demand to move extreme amounts of funds, in exchange for bounding worst-case loss. A rate limit is the simplest automated safety control rather than a complete one, and is intended to sit alongside other controls.
 
 ## Rate limit types
 
-We express rate limits in time-based periods.
-This means, we set rate limits for (say) 6-hour, daily, and weekly intervals.
-The rate limit for a given time period stores the relevant amount of assets at the start of the rate limit.
-Rate limits are then defined on percentage terms of the asset.
-The time windows for rate limits are currently _not_ rolling, they have discrete start/end times.
+Rate limits are expressed over time-based periods, such as 6-hour, daily, and weekly intervals. Each period records the relevant amount of assets at its start, and the limit is defined as a percentage of that amount. Time windows are _not_ rolling: they have discrete start and end times.
 
-We allow setting separate rate limits for the inflow and outflow of assets.
-We do all of our rate limits based on the _net flow_ of assets on a channel pair. This prevents DOS issues, of someone repeatedly sending assets back and forth, to trigger rate limits and break liveness.
+Inflow and outflow limits are set separately. All limits are based on the _net flow_ of assets on a channel pair, which prevents a denial-of-service in which someone repeatedly sends assets back and forth to trigger a limit and break liveness.
 
-We currently envision creating two kinds of rate limits:
+Two kinds of rate limit are defined:
 
-* Per denomination rate limits
-   - allows safety statements like "Only 30% of Stars on Osmosis can flow out in one day" or "The amount of Atom on Osmosis can at most double per day".
-* Per channel rate limits
-   - Limit the total inflow and outflow on a given IBC channel, based on "USDC" equivalent, using Osmosis as the price oracle.
+* **Per denomination**, supporting limits such as "at most 30% of STARS on Osmosis can flow out in one day" or "the amount of ATOM on Osmosis can at most double per day".
+* **Per channel**, limiting total inflow and outflow on a given IBC channel in USDC-equivalent terms, using Osmosis as the price oracle.
 
-We currently only implement per denomination rate limits for non-native assets. We do not implement channel based rate limits.
+Only per-denomination limits for non-native assets are implemented. Channel-based limits are not.
 
 These rate limits automatically "expire" at the end of the quota duration.
 
@@ -62,15 +48,13 @@ Rate limit quotas are set by governance. Governance can also delegate the author
 
 ## Parameterizing the rate limit
 
-One element is we don't want any rate limit timespan that's too short, e.g. not enough time for humans to react to. So we wouldn't want a 1 hour rate limit, unless we think that if its hit, it could be assessed within an hour.
+A rate limit period should be long enough that a breach can be assessed within it. A one-hour limit is only appropriate if a breach could realistically be triaged within the hour.
 
 ### Handling rate limit boundaries
 
-We want to be safe against the case where say we have a daily rate limit ending at a given time, and an adversary attempts to attack near the boundary window.
-We would not like them to be able to "double extract funds" by timing their extraction near a window boundary.
+Because windows are discrete rather than rolling, an adversary could time an extraction across a window boundary to draw close to two full quotas in quick succession.
 
-Admittedly, not a lot of thought has been put into how to deal with this well.
-Right now we envision simply handling this by saying if you want a quota of duration D, instead include two quotas of duration D, but offset by `D/2` from each other.
+The mitigation is to define two quotas of duration `D` offset from each other by `D/2`, so that no single moment sits near both boundaries at once.
 
 ### Inflow parameterization
 
@@ -81,19 +65,18 @@ This can be quite conservative (e.g. bridged amount doubling in one week). This 
 * Counter-party chain B runaway mint
 * IBC theft
 
-It does get more complex when the counterparty chain is itself a DEX, but this is still much more protection than nothing.
+Parameterization is less straightforward when the counterparty chain is itself a DEX, since legitimate flows are larger and more variable, but a conservative inflow limit still bounds the exposure.
 
 ### Outflow parameterization
 
 The "Outflow" side of a rate limit is protection against a bug on Osmosis OR IBC.
-This has potential for much more user-frustrating issues, if set too low.
-E.g. if there's some event that causes many people to suddenly withdraw many STARS or many USDC.
+Set too low, it blocks legitimate withdrawals during periods when many users withdraw the same asset at once, such as a volatility event.
 
-So this parameterization has to contend with being a tradeoff of withdrawal liveness in high volatility periods vs being a crucial safety rail, in event of on-Osmosis bug.
+Outflow parameterization therefore trades withdrawal liveness in high-volatility periods against protection in the event of an on-Osmosis bug.
 
 ## Code structure
 
-As mentioned at the beginning of the README, the go code is a relatively minimal ICS 20 wrapper, that dispatches relevant calls to a cosmwasm contract that implements the rate limiting functionality.
+The Go code is a minimal ICS 20 wrapper that dispatches the relevant calls to a CosmWasm contract, which implements the rate limiting functionality.
 
 ### Go Middleware
 
@@ -103,10 +86,10 @@ any IBC module, and be used as an ICS4 wrapper by a transfer module (for sending
 
 Of those interfaces, just the following methods have custom logic:
 
-* `ICS4Wrapper.SendPacket` forwards to contract, with intent of tracking of value sent via an ibc channel 
-* `Middleware.OnRecvPacket` forwards to contract, with intent of tracking of value received via an ibc channel 
-* `Middleware.OnAcknowledgementPacket` forwards to contract, with intent of undoing the tracking of a sent packet if the acknowledgment is not a success
-* `OnTimeoutPacket` forwards to contract, with intent of undoing the tracking of a sent packet if the packet times out (is not relayed)
+* `ICS4Wrapper.SendPacket` forwards to the contract to track value sent over an IBC channel.
+* `Middleware.OnRecvPacket` forwards to the contract to track value received over an IBC channel.
+* `Middleware.OnAcknowledgementPacket` forwards to the contract to undo the tracking of a sent packet when the acknowledgement is not a success.
+* `OnTimeoutPacket` forwards to the contract to undo the tracking of a sent packet when the packet times out and is not relayed.
 
 All other methods from those interfaces are passthroughs to the underlying implementations.
 
@@ -123,7 +106,7 @@ The middleware uses the following parameters:
 
 ### Cosmwasm Contract Concepts
 
-Something to keep in mind with all of the code, is that we have to reason separately about every item in the following matrix:
+Each cell of the following matrix has to be reasoned about separately:
 
 |     Native Token     |     Non-Native Token     |
 |----------------------|--------------------------|
@@ -195,7 +178,7 @@ All of these messages receive the packet from the chain and extract the necessar
 
 ### Necessary information 
 
-To determine if a packet should be rate limited, we need:
+Determining whether a packet should be rate limited requires:
 
 * Channel: The channel on the Osmosis side: `packet.SourceChannel` for sends, and `packet.DestinationChannel` for receives. 
 * Denom: The denom of the token being transferred as known on the Osmosis side (more on that below)
@@ -207,12 +190,11 @@ The contract also supports quotas on a custom channel called "any" that is check
 transfer channel or the "any" channel have a quota that has been filled, the transaction will be rate limited.
 
 #### Notes on Denom
-We always use the denom as represented on Osmosis. For native assets that is the local denom, and for non-native 
-assets it's the "ibc" prefix and the sha256 hash of the denom trace (`ibc/...`).
+The denom is always the representation as it exists on Osmosis: the local denom for native assets, and the `ibc/` prefix followed by the sha256 hash of the denom trace for non-native assets.
 
 ##### Sends
 
-For native denoms, we can just use the denom in the packet. If the denom is invalid, it will fail somewhere else along the chain. Example result: `uosmo`
+For native denoms the denom in the packet is used directly. An invalid denom fails elsewhere in the transfer path. Example result: `uosmo`
 
 For non-native denoms, the contract needs to hash the denom trace and append it to the `ibc/` prefix. The
 contract always receives the parsed denom (i.e.: `transfer/channel-32/uatom` instead of
@@ -222,39 +204,33 @@ is built on the `relay.SendTransfer()` in the transfer module and then passed to
 
 ##### Receives
 
-This behaves slightly different if the asset is an osmosis asset that was sent to the counterparty and is being
+This behaves slightly different if the asset is an Osmosis asset that was sent to the counterparty and is being
 returned to the chain, or if the asset is being received by the chain and originates on the counterparty. In ibc this
 is called being a "source" or a "sink" respectively.
 
-If the chain is a sink for the denom, we build the local denom by prefixing the port and the channel 
-(`transfer/local-channel`) and hashing that denom. Example result: `ibc/<hash>`
+If the chain is a sink for the denom, the local denom is built by prefixing the port and channel (`transfer/local-channel`) and hashing the result. Example result: `ibc/<hash>`
 
 If the chain is the source for the denom, there are two possibilities:
 
-* The token is a native token, in which case we just remove the prefix added by the counterparty. Example result: `uosmo`
-* The token is a non-native token, in which case we remove the extra prefix and hash it. Example result `ibc/<hash>`
+* A native token: the prefix added by the counterparty is removed. Example result: `uosmo`
+* A non-native token: the extra prefix is removed and the result hashed. Example result: `ibc/<hash>`
 
 #### Notes on Channel Value
-We have iterated on different strategies for calculating the channel value. Our preferred strategy is the following:
-* For non-native tokens (`ibc/...`), the channel value should be the supply of those tokens in Osmosis
-* For native tokens, the channel value should be the total amount of tokens in escrow across all ibc channels
+The intended strategy for calculating channel value is:
 
-The later ensures the limits are lower and represent the amount of native tokens that exist outside Osmosis. This is 
-beneficial as we assume the majority of native tokens exist on the native chain and the amount "normal" ibc transfers is 
-proportional to the tokens that have left the chain. 
+* For non-native tokens (`ibc/...`), the supply of those tokens on Osmosis.
+* For native tokens, the total amount held in escrow across all IBC channels.
 
+The latter yields lower limits that reflect the quantity of native tokens existing outside Osmosis, on the assumption that most native tokens remain on their native chain and that normal IBC transfer volume is proportional to the amount that has left it.
 This strategy is not currently implemented because IBC does not track the amount of tokens in escrow across 
 all channels ([github issue](https://github.com/cosmos/ibc-go/issues/2664)). Instead, the current supply on 
 Osmosis is used for all denoms (i.e.: native and non-native tokens are treated the same way).
 
 ##### Caching
 
-The channel value varies constantly. To have better predictability, and avoid issues of the value growing if there is 
-a potential infinite mint bug, we cache the channel value at the beginning of the period for every quota.
+The channel value varies constantly, so it is cached at the start of each quota period. This gives predictable limits and prevents an infinite-mint bug from inflating the quota that is meant to constrain it.
 
-This means that if we have a daily quota of 1% of the osmo supply, and the channel value is 1M osmo at the beginning of 
-the quota, no more than 100k osmo can transferred during that day. If 10M osmo were to be minted or IBC'd in during that
-period, the quota will not increase until the period expired. Then it will be 1% of the new channel value (~11M)
+For example, with a daily quota of 1% of the OSMO supply and a channel value of 1M OSMO at the start of the period, at most 100k OSMO can be transferred that day. If 10M OSMO were minted or transferred in during the period, the quota does not increase until the period expires, at which point it becomes 1% of the new channel value.
 
 ### Integration
 
@@ -264,26 +240,3 @@ The module is also provided to the underlying `transferIBCModule` as its `ICS4Wr
 pointed to a channel, which also implements the `ICS4Wrapper` interface.
 
 This integration can be seen in [osmosis/app/keepers/keepers.go](https://github.com/osmosis-labs/osmosis/blob/main/app/keepers/keepers.go)
-
-## Testing strategy
-
-
-A general testing strategy is as follows:
-
-* Setup two chains.
-* Send some tokens from A->B and some from B->A (so that there are IBC tokens to play with in both sides)
-* Add the rate limiter on A with low limits (i.e. 1% of supply)
-* Test Function for chains A' and B' and denom d
-  * Send some d tokens from A' to B' and get close to the limit. 
-  * Do the same transfer making sure the amount is above the quota and verify it fails with the rate limit error
-  * Wait until the reset time has passed, and send again. The transfer should now succeed
-* Repeat the above test for the following combination of chains and tokens: `(A,B,a)`, `(B,A,a)`, `(A,B,b)`, `(B,A,b)`, 
-  where `a` and `b` are native tokens to chains A and B respectively.
-
-For more comprehensive tests we can also:
-* Add a third chain C and make sure everything works properly for C tokens that have been transferred to A and to B
-* Test that the contracts gov address can reset rate limits if the quota has been hit
-* Test the queries for getting information about the state of the quotas 
-* Test that rate limit symmetries hold (i.e.: sending the a token through a rate-limited channel and then sending back 
-  reduces the rate limits by the same amount that it was increased during the first send)
-* Ensure that the channels between the test chains have different names (A->B="channel-0", B->A="channel-1", for example)

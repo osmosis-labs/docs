@@ -528,19 +528,19 @@ osmosisd tx lockup lock-tokens [tokens] --duration --from --chain-id
 <details>
 <summary>Example</summary>
 
-To lockup `15.527546134174465309gamm/pool/3` tokens for a `one day` bonding period from `WALLET_NAME` on the osmosis mainnet:
+To lockup `15.527546134174465309gamm/pool/3` tokens for a `one day` bonding period from `WALLET_NAME` on the Osmosis mainnet:
 
 ```bash
 osmosisd tx lockup lock-tokens 15527546134174465309gamm/pool/3 --duration="24h" --from WALLET_NAME --chain-id osmosis-1
 ```
 
-To lockup `25.527546134174465309gamm/pool/13` tokens for a `one week` bonding period from `WALLET_NAME` on the osmosis testnet:
+To lockup `25.527546134174465309gamm/pool/13` tokens for a `one week` bonding period from `WALLET_NAME` on the Osmosis testnet:
 
 ```bash
 osmosisd tx lockup lock-tokens 25527546134174465309gamm/pool/13 --duration="168h" --from WALLET_NAME --chain-id osmo-test-5
 ```
 
-To lockup `35.527546134174465309 gamm/pool/197` tokens for a `two week` bonding period from `WALLET_NAME` on the osmosis mainnet:
+To lockup `35.527546134174465309 gamm/pool/197` tokens for a `two week` bonding period from `WALLET_NAME` on the Osmosis mainnet:
 
 ```bash
 osmosisd tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="336h" --from WALLET_NAME --chain-id osmosis-1
@@ -559,7 +559,7 @@ osmosisd tx lockup begin-unlock-by-id [id] --from --chain-id
 <details>
 <summary>Example</summary>
 
-To begin the unbonding time for all bonded tokens under id `75` from `WALLET_NAME` on the osmosis mainnet:
+To begin the unbonding time for all bonded tokens under id `75` from `WALLET_NAME` on the Osmosis mainnet:
 
 ```bash
 osmosisd tx lockup begin-unlock-by-id 75 --from WALLET_NAME --chain-id osmosis-1
@@ -580,7 +580,7 @@ osmosisd tx lockup begin-unlock-tokens --from --chain-id
 <details>
 <summary>Example</summary>
 
-To begin unbonding time for ALL pools and ALL bonded tokens in `WALLET_NAME` on the osmosis mainnet:
+To begin unbonding time for ALL pools and ALL bonded tokens in `WALLET_NAME` on the Osmosis mainnet:
 
 
 ```bash

@@ -36,7 +36,7 @@ LocalOsmosis has the following advantages over a public testnet:
 
 The following commands must be executed from the root folder of the Osmosis repository.
 
-1. Make any change to the osmosis code that you want to test
+1. Make any change to the Osmosis code that you want to test
 
 2. Initialize LocalOsmosis:
 
@@ -86,7 +86,7 @@ make localnet-clean
 
 ## 2. LocalOsmosis - With Mainnet State
 
-Running an osmosis network with mainnet state is now as easy as setting up a stateless localnet.
+Running an Osmosis network with mainnet state is now as easy as setting up a stateless localnet.
 
 1. Set up a mainnet node and stop it at whatever height you want to fork the network at.
 

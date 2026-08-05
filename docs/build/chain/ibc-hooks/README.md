@@ -155,7 +155,7 @@ The contract that awaits the callback should implement the following interface f
 pub enum IBCLifecycleComplete {
     #[serde(rename = "ibc_ack")]
     IBCAck {
-        /// The source channel (osmosis side) of the IBC packet
+        /// The source channel (Osmosis side) of the IBC packet
         channel: String,
         /// The sequence number that the packet was sent with
         sequence: u64,
@@ -166,7 +166,7 @@ pub enum IBCLifecycleComplete {
     },
     #[serde(rename = "ibc_timeout")]
     IBCTimeout {
-        /// The source channel (osmosis side) of the IBC packet
+        /// The source channel (Osmosis side) of the IBC packet
         channel: String,
         /// The sequence number that the packet was sent with
         sequence: u64,
@@ -269,7 +269,7 @@ The contract is expected to implement the following sudo message handler:
 pub enum IBCAsyncOptions {
     #[serde(rename = "request_ack")]
     RequestAck {
-        /// The source channel (osmosis side) of the IBC packet
+        /// The source channel (Osmosis side) of the IBC packet
         source_channel: String,
         /// The sequence number that the packet was sent with
         packet_sequence: u64,

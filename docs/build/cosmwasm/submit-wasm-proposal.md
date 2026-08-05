@@ -62,10 +62,12 @@ VAL=$(osmosisd keys show -a validator --keyring-backend test)
 
 ## Submit proposal
 
+Storing code by governance is a `wasm` subcommand, not a `gov` one. The stored code is owned by the governance account, so `--authority` defaults to the gov module account and does not need to be set.
+
 ```
-osmosisd tx gov submit-proposal wasm-store $CONTRACT.wasm --title "Add $CONTRACT" \
-  --description "Let's upload this contract" --run-as $VAL \
-  --from validator --keyring-backend test --chain-id $CHAIN_ID -y -b block \
+osmosisd tx wasm submit-proposal wasm-store $CONTRACT.wasm --title "Add $CONTRACT" \
+  --summary "Upload the $CONTRACT contract" --deposit 7500000000uosmo \
+  --from validator --keyring-backend test --chain-id $CHAIN_ID -y \
   --gas 9000000 --gas-prices 0.05uosmo
 ```
 
@@ -77,13 +79,13 @@ osmosisd query gov proposal $PROPOSAL
 ## Deposit on proposal
 ```
 osmosisd tx gov deposit $PROPOSAL 10000000uosmo --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y -b block --gas 6000000 --gas-prices 0.05uosmo
+    --chain-id $CHAIN_ID -y --gas 6000000 --gas-prices 0.05uosmo
 ```
 
 ## Vote
 ```
 osmosisd tx gov vote $PROPOSAL yes --from validator --keyring-backend test \
-    --chain-id $CHAIN_ID -y -b block --gas 600000 --gas-prices 0.05uosmo
+    --chain-id $CHAIN_ID -y --gas 600000 --gas-prices 0.05uosmo
 ```
 
 ## Check the results
