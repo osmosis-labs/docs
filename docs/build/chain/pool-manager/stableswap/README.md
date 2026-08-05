@@ -1,4 +1,4 @@
-# Generalized Solidly Stableswap
+# Stableswap
 
 Stableswaps are pools that offer low slippage for two assets that are intended to be tightly correlated.
 There is a price ratio they are expected to be at, and the AMM offers low slippage around this price.
@@ -11,7 +11,7 @@ It is generalized to the multi-asset setting as $$f(a_1, ..., a_n) = a_1 * ... *
 
 ## Pool configuration
 
-One key concept, is that the pool has a native concept of
+One key concept is that the pool has a native concept of a scaling factor per asset, used to map raw coin units to AMM math units (detailed below).
 
 ### Scaling factor handling
 
@@ -40,8 +40,6 @@ The AMM equations need to each ensure that rounding happens correctly,
 for cases where the scaling factor doesn't perfectly divide into the liquidity.
 We detail rounding modes and scaling details as pseudocode in the relevant sections of the spec.
 (And rounding modes for 'descaling' from AMM eq output to real liquidity amounts, via multiplying by the respective scaling factor)
-
-<!-- TODO come back and revise the scaling factor section for clarity -->
 
 ## Algorithm details
 
@@ -72,8 +70,6 @@ We wish to have a simpler CFMM function to work within these cases.
 Due to the CFMM equation $$f$$ being a symmetric function, we can without loss of generality reorder the arguments to the function. Thus we put the assets of relevance at the beginning of the function. So if two assets $$x, y$$, we write: $$f(x,y, a_3, ... a_n) = xy * a_3 * ... a_n (x^2 + y^2 + a_3^2 + ... + a_n^2)$$.
 
 We then take a more convenient expression to work with, via variable substitution.
-
-<!-- It took several very silly hacks to get github to compile this. Editors in the future, be aware of spacing in the equation wrt how it GH renders -->
 
 $$
 \begin{equation}
@@ -131,7 +127,7 @@ So we can simply binary search for $$y$$ such that $$h(x, y, w) = k'$$, and we a
 
 In order to do a binary search, we need bounds on $$y$$.
 The lowest lowerbound is $$0$$, and the largest upperbound is $$\infty$$.
-The maximal upperbound is obviously unworkable, and in general binary searching around wide ranges is unfortunate, as we expect most trades to be centered around $$y_0$$.
+An infinite upperbound is unusable, and binary searching over very wide ranges is inefficient, since most trades are expected to be centered around $$y_0$$.
 This would suggest that we should do something smarter to iteratively approach the right value for the upperbound at least.
 Notice that $$h$$ is super-linearly related in $$y$$, and at most cubically related to $$y$$.
 This means that $$\forall c \in \mathbb{R}^+, c * h(x,y,w) < h(x,c*y,w) < c^3 * h(x,y,w)$$.
@@ -140,13 +136,13 @@ In the lowerbound case, we leave it as lower-bounded by $$0$$, otherwise we woul
 
 ##### Altering binary search equations due to error tolerance
 
-Great, we have a binary search to finding an input `new_y_reserve`, such that we get a value `k` within some error bound close to the true desired `k`! We can prove that an error by a factor of `e` in `k`, implies an error of a factor less than `e` in `new_y_reserve`. So we could set `e` to be close to some correctness bound we want. Except... `new_y_reserve >> y_in`, so we'd need an extremely high error tolerance for this to work. So we actually want to adapt the equations, to reduce the "common terms" in `k` that we need to binary search over, to help us search. To do this, we open up what are we doing again, and re-expose `y_out` as a variable we explicitly search over (and therefore get error terms in `k` implying error in `y_out`)
+The binary search above finds an input `new_y_reserve` yielding a value `k` within some error bound of the true desired `k`. An error by a factor of `e` in `k` implies an error of a factor less than `e` in `new_y_reserve`, so `e` can be set close to the desired correctness bound. However, `new_y_reserve >> y_in`, which would require an impractically high error tolerance. The equations are therefore adapted to reduce the "common terms" in `k` that the search ranges over, re-exposing `y_out` as the variable searched over directly so that error terms in `k` imply error in `y_out`.
 
-What we are doing above in the binary search is setting `k_target` and searching over `y_f` until we get `k_iter` within tolerance to `k_target`. Sine we want to change to iterating over $$y_{out}$$, we unroll that $$y_f = y_0 - y_{out}$$ where they are defined as:
+The binary search above sets `k_target` and searches over `y_f` until `k_iter` is within tolerance of `k_target`. To iterate over $$y_{out}$$ instead, unroll $$y_f = y_0 - y_{out}$$, where the terms are defined as:
 $$k_{target} = x_0 y_0 (x_0^2 + y_0^2 + w)$$
 $$k_{iter}(y_0 - y_{out}) = h(x_f, y_0 - y_{out}, w) = x_f (y_0 - y_{out}) (x_f^2 + (y_0 - y_{out})^2 + w)$$
 
-But we can remove many of these terms! First notice that `x_f` is a constant factor in `k_iter`, so we can just divide `k_target` by `x_f` to remove that. Then we switch what we search over, from `y_f` to `y_out`, by fixing `y_0`, so were at:
+Many of these terms can be removed. `x_f` is a constant factor in `k_iter`, so dividing `k_target` by `x_f` removes it. Fixing `y_0` then switches the search variable from `y_f` to `y_out`, giving:
 
 $$k_{target} = x_0 y_0 (x_0^2 + y_0^2 + w) / x_f$$
 
@@ -160,7 +156,7 @@ $$k_{iter}(y_{out}) = y_0 (x_f^2 + w) - y_{out}(x_f^2 + w) + y_0^3 - 3y_0^2 y_{o
 
 $$k_{iter}(y_{out}) = -y_{out}^3 + 3 y_0 y_{out}^2 - (x_f^2 + w + 3y_0^2)y_{out} + (y_0 (x_f^2 + w) + y_0^3)$$
 
-So we can subtract this constant term `y_0 (x_f^2 + w) + y_0^3`, which for `y_out < y_0` is the dominant term in the expression!
+This constant term `y_0 (x_f^2 + w) + y_0^3` can therefore be subtracted; for `y_out < y_0` it is the dominant term in the expression.
 
 So lets define this as:
 
@@ -248,7 +244,7 @@ An error of `e_k` in `k`, implies an error `e_y` in `y` that is less than `e_k`.
 To ensure the returned value is always rounded correctly, we define the rounding behavior expected.
 
 - If `x_in` is positive, then we take `y_out` units of `y` out of the pool. `y_out` should be rounded down. Note that `y_f < y_0` here. Therefore to round `y_out = y_0 - y_f` down, given fixed `y_0`, we want to round `y_f` up.
-- If `x_in` is negative, then `y_out` is also negative. The reason is that this is called in CalcInAmtGivenOut, so confusingly `x_in` is the known amount out, as a negative quantity. `y_out` is negative as well, to express that we get that many tokens out. (Since negative, `-y_out` is how many we add into the pool). We want `y_out` to be a larger negative, which means we want to round it down. Note that `y_f > y_0` here. Therefore `y_out = y_0 - y_f` is more negative, the higher `y_f` is. Thus we want to round `y_f` up.
+- If `x_in` is negative, then `y_out` is also negative. This is called in `CalcInAmtGivenOut`, where `x_in` is the known amount out expressed as a negative quantity. `y_out` is negative as well, to express that we get that many tokens out. (Since negative, `-y_out` is how many we add into the pool). We want `y_out` to be a larger negative, which means we want to round it down. Note that `y_f > y_0` here. Therefore `y_out = y_0 - y_f` is more negative, the higher `y_f` is. Thus we want to round `y_f` up.
 
 And therefore we round up in both cases.
 
@@ -276,8 +272,6 @@ The amount of tokens that we treat as going into the "0-swap fee" pool we define
 
 Then we simply call `solve_y` with the input reserves, and `amm_in`.
 
-<!-- TODO: Maybe we just use normal pseudocode syntax -->
-
 ```python
 def CalcOutAmountGivenExactAmountIn(pool, in_coin, out_denom, swap_fee):
   in_reserve, out_reserve, rem_reserves = pool.ScaledLiquidity(in_coin, out_denom, RoundingMode.RoundDown)
@@ -290,16 +284,12 @@ def CalcOutAmountGivenExactAmountIn(pool, in_coin, out_denom, swap_fee):
 
 ##### SwapExactAmountOut
 
-<!-- TODO: Explain overall context of this section -->
-
 When we scale liquidity, we round down, as lower reserves -> higher slippage.
 Similarly when we scale the exact token out, we round up to increase required token in.
 
 We model the `solve_y` call as we are doing a known change to the `out_reserve`, and solving for the implied unknown change to `in_reserve`.
 To handle the swapfee, we apply the swapfee on the resultant needed input amount.
 We do this by having `token_in = amm_in / (1 - swapfee)`.
-
-<!-- TODO: Maybe we just use normal pseudocode syntax -->
 
 ```python
 def CalcInAmountGivenExactAmountOut(pool, out_coin, in_denom, swap_fee):
@@ -312,7 +302,7 @@ def CalcInAmountGivenExactAmountOut(pool, out_coin, in_denom, swap_fee):
   return in_amt
 ```
 
-We see correctness of the swap fee, by imagining what happens if we took this resultant input amount, and ran `SwapExactAmountIn (seai)`. Namely, that `seai_amm_in = amm_in * (1 - swapfee) = amm_in`, as desired!
+The swap fee is correct by considering the result of taking this input amount and running `SwapExactAmountIn (seai)`: `seai_amm_in = amm_in * (1 - swapfee) = amm_in`, as desired.
 
 #### Precision handling
 
@@ -358,11 +348,9 @@ We bound the right hand side, with the assistance of wolfram alpha. Let $$a = y_
     - $$b > \frac{2}{3} a$$, as $$y_0$$ is positive.
     - $$c > 0$$ is by definition, so we just need to bound when $$-a^2 + 3ab - 3b^2 < 0$$. This is always the case as long as one of $$a$$ or $$b$$ is non-zero, per [here](https://www.wolframalpha.com/input?i=-a%5E2+%2B+3ab+-+3b%5E2+%3C+0).
 
-Tying this all together, we have that $$e_k > .01e_y$$. Therefore $$e_y < 100 e_k$$, satisfying our theoerem!
+Taken together, $$e_k > .01e_y$$, and therefore $$e_y < 100 e_k$$, which satisfies the theorem.
 
 To show the informal claims, the constraint that led to this 100x error blowup was trying to accommodate high $$y_{out}$$. When $$y_{out}$$ is smaller, the error is far lower. (Often to the case that $$e_y < e_k$$, you can convince yourself of this by setting the ratio to being greater than 1 in wolfram alpha) When $$y_{out}$$ is bigger than $$.9y_0$$, we can rely on x_f^2 + w being much larger to lower this error. In these cases, the $$x_f$$ term must be large relative to $$y_0$$, which would yield a far better error bound.
-
-TODO: Justify `a_y << y_out`. (This should be easy, assume its not, that leads to e_k being high. Ratio test probably easiest. Maybe just add a sentence to that effect)
 
 ### Spot Price
 
@@ -379,17 +367,16 @@ Then $$\text{spot price} = \frac{\text{CalculateOutAmountGivenIn}(\epsilon)}{\ep
 
 We divide this section into two parts, `JoinPoolNoSwap & ExitPool`, and `JoinPool`.
 
-First we recap what are the properties that we'd expect from `JoinPoolNoSwap`, `ExitPool`, and LP shares.
-From this, we then derive what we'd expect for `JoinPool`.
+First recap the properties expected from `JoinPoolNoSwap`, `ExitPool`, and LP shares.
+From these, derive the properties expected for `JoinPool`.
 
 #### JoinPoolNoSwap and ExitPool
 
-Both of these methods can be implemented via generic AMM techniques.
-(Link to them or describe the idea)
+Both of these methods can be implemented via generic AMM techniques: liquidity is added or removed in proportion to the existing reserves, so the ratio of reserves (and therefore the CFMM invariant up to scale) is preserved and no swap occurs.
 
 #### JoinPool
 
-The JoinPool API only supports JoinPoolNoSwap if
+Multi-asset JoinPool is a no-swap join. It joins the maximal portion of the provided tokens that matches the pool's exact reserve ratio, and returns the remainder to the sender rather than performing a follow-up single-asset join. A single-asset join is a separate path (see below), taken only when exactly one token is provided.
 
 #### Join pool single asset in
 
@@ -402,7 +389,7 @@ Then if we swap all of `tokensExited` back to tokensIn, under 0 swap fee, we sho
 
 In other words, if we single asset join pool, and then exit pool, we should return back to the same CFMM `k` value we started with. Then if we swap back to go entirely back into our input asset, we should have exactly many tokens as we started with, under 0 swap fee.
 
-We can solve this relation with a binary search over the amount of LP shares to give!
+This relation can be solved with a binary search over the amount of LP shares to give.
 
 Thus we are left with how to account swap fee. We currently account for swap fee, by considering the asset ratio in the pool. If post scaling factors, the pool liquidity is say 60:20:20, where 60 is the asset were bringing in, then we consider "only (1 - 60%) = 40%" of the input as getting swapped. So we charge the swap fee on 40% of our single asset join in input. So the pseudocode for this is roughly:
 
@@ -417,20 +404,3 @@ def JoinPoolSingleAssetIn(pool, tokenIn):
 We leave the rounding mode for the scaling factor division unspecified.
 This is because its expected to be tiny (as the denominator is larger than the numerator, and we are operating in BigDec),
 and it should be dominated by the later step of rounding down.
-
-## Code structure
-
-## Testing strategy
-
-- Unit tests for every pool interface method
-- Msg tests for custom messages
-  - CreatePool
-  - SetScalingFactors
-- Simulator integrations:
-  - Pool creation
-  - JoinPool + ExitPool gives a token amount out that is lte input
-  - SingleTokenIn + ExitPool + Swap to base token gives a token amount that is less than input
-  - CFMM k adjusting in the correct direction after every action
-- Fuzz test binary search algorithm, to see that it still works correctly across wide scale ranges
-- Fuzz test approximate equality of iterative approximation swap algorithm and direct equation swap.
-- Flow testing the entire stableswap scaling factor update process

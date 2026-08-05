@@ -1,6 +1,6 @@
 # Orderbook
 
-The Osmosis orderbook is a CosmWasm contract that implements a sumtree-backed limit-order venue. Each market is its own contract instance with one quote denom and one base denom, and the contract participates in the chain's pool routing graph alongside [CFMM](/build/chain/gamm) (Balancer-style weighted and stableswap) and [concentrated liquidity](/learn/features/concentrated-liquidity) pools.
+The Osmosis orderbook is a CosmWasm contract that implements a sumtree-backed limit-order venue. Each market is its own contract instance with one quote denom and one base denom, and the contract participates in the chain's pool routing graph alongside [CFMM](/build/chain/pool-manager/gamm) (Balancer-style weighted and stableswap) and [concentrated liquidity](/learn/features/concentrated-liquidity) pools.
 
 This page covers the integration surface: how to discover live orderbook pools, place and cancel orders, query state, and connect to the orderbook from a routing layer such as SQS.
 

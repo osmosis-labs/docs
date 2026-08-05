@@ -1,9 +1,9 @@
-# Pool Manager Module
+# Pool Manager
 
 The poolmanager module exists as a swap entrypoint for any pool model
 that exists on the chain. The poolmanager module is responsible for routing
 swaps across various pools. It also performs pool-id management for
-any on-chain pool.
+any onchain pool.
 
 The user-stories for this module follow:
 
@@ -14,14 +14,15 @@ The user-stories for this module follow:
 > As a user, I would like the pool management to be unified so that I don't
 > have to reason about additional complexity stemming from divergent pool sources.
 
-We have multiple pool-storage modules. Namely, `x/gamm` and `x/concentrated-liquidity`.
+Osmosis has three pool-storage modules: `x/gamm`, `x/concentrated-liquidity`,
+and `x/cosmwasmpool`.
 
 To avoid fragmenting swap and pool creation entrypoints and duplicating their boilerplate logic,
 we define a `poolmanager` module. Its purpose is twofold:
 
 1. Handle pool creation
    - Assign ids to pools
-   - Store the mapping from pool id to one of the swap modules (`gamm` or `concentrated-liquidity`)
+   - Store the mapping from pool id to its swap module (`gamm`, `concentrated-liquidity`, or `cosmwasmpool`)
    - Propagate the execution to the appropriate module depending on the pool type.
    - Note, that pool creation messages are received by the pool model's message server.
      Each module's message server then calls the `x/poolmanager` keeper method `CreatePool`.
@@ -34,17 +35,18 @@ Let's consider pool creation and swaps separately and in more detail.
 
 ## Pool Creation & Id Management
 
-To make sure that the pool ids are unique across the two modules, we unify pool id management
+To make sure that pool ids are unique across all pool modules, we unify pool id management
 in the `poolmanager`.
 
 When a call to `CreatePool` keeper method is received, we get the next pool id from the module
-storage, assign it to the new pool, and propagate the execution to either `gamm`
-or `concentrated-liquidity` modules.
+storage, assign it to the new pool, and propagate execution to the appropriate pool module.
 
-Note that we define a `CreatePoolMsg` interface:
-[https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/types/msg_create_pool.go#L9)
+Pool creation messages implement the
+[`CreatePoolMsg` interface](https://github.com/osmosis-labs/osmosis/blob/main/x/poolmanager/types/msg_create_pool.go).
 
-Each `balancer`, `stableswap` and `concentrated-liquidity` pool has its own implementation of `CreatePoolMsg`.
+Each pool model implements the interfaces needed by Pool Manager. CosmWasm pools
+are created through `x/cosmwasmpool`, while Pool Manager assigns their pool IDs
+and routes swaps to the CosmWasm pool keeper.
 
 Note the `PoolType` type. This is an enumeration of all supported pool types.
 We proto-generate this enumeration:
@@ -65,6 +67,9 @@ enum PoolType {
   // Concentrated is the pool model specific to concentrated liquidity. It is
   // defined in x/concentrated-liquidity.
   Concentrated = 2;
+  // CosmWasm is the pool model specific to CosmWasm. It is defined in
+  // x/cosmwasmpool.
+  CosmWasm = 3;
 }
 ```
 
@@ -77,7 +82,7 @@ Assume `balancer` pool is being created.
    the appropriate implementation of the `CreatePoolMsg` interface.
 
 ```go
-// x/poolmanager/creator.go CreatePool(...)
+// x/poolmanager/create_pool.go CreatePool(...)
 
 // CreatePool attempts to create a pool returning the newly created pool ID or
 // an error upon failure. The pool creation fee is used to fund the community
@@ -107,13 +112,14 @@ The propagation to the desired module is ensured by the routing table stored in 
 func NewKeeper(...) *Keeper {
     ...
 
-	routes := map[types.PoolType]types.SwapI{
+	routesMap := map[types.PoolType]types.PoolModuleI{
 		types.Balancer:     gammKeeper,
 		types.Stableswap:   gammKeeper,
 		types.Concentrated: concentratedKeeper,
+		types.CosmWasm:     cosmwasmpoolKeeper,
 	}
 
-	return &Keeper{..., routes: routes}
+	return &Keeper{..., routes: routesMap}
 }
 ```
 
@@ -123,7 +129,7 @@ As a result, `poolmanagerkeeper.CreatePool` can route the execution to the appro
 the following way:
 
 ```go
-// x/poolmanager/creator.go CreatePool(...)
+// x/poolmanager/create_pool.go CreatePool(...)
 
 swapModule := k.routes[msg.GetPoolType()]
 
@@ -132,17 +138,22 @@ if err := swapModule.InitializePool(ctx, pool, sender); err != nil {
 }
 ```
 
-Where swapModule is either `gamm` or `concentrated-liquidity` keeper.
+The selected swap module can be the `gamm`, `concentrated-liquidity`, or
+`cosmwasmpool` keeper.
 
-Both of these modules implement the `SwapI` interface:
+All three modules implement the `PoolModuleI` interface:
 
 ```go
-// x/poolmanager/types/routes.go SwapI interface
+// x/poolmanager/types/expected_keepers.go
 
-type SwapI interface {
+type PoolModuleI interface {
+	InitializePool(ctx sdk.Context, pool PoolI, creatorAddress sdk.AccAddress) error
+
+	GetPool(ctx sdk.Context, poolId uint64) (PoolI, error)
+
+	GetPools(ctx sdk.Context) ([]PoolI, error)
+
     ...
-
-	InitializePool(ctx sdk.Context, pool gammtypes.PoolI, creatorAddress sdk.AccAddress) error
 }
 ```
 
@@ -207,50 +218,49 @@ Once the message is received, it calls `RouteExactAmountIn`
 func (k Keeper) RouteExactAmountIn(
 	ctx sdk.Context,
 	sender sdk.AccAddress,
-	routes []types.SwapAmountInRoute,
+	route []types.SwapAmountInRoute,
 	tokenIn sdk.Coin,
-	tokenOutMinAmount sdk.Int) (tokenOutAmount sdk.Int, err error) {
+	tokenOutMinAmount osmomath.Int,
+) (tokenOutAmount osmomath.Int, err error) {
 }
 ```
 
 Essentially, the method iterates over the routes and calls a `SwapExactAmountIn` method
 for each, subsequently updating the inter-pool swap state.
 
-The routing works by querying the index `SwapModuleRouterPrefix`,
-searching up the `poolmanagerkeeper.router` mapping, and calling
-`SwapExactAmountIn` method of the appropriate module.
+The routing works by looking up the pool's type from the `SwapModuleRouterPrefix` index,
+resolving that type through the `routes` mapping, and calling the `SwapExactAmountIn`
+method of the appropriate module. `GetPoolModuleAndPool` performs both the module lookup
+and the pool fetch:
 
 ```go
-// x/poolmanager/router.go RouteExactAmountIn(...)
+// x/poolmanager/router.go SwapExactAmountIn(...)
 
-moduleRouteBytes := osmoutils.MustGet(poolmanagertypes.FormatModuleRouteIndex(poolId))
-moduleRoute, _ := poolmanagertypes.ModuleRouteFromBytes(moduleRouteBytes)
+swapModule, pool, err := k.GetPoolModuleAndPool(ctx, poolId)
 
-swapModule := k.routes[moduleRoute.PoolType]
-
-_ := swapModule.SwapExactAmountIn(...)
+_, err = swapModule.SwapExactAmountIn(ctx, sender, pool, tokenIn, tokenOutDenom, tokenOutMinAmount, spreadFactor)
 ```
 
 - note that error checks and other details are omitted for brevity.
 
 Similar to pool creation logic, we are able to call `SwapExactAmountIn` on any of the swap
-modules by implementing the `SwapI` interface:
+modules by implementing the `PoolModuleI` interface:
 
 ```go
-// x/poolmanager/types/routes.go SwapI interface
+// x/poolmanager/types/expected_keepers.go
 
-type SwapI interface {
+type PoolModuleI interface {
     ...
 
 	SwapExactAmountIn(
 		ctx sdk.Context,
 		sender sdk.AccAddress,
-		poolId gammtypes.PoolI,
+		pool PoolI,
 		tokenIn sdk.Coin,
 		tokenOutDenom string,
-		tokenOutMinAmount sdk.Int,
-		spreadFactor sdk.Dec,
-	) (sdk.Int, error)
+		tokenOutMinAmount osmomath.Int,
+		spreadFactor osmomath.Dec,
+	) (osmomath.Int, error)
 }
 ```
 
@@ -269,7 +279,7 @@ The calculation is also able to be reversed, the case where user
 provides `tokenOut`. The calculation for the amount of tokens that the
 user should be putting in is done through the following formula:
 
-`tokenBalanceIn * [{tokenBalanceOut / (tokenBalanceOut - tokenAmountOut)} ^ (tokenWeightOut / tokenWeightIn) -1] / tokenAmountIn`
+`tokenBalanceIn * [{tokenBalanceOut / (tokenBalanceOut - tokenAmountOut)} ^ (tokenWeightOut / tokenWeightIn) - 1] / (1 - spreadFactor)`
 
 Existing Swap types:
 
@@ -278,21 +288,18 @@ Existing Swap types:
 
 ## Messages
 
-### MsgSwapExactAmountIn
+The active message service is defined in the
+[Pool Manager transaction proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/poolmanager/v1beta1/tx.proto).
 
-[MsgSwapExactAmountIn](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/proto/osmosis/gamm/v1beta1/tx.proto#L79)
-
-### MsgSwapExactAmountOut
-
-[MsgSwapExactAmountOut](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/proto/osmosis/gamm/v1beta1/tx.proto#L102)
-
-### MsgSplitRouteSwapExactAmountIn
-
-[MsgSplitRouteSwapExactAmountIn](https://github.com/osmosis-labs/osmosis/blob/46e6a0c2051a3a5ef8cdd4ecebfff7305b13ab98/proto/osmosis/poolmanager/v1beta1/tx.proto#L41)
-
-## MsgSplitRouteSwapExactAmountOut
-
-[MsgSplitRouteSwapExactAmountOut](https://github.com/osmosis-labs/osmosis/blob/46e6a0c2051a3a5ef8cdd4ecebfff7305b13ab98/proto/osmosis/poolmanager/v1beta1/tx.proto#L85)
+| Message | Purpose |
+| --- | --- |
+| `MsgSwapExactAmountIn` | Executes a route with an exact input and minimum final output. |
+| `MsgSwapExactAmountOut` | Executes a route with an exact output and maximum total input. |
+| `MsgSplitRouteSwapExactAmountIn` | Splits an exact-input swap across multiple routes. |
+| `MsgSplitRouteSwapExactAmountOut` | Splits an exact-output swap across multiple routes. |
+| `MsgSetDenomPairTakerFee` | Sets or removes directional taker-fee overrides. The signer must be an authorized admin address, unless the change is executed by governance. |
+| `MsgSetTakerFeeShareAgreementForDenom` | Creates, updates, or removes the fee-share agreement for a denom. This is an authority-controlled message. |
+| `MsgSetRegisteredAlloyedPool` | Registers or removes an alloyed pool used for taker-fee revenue sharing. This is an authority-controlled message. |
 
 ## Multi-Hop
 
@@ -302,12 +309,7 @@ multiple pools in the process.
 The most cost-efficient route is determined offline and the list of the pools is provided externally, by user, during the broadcasting of the swapping transaction.
 At the moment of execution, the provided route may not be the most cost-efficient one anymore.
 
-When a trade consists of just two OSMO-included routes during a single transaction,
-the spread factors on each hop would be automatically halved.
-Example: for converting `ATOM -> OSMO -> LUNA` using two pools with spread factors `0.3% + 0.2%`,
-instead `0.15% + 0.1%` spread factors will be applied.
-
-[Multi-Hop](https://github.com/osmosis-labs/osmosis/blob/f26ceb958adaaf31510e17ed88f5eab47e2bac03/x/poolmanager/router.go#L16)
+[Multi-hop routing implementation](https://github.com/osmosis-labs/osmosis/blob/main/x/poolmanager/router.go)
 
 ## Route Splitting
 
@@ -333,3 +335,61 @@ Here's a detailed explanation of these advantages:
 
 Note, that the actual split happens off-chain. The router is only responsible for executing the swaps in the order and quantities of token in provided
 by the routes.
+
+## Taker Fees
+
+Pool Manager charges a taker fee in addition to each pool's spread factor. The
+fee is selected by the ordered input and output denom pair. A directional
+override takes precedence over the default taker fee, so `denomA -> denomB` and
+`denomB -> denomA` can have different fees. Addresses in the reduced-fee
+whitelist bypass the standard taker fee.
+
+Collected fees are tracked by denom. The module's epoch hooks distribute OSMO
+and non-OSMO fees between staking rewards, the community pool, and burning
+according to separate configured percentages. Non-whitelisted community-pool
+assets are swapped to the configured community-pool intermediary denom before
+distribution. Staking rewards can be smoothed across multiple daily epochs.
+
+### Taker-Fee Sharing
+
+An authority-managed agreement can associate a denom with a skim percentage and
+recipient address. When that denom appears in a swap route, the configured share
+of the route's taker fees accrues for the recipient and is paid at the epoch
+boundary.
+
+Alloyed CosmWasm pools can be registered for taker-fee sharing. Registration
+tracks the alloyed denom, contract address, pool ID, and the current composition
+of fee-share denoms represented by the pool.
+
+## Parameters
+
+The parameter definitions are in the
+[Pool Manager genesis proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/poolmanager/v1beta1/genesis.proto).
+
+| Parameter | Purpose |
+| --- | --- |
+| `pool_creation_fee` | Coins charged when a module creates a pool through Pool Manager. |
+| `taker_fee_params.default_taker_fee` | Fee used when a directional denom-pair override is not set. |
+| `taker_fee_params.osmo_taker_fee_distribution` | OSMO fee split between staking rewards, community pool, and burning. |
+| `taker_fee_params.non_osmo_taker_fee_distribution` | Non-OSMO fee split between staking rewards, community pool, and burning. |
+| `taker_fee_params.admin_addresses` | Accounts allowed to set directional taker-fee overrides directly. |
+| `taker_fee_params.community_pool_denom_to_swap_non_whitelisted_assets_to` | Intermediary denom used before non-whitelisted assets are sent to the community pool. |
+| `taker_fee_params.reduced_fee_whitelist` | Accounts allowed to bypass the standard taker fee. |
+| `taker_fee_params.community_pool_denom_whitelist` | Denoms sent directly to the community pool without an intermediary swap. |
+| `taker_fee_params.daily_staking_rewards_smoothing_factor` | Number of daily epochs over which staking-reward distributions are smoothed. |
+| `authorized_quote_denoms` | Deprecated. Quote-denom restrictions for concentrated pool creation were removed. |
+
+## Queries
+
+The public query services are defined in the
+[v1beta1 query proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/poolmanager/v1beta1/query.proto)
+and the [v2 spot-price query proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/poolmanager/v2/query.proto).
+
+| Category | Queries |
+| --- | --- |
+| Configuration | `Params` |
+| Swap estimation | `EstimateSwapExactAmountIn`, `EstimateSwapExactAmountInWithPrimitiveTypes`, `EstimateSinglePoolSwapExactAmountIn`, `EstimateSwapExactAmountOut`, `EstimateSwapExactAmountOutWithPrimitiveTypes`, `EstimateSinglePoolSwapExactAmountOut`, `EstimateTradeBasedOnPriceImpact` |
+| Pools and liquidity | `NumPools`, `Pool`, `AllPools`, `ListPoolsByDenom`, `TotalPoolLiquidity`, `TotalLiquidity`, `TotalVolumeForPool` |
+| Prices and fees | `SpotPrice`, `SpotPriceV2`, `TradingPairTakerFee` |
+| Taker-fee sharing | `AllTakerFeeShareAgreements`, `TakerFeeShareAgreementFromDenom`, `TakerFeeShareDenomsToAccruedValue`, `AllTakerFeeShareAccumulators` |
+| Alloyed pools | `RegisteredAlloyedPoolFromDenom`, `RegisteredAlloyedPoolFromPoolId`, `AllRegisteredAlloyedPools` |

@@ -78,20 +78,24 @@ The `x/protorev` module keeps the following objects in state:
 | State Object | Description | Key | Values | Store |
 | --- | --- | --- | --- | --- |
 | TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | `[]byte{1}` + `[]byte{inputDenom}` +`[]byte{outputDenom}` | `[]byte{TokenPairArbRoutes}` | KV |
-| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom`[]byte{2}` | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
-| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenoms{}`} | KV |
+| DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
+| BaseDenoms (deprecated) | Superseded by prefix 19. Retained so historical state remains decodable | `[]byte{3}` | `[]byte{[]BaseDenom{}}` | KV |
 | NumberOfTrades | Tracks the number of trades protorev has executed | `[]byte{4}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByDenom | Tracks the profits protorev has made | `[]byte{5}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | TradesByRoute | Tracks the number of trades the module has executed on a given route | `[]byte{6}` + `[]byte{route}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByRoute | Tracks the profits the module has accumulated after trading on a given route | `[]byte{7}` + `[]byte{route}` | `[]byte{sdk.Coin}` | KV |
 | DeveloperAccount | Tracks the developer account for protorev | `[]byte{8}` | `[]byte{sdk.AccAddress}` | KV |
 | DaysSinceModuleGenesis | Tracks the number of days since the module was initialized. Used to track profits that can be withdrawn by the developer account | `[]byte{9}` | `[]byte{uint}` | KV |
-| DeveloperFees | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
+| DeveloperFees (deprecated in v16) | Tracks the profits that the developer account can withdraw | `[]byte{10}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | MaxPoolPointsPerTx | Tracks the maximum number of pool points that can be consumed per tx | `[]byte{11}` | `[]byte{uint64}` | KV |
 | MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | `[]byte{12}` | `[]byte{uint64}` | KV |
 | PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | `[]byte{13}` | `[]byte{uint64}` | KV |
 | LatestBlockHeight | Tracks the latest recorded block height | `[]byte{14}` | `[]byte{uint64}` | KV |
-| PoolWeights | Tracks the weights (pool points) of the different pool types | `[]byte{15}` | `[]byte{PoolWeights}` | KV |
+| InfoByPoolType | Tracks the execution information (pool points and, for concentrated pools, max ticks crossed) for each pool type | `[]byte{15}` | `[]byte{InfoByPoolType}` | KV |
+| SwapsToBackrun | Tracks the swaps that need to be backrun for a given tx. Accumulated via swap hooks during transaction processing and discarded at the end of the block, so it is not persisted | `[]byte{16}` | `[]byte{Route}` | Transient |
+| CyclicArbTracker | Tracks the profits made by cyclic arbitrage | `[]byte{17}` | `[]byte{sdk.Coins}` | KV |
+| CyclicArbTrackerStartHeight | Tracks the height at which cyclic arbitrage tracking began | `[]byte{18}` | `[]byte{uint64}` | KV |
+| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{19}` | `[]byte{[]BaseDenom{}}` | KV |
 
 ### TokenPairArbRoutes
 
@@ -141,7 +145,7 @@ message Trade {
 
 ### DenomPairToPool
 
-DenomPairToPool takes in a base denomination (read below) – denom that is used to build routes (ex. osmo, atom, usdc) – and a denom to match (akash, juno) and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) —> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
+DenomPairToPool takes in a base denomination (read below), the denom that is used to build routes (ex. osmo, atom, usdc), and a denom to match (akash, juno), and returns the highest liquidity pool id between the pair of denominations. For example, an input might look like (osmo, juno) -> poolID: 5. This store is directly tied to the highest liquidity method (described in state transitions below). Each base denomination is going to have its own set of denominations it maps to.
 
 ### BaseDenoms
 
@@ -167,7 +171,7 @@ These stores allow users and researchers to query the number of cyclic arbitrage
 
 ### AdminAccount
 
-The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live on-chain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
+The admin account is set through governance and has permissions to set hot routes, the maximum number of pool points per transaction, maximum number of pool points per block, pool type weights, base denoms and the developer account. On genesis, the admin account is set to a trusted address that is stored on a ledger - currently configured to be the Skip dev team's address. Note that governance has full ability to change this live onchain, and this admin can at most prevent `x/protorev` from working. All the admin account's controls have limits, so it can't lead to a chain halt, excess processing time or prevention of swaps.
 
 ### DeveloperAccount
 
@@ -197,29 +201,20 @@ PoolPointCountForBlock tracks the number of pool points that have been consumed 
 
 LatestBlockHeight tracks the latest recorded block height. This is used to update and reset the pool point count within a block and after new blocks are proposed.
 
-### PoolWeights
+### InfoByPoolType
 
-PoolWeights assigns each pool type to a number of pool points it will approximately consume. This tracks the pool points or weight of each pool type that can be traversed. This distinction is necessary because different pool types have different simulation and execution times.
+`InfoByPoolType` records the cost assumptions used when ProtoRev simulates and
+executes routes. Stable and balancer pools each have a weight. Concentrated
+pools have a weight and a maximum number of ticks that may be crossed.
+CosmWasm pools use contract-address-to-weight mappings because different pool
+contracts can have different execution costs.
 
-```go
-// PoolWeights contains the weights of all of the different pool types. This
-// distinction is made and necessary because the execution time ranges
-// significantly between the different pool types. Each weight roughly
-// corresponds to the amount of time (in ms) it takes to execute a swap on that
-// pool type.
-type PoolWeights struct {
-	// The weight of a stableswap pool
-	StableWeight uint64 `protobuf:"varint,1,opt,name=stable_weight,json=stableWeight,proto3" json:"stable_weight,omitempty"`
-	// The weight of a balancer pool
-	BalancerWeight uint64 `protobuf:"varint,2,opt,name=balancer_weight,json=balancerWeight,proto3" json:"balancer_weight,omitempty"`
-	// The weight of a concentrated pool
-	ConcentratedWeight uint64 `protobuf:"varint,3,opt,name=concentrated_weight,json=concentratedWeight,proto3" json:"concentrated_weight,omitempty"`
-}
-```
+The old `PoolWeights` type is retained only for genesis and historical block
+decoding. Active state and APIs use `InfoByPoolType`.
 
 ### GenesisState
 
-There is only one configurable parameter for the genesis state —> whether protorev is enabled or not.
+There is only one configurable parameter for the genesis state -> whether protorev is enabled or not.
 
 ```go
 // GenesisState defines the protorev module's genesis state.
@@ -250,13 +245,13 @@ BaseDenoms
 - Osmosis
 - Atom
 
-Lets say the `postHandler` receives a transaction that contains a swap of **Juno** —> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
+Lets say the `postHandler` receives a transaction that contains a swap of **Juno** -> **Akash** on pool **4**. In this case, the module will attempt to create three-pool route where a base denomination is on either side of the route. For example, a route that it might create is
 
-- Osmosis —> Akash (on pool 1), Akash —> Juno (on pool 4), Juno —> Osmosis (on pool 2)
+- Osmosis -> Akash (on pool 1), Akash -> Juno (on pool 4), Juno -> Osmosis (on pool 2)
 
-It does so by finding the highest liquidity pool between (Osmosis, Akash) —> pool 1 and the highest liquidity pool between (Osmosis, Juno) —> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
+It does so by finding the highest liquidity pool between (Osmosis, Akash) -> pool 1 and the highest liquidity pool between (Osmosis, Juno) -> pool 2. If there is no highest liquidity pool pair between (Osmosis, Juno) or (Osmosis, Akash), no route will be generated.
 
-**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno —> Akash so we know that the route must include a swap of Akash —> Juno.**
+**NOTE: Cyclic arbitrage routes will always go in the opposite direction of the original swap i.e. in this case we see Juno -> Akash so we know that the route must include a swap of Akash -> Juno.**
 
 The same line of reasoning exists for Atom. `x/protorev` will attempt to find the highest liquidity pool between (Atom, Akash) and (Atom, Juno). If these pools exist, they will be added to the list of routes that can be simulated later in the pipeline. If not, the route is discarded.
 
@@ -275,20 +270,6 @@ Now that we have a list of cyclic routes for each pool swapped by the user’s t
 Each swap will generate its own set of routes and `x/protorev` will execute only the most profitable route.
 
 The module mints the optimal input amount of the coin to swap in from the `bankkeeper` to the `x/protorev` module account, executes the MultiHopSwap by interacting with the `x/poolmanager` module, burns the optimal input amount of the coin minted to execute the MultiHopSwap, and sends subsequent profits to the module account.
-
-## Governance Proposals
-
-`x/protorev` implements two different governance proposals. 
-
-**SetProtoRevAdminAccountProposal**
-
-As the landscape of pools on Osmosis evolves, an admin account will be able to add and remove routes for `x/protorev` to check for cyclic arbitrage opportunities along with several other optimization txs. Largely, the purpose of maintaining hot routes is to reduce the amount of computation that would otherwise be required to determine optimal paths at runtime. 
-
-This proposal is put in place in case the admin account needs to be transferred over. However, as mentioned above, it will be initialized to a trusted address on genesis.
-
-**SetProtoRevEnabledProposal**
-
-This proposal type allows the chain to turn the module on or off. This is meant to be used as a fail safe in the case stakers and the chain decide to turn the module off. This might be used to halt the execution of trades in the case that the `x/gamm` module has significant upgrades that might produce unexpected behavior from the module.
 
 ## PostHandler
 
@@ -516,45 +497,33 @@ Message stateful validation fails if:
 - The admin entered in the message does not match the admin on chain
 - The admin’s signatures are not the same
 
-## **`MsgSetPoolWeights`**
+## **`MsgSetInfoByPoolType`**
 
-The admin account broadcasts a **`MsgSetPoolWeights`** to set the pool weights. The pool weights roughly correspond to the execution time of a swap on that pool type (stable, balancer, concentrated).
+The admin account broadcasts `MsgSetInfoByPoolType` to replace the complete set
+of execution-cost information for stable, balancer, concentrated, and CosmWasm
+pools. Concentrated-pool information also sets `max_ticks_crossed`. CosmWasm
+information maps each supported contract address to its weight.
 
-```go
-// MsgSetPoolWeights defines the Msg/SetPoolWeights request type.
-type MsgSetPoolWeights struct {
-	// admin is the account that is authorized to set the pool weights.
-	Admin string `protobuf:"bytes,1,opt,name=admin,proto3" json:"admin,omitempty"`
-	// pool_weights is the list of pool weights to set.
-	PoolWeights *PoolWeights `protobuf:"bytes,2,opt,name=pool_weights,json=poolWeights,proto3" json:"pool_weights,omitempty"`
+```protobuf
+message MsgSetInfoByPoolType {
+  string admin = 1;
+  InfoByPoolType info_by_pool_type = 2;
 }
 
-// PoolWeights contains the weights of all of the different pool types. This
-// distinction is made and necessary because the execution time ranges
-// significantly between the different pool types. Each weight roughly
-// corresponds to the amount of time (in ms) it takes to execute a swap on that
-// pool type.
-type PoolWeights struct {
-	// The weight of a stableswap pool
-	StableWeight uint64 `protobuf:"varint,1,opt,name=stable_weight,json=stableWeight,proto3" json:"stable_weight,omitempty"`
-	// The weight of a balancer pool
-	BalancerWeight uint64 `protobuf:"varint,2,opt,name=balancer_weight,json=balancerWeight,proto3" json:"balancer_weight,omitempty"`
-	// The weight of a concentrated pool
-	ConcentratedWeight uint64 `protobuf:"varint,3,opt,name=concentrated_weight,json=concentratedWeight,proto3" json:"concentrated_weight,omitempty"`
+message InfoByPoolType {
+  StablePoolInfo stable = 1;
+  BalancerPoolInfo balancer = 2;
+  ConcentratedPoolInfo concentrated = 3;
+  CosmwasmPoolInfo cosmwasm = 4;
 }
 ```
 
-Message statless validation fails if:
+The signer must be the configured admin, every pool type must be populated, all
+weights must be positive, and every CosmWasm weight mapping must contain a valid
+contract address.
 
-- The admin is not a valid bech32 address
-- The signature of the user does not match the admin account’s
-- Any of the pool weights is not set or is less than or equal to 0.
-
-Message stateful validation fails if:
-
-- The admin is not set in state
-- The admin entered in the message does not match the admin on chain
-- The admin’s signatures are not the same
+See the current [`Msg` service](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/protorev/v1beta1/tx.proto)
+and [`InfoByPoolType` definitions](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/protorev/v1beta1/protorev.proto).
 
 ## **`MsgSetBaseDenoms`**
 
@@ -597,19 +566,28 @@ Message stateful validation fails if:
 
 # Parameters
 
-Tracks whether the module is enabled on genesis.
+The parameters control whether ProtoRev runs and which account may update its
+operational settings.
 
 ```go
 // Params defines the parameters for the module.
 type Params struct {
-	// Boolean whether the module is going to be enabled
+	// Boolean whether the module is enabled.
 	Enabled bool `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	// The admin account (settings manager) of the module.
+	Admin string `protobuf:"bytes,2,opt,name=admin,proto3" json:"admin,omitempty"`
 }
 ```
 
 ## Enabled
 
 The `Enabled` parameters toggles all state transitions in the module. When the parameter is disabled, it will prevent all module functionality. 
+
+## Admin
+
+The `Admin` parameter identifies the account authorized to update hot routes,
+the developer account, pool-point limits, base denoms, and pool-type execution
+information.
 
 # Clients
 
@@ -629,6 +607,7 @@ osmosisd query protorev params
 | query protorev | number-of-trades | Queries the number of cyclic arbitrage trades ProtoRev has executed |
 | query protorev | profits-by-denom [denom] | Queries ProtoRev profits by denom |
 | query protorev | all-profits | Queries all ProtoRev profits |
+| query protorev | all-proto-rev | Queries protocol revenue accumulated across all modules |
 | query protorev | statistics-by-route [route] where route is the list of pool ids i.e. [1,2,3] | Queries ProtoRev statistics by route |
 | query protorev | all-statistics | Queries all ProtoRev statistics |
 | query protorev | hot-routes | Queries the ProtoRev token pair arb routes |
@@ -638,14 +617,14 @@ osmosisd query protorev params
 | query protorev | max-pool-points-per-block | Queries the ProtoRev max pool points per block |
 | query protorev | base-denoms | Queries the ProtoRev base denoms used to create cyclic arbitrage routes |
 | query protorev | enabled | Queries whether the ProtoRev module is currently enabled |
-| query protorev | pool-weights | Queries the pool weights used to determine how computationally expensive a route is |
+| query protorev | info-by-pool-type | Queries the pool-type information used to estimate route execution cost |
 | query protorev | pool | Queries the pool id for a given denom pair stored in ProtoRev |
 
 ### Proposals
 
 | Command | Subcommand | Description |
 | --- | --- | --- |
-| tx protorev | set-pool-weights [path/to/file.json] | Submit a tx to set the pool weights for ProtoRev |
+| tx protorev | set-info-by-pool-type [path/to/file.json] | Submit a tx to replace the pool-type execution information for ProtoRev |
 | tx protorev | set-hot-routes [path/to/file.json] | Submit a tx to set the hot routes for ProtoRev |
 | tx protorev | set-base-denoms [path/to/file.json] | Submit a tx to set the base denoms for ProtoRev |
 | tx protorev | set-max-pool-points-per-block [uint64] | Submit a tx to set the max pool points per block for ProtoRev |
@@ -660,25 +639,27 @@ osmosisd query protorev params
 
 | Verb | Method | Description |
 | --- | --- | --- |
-| gRPC | osmosis.protorev.Query/Params | Queries the parameters of the module |
-| gRPC | osmosis.protorev.Query/GetProtoRevNumberOfTrades | Queries the number of arbitrage trades the module has executed |
-| gRPC | osmosis.protorev.Query/GetProtoRevProfitsByDenom | Queries the profits of the module by denom |
-| gRPC | osmosis.protorev.Query/GetProtoRevAllProfits | Queries all of the profits from the module |
-| gRPC | osmosis.protorev.Query/GetProtoRevStatisticsByRoute | Queries the number of arbitrages and profits that have been executed for a given route |
-| gRPC | osmosis.protorev.Query/GetProtoRevAllStatistics | Queries all of routes that the module has arbitrage against and the number of trades and profits that have been executed for each route |
-| gRPC | osmosis.protorev.Query/GetProtoRevTokenPairArbRoutes | Queries all of the hot routes that the module is currently arbitraging |
-| gRPC | osmosis.protorev.Query/GetProtoRevMaxPoolPointsPerTx | Queries the ProtoRev max pool points per transaction |
-| gRPC | osmosis.protorev.Query/GetProtoRevMaxPoolPointsPerBlock | Queries the ProtoRev max pool points per block |
-| gRPC | osmosis.protorev.Query/GetProtoRevAdminAccount | Queries the admin account of the ProtoRev |
-| gRPC | osmosis.protorev.Query/GetProtoRevDeveloperAccount | Queries the developer account of the ProtoRev |
-| gRPC | osmosis.protorev.Query/GetProtoRevBaseDenoms | Queries the ProtoRev base denoms used to create cyclic arbitrage routes |
-| gRPC | osmosis.protorev.Query/GetProtoRevEnabled | Queries whether the ProtoRev module is currently enabled |
-| gRPC | osmosis.protorev.Query/GetProtoRevPoolWeights | Queries the number of pool points each pool type will consume when executing and simulating trades |
-| gRPC | osmosis.protorev.Query/GetProtoRevPool | Queries the pool id for a given denom pair stored in ProtoRev |
+| gRPC | osmosis.protorev.v1beta1.Query/Params | Queries the parameters of the module |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevNumberOfTrades | Queries the number of arbitrage trades the module has executed |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevProfitsByDenom | Queries the profits of the module by denom |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevAllProfits | Queries all of the profits from the module |
+| gRPC | osmosis.protorev.v1beta1.Query/GetAllProtocolRevenue | Queries protocol revenue accumulated across all modules |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevStatisticsByRoute | Queries the number of arbitrages and profits that have been executed for a given route |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevAllRouteStatistics | Queries all routes that the module has arbitraged against and the number of trades and profits accumulated for each route |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevTokenPairArbRoutes | Queries all of the hot routes that the module is currently arbitraging |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevMaxPoolPointsPerTx | Queries the ProtoRev max pool points per transaction |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevMaxPoolPointsPerBlock | Queries the ProtoRev max pool points per block |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevAdminAccount | Queries the admin account of the ProtoRev |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevDeveloperAccount | Queries the developer account of the ProtoRev |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevBaseDenoms | Queries the ProtoRev base denoms used to create cyclic arbitrage routes |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevEnabled | Queries whether the ProtoRev module is currently enabled |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevInfoByPoolType | Queries the execution information used for each pool type |
+| gRPC | osmosis.protorev.v1beta1.Query/GetProtoRevPool | Queries the pool id for a given denom pair stored in ProtoRev |
 | GET | /osmosis/protorev/params | Queries the parameters of the module |
 | GET | /osmosis/protorev/number_of_trades | Queries the number of arbitrage trades the module has executed |
 | GET | /osmosis/protorev/profits_by_denom | Queries the profits of the module by denom |
 | GET | /osmosis/protorev/all_profits | Queries all of the profits from the module |
+| GET | /osmosis/protorev/all_protocol_revenue | Queries protocol revenue accumulated across all modules |
 | GET | /osmosis/protorev/statistics_by_route | Queries the number of arbitrages and profits that have happened for a given route |
 | GET | /osmosis/protorev/all_route_statistics | Queries all of routes that the module has arbitrage against and the number of trades and profits that have happened for each route |
 | GET | /osmosis/protorev/token_pair_arb_routes | Queries all of the hot routes that the module is currently arbitraging |
@@ -688,24 +669,24 @@ osmosisd query protorev params
 | GET | /osmosis/protorev/developer_account | Queries the developer account of the ProtoRev |
 | GET | /osmosis/protorev/base_denoms | Queries the base denominations ProtoRev is currently using to create cyclic arbitrage routes |
 | GET | /osmosis/protorev/enabled | Queries whether the ProtoRev module is currently enabled |
-| GET | /osmosis/protorev/pool_weights | Queries the number of pool points each pool type will consume when executing and simulating trades |
+| GET | /osmosis/protorev/info_by_pool_type | Queries the execution information used for each pool type |
 | GET | /osmosis/protorev/pool | Queries the pool id for a given denom pair stored in ProtoRev |
 
 ### Transactions
 
 | Verb | Method | Description |
 | --- | --- | --- |
-| gRPC | osmosis.protorev.Msg/SetHotRoutes | Sets the hot routes that will be explored when creating cyclic arbitrage routes. Can only be called by the admin account |
-| gRPC | osmosis.protorev.Msg/SetDeveloperAccount | Sets the account that can withdraw a portion of the profit from the ProtoRev module. Can only be called by the admin account |
-| gRPC | osmosis.protorev.Msg/SetMaxPoolPointsPerTx | Sets the maximum number of pool points that can be consumed per transaction |
-| gRPC | osmosis.protorev.Msg/SetMaxPoolPointsPerBlock | Sets the maximum number of routes that can be iterated per block |
-| gRPC | osmosis.protorev.Msg/SetBaseDenoms | Sets the base denominations the ProtoRev module will use to create cyclic arbitrage routes |
-| gRPC | osmosis.protorev.Msg/SetPoolWeights | Sets the amount of pool points each pool type will consume when executing and simulating trades |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetHotRoutes | Sets the hot routes that will be explored when creating cyclic arbitrage routes. Can only be called by the admin account |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetDeveloperAccount | Sets the account that can withdraw a portion of the profit from the ProtoRev module. Can only be called by the admin account |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetMaxPoolPointsPerTx | Sets the maximum number of pool points that can be consumed per transaction |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetMaxPoolPointsPerBlock | Sets the maximum number of routes that can be iterated per block |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetBaseDenoms | Sets the base denominations the ProtoRev module will use to create cyclic arbitrage routes |
+| gRPC | osmosis.protorev.v1beta1.Msg/SetInfoByPoolType | Sets the execution information used for each pool type |
 | POST | /osmosis/protorev/set_hot_routes | Sets the hot routes that will be explored when creating cyclic arbitrage routes. Can only be called by the admin account |
 | POST | /osmosis/protorev/set_developer_account | Sets the account that can withdraw a portion of the profit from the ProtoRev module. Can only be called by the admin account |
 | POST | /osmosis/protorev/set_max_pool_points_per_tx | Sets the maximum number of pool points that can be consumed per transaction |
 | POST | /osmosis/protorev/set_max_pool_points_per_block | Sets the maximum number of pool points that can be consumed per block |
-| POST | /osmosis/protorev/set_pool_weights | Sets the amount of pool points each pool type will consume when executing and simulating trades |
+| POST | /osmosis/protorev/set_info_by_pool_type | Sets the execution information used for each pool type |
 | POST | /osmosis/protorev/set_base_denoms | Sets the base denominations that will be used by ProtoRev to construct cyclic arbitrage routes |
 
 ## Events

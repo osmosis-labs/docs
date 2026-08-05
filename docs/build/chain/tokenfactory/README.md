@@ -11,9 +11,9 @@ created denom. Once a denom is created, the original creator is given
 - Mint their denom to any account
 - Burn their denom from any account
 - Create a transfer of their denom between any two accounts
-- Change the admin. In the future, more admin capabilities may be added. Admins
+- Change the admin. Admins
   can choose to share admin privileges with other accounts using the authz
-  module. The `ChangeAdmin` functionality, allows changing the master admin
+  module. The `ChangeAdmin` functionality allows changing the master admin
   account, or even setting it to `""`, meaning no account has admin privileges
   of the asset.
 
@@ -54,13 +54,19 @@ message MsgMint {
     (gogoproto.moretags) = "yaml:\"amount\"",
     (gogoproto.nullable) = false
   ];
+  string mintToAddress = 3 [
+    (gogoproto.moretags) = "yaml:\"mint_to_address\"",
+    (amino.dont_omitempty) = true
+  ];
 }
 ```
+
+When `mintToAddress` is left empty, the module mints to the sender.
 
 **State Modifications:**
 
 - Safety check the following
-  - Check that the denom minting is created via `tokenfactory` module
+  - Check that the denom is created via the `tokenfactory` module
   - Check that the sender of the message is the admin of the denom
 - Mint designated amount of tokens for the denom via `bank` module
 
@@ -76,14 +82,22 @@ message MsgBurn {
     (gogoproto.moretags) = "yaml:\"amount\"",
     (gogoproto.nullable) = false
   ];
+  string burnFromAddress = 3 [
+    (gogoproto.moretags) = "yaml:\"burn_from_address\"",
+    (amino.dont_omitempty) = true
+  ];
 }
 ```
+
+When `burnFromAddress` is left empty, the module burns from the sender's own balance.
 
 **State Modifications:**
 
 - Safety check the following
-  - Check that the denom minting is created via `tokenfactory` module
+  - Check that the denom is created via the `tokenfactory` module
   - Check that the sender of the message is the admin of the denom
+  - Check that `burnFromAddress` is not a module account, which fails with
+    `burning from Module Account is not allowed`
 - Burn designated amount of tokens for the denom via `bank` module
 
 ### ChangeAdmin
@@ -104,7 +118,7 @@ Setting of metadata for a specific denom is only allowed for the admin of the de
 It allows the overwriting of the denom metadata in the bank module.
 
 ```go
-message MsgChangeAdmin {
+message MsgSetDenomMetadata {
   string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
   cosmos.bank.v1beta1.Metadata metadata = 2 [ (gogoproto.moretags) = "yaml:\"metadata\"", (gogoproto.nullable)   = false ];
 }
@@ -113,7 +127,7 @@ message MsgChangeAdmin {
 **State Modifications:**
 
 - Check that sender of the message is the admin of denom
-- Modify `AuthorityMetadata` state entry to change the admin of the denom
+- Set/overwrite the bank-module `DenomMetadata` for the denom (via the bank keeper).
 
 ### SetBeforeSendHook
 

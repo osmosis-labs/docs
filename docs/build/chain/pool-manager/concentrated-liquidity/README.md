@@ -402,10 +402,9 @@ type MsgCreatePosition struct {
  Sender          string
  LowerTick       int64
  UpperTick       int64
- TokenDesired0   types.Coin
- TokenDesired1   types.Coin
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ TokensProvided  sdk.Coins
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -417,10 +416,10 @@ create the liquidityCreated number of shares in the given range.
 ```go
 type MsgCreatePositionResponse struct {
  PositionId  uint64
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
  JoinTime time.Time
- LiquidityCreated sdk.Dec
+ LiquidityCreated osmomath.Dec
 
 }
 ```
@@ -444,7 +443,7 @@ associated with the position are still retained until a user claims them manuall
 type MsgWithdrawPosition struct {
  PositionId      uint64
  Sender          string
- LiquidityAmount sdk.Dec
+ LiquidityAmount osmomath.Dec
 }
 ```
 
@@ -455,8 +454,8 @@ for the provided share liquidity amount.
 
 ```go
 type MsgWithdrawPositionResponse struct {
- Amount0 sdk.Int
- Amount1 sdk.Int
+ Amount0 osmomath.Int
+ Amount1 osmomath.Int
 }
 ```
 
@@ -478,7 +477,7 @@ type MsgCreateConcentratedPool struct {
  Denom0                    string
  Denom1                    string
  TickSpacing               uint64
- SpreadFactor                   sdk.Dec
+ SpreadFactor                   osmomath.Dec
 }
 ```
 
@@ -530,10 +529,10 @@ the original join time so charging is preserved.
 type MsgAddToPosition struct {
  PositionId     uint64
  Sender         string
- Amount0        sdk.Int
- Amount1        sdk.Int
- TokenMinAmount0 sdk.Int
- TokenMinAmount1 sdk.Int
+ Amount0        osmomath.Int
+ Amount1        osmomath.Int
+ TokenMinAmount0 osmomath.Int
+ TokenMinAmount1 osmomath.Int
 }
 ```
 
@@ -620,7 +619,7 @@ on the `x/concentrated-liquidity` keeper.
 The `InitializePool` method is responsible for doing concentrated-liquidity specific
 initialization and storing the pool in state.
 
-Note, that `InitializePool` is a method defined on the `SwapI` interface that is
+Note, that `InitializePool` is a method defined on the `PoolModuleI` interface that is
 implemented by all swap modules. For example, `x/gamm` also implements it so that
 `x/pool-manager` can route pool initialization there as well.
 
@@ -676,7 +675,7 @@ and token1 as a result the one that had higher liquidity will end up smaller
 than originally given by the user.
 
 Note that the liquidity used here does not represent an amount of a specific
-token, but the liquidity of the pool itself, represented in `sdk.Dec`.
+token, but the liquidity of the pool itself, represented in `osmomath.Dec`.
 
 Using the provided liquidity, now we calculate the delta amount of both token0
 and token1, using the following equations, where L is the liquidity calculated above:
@@ -695,9 +694,6 @@ Given the parameters needed for calculating the tokens needed for creating a
 position for a given tick, the API in the keeper layer would look like the following:
 
 ```go
-ctx sdk.Context, poolId uint64, owner sdk.AccAddress, amount0Desired,
-amount1Desired, amount0Min, amount1Min sdk.Int,
-lowerTick, upperTick int64, frozenUntil time.Time
 func createPosition(
     ctx sdk.Context,
     poolId uint64,
@@ -705,9 +701,9 @@ func createPosition(
     amount0Desired,
     amount1Desired,
     amount0Min,
-    amount1Min sdk.Int
+    amount1Min osmomath.Int,
     lowerTick,
-    upperTick int64) (amount0, amount1 sdk.Int, sdk.Dec, error) {
+    upperTick int64) (amount0, amount1 osmomath.Int, liquidity osmomath.Dec, err error) {
         ...
 }
 ```
@@ -730,9 +726,8 @@ func (k Keeper) withdrawPosition(
     owner sdk.AccAddress,
     lowerTick,
     upperTick int64,
-    frozenUntil time.Time,
-    requestedLiquidityAmountToWithdraw sdk.Dec)
-    (amtDenom0, amtDenom1 sdk.Int, err error) {
+    requestedLiquidityAmountToWithdraw osmomath.Dec)
+    (amtDenom0, amtDenom1 osmomath.Int, err error) {
     ...
 }
 ```
@@ -788,8 +783,8 @@ From the user perspective, there are two ways to swap:
 Each case has a corresponding message discussed previously in the `x/poolmanager`
 section.
 
-- `MsgSwapExactIn`
-- `MsgSwapExactOut`
+- `MsgSwapExactAmountIn`
+- `MsgSwapExactAmountOut`
 
 Once a message is received by the `x/poolmanager`, it is propagated into a
 corresponding keeper
@@ -807,7 +802,7 @@ context parameter. The cache context is dropped on failure and committed on succ
 
 ### Calculating Swap Amounts
 
-Let's now focus on the core logic of calculating swap amounts.
+The core logic for calculating swap amounts follows.
 We mainly focus on `calcOutAmtGivenIn` as the high-level steps of `calcInAmtGivenOut`
 are similar.
 
@@ -856,32 +851,32 @@ type SwapState struct {
  // if in given out, amount of token being swapped out.
  // Initialized to the amount of the token specified by the user.
  // Updated after every swap step.
- amountSpecifiedRemaining sdk.Dec
+ amountSpecifiedRemaining osmomath.Dec
 
  // Amount of the other token that is calculated from the specified token.
  // if out given in, amount of token swapped out.
  // if in given out, amount of token swapped in.
  // Initialized to zero.
  // Updated after every swap step.
- amountCalculated sdk.Dec
+ amountCalculated osmomath.Dec
 
  // Current sqrt price while calculating swap.
  // Initialized to the pool's current sqrt price.
  // Updated after every swap step.
- sqrtPrice sdk.Dec
+ sqrtPrice osmomath.BigDec
  // Current tick while calculating swap.
  // Initialized to the pool's current tick.
  // Updated each time a tick is crossed.
- tick sdk.Int
+ tick int64
  // Current liqudiity within the active tick.
  // Initialized to the pool's current tick's liquidity.
  // Updated each time a tick is crossed.
- liquidity sdk.Dec
+ liquidity osmomath.Dec
 
  // Global spread reward growth per-current swap.
  // Initialized to zero.
  // Updated after every swap step.
- spreadRewardGrowthGlobal sdk.Dec
+ spreadRewardGrowthGlobal osmomath.Dec
 }
 ```
 
@@ -1164,14 +1159,129 @@ tick tracked by the pool is 11_000. The global spread reward growth per unit of 
 has increased by 50 units of token one. See more details about the spread reward growth
 in the "Spread Rewards" section.
 
-TODO: Swapping, Appendix B: Compute Swap Step Internals and Math
+## Swapping. Appendix B: Compute Swap Step Internals and Math
 
-## Range Orders
+Appendix A walked a swap at the level of whole buckets. This appendix covers the single
+step inside one bucket, where liquidity is constant. That step is implemented by
+`ComputeSwapWithinBucketOutGivenIn` and `ComputeSwapWithinBucketInGivenOut` on the swap
+strategy, with one implementation per direction
+([`zero_for_one.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/swapstrategy/zero_for_one.go),
+[`one_for_zero.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/swapstrategy/one_for_zero.go)).
 
-> As a trader, I want to be able to execute ranger orders so that I have better
-> control of the price at which I trade
+Each call takes the current sqrt price, a target sqrt price, the bucket's liquidity, and the
+amount still remaining to swap. Both return the next sqrt price and the spread reward charged, but
+the middle two values are ordered by *which amount was specified*, not input-then-output:
 
-TODO
+* `ComputeSwapWithinBucketOutGivenIn` returns `(sqrtPriceNext, amountIn, amountOut, spreadReward)`.
+* `ComputeSwapWithinBucketInGivenOut` returns `(sqrtPriceNext, amountOut, amountIn, spreadReward)`.
+
+In both cases the second value is the amount of the *specified* token consumed, and the third is
+the amount of the other token computed.
+
+### Direction
+
+`zeroForOne` swaps token zero in for token one out and moves the price **down**;
+`oneForZero` is the mirror and moves the price **up**. The target sqrt price is the
+next initialized tick's sqrt price, unless the price limit supplied for slippage
+protection is hit first, in which case it is that limit.
+
+The two directions are exact mirrors, differing only in which token is the input and
+therefore which delta function is rounded up:
+
+| | `zeroForOne` (price down) | `oneForZero` (price up) |
+|---|---|---|
+| Input token | zero | one |
+| Output token | one | zero |
+| Input amount, rounded **up** | $$\Delta_0$$ | $$\Delta_1$$ |
+| Output amount, rounded **down** | $$\Delta_1$$ | $$\Delta_0$$ |
+
+### Token amounts across a sqrt price range
+
+Both deltas follow from the constant-product invariant over a range where $$L$$ is fixed.
+For sqrt prices $$\sqrt{P_a} < \sqrt{P_b}$$:
+
+$$\Delta_0 = \frac{L (\sqrt{P_b} - \sqrt{P_a})}{\sqrt{P_b} \cdot \sqrt{P_a}}$$
+
+$$\Delta_1 = L (\sqrt{P_b} - \sqrt{P_a})$$
+
+Token one is linear in sqrt price, so its delta is a plain multiplication. Token zero
+divides by both sqrt prices. The implementation divides by the **larger** sqrt price
+first and the smaller second, which reduces error amplification when either sqrt price
+is below one.
+
+### Solving for the next sqrt price
+
+If the amount remaining is at least the amount needed to reach the target, the step ends
+exactly at the target and the remainder carries to the next bucket. Otherwise the amount
+remaining is exhausted inside this bucket and the next sqrt price is solved from it by
+inverting the relevant delta above:
+
+$$\sqrt{P_{next}} = \frac{L \sqrt{P_{cur}}}{L + \Delta_0 \sqrt{P_{cur}}} \qquad \text{(token zero in)}$$
+
+$$\sqrt{P_{next}} = \sqrt{P_{cur}} + \frac{\Delta_1}{L} \qquad \text{(token one in)}$$
+
+$$\sqrt{P_{next}} = \frac{L \sqrt{P_{cur}}}{L - \Delta_0 \sqrt{P_{cur}}} \qquad \text{(token zero out)}$$
+
+$$\sqrt{P_{next}} = \sqrt{P_{cur}} - \frac{\Delta_1}{L} \qquad \text{(token one out)}$$
+
+When the target is **not** reached, the amount of the specified token is recomputed from the newly
+solved $$\sqrt{P_{next}}$$ rather than reusing the earlier estimate to the target. Which amount is
+recomputed differs by direction:
+
+* On **exact-in**, the input is recomputed and must keep rounding **up**. Rounding it down instead
+  lets the swap loop fail to make progress and spin.
+* On **exact-out**, the output is recomputed and rounds **down**, so the step cannot hand back more
+  than was requested. The required input is then derived from the solved sqrt price.
+
+### Rounding always favours the pool
+
+Every rounding decision in a swap step is made so that any error accrues to the pool and
+never to the trader:
+
+* The **input** is rounded up, at each intermediate division as well as at the end, so the
+  trader pays at least the true amount.
+* The **output** is truncated, so the trader receives at most the true amount.
+* Solving for $$\sqrt{P_{next}}$$ rounds in the direction that keeps the resulting amounts
+  conservative for the pool.
+
+One asymmetry follows from this. On an exact-out swap that does not reach the target,
+$$\sqrt{P_{next}}$$ is rounded *away* from the current price so the output is certainly
+reached, and recomputing the output from it can exceed the amount requested. The consumed
+output is therefore capped at the amount remaining. No such cap is needed on exact-in,
+where $$\sqrt{P_{next}}$$ is rounded toward the current price and the overshoot cannot occur.
+
+### Spread reward for the step
+
+The spread reward is always charged on the input token, never the output. With spread factor $$f$$,
+the base formula grosses up the input actually consumed:
+
+$$\text{reward} = \text{amountIn} \cdot \frac{f}{1 - f}$$
+
+The gross-up is required because the reward is a share of the *pre-fee* input, so charging it on a
+post-fee amount cannot simply multiply by $$f$$. The multiplication rounds up, again in the pool's
+favour.
+
+**Exact-out** applies this formula unconditionally. Its `amountRemaining` is an output amount, so
+there is no input remainder to take a difference against.
+
+**Exact-in** branches on whether the step reached its target:
+
+* **Target reached** (a tick or the price limit): the formula above, applied to the input consumed
+  before hitting the target.
+* **Target not reached**: the bucket had enough liquidity to fill the rest of the swap, and the
+  charge is simply the leftover:
+
+  $$\text{reward} = \text{amountRemaining} - \text{amountIn}$$
+
+  This approximates the gross-up rather than reproducing it exactly. The next sqrt price was solved
+  from the amount remaining *after* deducting the spread reward, that is from
+  $$\text{amountRemaining} \cdot (1 - f)$$, so the leftover is the reward on what was consumed. But
+  `amountIn` is rounded up, and the subtraction absorbs that rounding, so the result can differ
+  from $$\text{amountIn} \cdot \frac{f}{1-f}$$ by the rounding increment. The difference accrues to
+  the pool, consistent with the rounding rules above.
+
+A zero spread factor short-circuits to a zero charge, and a negative one panics as a
+defence-in-depth check.
 
 ## Spread Rewards
 
@@ -1197,7 +1307,7 @@ layers of state:
 // Note that this is proto-generated.
 type Pool struct {
     ...
-    SpreadFactor sdk.Dec
+    SpreadFactor osmomath.Dec
 }
 ```
 
@@ -1340,7 +1450,6 @@ Then, to calculate the spread reward within a single tick, we perform the follow
 
 ```go
 // Update global spread reward accumulator tracking spread rewards for denom of tokenInAmt.
-// TODO: revisit to make sure if truncations need to happen.
 pool.SpreadRewardGrowthGlobalOutside.TokenX = pool.SpreadRewardGrowthGlobalOutside.TokenX.Add(tokenInAmt.Mul(pool.SpreadFactor))
 
 // Update tokenInAmt to account for spread factor.
@@ -1418,9 +1527,9 @@ this design.
 ## Target Properties
 
 As a starting point, it's important to understand the properties of a healthy liquidity pool.
-These are all, of course, properties that become self-sustaining once the positive feedback cycle
-between liquidity and volume kicks off, but for the sake of understanding what exactly it is that
-we are trying to bootstrap with incentives it helps to be explicit with our goals.
+These properties become self-sustaining once the positive feedback cycle between liquidity and
+volume begins, but stating them explicitly clarifies what the incentives are intended to
+bootstrap.
 
 ### Liquidity Depth
 
@@ -1460,7 +1569,7 @@ some [clever accumulator tricks](https://www.paradigm.xyz/2021/05/liquidity-mini
 this can be designed to ensure that each LP only receives incentives for liquidity they contribute
 to the active tick. This approach is incredible for liquidity depth, which is arguably the most
 important property we need incentives to be able to accommodate. It is also a user flow that
-on-chain market makers are already somewhat familiar with and has enough live examples where
+onchain market makers are already somewhat familiar with and has enough live examples where
 we roughly know that it functions as intended.
 
 ## Our Implementation
@@ -1518,7 +1627,7 @@ To achieve this in a way that is difficult to game and efficient for the chain t
 
 One implication of this mechanism is that it moves the incentivization process to a higher level of abstraction (incentivizing _pairs_ instead of _pools_). For internal incentives (which are governance managed), this is in line with the goal of continuing to push governance to require less frequent actions, which this change ultimately does.
 
-To keep a small but meaningful incentive for LPs to still migrate their positions, we have added a **discount rate** to incentives that are redirected to Classic pools. This is initialized to 5% by default but is a governance-upgradable parameter that can be increased in the future. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
+To keep a small but meaningful incentive for LPs to still migrate their positions, a **discount rate** is applied to incentives that are redirected to Classic pools. This is initialized to 5% by default and is a governance-upgradable parameter. A discount rate of 100% is functionally equivalent to all the incentives staying in the CL pool.
 
 ## TWAP Integration
 
@@ -1690,8 +1799,8 @@ pool:
   total_weight: "1073741824000000"
 ```
 
-Let's say we want to migrate this into a CL pool where `uosmo` is the quote
-asset and `arb` base unit is the base asset.
+Consider migrating this into a CL pool where `uosmo` is the quote
+asset and the `arb` base unit is the base asset.
 
 Note that quote asset is denom1 and base asset is denom0.
 We want quote asset to be `uosmo` so that limit orders on ticks
@@ -1735,7 +1844,7 @@ the quote asset that has precision of 6 (e.g `uosmo` or `uusdc`).
 
 The true price of PEPE in USDC terms is `0.0000009749`.
 
-In the "on-chain representation", this would be:
+In the "onchain representation", this would be:
 `0.0000009749 * 10**6 / 10**18 = 9.749e-19`
 
 Note that this is below the minimum precision of `sdk.Dec`.
@@ -1744,10 +1853,12 @@ Additionally, there is a problem with tick to sqrt price conversions
 where at small price levels, two sqrt prices can map to the same
 tick.
 
-As a workaround, we have decided to limit min spot price to 10^-12
-and min tick to `-108000000`. It has been shown at at price levels
-below 10^-12, this issue is most apparent. See this issue for details:
-[https://github.com/osmosis-labs/osmosis/issues/5550](https://github.com/osmosis-labs/osmosis/issues/5550)
+At launch, the minimum spot price was therefore limited to 10^-12, with a corresponding
+minimum initialized tick of `-108000000`, since the ambiguity is most apparent below that
+price. The range was later extended down to 10^-30 (`MinSpotPriceV2`, minimum initialized
+tick `-270000000`) by performing the tick and sqrt price conversions in 36-precision
+`BigDec` rather than `Dec`. Both sets of bounds are defined in
+[`x/concentrated-liquidity/types/constants.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/types/constants.go).
 
 Now, we have a problem that we cannot handle pairs where
 the quote asset has a precision of 6 and the base asset has a

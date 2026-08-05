@@ -9,7 +9,7 @@ import DocCardList from '@theme/DocCardList';
 
 The specifications for the Osmosis chain itself, for contributing to the protocol or understanding how a module behaves. To set up a local toolchain (build from source, IDE, LocalOsmosis, the `osmosisd` binary, and key management), see **Developer Environment**.
 
-Each module page below documents one `x/` module: its messages, state, and parameters. They cover the AMM and pool types (GAMM, concentrated liquidity, stableswap, CosmWasm pools, pool manager), incentives and staking (incentives, pool incentives, lockup, superfluid, valset preference), economics (mint, txfees, ProtoRev), governance, TWAP, epochs, the token factory, and the IBC middleware (hooks, rate limiting).
+Each module page below documents one `x/` module: its messages, state, and parameters. **Pool Manager** is the swap entrypoint and holds the individual pool types beneath it (GAMM, concentrated liquidity, stableswap, CosmWasm pools). The rest cover incentives and staking (incentives, pool incentives, lockup, superfluid, valset preference), economics (mint, txfees, ProtoRev), governance, TWAP, epochs, the token factory, and the IBC middleware (hooks, rate limiting).
 
 <DocCardList />
 

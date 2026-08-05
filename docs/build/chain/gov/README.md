@@ -1,6 +1,6 @@
-# Gov
+# Governance
 
-The `gov` module enables on-chain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
+The `gov` module enables onchain governance which allows Osmosis token holders to participate in a community led decision-making process. For example, users can:
 
 - Form an idea and seek feedback
 - Create a proposal and adjust according to feedback as needed
@@ -12,21 +12,31 @@ The `gov` module enables on-chain governance which allows Osmosis token holders 
 
 ### Network parameters
 
-The network parameters for the gov module are:
+The gov module exposes the following parameters. Coin amounts are in the
+minimal denomination, `uosmo`. Durations use the protobuf duration format.
 
-- **`deposit_params`** - Deposit related parameters
+| Parameter | Purpose | Current mainnet value |
+| --- | --- | --- |
+| `min_deposit` | Total deposit required for a regular proposal to enter voting | `30000000000uosmo` (30,000 OSMO) |
+| `max_deposit_period` | Maximum time allowed to reach the required deposit | `1209600s` (14 days) |
+| `voting_period` | Voting period for a regular proposal | `432000s` (5 days) |
+| `quorum` | Minimum fraction of bonded voting power that must participate | `0.3` (30%) |
+| `threshold` | Minimum Yes share of non-abstaining votes required to pass | `0.5` (50%) |
+| `veto_threshold` | NoWithVeto share at which a proposal is vetoed | `0.334` (33.4%) |
+| `min_initial_deposit_ratio` | Minimum initial deposit as a fraction of the applicable minimum deposit | `0.25` (25%) |
+| `proposal_cancel_ratio` | Portion of the proposal deposit charged when the proposer cancels it | `1.0` (100%) |
+| `proposal_cancel_dest` | Optional destination for the cancellation charge; an empty value burns the charge | Empty |
+| `expedited_voting_period` | Voting period for an expedited proposal | `86400s` (1 day) |
+| `expedited_threshold` | Minimum Yes share of non-abstaining votes required for an expedited proposal | `0.8` (80%) |
+| `expedited_min_deposit` | Total deposit required for an expedited proposal to enter voting | `100000000000uosmo` (100,000 OSMO) |
+| `burn_vote_quorum` | Whether to burn deposits when a proposal fails quorum | `false` |
+| `burn_proposal_deposit_prevote` | Whether to burn deposits when a proposal fails to enter voting | `false` |
+| `burn_vote_veto` | Whether to burn deposits when a proposal is vetoed | `true` |
+| `min_deposit_ratio` | Minimum accepted individual deposit as a fraction of the applicable minimum deposit | `0.01` (1%) |
 
-  - **`min_deposit`**: Minimum deposit (in uOSMO) for a proposal to enter voting period
-  - **`max_deposit_period`**: Maximum period (in nanoseconds) for OSMO holders to deposit on a proposal.
-
-- **`voting_params`** - Voting related parameters
-
-  - **`voting_period`**: The length of the voting period (in nanoseconds)
-
-- **`tally_params`** - Tally related parameters
-  - **`quorum`**: The minimum percentage (in decimal form) of voting power that needs to be casted on a proposal for the result to be valid
-  - **`threshold`**: Minimum proportion (in decimal form) of Yes votes (excluding Abstain votes) for the proposal to be accepted
-  - **`veto`**: Minimum value of Veto votes to total votes ratio (in decimal form) for proposal to be vetoed.
+The regular minimum initial deposit is therefore 7,500 OSMO. The expedited
+minimum initial deposit is 25,000 OSMO. Subsequent deposits must be at least
+300 OSMO for a regular proposal or 1,000 OSMO for an expedited proposal.
 
 ### The Governance Procedure
 
@@ -42,21 +52,25 @@ Users submits a proposal with an initial deposit. The proposal will then become 
 
 **Phase 2 - Deposit period**
 
-During the deposit period, users can deposit and support an active proposal. Once the deposit of the proposal reaches the `min_deposit`, it will enter the voting period. Otherwise, if the proposal is not successfully funded within `max_deposit_period`, It will become inactive and **all the deposits will be burned**.
+During the deposit period, users can deposit and support an active proposal. Once the deposit reaches the applicable regular or expedited minimum, the proposal enters the voting period. If it does not reach that minimum within `max_deposit_period`, the proposal becomes inactive. Osmosis currently refunds these deposits because `burn_proposal_deposit_prevote` is `false`.
+
+If the proposer cancels before voting ends, the current
+`proposal_cancel_ratio` charges the full deposit. Because
+`proposal_cancel_dest` is empty, that charge is burned.
 
 **Phase 3 - Voting period**
 
 During the voting period, staked (bonded) tokens will be able to participate in the voting process. Users can choose one of the following options: `yes`, `no`, `no_with_veto` and `abstain`.
 
-After the `voting_period` has passed, the proposal will be considered "Rejected" and **the funds deposited in the deposit period will be burned if**:
+After the voting period, a rejected proposal's deposit is normally refunded.
+This includes rejection because participation did not reach `quorum`, since
+`burn_vote_quorum` is currently `false`. Deposits are burned when the
+`no_with_veto` share reaches `veto_threshold`, since `burn_vote_veto` is
+currently `true`.
 
-- Votes do not reach the `quorum`
-- Enough vote `no_with_veto` when compared with total votes to meet the veto to total votes ratio specified in `tally_params`
-
-The proposal will be considered "Rejected" and **the funds deposited in the deposit period will be returned if**
-
-- No one votes (or everyone votes to `abstain`)
-- More than `threshold` of non-abstaining voters vote `no`
+A proposal is also rejected, with its deposit refunded, when the Yes share of
+non-abstaining votes does not reach `threshold` or `expedited_threshold` as
+applicable.
 
 Otherwise, the proposal will be accepted and changes will be implemented according to the proposal.
 
@@ -74,204 +88,110 @@ typical flags would be:
 
 - `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 - `--from WALLET_ADDRESS` to set the running wallet
-- `--deposit=400000000uosmo` to provide the initial 400 OSMO (25% of total) deposit for putting a proposal on chain
+- `--deposit=7500000000uosmo` to provide the minimum initial deposit of 7,500 OSMO for a regular proposal
 
-There are different types of proposal submission types, including
+On the Cosmos SDK gov module that Osmosis runs (`v1`), proposals are submitted in one of two ways:
 
-- [`text`](#submit-proposal-text)
-- [`param-change`](#submit-proposal-param-change)
-- [`community-pool-spend`](#submit-proposal-community-pool-spend)
-- [`software-upgrade`](#submit-proposal-software-upgrade) and [`cancel-software-upgrade`](#submit-proposal-cancel-upgrade)
-- [`update-pool-incentives`](#submit-proposal-update-pool-incentives)
-- [`set-superfluid-asset`](#submit-proposal-set-superfluid-asset) and [`remove-superfluid-asset`](#submit-proposal-remove-superfluid-asset)
-- [`wasm-store`](#submit-proposal-wasm-store)
-- [`update-unpool-whitelist`](#submit-proposal-update-unpool-whitelist)
+- **`submit-proposal`** takes a single JSON file describing one or more `sdk.Msg`s to execute if the proposal passes. This is the current path for anything expressible as a message, including `MsgSoftwareUpgrade`, `MsgCommunityPoolSpend`, and module parameter updates via each module's `MsgUpdateParams`.
+- **`submit-legacy-proposal`** submits a legacy content-based proposal. This is still how the older Osmosis content types are submitted (text, legacy param-change, and the module handlers that remain registered on the gov router: pool-incentives, superfluid, protorev, txfees, gamm, concentrated-liquidity, cosmwasmpool, poolmanager, incentives).
 
-We will go over each of these submission types in detail now:
-
-### submit-proposal (text)
-
-Text proposals differ from other proposal submission types in that after it passes, no logic is automatically executed. This is good for proposing changes to Osmosis that are not linked to a specific daemon parameter.
+To avoid hand-writing the JSON, generate it interactively:
 
 ```bash
-osmosisd tx gov submit-proposal --type=text --title="" --description="" --from WALLET_ADDRESS --deposit=400000000uosmo [flags]
+osmosisd tx gov draft-proposal
 ```
 
-**Example**
+This prompts for the proposal type and fields and writes a ready-to-submit `draft_proposal.json` (plus a `draft_metadata.json`).
 
-Create a text signaling proposals to match external incentives for a `DOGE/OSMO` and `DOGE/ATOM` pair.
+### submit-proposal (message-based)
+
+Submit a proposal from a JSON file containing a `messages` array. Each message is proto-JSON with an `@type`.
 
 ```bash
-osmosisd tx gov submit-proposal --type=text --title="Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs" --description="Input description" --from WALLET_ADDRESS --deposit=400000000uosmo --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-proposal proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-### submit-proposal (param change)
-
-Submit a proposal to modify network parameters during run time, ideally these should be tested on Testnet before proposing.
-
-```bash
-osmosisd tx gov submit-proposal param-change [proposal-file] --from WALLET_ADDRESS [flags]
-```
-
-**Example**
-
-Change the parameter MaxValidators (maximum number of validator) in the staking module:
-
-```bash
-osmosisd tx gov submit-proposal param-change proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-The proposal.json file would look as follows:
+The `proposal.json` file has this shape:
 
 ```json
 {
-  "title": "Staking Param Change",
-  "description": "Update max validators",
-  "changes": [
+  "messages": [
     {
-      "subspace": "staking",
-      "key": "MaxValidators",
-      "value": 150
+      "@type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "authority": "osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp",
+      "recipient": "osmo1r9pjvsuahxwkxg8cnhacd6alkmxq330fl9pqqt",
+      "amount": [{ "denom": "uosmo", "amount": "10000000000" }]
     }
   ],
-  "deposit": "400000000uosmo"
+  "metadata": "ipfs://CID",
+  "deposit": "7500000000uosmo",
+  "title": "Community pool spend",
+  "summary": "Fund a project from the community pool",
+  "expedited": false
 }
 ```
 
-### submit-proposal (community pool spend)
-
-Request funds from the community pool to support projects or other activities.
-
-```bash
-osmosisd tx gov submit-proposal community-pool-spend [proposal-file] --from WALLET_ADDRESS [flags]
-```
-
-**Example**
-
-Submit a proposal to use community funds to fund a DAO:
-
-```bash
-osmosisd tx gov submit-proposal community-pool-spend proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-The proposal.json would look as follows:
-
-```json
-{
-  "title": "Osmosis DAO",
-  "description": "Establish a DAO for Osmosis. Potentially add external links for more information or allow discussion",
-  "recipient": "osmo1r9pjvsuahxwkxg8cnhacd6alkmxq330fl9pqqt",
-  "amount": "10000000000uosmo",
-  "deposit": "400000000uosmo"
-}
-```
-
-If passed, the requested community funds would be sent to the recipient address provided in the json file.
+The `authority` on a governance message is the gov module account, `osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp`. Set `"expedited": true` for an expedited proposal (higher deposit and threshold, shorter voting period). Module parameter changes use that module's `MsgUpdateParams` as the message; `draft-proposal` lists the available types.
 
 ### submit-proposal (software upgrade)
 
-Submit an upgrade proposal and suggest a software upgrade at a specific block height.
+A software upgrade is a message-based proposal wrapping `MsgSoftwareUpgrade`:
 
-```bash
-osmosisd tx gov submit-proposal software-upgrade [proposal-file] --from WALLET_ADDRESS [flags]
+```json
+{
+  "messages": [
+    {
+      "@type": "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
+      "authority": "osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp",
+      "plan": {
+        "name": "v31",
+        "height": "12345678",
+        "info": "https://raw.githubusercontent.com/osmosis-labs/osmosis/main/networks/osmosis-1/upgrades/v31/mainnet/upgrade_binaries.json"
+      }
+    }
+  ],
+  "deposit": "7500000000uosmo",
+  "title": "Osmosis v31 Upgrade",
+  "summary": "Upgrade the chain to v31 at the specified height"
+}
 ```
 
-**Example**
+To cancel a pending upgrade, submit a proposal wrapping `MsgCancelUpgrade` (same `authority`).
 
-Update Osmosis to V11:
+### submit-legacy-proposal
 
-```bash
-osmosisd tx gov submit-proposal software-upgrade v11 --upgrade-height 5432450 --upgrade-info https://raw.githubusercontent.com/osmosis-labs/osmosis/main//osmosis-1/upgrades/v11/mainnet/upgrade_11_binaries.json  --title="Osmosis v11 Upgrade" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-### submit-proposal (cancel upgrade)
-
-Cancel the planned software upgrade before the upgrade height is reached.
+Legacy content-based proposals (text, and the Osmosis module content handlers) are submitted with `submit-legacy-proposal` and a proposal file.
 
 ```bash
-osmosisd tx gov submit-proposal cancel-software-upgrade --title="" --description"" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+osmosisd tx gov submit-legacy-proposal --proposal proposal.json --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-The software upgrade does not have to be specified, as this will cancel the currently active software upgrade proposal.
+A text (signaling) proposal file:
 
-### submit-proposal (update pool incentives)
+```json
+{
+  "title": "ProtoRev usage: OSMO revenue as Burn Mechanism",
+  "description": "This proposal signals that OSMO revenue generated from the ProtoRev module should be permanently removed from circulating supply by transfer to the null address. Nothing is executed onchain if this passes; it records community direction for follow-up work.",
+  "type": "Text",
+  "deposit": "7500000000uosmo"
+}
+```
 
-Update the weight of specified pool gauges in regards to their share of incentives.
+The Osmosis content types that remain on the gov router (superfluid asset set/remove, update pool incentives, update unpool whitelist, and the per-module content handlers) are also submitted this way. Run `osmosisd tx gov draft-proposal` to see the currently registered proposal types and generate the correct file for each.
+
+### Uploading a CosmWasm contract
+
+Storing contract code via governance is a `wasm` module command, not a `gov` subcommand:
 
 ```bash
-osmosisd tx gov submit-proposal update-pool-incentives [gaugeIDs] [weights] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+osmosisd tx wasm submit-proposal wasm-store crosschain_swaps.wasm \
+  --title "Upload Crosschain Swaps contract" \
+  --summary "Store the crosschain swaps contract code" \
+  --deposit 7500000000uosmo \
+  --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
-**Example**
-
-Update the pool incentives weights for `gauge_id` 0 and 1 to be 5000 and 20,000.
-
-```bash
-osmosisd tx gov submit-proposal update-pool-incentives 0,1 5000,20000 --from WALLET_ADDRESS --chain-id CHAIN_ID
-```
-
-### submit-proposal (set superfluid asset)
-
-Enable a pool as eligible for Superfluid Staking, allowing a portion of the OSMO within the pool to be staked - providing additional security for Osmosis as well as staking rewards and voting power for Liquidity Providers
-
-```bash
-osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-**Example**
-
-Add Superfluid Staking to Pool 831.
-
-```bash
-osmosisd tx gov submit-proposal set-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-### submit-proposal (remove superfluid asset)
-
-Disable a pool as eligible for Superfluid Staking, this prevents OSMO in a pool from being able to also be staked.
-
-```bash
-osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets= [GAMM] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-**Example**
-
-Remove Superfluid Staking from Pool 831.
-
-```bash
-osmosisd tx gov submit-proposal remove-superfluid-assets-proposal --superfluid-assets="gamm/pool/831" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-### submit-proposal (wasm-store)
-
-Upload a CosmWasm contract to Osmosis for subsequent instantiation.
-
-```bash
-osmosisd tx gov wasm-store [contract.wasm] --title="" --description="" --code-hash [checksum] --code-source-url [source] --builder [builder] --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-**Example**
-Upload Crosschain Swaps contract.
-
-```bash
-osmosisd tx gov submit-proposal wasm-store crosschain_swaps.wasm --title="Upload Crosschain Swaps contract" --description="" --code-hash e7cfd4ec2cf594de9d15863c6e324025045de39236186c03483af7c9e06d4949 --code-source-url "https://github.com/osmosis-labs/osmosis/raw/v31.x/tests/ibc-hooks/bytecode/crosschain_swaps.wasm" --builder "cosmwasm/workspace-optimizer:0.12.10" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-### submit-proposal (update unpool whitelist)
-
-Enable immediate unpooling on a pool, allowing users to choose to freeze their impermanent loss during the unbonding period in the event of unexpected severe conditions.
-
-```bash
-osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids [PoolIDs] --title="" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
-
-**Example**
-
-Allow immediate unpooling of pools 1, 2 and 3.
-
-```bash
-osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids "1, 2, 3" --title="Allow Immediate Unpooling of Pools 1, 2 and 3" --description="" --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
-```
+See [Uploading a contract via governance](/build/cosmwasm/submit-wasm-proposal) for the full flow including code verification metadata.
 
 ### deposit
 
@@ -436,32 +356,33 @@ Which outputs:
 
 ```json
 {
-  "voting_params": {
-    "voting_period": "432000000000000",
-    "proposal_voting_periods": null,
-    "expedited_voting_period": "86400000000000"
-  },
-  "tally_params": {
-    "quorum": "0.200000000000000000",
-    "threshold": "0.500000000000000000",
-    "veto_threshold": "0.334000000000000000",
-    "expedited_threshold": "0.666666666666666667"
-  },
-  "deposit_params": {
+  "params": {
     "min_deposit": [
       {
         "denom": "uosmo",
-        "amount": "1600000000"
+        "amount": "30000000000"
       }
     ],
-    "max_deposit_period": "1209600000000000",
-    "min_expedited_deposit": [
+    "max_deposit_period": "1209600s",
+    "voting_period": "432000s",
+    "quorum": "0.300000000000000000",
+    "threshold": "0.500000000000000000",
+    "veto_threshold": "0.334000000000000000",
+    "min_initial_deposit_ratio": "0.250000000000000000",
+    "proposal_cancel_ratio": "1.000000000000000000",
+    "proposal_cancel_dest": "",
+    "expedited_voting_period": "86400s",
+    "expedited_threshold": "0.800000000000000000",
+    "expedited_min_deposit": [
       {
         "denom": "uosmo",
-        "amount": "5000000000"
+        "amount": "100000000000"
       }
     ],
-    "min_initial_deposit_ratio": "0.250000000000000000"
+    "burn_vote_quorum": false,
+    "burn_proposal_deposit_prevote": false,
+    "burn_vote_veto": true,
+    "min_deposit_ratio": "0.010000000000000000"
   }
 }
 ```
@@ -482,20 +403,20 @@ The following tables show overall effects on different configurations of the `go
 | Higher                | More collateral required to bring a proposal to vote | More time to solicit funds to reach `min_deposit` | Longer voting period       |
 | Lower                 | Less collateral required to bring a proposal to vote | Less time to solicit funds to reach `min_deposit` | Shorter voting period      |
 | Constraints           | Value has to be a positive integer                   | Value has to be positive                          | Value has to be positive   |
-| Current configuration | `1600000000` (1600 OSMO)                             | `1209600000000000` (2 weeks)                      | `432000000000000` (5 days) |
+| Current configuration | `30000000000` (30,000 OSMO)                           | `1209600s` (2 weeks)                              | `432000s` (5 days)         |
 
-|                       | `quorum`                             | `threshold`                          | `veto`                               |
+|                       | `quorum`                             | `threshold`                          | `veto_threshold`                     |
 | --------------------- | ------------------------------------ | ------------------------------------ | ------------------------------------ |
 | Type                  | string (dec)                         | string (dec)                         | string (dec)                         |
-| Higher                | Easier for a proposal to be passed   | Easier for a proposal to be passed   | Easier for a proposal to be passed   |
-| Lower                 | Harder for a proposal to be passed   | Harder for a proposal to be passed   | Harder for a proposal to be passed   |
+| Higher                | Harder for a proposal to be passed   | Harder for a proposal to be passed   | Easier for a proposal to be vetoed   |
+| Lower                 | Easier for a proposal to be passed   | Easier for a proposal to be passed   | Harder for a proposal to be vetoed   |
 | Constraints           | Value has to be less or equal to `1` | Value has to be less or equal to `1` | Value has to be less or equal to `1` |
-| Current configuration | `0.2` (20%)                          | `0.5` (50%)                          | `0.334` (33.4%)                      |
+| Current configuration | `0.3` (30%)                          | `0.5` (50%)                          | `0.334` (33.4%)                      |
 
-|                       | `min_expedited_deposit`                                         | `expedited_threshold`                         | `expedited_voting_period`       |
+|                       | `expedited_min_deposit`                                         | `expedited_threshold`                         | `expedited_voting_period`       |
 | --------------------- | --------------------------------------------------------------- | --------------------------------------------- | ------------------------------- |
-| Type                  | string (time ns)                                                | string (dec)                                  | string (dec)                    |
-| Higher                | More collateral required to bring an expedited proposal to vote | Easier for an expedited proposal to be passed | Longer expedited voting period  |
-| Lower                 | Less collateral required to bring an expedited proposal to vote | Harder for an expedited proposal to be passed | Shorter expedited voting period |
+| Type                  | array (coins)                                                   | string (dec)                                  | string (dec)                    |
+| Higher                | More collateral required to bring an expedited proposal to vote | Harder for an expedited proposal to be passed | Longer expedited voting period  |
+| Lower                 | Less collateral required to bring an expedited proposal to vote | Easier for an expedited proposal to be passed | Shorter expedited voting period |
 | Constraints           | Value has to be a positive integer                              | Value has to be less or equal to `1`          | Value has to be positive        |
-| Current configuration | `5000000000` (5000 OSMO)                                        | `0.666666666666666667` (66.6%)                | `86400000000000` (1 day)        |
+| Current configuration | `100000000000` (100,000 OSMO)                                  | `0.8` (80%)                                   | `86400s` (1 day)                |

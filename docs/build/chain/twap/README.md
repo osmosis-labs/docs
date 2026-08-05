@@ -3,14 +3,14 @@
 
 The TWAP package is responsible for being able to serve TWAPs for every AMM pool.
 
-A time weighted average price is a function that takes a sequence of `(time, price)` pairs, and returns a price representing an 'average' over the entire time period. The method of averaging can vary from the classic arithmetic mean, (such as geometric mean, harmonic mean), however we currently only implement arithmetic mean.
+A time weighted average price is a function that takes a sequence of `(time, price)` pairs, and returns a price representing an 'average' over the entire time period. The method of averaging can vary (such as the arithmetic mean, geometric mean, or harmonic mean). We currently implement both the arithmetic mean and the geometric mean.
 
 ## Arithmetic mean TWAP
 
 Using the arithmetic mean, the TWAP of a sequence `(t_i, p_i)`, from `t_0` to `t_n`, indexed by time in ascending order, is: $$\frac{1}{t_n - t_0}\sum_{i=0}^{n-1} p_i (t_{i+1} - t_i)$$
 Notice that the latest price `p_n` isn't used, as it has lasted for a time interval of `0` seconds in this range!
 
-To illustrate with an example, given the sequence: `(0s, $$1), (4s, $$6), (5s, $1)`, the arithmetic mean TWAP is: 
+To illustrate with an example, given the sequence: `(0s, $1), (4s, $6), (5s, $1)`, the arithmetic mean TWAP is: 
 $$\frac{\$1 * (4s - 0s) + \$6 * (5s - 4s)}{5s - 0s} = \frac{\$10}{5} = \$2$$
 
 ## Computation via accumulators method
@@ -57,11 +57,25 @@ The primary intended API is `GetArithmeticTwap`, which is documented below, and 
 func (k Keeper) GetArithmeticTwap(ctx sdk.Context,
 	poolId uint64,
 	baseAssetDenom string, quoteAssetDenom string,
-	startTime time.Time, endTime time.Time) (sdk.Dec, error) { ... }
+	startTime time.Time, endTime time.Time) (osmomath.Dec, error) { ... }
 ```
 
 There are convenience methods for `GetArithmeticTwapToNow` which sets `endTime = ctx.BlockTime()`, and has minor gas reduction.
 For users who need TWAPs outside the 48 hours stored in the state machine, you can get the latest accumulation store record from `GetBeginBlockAccumulatorRecord`.
+
+The module also exposes a geometric mean variant with the same shape and a similar cosmwasm binding:
+
+```go
+// GetGeometricTwap returns a geometric time weighted average price.
+// It takes the same arguments and obeys the same constraints as GetArithmeticTwap,
+// but computes the average using the geometric mean instead of the arithmetic mean.
+func (k Keeper) GetGeometricTwap(ctx sdk.Context,
+	poolId uint64,
+	baseAssetDenom string, quoteAssetDenom string,
+	startTime time.Time, endTime time.Time) (osmomath.Dec, error) { ... }
+```
+
+As with the arithmetic variant, there is a `GetGeometricTwapToNow` convenience method which sets `endTime = ctx.BlockTime()`.
 
 ## Code layout
 
@@ -86,7 +100,7 @@ Because Osmosis supports multi-asset pools, a complicating factor is that we hav
 For every pool, at a given point in time, we make one twap record entry per unique pair of denoms in the pool. If a pool has `k` denoms, the number of unique pairs is `k * (k - 1) / 2`.
 All public API's for the module will sort the input denoms to the canonical representation, so the caller does not need to worry about this. (The canonical representation is the denoms in lexicographical order)
 
-Each twap record stores [(source)](https://github.com/osmosis-labs/osmosis/tree/main/proto/osmosis/gamm/twap):
+Each twap record stores [(source)](https://github.com/osmosis-labs/osmosis/tree/main/proto/osmosis/twap/v1beta1):
 
 * last spot price of base asset A in terms of quote asset B
 * last spot price of base asset B in terms of quote asset A
@@ -124,38 +138,10 @@ and then clears on the block committing. This is done to save on gas (and I/O fo
 
 ## Pruning
 
-To avoid infinite growth of the state with the TWAP records, we attempt to delete some old records after every epoch.
-Essentially, records younger than a configurable parameter are pruned away. Currently, this parameter is set to 48 hours.
-Therefore, at the end of an epoch records younger than 48 hours before the current block time are pruned away.
+To avoid unbounded growth of the TWAP record state, old records are pruned after every epoch. Records
+**older** than the `RecordHistoryKeepPeriod` parameter are removed, currently 48 hours, so at the end
+of an epoch the keeper prunes records older than 48 hours before the current block time.
 
-## Testing Methodology
-
-The pre-release testing methodology planned for the twap module is:
-
-- [ ] Using table driven unit tests to test all foreseen states of the module
-  - hook testing
-    - All swaps correctly trigger twap record updates
-    - Create pools cause records to be created
-  - store
-    - EndBlock triggers all relevant twaps to be saved correctly
-    - Block commit wipes temporary stores
-  - logic
-    - Make tables of expected input / output cases for:
-      - getMostRecentRecord
-      - getInterpolatedRecord
-      - updateRecord
-      - computeArithmeticTwap
-    - Test overflow handling in all relevant arithmetic
-    - Complete testing code coverage (up to return err lines) for logic.go file
-  - API
-    - Unit tests for the public API, under foreseeable setup conditions
-- [ ] End to end migration tests
-  - Tests that migration of Osmosis pools created prior to the TWAP upgrade, get TWAPs recorded starting at the v11 upgrade.
-- [ ] Integration into the Osmosis simulator
-  - The osmosis simulator, simulates building up complex state machine states, in random ways not seen before. We plan on, in a property check, maintaining expected TWAPs for short time ranges, and seeing that the keeper query will return the same value as what we get off of the raw price history for short history intervals.
-  - Not currently deemed release blocking, but planned: Integration for gas tracking, to ensure gas of reads/writes does not grow with time.
-- [ ] Mutation testing usage
-  - integration of the TWAP module into [go mutation testing](https://github.com/osmosis-labs/go-mutesting): 
-    - We've seen with the `tokenfactory` module that it succeeds at surfacing behavior for untested logic.
-        e.g. if you delete a line, or change the direction of a conditional, mutation tests show if regular Go tests catch it.
-    - We expect to get this to a state, where after mutation testing is ran, the only items it mutates, that is not caught in a test, is: Deleting `return err`, or `panic` lines, in the situation where that error return or panic isn't reachable.
+One record earlier than the keep period is always retained per denom pair, so that a TWAP spanning the
+edge of the window still has an earlier record to interpolate from. Pruning is also rate limited per
+block: if the limit is reached, the keeper stores how far it got and resumes in the next block.
