@@ -96,6 +96,8 @@ When `burnFromAddress` is left empty, the module burns from the sender's own bal
 - Safety check the following
   - Check that the denom is created via the `tokenfactory` module
   - Check that the sender of the message is the admin of the denom
+  - Check that `burnFromAddress` is not a module account, which fails with
+    `burning from Module Account is not allowed`
 - Burn designated amount of tokens for the denom via `bank` module
 
 ### ChangeAdmin

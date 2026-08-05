@@ -141,37 +141,3 @@ and then clears on the block committing. This is done to save on gas (and I/O fo
 To avoid infinite growth of the state with the TWAP records, we attempt to delete some old records after every epoch.
 Essentially, records younger than a configurable parameter are pruned away. Currently, this parameter is set to 48 hours.
 Therefore, at the end of an epoch records younger than 48 hours before the current block time are pruned away.
-
-## Testing Methodology
-
-> This section documents the original pre-release test plan for the twap module and is retained for historical context. The unchecked items below reflect the plan as written before launch (the migration anchor references the v11 upgrade) and are not a live status tracker.
-
-The pre-release testing methodology planned for the twap module is:
-
-- [ ] Using table driven unit tests to test all foreseen states of the module
-  - hook testing
-    - All swaps correctly trigger twap record updates
-    - Create pools cause records to be created
-  - store
-    - EndBlock triggers all relevant twaps to be saved correctly
-    - Block commit wipes temporary stores
-  - logic
-    - Make tables of expected input / output cases for:
-      - getMostRecentRecord
-      - getInterpolatedRecord
-      - updateRecord
-      - computeArithmeticTwap
-    - Test overflow handling in all relevant arithmetic
-    - Complete testing code coverage (up to return err lines) for logic.go file
-  - API
-    - Unit tests for the public API, under foreseeable setup conditions
-- [ ] End to end migration tests
-  - Tests that migration of Osmosis pools created prior to the TWAP upgrade, get TWAPs recorded starting at the v11 upgrade.
-- [ ] Integration into the Osmosis simulator
-  - The osmosis simulator, simulates building up complex state machine states, in random ways not seen before. We plan on, in a property check, maintaining expected TWAPs for short time ranges, and seeing that the keeper query will return the same value as what we get off of the raw price history for short history intervals.
-  - Not currently deemed release blocking, but planned: Integration for gas tracking, to ensure gas of reads/writes does not grow with time.
-- [ ] Mutation testing usage
-  - integration of the TWAP module into [go mutation testing](https://github.com/osmosis-labs/go-mutesting): 
-    - We've seen with the `tokenfactory` module that it succeeds at surfacing behavior for untested logic.
-        e.g. if you delete a line, or change the direction of a conditional, mutation tests show if regular Go tests catch it.
-    - We expect to get this to a state, where after mutation testing is ran, the only items it mutates, that is not caught in a test, is: Deleting `return err`, or `panic` lines, in the situation where that error return or panic isn't reachable.
