@@ -802,7 +802,7 @@ context parameter. The cache context is dropped on failure and committed on succ
 
 ### Calculating Swap Amounts
 
-Let's now focus on the core logic of calculating swap amounts.
+The core logic for calculating swap amounts follows.
 We mainly focus on `calcOutAmtGivenIn` as the high-level steps of `calcInAmtGivenOut`
 are similar.
 
@@ -1403,9 +1403,9 @@ this design.
 ## Target Properties
 
 As a starting point, it's important to understand the properties of a healthy liquidity pool.
-These are all, of course, properties that become self-sustaining once the positive feedback cycle
-between liquidity and volume kicks off, but for the sake of understanding what exactly it is that
-we are trying to bootstrap with incentives it helps to be explicit with our goals.
+These properties become self-sustaining once the positive feedback cycle between liquidity and
+volume begins, but stating them explicitly clarifies what the incentives are intended to
+bootstrap.
 
 ### Liquidity Depth
 
@@ -1675,8 +1675,8 @@ pool:
   total_weight: "1073741824000000"
 ```
 
-Let's say we want to migrate this into a CL pool where `uosmo` is the quote
-asset and `arb` base unit is the base asset.
+Consider migrating this into a CL pool where `uosmo` is the quote
+asset and the `arb` base unit is the base asset.
 
 Note that quote asset is denom1 and base asset is denom0.
 We want quote asset to be `uosmo` so that limit orders on ticks
