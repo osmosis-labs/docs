@@ -104,7 +104,7 @@ The calculation is also able to be reversed, the case where user
 provides `tokenOut`. The calculation for the amount of tokens that the
 user should be putting in is done through the following formula:
 
-`tokenBalanceIn * [{tokenBalanceOut / (tokenBalanceOut - tokenAmountOut)} ^ (tokenWeightOut / tokenWeightIn) -1] / tokenAmountIn`
+`tokenBalanceIn * [{tokenBalanceOut / (tokenBalanceOut - tokenAmountOut)} ^ (tokenWeightOut / tokenWeightIn) - 1] / (1 - swapFee)`
 
 Existing Swap types:
 - SwapExactAmountIn

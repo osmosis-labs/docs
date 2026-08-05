@@ -142,25 +142,54 @@ The tracking contract uses the following concepts
 
 #### Messages
 
-The contract specifies the following messages:
+The deployed contract interface is defined in
+[`msg.rs`](https://github.com/osmosis-labs/osmosis/blob/main/x/ibc-rate-limit/contracts/rate-limiter/src/msg.rs).
 
 ##### Query
 
-* GetQuotas - Returns the quotas for a path
+| Query | Purpose |
+| --- | --- |
+| `GetQuotas` | Returns the quotas for a denom and channel path. |
+| `GetRoleOwners` | Returns every account that owns one or more roles. |
+| `GetRoles` | Returns the roles held by an account. |
+| `GetMessageIds` | Returns all queued message IDs. |
+| `GetMessage` | Returns a queued message by ID. |
+| `GetDenomRestrictions` | Returns the outbound channel restrictions for a denom. |
 
 ##### Exec
 
-* AddPath - Adds a list of quotas for a path
-* RemovePath - Removes a path
-* ResetPathQuota - If a rate limit has been reached, the contract's governance address can reset the quota so that transfers are allowed again
+| Execute message | Purpose |
+| --- | --- |
+| `AddPath` | Adds one or more quotas for a denom and channel path. |
+| `RemovePath` | Removes a rate-limited path. |
+| `ResetPathQuota` | Resets the flow used by one quota on a path. |
+| `SetDenomRestrictions` | Restricts outbound transfers of a denom to an allowlist of source channels. |
+| `UnsetDenomRestrictions` | Removes the outbound channel restriction for a denom. |
+| `GrantRole` | Gives an account one of the contract's management roles. |
+| `RevokeRole` | Removes a management role from an account. |
+| `EditPathQuota` | Changes a quota's duration or send and receive percentages without replacing the entire path. |
+| `RemoveMessage` | Removes a pending message from the timelock queue. |
+| `SetTimelockDelay` | Sets the delay, in hours, applied to management messages submitted by an account. |
+| `ProcessMessages` | Executes eligible messages from the timelock queue. This operation is permissionless. |
+
+Management executes are protected by role-based access control. Roles separate
+path management, quota editing, denom restrictions, role administration,
+timelock configuration, and message removal. A signer with a configured timelock
+queues its management message instead of executing it immediately. Authorization
+is checked before the message enters the queue. Once the stored delay expires,
+any account can call `ProcessMessages` to execute it.
+
+Denom restrictions apply to outbound sends. A restricted denom can leave only
+through its configured source channels. An unset restriction, or a restriction
+with no channels, does not constrain that denom.
 
 ##### Sudo
 
 Sudo messages can only be executed by the chain.
 
-* SendPacket - Increments the amount used out of the send quota and checks that the send is allowed. If it isn't, it will return a RateLimitExceeded error
-* RecvPacket - Increments the amount used out of the receive quota and checks that the receive is allowed. If it isn't, it will return a RateLimitExceeded error
-* UndoSend - If a send has failed, the undo message is used to remove its cost from the send quota
+* `SendPacket` - Increments the amount used from the send quota and rejects sends that exceed the quota or a denom restriction.
+* `RecvPacket` - Increments the amount used from the receive quota and rejects receives that exceed the quota.
+* `UndoSend` - Removes the send from the flow when a packet fails or times out.
 
 All of these messages receive the packet from the chain and extract the necessary information to process the packet and determine if it should be the rate limited. 
 

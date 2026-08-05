@@ -213,7 +213,7 @@ The Osmo Equivalent Multiplier for an asset is the multiplier it has for
 its value relative to OSMO.
 
 Different types of assets can have different functions for calculating
-their multiplier. We currently support two asset types.
+their multiplier. The module defines three asset types.
 
 1. Native Token
 
@@ -224,6 +224,11 @@ The multiplier for OSMO is always 1.
 The spot price for an asset is based on a designated
 osmo-basepair pool of an asset. The multiplier is set once per epoch, at
 the beginning of the epoch.
+
+3. Concentrated Liquidity Shares
+
+Concentrated liquidity positions use the concentrated-share type. Their OSMO
+equivalent value is calculated from the position's underlying liquidity.
 
 ### State changes
 
@@ -783,6 +788,7 @@ message AssetTypeResponse {
 enum SuperfluidAssetType {
   SuperfluidAssetTypeNative = 0;
   SuperfluidAssetTypeLPShare = 1;
+  SuperfluidAssetTypeConcentratedShare = 2;
 }
 ```
 
@@ -791,10 +797,10 @@ AssetTypes are meant for when we support more types of assets for
 superfluid staking than just LP shares. Each AssetType has a different
 algorithm used to get its "Osmo equivalent value".
 
-We represent different types of superfluid assets as different enums.
-Only enum `1` is actually used. Enum value `0` is reserved
-for the Native staking token, for if the legacy staking
-workflow is deprecated to have native staking also go through the superfluid module.
+We represent different types of superfluid assets as different enum values.
+Classic GAMM pool shares use `SuperfluidAssetTypeLPShare`, while concentrated
+liquidity positions use `SuperfluidAssetTypeConcentratedShare`. Enum value `0`
+represents the native staking token.
 
 If this query errors, that means that a denom is not allowed to be used
 for superfluid staking.

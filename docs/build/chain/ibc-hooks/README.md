@@ -84,9 +84,9 @@ An ICS20 packet is formatted correctly for wasmhooks iff the following all hold:
 * `memo` is not blank
 * `memo` is valid JSON
 * `memo` has at least one key, with name `"wasm"`
-* `memo["wasm"]` has exactly two entries, `"contract"` and `"msg"`
+* `memo["wasm"]` is an object containing a valid `"contract"` address and a `"msg"` field. Additional entries are allowed
 * `memo["wasm"]["msg"]` is a valid JSON object
-* `receiver == "" || receiver == memo["wasm"]["contract"]`
+* `receiver == memo["wasm"]["contract"]`. An empty receiver is not accepted
 
 We consider an ICS20 packet as directed towards wasmhooks iff all of the following hold:
 
@@ -225,6 +225,12 @@ If `is_async_ack` is set to true, `OnRecvPacket` will return `nil` and the ack w
 contract will be stored as the "ack actor" for the packet so that only that contract is allowed to send an ack
 for it.
 
+Async acknowledgements are accepted only from contracts listed in the
+governance-controlled `allowed_async_ack_contracts` module parameter. If the
+executed contract is not on that allowlist, returning `is_async_ack: true`
+causes packet handling to fail. The parameter is defined in the
+[`ibchooks` params proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/ibchooks/params.proto).
+
 It is up to the contract developers to decide which conditions will trigger the ack to be sent.
 
 #### Sending an async ack
@@ -295,9 +301,9 @@ pub enum IBCAck {
 }
 ```
 
-Note: the sudo call is required to potentially allow anyone to send the `MsgEmitIBCAck` message. For now, however,
-this is artificially limited so that the message can only be sent by the same contract. This could be expanded in
-the future if needed.
+Only the contract stored as the packet's ack actor can send its
+`MsgEmitIBCAck`. This prevents another account or contract from supplying the
+acknowledgement for that packet.
 
 The `MsgEmitIBCAck` message is defined in the [`osmosis.ibchooks` proto](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/ibchooks/tx.proto).
 

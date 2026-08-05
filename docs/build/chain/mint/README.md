@@ -58,7 +58,7 @@ type Minter struct {
 
 ### Params
 
-Minting [`Params`](https://github.com/osmosis-labs/osmosis/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L168) are held in the global params store.
+Minting [`Params`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/mint/v1beta1/mint.proto) are held in the module's parameter store.
 
 ### LastReductionEpoch
 
@@ -152,7 +152,7 @@ The minting module emits the following events:
 Query all the current mint parameter values
 
 ```sh
-query mint params
+osmosisd query mint params
 ```
 
 <details>
@@ -164,84 +164,30 @@ List all current mint parameters in json format by:
 osmosisd query mint params -o json | jq
 ```
 
-An example of the output:
+Example Osmosis mainnet output, queried on 2026-08-04:
 
 ```json
 {
-  "mint_denom": "uosmo",
-  "genesis_epoch_provisions": "821917808219.178082191780821917",
-  "epoch_identifier": "day",
-  "reduction_period_in_epochs": "365",
-  "reduction_factor": "0.666666666666666666",
-  "distribution_proportions": {
-    "staking": "0.250000000000000000",
-    "pool_incentives": "0.450000000000000000",
-    "developer_rewards": "0.250000000000000000",
-    "community_pool": "0.050000000000000000"
-  },
-  "weighted_developer_rewards_receivers": [
-    {
-      "address": "osmo14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
-      "weight": "0.288700000000000000"
+  "params": {
+    "mint_denom": "uosmo",
+    "genesis_epoch_provisions": "821917808219.178082191780821917",
+    "epoch_identifier": "day",
+    "reduction_period_in_epochs": "730",
+    "reduction_factor": "0.666666666666666666",
+    "distribution_proportions": {
+      "staking": "0.080000000000000000",
+      "pool_incentives": "0.000000000000000000",
+      "developer_rewards": "0.250000000000000000",
+      "community_pool": "0.670000000000000000"
     },
-    {
-      "address": "osmo1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
-      "weight": "0.229000000000000000"
-    },
-    {
-      "address": "osmo13lt0hzc6u3htsk7z5rs6vuurmgg4hh2ecgxqkf",
-      "weight": "0.162500000000000000"
-    },
-    {
-      "address": "osmo1kvc3he93ygc0us3ycslwlv2gdqry4ta73vk9hu",
-      "weight": "0.109000000000000000"
-    },
-    {
-      "address": "osmo19qgldlsk7hdv3ddtwwpvzff30pxqe9phq9evxf",
-      "weight": "0.099500000000000000"
-    },
-    {
-      "address": "osmo19fs55cx4594een7qr8tglrjtt5h9jrxg458htd",
-      "weight": "0.060000000000000000"
-    },
-    {
-      "address": "osmo1ssp6px3fs3kwreles3ft6c07mfvj89a544yj9k",
-      "weight": "0.015000000000000000"
-    },
-    {
-      "address": "osmo1c5yu8498yzqte9cmfv5zcgtl07lhpjrj0skqdx",
-      "weight": "0.010000000000000000"
-    },
-    {
-      "address": "osmo1yhj3r9t9vw7qgeg22cehfzj7enwgklw5k5v7lj",
-      "weight": "0.007500000000000000"
-    },
-    {
-      "address": "osmo18nzmtyn5vy5y45dmcdnta8askldyvehx66lqgm",
-      "weight": "0.007000000000000000"
-    },
-    {
-      "address": "osmo1z2x9z58cg96ujvhvu6ga07yv9edq2mvkxpgwmc",
-      "weight": "0.005000000000000000"
-    },
-    {
-      "address": "osmo1tvf3373skua8e6480eyy38avv8mw3hnt8jcxg9",
-      "weight": "0.002500000000000000"
-    },
-    {
-      "address": "osmo1zs0txy03pv5crj2rvty8wemd3zhrka2ne8u05n",
-      "weight": "0.002500000000000000"
-    },
-    {
-      "address": "osmo1djgf9p53n7m5a55hcn6gg0cm5mue4r5g3fadee",
-      "weight": "0.001000000000000000"
-    },
-    {
-      "address": "osmo1488zldkrn8xcjh3z40v2mexq7d088qkna8ceze",
-      "weight": "0.000800000000000000"
-    }
-  ],
-  "minting_rewards_distribution_start_epoch": "1"
+    "weighted_developer_rewards_receivers": [
+      {
+        "address": "osmo1f3w7ved2murkx4rg9qw8fyk5mfk2285hzzsxh5",
+        "weight": "1.000000000000000000"
+      }
+    ],
+    "minting_rewards_distribution_start_epoch": "1"
+  }
 }
 ```
 
@@ -252,7 +198,7 @@ An example of the output:
 Query the current epoch provisions
 
 ```sh
-query mint epoch-provisions
+osmosisd query mint epoch-provisions
 ```
 
 <details>
@@ -264,21 +210,47 @@ List the current epoch provisions:
 osmosisd query mint epoch-provisions
 ```
 
-As of this writing, this number will be equal to the `genesis-epoch-provisions`. Once the `reduction_period_in_epochs` is reached, the `reduction_factor` will be initiated and reduce the amount of OSMO minted per epoch.
+Example Osmosis mainnet response, queried on 2026-08-04:
+
+```yaml
+epoch_provisions: "121765601217.656011811263318112"
+```
+
+The current value decreases by `reduction_factor` after each
+`reduction_period_in_epochs`; it is not the same as
+`genesis_epoch_provisions` after the first reduction.
 </details>
+
+### inflation
+
+Query the current annualized minting inflation:
+
+```bash
+osmosisd query mint inflation
+```
+
+Example Osmosis mainnet response, queried on 2026-08-04:
+
+```yaml
+inflation: "0.018717643501583930"
+```
 
 ## Appendix
 
-### Current Configuration
+### Mainnet Configuration Snapshot
 
-`mint` **module: Network Parameter effects and current configuration**
+`mint` **module: Network parameter effects and configuration queried on 2026-08-04**
 
 The following tables show overall effects on different configurations of the `mint` related network parameters:
 
-| mint_denom            | epoch_provisions | epoch_identifier                   |
-| --------------------- | ---------------- | ---------------------------------- | ---------------------------------------- |
-| Type                  | string           | string (dec)                       | string                                   |
-| Higher                | N/A              | Higher inflation rate              | Increases time to reduction_period       |
-| Lower                 | N/A              | Lower inflation rate               | Decreases time to reduction_period       |
-| Constraints           | N/A              | Value has to be a positive integer | String must be day, week, month, or year |
-| Current configuration | uosmo            | 821917808219.178 (821,917.808 OSMO) | day                                     |
+|                       | `mint_denom` | `genesis_epoch_provisions` | `epoch_identifier` | `reduction_period_in_epochs` |
+| --------------------- | ------------- | -------------------------- | ------------------ | ---------------------------- |
+| Type                  | string        | decimal                    | string             | integer                      |
+| Higher                | N/A           | Higher initial issuance    | N/A                | More time between reductions |
+| Lower                 | N/A           | Lower initial issuance     | N/A                | Less time between reductions |
+| Constraints           | Valid denom   | Positive                   | Valid epoch identifier | Positive                  |
+| Current configuration | `uosmo`       | `821917808219.178082191780821917` | `day` | `730`                 |
+
+The live params query is authoritative for mutable distribution proportions
+and reward receiver addresses. The current epoch provision and inflation are
+derived values exposed by their respective queries.

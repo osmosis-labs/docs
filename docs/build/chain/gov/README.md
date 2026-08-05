@@ -12,21 +12,31 @@ The `gov` module enables onchain governance which allows Osmosis token holders t
 
 ### Network parameters
 
-The network parameters for the gov module are:
+The gov module exposes the following parameters. Coin amounts are in the
+minimal denomination, `uosmo`. Durations use the protobuf duration format.
 
-- **`deposit_params`** - Deposit related parameters
+| Parameter | Purpose | Current mainnet value |
+| --- | --- | --- |
+| `min_deposit` | Total deposit required for a regular proposal to enter voting | `30000000000uosmo` (30,000 OSMO) |
+| `max_deposit_period` | Maximum time allowed to reach the required deposit | `1209600s` (14 days) |
+| `voting_period` | Voting period for a regular proposal | `432000s` (5 days) |
+| `quorum` | Minimum fraction of bonded voting power that must participate | `0.3` (30%) |
+| `threshold` | Minimum Yes share of non-abstaining votes required to pass | `0.5` (50%) |
+| `veto_threshold` | NoWithVeto share at which a proposal is vetoed | `0.334` (33.4%) |
+| `min_initial_deposit_ratio` | Minimum initial deposit as a fraction of the applicable minimum deposit | `0.25` (25%) |
+| `proposal_cancel_ratio` | Portion of the proposal deposit charged when the proposer cancels it | `1.0` (100%) |
+| `proposal_cancel_dest` | Optional destination for the cancellation charge; an empty value burns the charge | Empty |
+| `expedited_voting_period` | Voting period for an expedited proposal | `86400s` (1 day) |
+| `expedited_threshold` | Minimum Yes share of non-abstaining votes required for an expedited proposal | `0.8` (80%) |
+| `expedited_min_deposit` | Total deposit required for an expedited proposal to enter voting | `100000000000uosmo` (100,000 OSMO) |
+| `burn_vote_quorum` | Whether to burn deposits when a proposal fails quorum | `false` |
+| `burn_proposal_deposit_prevote` | Whether to burn deposits when a proposal fails to enter voting | `false` |
+| `burn_vote_veto` | Whether to burn deposits when a proposal is vetoed | `true` |
+| `min_deposit_ratio` | Minimum accepted individual deposit as a fraction of the applicable minimum deposit | `0.01` (1%) |
 
-  - **`min_deposit`**: Minimum deposit (in uOSMO) for a proposal to enter voting period
-  - **`max_deposit_period`**: Maximum period (in nanoseconds) for OSMO holders to deposit on a proposal.
-
-- **`voting_params`** - Voting related parameters
-
-  - **`voting_period`**: The length of the voting period (in nanoseconds)
-
-- **`tally_params`** - Tally related parameters
-  - **`quorum`**: The minimum percentage (in decimal form) of voting power that needs to be casted on a proposal for the result to be valid
-  - **`threshold`**: Minimum proportion (in decimal form) of Yes votes (excluding Abstain votes) for the proposal to be accepted
-  - **`veto`**: Minimum value of Veto votes to total votes ratio (in decimal form) for proposal to be vetoed.
+The regular minimum initial deposit is therefore 7,500 OSMO. The expedited
+minimum initial deposit is 25,000 OSMO. Subsequent deposits must be at least
+300 OSMO for a regular proposal or 1,000 OSMO for an expedited proposal.
 
 ### The Governance Procedure
 
@@ -42,21 +52,25 @@ Users submits a proposal with an initial deposit. The proposal will then become 
 
 **Phase 2 - Deposit period**
 
-During the deposit period, users can deposit and support an active proposal. Once the deposit of the proposal reaches the `min_deposit`, it will enter the voting period. Otherwise, if the proposal is not successfully funded within `max_deposit_period`, It will become inactive and **all the deposits will be burned**.
+During the deposit period, users can deposit and support an active proposal. Once the deposit reaches the applicable regular or expedited minimum, the proposal enters the voting period. If it does not reach that minimum within `max_deposit_period`, the proposal becomes inactive. Osmosis currently refunds these deposits because `burn_proposal_deposit_prevote` is `false`.
+
+If the proposer cancels before voting ends, the current
+`proposal_cancel_ratio` charges the full deposit. Because
+`proposal_cancel_dest` is empty, that charge is burned.
 
 **Phase 3 - Voting period**
 
 During the voting period, staked (bonded) tokens will be able to participate in the voting process. Users can choose one of the following options: `yes`, `no`, `no_with_veto` and `abstain`.
 
-After the `voting_period` has passed, the proposal will be considered "Rejected" and **the funds deposited in the deposit period will be burned if**:
+After the voting period, a rejected proposal's deposit is normally refunded.
+This includes rejection because participation did not reach `quorum`, since
+`burn_vote_quorum` is currently `false`. Deposits are burned when the
+`no_with_veto` share reaches `veto_threshold`, since `burn_vote_veto` is
+currently `true`.
 
-- Votes do not reach the `quorum`
-- Enough vote `no_with_veto` when compared with total votes to meet the veto to total votes ratio specified in `tally_params`
-
-The proposal will be considered "Rejected" and **the funds deposited in the deposit period will be returned if**
-
-- No one votes (or everyone votes to `abstain`)
-- More than `threshold` of non-abstaining voters vote `no`
+A proposal is also rejected, with its deposit refunded, when the Yes share of
+non-abstaining votes does not reach `threshold` or `expedited_threshold` as
+applicable.
 
 Otherwise, the proposal will be accepted and changes will be implemented according to the proposal.
 
@@ -74,7 +88,7 @@ typical flags would be:
 
 - `--gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3` to auto-calculate gas required. The `--gas-prices` value is illustrative: Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee`) and pass a value at or above it.
 - `--from WALLET_ADDRESS` to set the running wallet
-- `--deposit=1500000000uosmo` to provide the initial 1500 OSMO (25% of the `min_deposit`) deposit for putting a proposal on chain
+- `--deposit=7500000000uosmo` to provide the minimum initial deposit of 7,500 OSMO for a regular proposal
 
 On the Cosmos SDK gov module that Osmosis runs (`v1`), proposals are submitted in one of two ways:
 
@@ -110,7 +124,7 @@ The `proposal.json` file has this shape:
     }
   ],
   "metadata": "ipfs://CID",
-  "deposit": "1500000000uosmo",
+  "deposit": "7500000000uosmo",
   "title": "Community pool spend",
   "summary": "Fund a project from the community pool",
   "expedited": false
@@ -136,7 +150,7 @@ A software upgrade is a message-based proposal wrapping `MsgSoftwareUpgrade`:
       }
     }
   ],
-  "deposit": "1500000000uosmo",
+  "deposit": "7500000000uosmo",
   "title": "Osmosis v31 Upgrade",
   "summary": "Upgrade the chain to v31 at the specified height"
 }
@@ -159,7 +173,7 @@ A text (signaling) proposal file:
   "title": "Match External Incentives for DOGE/OSMO and DOGE/ATOM pairs",
   "description": "Signaling proposal description",
   "type": "Text",
-  "deposit": "1500000000uosmo"
+  "deposit": "7500000000uosmo"
 }
 ```
 
@@ -173,7 +187,7 @@ Storing contract code via governance is a `wasm` module command, not a `gov` sub
 osmosisd tx wasm submit-proposal wasm-store crosschain_swaps.wasm \
   --title "Upload Crosschain Swaps contract" \
   --summary "Store the crosschain swaps contract code" \
-  --deposit 1500000000uosmo \
+  --deposit 7500000000uosmo \
   --from WALLET_ADDRESS --gas=auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
@@ -342,32 +356,33 @@ Which outputs:
 
 ```json
 {
-  "voting_params": {
-    "voting_period": "432000000000000",
-    "proposal_voting_periods": null,
-    "expedited_voting_period": "86400000000000"
-  },
-  "tally_params": {
-    "quorum": "0.300000000000000000",
-    "threshold": "0.500000000000000000",
-    "veto_threshold": "0.334000000000000000",
-    "expedited_threshold": "0.800000000000000000"
-  },
-  "deposit_params": {
+  "params": {
     "min_deposit": [
       {
         "denom": "uosmo",
-        "amount": "6000000000"
+        "amount": "30000000000"
       }
     ],
-    "max_deposit_period": "1209600000000000",
-    "min_expedited_deposit": [
+    "max_deposit_period": "1209600s",
+    "voting_period": "432000s",
+    "quorum": "0.300000000000000000",
+    "threshold": "0.500000000000000000",
+    "veto_threshold": "0.334000000000000000",
+    "min_initial_deposit_ratio": "0.250000000000000000",
+    "proposal_cancel_ratio": "1.000000000000000000",
+    "proposal_cancel_dest": "",
+    "expedited_voting_period": "86400s",
+    "expedited_threshold": "0.800000000000000000",
+    "expedited_min_deposit": [
       {
         "denom": "uosmo",
-        "amount": "20000000000"
+        "amount": "100000000000"
       }
     ],
-    "min_initial_deposit_ratio": "0.250000000000000000"
+    "burn_vote_quorum": false,
+    "burn_proposal_deposit_prevote": false,
+    "burn_vote_veto": true,
+    "min_deposit_ratio": "0.010000000000000000"
   }
 }
 ```
@@ -388,20 +403,20 @@ The following tables show overall effects on different configurations of the `go
 | Higher                | More collateral required to bring a proposal to vote | More time to solicit funds to reach `min_deposit` | Longer voting period       |
 | Lower                 | Less collateral required to bring a proposal to vote | Less time to solicit funds to reach `min_deposit` | Shorter voting period      |
 | Constraints           | Value has to be a positive integer                   | Value has to be positive                          | Value has to be positive   |
-| Current configuration | `6000000000` (6000 OSMO)                             | `1209600000000000` (2 weeks)                      | `432000000000000` (5 days) |
+| Current configuration | `30000000000` (30,000 OSMO)                           | `1209600s` (2 weeks)                              | `432000s` (5 days)         |
 
-|                       | `quorum`                             | `threshold`                          | `veto`                               |
+|                       | `quorum`                             | `threshold`                          | `veto_threshold`                     |
 | --------------------- | ------------------------------------ | ------------------------------------ | ------------------------------------ |
 | Type                  | string (dec)                         | string (dec)                         | string (dec)                         |
-| Higher                | Easier for a proposal to be passed   | Easier for a proposal to be passed   | Easier for a proposal to be passed   |
-| Lower                 | Harder for a proposal to be passed   | Harder for a proposal to be passed   | Harder for a proposal to be passed   |
+| Higher                | Harder for a proposal to be passed   | Harder for a proposal to be passed   | Easier for a proposal to be vetoed   |
+| Lower                 | Easier for a proposal to be passed   | Easier for a proposal to be passed   | Harder for a proposal to be vetoed   |
 | Constraints           | Value has to be less or equal to `1` | Value has to be less or equal to `1` | Value has to be less or equal to `1` |
 | Current configuration | `0.3` (30%)                          | `0.5` (50%)                          | `0.334` (33.4%)                      |
 
-|                       | `min_expedited_deposit`                                         | `expedited_threshold`                         | `expedited_voting_period`       |
+|                       | `expedited_min_deposit`                                         | `expedited_threshold`                         | `expedited_voting_period`       |
 | --------------------- | --------------------------------------------------------------- | --------------------------------------------- | ------------------------------- |
 | Type                  | array (coins)                                                   | string (dec)                                  | string (dec)                    |
-| Higher                | More collateral required to bring an expedited proposal to vote | Easier for an expedited proposal to be passed | Longer expedited voting period  |
-| Lower                 | Less collateral required to bring an expedited proposal to vote | Harder for an expedited proposal to be passed | Shorter expedited voting period |
+| Higher                | More collateral required to bring an expedited proposal to vote | Harder for an expedited proposal to be passed | Longer expedited voting period  |
+| Lower                 | Less collateral required to bring an expedited proposal to vote | Easier for an expedited proposal to be passed | Shorter expedited voting period |
 | Constraints           | Value has to be a positive integer                              | Value has to be less or equal to `1`          | Value has to be positive        |
-| Current configuration | `20000000000` (20000 OSMO)                                      | `0.8` (80%)                                   | `86400000000000` (1 day)        |
+| Current configuration | `100000000000` (100,000 OSMO)                                  | `0.8` (80%)                                   | `86400s` (1 day)                |

@@ -13,7 +13,14 @@ Each fee token is associated with a pool ID, and the spot price is calculated th
         not the base denom will be collected in a separate module
         account to be batched and swapped into the base denom at the end
         of each epoch.
-* Fee tokens are added or removed with the `MsgSetFeeTokens` message, which is gated to the addresses in the `WhitelistedFeeTokenSetters` parameter.
+* Fee tokens are added or removed with the `MsgSetFeeTokens` message, which is gated to the addresses in the `whitelisted_fee_token_setters` parameter.
+
+## Parameters
+
+| Parameter | Purpose |
+| --- | --- |
+| `whitelisted_fee_token_setters` | Addresses authorized to add or remove fee tokens with `MsgSetFeeTokens` |
+| `fee_swap_intermediary_denom_list` | Denoms that may be used as intermediate hops when accumulated non-native fees are swapped into the base denom |
 
 ## Local Mempool Filters Added
 
@@ -47,7 +54,7 @@ newBaseFee = curBaseFee * baseFeeMultiplier
 - `targetGas`: target gas per block, `187,500,000` (0.625 of the block gas limit). Below target, the base fee falls; above it, the base fee rises.
 - `maxChangeRate`: the maximum per-block change, `1/10`.
 
-The result is clamped to a fixed range, `MinBaseFee` (`0.03`) to `MaxBaseFee` (`5`), so it can neither fall to zero nor spike without bound.
+The result is clamped to a fixed range, `MinBaseFee` (`0.03`) to `MaxBaseFee` (`10`), so it can neither fall to zero nor spike without bound.
 
 Query the current base fee with `osmosisd query txfees base-fee`, or over LCD at `/osmosis/txfees/v1beta1/cur_eip_base_fee`. For the integrator view (setting gas prices against it), see [Fees and Gas](/integrate/fees).
 
@@ -61,6 +68,14 @@ denom-pool-id
 
 - Query the pool id associated with a specific whitelisted fee token
 
+denom-spot-price
+
+- The `DenomSpotPrice` query returns the registered pool ID and OSMO spot price for a fee-token denom over gRPC or LCD at `/osmosis/txfees/v1beta1/spot_price_by_denom?denom={denom}`. This query does not currently have an `osmosisd` CLI command.
+
 fee-tokens
 
 - Query the list of non-basedenom fee tokens and their associated pool ids
+
+base-fee
+
+- Query the current EIP-1559-style base fee
