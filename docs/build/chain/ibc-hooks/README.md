@@ -7,7 +7,7 @@ This allows cross-chain contract calls, that involve token movement.
 This is useful for a variety of usecases.
 One of primary importance is cross-chain swaps, which is an extremely powerful primitive.
 
-The mechanism enabling this is the `memo` field carried on every ICS20 transfer packet, added in IBC v3.4.0 and specified in the [ICS-20 fungible token transfer spec](https://github.com/cosmos/ibc/blob/main/spec/app/ics-020-fungible-token-transfer/README.md).
+The mechanism enabling this is the `memo` field carried on every ICS20 transfer packet, added in ibc-go v3.4.0 and specified in the [ICS-20 fungible token transfer spec](https://github.com/cosmos/ibc/blob/main/spec/app/ics-020-fungible-token-transfer/README.md).
 Wasm hooks is an IBC middleware that parses an ICS20 transfer, and if the `memo` field is of a particular form, executes a wasm contract call. We now detail the `memo` format for `wasm` contract calls, and the execution guarantees provided.
 
 ### Cosmwasm Contract Execution Format

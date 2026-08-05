@@ -1853,10 +1853,12 @@ Additionally, there is a problem with tick to sqrt price conversions
 where at small price levels, two sqrt prices can map to the same
 tick.
 
-As a workaround, we have decided to limit min spot price to 10^-12
-and min tick to `-108000000`. It has been shown at at price levels
-below 10^-12, this issue is most apparent. See this issue for details:
-[https://github.com/osmosis-labs/osmosis/issues/5550](https://github.com/osmosis-labs/osmosis/issues/5550)
+At launch, the minimum spot price was therefore limited to 10^-12, with a corresponding
+minimum initialized tick of `-108000000`, since the ambiguity is most apparent below that
+price. The range was later extended down to 10^-30 (`MinSpotPriceV2`, minimum initialized
+tick `-270000000`) by performing the tick and sqrt price conversions in 36-precision
+`BigDec` rather than `Dec`. Both sets of bounds are defined in
+[`x/concentrated-liquidity/types/constants.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/types/constants.go).
 
 Now, we have a problem that we cannot handle pairs where
 the quote asset has a precision of 6 and the base asset has a
