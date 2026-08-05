@@ -82,7 +82,7 @@ Assume `balancer` pool is being created.
    the appropriate implementation of the `CreatePoolMsg` interface.
 
 ```go
-// x/poolmanager/creator.go CreatePool(...)
+// x/poolmanager/create_pool.go CreatePool(...)
 
 // CreatePool attempts to create a pool returning the newly created pool ID or
 // an error upon failure. The pool creation fee is used to fund the community
@@ -112,14 +112,14 @@ The propagation to the desired module is ensured by the routing table stored in 
 func NewKeeper(...) *Keeper {
     ...
 
-	routes := map[types.PoolType]types.SwapI{
+	routesMap := map[types.PoolType]types.PoolModuleI{
 		types.Balancer:     gammKeeper,
 		types.Stableswap:   gammKeeper,
 		types.Concentrated: concentratedKeeper,
 		types.CosmWasm:     cosmwasmpoolKeeper,
 	}
 
-	return &Keeper{..., routes: routes}
+	return &Keeper{..., routes: routesMap}
 }
 ```
 
@@ -129,7 +129,7 @@ As a result, `poolmanagerkeeper.CreatePool` can route the execution to the appro
 the following way:
 
 ```go
-// x/poolmanager/creator.go CreatePool(...)
+// x/poolmanager/create_pool.go CreatePool(...)
 
 swapModule := k.routes[msg.GetPoolType()]
 
@@ -141,15 +141,19 @@ if err := swapModule.InitializePool(ctx, pool, sender); err != nil {
 The selected swap module can be the `gamm`, `concentrated-liquidity`, or
 `cosmwasmpool` keeper.
 
-All three modules implement the `SwapI` interface:
+All three modules implement the `PoolModuleI` interface:
 
 ```go
-// x/poolmanager/types/routes.go SwapI interface
+// x/poolmanager/types/expected_keepers.go
 
-type SwapI interface {
+type PoolModuleI interface {
+	InitializePool(ctx sdk.Context, pool PoolI, creatorAddress sdk.AccAddress) error
+
+	GetPool(ctx sdk.Context, poolId uint64) (PoolI, error)
+
+	GetPools(ctx sdk.Context) ([]PoolI, error)
+
     ...
-
-	InitializePool(ctx sdk.Context, pool gammtypes.PoolI, creatorAddress sdk.AccAddress) error
 }
 ```
 
@@ -214,50 +218,49 @@ Once the message is received, it calls `RouteExactAmountIn`
 func (k Keeper) RouteExactAmountIn(
 	ctx sdk.Context,
 	sender sdk.AccAddress,
-	routes []types.SwapAmountInRoute,
+	route []types.SwapAmountInRoute,
 	tokenIn sdk.Coin,
-	tokenOutMinAmount sdk.Int) (tokenOutAmount sdk.Int, err error) {
+	tokenOutMinAmount osmomath.Int,
+) (tokenOutAmount osmomath.Int, err error) {
 }
 ```
 
 Essentially, the method iterates over the routes and calls a `SwapExactAmountIn` method
 for each, subsequently updating the inter-pool swap state.
 
-The routing works by querying the index `SwapModuleRouterPrefix`,
-searching up the `poolmanagerkeeper.router` mapping, and calling
-`SwapExactAmountIn` method of the appropriate module.
+The routing works by looking up the pool's type from the `SwapModuleRouterPrefix` index,
+resolving that type through the `routes` mapping, and calling the `SwapExactAmountIn`
+method of the appropriate module. `GetPoolModuleAndPool` performs both the module lookup
+and the pool fetch:
 
 ```go
-// x/poolmanager/router.go RouteExactAmountIn(...)
+// x/poolmanager/router.go SwapExactAmountIn(...)
 
-moduleRouteBytes := osmoutils.MustGet(poolmanagertypes.FormatModuleRouteIndex(poolId))
-moduleRoute, _ := poolmanagertypes.ModuleRouteFromBytes(moduleRouteBytes)
+swapModule, pool, err := k.GetPoolModuleAndPool(ctx, poolId)
 
-swapModule := k.routes[moduleRoute.PoolType]
-
-_ := swapModule.SwapExactAmountIn(...)
+_, err = swapModule.SwapExactAmountIn(ctx, sender, pool, tokenIn, tokenOutDenom, tokenOutMinAmount, spreadFactor)
 ```
 
 - note that error checks and other details are omitted for brevity.
 
 Similar to pool creation logic, we are able to call `SwapExactAmountIn` on any of the swap
-modules by implementing the `SwapI` interface:
+modules by implementing the `PoolModuleI` interface:
 
 ```go
-// x/poolmanager/types/routes.go SwapI interface
+// x/poolmanager/types/expected_keepers.go
 
-type SwapI interface {
+type PoolModuleI interface {
     ...
 
 	SwapExactAmountIn(
 		ctx sdk.Context,
 		sender sdk.AccAddress,
-		poolId gammtypes.PoolI,
+		pool PoolI,
 		tokenIn sdk.Coin,
 		tokenOutDenom string,
-		tokenOutMinAmount sdk.Int,
-		spreadFactor sdk.Dec,
-	) (sdk.Int, error)
+		tokenOutMinAmount osmomath.Int,
+		spreadFactor osmomath.Dec,
+	) (osmomath.Int, error)
 }
 ```
 

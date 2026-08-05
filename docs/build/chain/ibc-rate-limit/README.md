@@ -8,7 +8,7 @@ The IBC Rate Limit module adds a governance-configurable rate limit to IBC trans
 
 The protection comes at the cost of a potential one-way bridge liveness tradeoff during periods of unusually high deposits or withdrawals.
 
-The module is a minimal Go package implementing an [IBC Middleware](https://github.com/cosmos/ibc-go/blob/f57170b1d4dd202a3c6c1c61dcf302b6a9546405/docs/ibc/middleware/develop.md) that wraps the [ICS20 transfer](https://ibc.cosmos.network/main/apps/transfer/overview.html) app and calls into a CosmWasm contract, which holds all of the rate limiting logic. The contract source is in the [`contracts`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts) package and its bytecode in the [`bytecode`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/bytecode) directory. Implementing the logic in CosmWasm lets Osmosis governance change this safety control by parameter change proposal rather than a hard fork, so limits can be adapted quickly as threats change.
+The module is a minimal Go package implementing an [IBC Middleware](https://github.com/cosmos/ibc-go/blob/main/docs/docs/04-middleware/01-callbacks/01-overview.md) that wraps the [ICS20 transfer](https://ibc.cosmos.network/main/apps/transfer/overview.html) app and calls into a CosmWasm contract, which holds all of the rate limiting logic. The contract source is in the [`contracts`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts) package and its bytecode in the [`bytecode`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/bytecode) directory. Implementing the logic in CosmWasm lets Osmosis governance change this safety control without a hard fork, so limits can be adapted quickly as threats change. Note the split: the middleware's contract address is a module parameter changed by parameter-change proposal, whereas the quotas, denom restrictions, roles, and timelocks are contract state changed by execute messages, sent either by governance or by an authorized role holder.
 
 The module supports governance-settable rate limits for high value bridged assets, providing protection for high value IBC connections.
 
@@ -16,12 +16,12 @@ The module supports governance-settable rate limits for high value bridged asset
 
 Rate limiting is motivated by bridge hacks where a rate limit would have substantially reduced the amount stolen:
 
-- [Polynetwork Bridge Hack ($611 million)](https://rekt.news/polynetwork-rekt/)
-- [BNB Bridge Hack ($586 million)](https://rekt.news/bnb-bridge-rekt/)
-- [Wormhole Bridge Hack ($326 million)](https://rekt.news/wormhole-rekt/)
-- [Nomad Bridge Hack ($190 million)](https://rekt.news/nomad-rekt/)
-- [Harmony Bridge Hack ($100 million)](https://rekt.news/harmony-rekt/) - (Would require rate limit + monitoring)
-- [Dragonberry IBC bug](https://forum.cosmos.network/t/ibc-security-advisory-dragonberry/7702) (can't yet disclose amount at risk, but was saved due to being found first by altruistic Osmosis core developers)
+- Polynetwork bridge, $611 million
+- BNB bridge, $586 million
+- Wormhole bridge, $326 million
+- Nomad bridge, $190 million
+- Harmony bridge, $100 million (a rate limit alone would not have been sufficient here; it also required monitoring)
+- The Dragonberry IBC vulnerability, which was found and patched before exploitation
 
 Given a software bug on Osmosis, in IBC itself, or on a counterparty chain, the objective is to prevent a bridged asset from fully depegging. A partial depeg is recoverable in a way that a total loss is not, and without a rate limit a bridged asset can go to zero as soon as a bug is exploited. A rate limit caps the damage and signals that something may have gone wrong, giving validators and developers time to analyse the situation and protect the remaining funds.
 
@@ -38,7 +38,7 @@ Two kinds of rate limit are defined:
 * **Per denomination**, supporting limits such as "at most 30% of STARS on Osmosis can flow out in one day" or "the amount of ATOM on Osmosis can at most double per day".
 * **Per channel**, limiting total inflow and outflow on a given IBC channel in USDC-equivalent terms, using Osmosis as the price oracle.
 
-Only per-denomination limits for non-native assets are implemented. Channel-based limits are not.
+Per-denomination limits are implemented, for native and non-native denoms alike; a denom's quota capacity is derived from its current total supply on Osmosis. Channel-wide limits denominated in USDC-equivalent terms are not implemented.
 
 These rate limits automatically "expire" at the end of the quota duration.
 
@@ -49,7 +49,7 @@ can be restricted to an allowlist of source channels, and outbound transfers ove
 channel are rejected outright regardless of quota headroom.
 
 The restriction is set with `SetDenomRestrictions { denom, allowed_channels }` and removed with
-`UnsetDenomRestrictions { denom }`. Three properties follow from the implementation:
+`UnsetDenomRestrictions { denom }`. Four properties follow from the implementation:
 
 * **Outbound only.** Inbound packets are never checked against the allowlist; the check returns
   early for receives.
@@ -57,6 +57,16 @@ The restriction is set with `SetDenomRestrictions { denom, allowed_channels }` a
   not constrained. Restriction is opt-in per denom.
 * **Allowlist, not a blocklist.** Once a denom has a non-empty list, only the channels in that
   list can send it. Everything else fails with a channel-blocked error.
+* **Keyed on the raw packet denom.** The restriction check runs *before* the denom normalization
+  that quota paths use, so it matches `packet.data.denom` verbatim.
+
+:::warning
+That last point is a footgun. Quotas key on the normalized local denom (`ibc/HASH` for a
+non-native asset), but restrictions key on the denom exactly as it appears on the outgoing packet,
+which for a non-native asset is the trace form `transfer/channel-X/base`. Registering a restriction
+against the `ibc/...` hash silently matches nothing and leaves the transfer unrestricted. The live
+entry on mainnet is stored as `transfer/channel-6897/usat` for this reason.
+:::
 
 This is the control to reach for when a denom is only ever meant to leave over the one channel it
 arrived on, which is the common case for an asset whose issuer lives on a single counterparty
@@ -152,11 +162,14 @@ osmosisd query wasm contract-state smart osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r
 
 Each entry reports the quota (`name`, `max_percentage_send`, `max_percentage_recv`, `duration` in
 seconds, and the `channel_value` cached at the start of the period) alongside the `inflow`,
-`outflow`, and `period_end` of the current window. Quota names on mainnet follow the asset and
-window, and the paired offset windows described under
-[Handling rate limit boundaries](#handling-rate-limit-boundaries) are visible in practice: an
-asset commonly carries both a `DAY-1` quota of 86400s and a `DAY-2` quota of 129600s, so the two
-daily windows do not end at the same moment.
+`outflow`, and `period_end` of the current window. An asset commonly carries several quotas of
+differing duration, for example a `DAY-1` of 86400s, a `DAY-2` of 129600s (36 hours), and a
+`WEEK-1` of 604800s, so that both a short burst and a sustained drain are bounded.
+
+These are independent repeating windows of differing length, not the equal-length offset scheme
+described under [Handling rate limit boundaries](#handling-rate-limit-boundaries). Periods are also
+not on a fixed schedule: a period only starts when a packet updates the flow, and an expired flow
+restarts lazily on the next packet, so `period_end` drifts rather than aligning to a wall clock.
 
 ## Code structure
 
@@ -300,15 +313,15 @@ The intended strategy for calculating channel value is:
 * For native tokens, the total amount held in escrow across all IBC channels.
 
 The latter yields lower limits that reflect the quantity of native tokens existing outside Osmosis, on the assumption that most native tokens remain on their native chain and that normal IBC transfer volume is proportional to the amount that has left it.
-This strategy is not currently implemented because IBC does not track the amount of tokens in escrow across 
-all channels ([github issue](https://github.com/cosmos/ibc-go/issues/2664)). Instead, the current supply on 
-Osmosis is used for all denoms (i.e.: native and non-native tokens are treated the same way).
+The escrow-based figure is not currently used, because IBC does not track the total amount of a token held
+in escrow across all channels. Instead, the current supply on Osmosis is used for every denom, so native and
+non-native tokens are treated the same way.
 
 ##### Caching
 
 The channel value varies constantly, so it is cached at the start of each quota period. This gives predictable limits and prevents an infinite-mint bug from inflating the quota that is meant to constrain it.
 
-For example, with a daily quota of 1% of the OSMO supply and a channel value of 1M OSMO at the start of the period, at most 100k OSMO can be transferred that day. If 10M OSMO were minted or transferred in during the period, the quota does not increase until the period expires, at which point it becomes 1% of the new channel value.
+For example, with a daily quota of 1% of the OSMO supply and a channel value of 1M OSMO at the start of the period, at most 10k OSMO can be transferred that day. If 10M OSMO were minted or transferred in during the period, the quota does not increase until the period expires, at which point it becomes 1% of the new channel value.
 
 ### Integration
 

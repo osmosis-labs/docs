@@ -7,14 +7,15 @@ This allows cross-chain contract calls, that involve token movement.
 This is useful for a variety of usecases.
 One of primary importance is cross-chain swaps, which is an extremely powerful primitive.
 
-The mechanism enabling this is a `memo` field on every ICS20 transfer packet as of [IBC v3.4.0](https://medium.com/the-interchain-foundation/moving-beyond-simple-token-transfers-d42b2b1dc29b).
+The mechanism enabling this is the `memo` field carried on every ICS20 transfer packet, added in IBC v3.4.0 and specified in the [ICS-20 fungible token transfer spec](https://github.com/cosmos/ibc/blob/main/spec/app/ics-020-fungible-token-transfer/README.md).
 Wasm hooks is an IBC middleware that parses an ICS20 transfer, and if the `memo` field is of a particular form, executes a wasm contract call. We now detail the `memo` format for `wasm` contract calls, and the execution guarantees provided.
 
 ### Cosmwasm Contract Execution Format
 
-Before we dive into the IBC metadata format, we show the cosmwasm execute message format, so the reader has a sense of what are the fields we need to be setting in.
-The cosmwasm `MsgExecuteContract` is defined [here](https://github.com/CosmWasm/wasmd/blob/4fe2fbc8f322efdaf187e2e5c99ce32fd1df06f0/x/wasm/types/tx.pb.go#L340-L349
-) as the following type:
+The CosmWasm execute message format comes first, so that the fields the IBC metadata has to set are
+clear. The CosmWasm `MsgExecuteContract` is defined in
+[`x/wasm/types/tx.pb.go`](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/types/tx.pb.go) as the
+following type:
 
 ```go
 type MsgExecuteContract struct {
@@ -66,7 +67,7 @@ ICS20 is JSON native, so we use JSON for the memo format.
     	"denom": "denom on counterparty chain (e.g. uatom)",  // will be transformed to the local denom (ibc/...)
         "amount": "1000",
         "sender": "addr on counterparty chain", // will be transformed
-        "receiver": "contract addr or blank",
+        "receiver": "osmo1contractAddr", // must equal memo.wasm.contract; blank is rejected
     	"memo": {
            "wasm": {
               "contract": "osmo1contractAddr",

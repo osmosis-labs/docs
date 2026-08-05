@@ -138,6 +138,10 @@ and then clears on the block committing. This is done to save on gas (and I/O fo
 
 ## Pruning
 
-To avoid infinite growth of the state with the TWAP records, we attempt to delete some old records after every epoch.
-Essentially, records younger than a configurable parameter are pruned away. Currently, this parameter is set to 48 hours.
-Therefore, at the end of an epoch records younger than 48 hours before the current block time are pruned away.
+To avoid unbounded growth of the TWAP record state, old records are pruned after every epoch. Records
+**older** than the `RecordHistoryKeepPeriod` parameter are removed, currently 48 hours, so at the end
+of an epoch the keeper prunes records older than 48 hours before the current block time.
+
+One record earlier than the keep period is always retained per denom pair, so that a TWAP spanning the
+edge of the window still has an earlier record to interpolate from. Pruning is also rate limited per
+block: if the limit is reached, the keeper stores how far it got and resumes in the next block.

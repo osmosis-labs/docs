@@ -79,7 +79,7 @@ The `x/protorev` module keeps the following objects in state:
 | --- | --- | --- | --- | --- |
 | TokenPairArbRoutes | TokenPairRoutes tracks cyclic arb routes that can be used to create a MultiHopSwap given two denoms | `[]byte{1}` + `[]byte{inputDenom}` +`[]byte{outputDenom}` | `[]byte{TokenPairArbRoutes}` | KV |
 | DenomPairToPool | Tracks the pool ids of the highest liquidity pools matched with a given denom | `[]byte{2}` + `[]byte{baseDenom}` + `[]byte{denomToMatch}` | `[]byte{poolID}` | KV |
-| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{3}` | `[]byte{[]BaseDenom{}}` | KV |
+| BaseDenoms (deprecated) | Superseded by prefix 19. Retained so historical state remains decodable | `[]byte{3}` | `[]byte{[]BaseDenom{}}` | KV |
 | NumberOfTrades | Tracks the number of trades protorev has executed | `[]byte{4}` | `[]byte{numberOfTrades}` | KV |
 | ProfitsByDenom | Tracks the profits protorev has made | `[]byte{5}` + `[]byte{tokenDenom}` | `[]byte{sdk.Coin}` | KV |
 | TradesByRoute | Tracks the number of trades the module has executed on a given route | `[]byte{6}` + `[]byte{route}` | `[]byte{numberOfTrades}` | KV |
@@ -91,7 +91,11 @@ The `x/protorev` module keeps the following objects in state:
 | MaxPoolPointsPerBlock | Tracks the maximum number of pool points that can be consumed per block | `[]byte{12}` | `[]byte{uint64}` | KV |
 | PoolPointCountForBlock | Tracks the number of pool points that have been consumed in this block | `[]byte{13}` | `[]byte{uint64}` | KV |
 | LatestBlockHeight | Tracks the latest recorded block height | `[]byte{14}` | `[]byte{uint64}` | KV |
-| PoolWeights | Tracks the weights (pool points) of the different pool types | `[]byte{15}` | `[]byte{PoolWeights}` | KV |
+| InfoByPoolType | Tracks the execution information (pool points and, for concentrated pools, max ticks crossed) for each pool type | `[]byte{15}` | `[]byte{InfoByPoolType}` | KV |
+| SwapsToBackrun | Tracks the swaps that need to be backrun for a given tx. Accumulated via swap hooks during transaction processing and discarded at the end of the block, so it is not persisted | `[]byte{16}` | `[]byte{Route}` | Transient |
+| CyclicArbTracker | Tracks the profits made by cyclic arbitrage | `[]byte{17}` | `[]byte{sdk.Coins}` | KV |
+| CyclicArbTrackerStartHeight | Tracks the height at which cyclic arbitrage tracking began | `[]byte{18}` | `[]byte{uint64}` | KV |
+| BaseDenoms | Tracks all of the base denominations that will be used to construct arbitrage routes | `[]byte{19}` | `[]byte{[]BaseDenom{}}` | KV |
 
 ### TokenPairArbRoutes
 

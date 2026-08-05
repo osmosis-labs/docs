@@ -619,7 +619,7 @@ on the `x/concentrated-liquidity` keeper.
 The `InitializePool` method is responsible for doing concentrated-liquidity specific
 initialization and storing the pool in state.
 
-Note, that `InitializePool` is a method defined on the `SwapI` interface that is
+Note, that `InitializePool` is a method defined on the `PoolModuleI` interface that is
 implemented by all swap modules. For example, `x/gamm` also implements it so that
 `x/pool-manager` can route pool initialization there as well.
 
@@ -1169,8 +1169,14 @@ strategy, with one implementation per direction
 [`one_for_zero.go`](https://github.com/osmosis-labs/osmosis/blob/main/x/concentrated-liquidity/swapstrategy/one_for_zero.go)).
 
 Each call takes the current sqrt price, a target sqrt price, the bucket's liquidity, and the
-amount still remaining to swap. It returns the next sqrt price, the amount of the input
-consumed, the amount of the output produced, and the spread reward charged.
+amount still remaining to swap. Both return the next sqrt price and the spread reward charged, but
+the middle two values are ordered by *which amount was specified*, not input-then-output:
+
+* `ComputeSwapWithinBucketOutGivenIn` returns `(sqrtPriceNext, amountIn, amountOut, spreadReward)`.
+* `ComputeSwapWithinBucketInGivenOut` returns `(sqrtPriceNext, amountOut, amountIn, spreadReward)`.
+
+In both cases the second value is the amount of the *specified* token consumed, and the third is
+the amount of the other token computed.
 
 ### Direction
 
@@ -1218,10 +1224,14 @@ $$\sqrt{P_{next}} = \frac{L \sqrt{P_{cur}}}{L - \Delta_0 \sqrt{P_{cur}}} \qquad 
 
 $$\sqrt{P_{next}} = \sqrt{P_{cur}} - \frac{\Delta_1}{L} \qquad \text{(token one out)}$$
 
-When the target is **not** reached, the input amount is recomputed from the newly solved
-$$\sqrt{P_{next}}$$ rather than reusing the earlier estimate to the target. The recomputation
-must keep rounding the input up: rounding it down instead lets the loop fail to make
-progress and spin.
+When the target is **not** reached, the amount of the specified token is recomputed from the newly
+solved $$\sqrt{P_{next}}$$ rather than reusing the earlier estimate to the target. Which amount is
+recomputed differs by direction:
+
+* On **exact-in**, the input is recomputed and must keep rounding **up**. Rounding it down instead
+  lets the swap loop fail to make progress and spin.
+* On **exact-out**, the output is recomputed and rounds **down**, so the step cannot hand back more
+  than was requested. The required input is then derived from the solved sqrt price.
 
 ### Rounding always favours the pool
 
@@ -1242,28 +1252,36 @@ where $$\sqrt{P_{next}}$$ is rounded toward the current price and the overshoot 
 
 ### Spread reward for the step
 
-The spread reward is always charged on the input token, never the output. With spread
-factor $$f$$:
+The spread reward is always charged on the input token, never the output. With spread factor $$f$$,
+the base formula grosses up the input actually consumed:
 
-* When the step **reaches** the target (a tick or the price limit), the charge is computed
-  from the input actually consumed:
+$$\text{reward} = \text{amountIn} \cdot \frac{f}{1 - f}$$
 
-  $$\text{reward} = \text{amountIn} \cdot \frac{f}{1 - f}$$
+The gross-up is required because the reward is a share of the *pre-fee* input, so charging it on a
+post-fee amount cannot simply multiply by $$f$$. The multiplication rounds up, again in the pool's
+favour.
 
-* When the step does **not** reach the target, the bucket had enough liquidity to fill the
-  rest of the swap. The charge is the leftover:
+**Exact-out** applies this formula unconditionally. Its `amountRemaining` is an output amount, so
+there is no input remainder to take a difference against.
+
+**Exact-in** branches on whether the step reached its target:
+
+* **Target reached** (a tick or the price limit): the formula above, applied to the input consumed
+  before hitting the target.
+* **Target not reached**: the bucket had enough liquidity to fill the rest of the swap, and the
+  charge is simply the leftover:
 
   $$\text{reward} = \text{amountRemaining} - \text{amountIn}$$
 
-  This works because the next sqrt price was solved from the amount remaining *after*
-  deducting the spread reward, that is from $$\text{amountRemaining} \cdot (1 - f)$$, so
-  the difference is exactly the reward.
+  This approximates the gross-up rather than reproducing it exactly. The next sqrt price was solved
+  from the amount remaining *after* deducting the spread reward, that is from
+  $$\text{amountRemaining} \cdot (1 - f)$$, so the leftover is the reward on what was consumed. But
+  `amountIn` is rounded up, and the subtraction absorbs that rounding, so the result can differ
+  from $$\text{amountIn} \cdot \frac{f}{1-f}$$ by the rounding increment. The difference accrues to
+  the pool, consistent with the rounding rules above.
 
-The $$\frac{f}{1-f}$$ form is what makes the two branches agree: the reward is a share of
-the pre-fee input, so charging it on the post-fee amount consumed requires grossing up
-rather than multiplying by $$f$$ directly. The multiplication rounds up, again in the pool's
-favour. A zero spread factor short-circuits to a zero charge, and a negative one panics as
-a defence-in-depth check.
+A zero spread factor short-circuits to a zero charge, and a negative one panics as a
+defence-in-depth check.
 
 ## Spread Rewards
 
