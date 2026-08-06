@@ -42,7 +42,15 @@ The total fee paid is `gas_limit * gas_price`.
 
 Thanks to [fee abstraction](/learn/features/fee-abstraction), gas does not have to be paid in OSMO. Validators accept a permissionless, governance-managed whitelist of fee tokens, so a transaction can pay gas in many of the assets listed on Osmosis. Accepted non-OSMO fees are converted back to OSMO before distribution to stakers.
 
-To pay in an alternative token, set `--gas-prices` (or `--fees`) in that token's denom, for example `--gas-prices 0.025ibc/<hash>`. The accepted set and each token's minimum price are onchain; query them rather than assuming a token is accepted.
+To pay in an alternative token, set `--gas-prices` (or `--fees`) in that token's denom, for example `--gas-prices 0.025ibc/<hash>`. The accepted set and each token's minimum price are onchain; query them rather than assuming a token is accepted:
+
+```bash
+osmosisd query txfees fee-tokens
+# or over REST:
+curl "https://lcd.osmosis.zone/osmosis/txfees/v1beta1/fee_tokens"
+```
+
+The response lists each accepted denom alongside the pool used to convert it to OSMO, e.g. `{ "denom": "ibc/<hash>", "poolID": "2533" }`. The base denom itself (`uosmo`, not in this list) is available at `/osmosis/txfees/v1beta1/base_denom`.
 
 ## Swap fees are not gas
 

@@ -12,7 +12,7 @@ External Incentives are an effective way to incentivize users to provide liquidi
 
 Creating an incentive gauge is permissionless, anyone can deposit tokens into a gauge to be distributed as bonding incentives.
 
-There is a small fee in OSMO to create a gauge, which is transferred from the running wallet's balance to the Osmosis Community Pool. At the time of writing this is 50 OSMO.
+There is a small fee in OSMO to create a gauge, which is transferred from the running wallet's balance to the Osmosis Community Pool. At the time of writing this is 50 OSMO. Adding more rewards to an existing gauge (`add-to-gauge`) carries a separate fee, currently 25 OSMO, also paid to the community pool.
 
 ### Classic and Stableswap Pool Distribution mechanism
 In Classic and Stableswap pools, it is possible to add incentives to 14-day gauges*. As long as a provider bonds liquidity for at least the time that is specified, they will receive a share of incentives at epoch. 
@@ -48,7 +48,7 @@ The command to run takes the format:
 
  * In Classic or Stableswap pools this specifies the length of time that a provider must be bonded for to receive incentives. This is typically 336h.
 
- * In Supercharged pools this specifies the length of time that a position must be in place to receive incentives. Permitted values are 1ns, 60s, 1h and 24h. Typical values are 60s or 1h for a volatile pairing, and 1h or 24h for a highly correlated pairing. If not specified this defaults to 1 minute.
+ * In Supercharged pools this specifies the length of time that a position must be in place to receive incentives. Permitted values are 1ns, 60s, 1h and 24h. Typical values are 60s or 1h for a volatile pairing, and 1h or 24h for a highly correlated pairing. If not specified this defaults to 24h.
 
 `--epochs` which specifies the number of days that these incentives will be distributed over
 

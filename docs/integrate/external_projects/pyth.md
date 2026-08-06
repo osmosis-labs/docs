@@ -6,7 +6,7 @@ description: Integrate Pyth price feeds with Osmosis.
 
 ## Introduction
 
-Pyth Network is an oracle that publishes financial market data to multiple blockchains. Its market data is contributed by over 90 first-party publishers, including some of the biggest exchanges and market making firms in the world. Pyth offers price feeds for a number of different asset classes, including US equities, commodities, and cryptocurrencies. Each price feed publishes a robust aggregate of publisher prices that updates multiple times per second.
+Pyth Network is an oracle that publishes financial market data to multiple blockchains. Its market data is contributed by over 120 first-party publishers, including some of the biggest exchanges and market making firms in the world. Pyth offers price feeds for a number of different asset classes, including US equities, commodities, and cryptocurrencies. Each price feed publishes a robust aggregate of publisher prices that updates multiple times per second.
 
 ## Pyth on Cosmwasm 
 Cosmwasm contracts can update and fetch the Pyth prices using the Pyth Cosmwasm Contract, deployed on their network. The documented source code can be found [here](https://github.com/pyth-network/pyth-crosschain/tree/main/target_chains/cosmwasm/contracts/pyth). The Cosmwasm API reference lets you interactively explore the complete API of the Pyth contract.
@@ -14,7 +14,7 @@ Cosmwasm contracts can update and fetch the Pyth prices using the Pyth Cosmwasm 
 
 ## Update Price Feeds
 
-The mechanism by which price feeds are updated on Cosmwasm is explained in the [Pyth documentation](https://docs.pyth.network/documentation/pythnet-price-feeds/pull-updates). The [`@pythnetwork/price-service-client` TypeScript package](https://github.com/pyth-network/pyth-crosschain/tree/main/price_service/client/js) can be used to fetch the latest price feed data which then can be passed to the contract as the `UpdatePriceFeeds` ExecuteMsg.
+The mechanism by which price feeds are updated on Cosmwasm is explained in the [Pyth documentation](https://docs.pyth.network/price-feeds/pull-updates). The [`@pythnetwork/hermes-client` TypeScript package](https://www.npmjs.com/package/@pythnetwork/hermes-client) can be used to fetch the latest price feed data which then can be passed to the contract as the `UpdatePriceFeeds` ExecuteMsg. (The older `@pythnetwork/price-service-client` package is deprecated in favor of `hermes-client`.)
 
 Pyth publishes prices for two kinds of feeds:
 
@@ -36,7 +36,4 @@ Pyth maintains the deployed addresses for every network (including testnet) on i
 
 ## Price Feed IDs
 
-The price feed IDs for stable and edge feeds are different and can be found at the following links:
-
-- [List of stable ids](https://pyth.network/developers/price-feed-ids#cosmwasm-stable)
-- [List of beta ids](https://pyth.network/developers/price-feed-ids#cosmwasm-edge)
+The price feed IDs for stable and beta (edge) feeds are different; both are listed on the [Price Feed IDs page](https://docs.pyth.network/price-feeds/core/price-feeds/price-feed-ids) in the Pyth documentation.

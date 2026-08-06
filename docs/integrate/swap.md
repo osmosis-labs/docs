@@ -15,7 +15,7 @@ The flow has three steps:
 3. **Sign and broadcast.** Sign the transaction and submit it over RPC.
 
 :::warning Exact-in vs exact-out
-This page covers the canonical **exact-in** swap (you specify the input amount and get a minimum output). Osmosis also supports **exact-out** (`MsgSwapExactAmountOut`, you specify the output and a maximum input). The two are not interchangeable: do not invert an exact-in quote to fake an exact-out swap. For exact-out, request an exact-out quote from SQS and build `MsgSwapExactAmountOut` instead.
+This page covers the canonical **exact-in** swap (you specify the input amount and get a minimum output). Osmosis also supports **exact-out** (`MsgSwapExactAmountOut`, you specify the output and a maximum input). The two are not interchangeable: do not invert an exact-in quote to fake an exact-out swap. For exact-out, request an exact-out quote from SQS and build `MsgSwapExactAmountOut` instead; see [Exact-out swaps](#exact-out-swaps) below for the worked example.
 :::
 
 ## 1. Get a quote
@@ -165,6 +165,108 @@ const res = await client.signAndBroadcast(address, [msg], fee);
 ```
 
 Estimate gas rather than hardcoding it for production, and size the fee against the live base fee at submission time: Osmosis runs a dynamic fee market, and a transaction whose gas price is below the current base fee is rejected (see [Fees and Gas](/integrate/fees)). Pay fees in any accepted fee token (see [Fee Abstraction](/learn/features/fee-abstraction)). For the lower-level signing and broadcasting flow over raw RPC, see [Interact with RPC endpoints](/integrate/endpoints/rpc).
+
+## Exact-out swaps
+
+When the fixed quantity is the **output** (for example, buying exactly 1 ION and paying whatever OSMO it takes), run the same three steps with the exact-out shapes: an in-given-out quote, `MsgSwapExactAmountOut`, and a **maximum-input** guard instead of a minimum-output one.
+
+### Quote
+
+Request an in-given-out quote: `tokenOut` is `<amount><denom>` of the desired output and `tokenInDenom` is the base denom you will pay with:
+
+```bash
+curl "https://sqs.osmosis.zone/router/quote?tokenOut=1000000uion&tokenInDenom=uosmo"
+```
+
+```json
+{
+  "amount_in": "544382386",
+  "amount_out": { "denom": "uion", "amount": "1000000" },
+  "route": [
+    {
+      "pools": [
+        { "id": 2, "token_in_denom": "uosmo", "taker_fee": "0.002000000000000000" }
+      ],
+      "in_amount": "544382386",
+      "out_amount": "1000000"
+    }
+  ],
+  "effective_fee": "0.002000000000000000",
+  "price_impact": "-0.013073061156192177",
+  "in_base_out_quote_spot_price": "552.698797850585259960"
+}
+```
+
+The shape mirrors the exact-in quote with the roles swapped: `amount_out` is the coin you asked for, `amount_in` is the required input as a string, and each pool in the route carries a `token_in_denom` instead of a `token_out_denom`.
+
+### Build the message
+
+The exact-out message is `osmosis.poolmanager.v1beta1.MsgSwapExactAmountOut`:
+
+```protobuf
+message MsgSwapExactAmountOut {
+  string sender = 1;
+  repeated SwapAmountOutRoute routes = 2; // { pool_id, token_in_denom }
+  string token_in_max_amount = 3;
+  cosmos.base.v1beta1.Coin token_out = 4;
+}
+```
+
+Map the quote onto the message:
+
+- `routes`: one `SwapAmountOutRoute { pool_id, token_in_denom }` per entry in `route[].pools[]`, in order. The quote's `pools[].id` is the `pool_id` and `pools[].token_in_denom` is the `token_in_denom`.
+- `token_out`: the quote's `amount_out` (`{ denom, amount }`).
+- `token_in_max_amount`: your slippage guard, mirrored: the quote's `amount_in` **increased** by your tolerance, in the input denom's base units. As with exact-in, compute it with integer (`BigInt`) math, never floats, and round **up** (a ceiling), so the guard never lands below what the quote itself requires.
+
+:::danger The guard caps the input, so round up
+For exact-out the slippage guard is a maximum on what you pay, not a minimum on what you receive. Never set `token_in_max_amount` to a huge sentinel value; compute it from the quote's `amount_in` plus an explicit tolerance, with ceiling rounding. Setting it below the quoted `amount_in` guarantees the swap fails.
+:::
+
+```ts
+import { osmosis } from 'osmojs';
+
+const { swapExactAmountOut } =
+  osmosis.poolmanager.v1beta1.MessageComposer.withTypeUrl;
+
+// This example assumes a single (non-split) route.
+if (quote.route.length !== 1) {
+  throw new Error('Split route: use MsgSplitRouteSwapExactAmountOut instead.');
+}
+const route = quote.route[0];
+
+// Slippage guard in integer base units (BigInt, never Number/float):
+// 1% tolerance -> pay at most 101/100 of the quoted input, rounded up.
+const tokenInMaxAmount = (
+  (BigInt(quote.amount_in) * 101n + 99n) / 100n
+).toString();
+
+const msg = swapExactAmountOut({
+  sender: address,
+  routes: route.pools.map((p) => ({
+    poolId: BigInt(p.id),
+    tokenInDenom: p.token_in_denom,
+  })),
+  tokenOut: quote.amount_out,
+  tokenInMaxAmount,
+});
+```
+
+### Split routes
+
+SQS returns split exact-out routes too (`quote.route` with more than one entry, each carrying its own `out_amount` portion of the total output). Use `osmosis.poolmanager.v1beta1.MsgSplitRouteSwapExactAmountOut` for those:
+
+```protobuf
+message MsgSplitRouteSwapExactAmountOut {
+  string sender = 1;
+  repeated SwapAmountOutSplitRoute routes = 2; // each: { pools[], token_out_amount }
+  string token_out_denom = 3;
+  string token_in_max_amount = 4; // one overall maximum across all routes
+}
+```
+
+One `SwapAmountOutSplitRoute` per entry in `quote.route`, where `pools` is that entry's hops and `token_out_amount` is its `out_amount`. `token_out_denom` is the output denom and `token_in_max_amount` is a single overall cap derived from the quote's total `amount_in` (the same ceiling math as above). As with exact-in, branch on `quote.route.length` and never collapse a split quote into the single-route message.
+
+Signing and broadcasting are identical to the exact-in flow above.
 
 ## Hazards checklist
 

@@ -35,16 +35,16 @@ Assets from non-Cosmos ecosystems (such as EVM chains) reach Osmosis through bri
 
 A token bridged in this way arrives on Osmosis as a fungible denom and can then be listed and traded like any other asset.
 
+Axelar is not the only route. The Osmosis frontend integrates bridge and cross-chain transfer providers directly, including [Skip Go](https://skip.build/) for route aggregation, [Squid](https://www.squidrouter.com/), [Nomic](https://nomic.io/) (BTC), and [Wormhole](https://wormhole.com/). Bridged variants of major assets (e.g., USDC, ETH, BTC) are typically folded into a single canonical [alloyed asset](/integrate/features/transmuter), so users trade one representation regardless of which bridge carried the underlying tokens.
+
 ## Setting up and operating a relayer to Osmosis
 Relayers are responsible of transferring IBC packets between Osmosis chain and the native chain of an asset. All Osmosis 'deposits' and 'withdrawals' are IBC transfers which dedicated relayers process.
 
 To ensure fungibility amongst IBC assets, the frontend will assume social consensus have been achieved and designate one specific channel between Osmosis and the native chain as the primary channel for all IBC token transfers. Multiple relayers can be active on the same channel, and for the sake of redundancy and increased resilience we recommend having multiple relayers actively relaying packets. It is recommended to initialize the channel as an unordered IBC channel, rather than an ordered IBC channel.
 
-The two actively maintained Cosmos-SDK IBC relayer implementations are:
-* [Hermes](https://hermes.informal.systems/): a Rust implementation of an IBC relayer.
-* [Go relayer](https://github.com/cosmos/relayer) (`rly`): a Go implementation of an IBC relayer.
+The actively maintained IBC relayer implementation is [Hermes](https://hermes.informal.systems/), a Rust implementation, and it is the recommended choice for new deployments. The [Go relayer](https://github.com/cosmos/relayer) (`rly`) was historically the other main implementation, but its repository has been archived and it is no longer maintained.
 
-Both are compatible with IBC token transfers on the same channel. Each relayer implementation may have different configuration requirements, and have various configuration customizability.
+Multiple relayer implementations are compatible with IBC token transfers on the same channel. Each relayer implementation may have different configuration requirements, and have various configuration customizability.
 
 At this time, Osmosis requires that all relayers to pay for the transaction fees for IBC relay transactions, and not the user.
 

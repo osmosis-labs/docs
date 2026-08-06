@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # Source Initial Liquidity
 
-A new asset needs a pool with real liquidity to be tradable, and more liquidity to qualify for [verified status](/integrate/list-asset/frontend) (default visibility on the frontend). As a starting point, a pool with at least USD $1,000-worth of liquidity makes the asset tradable; verification requires more (on the order of $10k total plus depth criteria, per [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md)). This page covers a few ways to source that liquidity.
+A new asset needs a pool with real liquidity to be tradable, and more liquidity to qualify for [verified status](/integrate/list-asset/frontend) (default visibility on the frontend). Verification requires at least $1,000-worth of each asset in a pool, plus depth criteria (a ±2% depth of $50, and a $50 bid quoting at least $49). Beyond that, the recommended "full integration" tier calls for on the order of $10k of liquidity in an approved pool type. Both sets of criteria live in [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md). This page covers a few ways to source that liquidity.
 
 *Note that the Osmosis Foundation will **not** consider any OTC token transfers or loans*
 
