@@ -119,11 +119,24 @@ osmosisd version
 
 These two commands should both output the current osmosisd version (for example `v31.x.x`; check the latest [Osmosis release](https://github.com/osmosis-labs/osmosis/releases) for the canonical tag).
 
-Reset private validator file to genesis state:
+Reset the node to a clean state before syncing:
 
 ```bash
-osmosisd unsafe-reset-all
+osmosisd comet unsafe-reset-all
 ```
+
+:::danger This deletes chain data and resets signing state
+`unsafe-reset-all` wipes the blockchain database and the address book, and resets
+`data/priv_validator_state.json` to genesis. That state file records the last height and round your
+consensus key signed, and it is the safeguard that stops the node signing a conflicting vote at a
+height it has already voted on.
+
+Only run this on a **fresh home directory** that has never signed for an active validator. Running
+it on a home whose consensus key is in an active validator set can lead to double signing, which is
+slashed and permanently jails the validator (tombstoning). See
+[Validator Security and Recovery](/validate/security) before touching this on any node that has
+signed blocks.
+:::
 
 ## Download Chain Data
 

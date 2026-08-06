@@ -65,15 +65,29 @@ To reiterate, if your snapshot is being taken on a more recent height where the 
 
 
 ### Take the state export (snapshot)
-Ensure the daemon is not running in the background. Then, to take a state export at a specified height (in this example 2138101):
+
+Ensure the daemon is not running in the background. The height is passed as a flag, and
+`--output-document` writes the result straight to a file:
+
+```sh
+osmosisd export --height 2138101 --output-document state_export.json
+```
+
+This process may take 30 minutes or more.
+
+:::note Older binaries take the height as an argument
+The current Cosmos SDK `export` command accepts no positional arguments. If you are running an
+older Osmosis binary to reach a historical height (see the previous step), it may instead use the
+pre-SDK-0.46 form, where the height is an argument and the output goes to stdout:
 
 ```sh
 osmosisd export 2138101 > state_export.json
 ```
 
-This process may take 30 minutes or more.
-
-NOTE: Depending on your Cosmos SDK version, the export may be written to stderr instead of stdout. If the redirect above produces an empty file, replace `>` with `2>` to capture stderr.
+On some of those older versions the export was written to stderr rather than stdout, so if the
+redirect produces an empty file, replace `>` with `2>`. Neither quirk applies to current releases;
+prefer `--height` with `--output-document` whenever the binary supports it.
+:::
 
 
 ### Export accounts in JSON format

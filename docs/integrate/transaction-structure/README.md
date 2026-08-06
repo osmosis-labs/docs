@@ -21,18 +21,23 @@ You can retrieve a single block by any one of:
 For our examples, we use `osmosisd` to retrieve a single block:
 
 ```sh
-osmosisd query block 2836990
+osmosisd query comet block-by-height 2836990
 ```
 
-The above retrieves the block `2836990`. The result generally is in json without any formatting,
-so we run it through `jq` to clean it up:
+The above retrieves the block `2836990`. The result is json without any formatting, so we run it through
+`jq` to clean it up:
 
 ```sh
-osmosisd query block 2836990 | jq '.'
+osmosisd query comet block-by-height 2836990 | jq '.'
 ```
 
-The result is a large json file. To keep this document readable, we will not reproduce the whole thing here,
-only its structure. The entire file is available at [block-2836990.json](block-2836990.md).
+:::note
+On older binaries this command was `osmosisd query block <height>`. In current Cosmos SDK releases
+the CometBFT queries moved under the `comet` subcommand group.
+:::
+
+The result is a large json file. To keep this document readable, only its structure is reproduced
+below.
 
 The main outline is as follows:
 
@@ -147,7 +152,7 @@ of which is an individual transaction.
 The block we have chosen, 2836990, contains 64 transactions:
 
 ```sh
-$ osmosisd query block 2836990 | jq -r '.block.data.txs | length'
+$ osmosisd query comet block-by-height 2836990 | jq -r '.block.data.txs | length'
 64
 ```
 
@@ -163,26 +168,30 @@ platform, but generally are of the form `base64 -D`. We do **not** recommend sim
 to the terminal, as this is binary-encoded data, specifically [protobufs](https://developers.google.com/protocol-buffers).
 
 ```sh
-osmosisd query block 2836990 | jq '.block.data.txs[0]' | base64 -D > outfile
+osmosisd query comet block-by-height 2836990 | jq -r '.block.data.txs[0]' | base64 -D > outfile
 ```
 
 The `outfile` will contain raw protobuf data.
 Protobuf data does not contain its own structure with it. It requires the `.proto` file to understand
 and interpret the fields, including converting them to a readable json format.
 
-Fortunately, `osmosisd` provides some basic tools for querying individual transactions. It does not,
-however, let you retrieve any arbitrary transaction, as you must pass it "events":
+Fortunately, `osmosisd` provides tools for querying transactions and will decode the protobufs for
+you. Transactions are searched by event, using the `--query` flag:
 
 ```sh
-osmosisd query txs --events '<type>.<key>=<value>' [--height <height>]
+osmosisd query txs --query "<type>.<key>='<value>'" -o json
 ```
 
-If you already know the events, you can retrieve individual transactions.
-Fortunately, if you are dealing with an individual block, you can get the transactions - and have `osmosisd`
-decode the protobufs for you - by making the event be the block height:
+:::note
+`--query` is required, and takes CometBFT query syntax, so string values are wrapped in single
+quotes. Older binaries used `--events` with an optional `--height`; both of those flags were removed
+in Cosmos SDK v0.50.
+:::
+
+To get every transaction in one block, query on the block height:
 
 ```sh
-osmosisd query txs --height 2836990 --events 'tx.height=2836990' -o json
+osmosisd query txs --query "tx.height=2836990" -o json
 ```
 
 The results should match the number of transactions we have in the block:
@@ -204,16 +213,14 @@ with this being page 1.
 By passing the total transactions to retrieve, we can avoid the pagination:
 
 ```sh
-osmosisd query txs --height 2836990 --events 'tx.height=2836990' -o json --limit 64
+osmosisd query txs --query "tx.height=2836990" -o json --limit 64
 ```
 
-For convenience, we also will pass it through `jq` for formatting, and save the results to a file:
+For convenience, we also pass it through `jq` for formatting, and save the results to a file:
 
 ```sh
-osmosisd query txs --height 2836990 --events 'tx.height=2836990' -o json --limit 64 | jq '.' > outfile.json
+osmosisd query txs --query "tx.height=2836990" -o json --limit 64 | jq '.' > outfile.json
 ```
-
-The entire block's transactions is available at [txs-block-2836990.json](txs-block-2836990.md).
 
 We now have the ability to look at transactions:
 

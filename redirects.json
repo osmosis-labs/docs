@@ -128,7 +128,7 @@
     "from": "/osmosis-core/guides/structure/arb"
   },
   {
-    "to": "/integrate/transaction-structure/block-2836990",
+    "to": "/integrate/transaction-structure",
     "from": "/osmosis-core/guides/structure/block-2836990"
   },
   {
@@ -136,7 +136,7 @@
     "from": "/osmosis-core/guides/structure"
   },
   {
-    "to": "/integrate/transaction-structure/txs-block-2836990",
+    "to": "/integrate/transaction-structure",
     "from": "/osmosis-core/guides/structure/txs-block-2836990"
   },
   {
