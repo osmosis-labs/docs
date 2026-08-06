@@ -132,19 +132,22 @@ quote and an explicit slippage tolerance:
 ```javascript
 // Quote first, then bound the output. Never hardcode a permissive minimum.
 const quote = await fetch(
-  "https://sqs.osmosis.zone/router/quote?tokenIn=1000000ibc/27394FB0…5EB2&tokenOutDenom=uosmo"
+  "https://sqs.osmosis.zone/router/quote" +
+    "?tokenIn=1000000uosmo" +
+    "&tokenOutDenom=ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
 ).then((r) => r.json());
 
-const slippageTolerance = 0.005; // 0.5%
-const tokenOutMinAmount = BigInt(
-  Math.floor(Number(quote.amount_out) * (1 - slippageTolerance))
-).toString();
+// Integer math only. `amount_out` is a base-unit string that can exceed
+// Number.MAX_SAFE_INTEGER, so converting it to Number can silently lose precision.
+// 9950/10000 is a 0.5% tolerance; use basis points to stay in BigInt.
+const tokenOutMinAmount = ((BigInt(quote.amount_out) * 9950n) / 10000n).toString();
 ```
 
 Setting `tokenOutMinAmount` to `1`, or to any value not derived from a live quote, accepts
-effectively unlimited slippage and will be sandwiched on a real trade. See
-[Swap Integration](/integrate/swap) for the full quote-then-execute flow, and the
-[Sidecar Query Server](./sqs) for the routing API.
+effectively unlimited slippage and will be sandwiched on a real trade. Match the full `ibc/HASH`
+denom rather than a stripped symbol, and read the output asset's exponent from its metadata rather
+than assuming 6. See [Swap Integration](/integrate/swap) for the full quote-then-execute flow,
+including split routes, and the [Sidecar Query Server](./sqs) for the routing API.
 
 ## Subscribing to events over WebSocket
 
