@@ -220,11 +220,11 @@ When a user or delegator delegates and bonds Osmo to an active validator in orde
 
 ## Taker fee
 
-A small protocol-level fee charged on trades. The default is 0.1%, but per-pair overrides set by the Protocol Fee Controller subDAO go in both directions: major routes are reduced (for example, allBTC/USDC pays 0.02%), while OSMO pairs are raised to between 0.5% and 0.8% (for example, OSMO/USDC pays 0.8%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
+A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (allBTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
 
 ## CometBFT consensus
 
-The consensus procedure used by the Osmosis protocol (formerly known as Tendermint consensus). First, a validator proposes a new block. Other validators vote on the block in two rounds. If a block receives a two-thirds majority or greater of yes votes in both rounds, it gets added to the blockchain. Validators get rewarded with the block's transaction fees. Proposers get rewarded extra. Each validator is chosen to propose based on their weight. Checkout the [CometBFT documentation](https://docs.cometbft.com/) for more information.
+The consensus procedure used by the Osmosis protocol (formerly known as Tendermint consensus). First, a validator proposes a new block. Other validators vote on the block in two rounds. If a block receives a two-thirds majority or greater of yes votes in both rounds, it gets added to the blockchain. The block's transaction fees are shared across all bonded validators and their delegators; the proposer does not currently receive an extra share (both proposer reward parameters are zero on Osmosis). Each validator is chosen to propose based on their weight. Checkout the [CometBFT documentation](https://docs.cometbft.com/) for more information.
 
 ## Orderbook
 

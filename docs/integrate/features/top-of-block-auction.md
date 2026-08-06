@@ -5,7 +5,7 @@ sidebar_position: 18
 
 # Top-of-Block Auction
 
-Osmosis runs a top-of-block (ToB) auction through the [Skip block-sdk](https://github.com/osmosis-labs/block-sdk) MEV lane. A searcher submits a `MsgAuctionBid` that wraps a bid amount and a bundle of up to five signed transactions. The single highest valid bid each block is executed atomically at the very top of the block, ahead of all normal transactions. This page covers how to build, encode, and submit a bid.
+Osmosis runs a top-of-block (ToB) auction through the [Skip block-sdk](https://github.com/osmosis-labs/block-sdk) MEV lane. A searcher submits a `MsgAuctionBid` that wraps a bid amount and a bundle of up to five signed transactions. The single highest valid bid each block has its bundle placed, in order, at the very top of the block, ahead of all normal transactions. This page covers how to build, encode, and submit a bid.
 
 For the in-protocol MEV mechanism that captures arbitrage value for the protocol, see [ProtoRev](/learn/features/protorev) in the Learn section.
 
@@ -13,7 +13,7 @@ For the in-protocol MEV mechanism that captures arbitrage value for the protocol
 
 - You submit one `MsgAuctionBid` containing a bid amount and a bundle of signed transactions.
 - During `PrepareProposal`, the MEV lane scans bids from highest to lowest, validates each in turn, and selects the first fully valid bid. Only one bid wins per block.
-- The winning bid transaction and its bundle are included atomically at the top of the block, so the bundle executes before any other transaction in that block.
+- The winning bid transaction and its bundle are included consecutively at the top of the block, in the order given, before any other transaction in that block. Inclusion is not atomic execution: the bundle is ante-validated when the proposal is built, but each transaction executes separately, and a failure in a later one does not revert the earlier ones.
 - Losing bids are not charged (see [Costs and validation](#costs-and-validation)).
 
 ## The `MsgAuctionBid` message
