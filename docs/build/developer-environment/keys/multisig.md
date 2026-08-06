@@ -39,7 +39,7 @@ First import the public keys of `test3` into your keyring.
 ```sh
 osmosisd keys add \
     test3 \
-    --pubkey=osmopub1addwnpepqgcxazmq6wgt2j4rdfumsfwla0zfk8e5sws3p3zg5dkm9007hmfysxas0u2
+    --pubkey='{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A0OjtIUCFJM3AobJ9HJTWKP9RZV2+WPcwVjLgsAidrZ/"}'
 ```
 
 Generate the multisig key with 2/3 threshold.
@@ -56,13 +56,10 @@ You can see its address and details:
 ```sh
 osmosisd keys show multi
 
-- name: multi
+- address: osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m
+  name: multi
+  pubkey: '{"@type":"/cosmos.crypto.multisig.LegacyAminoPubKey","threshold":2,"public_keys":[{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"ApCzSG8k7Tr4aM6e4OJRExN7cNtvH21L9azbh+uRrvt4"},{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"Ah91erz8ChNanqLe9ea948rvAiXMCRlR5Ka7EE/c0xUK"},{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A0OjtIUCFJM3AobJ9HJTWKP9RZV2+WPcwVjLgsAidrZ/"}]}'
   type: multi
-  address: osmo1e0fx0q9meawrcq7fmma9x60gk35lpr4xk3884m
-  pubkey: osmopub1ytql0csgqgfzd666axrjzq3mxw59ys6yqcd3ydjvhgs0uzs6kdk5fp4t73gmkl8t6y02yfq7tvfzd666axrjzq3sd69kp5usk492x6nehqjal67ynv0nfqapzrzy3gmdk27la0kjfqfzd666axrjzq6utqt639ka2j3xkncgk65dup06t297ccljmxhvhu3rmk92u3afjuyz9dg9
-  mnemonic: ""
-  threshold: 0
-  pubkeys: []
 ```
 
 Let's add 10 OSMO to the multisig wallet:

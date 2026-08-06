@@ -110,10 +110,12 @@ Running an Osmosis network with mainnet state is now as easy as setting up a sta
      On version X, run:
 
       ```bash
-      osmosisd in-place-testnet localosmosis osmo12smx2wdlyttvyzvzg54y2vnqwq2qjateuf7thj --trigger-testnet-upgrade
+      osmosisd in-place-testnet localosmosis osmo12smx2wdlyttvyzvzg54y2vnqwq2qjateuf7thj --trigger-testnet-upgrade=vXX
       ```
 
-      Where the first input is the desired chain-id of the new network and the second input is the desired validator operator address (where you vote from).
+      Where `vXX` indicates the next version that mainnet needs to be upgraded to. For example, when current mainnet state is at v26, the flag value should be `--trigger-testnet-upgrade=v27`.
+
+      The first input is the desired chain-id of the new network and the second input is the desired validator operator address (where you vote from).
       The address provided above is included in the localosmosis keyring under the name 'val'.
 
      The network will start and hit 10 blocks, at which point the upgrade will trigger and the network will halt.

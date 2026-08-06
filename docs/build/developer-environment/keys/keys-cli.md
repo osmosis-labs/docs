@@ -6,7 +6,7 @@ description: Create, import, and manage keys with the CLI.
 
 Create, import, export and delete keys using the CLI keyring. 
 
-For this guide, The osmosis Binary is required which you can install from here.
+For this guide, the osmosisd binary is required, which you can install from [here](/build/developer-environment/osmosisd).
 
 ## Create a new key
 
@@ -20,13 +20,10 @@ You can create a new key with the name `Default` as in the following example:
 
 ```bash
 $ osmosisd keys add Default
-- name: Default
+- address: osmo1quw5r22pxy8znjtdkgqc65atrm3x5hg6vycm5n
+  name: Default
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AtQ2XW3f5D2jkF9zg7Ml..."}'
   type: local
-  address: osmo1quw5r22pxy8znjtdkgqc65atrm3x5hg6vycm5n
-  pubkey: osmopub1addwnpepqdct05khsxvtaaj0stuvayrpw0j8t6styr7vu05k3y63d5540ftuz8x6tsq
-  mnemonic: ""
-  threshold: 0
-  pubkeys: []
 
 **Important** write this mnemonic phrase in a safe place.
 It is the only way to recover your account if you ever forget your password.
@@ -74,20 +71,14 @@ Multiple keys can be created when needed. You can list all keys saved under the 
 
 ```bash
 $ osmosisd keys list
-    - name: Default
-    type: local
-    address: ## Address of "Default" ##
-    pubkey: ## Pubkey of "Default" ##
-    mnemonic: ""
-    threshold: 0
-    pubkeys: []
-  - name: Default_restore
-    type: local
-    address: ## Address of "Default_restore" ##
-    pubkey: ## Pubkey of "Default_restore" ##
-    mnemonic: ""
-    threshold: 0
-    pubkeys: []
+- address: ## Address of "Default" ##
+  name: Default
+  pubkey: ## Pubkey of "Default" ##
+  type: local
+- address: ## Address of "Default_restore" ##
+  name: Default_restore
+  pubkey: ## Pubkey of "Default_restore" ##
+  type: local
 ```
 
 </details>
@@ -105,13 +96,10 @@ You can retrieve key information by its name:
 
 ```bash
 $ osmosisd keys show Default --bech acc
-- name: Default
+- address: osmo1quw5r22pxy8znjtdkgqc65atrm3x5hg6vycm5n
+  name: Default
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AtQ2XW3f5D2jkF9zg7Ml..."}'
   type: local
-  address: osmo1quw5r22pxy8znjtdkgqc65atrm3x5hg6vycm5n
-  pubkey: osmopub1addwnpepqdct05khsxvtaaj0stuvayrpw0j8t6styr7vu05k3y63d5540ftuz8x6tsq
-  mnemonic: ""
-  threshold: 0
-  pubkeys: []
 ```
 
 </details>
@@ -121,13 +109,10 @@ $ osmosisd keys show Default --bech acc
 
 ```bash
 $ osmosisd keys show Default --bech val
-- name: Default
+- address: osmovaloper1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s3prz35z
+  name: Default
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AtQ2XW3f5D2jkF9zg7Ml..."}'
   type: local
-  address: osmovaloper1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s3prz35z
-  pubkey: osmovaloperpub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ck5ad5l
-  mnemonic: ""
-  threshold: 0
-  pubkeys: []
 ```
 
 </details>
@@ -137,13 +122,10 @@ $ osmosisd keys show Default --bech val
 
 ```bash
 $ osmosisd keys show Default --bech cons
-- name: Default
+- address: osmovalcons1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s34pfmlc
+  name: Default
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AtQ2XW3f5D2jkF9zg7Ml..."}'
   type: local
-  address: osmovalcons1zdlttjrqh9jsgk2l8tgn6f0kxlfy98s34pfmlc
-  pubkey: osmovalconspub1addwnpepq0ua07k8p3vrv5dap4pl77n4gjyyqsqrndzu0tdrr60ddhfg6ah0ch6kdrc
-  mnemonic: ""
-  threshold: 0
-  pubkeys: []
 ```
 
 </details>
@@ -208,10 +190,10 @@ The default `os` backend stores the keys in operating system's credential sub-sy
 
 Here is a list of the corresponding password managers in different operating systems:
 - macOS (since Mac OS 8.6): [Keychain](https://support.apple.com/en-gb/guide/keychain-access/welcome/mac)
-- Windows: [Credentials Management API](https://docs.miosmosoft.com/en-us/windows/win32/secauthn/credentials-management)
+- Windows: [Credentials Management API](https://learn.microsoft.com/en-us/windows/win32/secauthn/credentials-management)
 - GNU/Linux:
   - [libsecret](https://gitlab.gnome.org/GNOME/libsecret)
-  - [kwallet](https://api.kde.org/frameworks/kwallet/html/index.html)
+  - [kwallet](https://invent.kde.org/frameworks/kwallet)
 
 ### file backend
 The `file` backend stores the encrypted keys inside the app's configuration directory. A password entry is required every time a user access it, which may also occur multiple times of repeated password prompts in one single command.

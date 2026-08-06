@@ -38,7 +38,7 @@ These are the VSCode extensions that are in daily use by the teams working on Os
 1. [Go by Google](https://marketplace.visualstudio.com/items?itemName=golang.Go)
 2. [VSCode Proto 3 by zxh404](https://marketplace.visualstudio.com/items?itemName=zxh404.vscode-proto3)
 3. [Git Lens by GitKraken](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-4. [Github Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilotvs)
+4. [Github Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
 
 ## Vscode configuration
 
@@ -46,8 +46,7 @@ To make your environment run tests automatically every time you save:
 
 Go to: `VSCode -> Preferences -> settings -> Extensions -> Go`
 
-* Set `Go: Lint tool` to `golint`. You can use `staticcheck` if you'd like, it can just take lots of computational resources.
-    * If you'd like to use the same configuration as Osmosis code, use `golangci-lint` .
+* Set `Go: Lint tool` to `golangci-lint`. This is the linter the Osmosis repository itself uses, configured by the `.golangci.yml` file in the repository root, so it matches what CI enforces. You can use `staticcheck` instead if you'd like, it can just take lots of computational resources.
     * You will likely be prompted to install the linter you choose, click the install button.
 * Set `Go: Format tool` to `gofumpt`
     * You will likely be prompted to install the formatter you choose, click the install button.

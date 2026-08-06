@@ -127,8 +127,10 @@ mkdir -p $HOME/hermes
 git clone https://github.com/informalsystems/hermes
 cd hermes
 git checkout v1.13.3
-cargo install ibc-relayer-cli --bin hermes --locked
+cargo install --path crates/relayer-cli --locked
 ```
+
+`cargo install --path` builds the checked-out tag; installing the `ibc-relayer-cli` crate by name would fetch a release from crates.io and ignore the checkout.
 
 Make hermes config & keys directory, copy config-template to config directory:
 ```sh
@@ -156,7 +158,7 @@ In this example, we will set `channel-141` on the cosmoshub-4 chain settings and
 id = 'cosmoshub-4'
 rpc_addr = 'http://127.0.0.1:26757'
 grpc_addr = 'http://127.0.0.1:9092'
-websocket_addr = 'ws://127.0.0.1:26757/websocket'
+event_source = { mode = 'push', url = 'ws://127.0.0.1:26757/websocket', batch_delay = '500ms' }
 rpc_timeout = '10s'
 account_prefix = 'cosmos'
 key_name = 'cosmos'
@@ -183,7 +185,7 @@ list = [
 id = 'osmosis-1'
 rpc_addr = 'http://127.0.0.1:26657'
 grpc_addr = 'http://127.0.0.1:9090'
-websocket_addr = 'ws://127.0.0.1:26657/websocket'
+event_source = { mode = 'push', url = 'ws://127.0.0.1:26657/websocket', batch_delay = '500ms' }
 rpc_timeout = '10s'
 account_prefix = 'osmo'
 key_name = 'osmosis'
@@ -305,7 +307,7 @@ hermes query packet commitments --chain cosmoshub-4 --port transfer --channel ch
 hermes query packet commitments --chain osmosis-1 --port transfer --channel channel-0
 ```
 
-Clear channel manually in both directions. Use this in case you want to clear congestion manually. Only works on hermes `v0.12.0` and higher. *You'll need to stop your Hermes daemon before using `clear packets`. This is important, otherwise the `clear packets` process will be racing with the daemeon process to access the same relayer wallet, resulting in account sequence mismatch errors.*
+Clear channel manually in both directions. Use this in case you want to clear congestion manually. *You'll need to stop your Hermes daemon before using `clear packets`. This is important, otherwise the `clear packets` process will be racing with the daemeon process to access the same relayer wallet, resulting in account sequence mismatch errors.*
 
 ```sh
 hermes clear packets --chain cosmoshub-4 --port transfer --channel channel-141
