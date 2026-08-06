@@ -13,6 +13,8 @@ Osmosis uses [proof of stake](/learn/terminology#proof-of-stake): a set of [vali
 
 In return for helping secure the chain, stakers earn **staking rewards**: a share of transaction fees and other distributions, minus the [commission](/learn/terminology#commission) the validator takes for running the infrastructure. Choosing a validator means weighing commission, reliability, and how much you want to support decentralization rather than concentrating stake in the largest few.
 
+You do not have to pick just one. Osmosis supports **validator-set preferences**: you can define a weighted set of validators and then stake, restake, or withdraw rewards against the whole set in a single action. See the [validator-set preferences module page](/build/chain/valset-pref) for the mechanics.
+
 ## Unbonding and slashing
 
 Staking is not instant to reverse. When you unstake, your OSMO goes through an **unbonding period** during which it earns no rewards and cannot be transferred, before it returns to your liquid balance. This delay is what makes the security guarantee credible.

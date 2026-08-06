@@ -22,7 +22,7 @@ If you do not vote yourself, your stake inherits your validator's vote unless yo
 
 ## How to vote
 
-- **Web:** vote with a connected wallet. Most wallets (Keplr, Leap) surface active proposals directly; outside of a wallet, [DAO DAO](https://daodao.zone/dao/osmosis) is the main interface for casting votes. For a breakdown of how validators and large holders have voted, [Mintscan's proposals view](https://www.mintscan.io/osmosis/proposals) is the most useful.
+- **Web:** vote with a connected wallet. Keplr and other supported wallets surface active proposals directly; outside of a wallet, [DAO DAO](https://daodao.zone/dao/osmosis) is the main interface for casting votes. For a breakdown of how validators and large holders have voted, [Mintscan's proposals view](https://www.mintscan.io/osmosis/proposals) is the most useful.
 - **CLI:** vote with `osmosisd`:
 
 ```bash
@@ -33,7 +33,7 @@ See the [CLI guide](/build/developer-environment/cli) for setup.
 
 ## Submitting a proposal
 
-A proposal needs a clear rationale, the onchain message it executes (for parameter or upgrade proposals), and a deposit. The minimum deposit to enter the voting period is 6000 OSMO for a standard proposal and 20000 OSMO for an expedited one. Socialize it on the forum first (the three-day minimum discussion period above applies); a proposal that arrives at a vote without prior discussion usually fails. For the exact CLI per proposal type (parameter change, software upgrade, community-pool spend, store-code, and others), see the [gov module guide](/build/chain/gov).
+A proposal needs a clear rationale, the onchain message it executes (for parameter or upgrade proposals), and a deposit. The minimum deposit to enter the voting period is 30,000 OSMO for a standard proposal and 100,000 OSMO for an expedited one, and 25% of the minimum deposit (7,500 OSMO at current parameters) must accompany the initial submission. Socialize it on the forum first (the three-day minimum discussion period above applies); a proposal that arrives at a vote without prior discussion usually fails. For the exact CLI per proposal type (parameter change, software upgrade, community-pool spend, store-code, and others), see the [gov module guide](/build/chain/gov).
 
 ## Where to engage
 

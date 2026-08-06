@@ -9,7 +9,7 @@ The Token Factory lets any account create its own token on Osmosis, permissionle
 
 ## How it works conceptually
 
-A token created through the factory has a [denom](/learn/terminology#denom) of the form `factory/{creator address}/{subdenom}`. Because the creator's address is part of the denom, two different creators can both make a token called, say, `mycoin` without conflict: they are distinct denoms (`factory/osmo1aaa.../mycoin` and `factory/osmo1bbb.../mycoin`). A single account can create as many tokens as it likes by choosing a different subdenom each time.
+A token created through the factory has a [denom](/learn/terminology#denom) of the form `factory/{creator address}/{subdenom}`. Because the creator's address is part of the denom, two different creators can both make a token called, say, `mycoin` without conflict: they are distinct denoms (`factory/osmo1aaa.../mycoin` and `factory/osmo1bbb.../mycoin`). A single account can create as many tokens as it likes by choosing a different subdenom each time. As a spam deterrent, creating a denom consumes a flat gas surcharge (currently 1,000,000 gas) on top of the transaction's normal cost, so mass token creation is not free.
 
 The creator of a denom is its admin and controls minting and burning, and can assign token metadata (such as the display symbol and [exponent](/learn/terminology#exponent)). This makes the factory the standard way to issue native assets on Osmosis, from stablecoins and project tokens to the alloyed-asset denoms.
 

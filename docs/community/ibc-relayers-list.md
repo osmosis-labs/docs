@@ -12,13 +12,13 @@ Osmosis is connected to the rest of the interchain by IBC relayers: independent 
 
 Rather than a hand-maintained directory (which goes stale quickly as operators and channels change), use live sources:
 
-- **[Relayers dashboard (Smart Stake)](https://relayers.smartstake.io/network/OSMO)** shows the relayers actually submitting Osmosis IBC transactions, with their recent activity and the channels they serve. This is the best view of who is relaying for Osmosis right now.
+- **[Mintscan's relayers view](https://www.mintscan.io/osmosis/relayers)** shows the relayers submitting Osmosis IBC transactions and the channels they serve.
 - **[Cosmos chain registry](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json)** lists the canonical peers and the [IBC channel definitions](https://github.com/cosmos/chain-registry/tree/master/_IBC) between Osmosis and each counterparty chain.
 - **[Map of Zones](https://mapofzones.com/zones/osmosis-1)** visualizes Osmosis's IBC connections and relative transfer volume across the interchain.
 
 ## Running a relayer
 
-If you want to relay for Osmosis yourself, the two production relayer implementations are [Hermes](https://hermes.informal.systems/) (Rust, maintained by Informal Systems) and the [Go relayer](https://github.com/cosmos/relayer). Both read channel and chain metadata from the chain registry. Coordinate with other operators in the [Osmosis Discord](https://discord.com/invite/osmosis).
+If you want to relay for Osmosis yourself, the maintained production implementation is [Hermes](https://hermes.informal.systems/) (Rust, maintained by Informal Systems); the [Go relayer](https://github.com/cosmos/relayer) still works but its repository is archived and no longer maintained. Both read channel and chain metadata from the chain registry. Coordinate with other operators in the [Osmosis Discord](https://discord.com/invite/osmosis).
 
 ## Reference
 

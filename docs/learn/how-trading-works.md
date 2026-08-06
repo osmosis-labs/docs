@@ -40,7 +40,7 @@ Two related ideas govern what price you actually get:
 A swap on Osmosis carries two kinds of fee:
 
 - **Spread factor** (the pool's swap fee). This is paid to the pool's liquidity providers as compensation for supplying the assets you traded against. Each pool sets its own spread factor.
-- **[Taker fee](/learn/osmo#taker-fees)**. A small protocol-level fee on trades, 0.1% by default, with some routes reduced or exempt. Taker fees are split between OSMO stakers, OSMO buyback, and the community pool.
+- **[Taker fee](/learn/osmo#taker-fees)**. A small protocol-level fee on trades. The default is 0.1%, but per-pair overrides set by the Protocol Fee Controller subDAO go in both directions: major routes are reduced (for example, allBTC/USDC pays 0.02%), while OSMO pairs are raised to between 0.5% and 0.8% (for example, OSMO/USDC pays 0.8%). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool.
 
 You also pay a network [gas](/learn/terminology#fees) fee to include the transaction in a block, like any onchain action. Thanks to [fee abstraction](/learn/features/fee-abstraction), you can pay that gas in many tokens, not only OSMO.
 
