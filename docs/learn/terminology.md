@@ -17,7 +17,7 @@ A transfer of free cryptocurrency from a crypto project into users' wallets in o
 
 ## Alloyed asset
 
-A single canonical Osmosis denom that represents several equivalent bridged versions of the same underlying asset (for example, the different bridged versions of BTC collapsed into `allBTC`). It lets liquidity that would otherwise be split across variants trade as one unit. See [Alloyed Assets](/learn/features/alloyed-assets).
+A single canonical Osmosis denom that represents several equivalent bridged versions of the same underlying asset (for example, the different bridged versions of BTC collapsed into one alloyed asset, `allBTC` onchain, displayed simply as BTC). It lets liquidity that would otherwise be split across variants trade as one unit. See [Alloyed Assets](/learn/features/alloyed-assets).
 
 ## Arbitrage
 
@@ -220,7 +220,7 @@ When a user or delegator delegates and bonds Osmo to an active validator in orde
 
 ## Taker fee
 
-A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (allBTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
+A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
 
 ## CometBFT consensus
 

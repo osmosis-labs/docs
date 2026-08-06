@@ -33,7 +33,7 @@ _The token must have reasonable liquidity, paired with $OSMO as a minimum requir
 
 ## Taker Fees
 Osmosis charges a small taker fee on all trades with a 0.1% default.
-Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO, are set per direction of a trading pair (keyed by input and output denom) and adjust the default both ways: major routes are reduced (allBTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to between 0.5% and 0.8%. The two directions of a pair can differ widely: selling OSMO for USDC pays 0.8%, while swapping USDC to OSMO pays 0.05%.
+Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO, are set per direction of a trading pair (keyed by input and output denom) and adjust the default both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to between 0.5% and 0.8%. The two directions of a pair can differ widely: selling OSMO for USDC pays 0.8%, while swapping USDC to OSMO pays 0.05%.
 
 The taker fee is charged on each hop of a trade's route, in that hop's input asset, at the rate set for that pair.
 
