@@ -12,9 +12,11 @@ Osmosis is connected to the rest of the interchain by IBC relayers: independent 
 
 Rather than a hand-maintained directory (which goes stale quickly as operators and channels change), use live sources:
 
-- **[Mintscan's relayers view](https://www.mintscan.io/osmosis/relayers)** shows the relayers submitting Osmosis IBC transactions and the channels they serve.
+- **[Mintscan's relayers view](https://www.mintscan.io/osmosis/relayers)** shows live relaying activity per channel pair (transaction counts and volume), though it does not name the operator behind each relayer address.
 - **[Cosmos chain registry](https://github.com/cosmos/chain-registry/blob/master/osmosis/chain.json)** lists the canonical peers and the [IBC channel definitions](https://github.com/cosmos/chain-registry/tree/master/_IBC) between Osmosis and each counterparty chain.
 - **[Map of Zones](https://mapofzones.com/zones/osmosis-1)** visualizes Osmosis's IBC connections and relative transfer volume across the interchain.
+
+No public dashboard currently names the operator behind each relayer address. Hermes lets operators set an identifying transaction memo, and many do, so inspecting a relayer's recent transactions on an explorer is usually the quickest way to attribute one.
 
 ## Running a relayer
 
