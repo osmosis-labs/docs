@@ -19,12 +19,14 @@ The chain exposes the same state three ways. Which one to use depends on what yo
 
 | | Use it for | Avoid it for |
 |---|---|---|
-| **RPC** (port 26657) | Broadcasting transactions, WebSocket event subscriptions, consensus and block data (`/status`, `/block`, `/tx_search`) | Bulk state reads, where the typed gRPC/REST query services are easier |
-| **gRPC** (port 9090) | Typed module queries from a backend, streaming, generated clients | Browsers, which cannot speak gRPC directly without a proxy |
-| **REST / LCD** (port 1317) | Typed module queries over plain HTTP, quick curl checks, browser clients | Subscriptions, which it does not support |
+| **RPC** (port 26657) | WebSocket event subscriptions, consensus and block data (`/status`, `/block`, `/tx_search`), broadcasting | Bulk state reads, where the typed gRPC/REST query services are easier |
+| **gRPC** (port 9090) | Typed module queries from a backend, streaming, generated clients, broadcasting via `cosmos.tx.v1beta1.Service/BroadcastTx` | Browsers, which cannot speak gRPC directly without a proxy |
+| **REST / LCD** (port 1317) | Typed module queries over plain HTTP, quick curl checks, browser clients, broadcasting via `POST /cosmos/tx/v1beta1/txs` | Subscriptions, which it does not support |
 
-Only RPC offers WebSocket subscriptions, and only RPC accepts transaction broadcast. For routing
-quotes and batched pool state, prefer the [Sidecar Query Server](./sqs) over all three.
+All three can broadcast a signed transaction: the SDK's `cosmos.tx.v1beta1.Service` exposes
+`BroadcastTx` over gRPC with a REST binding, alongside CometBFT's own RPC broadcast endpoints. The
+distinction that matters is **subscriptions**, which only RPC offers. For routing quotes and batched
+pool state, prefer the [Sidecar Query Server](./sqs) over all three.
 
 ## Querying the ABCI Query with Javascript via Telescope
 
@@ -76,16 +78,16 @@ yarn dev
 
 ## Signing and broadcasting a transaction
 
-Broadcast goes through the RPC endpoint. The generated `ClientFactory` also exposes a signing
-client, which takes a wallet and handles the sign-and-broadcast round trip:
+The generated `ClientFactory` exposes a signing client that takes a wallet and handles the
+sign-and-broadcast round trip over the RPC endpoint:
 
 ```javascript
-import { osmosis } from "./codegen";
+import { cosmos, osmosis } from "./codegen";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 
-const { swapExactAmountIn } = osmosis.poolmanager.v1beta1.MessageComposer.withTypeUrl;
+const { send } = cosmos.bank.v1beta1.MessageComposer.fromPartial;
 
-async function swap() {
+async function transfer() {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(process.env.MNEMONIC, {
     prefix: "osmo",
   });
@@ -96,28 +98,53 @@ async function swap() {
     signer: wallet,
   });
 
-  const msg = swapExactAmountIn({
-    sender: account.address,
-    routes: [{ poolId: 1n, tokenOutDenom: "uosmo" }],
-    tokenIn: { denom: "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2", amount: "1000000" },
-    tokenOutMinAmount: "1",
+  const msg = send({
+    fromAddress: account.address,
+    toAddress: "osmo1...",
+    amount: [{ denom: "uosmo", amount: "1000" }], // 0.001 OSMO, base units
   });
 
-  const fee = { amount: [{ denom: "uosmo", amount: "5000" }], gas: "300000" };
+  const fee = { amount: [{ denom: "uosmo", amount: "5000" }], gas: "200000" };
   const res = await client.signAndBroadcast(account.address, [msg], fee);
+
+  if (res.code !== 0) throw new Error(`tx failed: ${res.rawLog}`);
   console.log(res.transactionHash);
 }
 ```
 
+`signAndBroadcast` polls until the transaction is included in a block and resolves to a
+`DeliverTxResponse`, so a successful promise does **not** mean the transaction succeeded. Check
+`res.code === 0` before treating it as settled, as above. If you want to return as soon as the
+mempool accepts the transaction and track the result yourself, use `broadcastTxSync`, which resolves
+to the transaction hash only.
+
 :::warning
-`tokenOutMinAmount` is your slippage protection. Setting it to `1` as above accepts almost any
-output and will be sandwiched on a real trade. Derive it from a quote and your slippage tolerance,
-and remember amounts are in base units, so convert using each asset's exponent rather than assuming
-6. Never hold a mnemonic in source; load it from the environment or a keyring.
+Never hold a mnemonic in source; load it from the environment or a keyring. Amounts are always in
+base units, so convert using each asset's exponent rather than assuming 6.
 :::
 
-Broadcast returns as soon as the transaction is accepted into the mempool. That is not the same as
-execution: check `res.code === 0` on the delivered result before treating a swap as settled.
+### Swaps need slippage protection
+
+A bank transfer is used above because it has no price exposure. Swap messages do, and the protection
+is the minimum-output field, `tokenOutMinAmount` on `MsgSwapExactAmountIn`. It must be derived from a
+quote and an explicit slippage tolerance:
+
+```javascript
+// Quote first, then bound the output. Never hardcode a permissive minimum.
+const quote = await fetch(
+  "https://sqs.osmosis.zone/router/quote?tokenIn=1000000ibc/27394FB0…5EB2&tokenOutDenom=uosmo"
+).then((r) => r.json());
+
+const slippageTolerance = 0.005; // 0.5%
+const tokenOutMinAmount = BigInt(
+  Math.floor(Number(quote.amount_out) * (1 - slippageTolerance))
+).toString();
+```
+
+Setting `tokenOutMinAmount` to `1`, or to any value not derived from a live quote, accepts
+effectively unlimited slippage and will be sandwiched on a real trade. See
+[Swap Integration](/integrate/swap) for the full quote-then-execute flow, and the
+[Sidecar Query Server](./sqs) for the routing API.
 
 ## Subscribing to events over WebSocket
 
