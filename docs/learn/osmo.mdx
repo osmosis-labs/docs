@@ -22,7 +22,7 @@ Governance is the critical component of how Osmosis evolves. Active stakeholders
 ## Transaction Fees
 Transaction fees are paid by any user to post a transaction on the chain. The fee amount is determined by the computation and storage costs of the transaction. The network-wide minimum gas price is set algorithmically by Osmosis's [EIP-1559 style fee market](/learn/features/fee-market), which adjusts the base fee with network load. This transaction fee is distributed to OSMO stakers on the network.
 
-Validators can choose which assets to accept for fees in the blocks that they propose, allowing users to pay for gas in almost any token listed on Osmosis. All accepted assets are converted back to OSMO before distribution, retaining this utility.
+The assets accepted for fees come from an onchain whitelist, managed by the Fee Token subDAO linked below, allowing users to pay for gas in many of the tokens listed on Osmosis. A fee paid in a whitelisted token is valued at its OSMO equivalent and must still cover the base fee. All accepted assets are converted back to OSMO before distribution, retaining this utility.
 
 :::info
 
@@ -33,9 +33,9 @@ _The token must have reasonable liquidity, paired with $OSMO as a minimum requir
 
 ## Taker Fees
 Osmosis charges a small taker fee on all trades with a 0.1% default.
-Several routes have reductions or exemptions, which are managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO.
+Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO, are set per direction of a trading pair (keyed by input and output denom) and adjust the default both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to between 0.5% and 0.8%. The two directions of a pair can differ widely: selling OSMO for USDC pays 0.8%, while swapping USDC to OSMO pays 0.05%.
 
-Taker fees are initially collected in the asset provided as the entry point to the trade. 
+The taker fee is charged on each hop of a trade's route, in that hop's input asset, at the rate set for that pair.
 
 Non-OSMO collected is divided, with 25% going to the Community Pool and 75% used to buyback OSMO before further distribution.
 
@@ -43,6 +43,8 @@ OSMO collected is distributed partially to stakers (30%) and partially burned (7
 
 ## ProtoRev
 The ProtoRev module mints and burns tokens in order to perform privileged arbitrage transactions onchain, ensuring prices are balanced across all liquidity sources. This happens within the same transaction and results in a net gain after the mint and burn from the arbitrage performed.
+
+A developer fee (currently 5% of the captured profit) is sent to the ProtoRev developer account first; the remainder is distributed as follows.
 
 If a non-OSMO asset is recovered from this arbitrage, it is sent to the Community Pool as specified in [Proposal 709](https://daodao.zone/dao/osmosis/proposals/709).
 

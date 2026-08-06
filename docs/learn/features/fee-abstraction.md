@@ -19,4 +19,7 @@ The same primitive also lets other Cosmos chains accept their users' fees in IBC
 
 ## Reference
 
-For the full module mechanics (the exchange-rate updates over interchain queries, the cross-chain swap settlement, and the deployment), see the [fee-abstraction repository](https://github.com/osmosis-labs/fee-abstraction).
+This page covers two distinct implementations, one for each side of the picture:
+
+- **Paying fees on Osmosis in non-OSMO tokens** is implemented by Osmosis's own `txfees` module, which maintains the whitelist of accepted fee tokens and values fees at their OSMO equivalent. See the [txfees module page](/build/chain/txfees) for those mechanics.
+- **Other chains accepting fees in IBC tokens** adopt the fee-abstraction module, which keeps exchange rates updated over interchain queries and settles the collected fees cross-chain through Osmosis liquidity. See the [fee-abstraction repository](https://github.com/osmosis-labs/fee-abstraction) for the module mechanics and deployment.

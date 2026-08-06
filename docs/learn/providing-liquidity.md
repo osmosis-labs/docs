@@ -32,7 +32,7 @@ Fees earned offset impermanent loss, and whether providing liquidity is net prof
 
 ## Incentives
 
-Beyond swap fees, some pools receive additional **liquidity incentives**: extra rewards streamed to LPs on top of the fees they earn. These are typically funded by third parties (for example, a project incentivizing its own pool) through a [gauge](/learn/terminology#gauge), which anyone can create permissionlessly. Depending on the gauge, you may need to [bond](/learn/terminology#bonding) your position for a commitment period to qualify.
+Beyond swap fees, some pools receive additional **liquidity incentives**: extra rewards streamed to LPs on top of the fees they earn. These are typically funded by third parties (for example, a project incentivizing its own pool) through a [gauge](/learn/terminology#gauge), which anyone can create permissionlessly for a fee of 50 OSMO, paid to the community pool. Depending on the gauge, you may need to [bond](/learn/terminology#bonding) your position for a commitment period to qualify.
 
 ## Where to go next
 

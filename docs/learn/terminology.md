@@ -17,7 +17,7 @@ A transfer of free cryptocurrency from a crypto project into users' wallets in o
 
 ## Alloyed asset
 
-A single canonical Osmosis denom that represents several equivalent bridged versions of the same underlying asset (for example, the different bridged versions of BTC collapsed into `allBTC`). It lets liquidity that would otherwise be split across variants trade as one unit. See [Alloyed Assets](/learn/features/alloyed-assets).
+A single canonical Osmosis denom that represents several equivalent bridged versions of the same underlying asset (for example, the different bridged versions of BTC collapsed into one alloyed asset, `allBTC` onchain, displayed simply as BTC). It lets liquidity that would otherwise be split across variants trade as one unit. See [Alloyed Assets](/learn/features/alloyed-assets).
 
 ## Arbitrage
 
@@ -58,7 +58,7 @@ A pool type that lets liquidity providers concentrate their capital within a cho
 
 ## Consensus
 
-A system used by validators or miners to agree that each block of transactions in a blockchain is correct. The Osmosis blockchain uses Tendermint consensus engine. Validators earn rewards for participating in consensus. Visit the [Tendermint official documentation site](https://docs.tendermint.com/) for more information.
+A system used by validators or miners to agree that each block of transactions in a blockchain is correct. The Osmosis blockchain uses the CometBFT consensus engine (formerly Tendermint). Validators earn rewards for participating in consensus. Visit the [CometBFT documentation site](https://docs.cometbft.com/) for more information.
 
 ## Cosmos-SDK
 
@@ -99,7 +99,7 @@ The number of decimal places between an asset's base [denom](#denom) and its dis
 
 ## Fees
 
-- **Gas**: Computed fees added on to all transactions to avoid spamming. Validators set minimum gas prices and reject transactions that have implied gas prices below this threshold.
+- **Gas**: Computed fees added on to all transactions to avoid spamming. The minimum gas price is a dynamic network base fee that rises and falls with network load; see [Fee Market](/learn/features/fee-market). Transactions offering less than the current base fee are rejected.
 
 
 ## Full node
@@ -128,7 +128,7 @@ Validators that are not in the [active set](#active-set). These validators do no
 ## IBC
 
 The inter-blockchain communication protocol (IBC) creates communication between independent blockchains. IBC achieves this by specifying a set of structures that can be implemented by any distributed ledger that satisfies a small number of requirements.
-IBC facilitates cross-chain applications for token transfers, swaps, multi-chain contracts, and data sharding. At launch, Osmosis utilizes IBC for token transfers. Over time, Osmosis will add new features that are made possible through IBC.
+IBC facilitates cross-chain applications for token transfers, swaps, multi-chain contracts, and data sharding. Osmosis uses IBC for token transfers and builds features on top of it, including [IBC hooks](/learn/features/ibc-hooks) (cross-chain contract calls, which enable cross-chain swaps) and [rate limiting](/learn/features/ibc-rate-limit) on transfers.
 
 
 ## Impermanent Loss
@@ -140,8 +140,6 @@ When the price of the assets in the pool change at different rates, LPs end up o
 Impermanent loss is mitigated in part by the transaction fees earned by LPs. When the profits made from swap fees outweigh an LP's impermanent loss, the pool is self-sustainable.
 
 To further offset impermanent loss, particularly in the early stages of a protocol when volatility is high, AMMs utilize liquidity mining rewards. Liquidity rewards bootstrap the ecosystem as usage and fee revenues are still ramping up.
-
-Osmosis has many new features and innovations in development to decrease impermanent loss.
 
 
 ## Jailed
@@ -222,11 +220,11 @@ When a user or delegator delegates and bonds Osmo to an active validator in orde
 
 ## Taker fee
 
-A small protocol-level fee charged on trades, 0.1% by default, with some routes reduced or exempt. It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, OSMO buyback, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
+A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
 
-## Tendermint consensus
+## CometBFT consensus
 
-The consensus procedure used by the Osmosis protocol. First, a validator proposes a new block. Other validators vote on the block in two rounds. If a block receives a two-thirds majority or greater of yes votes in both rounds, it gets added to the blockchain. Validators get rewarded with the block's transaction fees. Proposers get rewarded extra. Each validator is chosen to propose based on their weight. Checkout the [Tendermint official documentation](https://docs.tendermint.com/) for more information.
+The consensus procedure used by the Osmosis protocol (formerly known as Tendermint consensus). First, a validator proposes a new block. Other validators vote on the block in two rounds. If a block receives a two-thirds majority or greater of yes votes in both rounds, it gets added to the blockchain. The block's transaction fees are shared across all bonded validators and their delegators; the proposer does not currently receive an extra share (both proposer reward parameters are zero on Osmosis). Each validator is chosen to propose based on their weight. Checkout the [CometBFT documentation](https://docs.cometbft.com/) for more information.
 
 ## Orderbook
 
