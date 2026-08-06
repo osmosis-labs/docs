@@ -40,26 +40,31 @@ To contribute a change proposal, use the following workflow:
 
 ## Working with the SDK
 
-### Updating dependencies for builds
+### Pointing at a Cosmos SDK fork
 
-Vendor is a folder that go automatically makes if you run go mod vendor, which contains the source code for all of your dependencies. Its often helpful for local debugging. In order to update it...
+Osmosis runs a fork of the Cosmos SDK and of CometBFT. They are wired in through `replace`
+directives in `go.mod` rather than by vendoring, and there is no `vendor/` directory in the repo.
 
-Commit & push to the Cosmos-SDK fork in a new branch (see above steps for more details), and then you can grab the commit hash to do:
+Each replace carries comments recording the fork branch, the commit, and the release tag it maps to,
+for example:
 
-`go get github.com/osmosis-labs/cosmos-sdk@{my commit hash}`
+```go
+// Direct cosmos-sdk branch link: https://github.com/osmosis-labs/cosmos-sdk/tree/osmo-v30/0.50.14
+cosmossdk.io/store => github.com/osmosis-labs/cosmos-sdk/store v1.1.1-v0.50.11-v28-osmo-2
+```
 
-You get something like:
+To move Osmosis onto a new fork revision:
 
-`go get: github.com/osmosis-labs/cosmos-sdk@v0.33.2 updating to
-	github.com/osmosis-labs/cosmos-sdk@v0.42.10-0.20210829064313-2c87644925da: parsing go.mod:
-	module declares its path as: github.com/cosmos/cosmos-sdk
-	        but was required as: github.com/osmosis-labs/cosmos-sdk`
+1. Commit and push your change to the [osmosis-labs/cosmos-sdk](https://github.com/osmosis-labs/cosmos-sdk) fork on a branch, and tag it if the replace targets a tag.
+2. Update the version on the right-hand side of the relevant `replace` line in `go.mod`, and update the branch/commit/tag comments above it so they still describe what is pinned.
+3. Run `go mod tidy` and build.
 
-Then you can copy paste the `v0.42.10-0.20210829064313-2c87644925da` part and replace the corresponding section of go.mod
+Note that the fork's `go.mod` still declares the upstream module path, so a bare
+`go get github.com/osmosis-labs/cosmos-sdk` fails with a "module declares its path as" error. The
+`replace` directive is what makes the substitution work, so edit `go.mod` directly rather than
+relying on `go get`.
 
-Then do `go mod vendor`, and you're set.
-
-### Changing things in vendor for local builds / local testing
+### Profiling and benchmarks
 
 In whichever folder you're running benchmarks for, you can test via:
 
@@ -69,9 +74,11 @@ Then once that is done, and you get the short benchmark results out, you can do:
 
 `go tool pprof -http localhost:8080 cpu.out`
 
-and take look at the graphviz output!
+and take a look at the graphviz output.
 
-Note that if you are doing things that are low-level / small, the overhead of cpuprofile may mess with cache effects, etc. However for things like epoch code, or relatively large txs, this totally works!
+Note that if you are doing things that are low-level or small, the overhead of cpuprofile may
+interfere with cache effects. For larger units of work such as epoch code or sizeable transactions
+it works well.
 
 ### Branch structure and backports
 
@@ -79,6 +86,18 @@ Each major release has a long-lived release branch (for example `v31.x`). Older 
 
 Most PRs land on `main` first. State-compatible fixes are then backported to the latest major release branch with a `backport` label. We typically use mergify for backporting, which takes place after a PR has been merged to main.
 
-### How to build proto files. (rm -rf vendor/ && make build-reproducible once docker is installed)
+### Building proto files
 
-You can do rm -rf vendor and make build-reproducible to redownload all dependencies - this should pull the latest docker image of Osmo. You should also make sure to do make proto-all to auto-generate your protobuf files. Makes sure you have docker installed. If you get something like `W0503 22:16:30.068560 158 services.go:38] No HttpRule found for method: Msg.CreateBalancerPool` feel free to ignore that. Make sure to also do make all to run all the linting tests before you commit and push, as well as `gofmt`-ing the file you've modified or added to make sure everything still abides by the standards. 
+Protobuf generation runs in Docker, so make sure Docker is installed first.
+
+- `make proto-all` formats and regenerates the protobuf files (`proto-format` then `proto-gen`).
+- `make build-reproducible` produces the reproducible release build.
+
+A warning such as `No HttpRule found for method: Msg.CreateBalancerPool` during generation is
+expected and can be ignored.
+
+Before you commit and push, run the linters and unit tests:
+
+- `make lint-all` runs golangci-lint and the markdown linter. `make lint-format` applies the
+  autofixes, including `gofumpt`. Plain `make lint` only prints the available lint subtargets.
+- `make test-unit` runs the unit tests.

@@ -42,7 +42,7 @@
 
 - [Docusaurus](https://docusaurus.io/)
 - [React](https://reactjs.org/)
-- [Tailwind](https://tailwindcss.com/)
+- Plain CSS with custom properties (`src/css/custom.css`)
 
 <!-- GETTING STARTED -->
 

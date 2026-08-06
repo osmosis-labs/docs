@@ -287,26 +287,35 @@ osmosisd query tx --type=signature <sig1_base64,sig2_base64...>
 
 ### `txs`
 
-Retrieves transactions that match the specified events where results are paginated.
+Retrieves transactions that match the specified event query, where results are paginated. `--query` is required and takes CometBFT query syntax, so string values are single-quoted and multiple conditions are joined with `AND`.
 
 **Syntax**
 ```bash
-osmosisd query txs --events '<event>' --page <page-number> --limit <number-of-results>
+osmosisd query txs --query "<type>.<key>='<value>'" --page <page-number> --limit <number-of-results>
 ```
 
 **Example**
 ```bash
-osmosisd query txs --events 'message.sender=cosmos1...&message.action=withdraw_delegator_reward' --page 1 --limit 30
+osmosisd query txs --query "message.sender='osmo1...' AND message.action='withdraw_delegator_reward'" --page 1 --limit 30
 ```
 
-### `unsafe-reset-all`
+Older binaries used `--events` with `&`-joined conditions; both were removed in Cosmos SDK v0.50.
 
-Resets the blockchain database, removes address book files, and resets `data/priv_validator_state.json` to the genesis state.
+### `comet unsafe-reset-all`
+
+Resets the blockchain database, removes address book files, and resets `data/priv_validator_state.json` to the genesis state. Note this is a subcommand of `comet`; the bare `osmosisd unsafe-reset-all` form was removed.
 
 **Syntax**
 ```bash
-osmosisd unsafe-reset-all
+osmosisd comet unsafe-reset-all
 ```
+
+:::danger
+Resetting `priv_validator_state.json` discards the record of the last height and round your consensus
+key signed. On a node whose key is in an active validator set this can lead to double signing, which
+is slashed and permanently jails the validator. Restrict this to a fresh home directory that has
+never signed. See [Validator Security and Recovery](/validate/security).
+:::
 
 ### `validate-genesis`
 
