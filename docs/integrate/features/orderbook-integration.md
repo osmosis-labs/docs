@@ -106,7 +106,7 @@ Bounty economics are per-claim: the bounty rate applies to each claim's payout, 
 
 Two options, depending on whether you want aggregated or per-contract state:
 
-- **SQS passthrough**: `GET /passthrough/active-orders?userOsmoAddress=<address>` returns an address's open limit orders across all canonical orderbooks in one call, including a `is_best_effort` flag when some books could not be reached. See [Active limit orders](/integrate/endpoints/sqs#active-limit-orders) for the response shape.
+- **SQS passthrough**: `GET /passthrough/active-orders?userOsmoAddress=<address>` returns an address's open limit orders across all canonical orderbooks in one call, including a `is_best_effort` flag when some books could not be reached. See the [SQS endpoint reference](/integrate/endpoints/sqs) for the response shape.
 - **Contract query**: each book exposes `orders_by_owner` directly:
 
 ```json
