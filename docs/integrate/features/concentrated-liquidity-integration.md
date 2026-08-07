@@ -21,15 +21,17 @@ SQS serves hydrated pool state and is the right source for anything latency-sens
 `GET /pools` with `filter[type]=2` returns every concentrated pool (pool type `2` is `Concentrated` in the `poolmanager` pool-type enum; `0` is Balancer, `1` is Stableswap, `3` is CosmWasm):
 
 ```bash
-curl "https://sqs.osmosis.zone/pools?filter[type]=2"
+curl --globoff "https://sqs.osmosis.zone/pools?filter[type]=2"
 ```
+
+(`--globoff` stops curl treating the `[type]` brackets as URL globbing; alternatively percent-encode them: `filter%5Btype%5D=2`.)
 
 Each entry's `chain_model` carries the CL-specific fields: `token0`, `token1`, `current_tick`, `current_sqrt_price`, `tick_spacing`, `exponent_at_price_one`, and `spread_factor`. Filters compose with `filter[id]`, `filter[denom]`, and `filter[min_liquidity_cap]`; see the [SQS page](/integrate/endpoints/sqs) for the full parameter reference.
 
-`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This is the endpoint to build liquidity-depth charts or simulate swaps offchain:
+`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This is the endpoint to build liquidity-depth charts or simulate swaps offchain. The route is currently blocked (HTTP 403) on the public mainnet host; use the staging deployment or a self-hosted SQS (see the [SQS page](/integrate/endpoints/sqs) for details):
 
 ```bash
-curl "https://sqs.osmosis.zone/pools/ticks/1066"
+curl "https://sqs.stage.osmosis.zone/pools/ticks/1066"
 ```
 
 ### LCD query surface

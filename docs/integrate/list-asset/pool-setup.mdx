@@ -287,12 +287,12 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-Sample pool JSON file contents for balancer:
+Sample pool JSON file contents for balancer (a 40/40/20 ATOM/OSMO/AKT pool; non-native assets must use their full Osmosis `ibc/HASH` denom, never the origin-chain denom like `uatom`):
 
 ```json
 {
-  "weights": "4uatom,4uosmo,2uakt",
-  "initial-deposit": "100uatom,5uosmo,20uakt",
+  "weights": "4ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,4uosmo,2ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4",
+  "initial-deposit": "100ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,5uosmo,20ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4",
   "swap-fee": "0.001",
   "exit-fee": "0",
   "future-governor": "168h"

@@ -214,7 +214,7 @@ message MsgSwapExactAmountOut {
 
 Map the quote onto the message:
 
-- `routes`: one `SwapAmountOutRoute { pool_id, token_in_denom }` per entry in `route[].pools[]`, in order. The quote's `pools[].id` is the `pool_id` and `pools[].token_in_denom` is the `token_in_denom`.
+- `routes`: one `SwapAmountOutRoute { pool_id, token_in_denom }` per entry in `route[].pools[]`, **in reverse order**. SQS returns an exact-out route's pools ordered from the output token back toward the input token, while the chain executes the `routes` array from input toward output (each hop's output feeds the next hop's `token_in_denom`), so reverse a copy of the array when building the message. The first route after reversing must carry your input denom as its `token_in_denom`. A single-hop route is unaffected, but reverse unconditionally so multi-hop quotes do not fail onchain. The quote's `pools[].id` is the `pool_id` and `pools[].token_in_denom` is the `token_in_denom`.
 - `token_out`: the quote's `amount_out` (`{ denom, amount }`).
 - `token_in_max_amount`: your slippage guard, mirrored: the quote's `amount_in` **increased** by your tolerance, in the input denom's base units. As with exact-in, compute it with integer (`BigInt`) math, never floats, and round **up** (a ceiling), so the guard never lands below what the quote itself requires.
 
@@ -240,9 +240,11 @@ const tokenInMaxAmount = (
   (BigInt(quote.amount_in) * 101n + 99n) / 100n
 ).toString();
 
+// SQS lists exact-out pools output-to-input; the chain executes
+// input-to-output, so reverse a copy before mapping.
 const msg = swapExactAmountOut({
   sender: address,
-  routes: route.pools.map((p) => ({
+  routes: [...route.pools].reverse().map((p) => ({
     poolId: BigInt(p.id),
     tokenInDenom: p.token_in_denom,
   })),
@@ -264,7 +266,7 @@ message MsgSplitRouteSwapExactAmountOut {
 }
 ```
 
-One `SwapAmountOutSplitRoute` per entry in `quote.route`, where `pools` is that entry's hops and `token_out_amount` is its `out_amount`. `token_out_denom` is the output denom and `token_in_max_amount` is a single overall cap derived from the quote's total `amount_in` (the same ceiling math as above). As with exact-in, branch on `quote.route.length` and never collapse a split quote into the single-route message.
+One `SwapAmountOutSplitRoute` per entry in `quote.route`, where `pools` is that entry's hops **reversed the same way as above** (every split route needs its own reversed copy) and `token_out_amount` is its `out_amount`. `token_out_denom` is the output denom and `token_in_max_amount` is a single overall cap derived from the quote's total `amount_in` (the same ceiling math as above). As with exact-in, branch on `quote.route.length` and never collapse a split quote into the single-route message.
 
 Signing and broadcasting are identical to the exact-in flow above.
 
@@ -273,5 +275,5 @@ Signing and broadcasting are identical to the exact-in flow above.
 - **Direction.** Exact-in and exact-out are distinct messages; pick the one matching the quote you requested.
 - **Slippage.** Always set `token_out_min_amount` from the quote and an explicit tolerance.
 - **Denoms.** Match the full base denom (`ibc/HASH` or `factory/...`), never the display symbol. Read exponents from metadata.
-- **Route order.** Preserve the pool order from the quote; the `token_out_denom` of each hop must chain into the next.
+- **Route order.** For exact-in, preserve the pool order from the quote; the `token_out_denom` of each hop must chain into the next. For exact-out, reverse the quote's pool order (SQS lists those pools output-to-input, the chain executes input-to-output).
 - **Fees.** `effective_fee` already accounts for spread factors and taker fees; the onchain swap applies them, so size `token_out_min_amount` against the quoted `amount_out`, not the spot price.

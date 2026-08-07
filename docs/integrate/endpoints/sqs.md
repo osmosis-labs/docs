@@ -23,7 +23,7 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 | Staging | `https://sqs.stage.osmosis.zone` | `osmosis-1` |
 | Testnet | `https://sqs.testnet.osmosis.zone` | `osmo-test-5` |
 
-The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host; the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
+The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host except the three noted as edge-blocked in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups); the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
 
 Swagger reference: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html).
 

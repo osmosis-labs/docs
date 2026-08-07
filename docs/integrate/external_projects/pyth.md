@@ -4,6 +4,10 @@ description: Integrate Pyth price feeds with Osmosis.
 
 # Pyth
 
+:::danger Pyth is ending CosmWasm support on August 18, 2026
+Pyth's [official notice](https://docs.pyth.network/price-feeds/core/contract-addresses/cosmwasm) states that Pyth Core will no longer support CosmWasm after August 18, 2026. Do not build new integrations on the CosmWasm contract described below, and plan a migration path off it if you depend on it today.
+:::
+
 ## Introduction
 
 Pyth Network is an oracle that publishes financial market data to multiple blockchains. Its market data is contributed by over 120 first-party publishers, including some of the biggest exchanges and market making firms in the world. Pyth offers price feeds for a number of different asset classes, including US equities, commodities, and cryptocurrencies. Each price feed publishes a robust aggregate of publisher prices that updates multiple times per second.
