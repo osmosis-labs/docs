@@ -10,7 +10,7 @@ This guide intends to support teams looking to enlist their tokenized crypto ass
 At a very high level, the process is:
 
 1. **Register chain and asset metadata to the Cosmos Chain Registry** (required), and ensure an IBC connection to Osmosis is registered there as well.
-2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs daily (around 17:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
+2. **Wait for auto-listing** on Osmosis. The [osmosis-labs/assetlists](https://github.com/osmosis-labs/assetlists) pipeline runs daily (15:00 UTC) and automatically detects new IBC-connected assets in the Cosmos Chain Registry, adds them to `osmosis.zone_assets.json`, and ships them to Osmosis Zone as **unverified** assets.
 3. *(Optional)* **Submit a PR to `osmosis-labs/assetlists`** to configure advanced properties (categories, transfer methods, override metadata, etc.) and/or to request an upgrade to **verified status** once onchain liquidity criteria are met.
 
 Note that the overall process may require collaboration from technical teams (to provide chain services and IBC relaying) and market-making entities (to provide initial liquidity needed for verified status).
@@ -54,7 +54,7 @@ The Cosmos Chain Registry is meant to be a public good, used as a single source 
 	  - Be sure to include at least one RPC and one REST under `apis`.
     - Be sure to include at least one working Block Explorer.
   - Note that to be enlisted on Osmosis, an IBC connection will need to be set up and registered (in `/_IBC/`) at the Chain Registry.
-3. If registering a new Asset, submit a pull request with necessary changes to the `assetlists.json` file.
+3. If registering a new Asset, submit a pull request with necessary changes to the `assetlist.json` file.
 	- Follow the [assetlist.schema.json](https://github.com/cosmos/chain-registry/blob/master/assetlist.schema.json) format.
 	  - `name` refers to how the asset should be called when spoken in conversation.
     - `symbol` refers to ticker symbol, like how a stock or other securities use a shortened representation. Typically in ALL CAPS.
@@ -76,10 +76,11 @@ The Osmosis Labs' Assetlist Registry ([osmosis-labs/assetlists](https://github.c
 
 ### How auto-detection works
 
-- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs daily at around 17:00 UTC.
+- A scheduled GitHub Actions workflow in `osmosis-labs/assetlists` runs daily at 15:00 UTC.
 - It scans the Cosmos Chain Registry for assets whose source chain has an IBC connection to Osmosis.
 - For each newly detected asset, the workflow generates an entry in `osmosis-1/osmosis.zone_assets.json` (and stubs the source chain into `osmosis.zone_chains.json` if it is not already present), opens a PR to the `update/assetlist_all` branch, runs validation, and auto-merges on success.
 - The asset is then shipped to Osmosis Zone as **unverified**. Unverified assets are visible only to users who have toggled "Show Unverified Assets" on in the Osmosis Zone app.
+- Newly listed assets are automatically stamped with a listing date and appear in the frontend's "New" category for about 30 days.
 
 For the full workflow detail (validation steps, IBC client health checks, endpoint validation, etc.), see the [assetlists README](https://github.com/osmosis-labs/assetlists/blob/main/README.md).
 
@@ -119,7 +120,12 @@ The minimum required shape for an asset object is:
 }
 ```
 
-All other fields are optional and default to safe values (e.g., `osmosis_verified` defaults to `false`). Consult the assetlists README before adding any optional field.
+Note that `path` (the full IBC port/channel/denom trace) is required only for assets transferred to Osmosis over IBC (ICS20); it is omitted for assets deployed directly on Osmosis, such as factory denoms. All other fields are optional and default to safe values (e.g., `osmosis_verified` defaults to `false`). Consult the assetlists README before adding any optional field.
+
+#### Common pitfalls
+
+- **Decimals and exponents:** the display exponent must match the token's actual decimal precision as registered in its chain-registry metadata. Never assume 6 decimals; EVM-originated assets commonly use 18, and a wrong exponent misprices the asset by orders of magnitude.
+- **Base vs display denom:** the base (minimal) denomination and the display denomination are different units and must not be conflated; onchain amounts are always expressed in the base denom.
 
 #### Submitting the PR
 
@@ -148,3 +154,4 @@ The authoritative criteria live in [LISTING.md](https://github.com/osmosis-labs/
 
 - Maintainers review the PR against the criteria in LISTING.md before merging.
 - Once merged, the asset is shipped to Osmosis Zone as verified on the next assetlist publish.
+- Verified status is not permanent: a scheduled workflow in the assetlists repo (running on the 1st and 15th of each month) opens a PR proposing removal of verified status for any asset whose data has been continuously unstable for 90 days or more.

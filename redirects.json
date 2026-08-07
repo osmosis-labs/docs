@@ -356,7 +356,7 @@
     "from": "/overview/integrate/earn-risk"
   },
   {
-    "to": "/integrate/external_projects/pyth",
+    "to": "/integrate/prices",
     "from": "/overview/integrate/external_projects/pyth"
   },
   {
@@ -670,5 +670,9 @@
   {
     "to": "/build/chain/incentives/pool-incentives",
     "from": "/build/chain/pool-incentives"
+  },
+  {
+    "to": "/integrate/prices",
+    "from": "/integrate/external_projects/pyth"
   }
 ]

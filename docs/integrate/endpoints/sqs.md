@@ -23,7 +23,7 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 | Staging | `https://sqs.stage.osmosis.zone` | `osmosis-1` |
 | Testnet | `https://sqs.testnet.osmosis.zone` | `osmo-test-5` |
 
-The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host; the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
+The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host except the three noted as edge-blocked in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups); the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
 
 Swagger reference: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html).
 
@@ -211,6 +211,131 @@ curl "https://sqs.osmosis.zone/tokens/metadata?denoms=uosmo,uion" | jq .
 
 The response is keyed by the chain denom passed in. SQS reads this metadata from the [generated frontend assetlist](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/generated/frontend/assetlist.json); the assetlist remains the canonical source if you are not running SQS yourself.
 
+## Passthrough and lookup endpoints
+
+Beyond routing and pool state, SQS serves account-level **passthrough** queries (it fans out the underlying chain queries and aggregates the result for you) and a few smaller lookup endpoints.
+
+### Active limit orders
+
+`GET /passthrough/active-orders?userOsmoAddress=<address>` returns a user's open limit orders across the canonical orderbooks.
+
+```bash
+curl "https://sqs.osmosis.zone/passthrough/active-orders?userOsmoAddress=osmo1..." | jq .
+```
+
+```json
+{ "orders": [], "is_best_effort": false }
+```
+
+An address with no open orders returns an empty `orders` array. `is_best_effort` is `true` when SQS could not reach every orderbook and the list may be incomplete.
+
+### Portfolio assets
+
+`GET /passthrough/portfolio-assets/{address}` returns an address's aggregated holdings, bucketed by category (total assets, staked, pooled, in locks, unclaimed rewards) with a per-coin breakdown and a USD capitalization for each.
+
+```bash
+curl "https://sqs.osmosis.zone/passthrough/portfolio-assets/osmo1..." | jq .
+```
+
+```json
+{
+  "categories": {
+    "in-locks": { "capitalization": "0.031304057153332185", "is_best_effort": false },
+    "pooled": { "capitalization": "0.000000000797905905", "is_best_effort": false },
+    "staked": { "capitalization": "0.000558723852586202", "is_best_effort": false },
+    "total-assets": {
+      "capitalization": "0.039646246920034655",
+      "account_coins_result": [
+        {
+          "coin": { "denom": "ibc/072E5B3D...", "amount": "550940834" },
+          "cap_value": "0.015699962323825378"
+        }
+      ],
+      "is_best_effort": false
+    }
+  }
+}
+```
+
+(`account_coins_result` truncated to one coin.) This is the query behind the frontend's portfolio page; it saves you a balance query, a staking query, a lock query, and a price lookup per denom.
+
+### Concentrated-liquidity ticks
+
+`GET /pools/ticks/{id}` returns the tick-level liquidity (depth) data for a concentrated-liquidity pool id, as an array of `{ liquidity_amount, lower_tick, upper_tick }` ranges:
+
+```json
+{
+  "ticks": [
+    { "liquidity_amount": "44445455285122705.656039576085736780", "lower_tick": -108000000, "upper_tick": -107999800 }
+  ]
+}
+```
+
+The public mainnet host currently blocks this path at the edge (HTTP 403 with an empty body). Query it against the staging host or a self-hosted deployment.
+
+### Per-pool taker fee
+
+`GET /router/taker-fee-pool/{id}` returns the taker fee for each denom pair in the given pool:
+
+```json
+[
+  { "Denom0": "ibc/27394FB0...", "Denom1": "uosmo", "TakerFee": "0.002000000000000000" }
+]
+```
+
+Like `/pools/ticks`, this path returns HTTP 403 on the public mainnet host; use staging or a self-hosted deployment.
+
+### Per-pool spot price
+
+`GET /router/spot-price-pool/{id}?baseAsset=<denom>&quoteAsset=<denom>` returns the spot price of the base asset in terms of the quote asset within a single pool, as a bare decimal string (e.g. `"47.416244090626802924000000000000000000"`). Both `baseAsset` and `quoteAsset` are required; omitting one returns `{"message": "baseAsset is required"}`. Also blocked (HTTP 403) on the public mainnet host; use staging or a self-hosted deployment.
+
+Unlike `/tokens/prices`, which prices across all pools with fallbacks, this endpoint prices against one specific pool's state.
+
+### Pool-denom metadata
+
+`GET /tokens/pool-metadata` returns, for every denom SQS has seen in a pool, its total pooled liquidity, liquidity cap, and price:
+
+```bash
+curl "https://sqs.osmosis.zone/tokens/pool-metadata" | jq .
+```
+
+```json
+{
+  "uosmo": {
+    "total_liquidity": "...",
+    "total_liquidity_cap": "...",
+    "total_effective_liquidity_cap": "...",
+    "price": "..."
+  }
+}
+```
+
+The response covers every pooled denom and is large; cache it rather than fetching per request.
+
+### Fee tokens
+
+`GET /chainregistry/fee_tokens` returns the chain-registry view of accepted fee tokens with suggested gas-price tiers:
+
+```bash
+curl "https://sqs.osmosis.zone/chainregistry/fee_tokens" | jq .
+```
+
+```json
+{
+  "fee_tokens": [
+    {
+      "denom": "uosmo",
+      "fixed_min_gas_price": 0.03,
+      "low_gas_price": 0.03,
+      "average_gas_price": 0.1,
+      "high_gas_price": 0.16
+    }
+  ]
+}
+```
+
+(Truncated to the first entry.) For the onchain whitelist itself, query the `txfees` module directly; see [Fees and Gas](/integrate/fees).
+
 ## Health, metrics, and version
 
 | Endpoint | Use |
@@ -232,7 +357,7 @@ The response is keyed by the chain denom passed in. SQS reads this metadata from
 | Subscribe to new blocks or txs | RPC websocket |
 | Sign and broadcast a transaction | RPC `/broadcast_tx_sync` |
 | Query historical state by block height | Archive RPC / REST |
-| Module queries not in the SQS surface | gRPC reflection (`grpc.osmosis.zone:9090`) |
+| Module queries not in the SQS surface | gRPC (`grpc.osmosis.zone:443`, TLS) |
 
 In short: SQS for cross-pool aggregation and routing, RPC/REST/gRPC for everything else. See [RPC](./rpc), [REST](./rest), and [gRPC](./grpc) for those paths.
 
@@ -241,7 +366,7 @@ In short: SQS for cross-pool aggregation and routing, RPC/REST/gRPC for everythi
 If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/main/docs/architecture/COSMWASM_POOLS.MD) for the model.
 
 1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
-2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/main/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are opted out of SQS route search entirely.** SQS will not surface them in `/router/quote` results; they remain reachable only via `/router/custom-direct-quote` against a known pool id, where SQS queries the contract directly at quote time.
+2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/main/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are deprioritized in route search:** they are excluded from split quotes, and when any route without a generalized pool exists, the router filters the generalized routes out of `/router/quote` results. Only when no other route connects the pair does SQS fall back to the best generalized route. Because SQS queries the contract over gRPC at quote time for these pools (instead of computing in memory), quotes through them are slower; `/router/custom-direct-quote` against a known pool id always works regardless of route-search priority.
 
 After the PR merges, the SQS team will deploy the updated config to production.
 

@@ -16,7 +16,7 @@ There are several different types of liquidity pools on Osmosis, each with uniqu
 - Weighted Pool
 - Stableswap Pool
 
-Note: As of [Proposal 699](https://www.mintscan.io/osmosis/proposals/699), a pool creation fee of 20 USDC is required.
+Note: Creating a pool requires a pool creation fee, set to 20 USDC by [Proposal 767](https://www.mintscan.io/osmosis/proposals/767) (query the poolmanager params for the live value).
 *[fee taken automatically when transaction has been sent via CLI]*
 
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.
@@ -97,6 +97,8 @@ There are recommendations for creating CL pools:
   - 0.002 (0.2%)
   - 0.003 (0.3%)
   - 0.005 (0.5%)
+  - 0.01 (1%)
+  - 0.025 (2.5%)
   - Generally, the lower fees are used for like-value stablecoin pairs, since those theoretically have a lower risk of impermanent loss.
 
 ### Join Pool
@@ -137,7 +139,7 @@ For parameter values:
 - Based on the current price/balance of tokens in the pool, (and the defined tick boundary,) the amount of each token that can be added must be at a precise ratio; the exact ratio would be difficult to calculate, and can also change frequently, which is why the command asks for maximum and minimum amounts of tokens to add rather than exact amounts.
 - `tokensProvided` requires a list of (maximum) token amounts approved for addition. Both constituent tokens must be specified with an amount, even if the amount is 0, and must be separated by a comma. Generally these should be supplied in alphabetical order.
 - `token-0-min-amount` and `token-1-min-amount` refer to the minimum amount of token-0 and token-1, respectively, that must be added to the position. These values must also be less than the corresponding amounts of tokensProvided because the transaction cannot add more tokens than were approved for addition.
-  - To find out which is token-0, and which is token-1, query: `osmosisd query poolmanager <pool-id>`. If you created the pool in the previous step (when adding liquidity for the first time to the pool), the pool ID will be in the `create-pool` output.
+  - To find out which is token-0, and which is token-1, query: `osmosisd query poolmanager pool <pool-id>`. If you created the pool in the previous step (when adding liquidity for the first time to the pool), the pool ID will be in the `create-pool` output.
   - If you don't know the pool ID is, to find out which is token-0, and which is token-1, use the query: `osmosisd query concentratedliquidity pools`, and search for the pool among the returned list of pools. Note: this query command paginates, so if the pool ID you were expected is not returned, append `--page N` (.e.g., `--page 2`) to paginate through all pools.
 
 ## CosmWasm Pools
@@ -181,7 +183,7 @@ Each accepts an administrator address, which can add new assets denominations to
 Multiple alloyed-transmuter code IDs are whitelisted at once, and the most recent whitelisted ID should be used when creating a new pool. The code IDs current at the time of writing, for convenience, are:
 
 - osmosis-1 (mainnet): 996
-- osmo-test-5 (testnet): 8319
+- osmo-test-5 (testnet): 11749
 
 Confirm the latest whitelisted ID before creating a pool rather than relying on these values (see [Finding the current code ID](/integrate/features/transmuter#finding-the-current-code-id)).
 
@@ -285,14 +287,14 @@ Note that it is recommended to always first show the associated help/information
 
 Start with: `osmosisd tx gamm create-pool -h`
 
-Sample pool JSON file contents for balancer:
+Sample pool JSON file contents for balancer (a 40/40/20 ATOM/OSMO/AKT pool; non-native assets must use their full Osmosis `ibc/HASH` denom, never the origin-chain denom like `uatom`):
 
 ```json
 {
-  "weights": "4uatom,4osmo,2uakt",
-  "initial-deposit": "100uatom,5osmo,20uakt",
+  "weights": "4ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,4uosmo,2ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4",
+  "initial-deposit": "100ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,5uosmo,20ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4",
   "swap-fee": "0.001",
-  "exit-fee": "0.001",
+  "exit-fee": "0",
   "future-governor": "168h"
 }
 ```

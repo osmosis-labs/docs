@@ -8,7 +8,6 @@ Osmosis integrates with a range of external projects and is supported by a wider
 
 ## Integration guides
 
-- Pyth: [How to Integrate with Pyth](./pyth.md)
 - SubQuery: [How to Integrate with SubQuery](./subquery.md)
 
 ## Osmosis packages

@@ -24,6 +24,8 @@ Listing an asset as unverified is close to permissionless: nearly any registered
 
 ## Verified assets
 
-**Verified** status is what makes an asset visible by default, including on the Swap page, without the unverified toggle. It is permissioned: a maintainer validates the asset, and it must meet liquidity and quality criteria. As of writing, these include sufficient onchain liquidity (on the order of $10k total, with at least $1,000-worth of each asset in the pool and a minimum bid/ask depth) and a pool of an approved type (concentrated liquidity, stableswap, or an alloyed-asset transmuter).
+**Verified** status is what makes an asset visible by default, including on the Swap page, without the unverified toggle. It is permissioned: a maintainer validates the asset, and it must meet liquidity and quality criteria. As of writing, verification requires at least one pool containing at least $1,000-worth of each asset as liquidity, with minimum depth (a ±2% depth of $50, and a $50 bid quoting at least $49 of any other asset in the pool), alongside complete asset metadata on the Cosmos Chain Registry. Constituents of alloyed assets qualify automatically.
+
+Separate from verification, the assetlists repo also describes a **full integration** tier, recommended for the best user experience: on the order of $10k of liquidity on Osmosis, with at least one pool of an approved type (concentrated liquidity, stableswap, transmuter/alloyed asset, or Astroport PCL; a weighted pool does not satisfy this), plus a correct CoinGecko ID and a high-quality logo.
 
 Because these criteria change, treat [LISTING.md](https://github.com/osmosis-labs/assetlists/blob/main/LISTING.md) in the assetlists repo as the source of truth, and see [Liquidity](/integrate/list-asset/liquidity) for how to source the required liquidity. To request the upgrade, open a PR setting `osmosis_verified: true` for the asset, citing a qualifying pool ID.
