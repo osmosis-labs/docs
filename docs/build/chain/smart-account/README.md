@@ -18,12 +18,12 @@ Authenticator implementations are stateless singletons registered in an `Authent
 
 Two store prefixes:
 
-| Prefix | Key layout | Value |
+| Prefix (as stored) | Key layout | Value |
 | --- | --- | --- |
-| `0x01` | fixed key | `next_authenticator_id`, a module-wide `uint64` counter |
-| `0x02` | `<prefix>\|<bech32 account>\|<id>\|` | `AccountAuthenticator{id, type, config}` |
+| `[1]\|` | fixed key | `next_authenticator_id`, a module-wide `uint64` counter |
+| `[2]\|` | `[2]\|<bech32 account>\|<id>\|` | `AccountAuthenticator{id, type, config}` |
 
-Ids are allocated from the single global counter (starting at 1), so an authenticator id is unique across all accounts, not merely within one. Keys are built by joining the prefix, the account address string, and the id with a `|` separator, which makes per-account iteration a straightforward prefix scan (`GetAuthenticatorDataForAccount`) and single-authenticator lookup a direct key get (`GetSelectedAuthenticatorData`).
+The prefixes are declared as `[]byte{0x01}` and `[]byte{0x02}` in `types/keys.go`, but `BuildKey` formats every element with `fmt.Sprint` and joins them with `|`, so the persisted keys literally begin with the ASCII strings `[1]|` and `[2]|` rather than raw prefix bytes. Ids are allocated from the single global counter (starting at 1), so an authenticator id is unique across all accounts, not merely within one. The account address string and id follow in the key, which makes per-account iteration a straightforward prefix scan (`GetAuthenticatorDataForAccount`) and single-authenticator lookup a direct key get (`GetSelectedAuthenticatorData`).
 
 The stored `AccountAuthenticator` (`proto/osmosis/smartaccount/v1beta1/models.proto`) has three fields: `id` (uint64), `type` (the registered type string), and `config` (opaque bytes whose interpretation is type-specific).
 
@@ -70,7 +70,7 @@ After every message has authenticated, the handler runs each authenticator's `Tr
 
 `AuthenticatorPostDecorator.PostHandle` (`post/post.go`) runs after message execution, for authenticator transactions only (it re-checks the same circuit breaker condition and passes classic transactions through). For each message it re-initializes the same selected authenticator, rebuilds the request (replay protection is skipped, having already been checked in the ante), and calls `ConfirmExecution`. This is where outcome-dependent rules live: a spend limit compares the post-execution balance captured here against the pre-execution balance captured in `Track`.
 
-A `ConfirmExecution` failure returns an error from the post handler, which reverts all message execution state: the transaction is included in the block as failed, and nothing it did survives except the fee deduction, which was persisted during the ante phase.
+A `ConfirmExecution` failure returns an error from the post handler, which reverts all message execution state: the transaction is included in the block as failed and nothing the messages did survives. Everything written during the ante phase does survive, though: BaseApp commits the ante cache before message execution, so both the fee deduction and the `Track` snapshots persist even for a rejected transaction. Authenticator contracts must not assume a `ConfirmExecution` failure rolls back what they wrote during `Track`.
 
 ## Authenticator types
 

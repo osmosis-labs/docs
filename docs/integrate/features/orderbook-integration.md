@@ -9,7 +9,7 @@ Osmosis limit orders live in CosmWasm orderbook contracts that are registered as
 
 This page covers the integration surface for a bot operator or dapp working with limit orders directly: discovering the canonical book for a pair, placing and cancelling orders, claiming fills, and tracking open orders. For a conceptual introduction see [Limit Orders](/learn/features/orderbook) in the Learn section; for pool mechanics, tick math, market creation, routing internals, and the admin/moderator surface, see the [orderbook module page](/build/chain/pool-manager/cosmwasmpool/orderbook).
 
-Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are taken from [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/msg.rs) at that version.
+Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are taken from [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/msg.rs) at that version (the linked revision is the 2.0.0 version bump).
 
 ## Discovering the canonical orderbook
 
@@ -86,7 +86,7 @@ Fills are not pushed to the order owner. When market flow crosses a resting orde
 { "batch_claim": { "orders": [[-3600000, 42], [-3599000, 43]] } }
 ```
 
-Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the deployed implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/order.rs):
+Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the deployed implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/order.rs):
 
 - The filled portion (which may be partial) is converted at the order's tick price into the opposite denom: bids are paid out in the base denom, asks in the quote denom.
 - If the order was placed with a `claim_bounty`, that fraction of the payout goes to the transaction sender, whoever they are. This is the incentive that lets order owners outsource claiming.
@@ -98,7 +98,7 @@ Both are permissionless: any address can claim any order's fills at any time, an
 
 ### The claimbot
 
-[`osmosis-labs/orderbook-claimbot`](https://github.com/osmosis-labs/orderbook-claimbot) is the reference implementation of a third-party claimer. It runs a scanner per orderbook that reads the book's tick cursors (`next_bid_tick`, `next_ask_tick` from the `orderbook_state` query), identifies fully crossed ticks (bid ticks above `next_bid_tick`, ask ticks below `next_ask_tick`), pushes their orders onto a queue, and a claimer drains the queue with `batch_claim` transactions of up to 100 orders, earning whatever bounties those orders carry. If you place orders with a bounty, this is the machinery that turns them into hands-off fills; if you run your own bot, it is the architecture to copy.
+[`osmosis-labs/orderbook-claimbot`](https://github.com/osmosis-labs/orderbook-claimbot) is the reference implementation of a third-party claimer. It runs a scanner per orderbook that walks each tick's orders and computes every order's fill percentage from the tick's running totals; orders above a configurable threshold (98% by default, so partially filled orders qualify) are pushed onto a queue, ticks whose value totals show them fully swapped are enqueued wholesale, and a claimer drains the queue with `batch_claim` transactions of up to 100 orders, earning whatever bounties those orders carry. If you place orders with a bounty, this is the machinery that turns them into hands-off fills; if you run your own bot, it is the architecture to copy.
 
 Bounty economics are per-claim: the bounty rate applies to each claim's payout, so claiming an order in many small increments yields the same total bounty as one claim at full fill (modulo rounding down on each claim).
 
@@ -120,7 +120,7 @@ Two options, depending on whether you want aggregated or per-contract state:
 }
 ```
 
-`start_from` (exclusive) and `end_at` (inclusive) are `[tick_id, order_id]` pairs for pagination; `limit` defaults to 100. The response is `{ "orders": [...], "count": n }` where `count` is the number of orders returned. The related `orders_by_tick`, `orderbook_state`, `ticks_by_id`, and `all_ticks` queries (useful for building your own claim scanner or book view) are covered on the [module page](/build/chain/pool-manager/cosmwasmpool/orderbook#querying-state).
+`start_from` and `end_at` are `[tick_id, order_id]` pairs bounding the page; both are **inclusive**, so when paginating, advance `start_from` past the last order you received or you will get it again. `limit` defaults to 100. The response is `{ "orders": [...], "count": n }` where `count` is the owner's **total** order count on the book, not the number returned in the page. The related `orders_by_tick`, `orderbook_state`, `ticks_by_id`, and `all_ticks` queries (useful for building your own claim scanner or book view) are covered on the [module page](/build/chain/pool-manager/cosmwasmpool/orderbook#querying-state).
 
 ## Maker fee
 
