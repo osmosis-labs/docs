@@ -20,7 +20,7 @@ Snapshot contents and state-sync RPC servers change frequently. The snapshot pro
 | **State sync** | Fetch a recent state snapshot from RPC peers and verify it against trusted block hashes | Minimal data transfer, no third-party archive needed |
 | **Genesis sync** | Replay every block from genesis | Building an archive node, or when you need full history |
 
-The `get.osmosis.zone` installer can set up a node from a snapshot; see [Install osmosisd](/validate/install-osmosisd).
+The `get.osmosis.zone` installer can set up a node from a snapshot; see [Running a Node on Mainnet](/validate/joining-mainnet).
 
 ## Pruning vs archive
 
@@ -59,7 +59,7 @@ State sync needs two things in `config.toml`: at least two trusted RPC servers f
 Public RPC endpoints that serve this purpose:
 
 - `https://rpc.osmosis.zone:443` (official)
-- `https://osmosis-rpc.polkachu.com:443` (community; Polkachu also documents a dedicated [state-sync service](https://www.polkachu.com/state_sync/osmosis))
+- `https://osmosis-rpc.polkachu.com:443` (community)
 - `https://osmosis-rpc.publicnode.com:443` (community)
 
 Endpoints change over time; confirm an endpoint responds to `/status` before relying on it.
@@ -88,6 +88,23 @@ trust_period = "168h0m0s"
 ```
 
 The snapshots themselves arrive over P2P from peers that have snapshot serving enabled; the RPC servers are only used to verify what arrives. If discovery stalls, a snapshot restore is the more predictable path.
+
+### Serving state sync
+
+The `[statesync]` section above only consumes snapshots. For your node to serve them to other state-syncing nodes, enable snapshot creation in `app.toml` under `[state-sync]`:
+
+```toml
+[state-sync]
+
+# snapshot-interval specifies the block interval at which local state sync snapshots are
+# taken (0 to disable).
+snapshot-interval = 1000
+
+# snapshot-keep-recent specifies the number of recent snapshots to keep and serve (0 to keep all).
+snapshot-keep-recent = 2
+```
+
+`snapshot-interval` defaults to `0` (no snapshots taken) and `snapshot-keep-recent` to `2`. A node with `pruning = "everything"` cannot take state sync snapshots; the configuration is rejected at startup.
 
 ## Reference
 

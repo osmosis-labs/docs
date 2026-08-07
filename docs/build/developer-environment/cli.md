@@ -22,41 +22,41 @@ osmosisd status
 
 ```json
 {
-  "NodeInfo": {
+  "node_info": {
     "protocol_version": {
       "p2p": "8",
       "block": "11",
-      "app": "12"
+      "app": "0"
     },
-    "id": "4017c243549b8bb4ad2b4cfe5d685aea450dcbcd",
-    "listen_addr": "209.34.206.35:26656",
+    "id": "6f6f68362b6fcb3a4a968f667df7dbbd7523072d",
+    "listen_addr": "tcp://0.0.0.0:26656",
     "network": "osmosis-1",
-    "version": "0.34.21",
+    "version": "0.38.22",
     "channels": "40202122233038606100",
-    "moniker": "artifact-rpc",
+    "moniker": "osmosis",
     "other": {
       "tx_index": "on",
       "rpc_address": "tcp://0.0.0.0:26657"
     }
   },
-  "SyncInfo": {
-    "latest_block_hash": "FBA710794C5A9C61523D7CCE78F2F51C7CD7A6C33A154C078E423859D7243E30",
-    "latest_app_hash": "EC15E54C7BF66EDC9FEF561969B756CAA58933598FCBF72FE7727DE78F0D8DCF",
-    "latest_block_height": "6335644",
-    "latest_block_time": "2022-10-07T08:45:15.929540892Z",
-    "earliest_block_hash": "38EAF21C7C4A786D73FFAADA32FD3D4B2B683AF2050B41CF5E5924D20AF4EEBC",
-    "earliest_app_hash": "808B1D7123C385D52E6A5BC544FD763D156526751DEB401DADB18C717D567DC0",
-    "earliest_block_height": "6287475",
-    "earliest_block_time": "2022-10-03T22:54:17.633996278Z",
+  "sync_info": {
+    "latest_block_hash": "5DC6FBEF446B685FEF456581B91A2A14C7B86FE2247839E920CCBDFF09788D61",
+    "latest_app_hash": "885E25FC2F464C5BBAAB20ABC7278B3E898A54B6801841D199F650502F781C02",
+    "latest_block_height": "67949994",
+    "latest_block_time": "2026-08-06T13:14:31.550833105Z",
+    "earliest_block_hash": "27B370EF5765769CAF697E3874014C8D57AD08F179E38A5F3619A82A01DF2AEC",
+    "earliest_app_hash": "C33F4FA2B66F87AF4F98BAED8E2DEA3E8FE47E67C4926A100A358EAB71AD975B",
+    "earliest_block_height": "66171492",
+    "earliest_block_time": "2026-07-12T19:59:48.446672466Z",
     "catching_up": false
   },
-  "ValidatorInfo": {
-    "Address": "369E2DCC99CD68400753812BBDF54CD5380FBAC7",
-    "PubKey": {
+  "validator_info": {
+    "address": "3BD8DD32674B0CC6552E22BEDC30FB7609A5ED4A",
+    "pub_key": {
       "type": "tendermint/PubKeyEd25519",
-      "value": "mhb68/B38wFLH/5pDgvPKNbKyKdwduIKxJySz0GV/uI="
+      "value": "2B7ZI70OV4BIz5i6W0dfTNOzcim/xo+K4t3eGXeia+o="
     },
-    "VotingPower": "0"
+    "voting_power": "0"
   }
 }
 ```
@@ -64,33 +64,50 @@ osmosisd status
 </details>
 
 ### Node configuration
+
+The client-side settings (chain id, RPC node, keyring backend) live in the `client.toml` file, which is managed with the `osmosisd config` subcommands. To view the full client configuration:
+
 ```bash
-osmosisd config
+osmosisd config view client
 ```
 Output:
-```json
-{
-	"chain-id": "osmosis-1",
-	"keyring-backend": "os",
-	"output": "text",
-	"node": "http://osmosis.artifact-staking.io:26657",
-	"broadcast-mode": "sync",
-	"grpc-concurrency": false
-}
+```toml
+# This is a TOML config file.
+# For more information, see https://github.com/toml-lang/toml
+
+###############################################################################
+###                           Client Configuration                          ###
+###############################################################################
+
+# The network chain ID
+chain-id = "osmosis-1"
+# The keyring's backend, where the keys are stored (os|file|kwallet|pass|test|memory)
+keyring-backend = "os"
+# CLI output format (text|json)
+output = "text"
+# <host>:<port> to CometBFT RPC interface for this chain
+node = "tcp://localhost:26657"
+# Transaction broadcasting mode (sync|async)
+broadcast-mode = "sync"
 ```
-In this example when we install osmosisd as a client with the [installer](./osmosisd), it connects to the `http://osmosis.artifact-staking.io:26657`.
+
+To read a single value, such as the RPC node the CLI sends queries and transactions to:
+
+```bash
+osmosisd config get client node
+```
 
 ### Change node
 
-```
-osmosis config node https://rpc.osmosis.zone:443
+```bash
+osmosisd config set client node https://rpc.osmosis.zone:443
 ```
 
 ### Connect to the testnet
 
 ```bash
-osmosisd config node https://rpc.testnet.osmosis.zone:443
-osmosisd config chain-id osmo-test-5
+osmosisd config set client node https://rpc.testnet.osmosis.zone:443
+osmosisd config set client chain-id osmo-test-5
 ```
 
 To add a  new account on your local keyring
@@ -110,6 +127,6 @@ osmosisd query bank balances $MYACCOUNT
 ```
 ![](@site/docs/assets/asset_list.png)
 
-For more information about querying osmosisd via the CLI visit the [Cosmos documentation](https://hub.cosmos.network/main/hub-tutorials/gaiad.html).
+For more information about querying osmosisd via the CLI visit the [Cosmos SDK documentation](https://docs.cosmos.network/).
 
 

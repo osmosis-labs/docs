@@ -54,7 +54,7 @@ This section is intended to give you an introduction to `Beaker`, for more detai
 
 - [Rust](https://www.rust-lang.org/tools/install) for building cosmwasm contract
     - [Rustup](https://rustup.rs/) for dealing with wasm target
-- [Docker](https://docs.docker.com/get-docker/) for running wasm `rust-optimizer` and spinning up [LocalOsmosis](https://github.com/osmosis-labs/localosmosis)
+- [Docker](https://docs.docker.com/get-docker/) for running wasm `rust-optimizer` and spinning up [LocalOsmosis](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis)
 - [Node](https://nodejs.org/en/) for frontend related stuffs and `beaker-console`
   - [Yarn](https://yarnpkg.com/) over NPM, since it will not have package resolving issue and causes weird errors down the road
 
@@ -158,7 +158,7 @@ template_repo = "https://github.com/osmosis-labs/cw-tpl-osmosis.git"
 
 LocalOsmosis, as its name suggests, is Osmosis for local development. It has to be installed and run separately.
 
-You can install from source by following the instruction at [osmosis-labs/LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis), or use the official installer and select option 3:
+LocalOsmosis lives in the main Osmosis repo under [tests/localosmosis](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis); see the [Local Testing](/build/developer-environment/localtesting) guide for the full setup. Alternatively, use the official installer and select option 3:
 
 ```sh
 curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
@@ -180,7 +180,7 @@ beaker wasm build --no-wasm-opt
 
 # read .wasm in `target/wasm32-unknown-unknown/release/<CONTRACT_NAME>.wasm` due to `--no-wasm-opt` flag
 # use `--signer-account test1` which is predefined.
-# The list of all predefined accounts are here: https://github.com/osmosis-labs/LocalOsmosis#accounts
+# The list of all predefined accounts are here: https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts-and-keys
 # `code-id` is stored in the beaker state, local by default
 beaker wasm store-code counter --signer-account test1 --no-wasm-opt
 
@@ -330,7 +330,7 @@ Press `enter` to proceed for now, and we will discuss about it in detail in the 
 
 This will launch custom node repl, where `contract`, `account` are available.
 `contract` contains deployed contract.
-`account` contains [pre-defined accounts in localosmosis](https://github.com/osmosis-labs/LocalOsmosis#accounts).
+`account` contains [pre-defined accounts in LocalOsmosis](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts-and-keys).
 
 So you can interact with the recently deployed contract like this:
 
@@ -390,7 +390,7 @@ Apart from that, in the console, you can access Beaker's state, configuration an
 
 ### Typescript SDK Generation
 
-Beaker leverage [cosmwasm-typescript-gen](https://github.com/CosmWasm/cosmwasm-typescript-gen) to generate typescript client for cosmwasm contract. By default, Beaker's template prepare `ts/sdk` directory where typescript compiler and bundler are setup, so the generated client definition could be used by `beaker-console`, frontend or published as library for others to use.
+Beaker leverages [ts-codegen](https://github.com/hyperweb-io/ts-codegen) (formerly cosmwasm-typescript-gen) to generate a typescript client for a cosmwasm contract. By default, Beaker's template prepare `ts/sdk` directory where typescript compiler and bundler are setup, so the generated client definition could be used by `beaker-console`, frontend or published as library for others to use.
 
 To generate sdk for contract, run
 
@@ -485,11 +485,10 @@ await sc.getCount()
 Beaker project template also comes with frontend template. But in order to interact with it you need:
 
 - [Keplr installed](https://www.keplr.app/)
-- [Keplr chain setup for LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis/tree/main/localKeplr)
-- Add test account to Keplr
-  - [Add account via mnemonic in Keplr](https://help.keplr.app/articles/how-to-connect-additional-keplr-accounts).
+- [Keplr chain setup for LocalOsmosis](https://github.com/osmosis-labs/localosmosis-archive/tree/main/localKeplr) (from the archived standalone LocalOsmosis repo)
+- Add test account to Keplr via mnemonic (see the [Keplr Help Center](https://help.keplr.app) for wallet basics).
     The account `test1` can be added by copy-pasting `notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius` to the Import account screen on Keplr. It contains 100,000 test OSMOs.
-  - [List of test accounts and its mnemonics in LocalOsmosis](https://github.com/osmosis-labs/LocalOsmosis#accounts)
+  - [List of test accounts and their mnemonics in LocalOsmosis](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts-and-keys)
 
 
 ```sh

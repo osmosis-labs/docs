@@ -6,11 +6,11 @@ sidebar_position: 5
 # Cosmwasm & Beaker
 ## Deploying Cosmwasm Contracts to the testnet with Beaker
 
-The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permissionless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
-
-:::note
-For an alternative CosmWasm scripting, testing, and deployment framework, see [cw-orchestrator](./cw-orch.md).
+:::warning Beaker is no longer actively maintained
+Beaker's last release was v0.1.8 (November 2023). For new contracts, use [cw-orchestrator](./cw-orch.md) with the [Quickstart](./quickstart.md). This page remains as a reference for projects already built on Beaker.
 :::
+
+The following guide will show you how to create and deploy a Cosmwasm smart contract to the Osmosis testnet. The testnet is permissionless by default to allow developers to test their contracts on a live environment. The Osmosis mainnet is permissioned meaning that you will need to submit a governance proposal in order to deploy to it. 
 
 ### Requirements
 - [Rust](https://www.rust-lang.org/tools/install)
@@ -33,7 +33,7 @@ In the directory you want your project to reside, run:
 beaker new counter-dapp
 ```
 
-For detailed information about Beaker [click here](https://github.com/osmosis-labs/beaker/blob/main/README.md).
+For detailed information about Beaker, see the [Beaker reference](./beaker/README.md).
 
 ### Your first CosmWasm contract with Beaker
 
@@ -54,10 +54,10 @@ beaker wasm deploy counter --signer-account test1 --network testnet --no-wasm-op
 Note how we added `--network testnet` to tell beaker to deploy to the testnet Osmosis chain. 
 
 ### Deploy with an admin
-In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/main/packages/cli/src/framework/config.rs) file. 
+In this example we are using `osmo1nyphwl8p5yx6fxzevjwqunsfqpcxukmtk8t60m` which is the address from the beaker test1 account as seen in the [config.rs](https://github.com/osmosis-labs/beaker/blob/v0.1.8/packages/cli/src/framework/config.rs) file. 
 
 :::warning
-Please note that account test1 is publicly available as documented [here](https://github.com/osmosis-labs/beaker/blob/main/docs/config/global.md) and only used for development purposes. Beaker also supports signing from the OS keyring (see [Using the OS keyring](#using-the-os-keyring) below).
+Please note that account test1 is publicly available as documented in the [global config reference](./beaker/config/global.md) and only used for development purposes. Beaker also supports signing from the OS keyring (see [Using the OS keyring](#using-the-os-keyring) below).
 :::
 
 ```
@@ -67,101 +67,14 @@ beaker wasm deploy counter --signer-account test1 --admin osmo1nyphwl8p5yx6fxzev
 
 
 ### Deploy contract via governance
-We can also deploy the contract via governance on the testnet before going to mainnet. There are a couple of steps as described in the manual process via CLI [here](./submit-wasm-proposal.md), more details also available on the [official CosmWasm Docs](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md). 
 
+Beaker's `beaker wasm proposal store-code` flow submits a legacy (gov v1beta1) wasm proposal, which current Osmosis networks no longer route, so it cannot succeed. To store contract code through governance, follow [Submit a CosmWasm Governance Proposal](./submit-wasm-proposal.md), which walks through building the contract, submitting the store-code proposal with `osmosisd`, and voting on it. Background on wasm governance is available in the [official CosmWasm docs](https://github.com/CosmWasm/wasmd/blob/main/x/wasm/Governance.md).
 
-### Build contract
-This is required to create the compiled.wasm file that will be uploaded to the block chain.
-
-```
-beaker wasm build
-```
-
-
-### Submit proposal
-
-The proposal can be submitted with all the meta data in a yml file or toml file. Example file:
+You can track a proposal on the [Mintscan testnet explorer](https://www.mintscan.io/osmosis-testnet) or query it directly from the testnet LCD, for example:
 
 ```
-touch prop.yml
-nano prop.yml
+https://lcd.testnet.osmosis.zone/cosmos/gov/v1/proposals/<proposal_id>
 ```
-Paste the following template
-
-```yml
-title: Proposal to allow DappName to be enabled in Osmosis
-description: |
-            A lengthy proposal description
-            goes here  
-            we expect this to be many lines...
-deposit: 500000000uosmo
-code:
-    repo:   https://github.com/osmosis-labs/beaker/
-    rust_flags: -C link-arg=-s
-    optimizer: workspace-optimizer:0.12.6
-```
-
-```sh
-beaker wasm proposal store-code --proposal prop.yml --signer-account test1 --network testnet counter --gas 25000000uosmo --gas-limit 25000000
-```
-![store-proposal](@site/docs/assets/store-prop.png)  
-
-
-### Query proposal
-
-There are four ways to query the proposal results
-
-1. Beaker command
-```
-beaker wasm proposal query store-code --network testnet counter
-```
-
-2. Osmosisd 
-```
-osmosisd query gov tally 196
-```
-
-2. Mintstan testnet explorer
-```
-https://testnet.mintscan.io/osmosis-testnet/proposals/196
-```
-
-3. LCD Proposal endpoint
-
-```
-https://lcd-test.osmosis.zone/cosmos/gov/v1beta1/proposals/196
-```
-
-Note how the min_deposit was `500000000uosmo` that's why our prop.yml had `500000000uosmo`. If the deposit requirement is not met, then additional funds need to be sent to the proposal. 
-
-#### Proposal period 
-On the testnet the voting period is very short to allow developers to move quickly with their testing, as you can see in this case it's `3 minutes`. This means you must vote within the next 3 minutes for your proposal to pass. In mainnet the voting period is usually several days. If you take longer than 3 minutes, then you will get an error letting you know that the voting period has passed. 
-
-```
-    ├── voting_start_time: 2022-07-06T18:45:06Z
-    └── voting_end_time: 2022-07-06T18:48:06Z
-```
-
-![store-proposal](@site/docs/assets/proposal-query.png)  
-
-
-## Voting on proposal on testnet
-
-Run the following command to vote from beaker
-
-```
-beaker wasm proposal vote --option yes counter --signer-account test1 --network testnet
-```
-
-Even though the testnet is configured as permissionless, it's important to understand the voting process. We need validators to vote for your proposal in order to reach the quorum. We created a simple utility in our faucet that will allow you to request a validator with enough voting power to vote for your proposal as well. 
-
-Please visit: 
-
-[https://faucet.osmosis.zone/#/contracts](https://faucet.osmosis.zone/#/contracts)
-
-![store-proposal](@site/docs/assets/faucet-vote.png) 
-
-Great! Your proposal should have passed now!
 
 
 ### Signers

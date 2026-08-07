@@ -7,6 +7,8 @@ sidebar_position: 10
 
 The Tendermint Key Management System (or TMKMS) should be used by any validator currently or intending to be in the active validator set. This application mitigates the risk of double-signing and provides high-availability to validator keys while keeping these keys on a separate physical host. While TMKMS can be used on the same machine as the validator, it is recommended to be on a separate host.
 
+TMKMS is not the only remote signer in production use. [Horcrux](https://github.com/strangelove-ventures/horcrux) splits the consensus key into threshold shares across several signer nodes, so no single host holds the whole key and the signer itself is highly available. Consider it if you need signer redundancy; this page covers TMKMS.
+
 ## Prepare TMKMS Dependencies
 
 Start by opening the node you intend to run TMKMS (not the node you validate on) and install the following dependencies:
@@ -71,13 +73,12 @@ export RUSTFLAGS=-Ctarget-feature=+aes,+ssse3
 
 ## Setup TMKMS
 
-In this example, we will be compiling from the github source code using the `--features=softsign` flag, however you may use `--features=yubihsm` if you want to use a yubikey (ledger support is not working properly at the moment, and this guide will not go into using yubihsm).
+In this example, we will be installing tmkms from crates.io using the `--features=softsign` flag, however you may use `--features=yubihsm` if you want to use a yubikey (ledger support is not working properly at the moment, and this guide will not go into using yubihsm).
 
 ```sh
-cd $HOME
-git clone https://github.com/iqlusioninc/tmkms.git
+mkdir -p $HOME/tmkms
 cd $HOME/tmkms
-cargo install tmkms --features=softsign
+cargo install tmkms --version 0.15.0 --features=softsign --locked
 tmkms init config
 tmkms softsign keygen ./config/secrets/secret_connection_key
 ```
@@ -102,7 +103,9 @@ Now, modify the `tmkms.toml` file
 nano $HOME/tmkms/config/tmkms.toml
 ```
 
-In this example, my validator has the private IP address `10.0.0.5` and we will be using port 26659 to feed the validator key to the validator. We will also be using chain_id `osmosis-1`, but if you are doing this on the testnet be sure to use `osmo-test-5` instead:
+In this example, my validator has the private IP address `10.0.0.5` and we will be using port 26659 to feed the validator key to the validator. We will also be using chain_id `osmosis-1`, but if you are doing this on the testnet be sure to use `osmo-test-5` instead.
+
+tmkms does not expand `~` or environment variables in this file, so the three paths must be absolute. `tmkms init config` already wrote them for your home directory; the example below is for a user whose home is `/home/user`:
 
 ```toml
 # Tendermint KMS configuration file
@@ -114,7 +117,7 @@ In this example, my validator has the private IP address `10.0.0.5` and we will 
 [[chain]]
 id = "osmosis-1"
 key_format = { type = "bech32", account_key_prefix = "osmopub", consensus_key_prefix = "osmovalconspub" }
-state_file = "/root/tmkms/config/state/priv_validator_state.json"
+state_file = "/home/user/tmkms/config/state/priv_validator_state.json"
 
 ## Signing Provider Configuration
 
@@ -123,14 +126,14 @@ state_file = "/root/tmkms/config/state/priv_validator_state.json"
 [[providers.softsign]]
 chain_ids = ["osmosis-1"]
 key_type = "consensus"
-path = "/root/tmkms/config/secrets/priv_validator_key"
+path = "/home/user/tmkms/config/secrets/priv_validator_key"
 
 ## Validator Configuration
 
 [[validator]]
 chain_id = "osmosis-1"
 addr = "tcp://10.0.0.5:26659"
-secret_key = "/root/tmkms/config/secrets/secret_connection_key"
+secret_key = "/home/user/tmkms/config/secrets/secret_connection_key"
 protocol_version = "v0.38"
 reconnect = true
 ```
@@ -167,19 +170,12 @@ Next, stop the validator. Move back to your VM running TMKMS and start it:
 tmkms start -c $HOME/tmkms/config/tmkms.toml
 ```
 
-You will see error logs like the following:
+tmkms loads the key and then repeatedly logs a connection-refused error, because the validator is not yet listening. This is expected at this point. An illustrative excerpt (exact formatting varies by version):
 
 ```
-2022-03-08T23:42:37.926816Z  INFO tmkms::commands::start: tmkms 0.11.0 starting up...
-2022-03-08T23:42:37.926968Z  INFO tmkms::keyring: [keyring:softsign] added consensus Ed25519 key: osmovalconspub1zcjduepq2qfkp3ahrhaafzuqglme9mares0eluj58xr6cy7c37cdmzq0eecqk0yehr
-2022-03-08T23:42:37.927216Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
-2022-03-08T23:42:37.929454Z ERROR tmkms::client: [osmosis-1@tcp://10.0.0.5:26659] I/O error: Connection refused (os error 111)
-2022-03-08T23:42:38.929746Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
-2022-03-08T23:42:38.931428Z ERROR tmkms::client: [osmosis-1@tcp://10.0.0.5:26659] I/O error: Connection refused (os error 111)
-2022-03-08T23:42:39.931729Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
-2022-03-08T23:42:39.932417Z ERROR tmkms::client: [osmosis-1@tcp://10.0.0.5:26659] I/O error: Connection refused (os error 111)
-2022-03-08T23:42:40.932732Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
-2022-03-08T23:42:40.933425Z ERROR tmkms::client: [osmosis-1@tcp://10.0.0.5:26659] I/O error: Connection refused (os error 111)
+INFO tmkms::commands::start: tmkms starting up...
+INFO tmkms::keyring: [keyring:softsign] added consensus Ed25519 key: osmovalconspub1...
+ERROR tmkms::client: [osmosis-1@tcp://10.0.0.5:26659] I/O error: Connection refused (os error 111)
 ```
 
 Now, start your osmosis validator on the validator node:
@@ -188,18 +184,12 @@ Now, start your osmosis validator on the validator node:
 osmosisd start
 ```
 
-Your TMKMS node will now show logs like the following:
+Success looks like this: tmkms connects to the validator and then logs a signed vote at each new, increasing height. An illustrative excerpt (exact formatting varies by version):
 
 ```
-2022-03-08T23:46:06.208451Z  INFO tmkms::connection::tcp: KMS node ID: 948f8fee83f7715f99b8b8a53d746ef00e7b0d9e
-2022-03-08T23:46:06.210568Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] connected to validator successfully
-2022-03-08T23:46:06.210604Z  WARN tmkms::session: [osmosis-1@tcp://10.0.0.5:26659]: unverified validator peer ID! (ba44dd36899602e255b04e3608e5ef0fe4bc5f5b)
-2022-03-08T23:46:15.929787Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399910/0/2 (0 ms)
-2022-03-08T23:46:17.344579Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399911/0/2 (0 ms)
-2022-03-08T23:46:22.367627Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399912/0/2 (0 ms)
-2022-03-08T23:46:27.409777Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399913/0/2 (0 ms)
-2022-03-08T23:46:32.442300Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399914/0/2 (0 ms)
-2022-03-08T23:46:37.452162Z  INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399915/0/2 (0 ms)
+INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] connected to validator successfully
+INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399910/0/2 (0 ms)
+INFO tmkms::session: [osmosis-1@tcp://10.0.0.5:26659] signed PreCommit:<nil> at h/r/s 3399911/0/2 (0 ms)
 ```
 
 You should now be signing blocks! If you cancel the TMKMS process, you will no longer sign blocks and will stop syncing. If you restart the TMKMS process, your validator node will continue to sync from where it left off.

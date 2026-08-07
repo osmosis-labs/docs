@@ -37,6 +37,7 @@ Protect the consensus signing key. Options, in increasing robustness:
 
 - Keep `priv_validator_key.json` on the validator host with strict file permissions (baseline).
 - Use a remote signer / KMS so the key never lives on the internet-facing node. See [Using TMKMS](/validate/tmkms).
+- Use a threshold signer such as [Horcrux](https://github.com/strangelove-ventures/horcrux), which splits the key into shares across several signer hosts so no single machine holds it (see the note in [Using TMKMS](/validate/tmkms)).
 
 ## Operator account security
 

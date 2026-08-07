@@ -8,9 +8,14 @@ The following list is the configuration references for beaker which can be used 
 ---
 
 # Default Config
+
+:::note
+The testnet endpoints bundled with Beaker v0.1.8 use the legacy `osmotest5.osmosis.zone` hostnames; edit them in your `Beaker.toml` to the current osmo-test-5 hosts, `https://rpc.testnet.osmosis.zone` (RPC) and `https://lcd.testnet.osmosis.zone` (LCD).
+:::
+
 ```toml
 name = ''
-gas_price = '0.05uosmo'
+gas_price = '0.025uosmo'
 gas_adjustment = 1.3
 account_prefix = 'osmo'
 derivation_path = '''m/44'/118'/0'/0/0'''
@@ -23,16 +28,16 @@ rpc_endpoint = 'http://localhost:26657'
 [networks.testnet]
 chain_id = 'osmo-test-5'
 network_variant = 'Shared'
-grpc_endpoint = 'https://grpc-test.osmosis.zone:9090'
-rpc_endpoint = 'https://rpc.testnet.osmosis.zone'
+grpc_endpoint = 'https://grpc.osmotest5.osmosis.zone'
+rpc_endpoint = 'https://rpc.osmotest5.osmosis.zone'
 
 [networks.mainnet]
 chain_id = 'osmosis-1'
 network_variant = 'Shared'
 grpc_endpoint = 'https://grpc.osmosis.zone:9090'
-rpc_endpoint = 'https://rpc.osmosis.zone'
+rpc_endpoint = 'https://rpc.osmosis.zone:443'
 [accounts.validator]
-mnemonic = 'satisfy adjust timber high purchase tuition stool faith fine install that you unaware feed domain license impose boss human eager hat rent enjoy dawn'
+mnemonic = 'bottom loan skill merry east cradle onion journey palm apology verb edit desert impose absurd oil bubble sweet glove shallow size build burst effort'
 
 [accounts.test1]
 mnemonic = 'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius'
@@ -79,8 +84,11 @@ target_dir = '.'
 
 [wasm]
 contract_dir = 'contracts'
-template_repo = 'https://github.com/InterWasm/cw-template.git'
-optimizer_version = '0.12.6'
+optimizer_version = '0.14.0'
+
+[wasm.template_repos]
+classic = 'https://github.com/osmosis-labs/cw-minimal-template'
+sylvia = 'https://github.com/osmosis-labs/cw-sylvia-template'
 
 
 # console

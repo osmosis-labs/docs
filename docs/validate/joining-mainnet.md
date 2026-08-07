@@ -41,6 +41,12 @@ Download and place the genesis file in the osmosis config folder:
 wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
 ```
 
+Check that the downloaded file is a valid genesis before continuing:
+
+```bash
+osmosisd validate-genesis
+```
+
 ## Node Requirements and Cosmovisor Setup
 
 ### Go Requirement
@@ -89,7 +95,6 @@ echo "# Setup Cosmovisor" >> ~/.profile
 echo "export DAEMON_NAME=osmosisd" >> ~/.profile
 echo "export DAEMON_HOME=$HOME/.osmosisd" >> ~/.profile
 echo "export DAEMON_ALLOW_DOWNLOAD_BINARIES=false" >> ~/.profile
-echo "export DAEMON_LOG_BUFFER_SIZE=512" >> ~/.profile
 echo "export DAEMON_RESTART_AFTER_UPGRADE=true" >> ~/.profile
 echo "export UNSAFE_SKIP_BACKUP=true" >> ~/.profile
 source ~/.profile
@@ -102,7 +107,7 @@ Copy the current osmosisd binary into the cosmovisor/genesis folder:
 cp $GOPATH/bin/osmosisd ~/.osmosisd/cosmovisor/genesis/bin
 ```
 
-To check your work, ensure the version of cosmovisor and osmosisd are the same:
+To check your work, confirm that the daemon version reported by `cosmovisor version` matches the output of `osmosisd version` (the `cosmovisor version` output includes both Cosmovisor's own version and the version of the daemon binary it found):
 
 ```bash
 cosmovisor version
@@ -138,7 +143,6 @@ Environment="DAEMON_NAME=osmosisd"
 Environment="DAEMON_HOME=${HOME}/.osmosisd"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
-Environment="DAEMON_LOG_BUFFER_SIZE=512"
 Environment="UNSAFE_SKIP_BACKUP=true"
 User=$USER
 ExecStart=${HOME}/go/bin/cosmovisor run start
