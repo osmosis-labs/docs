@@ -11,12 +11,12 @@ Osmosis exposes a public gRPC endpoint at:
 grpc.osmosis.zone:443
 ```
 
-The endpoint is **TLS-only**. It terminates TLS at a proxy on port 443 and forwards to a node's gRPC port behind it, so clients must connect with transport security to port 443. Plaintext connections to `grpc.osmosis.zone:9090` (the form used in older examples) no longer work.
+The endpoint is **TLS-only**. The Cosmos SDK's own gRPC server has no transport security (a node's gRPC port always speaks plaintext); the TLS here is terminated by a reverse proxy on port 443, which forwards to a node's gRPC port behind it. Clients must therefore connect with transport security to port 443, while plaintext connections to `grpc.osmosis.zone:9090` (the form used in older examples) no longer work. Against your own node's gRPC port, plaintext remains the correct mode.
 
 :::info Rate limits and reflection
 The public endpoint sits behind a strict rate limit (about 5 requests per second) and automated banning of clients that exceed it. gRPC **server reflection** (what `grpcurl list` and `grpcurl describe` use, and what `grpcurl` performs internally before every call) bursts many requests at once, so reflection against `grpc.osmosis.zone:443` frequently times out. That is the rate limit working as intended, not an outage.
 
-For interactive exploration with reflection, use your own node or a third-party endpoint (an example is shown below), and reserve the public endpoint for clients with compiled Protobuf definitions making modest request volumes.
+For interactive exploration with reflection, use your own node; against the public endpoint, work from local descriptor sets as shown below, and keep request volumes modest.
 :::
 
 ## Enabling gRPC on a node
