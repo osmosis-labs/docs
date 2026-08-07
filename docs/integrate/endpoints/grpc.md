@@ -46,36 +46,41 @@ Osmosis publishes its gRPC and Protobuf service definitions to the [Osmosis Buf 
 
 #### Connecting to the public endpoint
 
-Against `grpc.osmosis.zone:443`, run grpcurl **without** the `-plaintext` flag so it negotiates TLS:
+Against `grpc.osmosis.zone:443`, run grpcurl **without** the `-plaintext` flag so it negotiates TLS. By default grpcurl resolves every method through server reflection, and reflection's burst of requests trips the public endpoint's rate limit, timing out with `DeadlineExceeded`. That is expected behavior, not an outage: supply the Protobuf descriptors locally instead, and grpcurl never needs reflection.
+
+#### Building a descriptor set
+
+Build a descriptor set from the chain repo at the deployed release using [buf](https://buf.build/docs/installation) (it resolves the third-party imports from the repo's `buf.lock`; swap the tag for the current release):
 
 ```bash
-grpcurl grpc.osmosis.zone:443 cosmos.base.tendermint.v1beta1.Service/GetLatestBlock
+git clone --depth 1 --branch v31.0.2 https://github.com/osmosis-labs/osmosis
+cd osmosis/proto
+buf build -o osmosis.protoset
 ```
 
-Because grpcurl uses server reflection to resolve the method before calling it, even a single call like this can hit the public endpoint's rate limit and time out with `DeadlineExceeded`. If that happens, retry after a pause, supply the `.proto` files locally with grpcurl's `-proto`/`-import-path` flags to skip reflection, or use an endpoint without the strict limit as below.
-
-#### Listing services with reflection
-
-For reflection-heavy exploration, use your own node or a community endpoint. The example below uses Polkachu's public Osmosis gRPC endpoint, which serves plaintext gRPC and was verified working at the time of writing (note `-plaintext` here, since this endpoint does not terminate TLS):
+This covers the `osmosis.*` services. For the SDK-level services the node also exposes (bank, auth, staking, tx, and so on), build a second set straight from the Buf Schema Registry, and pass as many `-protoset` flags as you need:
 
 ```bash
-grpcurl -plaintext osmosis-grpc.polkachu.com:12590 list
+buf build buf.build/cosmos/cosmos-sdk -o cosmos-sdk.protoset
 ```
 
-The output is the full list of Protobuf services the node exposes (50 on the current mainnet version), including:
+#### Listing and describing services
+
+With a descriptor set, `list` and `describe` read the file locally, with no server round trip:
+
+```bash
+grpcurl -protoset osmosis.protoset list
+grpcurl -protoset osmosis.protoset describe osmosis.poolmanager.v1beta1.Query
+```
+
+The Osmosis set contains every `osmosis.*` service, including:
 
 ```
-cosmos.auth.v1beta1.Query
-cosmos.bank.v1beta1.Query
-cosmos.base.tendermint.v1beta1.Service
-cosmos.staking.v1beta1.Query
-cosmos.tx.v1beta1.Service
-cosmwasm.wasm.v1.Query
-grpc.reflection.v1alpha.ServerReflection
-ibc.applications.transfer.v1.Query
 osmosis.concentratedliquidity.v1beta1.Query
+osmosis.cosmwasmpool.v1beta1.Query
 osmosis.gamm.v1beta1.Query
 osmosis.poolmanager.v1beta1.Query
+osmosis.protorev.v1beta1.Query
 osmosis.smartaccount.v1beta1.Query
 osmosis.superfluid.Query
 osmosis.tokenfactory.v1beta1.Query
@@ -83,36 +88,32 @@ osmosis.txfees.v1beta1.Query
 ...
 ```
 
-Each of these is a Protobuf service, and each service exposes multiple RPC methods you can query. To get a description of a service:
-
-```bash
-grpcurl -plaintext osmosis-grpc.polkachu.com:12590 describe osmosis.poolmanager.v1beta1.Query
-```
+The node itself exposes around 50 services once the `cosmos.*`, `ibc.*`, and `cosmwasm.*` ones are counted; those resolve from the cosmos-sdk set (and, for CosmWasm and IBC, the corresponding Buf Schema Registry modules).
 
 #### Calling a method
 
-An RPC call to query the node for information:
+An RPC call against the public endpoint, with the method resolved from the local descriptor set:
 
 ```bash
-grpcurl -plaintext osmosis-grpc.polkachu.com:12590 cosmos.base.tendermint.v1beta1.Service/GetLatestBlock
+grpcurl -protoset osmosis.protoset grpc.osmosis.zone:443 osmosis.poolmanager.v1beta1.Query/Params
 ```
 
-This returns the latest block as JSON (block id, header with `chainId: "osmosis-1"` and the current height, transaction data, and the last commit). The same call works against `grpc.osmosis.zone:443` without `-plaintext`, subject to the rate-limit caveat above.
+This returns the live poolmanager parameters as JSON (the pool creation fee in Noble USDC, the 0.1% default taker fee, and the fee distribution parameters).
 
 #### Query for historical state using grpcurl
 
-You may also query for historical data by passing some [gRPC metadata](https://github.com/grpc/grpc-go/blob/master/Documentation/grpc-metadata.md) to the query: the `x-cosmos-block-height` metadata should contain the block to query. Using grpcurl as above, the command looks like:
+You may also query for historical data by passing some [gRPC metadata](https://github.com/grpc/grpc-go/blob/master/Documentation/grpc-metadata.md) to the query: the `x-cosmos-block-height` metadata should contain the block to query. Using the cosmos-sdk descriptor set from above:
 
 ```bash
 grpcurl \
-    -plaintext \
-    -H "x-cosmos-block-height: 6312618" \
+    -protoset cosmos-sdk.protoset \
+    -H "x-cosmos-block-height: 68021983" \
     -d '{"address":"osmo19a7pmytd9vk26l57q8chacuprsmx05g23mg6yc"}' \
-    osmosis-grpc.polkachu.com:12590 \
+    grpc.osmosis.zone:443 \
     cosmos.bank.v1beta1.Query/AllBalances
 ```
 
-Assuming the state at that block has not yet been pruned by the node, this query should return a non-empty response.
+The public node is pruned, so it serves only recent heights; pick a height within the retention window (the example height was recent when this page was verified) or the query returns a pruning error.
 
 ### Interacting with Go
 
