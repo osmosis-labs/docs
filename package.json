@@ -6,7 +6,7 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "postbuild": "node scripts/gen-llms.mjs",
+    "postbuild": "node scripts/gen-llms.mjs && node scripts/gen-redirects.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
