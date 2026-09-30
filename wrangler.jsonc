@@ -1,0 +1,14 @@
+// Cloudflare Workers static assets for docs.osmosis.zone: the Docusaurus build
+// served as-is, no Worker code.
+{
+  "name": "osmosis-docs",
+  "compatibility_date": "2026-09-30",
+  "assets": {
+    "directory": "./build",
+    // Matches the site's URLs on Vercel: /path redirects (308) to /path/,
+    // which serves path.html or path/index.html.
+    "html_handling": "force-trailing-slash",
+    // Docusaurus builds a 404.html; serve it with a 404 status.
+    "not_found_handling": "404-page"
+  }
+}
