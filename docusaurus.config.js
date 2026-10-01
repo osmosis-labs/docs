@@ -16,7 +16,7 @@ const rehypeKatex = esmDefault(require('rehype-katex'));
 
 // Minimal .env loader (Docusaurus does not read .env, and we avoid adding a
 // dotenv dependency just for one var). Only fills vars not already set, so the
-// real process environment (Vercel, CI) always wins over the file.
+// real process environment (Workers Builds, CI) always wins over the file.
 (() => {
   try {
     const fs = require('fs');
@@ -40,13 +40,14 @@ const rehypeKatex = esmDefault(require('rehype-katex'));
 // (search/listIndexes/settings/browse; no write/admin ACL). It is read from an
 // env var rather than committed inline so org secret scanners stop flagging it
 // as an exposed credential; env-injecting it changes nothing about security.
-// Set ALGOLIA_SEARCH_KEY in Vercel (all environments) and in a local `.env`.
+// Set ALGOLIA_SEARCH_KEY in the Cloudflare Workers Builds variables and in a
+// local `.env`.
 // The scraper's write credentials (APPLICATION_ID / API_KEY) are separate
 // GitHub Action secrets and are correctly not in this repo.
 const ALGOLIA_SEARCH_KEY = process.env.ALGOLIA_SEARCH_KEY;
 if (!ALGOLIA_SEARCH_KEY) {
   throw new Error(
-    'ALGOLIA_SEARCH_KEY is not set. Set it (Vercel env vars, or a local .env) ' +
+    'ALGOLIA_SEARCH_KEY is not set. Set it (Workers Builds variables, or a local .env) ' +
       'so the docs search box works. It is the public search-only DocSearch key, ' +
       'not a secret; see docusaurus.config.js for details.'
   );
@@ -87,9 +88,9 @@ const docsPlugin = [
 ];
 
 // In-repo backstop for the URL changes from the IA restructure.
-// Vercel serves the canonical 301s (vercel.json `redirects`), but this client
-// redirect keeps old paths resolving on local/preview builds where Vercel rules
-// do not apply. The full old->new map is generated from the page move plan.
+// The Worker serves the canonical 308s (static/_redirects), but this client
+// redirect keeps old paths resolving on local builds, where those rules do not
+// apply. The full old->new map is generated from the page move plan.
 const redirectsPlugin = [
   '@docusaurus/plugin-client-redirects',
   /** @type {import('@docusaurus/plugin-client-redirects').Options} */
