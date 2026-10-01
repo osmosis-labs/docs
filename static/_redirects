@@ -36,9 +36,9 @@
 /osmosis-core/guides/create-ibc-pool /integrate/list-asset/pool-setup/ 308
 /osmosis-core/guides/performance /validate/performance/ 308
 /osmosis-core/guides/structure/arb /integrate/transaction-structure/arb/ 308
-/osmosis-core/guides/structure/block-2836990 /integrate/transaction-structure/block-2836990/ 308
+/osmosis-core/guides/structure/block-2836990 /integrate/transaction-structure/ 308
 /osmosis-core/guides/structure /integrate/transaction-structure/ 308
-/osmosis-core/guides/structure/txs-block-2836990 /integrate/transaction-structure/txs-block-2836990/ 308
+/osmosis-core/guides/structure/txs-block-2836990 /integrate/transaction-structure/ 308
 /osmosis-core/ibc /learn/ibc/ 308
 /osmosis-core/ide-guide /build/developer-environment/ide-guide/ 308
 /osmosis-core/keys/keys-cli /build/developer-environment/keys/keys-cli/ 308
