@@ -19,7 +19,7 @@ You do not have to pick just one. Osmosis supports **validator-set preferences**
 
 Staking is not instant to reverse. When you unstake, your OSMO goes through an **unbonding period** during which it earns no rewards and cannot be transferred, before it returns to your liquid balance. This delay is what makes the security guarantee credible.
 
-Staking also carries risk. If a validator misbehaves (for example, double-signing blocks or being offline for too long), it can be [slashed](/learn/terminology#slashing): a portion of its stake, including its delegators' stake, is destroyed. This is why the validator you delegate to matters. A well-run validator with good uptime and security protects your stake.
+Staking also carries risk. If a validator double-signs blocks, it is [slashed](/learn/terminology#slashing): 5% of its stake, including its delegators' stake, is destroyed, and the validator is permanently removed from the set (tombstoned). A validator that is offline for too long is [jailed](/learn/terminology#jailed) instead: it stops earning rewards until it unjails, but no stake is destroyed. This is why the validator you delegate to matters. A well-run validator with good uptime and security protects your stake.
 
 ## Governance
 
