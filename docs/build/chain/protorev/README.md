@@ -179,11 +179,11 @@ The developer account is set through a MsgSetDeveloperAccount tx. This is the ac
 
 ### DaysSinceModuleGenesis
 
-`x/protorev` will distribute 20% of profits to the developer account in year 1, 10% of profits in year 2, and 5% thereafter. To track how much profit can be distributed to the developer account at any given moment, we store the amount of days since module genesis.
+`x/protorev` will distribute 20% of profits to the developer account in year 1, 10% of profits in year 2, and 5% thereafter (the current split, since the module has been live for more than 730 days). To track which split applies, we store the amount of days since module genesis, incremented on every `day` epoch.
 
 ### DeveloperFees (DEPRECATED IN v16)
 
-DeveloperFees tracks the total amount of profit that can be withdrawn by the developer account. These fees are sent to the developer account, if set, every week through the `epoch` hook. If unset, the funds are held in the module account. All `x/protorev` profits are going to be stored on the module account.
+DeveloperFees tracked the total amount of profit that could be withdrawn by the developer account. It is no longer used: profits accumulate in the module account and are split at the end of each `day` epoch (see [Profit Distribution](#profit-distribution)).
 
 ### MaxPoolPointsPerTx
 
@@ -214,7 +214,7 @@ decoding. Active state and APIs use `InfoByPoolType`.
 
 ### GenesisState
 
-There is only one configurable parameter for the genesis state -> whether protorev is enabled or not.
+The module parameters in genesis are `enabled` (whether protorev is enabled) and `admin` (the admin account).
 
 ```go
 // GenesisState defines the protorev module's genesis state.
@@ -331,11 +331,15 @@ As described above, one method of determining cyclic arbitrage opportunities is 
 
 ### Profit Distribution
 
-Profits accumulated by the module will be partially distributed to the developers that built the module in accordance with the governance proposal that was passed: year 1 is 20% of profits, year 2 is 10%, and subsequent years is 5%.
+Profits accumulated by the module will be partially distributed to the developers that built the module in accordance with the governance proposal that was passed: year 1 is 20% of profits, year 2 is 10%, and subsequent years is 5% (the current split).
 
-In order to track how much profit the developers can withdraw at any given moment, the module tracks the number of days since module genesis. This gets incremented in the epoch hook after every day. When a trade gets executed by the module, the module will determine how much of the profit from the trade the developers can receive by using `daysSinceModuleGenesis` in a simple calculation. 
+Arbitrage profits accumulate in the module account. At the end of each `day` epoch, `AfterEpochEnd` calls `CalculateAndDistributeProfits`, which reads the module account's balance of each base denom and passes it to `DistributeProfit`:
 
-If the developer account is not set (which it is not on genesis), all funds are held in the module account. Once the developer address is set by the admin account, the developer address will start to automatically receive a share of profits after every trade. The distribution of funds from the module account is done through `SendDeveloperFees`.
+1. The developer share (selected using `daysSinceModuleGenesis`) of each base denom is sent to the developer account.
+2. The remaining OSMO is burned by sending it to the null address.
+3. All other remaining profit is sent to the community pool.
+
+The module then increments `daysSinceModuleGenesis` and updates the highest liquidity pools. `DistributeProfit` requires the developer account to be set; if it is not set (as on genesis), profits stay in the module account.
 
 # Governance Proposals
 

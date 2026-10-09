@@ -61,7 +61,8 @@ the token which matches the 'minted denom' from the fee collector and
 distributes it to each `DistrRecord` of the DistrInfo. The share of the
 minted inflation routed to pool incentives is governed by the mint
 module's `pool_incentives` distribution proportion, not by a
-pool-incentives parameter.
+pool-incentives parameter. That proportion is currently `0` on mainnet, so
+no minted OSMO is routed to pool incentives.
 
 ## Gov
 

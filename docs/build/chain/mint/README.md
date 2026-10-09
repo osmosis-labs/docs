@@ -104,6 +104,10 @@ The minting module contains the following parameters:
 | weighted_developer_rewards_receivers       | array        | `[{"address": "osmoxx", "weight": "1"}]` |
 | minting_rewards_distribution_start_epoch   | int64        | 10                                       |
 
+The values above are illustrative examples. For the current mainnet values, see the
+[Mainnet Configuration Snapshot](#mainnet-configuration-snapshot) below or query
+`osmosisd query mint params`.
+
 Below are all the network parameters for the `mint` module:
 
 - **`mint_denom`** - Token type being minted

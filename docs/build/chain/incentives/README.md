@@ -145,7 +145,9 @@ type MsgCreateGauge struct {
 
 **State modifications:**
 
-- Validate `Owner` has enough tokens for rewards
+- Validate `Owner` has enough tokens for rewards plus the 50 OSMO create fee
+- Send the create fee to the community pool
+- Check every non-`uosmo` reward denom has a protorev route with `uosmo`
 - Generate new `Gauge` record
 - Save the record inside the keeper's time basis unlock queue
 - Transfer the tokens from the `Owner` to incentives `ModuleAccount`.
@@ -164,7 +166,9 @@ type MsgAddToGauge struct {
 
 **State modifications:**
 
-- Validate `Owner` has enough tokens for rewards
+- Validate `Owner` has enough tokens for rewards plus the 25 OSMO add-to-gauge fee
+- Send the add-to-gauge fee to the community pool
+- Check every non-`uosmo` reward denom has a protorev route with `uosmo`
 - Check if `Gauge` with specified `msg.GaugeID` is available
 - Modify the `Gauge` record by adding `msg.Rewards`
 - Transfer the tokens from the `Owner` to incentives `ModuleAccount`.
@@ -203,9 +207,14 @@ Create a gauge to distribute rewards to users
 osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
 ```
 
+Creating a gauge charges a fixed fee of 50 OSMO (`CreateGaugeFee`), paid to
+the community pool in addition to the rewards. Every reward denom other than
+`uosmo` must have a protorev route with `uosmo`, otherwise the gauge is
+rejected.
+
 **Example 1**
 
-I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 14 days. [this is currently the only valid bonding period]
+I want to make incentives for LP tokens of pool 3, namely gamm/pool/3 that have been locked up for at least 14 days. [valid lockable durations are currently 1 day, 7 days and 14 days]
 I want to reward 10 `OSMO` (`uosmo`) to this pool over 2 days (2 epochs). (5 rewarded on each day)
 I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
 
@@ -216,7 +225,7 @@ osmosisd tx incentives create-gauge gamm/pool/3 10000000uosmo \
 
 **Example 2**
 
-I want to make incentives for `ATOM` (`ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`) that have been locked up for at least 2 weeks (336h). [this is currently the only valid bonding period]
+I want to make incentives for `ATOM` (`ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`) that have been locked up for at least 2 weeks (336h). [valid lockable durations are currently 1 day, 7 days and 14 days]
 I want to reward 1000 `OSMO` (`uosmo`) to `ATOM` holders perpetually (perpetually meaning I must add more tokens to this gauge myself every epoch). I want the reward to start dispersing immediately.
 
 ```bash
@@ -232,6 +241,10 @@ Add coins to a gauge previously created to distribute more rewards to users
 ```sh
 osmosisd tx incentives add-to-gauge [gauge_id] [rewards] [flags]
 ```
+
+Adding to a gauge charges a fixed fee of 25 OSMO (`AddToGaugeFee`), paid to
+the community pool. The same protorev route requirement applies to the added
+reward denoms.
 
 **Example**
 
@@ -299,14 +312,27 @@ If there's no usecase for this, we could ignore this.
 
 The incentives module contains the following parameters:
 
-| Key                  | Type   | Example  |
-| -------------------- | ------ | -------- |
-| DistrEpochIdentifier | string | "weekly" |
+| Key                            | Type          | Mainnet value     |
+| ------------------------------ | ------------- | ----------------- |
+| DistrEpochIdentifier           | string        | "day"             |
+| GroupCreationFee               | sdk.Coins     | 100000000uosmo (100 OSMO) |
+| UnrestrictedCreatorWhitelist   | []string      | [] (empty)        |
+| InternalUptime                 | duration      | 60s               |
+| MinValueForDistribution        | sdk.Coin      | 10000uosmo (0.01 OSMO) |
 
 Note: DistrEpochIdentifier is an epoch identifier, and module distribute
 rewards at the end of epochs. As `epochs` module is handling multiple
 epochs, the identifier is required to check if distribution should be
 done at `AfterEpochEnd` hook
+
+- `GroupCreationFee` is charged for creating a group, except to the
+  incentives module account and addresses in `UnrestrictedCreatorWhitelist`.
+- `InternalUptime` is the uptime used for internal incentives on pools that
+  use NoLock gauges (concentrated liquidity pools), including group
+  distributions routed through them.
+- `MinValueForDistribution` is the minimum value a reward must be worth to
+  be distributed; smaller amounts (or denoms without a registered route) are
+  forfeited to the remaining eligible distributees.
 
 
 ## Queries

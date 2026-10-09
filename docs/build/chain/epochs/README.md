@@ -26,7 +26,7 @@ We refer to the period in between two timer ticks as an "epoch".
 
 Every timer has a unique identifier.
 Every epoch will have a start time, and an end time, where `end time = start time + timer interval`.
-On Osmosis mainnet, we only utilize one identifier, with a time interval of `one day`.
+On Osmosis mainnet, we use two identifiers: `day`, with a time interval of one day, and `week`, with a time interval of one week.
 
 The timer will tick at the first block whose blocktime is greater than the timer end time,
 and set the start as the prior timer end time. (Notably, its not set to the block time!)

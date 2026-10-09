@@ -34,7 +34,10 @@ message MsgCreateDenom {
 **State Modifications:**
 
 - Fund community pool with the denom creation fee from the creator address, set
-  in `Params`.
+  in `Params` (`denom_creation_fee`). This fee is currently empty on mainnet, so
+  no fee is charged.
+- Consume the gas set in `Params` (`denom_creation_gas_consume`), currently
+  1,000,000 gas.
 - Set `DenomMetaData` via bank keeper.
 - Set `AuthorityMetadata` for the given denom to store the admin for the created
   denom `factory/{creator address}/{subdenom}`. Admin is automatically set as the

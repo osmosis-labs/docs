@@ -33,7 +33,7 @@ Creating a new orderbook market is **permissionless**: anyone can instantiate a 
 ```bash
 osmosisd tx cosmwasmpool create-pool <CODE_ID> '{
   "base_denom": "uatom",
-  "quote_denom": "uusdc"
+  "quote_denom": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC"
 }' --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
@@ -53,7 +53,7 @@ osmosisd tx wasm execute <ORDERBOOK_CONTRACT_ADDR> '{
     "quantity": "1000000",
     "claim_bounty": "0.0001"
   }
-}' --amount "1000000uusdc" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
+}' --amount "1000000factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" --from <KEY> --gas auto --gas-prices 0.05uosmo --gas-adjustment 1.3
 ```
 
 The `--gas-prices` here is illustrative. Osmosis sets a dynamic minimum gas price via its [fee market](/learn/features/fee-market), so query the current base fee (`osmosisd query txfees base-fee` or the `osmosis/txfees/v1beta1/cur_eip_base_fee` LCD endpoint) and pass a value at or above it.
@@ -196,11 +196,11 @@ For advanced users tracking realized-vs-unrealized accounting.
 
 ## Routing through SQS
 
-SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go). This means an end-user swap routed through `/router/quote` can transparently use orderbook liquidity alongside CFMM and CL pools.
+SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go). This means an end-user swap routed through `/router/quote` can transparently use orderbook liquidity alongside CFMM and CL pools.
 
 ### Discovery
 
-SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/main/domain/config.go); `[885]` at the time of writing, read the live config for the current set). Once a market is instantiated onchain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
+SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/domain/config.go); `[885]` in the default config; the deployed config can extend it). Once a market is instantiated onchain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
 
 When multiple orderbook contracts exist for the same base/quote pair, SQS continuously tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two dedicated endpoints expose this view:
 
@@ -271,4 +271,4 @@ See [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sum
 
 - Contract: [`osmosis-labs/orderbook`](https://github.com/osmosis-labs/orderbook). Cargo workspace, single contract under `contracts/sumtree-orderbook/`.
 - Claimbot: [`osmosis-labs/orderbook-claimbot`](https://github.com/osmosis-labs/orderbook-claimbot). Producer-consumer scanner that batches `batch_claim` transactions.
-- SQS routing: [`router/usecase/pools/routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go) in the SQS repo.
+- SQS routing: [`router/usecase/pools/routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go) in the SQS repo.
