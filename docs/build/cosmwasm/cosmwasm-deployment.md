@@ -94,18 +94,7 @@ You need some tokens named `OSMO`(`uosmo`) in your address to interact with the 
 
 ### faucet
 
-#### Official Faucet
-You can request tokens from the official faucet at [faucet.osmosis.zone](https://faucet.osmosis.zone) 
-
-#### Discord Faucet
-You can also participate in the [Osmosis discord](https://discord.com/invite/osmosis) to request a faucet of the Osmosis Testnet. After gaining access to the testnet channel on the `#roles` channel of the discord, you can request a testnet token by sending the following message on the `#faucet` channel:
-
-```bash
-$request <address>
-```
-![](https://user-images.githubusercontent.com/70956926/172293039-b832fd96-d62d-44de-9889-ee400a9ec815.png)
-![](https://user-images.githubusercontent.com/70956926/172293080-aee186ad-ef51-43bb-ac6e-1a8b65c9ce04.png)
-
+You can request testnet tokens from the official faucet at [faucet.testnet.osmosis.zone](https://faucet.testnet.osmosis.zone/).
 
 Then, you can check that your faucet request has been successful by checking the balance of your wallet bank account by trying the command:
 
@@ -141,13 +130,13 @@ cargo wasm
 ```
 
 - `toolchain` means the compiler of  Rust, and rust has three release channels: `stable`, `beta`, and `nightly`, of which the `stable` channel is the most recently released version. `rustup` helps you manage these different versions easily.
-- `cargo` is the *Rust package manager*. In the [.cargo/config](https://github.com/InterWasm/cw-template/blob/main/.cargo/config), you can view the wasm compilation options as follows:
+- `cargo` is the *Rust package manager*. In the [.cargo/config.toml](https://github.com/CosmWasm/cw-template/blob/main/.cargo/config.toml), you can view the wasm compilation options as follows:
     
     ```bash
-    wasm = "build --release --target wasm32-unknown-unknown"
+    wasm = "build --release --lib --target wasm32-unknown-unknown"
     ```
     
-    So when we run the `cargo wasm` command, the `cargo build --release --target wasm32-unknown-unknown` command is executed according to the option in the config file above.
+    So when we run the `cargo wasm` command, the `cargo build --release --lib --target wasm32-unknown-unknown` command is executed according to the option in the config file above.
     
 
 After this compiles, it should produce a file in `target/wasm32-unknown-unknown/release/cw_tpl_osmosis.wasm`.  If you check the size of the file by using the `ls -lh` command, it shows around `1.8M`. This is a release build, but not stripped of all unneeded code. To produce a much smaller version, you can run this which tells the compiler to strip all unused code out:
@@ -239,7 +228,7 @@ osmosisd tx wasm instantiate $CODE_ID "$INIT" \
 - `--label` : human-readable name for this contract in lists.
 - `--no-admin` : you must set this explicitly if you don’t want an admin.
 
-If you have succeeded in instantiating the contract, you can search for output `txhash` in [Osmosis Explorer](https://testnet.ping.pub/osmosis) to verify your deployment.
+If you have succeeded in instantiating the contract, you can search for output `txhash` in [Celatone](https://celatone.osmosis.zone/osmo-test-5) to verify your deployment.
 
 Get the contract address using the command following:
 

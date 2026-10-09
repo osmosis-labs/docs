@@ -289,8 +289,8 @@ Now that you workspace is setup, you can [integrate with single contracts](#sing
 
 You can find more example interactions on the `counter-contract` example directly in the `cw-orchestrator` repo:  
 
-- Some examples <a href="https://github.com/AbstractSDK/cw-orchestrator/blob/main/contracts/counter/examples/deploy.rs" target="_blank">showcase interacting with live chains</a>.
-- Some other examples show <a href="https://github.com/AbstractSDK/cw-orchestrator/tree/main/contracts/counter/tests" target="_blank">how to use the library for testing your contracts</a>.
+- Some examples <a href="https://github.com/AbstractSDK/cw-orchestrator/blob/main/contracts-ws/contracts/counter/examples/deploy.rs" target="_blank">showcase interacting with live chains</a>.
+- Some other examples show <a href="https://github.com/AbstractSDK/cw-orchestrator/tree/main/contracts-ws/contracts/counter/tests" target="_blank">how to use the library for testing your contracts</a>.
 
 > **FINAL ADVICE**: Learn more and explorer our [full `cw-orch` documentation !](https://orchestrator.abstract.money)
 
