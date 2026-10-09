@@ -196,11 +196,11 @@ For advanced users tracking realized-vs-unrealized accounting.
 
 ## Routing through SQS
 
-SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go). This means an end-user swap routed through `/router/quote` can transparently use orderbook liquidity alongside CFMM and CL pools.
+SQS implements a dedicated routable pool type for orderbooks in [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_orderbook_pool.go). This means an end-user swap routed through `/router/quote` can transparently use orderbook liquidity alongside CFMM and CL pools.
 
 ### Discovery
 
-SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/domain/config.go); `[885]` in the default config; the deployed config can extend it). Once a market is instantiated onchain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
+SQS recognises a CosmWasm pool as an orderbook by matching its `code_id` against a configured list (`OrderbookCodeIDs` in [`domain/config.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/domain/config.go); `[885]` in the default config; the deployed config can extend it). Once a market is instantiated onchain from a recognised code id, SQS picks it up automatically as soon as it has ingested the pool state, without any operator action.
 
 When multiple orderbook contracts exist for the same base/quote pair, SQS continuously tracks which one has the highest liquidity cap and promotes it to "canonical" for that pair. Two dedicated endpoints expose this view:
 
@@ -271,4 +271,4 @@ See [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sum
 
 - Contract: [`osmosis-labs/orderbook`](https://github.com/osmosis-labs/orderbook). Cargo workspace, single contract under `contracts/sumtree-orderbook/`.
 - Claimbot: [`osmosis-labs/orderbook-claimbot`](https://github.com/osmosis-labs/orderbook-claimbot). Producer-consumer scanner that batches `batch_claim` transactions.
-- SQS routing: [`router/usecase/pools/routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go) in the SQS repo.
+- SQS routing: [`router/usecase/pools/routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_orderbook_pool.go) in the SQS repo.
