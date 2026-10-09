@@ -82,11 +82,15 @@ Or you can construct manually if you wish:
 ```js
 import { coins } from '@cosmjs/amino';
 
+// The chain rejects fees below its base fee (minimum 0.03 uosmo per gas, rising with demand),
+// so 250000 gas needs at least 7500 uosmo; 10000 uosmo (0.04 uosmo/gas) leaves headroom.
 const fee = {
-    amount: coins(0, 'uosmo'),
+    amount: coins(10000, 'uosmo'),
     gas: '250000'
 }
 ```
+
+The current base fee is available at `https://lcd.osmosis.zone/osmosis/txfees/v1beta1/cur_eip_base_fee`.
 
 if you are broadcasting multiple messages in a batch, you should `simulate` your tx and estimate the fee
 
@@ -94,12 +98,14 @@ if you are broadcasting multiple messages in a batch, you should `simulate` your
 import { Dec, IntPretty } from '@keplr-wallet/unit';
 
 const gasEstimated = await stargateClient.simulate(address, msgs, memo);
+const gas = new IntPretty(new Dec(gasEstimated).mul(new Dec(1.3)))
+  .maxDecimals(0)
+  .locale(false)
+  .toString();
+// Pay at least the base fee (minimum 0.03 uosmo per gas); 0.04 uosmo/gas leaves headroom.
 const fee = {
-  amount: coins(0, 'uosmo'),
-  gas: new IntPretty(new Dec(gasEstimated).mul(new Dec(1.3)))
-    .maxDecimals(0)
-    .locale(false)
-    .toString()
+  amount: coins(Math.ceil(Number(gas) * 0.04), 'uosmo'),
+  gas
 };
 ```
 

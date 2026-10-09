@@ -5,10 +5,10 @@ sidebar_position: 6
 
 # Submit a Cosmwasm Governance Proposal
 
-The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis but it can also be used with testnet.
+The following is a quick guide to provide a basic example on how submit a wasm binary proposal in Osmosis. This particular example will be with localOsmosis. The same governance flow applies on mainnet, where code upload is permissioned. On testnet (osmo-test-5) code upload is open to everyone, so you can store a contract directly with `osmosisd tx wasm store` instead of submitting a proposal.
 
 ## Localosmosis
-The easiest way to setup your localOsmosis is by downloading the [automated installer](https://get.osmosis.zone/). You can learn more about localOsmosis by reading the [README](https://github.com/osmosis-labs/localosmosis) in the official repo. 
+The easiest way to setup your localOsmosis is by downloading the [automated installer](https://get.osmosis.zone/). You can learn more about localOsmosis by reading the [README](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis) in the Osmosis repo. 
 
 Run the following and choose option #3.
 ```
@@ -53,7 +53,7 @@ PROPOSAL=1
 ```
 
 ## Create local wallet from seed
-Note that this seed is already part of localOsmosis as shown [here](https://github.com/osmosis-labs/localosmosis#accounts).
+Note that this seed is already part of localOsmosis as shown [here](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts-and-keys).
 ```
 echo "satisfy adjust timber high purchase tuition stool faith fine install that you unaware feed domain license impose boss human eager hat rent enjoy dawn" | osmosisd keys add validator --keyring-backend test --recover
 VAL=$(osmosisd keys show -a validator --keyring-backend test)

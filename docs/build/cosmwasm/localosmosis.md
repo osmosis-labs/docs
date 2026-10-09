@@ -111,15 +111,8 @@ You will start seeing LocalOsmosis block activity in your terminal. Keep LocalOs
 
 ![](@site/docs/assets/localOsmosis.png)
 
-In place of doing the above commands, you can instead start LocalOsmosis with pre-made pools by starting LocalOsmosis with the following commands:
-
-```bash
-cd ~/osmosis
-make localnet-start-with-state
-```
-
 :::tip
-To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page](https://github.com/osmosis-labs/localosmosis#accounts). 
+To view the LocalOsmosis wallet information, visit the [LocalOsmosis accounts page](https://github.com/osmosis-labs/osmosis/tree/main/tests/localosmosis#localosmosis-accounts-and-keys). 
 :::
 
 ## Deploy a smart contract

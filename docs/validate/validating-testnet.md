@@ -38,10 +38,7 @@ Ensure you have a small amount of OSMO on the wallet address you are using on yo
 Once you have have a balance on the address on your keyring, you can now send the create-validator transaction. 
 
 ## Get OSMO via the Faucet
-If you need testnet testnet OSMO you have two options.
-
-- Use the faucet at [https://faucet.osmosis.zone](https://faucet.osmosis.zone)
-- Join the osmosis discord, get the testnet role [here](https://canary.discord.com/channels/798583171548840026/842529004955500555), and then utilize the faucet bot [in the faucet channel](https://canary.discord.com/channels/798583171548840026/911309363464007741).
+If you need testnet OSMO, use the official faucet at [https://faucet.testnet.osmosis.zone](https://faucet.testnet.osmosis.zone/).
 
 
 The validator details are supplied in a **JSON file**, not as command flags. Create `validator.json`:

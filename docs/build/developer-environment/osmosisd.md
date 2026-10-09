@@ -204,19 +204,6 @@ osmosisd init myNode
 Manages Keyring commands. 
 
 
-### `migrate`
-Migrates the source genesis into the target version and prints to STDOUT.
-
-**Syntax**
-```bash
-osmosisd migrate <path-to-genesis-file>
-```
-
-**Example**
-```bash
-osmosisd migrate /genesis.json --chain-id=testnet --genesis-time=2020-04-19T17:00:00Z --initial-height=4000
-```
-
 ### `query`
 
 Manages queries. 
