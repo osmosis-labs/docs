@@ -706,7 +706,7 @@ yarn add @osmonauts/lcd
 
 CRA requires that you update Webpack configurations:
 
-https://github.com/cosmos/cosmjs/blob/656e02374898afe755e980e93390591b4b65fd86/README.md#webpack-configs
+https://github.com/cosmos/cosmjs/blob/main/README.md#webpack-configs
 
 Here is an example of a `config-overrides.js`:
 
