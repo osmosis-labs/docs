@@ -98,7 +98,7 @@ An RPC call against the public endpoint, with the method resolved from the local
 grpcurl -protoset osmosis.protoset grpc.osmosis.zone:443 osmosis.poolmanager.v1beta1.Query/Params
 ```
 
-This returns the live poolmanager parameters as JSON (the pool creation fee in allUSDC, the 0.1% default taker fee, and the fee distribution parameters).
+This returns the live poolmanager parameters as JSON (the pool creation fee in USDC, the 0.1% default taker fee, and the fee distribution parameters).
 
 #### Query for historical state using grpcurl
 

@@ -107,7 +107,7 @@ This transaction has a single message, whose contents are:
 
 The `@type` of this message is `"/osmosis.gamm.v1beta1.MsgSwapExactAmountIn"`. This means it is
 a message on the Osmosis app, in the `gamm` module, version `v1beta`, with the message
-[MsgSwapExactAmountIn](https://github.com/osmosis-labs/osmosis/blob/13531e5bcdbd262527c916d462974b0ef01ef7a9/x/gamm/types/tx.pb.go#L282-L287).
+[MsgSwapExactAmountIn](https://github.com/osmosis-labs/osmosis/blob/main/x/gamm/types/tx.pb.go).
 
 Each Cosmos SDK app implementation will have its own modules and therefore its own message types,
 in addition to basic ones inherited from the Cosmos SDK.

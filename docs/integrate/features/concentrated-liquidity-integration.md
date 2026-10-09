@@ -28,7 +28,7 @@ curl --globoff "https://sqs.osmosis.zone/pools?filter[type]=2"
 
 Each entry's `chain_model` carries the CL-specific fields: `token0`, `token1`, `current_tick`, `current_sqrt_price`, `tick_spacing`, `exponent_at_price_one`, and `spread_factor`. Filters compose with `filter[id]`, `filter[denom]`, and `filter[min_liquidity_cap]`; see the [SQS page](/integrate/endpoints/sqs) for the full parameter reference.
 
-`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This route is not served on the public SQS host (it returns HTTP 403), so it needs a self-hosted SQS (see the [SQS page](/integrate/endpoints/sqs#self-hosting)). Against the public endpoints, read the same tick-range liquidity from the chain with the `LiquidityPerTickRange` query below, which is the data to build liquidity-depth charts or simulate swaps offchain:
+`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This route is not served publicly, so it needs a self-hosted SQS (see the [SQS page](/integrate/endpoints/sqs#self-hosting)). Against the public endpoints, read the same tick-range liquidity from the chain with the `LiquidityPerTickRange` query below, which is the data to build liquidity-depth charts or simulate swaps offchain:
 
 ```bash
 curl "https://lcd.osmosis.zone/osmosis/concentratedliquidity/v1beta1/liquidity_per_tick_range?pool_id=3499"
@@ -68,7 +68,7 @@ The returned `spot_price` is quoted in base units of each denom. Scale it by the
 
 ## Position lifecycle
 
-Six messages make up the position lifecycle. All examples below use proto-JSON; field names are verified against the module's `tx.proto` at the deployed version. The examples use pool `3499` (`uosmo` / allUSDC, tick spacing 100).
+Six messages make up the position lifecycle. All examples below use proto-JSON; field names are verified against the module's `tx.proto` at the deployed version. The examples use pool `3499` (`uosmo` / USDC, tick spacing 100).
 
 ### Create a position
 
@@ -90,7 +90,7 @@ Six messages make up the position lifecycle. All examples below use proto-JSON; 
 }
 ```
 
-Because liquidity must be proportional to the pool's reserves at the current price, the amounts actually used can be less than `tokens_provided`. `token_min_amount0` and `token_min_amount1` are the slippage guards: the transaction fails if the used amounts fall below them. They index the pool's `token0` and `token1` (here `uosmo` and allUSDC respectively), not the order of `tokens_provided`. Set them from the current pool state and an explicit tolerance; do not pass `0` in production.
+Because liquidity must be proportional to the pool's reserves at the current price, the amounts actually used can be less than `tokens_provided`. `token_min_amount0` and `token_min_amount1` are the slippage guards: the transaction fails if the used amounts fall below them. They index the pool's `token0` and `token1` (here `uosmo` and USDC respectively), not the order of `tokens_provided`. Set them from the current pool state and an explicit tolerance; do not pass `0` in production.
 
 The response reports what was actually used:
 
@@ -203,7 +203,7 @@ The response returns the new `pool_id`. Two module parameters constrain the conf
 - `authorized_tick_spacing`: `1`, `10`, `100`, `1000`. Smaller spacing allows finer price granularity at the cost of more tick state.
 - `authorized_spread_factors`: `0`, `0.0001`, `0.0005`, `0.001`, `0.002`, `0.003`, `0.005`, `0.01`, `0.025`.
 
-Values outside these lists are rejected (governance-created pools and a whitelist of unrestricted creators bypass the lists). Creation also charges the `poolmanager` module's `pool_creation_fee`, currently 20 allUSDC (`20000000` of the allUSDC denom), which is deposited into the community pool. A freshly created pool has no liquidity and no spot price until the first `MsgCreatePosition` lands on it.
+Values outside these lists are rejected (governance-created pools and a whitelist of unrestricted creators bypass the lists). Creation also charges the `poolmanager` module's `pool_creation_fee`, currently 20 USDC (`20000000` of the USDC denom `factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC`), which is deposited into the community pool. A freshly created pool has no liquidity and no spot price until the first `MsgCreatePosition` lands on it.
 
 ## Swapping against CL pools
 

@@ -54,7 +54,7 @@ This means swaps through the transmuter:
 
 ## Discovery
 
-A transmuter pool is a `x/cosmwasmpool` pool whose contract is built from one of the alloyed-transmuter code IDs. SQS recognises them by matching the `code_id` against its configured list ([`AlloyedTransmuterCodeIDs` in `domain/config.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/domain/config.go)).
+A transmuter pool is a `x/cosmwasmpool` pool whose contract is built from one of the alloyed-transmuter code IDs. SQS recognises them by matching the `code_id` against its configured list ([`AlloyedTransmuterCodeIDs` in `domain/config.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/domain/config.go)).
 
 To find every live alloyed-asset pool:
 
@@ -76,7 +76,7 @@ osmosisd q cosmwasmpool params
 curl -s "https://sqs.osmosis.zone/pools?IDs=<POOL_ID>" | jq '.[0].chain_model.code_id'
 ```
 
-The alloyed-transmuter code IDs are the subset of that whitelist tracked in SQS's [`AlloyedTransmuterCodeIDs`](https://github.com/osmosis-labs/sqs/blob/v28.x/domain/config.go); the highest of them is the current version.
+The alloyed-transmuter code IDs are the subset of that whitelist tracked in SQS's [`AlloyedTransmuterCodeIDs`](https://github.com/osmosis-labs/sqs/blob/HEAD/domain/config.go); the highest of them is the current version.
 
 ## Instantiation parameters
 
@@ -246,7 +246,7 @@ The current moderator.
 
 ## Routing through SQS
 
-See the [Sidecar Query Server (SQS)](../endpoints/sqs) page for the routing and pool-query endpoints in general. SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_alloy_transmuter_pool.go). The routing semantics differ from a CFMM:
+See the [Sidecar Query Server (SQS)](../endpoints/sqs) page for the routing and pool-query endpoints in general. SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_alloy_transmuter_pool.go). The routing semantics differ from a CFMM:
 
 - SQS exposes the alloyed denom and every backing denom as connected through the pool, so a quote between any two of them can be routed through the transmuter.
 - Quoting is exact: no slippage, no price impact, no spread fee on the current contracts. The output is simply the input scaled by the ratio of normalization factors.
@@ -293,5 +293,5 @@ The moderator role is assigned by the admin via `assign_moderator`; there is no 
 ## Repository references
 
 - Contract: [`osmosis-labs/transmuter`](https://github.com/osmosis-labs/transmuter). The v3.2.0 tag is the deployed version on code ID 996.
-- SQS routing: [`router/usecase/pools/routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_alloy_transmuter_pool.go).
+- SQS routing: [`router/usecase/pools/routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_alloy_transmuter_pool.go).
 - Assetlist tagging: the `is_alloyed` flag in [`osmosis-1/osmosis.zone_assets.json`](https://github.com/osmosis-labs/assetlists/blob/main/osmosis-1/osmosis.zone_assets.json).

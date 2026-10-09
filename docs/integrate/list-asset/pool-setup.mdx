@@ -16,7 +16,7 @@ There are several different types of liquidity pools on Osmosis, each with uniqu
 - Weighted Pool
 - Stableswap Pool
 
-Note: Creating a pool requires a pool creation fee, set to 20 USDC by [Proposal 767](https://www.mintscan.io/osmosis/proposals/767) and now charged in allUSDC (`20000000` of the allUSDC denom; query the poolmanager params for the live value).
+Note: Creating a pool requires a pool creation fee, set to 20 USDC by [Proposal 767](https://www.mintscan.io/osmosis/proposals/767) (query the poolmanager params for the live value).
 *[fee taken automatically when transaction has been sent via CLI]*
 
 Note: Sometimes there is no way to find the Pool ID of a pool via a block explorer using the transaction hash. osmosisd CLI will show the Pool ID of the new pool in response when creating the pool via CLI; otherwise, the only way to get a Pool ID is to search among the most recently created pools, or else look on a list (that shows Pool ID) of all pools for matching specifications.

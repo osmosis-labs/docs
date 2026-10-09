@@ -9,7 +9,7 @@ Osmosis limit orders live in CosmWasm orderbook contracts that are registered as
 
 This page covers the integration surface for a bot operator or dapp working with limit orders directly: discovering the canonical book for a pair, placing and cancelling orders, claiming fills, and tracking open orders. For a conceptual introduction see [Limit Orders](/learn/features/orderbook) in the Learn section; for pool mechanics, tick math, market creation, routing internals, and the admin/moderator surface, see the [orderbook module page](/build/chain/pool-manager/cosmwasmpool/orderbook).
 
-Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are taken from [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/msg.rs) at that version (the linked revision is the 2.0.0 version bump).
+Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are defined in [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/msg.rs) in the orderbook repo.
 
 ## Discovering the canonical orderbook
 
@@ -86,7 +86,7 @@ Fills are not pushed to the order owner. When market flow crosses a resting orde
 { "batch_claim": { "orders": [[-3600000, 42], [-3599000, 43]] } }
 ```
 
-Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the deployed implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/order.rs):
+Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/order.rs):
 
 - The filled portion (which may be partial) is converted at the order's tick price into the opposite denom: bids are paid out in the base denom, asks in the quote denom.
 - If the order was placed with a `claim_bounty`, that fraction of the payout goes to the transaction sender, whoever they are. This is the incentive that lets order owners outsource claiming.

@@ -270,7 +270,7 @@ curl "https://sqs.osmosis.zone/passthrough/portfolio-assets/osmo1..." | jq .
 }
 ```
 
-This route is not served on the public SQS host (it returns HTTP 403). Self-host SQS to use it, or read the same data from the chain over LCD with `/osmosis/concentratedliquidity/v1beta1/liquidity_per_tick_range?pool_id={id}`.
+This route is not served publicly. Self-host SQS to use it, or read the same data from the chain over LCD with `/osmosis/concentratedliquidity/v1beta1/liquidity_per_tick_range?pool_id={id}`.
 
 ### Per-pool taker fee
 
@@ -282,11 +282,11 @@ This route is not served on the public SQS host (it returns HTTP 403). Self-host
 ]
 ```
 
-Like `/pools/ticks`, this route is not served on the public SQS host (HTTP 403). Self-host SQS, or query the chain per denom pair with `/osmosis/poolmanager/v1beta1/trading_pair_takerfee?denom_0=<denom>&denom_1=<denom>` over LCD.
+Like `/pools/ticks`, this route is not served publicly. Self-host SQS, or query the chain per denom pair with `/osmosis/poolmanager/v1beta1/trading_pair_takerfee?denom_0=<denom>&denom_1=<denom>` over LCD.
 
 ### Per-pool spot price
 
-`GET /router/spot-price-pool/{id}?baseAsset=<denom>&quoteAsset=<denom>` returns the spot price of the base asset in terms of the quote asset within a single pool, as a bare decimal string (e.g. `"47.416244090626802924000000000000000000"`). Both `baseAsset` and `quoteAsset` are required; omitting one returns `{"message": "baseAsset is required"}`. This route is not served on the public SQS host either (HTTP 403). Self-host SQS, or use the chain's poolmanager spot price query over LCD, `/osmosis/poolmanager/v2/pools/{id}/prices?base_asset_denom=<denom>&quote_asset_denom=<denom>`.
+`GET /router/spot-price-pool/{id}?baseAsset=<denom>&quoteAsset=<denom>` returns the spot price of the base asset in terms of the quote asset within a single pool, as a bare decimal string (e.g. `"47.416244090626802924000000000000000000"`). Both `baseAsset` and `quoteAsset` are required; omitting one returns `{"message": "baseAsset is required"}`. This route is not served publicly either. Self-host SQS, or use the chain's poolmanager spot price query over LCD, `/osmosis/poolmanager/v2/pools/{id}/prices?base_asset_denom=<denom>&quote_asset_denom=<denom>`.
 
 Unlike `/tokens/prices`, which prices across all pools with fallbacks, this endpoint prices against one specific pool's state.
 
@@ -362,10 +362,10 @@ In short: SQS for cross-pool aggregation and routing, RPC/REST/gRPC for everythi
 
 ## Adding a custom CosmWasm pool to SQS
 
-If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/v28.x/docs/architecture/COSMWASM_POOLS.MD) for the model.
+If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/HEAD/docs/architecture/COSMWASM_POOLS.MD) for the model.
 
-1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
-2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/v28.x/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are deprioritized in route search:** they are excluded from split quotes, and when any route without a generalized pool exists, the router filters the generalized routes out of `/router/quote` results. Only when no other route connects the pair does SQS fall back to the best generalized route. Because SQS queries the contract over gRPC at quote time for these pools (instead of computing in memory), quotes through them are slower; `/router/custom-direct-quote` against a known pool id always works regardless of route-search priority.
+1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
+2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/HEAD/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are deprioritized in route search:** they are excluded from split quotes, and when any route without a generalized pool exists, the router filters the generalized routes out of `/router/quote` results. Only when no other route connects the pair does SQS fall back to the best generalized route. Because SQS queries the contract over gRPC at quote time for these pools (instead of computing in memory), quotes through them are slower; `/router/custom-direct-quote` against a known pool id always works regardless of route-search priority.
 
 After the PR merges, the SQS team will deploy the updated config to production.
 
