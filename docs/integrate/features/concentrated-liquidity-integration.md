@@ -28,10 +28,10 @@ curl --globoff "https://sqs.osmosis.zone/pools?filter[type]=2"
 
 Each entry's `chain_model` carries the CL-specific fields: `token0`, `token1`, `current_tick`, `current_sqrt_price`, `tick_spacing`, `exponent_at_price_one`, and `spread_factor`. Filters compose with `filter[id]`, `filter[denom]`, and `filter[min_liquidity_cap]`; see the [SQS page](/integrate/endpoints/sqs) for the full parameter reference.
 
-`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This is the endpoint to build liquidity-depth charts or simulate swaps offchain. The route is currently blocked (HTTP 403) on the public mainnet host; use the staging deployment or a self-hosted SQS (see the [SQS page](/integrate/endpoints/sqs) for details):
+`GET /pools/ticks/{id}` returns the full tick model for one concentrated pool: every initialized tick range with its liquidity, plus the current tick index. This route is not served publicly, so it needs a self-hosted SQS (see the [SQS page](/integrate/endpoints/sqs#self-hosting)). Against the public endpoints, read the same tick-range liquidity from the chain with the `LiquidityPerTickRange` query below, which is the data to build liquidity-depth charts or simulate swaps offchain:
 
 ```bash
-curl "https://sqs.stage.osmosis.zone/pools/ticks/1066"
+curl "https://lcd.osmosis.zone/osmosis/concentratedliquidity/v1beta1/liquidity_per_tick_range?pool_id=3499"
 ```
 
 ### LCD query surface
@@ -55,20 +55,20 @@ The module's gRPC/REST queries live under `/osmosis/concentratedliquidity/v1beta
 Example:
 
 ```bash
-curl "https://lcd.osmosis.zone/osmosis/concentratedliquidity/v1beta1/positions/osmo1...?pool_id=1464"
+curl "https://lcd.osmosis.zone/osmosis/concentratedliquidity/v1beta1/positions/osmo1...?pool_id=3499"
 ```
 
 The spot price of a CL pool is served by the `poolmanager` module, same as for every other pool type:
 
 ```bash
-curl "https://lcd.osmosis.zone/osmosis/poolmanager/pools/1464/prices?base_asset_denom=uosmo&quote_asset_denom=ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4"
+curl "https://lcd.osmosis.zone/osmosis/poolmanager/pools/3499/prices?base_asset_denom=uosmo&quote_asset_denom=factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC"
 ```
 
 The returned `spot_price` is quoted in base units of each denom. Scale it by the difference in the two assets' exponents (from asset metadata) before displaying it; never assume 6 decimals.
 
 ## Position lifecycle
 
-Six messages make up the position lifecycle. All examples below use proto-JSON; field names are verified against the module's `tx.proto` at the deployed version. The examples use pool `1464` (`uosmo` / USDC, tick spacing 100).
+Six messages make up the position lifecycle. All examples below use proto-JSON; field names are verified against the module's `tx.proto` at the deployed version. The examples use pool `3499` (`uosmo` / USDC, tick spacing 100).
 
 ### Create a position
 
@@ -77,12 +77,12 @@ Six messages make up the position lifecycle. All examples below use proto-JSON; 
 ```json
 {
   "@type": "/osmosis.concentratedliquidity.v1beta1.MsgCreatePosition",
-  "pool_id": "1464",
+  "pool_id": "3499",
   "sender": "osmo1...",
   "lower_tick": "-17000000",
   "upper_tick": "-15000000",
   "tokens_provided": [
-    { "denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4", "amount": "1500000" },
+    { "denom": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC", "amount": "1500000" },
     { "denom": "uosmo", "amount": "50000000" }
   ],
   "token_min_amount0": "47500000",
@@ -192,7 +192,7 @@ Concentrated pool creation is permissionless (`is_permissionless_pool_creation_e
   "@type": "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1.MsgCreateConcentratedPool",
   "sender": "osmo1...",
   "denom0": "uosmo",
-  "denom1": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+  "denom1": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC",
   "tick_spacing": "100",
   "spread_factor": "0.001000000000000000"
 }
@@ -203,11 +203,11 @@ The response returns the new `pool_id`. Two module parameters constrain the conf
 - `authorized_tick_spacing`: `1`, `10`, `100`, `1000`. Smaller spacing allows finer price granularity at the cost of more tick state.
 - `authorized_spread_factors`: `0`, `0.0001`, `0.0005`, `0.001`, `0.002`, `0.003`, `0.005`, `0.01`, `0.025`.
 
-Values outside these lists are rejected (governance-created pools and a whitelist of unrestricted creators bypass the lists). Creation also charges the `poolmanager` module's `pool_creation_fee`, currently 20 USDC (`20000000` of the USDC base denom), which is deposited into the community pool. A freshly created pool has no liquidity and no spot price until the first `MsgCreatePosition` lands on it.
+Values outside these lists are rejected (governance-created pools and a whitelist of unrestricted creators bypass the lists). Creation also charges the `poolmanager` module's `pool_creation_fee`, currently 20 USDC (`20000000` of the USDC denom `factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC`), which is deposited into the community pool. A freshly created pool has no liquidity and no spot price until the first `MsgCreatePosition` lands on it.
 
 ## Swapping against CL pools
 
-There is nothing CL-specific to implement for swaps. CL pools are routed by the `poolmanager` module and quoted by SQS alongside every other pool type; a route hop through a CL pool looks identical to any other hop in the quote response and in `MsgSwapExactAmountIn`. Follow [Swap Integration](/integrate/swap) end to end. If you are simulating CL swaps yourself instead of using SQS quotes, take tick data from `GET /pools/ticks/{id}` and the swap math from the [module spec](/build/chain/pool-manager/concentrated-liquidity#calculating-swap-amounts).
+There is nothing CL-specific to implement for swaps. CL pools are routed by the `poolmanager` module and quoted by SQS alongside every other pool type; a route hop through a CL pool looks identical to any other hop in the quote response and in `MsgSwapExactAmountIn`. Follow [Swap Integration](/integrate/swap) end to end. If you are simulating CL swaps yourself instead of using SQS quotes, take tick data from the `LiquidityPerTickRange` query (or `GET /pools/ticks/{id}` on a self-hosted SQS) and the swap math from the [module spec](/build/chain/pool-manager/concentrated-liquidity#calculating-swap-amounts).
 
 ## Incentives and uptime
 

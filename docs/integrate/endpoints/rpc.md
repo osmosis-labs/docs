@@ -104,7 +104,8 @@ async function transfer() {
     amount: [{ denom: "uosmo", amount: "1000" }], // 0.001 OSMO, base units
   });
 
-  const fee = { amount: [{ denom: "uosmo", amount: "5000" }], gas: "200000" };
+  // The fee must cover the current base fee (gas * base fee per gas); 7500uosmo / 200000 gas = 0.0375 uosmo per gas.
+  const fee = { amount: [{ denom: "uosmo", amount: "7500" }], gas: "200000" };
   const res = await client.signAndBroadcast(account.address, [msg], fee);
 
   if (res.code !== 0) throw new Error(`tx failed: ${res.rawLog}`);

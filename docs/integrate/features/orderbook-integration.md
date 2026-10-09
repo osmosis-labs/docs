@@ -9,7 +9,7 @@ Osmosis limit orders live in CosmWasm orderbook contracts that are registered as
 
 This page covers the integration surface for a bot operator or dapp working with limit orders directly: discovering the canonical book for a pair, placing and cancelling orders, claiming fills, and tracking open orders. For a conceptual introduction see [Limit Orders](/learn/features/orderbook) in the Learn section; for pool mechanics, tick math, market creation, routing internals, and the admin/moderator surface, see the [orderbook module page](/build/chain/pool-manager/cosmwasmpool/orderbook).
 
-Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are taken from [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/msg.rs) at that version (the linked revision is the 2.0.0 version bump).
+Everything below is written against the deployed contract: the canonical orderbooks run code id `885`, which carries cw2 info `crates.io:sumtree-orderbook` version `2.0.0`. Message shapes are defined in [`msg.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/msg.rs) in the orderbook repo.
 
 ## Discovering the canonical orderbook
 
@@ -20,35 +20,35 @@ Do not hardcode contract addresses. SQS tracks which book is canonical for each 
 curl -s "https://sqs.osmosis.zone/pools/canonical-orderbooks" | jq .
 
 # One pair (OSMO/USDC)
-curl -s "https://sqs.osmosis.zone/pools/canonical-orderbook?base=uosmo&quote=ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" | jq .
+curl -s "https://sqs.osmosis.zone/pools/canonical-orderbook?base=uosmo&quote=factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" | jq .
 ```
 
 ```json
 {
   "base": "uosmo",
-  "quote": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
-  "pool_id": 1933,
-  "contract_address": "osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4"
+  "quote": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC",
+  "pool_id": 3530,
+  "contract_address": "osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh"
 }
 ```
 
 The `base` and `quote` fields are the chain denoms the contract was instantiated with; you can confirm them against the contract itself with the `denoms` smart query (`{ "denoms": {} }` returns `{ "quote_denom", "base_denom" }`). Both endpoints are documented with the rest of the SQS surface under [Canonical orderbook lookup](/integrate/endpoints/sqs#canonical-orderbook-lookup).
 
-All examples below use the OSMO/USDC book at `osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4` (pool `1933`).
+All examples below use the OSMO/USDC book at `osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh` (pool `3530`).
 
 ## Placing an order
 
 Limit orders are placed with the `place_limit` execute message:
 
 ```bash
-osmosisd tx wasm execute osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{
+osmosisd tx wasm execute osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{
   "place_limit": {
     "tick_id": -3600000,
     "order_direction": "bid",
     "quantity": "5000000",
     "claim_bounty": "0.0001"
   }
-}' --amount "5000000ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" \
+}' --amount "5000000factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" \
    --from <KEY> --gas auto --gas-adjustment 1.3 --gas-prices 0.05uosmo
 ```
 
@@ -64,7 +64,7 @@ The execution response includes the assigned `order_id`, which you need (togethe
 ## Cancelling an order
 
 ```bash
-osmosisd tx wasm execute osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{
+osmosisd tx wasm execute osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{
   "cancel_limit": {
     "tick_id": -3600000,
     "order_id": 42
@@ -86,7 +86,7 @@ Fills are not pushed to the order owner. When market flow crosses a resting orde
 { "batch_claim": { "orders": [[-3600000, 42], [-3599000, 43]] } }
 ```
 
-Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the deployed implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/47bb3d60506e49f7c11504cb759b96a7d23f84ae/contracts/sumtree-orderbook/src/order.rs):
+Both are permissionless: any address can claim any order's fills at any time, and neither message accepts funds. What happens on a claim, per the implementation in [`order.rs`](https://github.com/osmosis-labs/orderbook/blob/main/contracts/sumtree-orderbook/src/order.rs):
 
 - The filled portion (which may be partial) is converted at the order's tick price into the opposite denom: bids are paid out in the base denom, asks in the quote denom.
 - If the order was placed with a `claim_bounty`, that fraction of the payout goes to the transaction sender, whoever they are. This is the incentive that lets order owners outsource claiming.
@@ -127,7 +127,7 @@ Two options, depending on whether you want aggregated or per-contract state:
 The contract supports a maker fee, deducted from claim payouts and sent to a configured recipient. On the deployed canonical books it is currently zero:
 
 ```bash
-osmosisd query wasm contract-state smart osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{ "get_maker_fee": {} }'
+osmosisd query wasm contract-state smart osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{ "get_maker_fee": {} }'
 # data: "0"
 ```
 

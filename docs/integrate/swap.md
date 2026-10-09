@@ -31,20 +31,19 @@ The response contains the expected output, the route, and the realized fees and 
 ```json
 {
   "amount_in": { "denom": "uosmo", "amount": "1000000" },
-  "amount_out": "27607",
+  "amount_out": "17561",
   "route": [
     {
       "pools": [
-        { "id": 1933, "token_out_denom": "ibc/498A0751...", "taker_fee": "0.008000000000000000" },
-        { "id": 1282, "token_out_denom": "ibc/27394FB0...", "taker_fee": "0.008000000000000000" }
+        { "id": 1, "spread_factor": "0.002000000000000000", "token_out_denom": "ibc/27394FB0...", "taker_fee": "0.008000000000000000" }
       ],
       "in_amount": "1000000",
-      "out_amount": "27607"
+      "out_amount": "17561"
     }
   ],
-  "effective_fee": "0.015936000000000000",
-  "price_impact": "0.070767626877084552",
-  "in_base_out_quote_spot_price": "0.026200034512947721"
+  "effective_fee": "0.008000000000000000",
+  "price_impact": "-0.002022469825617465",
+  "in_base_out_quote_spot_price": "0.017738496541749443"
 }
 ```
 
@@ -54,7 +53,7 @@ The fields you need to build the swap:
 - `route[].pools[]`: the ordered hops. Each pool's `id` and `token_out_denom` map directly to the swap message's route.
 - `amount_out`: the expected output. Use it with your slippage tolerance to set the minimum acceptable output.
 
-`effective_fee` (combined spread factor + taker fee across the route) and `price_impact` are returned for display and decision-making; they are already reflected in `amount_out`. Each pool's `taker_fee` is read from chain state for that pool and can differ from (and exceed) the chain-wide default, so use the per-pool values and `effective_fee` from the quote rather than assuming a default. See the [SQS page](/integrate/endpoints/sqs#get-a-swap-quote) for the full parameter and field reference, including split routes (where `route` has more than one entry).
+`effective_fee` (the taker fee compounded across the route; it excludes the spread factor) and `price_impact` are returned for display and decision-making. Both the taker fees and each pool's `spread_factor` are already reflected in `amount_out`. Each pool's `taker_fee` is read from chain state for that pool and can differ from (and exceed) the chain-wide default, so use the per-pool values and `effective_fee` from the quote rather than assuming a default. See the [SQS page](/integrate/endpoints/sqs#get-a-swap-quote) for the full parameter and field reference, including split routes (where `route` has more than one entry).
 
 ## 2. Build the swap message
 
@@ -276,4 +275,4 @@ Signing and broadcasting are identical to the exact-in flow above.
 - **Slippage.** Always set `token_out_min_amount` from the quote and an explicit tolerance.
 - **Denoms.** Match the full base denom (`ibc/HASH` or `factory/...`), never the display symbol. Read exponents from metadata.
 - **Route order.** For exact-in, preserve the pool order from the quote; the `token_out_denom` of each hop must chain into the next. For exact-out, reverse the quote's pool order (SQS lists those pools output-to-input, the chain executes input-to-output).
-- **Fees.** `effective_fee` already accounts for spread factors and taker fees; the onchain swap applies them, so size `token_out_min_amount` against the quoted `amount_out`, not the spot price.
+- **Fees.** `amount_out` already accounts for spread factors and taker fees (`effective_fee` reports the taker fee portion only); the onchain swap applies them, so size `token_out_min_amount` against the quoted `amount_out`, not the spot price.

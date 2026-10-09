@@ -23,10 +23,10 @@ A bid is a `MsgAuctionBid` with three fields:
 | Field | Type | Description |
 | -- | -- | -- |
 | `bidder` | string | The bidding account address. |
-| `bid` | `Coin` | The bid amount and denom (Noble USDC, see below). |
+| `bid` | `Coin` | The bid amount and denom (USDC, see below). |
 | `transactions` | repeated bytes | The bundle: raw transaction bytes, in execution order. |
 
-The bid denom is Noble USDC, `ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4` (base denom `uusdc`, 6 decimals, so `100000` = 0.1 USDC).
+The bid denom is USDC, `factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC` (6 decimals, so `100000` = 0.1 USDC).
 
 A bundle holds one to five transactions. Each transaction must be:
 
@@ -90,7 +90,7 @@ Then submit. The transactions are one comma-separated argument, not separate arg
 
 ```bash
 osmosisd tx auction auction-bid [BIDDER_ADDRESS] \
-  100000ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 \
+  100000factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC \
   <hexTx1>,<hexTx2>,<hexTx3> \
   --from [BIDDER_KEY] \
   --gas=auto \
@@ -105,13 +105,13 @@ osmosisd tx auction auction-bid [BIDDER_ADDRESS] \
 Your bid must satisfy the following. All values are governance-mutable, so verify the current values at the params endpoint below.
 
 - Bundle size at most `max_bundle_size` (currently `5`), and at least one transaction.
-- Bid at least the `reserve_fee` (currently `100000` `uusdc`, 0.1 USDC).
-- Bid exceeding the current highest bid by at least `min_bid_increment` (currently `100000` `uusdc`, 0.1 USDC).
+- Bid at least the `reserve_fee` (currently `100000`, 0.1 USDC).
+- Bid exceeding the current highest bid by at least `min_bid_increment` (currently `100000`, 0.1 USDC).
 - Timeout height set to the next block, matched across the bid and the bidder's bundled transactions.
 - The bid plus the full bundle fit within the MEV lane's per-block size and gas limits.
 - All bundled transactions valid, and the front-running rules satisfied.
 
-The chain checks that the bidder holds sufficient funds during validation, but the bid is only deducted from the winning bid selected at block proposal. Losing bids are not charged. The winning bid is split between the proposer (per `proposer_fee`, currently `0`) and an escrow account. With `proposer_fee = 0` the entire bid goes to the escrow account, `osmo1jayxmrajq8nzw2knatgsjdkdhnkw8flkgqs84pvphs3ut2hts5xq9hacch`.
+The chain checks that the bidder holds sufficient funds during validation, but the bid is only deducted from the winning bid selected at block proposal. Losing bids are not charged. The winning bid is split between the proposer (per `proposer_fee`, currently `0`) and an escrow account. With `proposer_fee = 0` the entire bid goes to the escrow account, `osmo10c79mm4taurpdmvxvw9nyqq4mskvk9h5jn38yjpye2azeun9rg2s8j5jhr`, a contract that forwards the USDC it receives to the community pool.
 
 Verify the current parameters live:
 

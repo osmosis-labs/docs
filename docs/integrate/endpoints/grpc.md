@@ -53,7 +53,7 @@ Against `grpc.osmosis.zone:443`, run grpcurl **without** the `-plaintext` flag s
 Build a descriptor set from the chain repo at the deployed release using [buf](https://buf.build/docs/installation) (it resolves the third-party imports from the repo's `buf.lock`; swap the tag for the current release):
 
 ```bash
-git clone --depth 1 --branch v31.0.2 https://github.com/osmosis-labs/osmosis
+git clone --depth 1 --branch v31.0.3 https://github.com/osmosis-labs/osmosis
 cd osmosis/proto
 buf build -o osmosis.protoset
 ```
@@ -98,7 +98,7 @@ An RPC call against the public endpoint, with the method resolved from the local
 grpcurl -protoset osmosis.protoset grpc.osmosis.zone:443 osmosis.poolmanager.v1beta1.Query/Params
 ```
 
-This returns the live poolmanager parameters as JSON (the pool creation fee in Noble USDC, the 0.1% default taker fee, and the fee distribution parameters).
+This returns the live poolmanager parameters as JSON (the pool creation fee in USDC, the 0.1% default taker fee, and the fee distribution parameters).
 
 #### Query for historical state using grpcurl
 
@@ -107,13 +107,13 @@ You may also query for historical data by passing some [gRPC metadata](https://g
 ```bash
 grpcurl \
     -protoset cosmos-sdk.protoset \
-    -H "x-cosmos-block-height: 68021983" \
+    -H "x-cosmos-block-height: <RECENT_HEIGHT>" \
     -d '{"address":"osmo19a7pmytd9vk26l57q8chacuprsmx05g23mg6yc"}' \
     grpc.osmosis.zone:443 \
     cosmos.bank.v1beta1.Query/AllBalances
 ```
 
-The public node is pruned, so it serves only recent heights; pick a height within the retention window (the example height was recent when this page was verified) or the query returns a pruning error.
+The public node is pruned, so it serves only recent heights; replace `<RECENT_HEIGHT>` with a height within the retention window (a few thousand blocks below the current height is safe) or the query returns a pruning error.
 
 ### Interacting with Go
 

@@ -10,7 +10,7 @@ A new asset needs a pool with real liquidity to be tradable, and more liquidity 
 *Note that the Osmosis Foundation will **not** consider any OTC token transfers or loans*
 
 ## Add your own liquidity
-Buy at least USD $500-worth of your chosen Quote Asset (USDC, USDT, DAI, WBTC, ETH, ATOM or OSMO) to pair with USD $500-worth of the new asset to create a 50/50 pool.
+Buy at least USD $1,000-worth of your chosen Quote Asset (USDC, USDT, DAI, WBTC, ETH, ATOM or OSMO) to pair with USD $1,000-worth of the new asset to create a 50/50 pool.
 
 Alternatively, find partners who would be willing to provide the base asset portion of the liquidity to the equivalent value of the new asset you are creating a pool for.
 
