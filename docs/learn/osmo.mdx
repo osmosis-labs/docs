@@ -10,7 +10,7 @@ OSMO is the native token of Osmosis. It secures the chain through staking, gover
 
 OSMO has a maximum supply of 1 billion. New OSMO is minted each day as staking and ecosystem rewards, on a declining schedule: every reduction period the daily emission is multiplied by a reduction factor of two-thirds, cutting it by a third. This is known as the **thirdening**. The reduction period is currently 730 days (roughly two years), so emissions step down toward the supply cap over time.
 
-Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. As of writing, the split is weighted toward staking rewards, developer rewards, and the community pool. Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
+Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. Currently, most of it goes to the community pool (67%), with 25% to developer rewards, 8% to staking rewards, and none to pool incentives. Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
 
 ## Staking
 
@@ -33,7 +33,7 @@ _The token must have reasonable liquidity, paired with $OSMO as a minimum requir
 
 ## Taker Fees
 Osmosis charges a small taker fee on all trades with a 0.1% default.
-Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO, are set per direction of a trading pair (keyed by input and output denom) and adjust the default both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to between 0.5% and 0.8%. The two directions of a pair can differ widely: selling OSMO for USDC pays 0.8%, while swapping USDC to OSMO pays 0.05%.
+Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo162wk8qc3w5s9hfs8dm76wrqnk6fjmsez2t4kk6zyugmrlzgds8sqfesmlm) subDAO, are set per direction of a trading pair (keyed by input and output denom) and adjust the default both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into many assets are raised to between 0.5% and 0.8%. The two directions of a pair can differ widely: selling OSMO for USDC pays 0.8%, while swapping USDC to OSMO pays 0.05%.
 
 The taker fee is charged on each hop of a trade's route, in that hop's input asset, at the rate set for that pair.
 

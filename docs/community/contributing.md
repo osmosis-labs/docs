@@ -15,7 +15,7 @@ To contribute to this documentation site itself, open an issue or PR against the
 
 The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label.
 
-If you have a feature request, please use the [feature-request repo](https://github.com/osmosis-labs/feature-requests)
+If you have a feature request for the chain, open it with the [feature request form](https://github.com/osmosis-labs/osmosis/issues/new?template=feature-request.yml) in the osmosis repo. For broader ideas, use the [Feature Requests and Discussion](https://forum.osmosis.zone/c/site-feedback/2) category on the Osmosis forum.
 
 Once you find an existing issue that you want to work on or if you have a new issue to create, continue below.
 
@@ -49,8 +49,10 @@ Each replace carries comments recording the fork branch, the commit, and the rel
 for example:
 
 ```go
-// Direct cosmos-sdk branch link: https://github.com/osmosis-labs/cosmos-sdk/tree/osmo-v30/0.50.14
-cosmossdk.io/store => github.com/osmosis-labs/cosmos-sdk/store v1.1.1-v0.50.11-v28-osmo-2
+// Direct cosmos-sdk branch link: https://github.com/osmosis-labs/cosmos-sdk/tree/osmo-v30/0.50.14, current branch: osmo-v30/0.50.14
+// Direct commit link: https://github.com/osmosis-labs/cosmos-sdk/commit/1f78f02de9b2f60779c5062686201b45361fcb3f
+// Direct tag link: https://github.com/osmosis-labs/cosmos-sdk/releases/tag/v0.50.14-v30-osmo
+github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.50.14-v30-osmo
 ```
 
 To move Osmosis onto a new fork revision:

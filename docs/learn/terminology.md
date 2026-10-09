@@ -220,7 +220,7 @@ When a user or delegator delegates and bonds Osmo to an active validator in orde
 
 ## Taker fee
 
-A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into major assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
+A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into many assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
 
 ## CometBFT consensus
 
@@ -273,7 +273,7 @@ When a delegator no longer wishes to have their OSMO bonded to a validator. This
 
 ## Uptime
 
-The amount of time a validator has been active in a given timeframe. Validators with low up time may be slashed.
+The amount of time a validator has been active in a given timeframe. Validators with low uptime are jailed (removed from the active set until they unjail), but their stake is not slashed.
 
 ## Validator
 
