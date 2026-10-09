@@ -1594,9 +1594,10 @@ at launch while we refine a more sophisticated version. We leave the state-relat
 in core logic to ensure that if we do decide to turn the feature on (even if just to
 experiment), it could be done by a simple governance proposal (to add more supported
 uptimes to the list of authorized uptimes) and not require a state migration for pools.
-At launch, only the 1ns uptime will be authorized, which is roughly equivalent to status
+At launch, only the 1ns uptime was authorized, which is roughly equivalent to status
 quo CL incentives with the small difference that positions that are created and closed in
-the same block are not eligible for any incentives.
+the same block are not eligible for any incentives. The authorized uptimes on mainnet are
+now 1ns, 60s, 3600s (1h) and 86400s (1d).
 
 For the sake of clarity, this mechanism functions very similarly to status quo incentives,
 but it has a separate accumulator for each supported uptime and ensures that only liquidity
@@ -1693,6 +1694,38 @@ the use of these hooks.
 
 ## Parameters
 
+Current mainnet values (query with `osmosisd query concentratedliquidity params`):
+
+| Key | Type | Mainnet value |
+| --- | ---- | ------------- |
+| `AuthorizedTickSpacing` | []uint64 | 1, 10, 100, 1000 |
+| `AuthorizedSpreadFactors` | []sdk.Dec | 0, 0.0001, 0.0005, 0.001, 0.002, 0.003, 0.005, 0.01, 0.025 |
+| `BalancerSharesRewardDiscount` | sdk.Dec | 0.05 |
+| `AuthorizedQuoteDenoms` | []string | [] (deprecated) |
+| `AuthorizedUptimes` | []duration | 1ns, 60s, 3600s, 86400s |
+| `IsPermissionlessPoolCreationEnabled` | bool | true |
+| `UnrestrictedPoolCreatorWhitelist` | []string | osmo1k396geqx70uyyqf6kcvsz27n2c80fduagnhswxj3smny582pyyusf5qf6j |
+| `HookGasLimit` | uint64 | 2000000 |
+
+- `AuthorizedTickSpacing` []uint64
+
+The tick spacings a pool can be created with.
+
+- `AuthorizedSpreadFactors` []sdk.Dec
+
+The spread factors a pool can be created with.
+
+- `BalancerSharesRewardDiscount` sdk.Dec
+
+The rate by which incentives flowing from CL to Balancer pools are discounted
+to encourage LPs to migrate. A rate of 0.05 means Balancer LPs get 5% less
+incentives than full range CL LPs.
+
+- `AuthorizedUptimes` []duration
+
+The uptimes that incentives can be created for (see "Note on supported and
+authorized uptimes").
+
 - `AuthorizedQuoteDenoms` []string
 
 This was a list of quote denoms that can be used as token1 when creating a pool.
@@ -1701,13 +1734,24 @@ price increments stemming from tick to price conversion.
 
 This is no longer an active parameter as of v30 although it remains visible on chain.
 
-- `IsPermisionlessPoolCreationEnabled` bool
+- `IsPermissionlessPoolCreationEnabled` bool
 
-The flag indicating whether permissionless pool creation is enabled or not. For
-launch, we have decided to disable permissionless pool creation. It will still
-be enabled via governance. This is because we want to limit the number of pools
-for risk management and want to avoid fragmenting liquidity for major denom
-pairs with configurations of tick spacing that are not ideal.
+The flag indicating whether permissionless pool creation is enabled or not.
+Permissionless pool creation was disabled at launch and has since been enabled
+by governance, so any account can create a pool using an authorized tick
+spacing and spread factor.
+
+- `UnrestrictedPoolCreatorWhitelist` []string
+
+Addresses that bypass the pool creation restrictions (the permissionless
+creation flag and the authorized tick spacing and spread factor checks). The
+poolmanager module account (used by governance proposals) bypasses them too.
+
+- `HookGasLimit` uint64
+
+The gas limit applied to each CosmWasm contract call made by a CL pool action
+hook (for example `BeforeCreatePosition`), capped by the gas remaining in the
+transaction.
 
 ## Listeners
 

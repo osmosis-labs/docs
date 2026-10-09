@@ -13,6 +13,12 @@ token is minted and burned in the context of Superfluid Staking.
 Throughout all of this, OSMO's supply is preserved in queries to the
 bank module.
 
+:::note
+There are currently no superfluid assets registered onchain
+(`/osmosis/superfluid/v1beta1/all_assets` returns an empty list), so no
+new superfluid delegations can be made.
+:::
+
 ### The process
 
 All of the below methods are found under the [Superfluid
@@ -461,7 +467,7 @@ Overall Epoch sequence
   - Mint new tokens
     - Issue new Osmo, and send to various modules (distribution,
       incentives, etc.)
-    - 25% currently goes to `x/distribution` which funds `Staking`
+    - 8% currently goes to `x/distribution` which funds `Staking`
       and `Superfluid` rewards
     - Rewards for `Superfluid` are based on the just updated
       delegation amounts, and queued for payout in the next epoch

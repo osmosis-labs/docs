@@ -6,7 +6,7 @@ The `x/smart-account` module (store key `smartaccount`) adds an opt-in, per-tran
 
 This page is the module spec: storage layout, the ante and post handler internals, and the exact semantics of each registered authenticator type. For the integrator surface (message payload shapes, worked One Click Trading example, composition patterns), see [Smart Accounts and Authenticators](/integrate/features/smart-accounts).
 
-Source: [`x/smart-account` at v31.0.2](https://github.com/osmosis-labs/osmosis/tree/v31.0.2/x/smart-account).
+Source: [`x/smart-account`](https://github.com/osmosis-labs/osmosis/tree/main/x/smart-account).
 
 ## Concepts
 

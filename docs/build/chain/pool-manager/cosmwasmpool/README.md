@@ -360,7 +360,7 @@ pub struct Coin {
 ### Governance and Code Id Management
 
 Despite code upload being permissioned by governance on Osmosis, it is allowed to be done by a certain
-set of addresses:
+set of addresses. The output below is a truncated example; the live list is longer, so query it with `osmosisd q wasm params`:
 
 ```bash
 osmosisd q wasm params

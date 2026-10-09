@@ -160,7 +160,7 @@ Pools have the following parameters:
 1. **SwapFee** -
     The swap fee is the cut of all swaps that goes to the Liquidity Providers (LPs) for a pool. Suppose a pool has a swap fee `s`. Then if a user wants to swap `T` tokens in the pool, `sT` tokens go to the LP's, and then `(1 - s)T` tokens are swapped according to the AMM swap function.
 2. **ExitFee** -
-    The exit fee is a fee that is applied to LP's that want to remove their liquidity from the pool. Suppose a pool has an exit fee `e`. If they currently have `S` LP shares, then when they remove their liquidity they get tokens worth `(1 - e)S` shares back. The remaining `eS` shares are then burned, and the tokens corresponding to these shares are kept as liquidity.
+    The exit fee is a fee that is applied to LP's that want to remove their liquidity from the pool. Suppose a pool has an exit fee `e`. If they currently have `S` LP shares, then when they remove their liquidity they get tokens worth `(1 - e)S` shares back. The remaining `eS` shares are then burned, and the tokens corresponding to these shares are kept as liquidity. Pool creation rejects any non-zero exit fee (`can not create pool with non zero exit fee`), so `ExitFee` must be set to `0`.
 3. **FutureGovernor** -
     Osmosis plans to allow every pool to act as a DAO, with its own governance in a future upgrade. To facilitate this transition, we allow pools to specify who the governor should be as a string. There are currently 3 options for the future governor.
     - No one will govern it. This is done by leaving the future governor string as blank.
@@ -250,12 +250,12 @@ The JSON [config-file] must specify the following parameters:
  "weights": [list weighted denoms],
  "initial-deposit": [list of denoms with initial deposit amount],
  "swap-fee": [swap fee in percentage],
- "exit-fee": [exit fee in percentage],
+ "exit-fee": [exit fee, must be "0"],
  "future-governor": [see options in pool parameters section above]
 }
 ```
 
-Create a new 50/50 ATOM-OSMO liquidity pool with a swap and exit fee of 1%.
+Create a new 50/50 ATOM-OSMO liquidity pool with a swap fee of 1% and no exit fee.
 
 ```sh
 osmosisd tx gamm create-pool --pool-file [config-file] --from WALLET_NAME --chain-id osmosis-1
@@ -268,7 +268,7 @@ The configuration json file contains the following parameters:
  "weights": "5ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,5uosmo",
  "initial-deposit": "1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,5000000uosmo",
  "swap-fee": "0.01",
- "exit-fee": "0.01",
+ "exit-fee": "0",
  "future-governor": ""
 }
 ```
@@ -305,7 +305,7 @@ Create a pool that starts at a 10:1 weighting favouring `OSMO` and shifts to an 
     "weights": "10uosmo,1ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
     "initial-deposit": "5000000uosmo,1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
     "swap-fee": "0.001",
-    "exit-fee": "0.001",
+    "exit-fee": "0",
     "lbp-params": {
         "duration": "72h",
         "target-pool-weights": "1uosmo,1ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
