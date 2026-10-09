@@ -11,7 +11,7 @@ The first transactions in a block are valuable: whoever executes first can captu
 
 Each block, searchers can submit a `MsgAuctionBid`: a bid amount wrapped around a bundle of up to five signed transactions. The single highest valid bid wins, and its bundle is placed, in the order given, at the very top of the block, ahead of all normal transactions. The bundle is validated up front, but its transactions execute as separate transactions: a failure in a later one does not revert the earlier ones. Losing bids are not charged, and no bid persists beyond one block.
 
-Bids are denominated in allUSDC, with a governance-set minimum bid and minimum increment (currently both 0.1 USDC). Front-running protection is enabled: the rules on who signs which transactions in a bundle prevent a bidder from sandwiching or front-running someone else's transaction within their bundle.
+Bids are denominated in USDC, with a governance-set minimum bid and minimum increment (currently both 0.1 USDC). Front-running protection is enabled: the rules on who signs which transactions in a bundle prevent a bidder from sandwiching or front-running someone else's transaction within their bundle.
 
 ## Where the money goes
 
