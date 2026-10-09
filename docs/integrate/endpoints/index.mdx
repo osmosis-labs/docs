@@ -8,6 +8,8 @@ import DocCardList from '@theme/DocCardList';
 
 This section serves the purpose of different endpoints for different projects on top of Osmosis.
 
+[endpoints.osmosis.zone](https://endpoints.osmosis.zone/) lists every public node, file and snapshot that Osmosis Labs runs for mainnet (`osmosis-1`) and testnet (`osmo-test-5`): RPC, LCD, gRPC and SQS endpoints, the archive node, seeds and persistent peers, genesis files, the addrbook, the latest snapshots and a snapshot restore guide. Use it as the current reference when the values below change.
+
 ## Mainnet Chain Endpoints
 
 These APIs are recommended for development purposes. For maximum control and reliability it's recommended to run your own node. This can be easily accomplished by using the get.osmosis.zone installer.
@@ -15,6 +17,13 @@ These APIs are recommended for development purposes. For maximum control and rel
 - gRPC endpoint: `grpc.osmosis.zone:443` (TLS)
 - RPC endpoint: [https://rpc.osmosis.zone:443](https://rpc.osmosis.zone:443)
 - lcd-endpoint: [https://lcd.osmosis.zone](https://lcd.osmosis.zone)
+
+The public endpoints are free and rate limited to 5 requests per second per IP. They serve recent blocks only; for older heights use the archive node, which holds full history from genesis:
+
+- Archive RPC: [https://rpc.archive.osmosis.zone](https://rpc.archive.osmosis.zone)
+- Archive LCD: [https://lcd.archive.osmosis.zone](https://lcd.archive.osmosis.zone)
+
+Integrators that need higher limits can request a token from [endpoints.osmosis.zone](https://endpoints.osmosis.zone/) for `rpc.integrators.osmosis.zone`, with the same names for `lcd`, `grpc` and `sqs`.
 
 Swagger for RPC and LCD: 
 - rpc reference: [API Reference (RPC)](/api?v=RPC)
@@ -38,7 +47,16 @@ For live routing and pool-state queries (the data that powers swap quoting on th
 
 ## Testnet Networks
 
-Osmosis now offers several testnets and devnets, for endpoints and information on different endpoints across different network, please refer to https://github.com/osmosis-labs/testnets repo.
+Public endpoints for the `osmo-test-5` testnet (the `*.osmotest5.osmosis.zone` names also work):
+
+- gRPC endpoint: `grpc.testnet.osmosis.zone:443` (TLS)
+- RPC endpoint: [https://rpc.testnet.osmosis.zone](https://rpc.testnet.osmosis.zone)
+- LCD endpoint: [https://lcd.testnet.osmosis.zone](https://lcd.testnet.osmosis.zone)
+- SQS endpoint: [https://sqs.testnet.osmosis.zone](https://sqs.testnet.osmosis.zone)
+- Faucet: [faucet.testnet.osmosis.zone](https://faucet.testnet.osmosis.zone/)
+- Add `osmo-test-5` to Keplr: [keplr.testnet.osmosis.zone](https://keplr.testnet.osmosis.zone/)
+
+Seeds, peers, the genesis file and snapshots for `osmo-test-5` are on the testnet tab of [endpoints.osmosis.zone](https://endpoints.osmosis.zone/). For other testnets and devnets, see the [osmosis-labs/testnets](https://github.com/osmosis-labs/testnets) repo.
 
 ## Frontend
  

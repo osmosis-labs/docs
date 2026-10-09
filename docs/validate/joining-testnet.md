@@ -27,7 +27,7 @@ Make sure you have [installed the Osmosis Binary (CLI)](/build/developer-environ
 You may also [use the Osmosis installer](/build/developer-environment/osmosisd) if you want everything to be done automatically.
 
 ## Faucet 
-In order to get testnet tokens use  [https://faucet.osmosis.zone/](https://faucet.osmosis.zone/)
+To get testnet tokens, use the faucet at [faucet.testnet.osmosis.zone](https://faucet.testnet.osmosis.zone/)
 
 ## Initialize Osmosis Node
 
@@ -45,19 +45,19 @@ nano config.toml
 ```
 
 :::caution
-Seed and peer addresses rotate as nodes are added or retired. Confirm the current `osmo-test-5` values from the [Cosmos Chain Registry testnet entry](https://github.com/cosmos/chain-registry/blob/master/testnets/osmosistestnet/chain.json) before applying; the values below are illustrative.
+Seed and peer addresses rotate as nodes are added or retired. Confirm the current `osmo-test-5` values on the testnet tab of [endpoints.osmosis.zone](https://endpoints.osmosis.zone/) before applying.
 :::
 
 Use page down or arrow keys to get to the line that says seeds = "" and replace it with the current seed list, for example:
 
 ```bash
-seeds = "0f9a9c694c46bd28ad9ad6126e923993fc6c56b1@137.184.181.105:26656"
+seeds = "4eba5df8a8d5d00142db3771699cbcab241899f4@seed.testnet.osmosis.zone:26656"
 ```
 
 Next, add persistent peers:
 
 ```bash
-persistent_peers = "4ab030b7fd75ed895c48bcc899b99c17a396736b@137.184.190.127:26656,3dbffa30baab16cc8597df02945dcee0aa0a4581@143.198.139.33:26656"
+persistent_peers = "4eba5df8a8d5d00142db3771699cbcab241899f4@157.180.88.179:26656,279ab0841c40a9be872aa6f7ee3f04171fb2d96a@2.28.9.125:26656"
 ```
 
 Then press ```Ctrl+O``` then enter to save, then ```Ctrl+X``` to exit
@@ -98,9 +98,7 @@ You may leave out `UNSAFE_SKIP_BACKUP=true`, however the backup takes a decent a
 Download and replace the genesis file:
 
 ```bash
-cd $HOME/.osmosisd/config
-wget https://github.com/osmosis-labs/networks/raw/main/osmo-test-5/genesis.tar.bz2
-tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
+wget -O $HOME/.osmosisd/config/genesis.json https://genesis.testnet.osmosis.zone/genesis.json
 ```
 
 Copy the current osmosisd binary into the cosmovisor/genesis folder:
@@ -139,7 +137,7 @@ signed blocks.
 
 ## Download Chain Data
 
-Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a>, which publishes pruned `osmo-test-5` testnet snapshots. The snapshot URL is timestamped and rotates, so copy the current one from that page rather than hardcoding it.
+Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a> (testnet tab), which publishes pruned `osmo-test-5` testnet snapshots. The snapshot URL is timestamped and rotates, so don't hardcode it: `https://snapshots.testnet.osmosis.zone/latest` always returns the URL of the newest one.
 
 Download liblz4-tool to handle the compressed file:
 
@@ -147,10 +145,10 @@ Download liblz4-tool to handle the compressed file:
 sudo apt-get install wget liblz4-tool aria2 -y
 ```
 
-Download a pruned snapshot from [snapshots.osmosis.zone](https://snapshots.osmosis.zone/) and extract it into the data directory. Replace `<SNAPSHOT_URL>` with the current URL copied from that page:
+Download the newest testnet snapshot and extract it into the data directory:
 
 ```bash
-wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C $HOME/.osmosisd -xvf -
+wget -q -O - $(curl -sL https://snapshots.testnet.osmosis.zone/latest) | lz4 -d | tar -C $HOME/.osmosisd -xvf -
 ```
 
 ## Set Up Osmosis Service

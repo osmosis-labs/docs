@@ -39,7 +39,7 @@ Choose pruned unless you specifically need history. Switching a node from pruned
 
 ## Snapshot providers
 
-- **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)**: the official Osmosis snapshots.
+- **[snapshots.osmosis.zone](https://snapshots.osmosis.zone)**: the official Osmosis snapshots. [endpoints.osmosis.zone](https://endpoints.osmosis.zone/) lists the latest mainnet and testnet snapshots alongside a step-by-step restore guide, and `https://snapshots.osmosis.zone/latest` returns the URL of the newest mainnet snapshot.
 - **[Polkachu](https://www.polkachu.com/tendermint_snapshots/osmosis)**: community-maintained snapshots with restore instructions.
 
 Each provider's page lists the current snapshot height, download URL, and the extract command for the latest data. Match the snapshot's pruning profile to your node's role (a pruned snapshot for a validator, an archive snapshot only if you need full history). Verify the download against the checksum the provider publishes before extracting it.
