@@ -20,35 +20,35 @@ Do not hardcode contract addresses. SQS tracks which book is canonical for each 
 curl -s "https://sqs.osmosis.zone/pools/canonical-orderbooks" | jq .
 
 # One pair (OSMO/USDC)
-curl -s "https://sqs.osmosis.zone/pools/canonical-orderbook?base=uosmo&quote=ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" | jq .
+curl -s "https://sqs.osmosis.zone/pools/canonical-orderbook?base=uosmo&quote=factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" | jq .
 ```
 
 ```json
 {
   "base": "uosmo",
-  "quote": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
-  "pool_id": 1933,
-  "contract_address": "osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4"
+  "quote": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC",
+  "pool_id": 3530,
+  "contract_address": "osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh"
 }
 ```
 
 The `base` and `quote` fields are the chain denoms the contract was instantiated with; you can confirm them against the contract itself with the `denoms` smart query (`{ "denoms": {} }` returns `{ "quote_denom", "base_denom" }`). Both endpoints are documented with the rest of the SQS surface under [Canonical orderbook lookup](/integrate/endpoints/sqs#canonical-orderbook-lookup).
 
-All examples below use the OSMO/USDC book at `osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4` (pool `1933`).
+All examples below use the OSMO/USDC book at `osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh` (pool `3530`).
 
 ## Placing an order
 
 Limit orders are placed with the `place_limit` execute message:
 
 ```bash
-osmosisd tx wasm execute osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{
+osmosisd tx wasm execute osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{
   "place_limit": {
     "tick_id": -3600000,
     "order_direction": "bid",
     "quantity": "5000000",
     "claim_bounty": "0.0001"
   }
-}' --amount "5000000ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" \
+}' --amount "5000000factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" \
    --from <KEY> --gas auto --gas-adjustment 1.3 --gas-prices 0.05uosmo
 ```
 
@@ -64,7 +64,7 @@ The execution response includes the assigned `order_id`, which you need (togethe
 ## Cancelling an order
 
 ```bash
-osmosisd tx wasm execute osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{
+osmosisd tx wasm execute osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{
   "cancel_limit": {
     "tick_id": -3600000,
     "order_id": 42
@@ -127,7 +127,7 @@ Two options, depending on whether you want aggregated or per-contract state:
 The contract supports a maker fee, deducted from claim payouts and sent to a configured recipient. On the deployed canonical books it is currently zero:
 
 ```bash
-osmosisd query wasm contract-state smart osmo1twq36c866tdjhp4jgsayr0un5rn7adv4xwm0e7qs78te65pmynqqzwulk4 '{ "get_maker_fee": {} }'
+osmosisd query wasm contract-state smart osmo1ujup7sqkq4trw4mw3ys3h5fj3zp9fghn2ay6jtfvl8u7f759hhhsqfqvuh '{ "get_maker_fee": {} }'
 # data: "0"
 ```
 

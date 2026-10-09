@@ -30,7 +30,7 @@ Querying for historical state is done using the HTTP header `x-cosmos-block-heig
 curl \
     -X GET \
     -H "Content-Type: application/json" \
-    -H "x-cosmos-block-height: 279256"
+    -H "x-cosmos-block-height: 279256" \
     http://localhost:1317/cosmos/bank/v1beta1/balances/$MY_VALIDATOR
 ```
 

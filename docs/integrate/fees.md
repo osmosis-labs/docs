@@ -57,6 +57,6 @@ The response lists each accepted denom alongside the pool used to convert it to 
 Keep the two separate when integrating a swap:
 
 - **Gas fee:** paid to include the transaction, sized as above (`gas_limit * gas_price`).
-- **Spread factor + taker fee:** charged by the swap itself, already reflected in a quote's `amount_out` and surfaced as `effective_fee`. See [Swap Integration](/integrate/swap) and [The OSMO Token](/learn/osmo#taker-fees).
+- **Spread factor + taker fee:** charged by the swap itself and already reflected in a quote's `amount_out`. The quote's `effective_fee` reports the taker fee portion only; each pool's `spread_factor` is listed per hop. See [Swap Integration](/integrate/swap) and [The OSMO Token](/learn/osmo#taker-fees).
 
 Do not double-count: size your `token_out_min_amount` against the quote's `amount_out` (which already has swap fees applied), and budget gas separately.

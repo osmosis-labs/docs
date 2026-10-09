@@ -26,7 +26,7 @@ curl "https://sqs.osmosis.zone/tokens/prices?base=uosmo"
 ```
 
 ```json
-{ "uosmo": { "ibc/498A0751...": "0.045873961862374866000000000000000000" } }
+{ "uosmo": { "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC": "0.030386266028946215568462763902447312" } }
 ```
 
 Each base maps to a quote-denom map whose value is the spot price. Pass `humanDenoms=true` to use display symbols (`wbtc`) instead of the full `ibc/HASH`. See [Read token prices](/integrate/endpoints/sqs#read-token-prices) for the full parameter reference.

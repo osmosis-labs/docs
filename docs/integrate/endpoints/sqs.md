@@ -20,10 +20,9 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 | Environment | Host | Chain |
 | --- | --- | --- |
 | Mainnet | `https://sqs.osmosis.zone` | `osmosis-1` |
-| Staging | `https://sqs.stage.osmosis.zone` | `osmosis-1` |
 | Testnet | `https://sqs.testnet.osmosis.zone` | `osmo-test-5` |
 
-The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host except the three noted as edge-blocked in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups); the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
+The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host except the three noted as not publicly served in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups); the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
 
 Swagger reference: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html).
 
@@ -42,26 +41,26 @@ curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=u
 ```json
 {
   "amount_in": { "denom": "uosmo", "amount": "1000000" },
-  "amount_out": "2366",
+  "amount_out": "1932",
   "route": [
     {
       "pools": [
         {
-          "id": 1013,
+          "id": 2,
           "type": 0,
           "spread_factor": "0.005000000000000000",
           "token_out_denom": "uion",
           "taker_fee": "0.008000000000000000",
-          "liquidity_cap": "791"
+          "liquidity_cap": "6500"
         }
       ],
-      "out_amount": "2366",
+      "out_amount": "1932",
       "in_amount": "1000000"
     }
   ],
-  "effective_fee": "0.013000000000000000",
-  "price_impact": "0.012345678901234567",
-  "in_base_out_quote_spot_price": "0.002400000000000000"
+  "effective_fee": "0.008000000000000000",
+  "price_impact": "-0.005029830377964843",
+  "in_base_out_quote_spot_price": "0.001957426166757470"
 }
 ```
 
@@ -86,7 +85,7 @@ The response has `amount_in` as a string (the required input) and `amount_out` a
 
 ### Fees
 
-`amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side. The top-level `effective_fee` is the combined spread factor and taker fee across the whole route, `price_impact` is the route's price impact, and `in_base_out_quote_spot_price` is the spot price in base/quote terms. Each pool's `taker_fee` is read from chain state for that specific pool and can differ from (and exceed) the chain-wide default.
+`amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side. The top-level `effective_fee` is the taker fee compounded across the whole route; it does not include the spread factor (in the example above, `0.008` is pool 2's taker fee alone, while its `0.005` spread factor is already reflected in `amount_out`), `price_impact` is the route's price impact, and `in_base_out_quote_spot_price` is the spot price in base/quote terms. Each pool's `taker_fee` is read from chain state for that specific pool and can differ from (and exceed) the chain-wide default.
 
 ## Quote a specific route
 
@@ -154,15 +153,15 @@ When multiple orderbook contracts exist for the same base/quote pair, SQS tracks
 `GET /pools/canonical-orderbook?base=<denom>&quote=<denom>` returns the canonical orderbook pool id and contract address for a single pair:
 
 ```bash
-curl "https://sqs.osmosis.zone/pools/canonical-orderbook?base=factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC&quote=ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4" | jq .
+curl "https://sqs.osmosis.zone/pools/canonical-orderbook?base=factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC&quote=factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC" | jq .
 ```
 
 ```json
 {
   "base": "factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC",
-  "quote": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
-  "pool_id": 1930,
-  "contract_address": "osmo13zuafleemprax0csfddn8z8p8nt9a80tefg6cw0jlkqhzvt4h49sjxy0wm"
+  "quote": "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC",
+  "pool_id": 3525,
+  "contract_address": "osmo1w4w564csdwlfdrzten924u2kthg53zmva6qjkmzz8759kvp7wv8qdpt6nl"
 }
 ```
 
@@ -271,7 +270,7 @@ curl "https://sqs.osmosis.zone/passthrough/portfolio-assets/osmo1..." | jq .
 }
 ```
 
-The public mainnet host currently blocks this path at the edge (HTTP 403 with an empty body). Query it against the staging host or a self-hosted deployment.
+This route is not served on the public SQS host (it returns HTTP 403). Self-host SQS to use it, or read the same data from the chain over LCD with `/osmosis/concentratedliquidity/v1beta1/liquidity_per_tick_range?pool_id={id}`.
 
 ### Per-pool taker fee
 
@@ -283,11 +282,11 @@ The public mainnet host currently blocks this path at the edge (HTTP 403 with an
 ]
 ```
 
-Like `/pools/ticks`, this path returns HTTP 403 on the public mainnet host; use staging or a self-hosted deployment.
+Like `/pools/ticks`, this route is not served on the public SQS host (HTTP 403). Self-host SQS, or query the chain per denom pair with `/osmosis/poolmanager/v1beta1/trading_pair_takerfee?denom_0=<denom>&denom_1=<denom>` over LCD.
 
 ### Per-pool spot price
 
-`GET /router/spot-price-pool/{id}?baseAsset=<denom>&quoteAsset=<denom>` returns the spot price of the base asset in terms of the quote asset within a single pool, as a bare decimal string (e.g. `"47.416244090626802924000000000000000000"`). Both `baseAsset` and `quoteAsset` are required; omitting one returns `{"message": "baseAsset is required"}`. Also blocked (HTTP 403) on the public mainnet host; use staging or a self-hosted deployment.
+`GET /router/spot-price-pool/{id}?baseAsset=<denom>&quoteAsset=<denom>` returns the spot price of the base asset in terms of the quote asset within a single pool, as a bare decimal string (e.g. `"47.416244090626802924000000000000000000"`). Both `baseAsset` and `quoteAsset` are required; omitting one returns `{"message": "baseAsset is required"}`. This route is not served on the public SQS host either (HTTP 403). Self-host SQS, or use the chain's poolmanager spot price query over LCD, `/osmosis/poolmanager/v2/pools/{id}/prices?base_asset_denom=<denom>&quote_asset_denom=<denom>`.
 
 Unlike `/tokens/prices`, which prices across all pools with fallbacks, this endpoint prices against one specific pool's state.
 
@@ -363,10 +362,10 @@ In short: SQS for cross-pool aggregation and routing, RPC/REST/gRPC for everythi
 
 ## Adding a custom CosmWasm pool to SQS
 
-If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/main/docs/architecture/COSMWASM_POOLS.MD) for the model.
+If you operate a custom CosmWasm pool that you want SQS to handle, there are two integration paths. Background: SQS ingests `CosmWasmPoolModel` per block and routes against in-memory pool state, so any pool type that participates in route search must be cheap to quote in Go. See the SQS architecture note on [CosmWasm pools](https://github.com/osmosis-labs/sqs/blob/v28.x/docs/architecture/COSMWASM_POOLS.MD) for the model.
 
-1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/main/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
-2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/main/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are deprioritized in route search:** they are excluded from split quotes, and when any route without a generalized pool exists, the router filters the generalized routes out of `/router/quote` results. Only when no other route connects the pair does SQS fall back to the best generalized route. Because SQS queries the contract over gRPC at quote time for these pools (instead of computing in memory), quotes through them are slower; `/router/custom-direct-quote` against a known pool id always works regardless of route-search priority.
+1. **Implement a dedicated pool type in SQS.** Best when the pool's quote and spot-price logic is simple enough to mirror in Go. SQS gets enough state from the ingester each block to compute quotes in-process. See [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_alloy_transmuter_pool.go) (alloyed transmuter) or [`routable_cw_orderbook_pool.go`](https://github.com/osmosis-labs/sqs/blob/v28.x/router/usecase/pools/routable_cw_orderbook_pool.go) (orderbook) as reference implementations. Requires a PR against `osmosis-labs/sqs` adding the new pool type alongside an entry in the relevant code-id list (`transmuter-code-ids`, `alloyed-transmuter-code-ids`, `orderbook-code-ids`).
+2. **Register your code ID as a generalised CosmWasm pool.** Best when the pool logic is too complex to mirror in Go. Add your code ID to `pools.general-cosmwasm-code-ids` in the SQS deployment config (mainnet's runtime config is maintained by the SQS team; see [`config-testnet.json`](https://github.com/osmosis-labs/sqs/blob/v28.x/config-testnet.json) for the schema). **Pools registered under `general-cosmwasm-code-ids` are deprioritized in route search:** they are excluded from split quotes, and when any route without a generalized pool exists, the router filters the generalized routes out of `/router/quote` results. Only when no other route connects the pair does SQS fall back to the best generalized route. Because SQS queries the contract over gRPC at quote time for these pools (instead of computing in memory), quotes through them are slower; `/router/custom-direct-quote` against a known pool id always works regardless of route-search priority.
 
 After the PR merges, the SQS team will deploy the updated config to production.
 
