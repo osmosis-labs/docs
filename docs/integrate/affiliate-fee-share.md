@@ -67,6 +67,8 @@ Send the input token as funds on the execute call. The contract:
 2. Swaps the remaining amount through `routes`, enforcing `token_out_min_amount.amount`.
 3. Returns the swapped output to you.
 
+The output always goes to the address that called the contract (`info.sender`); there is no recipient field. Call it directly from the account that should receive the output. If you drive it through an IBC hook memo, the caller is the hook's derived sender address, which nobody holds a key for, so the output would be stranded there.
+
 ### Fee cap
 
 Each instance has its own maximum. If you request more than the instance's configured maximum, the contract silently uses the maximum instead of failing. Query the live cap on the instance you use:

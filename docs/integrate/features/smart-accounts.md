@@ -83,7 +83,7 @@ message MsgAddAuthenticator {
 The `data` shape is specific to the authenticator type. Each authenticator's `OnAuthenticatorAdded` hook validates the bytes at registration time and rejects malformed payloads. Verified against authenticators currently live on chain, the shapes are:
 
 - **`SignatureVerification`**: raw compressed secp256k1 public-key bytes (33 bytes).
-- **`MessageFilter`**: JSON-encoded message pattern, typically `{"@type": "/osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn"}` to restrict the authenticator to a specific msg type. Partial msg contents can also be matched.
+- **`MessageFilter`**: JSON-encoded message pattern, typically `{"@type": "/osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn"}` to restrict the authenticator to a specific msg type. Partial msg contents can also be matched, but the match is a subset check: the message may carry fields the pattern leaves out, and arrays match by prefix, so extra trailing elements (such as additional swap hops) still match. Use filters to allowlist message types, not to pin exact routes or amounts.
 - **`AllOf`, `AnyOf`, `PartitionedAllOf`, `PartitionedAnyOf`**: JSON-encoded array of `{"type": "<type-string>", "config": "<base64-encoded child config>"}` objects, one per nested authenticator. Nesting is arbitrary; composites of composites are valid.
 - **`CosmwasmAuthenticatorV1`**: JSON-encoded object with two fields, `contract` (the bech32 address of the contract that handles the authentication sudo messages) and `params` (a base64-encoded byte payload that the chain forwards to the contract's `OnAuthenticatorAdded` hook as its initialisation config).
 
@@ -251,6 +251,8 @@ The spend-limit policy contract that the worked example points at is a single li
 The `osmo1wn58hxkv0869ua7qmz3gvek3sz773l89a778fjqvenl6anwuhgnq6ks7kl` DAODAO subDAO holds both the contract's wasm-level admin and the spend-limit contract's own internal `admin`. That is the same subDAO listed in the module's `circuit_breaker_controllers`, so the kill switch on the contract and the kill switch on the module are operated by the same governance hand.
 
 Each One Click Trading session passes its own per-session parameters to this shared contract via the `params` field of the `CosmwasmAuthenticatorV1` config. The shape is `{ "limit": "<microUSDC>", "reset_period": "day", "time_limit": { "end": "<unix-nanos>", "start": "<unix-nanos>"? } }`, base64-encoded (`start` is optional). The contract keeps per-(account, authenticator-id) state so multiple sessions on the same account do not collide.
+
+`reset_period` is a calendar period in UTC, not a rolling window. `day` resets at 00:00 UTC, `week` at the start of the ISO week, and `month` and `year` at their calendar boundaries. A session that spends its full limit just before midnight UTC can spend it again just after, so the most it can spend in any 24 hours is about twice the daily limit.
 
 The source for the contract is at [`osmosis-labs/spend-limit-authenticator`](https://github.com/osmosis-labs/spend-limit-authenticator). The same pattern can be reused for other policy contracts: a custom authenticator only has to implement the `cw-authenticator` sudo interface and the chain's lifecycle hooks do the rest.
 

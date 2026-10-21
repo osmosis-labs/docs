@@ -41,3 +41,7 @@ The module exposes a single gRPC query, `RecoveredSinceDowntimeOfLength`:
     * `succesfully_recovered` (`bool`): true if it has been at least `recovery` since the last downtime of length `downtime`. (The misspelling is part of the deployed proto field name.)
 
 Source: [`proto/osmosis/downtimedetector/v1beta1/query.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/downtimedetector/v1beta1/query.proto) and [`downtime_duration.proto`](https://github.com/osmosis-labs/osmosis/blob/main/proto/osmosis/downtimedetector/v1beta1/downtime_duration.proto).
+
+## Trust assumption
+
+The detector reads block timestamps, so it is only as reliable as block time. Under CometBFT, each block's time is the voting-power-weighted median of the timestamps in the previous block's commit. That holds while less than a third of the voting power is faulty. Validators holding more than that could make a downtime appear that did not happen, or hide one that did. Treat the query as a liveness signal for pausing price-sensitive logic, not as a security boundary.
