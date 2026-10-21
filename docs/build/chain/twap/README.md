@@ -77,6 +77,12 @@ func (k Keeper) GetGeometricTwap(ctx sdk.Context,
 
 As with the arithmetic variant, there is a `GetGeometricTwapToNow` convenience method which sets `endTime = ctx.BlockTime()`.
 
+## What TWAP does not cover
+
+- **Cosmwasm pools have no TWAP records.** Transmuter (alloy), orderbook and other cosmwasm pools are not tracked by `x/twap`, so a TWAP query against one of them fails. Price an alloyed asset through a concentrated liquidity or balancer pool that holds it.
+- **A TWAP carries no liquidity signal.** It is only as hard to move as the pool behind it. A pool with little two-sided depth can be held at a skewed price for a whole window at low cost, and the TWAP reports that price. When a TWAP feeds onchain logic, route through deep pools and check their liquidity separately.
+- **The 48 hour window is not a hard cut-off.** Pruning runs once a day, on the `day` epoch. Each prune removes records older than 48 hours, keeping the newest one before the cutoff so a TWAP can still interpolate across it, and deletes them gradually over the following blocks. Between prunes a query can therefore reach back up to about 72 hours. Don't rely on a query older than 48 hours either succeeding or failing.
+
 ## Code layout
 
 **api.go** is the main file you should look at as a user of this module.

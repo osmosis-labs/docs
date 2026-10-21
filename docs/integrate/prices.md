@@ -37,6 +37,8 @@ The price is returned at full precision; format it for display using the asset's
 
 The `x/twap` module records time-weighted average prices that compose across pools. Because a TWAP is averaged over many blocks, moving it requires sustaining a price over time rather than within a single transaction, which makes it the right choice for any onchain consumer (another contract, a liquidation check, a reference rate). Read it from the chain over [RPC, REST, or gRPC](/integrate/endpoints); see the [TWAP module](/build/chain/twap) for the query surface and the windowing semantics.
 
+Two limits matter for onchain use. Cosmwasm pools, including the alloy transmuters, have no TWAP records, so price an alloyed asset through a concentrated liquidity or balancer pool that holds it. And a TWAP is only as hard to move as its pool, so pick deep pools and check their liquidity. See [What TWAP does not cover](/build/chain/twap#what-twap-does-not-cover).
+
 ## Decimal handling (applies to every source)
 
 All of these sources return prices and amounts in an asset's **base (minimal) denom**, and assets do not all use 6 decimals. To convert a base-denom price or amount to a human display value you must apply the asset's **exponent**, which you read from its metadata, never assume.

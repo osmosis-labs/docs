@@ -67,6 +67,8 @@ Send the input token as funds on the execute call. The contract:
 2. Swaps the remaining amount through `routes`, enforcing `token_out_min_amount.amount`.
 3. Returns the swapped output to you.
 
+The output always goes to the address that called the contract (`info.sender`); there is no recipient field. Call it directly from the account that should receive the output. If you drive it through an IBC hook memo, the caller is the hook's derived sender address, which nobody holds a key for, so the output would be stranded there.
+
 ### Fee cap
 
 Each instance has its own maximum. If you request more than the instance's configured maximum, the contract silently uses the maximum instead of failing. Query the live cap on the instance you use:
@@ -85,7 +87,7 @@ You want to swap 1 ATOM to OSMO through pool 1, taking a 1% referral fee to your
 1. Build the execute message above with `fee_percentage: "1.0"` and `fee_collector` set to your address.
 2. Execute against the instance above, attaching `1000000` of the ATOM denom as funds.
 3. Onchain, `10000` ATOM-denom (1%) transfers to your address, and the remaining `990000` swaps to OSMO with `token_out_min_amount.amount` enforced.
-4. The OSMO output returns to the sender.
+4. The OSMO output returns to the account that called the contract.
 
 Because the fee comes out of the input before the swap, quote the swap on the post-fee amount, not the gross input, or your displayed output will be too high. Mirror the contract's integer math exactly (it caps the requested percentage, floors the fee amount, then subtracts), since an `input * (1 - fee)` approximation can differ by one minimal unit and ignores the cap:
 
