@@ -145,6 +145,10 @@ A few notes on why this composition is the recommended template:
 - **The policy contract goes in the middle**, where it can use `Authenticate` for cheap rejections and `ConfirmExecution` for any rule that depends on the transaction's outcome (spend limits, balance assertions, slippage caps).
 - **`AnyOf(MessageFilter, MessageFilter, ...)`** at the end gives an explicit allowlist of message types this authenticator can sign for. The session key cannot accidentally authorise a `MsgSend` or governance vote if those filters are not in the list.
 
+:::warning Keep policy contracts directly under `AllOf`
+Never place a policy contract such as the spend limit inside an `AnyOf`. `AnyOf` passes `ConfirmExecution` as soon as one child confirms. In `AnyOf(spend-limit contract, SignatureVerification)`, a spend over the limit fails the contract branch, and the transaction is then confirmed by `SignatureVerification`, whose `ConfirmExecution` always succeeds. With the contract listed second, it never runs when the first child confirms. Either way the limit is not enforced. The contract cannot see which composite it sits under, so it cannot detect this itself. The `AnyOf` in the template above is safe because it holds only `MessageFilter`s, which allowlist message types rather than enforce a limit.
+:::
+
 Other compositions are valid too. A multisig with custom quorum logic might be `AllOf(SignatureVerification, SignatureVerification, ...)` directly, with no contract. A read-only observer key (for analytics flows) might be a `SignatureVerification` plus a `MessageFilter` restricting it to query-only message types. The point is that the primitives compose; pick the smallest set that expresses your policy.
 
 ## Authentication lifecycle
