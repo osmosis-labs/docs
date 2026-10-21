@@ -38,7 +38,7 @@ osmosisd init NODE_NAME --chain-id=osmosis-1
 Download and place the genesis file in the osmosis config folder:
 
 ```
-wget -O ~/.osmosisd/config/genesis.json https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
+wget -O ~/.osmosisd/config/genesis.json https://genesis.osmosis.zone/genesis.json
 ```
 
 Check that the downloaded file is a valid genesis before continuing:
@@ -116,7 +116,7 @@ osmosisd version
 
 ## Download Chain Data
 
-Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a>, which publishes `osmosis-1` mainnet snapshots in both pruned (regular node) and archive (full history) forms. The snapshot URL is timestamped and rotates, so copy the current one from that page rather than hardcoding it.
+Download the latest chain data from a snapshot provider. The official source is <a href="https://snapshots.osmosis.zone/" target="_blank">https://snapshots.osmosis.zone/</a>, which publishes pruned `osmosis-1` mainnet snapshots and also lists an archive (full history) snapshot provided by CryptoCrew. The snapshot URL is timestamped and rotates, so don't hardcode it: `https://snapshots.osmosis.zone/latest` always returns the URL of the newest pruned snapshot.
 
 Download liblz4-tool to handle the compressed file:
 
@@ -124,11 +124,13 @@ Download liblz4-tool to handle the compressed file:
 sudo apt-get install wget liblz4-tool aria2 -y
 ```
 
-Pick a pruned or archive snapshot from [snapshots.osmosis.zone](https://snapshots.osmosis.zone/) and extract it into the data directory. Replace `<SNAPSHOT_URL>` with the current URL copied from that page:
+Download the newest pruned snapshot and extract it into the data directory:
 
 ```bash
-wget -q -O - <SNAPSHOT_URL> | lz4 -d | tar -C $HOME/.osmosisd -xvf -
+wget -q -O - $(curl -sL https://snapshots.osmosis.zone/latest) | lz4 -d | tar -C $HOME/.osmosisd -xvf -
 ```
+
+For an archive node, replace the `$(curl ...)` part with the archive snapshot URL copied from [snapshots.osmosis.zone](https://snapshots.osmosis.zone/).
 
 ## Set Up Osmosis Service
 
