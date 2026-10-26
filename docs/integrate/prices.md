@@ -12,7 +12,7 @@ There is no single "price of an asset" on Osmosis; which price source to use dep
 
 | Source | Good for | Notes |
 | --- | --- | --- |
-| **SQS spot price** | Display prices, quoting, "what is this worth right now" | Fast, covers every routable asset, falls back to CoinGecko when a price cannot be determined onchain. |
+| **SQS spot price** | Display prices, quoting, "what is this worth right now" | Fast, covers every routable asset, falls back to CoinGecko when a price cannot be determined onchain. An asset with no price is left out rather than priced at zero. |
 | **TWAP** | A manipulation-resistant reference price, especially for a contract | Averaged over a time window, so far harder to manipulate than spot. See [TWAP](/build/chain/twap). |
 
 A rule of thumb: use **SQS spot** for UI and quoting, and **TWAP** anywhere a price feeds back into onchain logic or a decision that an attacker could profit from moving.
@@ -29,7 +29,7 @@ curl "https://sqs.osmosis.zone/tokens/prices?base=uosmo"
 { "uosmo": { "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC": "0.030386266028946215568462763902447312" } }
 ```
 
-Each base maps to a quote-denom map whose value is the spot price. Pass `humanDenoms=true` to use display symbols (`wbtc`) instead of the full `ibc/HASH`. See [Read token prices](/integrate/endpoints/sqs#read-token-prices) for the full parameter reference.
+Each base maps to a quote-denom map whose value is the spot price. Pass `humanDenoms=true` to use display symbols (`wbtc`) instead of the full `ibc/HASH`. An asset SQS cannot price (unknown, unlisted, only in very thin pools, and without a CoinGecko price) is left out of the response rather than returned as zero, so check for the key before reading it. See [Read token prices](/integrate/endpoints/sqs#read-token-prices) for the full parameter reference.
 
 The price is returned at full precision; format it for display using the asset's exponent (see below). If you need the price implied by a specific trade size rather than the marginal spot price, request a [quote](/integrate/swap) instead, the quote's `in_base_out_quote_spot_price` and `amount_out` reflect the actual route and its price impact.
 

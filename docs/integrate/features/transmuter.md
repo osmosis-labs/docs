@@ -249,6 +249,7 @@ The current moderator.
 See the [Sidecar Query Server (SQS)](../endpoints/sqs) page for the routing and pool-query endpoints in general. SQS has a dedicated routable pool type for alloyed transmuters in [`routable_cw_alloy_transmuter_pool.go`](https://github.com/osmosis-labs/sqs/blob/HEAD/router/usecase/pools/routable_cw_alloy_transmuter_pool.go). The routing semantics differ from a CFMM:
 
 - SQS exposes the alloyed denom and every backing denom as connected through the pool, so a quote between any two of them can be routed through the transmuter.
+- **Paused transmuters are not routed.** The mainnet SQS excludes alloyed transmuter pools whose contract is paused from routing and pricing, and rejects a custom direct quote through one. See [Pools excluded from routing](/integrate/endpoints/sqs#pools-excluded-from-routing).
 - Quoting is exact: no slippage, no price impact, no spread fee on the current contracts. The output is simply the input scaled by the ratio of normalization factors.
 - **Static upper-limit enforcement happens at quote time.** Before returning a quote, SQS checks every backing variant's post-trade balance against its configured static upper limit. A swap that would push a variant over its cap is rejected by SQS as insufficient routing, not just by the contract at execute time.
 - Routing through a transmuter can also fail if the pool does not hold enough of the requested output denom. Balance validation is skipped on the alloyed side because the contract can mint or burn it freely; it is enforced on every backing denom.

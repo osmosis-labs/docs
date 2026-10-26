@@ -22,7 +22,7 @@ The trade-off is that SQS is **eventually consistent** with the chain (by one bl
 | Mainnet | `https://sqs.osmosis.zone` | `osmosis-1` |
 | Testnet | `https://sqs.testnet.osmosis.zone` | `osmo-test-5` |
 
-The mainnet host is geo-distributed across three regions and front-ended by nginx, which rate-limits requests. Every endpoint documented on this page is reachable on the mainnet host except the three noted as not publicly served in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups); the testnet deployment is functionally equivalent and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget.
+The mainnet host is served by several nodes behind a load balancer, which rate-limits requests per client IP. Every endpoint documented on this page is reachable on the mainnet host except the three noted as not publicly served in the passthrough and lookup section (`/pools/ticks/{id}` and the per-pool router lookups). The testnet deployment serves the same routing, pool and price endpoints and is the right environment for high-volume exploration without consuming the mainnet rate-limit budget; it does not serve the [trade endpoints](#recent-trades-and-volume) or [orderbook depth](#orderbook-depth).
 
 Swagger reference: [https://sqs.osmosis.zone/swagger/index.html](https://sqs.osmosis.zone/swagger/index.html).
 
@@ -41,26 +41,34 @@ curl "https://sqs.osmosis.zone/router/quote?tokenIn=1000000uosmo&tokenOutDenom=u
 ```json
 {
   "amount_in": { "denom": "uosmo", "amount": "1000000" },
-  "amount_out": "1932",
+  "amount_out": "1822",
   "route": [
     {
       "pools": [
         {
-          "id": 2,
-          "type": 0,
+          "id": 1100,
+          "type": 2,
+          "balances": [],
           "spread_factor": "0.005000000000000000",
           "token_out_denom": "uion",
           "taker_fee": "0.008000000000000000",
-          "liquidity_cap": "6500"
+          "liquidity_cap": "1805"
         }
       ],
-      "out_amount": "1932",
+      "has-cw-pool": false,
+      "out_amount": "1822",
       "in_amount": "1000000"
     }
   ],
+  "tokens": [
+    { "denom": "uosmo", "liquidity_cap": "1839019" },
+    { "denom": "uion", "liquidity_cap": "10811" }
+  ],
+  "liquidity_cap": "1805",
+  "liquidity_cap_overflow": false,
   "effective_fee": "0.008000000000000000",
-  "price_impact": "-0.005029830377964843",
-  "in_base_out_quote_spot_price": "0.001957426166757470"
+  "price_impact": "-0.005455176823085256",
+  "in_base_out_quote_spot_price": "0.001846767994347477"
 }
 ```
 
@@ -76,7 +84,7 @@ The response has `amount_in` as a string (the required input) and `amount_out` a
 
 ### Parameters
 
-- `tokenIn` (exact-in): input amount as an `sdk.Coin` string, e.g. `1000000uosmo`.
+- `tokenIn` (exact-in): input amount as an `sdk.Coin` string, e.g. `1000000uosmo`. The amount must be a positive whole number of the denom's smallest unit: a registered display unit is converted (`1.5osmo` is quoted as `1500000uosmo`), but zero or a fraction of the smallest unit (`1.5uosmo`) is rejected with `tokenIn amount must be a positive integer`. The same rule applies to `tokenOut`.
 - `tokenOutDenom` (exact-in): chain denom of the desired output token.
 - `tokenOut` (exact-out): output amount as an `sdk.Coin` string, e.g. `1000000uion`.
 - `tokenInDenom` (exact-out): chain denom of the input token.
@@ -87,6 +95,8 @@ The response has `amount_in` as a string (the required input) and `amount_out` a
 
 `amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side. The top-level `effective_fee` is the taker fee compounded across the whole route; it does not include the spread factor (in the example above, `0.008` is pool 2's taker fee alone, while its `0.005` spread factor is already reflected in `amount_out`), `price_impact` is the route's price impact, and `in_base_out_quote_spot_price` is the spot price in base/quote terms. Each pool's `taker_fee` is read from chain state for that specific pool and can differ from (and exceed) the chain-wide default.
 
+When SQS cannot compute a spot price along the route, the quote is still returned, with `price_impact` set to `"0"` and `price_impact_unknown: true`. Treat that as unknown rather than zero impact, for example by asking for confirmation before a large swap. The field is left out when the impact is known.
+
 ## Quote a specific route
 
 If you already know which pool(s) you want to route through (for example, when quoting against a contract-specific pool that the general router has filtered out), use `GET /router/custom-direct-quote`:
@@ -95,7 +105,15 @@ If you already know which pool(s) you want to route through (for example, when q
 curl "https://sqs.osmosis.zone/router/custom-direct-quote?tokenIn=1000000uosmo&tokenOutDenom=uion&poolID=2" | jq .
 ```
 
-This endpoint bypasses the router's minimum-liquidity filter, so it returns a quote as long as the pool exists onchain.
+This endpoint bypasses the router's minimum-liquidity filter, so it returns a quote as long as the pool exists onchain and is not [excluded from routing](#pools-excluded-from-routing). A pool that is excluded is rejected with `validation failed: pool <id> is excluded from routing`.
+
+### Pools excluded from routing
+
+The mainnet deployment excludes the alloyed transmuter pools whose contract is paused from routing and pricing, so no quote or price goes through them. The current list is under `Router.ExcludedPoolIDs` in `GET /config`:
+
+```bash
+curl -s "https://sqs.osmosis.zone/config" | jq .Router.ExcludedPoolIDs
+```
 
 ## Discover available routes
 
@@ -169,6 +187,38 @@ curl "https://sqs.osmosis.zone/pools/canonical-orderbook?base=factory/osmo1z6r6q
 
 These endpoints are the right entry point for any orderbook UI or bot that needs to know which contract address to talk to for a given trading pair. Non-canonical orderbooks for the same pair still appear in `/pools` and can be queried directly by pool id; they just are not the default routing target.
 
+## Orderbook depth
+
+`GET /passthrough/orderbook-ticks?poolID=<id>` returns the full tick map of an orderbook pool as SQS holds it, for drawing a depth chart without reading every tick from the contract:
+
+```bash
+curl -s "https://sqs.osmosis.zone/passthrough/orderbook-ticks?poolID=3525" | jq '.ticks[0]'
+```
+
+```json
+{
+  "tick_id": 22000000,
+  "tick_state": {
+    "ask_values": {
+      "total_amount_of_liquidity": "0",
+      "cumulative_total_value": "0",
+      "effective_total_amount_swapped": "0",
+      "cumulative_realized_cancels": "0",
+      "last_tick_sync_etas": "0"
+    },
+    "bid_values": {
+      "total_amount_of_liquidity": "12500000000",
+      "cumulative_total_value": "...",
+      "effective_total_amount_swapped": "...",
+      "cumulative_realized_cancels": "...",
+      "last_tick_sync_etas": "..."
+    }
+  }
+}
+```
+
+Ticks are sorted by ascending `tick_id`, and a tick with no liquidity on either side is left out. `total_amount_of_liquidity` is the resting amount on each side of the tick, in minimal units; convert `tick_id` to a price with the [orderbook tick math](/build/chain/pool-manager/cosmwasmpool/orderbook). An empty `ticks` array means the book is empty. Missing data is never reported as an empty book: an unknown pool returns `pool <id> not found`, a pool that is not an orderbook `pool <id> is not an orderbook`, and an orderbook whose ticks SQS has not ingested yet returns `ticks for pool <id> have not been ingested yet`. Don't treat either as zero depth.
+
 ## Read token prices
 
 `GET /tokens/prices` returns spot prices for a list of base denoms.
@@ -177,7 +227,85 @@ These endpoints are the right entry point for any orderbook UI or bot that needs
 curl "https://sqs.osmosis.zone/tokens/prices?base=wbtc,dydx&humanDenoms=true" | jq .
 ```
 
-Each base maps to a quote-denom map whose value is the spot price. Set `humanDenoms=true` to pass `wbtc` instead of the IBC hash. If a price cannot be determined onchain, SQS falls back to CoinGecko.
+```json
+{
+  "factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc": {
+    "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC": "80210.000000000000000000000000000000000000"
+  },
+  "factory/osmo1zem8r6dv6u38f6qpg546zy30946av8h5srgug0s4gcyy6cfecf3seac083/alloyed/allDYDX": {
+    "factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC": "0.103138768064016994908621000000000000"
+  }
+}
+```
+
+Each base maps to a quote-denom map whose value is the spot price, keyed by chain denoms. The quote is always USDC, under its full `factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC` denom. Set `humanDenoms=true` to pass `wbtc` instead of the chain denom.
+
+If a price cannot be determined onchain, SQS falls back to CoinGecko. A denom that still has no price is left out of the response rather than priced at zero: it is unknown or unlisted, it has no route through pools above the minimum liquidity, or CoinGecko has no price for it. Check that a key is present before reading it, and treat a missing one as unpriced. Because onchain prices only route through pools above a minimum liquidity, a token traded only in very thin pools has no price.
+
+## Recent trades and volume
+
+SQS records every swap and orderbook fill on the pools it routes (GAMM weighted and stable, concentrated liquidity, orderbook and alloyed transmuter pools) from each block's `token_swapped` events, and serves them for a pool or an asset.
+
+`GET /trades/list` returns trades newest first:
+
+```bash
+curl -s "https://sqs.osmosis.zone/trades/list?coinMinimalDenom=uosmo&limit=1" | jq .
+```
+
+```json
+{
+  "trades": [
+    {
+      "timestamp": 1793018527,
+      "txHash": "8BE484636F4A80FEA08363CC0C0B44FFCD0434A2819D2508C431DDCBDD6BF347",
+      "wallet": "osmo1xzphwrc9aahmq7smwaggukwx5w2w8mmtqf5mk0ky0v6hh75paxsszfnlu5",
+      "blockHeight": 73220921,
+      "txIndex": 0,
+      "eventIndex": 32,
+      "poolId": 1111,
+      "coinMinimalDenomIn": "uosmo",
+      "coinMinimalDenomOut": "ibc/B9E0A1A524E98BB407D3CED8720EFEFD186002F90C1B1B7964811DD0CCC12228",
+      "inAmount": "13668",
+      "outAmount": "172548786",
+      "usdValueAtIngest": "0.000696217734618997502352000000000000",
+      "direction": "buy",
+      "source": "swap"
+    }
+  ],
+  "nextCursor": "..."
+}
+```
+
+- Filter with `poolId`, `coinMinimalDenom` (traded in or out) or both; at least one is required. `wallet` narrows to one sender.
+- `limit` is 1 to 100 (default 50). Pass the response's `nextCursor` as `cursor` for the next page; it is `null` on the last page.
+- A multi-hop swap appears as one trade per hop, with the same `txHash` and a different `eventIndex`. Orderbook fills have `source: "orderbookFill"`.
+- `wallet` is the swap message sender, not the fee payer; for a swap routed through a contract it is the contract.
+- `direction` is relative to the pair's quote asset: an orderbook's own quote denom, and otherwise the first of USDC, USDT and OSMO in the pair. `buy` means the trader paid the quote asset and received the other. It is `null` when neither side is a quote asset, and for stableswap and alloyed transmuter pools, which have no natural quote.
+- `usdValueAtIngest` is the trade's USD value at the spot price when SQS read the block, not at the trade's own height, and `null` when the asset could not be priced. Amounts are in minimal units.
+
+`GET /trades/aggregates` returns rolling 24 hour and 7 day totals:
+
+```bash
+curl -s "https://sqs.osmosis.zone/trades/aggregates?coinMinimalDenom=uosmo" | jq .
+```
+
+```json
+{
+  "24h": {
+    "buys": 21610,
+    "sells": 23069,
+    "buyVolumeUsd": "824107.494399922065569994493385997926599724",
+    "sellVolumeUsd": "703975.166796858714405634829049728295506816",
+    "distinctBuyers": 266,
+    "distinctSellers": 256
+  },
+  "7d": { "buys": 35415, "sells": 40242, "...": "..." }
+}
+```
+
+With `coinMinimalDenom`, a buy is a trade that received that denom and a sell one that gave it up. With only `poolId`, buys and sells follow each trade's `direction`, and trades without one are not counted. Volumes are sums of `usdValueAtIngest` and are `null` when no trade on that side was priced. `windows=24h` or `windows=7d` returns one window; `wallet` narrows to one sender.
+
+Trades are held in memory, for 8 days on mainnet, from the time each SQS node started. A window therefore only covers trades since the node serving the request started, and two requests served by different nodes can differ slightly. Until a node has ingested its first block, both endpoints answer `trades have not been ingested yet`. For full trade history, use an indexer.
 
 ## Token metadata
 
@@ -352,6 +480,8 @@ curl "https://sqs.osmosis.zone/chainregistry/fee_tokens" | jq .
 | Quote a swap through a specific pool | SQS `/router/custom-direct-quote` |
 | List pools and their current state | SQS `/pools` |
 | Spot prices for an arbitrary basket | SQS `/tokens/prices` |
+| Recent trades, 24h and 7d buy and sell volume for a pool or asset | SQS `/trades/list`, `/trades/aggregates` |
+| Orderbook depth | SQS `/passthrough/orderbook-ticks` |
 | Read a single account balance | REST `/cosmos/bank/v1beta1/balances/{address}` |
 | Subscribe to new blocks or txs | RPC websocket |
 | Sign and broadcast a transaction | RPC `/broadcast_tx_sync` |
@@ -372,6 +502,12 @@ After the PR merges, the SQS team will deploy the updated config to production.
 ## Self-hosting
 
 SQS is open-source at [osmosis-labs/sqs](https://github.com/osmosis-labs/sqs). To run your own deployment you need an Osmosis full node with `is-enabled = "true"` under the `[osmosis-sqs]` section of `app.toml`. See the repo's `README.md` for the development setup, ingest configuration, and Docker images.
+
+A few settings matter for the endpoints above:
+
+- **Trades** are off unless `trades.enabled` is `true`, which also needs `grpc-ingester.enabled`. SQS reads each block's swap events from the node's `/block_results`, so the node must keep block results (`discard_abci_responses = false` under `[storage]` in `config.toml`); otherwise the trade endpoints never leave the not-ingested state. `trades.retention-hours` (default 192) must cover the 7 day window.
+- **Excluded pools:** `router.excluded-pool-ids` lists pool ids to leave out of routing and pricing.
+- **Debug endpoints** are off by default: `pprof-enabled` turns on `/debug/pprof`, and `debug-endpoints-enabled` the router and token state dump endpoints.
 
 ## Reference
 
