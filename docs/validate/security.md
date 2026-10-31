@@ -79,7 +79,7 @@ osmosisd query staking params
 osmosisd query slashing signing-info $(osmosisd tendermint show-validator)
 ```
 
-At the time of writing the active set is the top 70 validators and the unbonding period is 14 days, but treat both as values to check rather than constants.
+At the time of writing the active set is the top 30 validators and the unbonding period is 14 days, but treat both as values to check rather than constants.
 
 ## Reference
 

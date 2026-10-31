@@ -168,7 +168,7 @@ List all current mint parameters in json format by:
 osmosisd query mint params -o json | jq
 ```
 
-Example Osmosis mainnet output, queried on 2026-08-04:
+Example Osmosis mainnet output, queried on 2026-10-31:
 
 ```json
 {
@@ -179,10 +179,10 @@ Example Osmosis mainnet output, queried on 2026-08-04:
     "reduction_period_in_epochs": "730",
     "reduction_factor": "0.666666666666666666",
     "distribution_proportions": {
-      "staking": "0.080000000000000000",
+      "staking": "0.000000000000000000",
       "pool_incentives": "0.000000000000000000",
-      "developer_rewards": "0.250000000000000000",
-      "community_pool": "0.670000000000000000"
+      "developer_rewards": "0.000000000000000000",
+      "community_pool": "1.000000000000000000"
     },
     "weighted_developer_rewards_receivers": [
       {
@@ -190,7 +190,7 @@ Example Osmosis mainnet output, queried on 2026-08-04:
         "weight": "1.000000000000000000"
       }
     ],
-    "minting_rewards_distribution_start_epoch": "1"
+    "minting_rewards_distribution_start_epoch": "100000000"
   }
 }
 ```
@@ -214,7 +214,7 @@ List the current epoch provisions:
 osmosisd query mint epoch-provisions
 ```
 
-Example Osmosis mainnet response, queried on 2026-08-04:
+Example Osmosis mainnet response, queried on 2026-10-31:
 
 ```yaml
 epoch_provisions: "121765601217.656011811263318112"
@@ -233,17 +233,17 @@ Query the current annualized minting inflation:
 osmosisd query mint inflation
 ```
 
-Example Osmosis mainnet response, queried on 2026-08-04:
+Example Osmosis mainnet response, queried on 2026-10-31:
 
 ```yaml
-inflation: "0.018717643501583930"
+inflation: "0.000000000000000000"
 ```
 
 ## Appendix
 
 ### Mainnet Configuration Snapshot
 
-`mint` **module: Network parameter effects and configuration queried on 2026-08-04**
+`mint` **module: Network parameter effects and configuration queried on 2026-10-31**
 
 The following tables show overall effects on different configurations of the `mint` related network parameters:
 

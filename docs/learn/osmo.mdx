@@ -8,13 +8,13 @@ OSMO is the native token of Osmosis. It secures the chain through staking, gover
 
 ## Supply and emissions
 
-OSMO has a maximum supply of 1 billion. New OSMO is minted each day as staking and ecosystem rewards, on a declining schedule: every reduction period the daily emission is multiplied by a reduction factor of two-thirds, cutting it by a third. This is known as the **thirdening**. The reduction period is currently 730 days (roughly two years), so emissions step down toward the supply cap over time.
+OSMO has a maximum supply of 1 billion. Inflationary emissions have ended: the mint module no longer issues new OSMO, and staking rewards come from protocol revenue.
 
-Each day's newly minted OSMO is split between several uses by a governance-controlled set of proportions. Currently, most of it goes to the community pool (67%), with 25% to developer rewards, 8% to staking rewards, and none to pool incentives. Because these proportions and the reduction schedule are governance parameters, they can change by proposal. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
+The mint module's distribution proportions and start epoch are governance parameters. For the live values and the mechanism, see the [Mint module page](/build/chain/mint) under Build.
 
 ## Staking
 
-Staking OSMO secures the network and earns a share of emissions and fees. When you stake (delegate) to a validator, your OSMO backs that validator's voting power, and you earn rewards in return. Unstaking goes through an unbonding period during which the OSMO earns nothing and cannot be transferred. Staked OSMO also carries governance voting power. For how delegation, rewards, unbonding, and voting work, see [Staking and Governance](/learn/staking-and-governance).
+Staking OSMO secures the network and earns a share of protocol revenue. When you stake (delegate) to a validator, your OSMO backs that validator's voting power, and you earn rewards in return. Unstaking goes through an unbonding period during which the OSMO earns nothing and cannot be transferred. Staked OSMO also carries governance voting power. For how delegation, rewards, unbonding, and voting work, see [Staking and Governance](/learn/staking-and-governance).
 
 ## Voting
 Governance is the critical component of how Osmosis evolves. Active stakeholders of the network are responsible for proposing, vetting, and passing protocol upgrades and parameter changes. Voting power is proportional to staked OSMO. See [Staking and Governance](/learn/staking-and-governance) for how a proposal becomes a protocol change.
@@ -37,7 +37,7 @@ Overrides, managed by the [Protocol Fee Controller](https://daodao.zone/dao/osmo
 
 The taker fee is charged on each hop of a trade's route, in that hop's input asset, at the rate set for that pair.
 
-Non-OSMO collected is divided, with 25% going to the Community Pool and 75% used to buyback OSMO before further distribution.
+Non-OSMO collected is used to buyback OSMO before further distribution. The bought-back OSMO is distributed partially to stakers (47.5%) and partially burned (52.5%).
 
 OSMO collected is distributed partially to stakers (30%) and partially burned (70%) to reduce the maximum supply of OSMO. 
 

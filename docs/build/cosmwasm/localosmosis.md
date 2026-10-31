@@ -88,13 +88,13 @@ cargo install -f beaker
 
 #### Osmosis
 
-Setup v31.x Osmosis
+Setup v32.x Osmosis
 
 ```bash
 cd $HOME
 git clone https://github.com/osmosis-labs/osmosis.git
 cd $HOME/osmosis
-git checkout v31.x
+git checkout v32.x
 make install
 source ~/.profile
 ```

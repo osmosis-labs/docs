@@ -68,7 +68,7 @@ After installed, open new terminal to properly load go
 
 ## Install Osmosis Binary
 
-Clone the osmosis repo and check out the current mainnet release tag (replace `v31.0.3` below with the latest tag from the [Osmosis releases](https://github.com/osmosis-labs/osmosis/releases) page):
+Clone the osmosis repo and check out the current mainnet release tag (replace `v32.0.0` below with the latest tag from the [Osmosis releases](https://github.com/osmosis-labs/osmosis/releases) page):
 
 
 ```bash
@@ -76,7 +76,7 @@ cd $HOME
 git clone https://github.com/osmosis-labs/osmosis
 cd osmosis
 
-git checkout v31.0.3
+git checkout v32.0.0
 
 make install
 ```
