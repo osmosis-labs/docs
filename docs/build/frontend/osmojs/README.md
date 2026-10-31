@@ -174,7 +174,7 @@ const client = await getSigningOsmosisClient({
 
 ## Creating Signers
 
-To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/api/intro) or an `OfflineSigner` from `cosmjs` using mnemonics.
+To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/api/use-with/cosmjs) or an `OfflineSigner` from `cosmjs` using mnemonics.
 
 ### Getting an offline signer
 
