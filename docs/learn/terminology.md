@@ -9,7 +9,7 @@ Use this glossary to learn about terms used in Osmosis and the Cosmos ecosystem.
 
 ## Active set
 
-The validators in the active set (currently the top 70, set by governance) that participate in consensus and receive rewards.
+The validators in the active set (currently the top 30, set by governance) that participate in consensus and receive rewards.
 
 ## Airdrop
 
@@ -220,7 +220,7 @@ When a user or delegator delegates and bonds Osmo to an active validator in orde
 
 ## Taker fee
 
-A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into many assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers, a permanent OSMO burn, and the community pool. See [The OSMO Token](/learn/osmo#taker-fees).
+A small protocol-level fee charged on trades. The default is 0.1%, but overrides set by the Protocol Fee Controller subDAO apply per direction of a trading pair and go both ways: major routes are reduced (BTC/USDC pays 0.02% in either direction), while swaps from OSMO into many assets are raised to 0.5% to 0.8% (selling OSMO for USDC pays 0.8%; the reverse direction pays 0.05%). It is separate from the pool's [spread factor](#spread-factor). Taker fees are split between OSMO stakers and a permanent OSMO burn. See [The OSMO Token](/learn/osmo#taker-fees).
 
 ## CometBFT consensus
 
@@ -277,18 +277,8 @@ The amount of time a validator has been active in a given timeframe. Validators 
 
 ## Validator
 
-A participant responsible for producing and verifying blocks on the Osmosis blockchain. Validators run programs called full nodes that allow them to participate in consensus, verify blocks, participate in governance, and receive rewards. The validators with the highest total stake, up to the governance-set active-set size (currently 70), can participate in consensus.
+A participant responsible for producing and verifying blocks on the Osmosis blockchain. Validators run programs called full nodes that allow them to participate in consensus, verify blocks, participate in governance, and receive rewards. The validators with the highest total stake, up to the governance-set active-set size (currently 30), can participate in consensus.
 
 ## Weight
 
 The measure of a validator's total stake. Validators with higher weights get selected more often to propose blocks. A validator's weight is also a measure of their voting power in governance.
-
-
-
-
-
-
-
-
-
-
