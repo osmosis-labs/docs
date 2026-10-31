@@ -53,7 +53,7 @@ Against `grpc.osmosis.zone:443`, run grpcurl **without** the `-plaintext` flag s
 Build a descriptor set from the chain repo at the deployed release using [buf](https://buf.build/docs/installation) (it resolves the third-party imports from the repo's `buf.lock`; swap the tag for the current release):
 
 ```bash
-git clone --depth 1 --branch v31.0.3 https://github.com/osmosis-labs/osmosis
+git clone --depth 1 --branch v32.0.0 https://github.com/osmosis-labs/osmosis
 cd osmosis/proto
 buf build -o osmosis.protoset
 ```
