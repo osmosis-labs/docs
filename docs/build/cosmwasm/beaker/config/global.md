@@ -159,7 +159,7 @@ rpc_endpoint = 'https://rpc.osmotest5.osmosis.zone'
 [networks.mainnet]
 chain_id = 'osmosis-1'
 network_variant = 'Shared'
-grpc_endpoint = 'https://grpc.osmosis.zone:9090'
+grpc_endpoint = 'https://grpc.osmosis.zone'
 rpc_endpoint = 'https://rpc.osmosis.zone:443'
 [accounts.validator]
 mnemonic = 'bottom loan skill merry east cradle onion journey palm apology verb edit desert impose absurd oil bubble sweet glove shallow size build burst effort'

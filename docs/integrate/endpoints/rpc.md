@@ -11,7 +11,7 @@ As shown on the RPC specifications, there are different endpoints to communicate
 RPC is the right path for signing, broadcasting, and per-block subscriptions, but for routing quotes and batched pool state you almost certainly want the [Sidecar Query Server (SQS)](./sqs), the query path used by the production frontend.
 :::
 
-For more information, read about [generating, signing, and broadcasting transactions](https://docs.cosmos.network/v0.50/learn/advanced/transactions) in the cosmos-sdk docs.
+For more information, read about [generating, signing, and broadcasting transactions](https://docs.cosmos.network/sdk/v0.50/learn/advanced/transactions) in the cosmos-sdk docs.
 
 ## Choosing between RPC, gRPC, and REST
 

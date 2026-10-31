@@ -283,7 +283,7 @@ Creating a pool requires paying the pool creation fee. This fee is set by the `p
 
 ### Liquidity bootstrapping pool
 
-A [liquidity bootstrapping pool](https://docs.balancer.finance/guides/crp-tutorial/liquidity-bootstrapping) starts at the weights in `weights` and shifts linearly toward `target-pool-weights` over `duration`.
+A liquidity bootstrapping pool starts at the weights in `weights` and shifts linearly toward `target-pool-weights` over `duration`.
 
 Weights typically begin unbalanced, favouring the token being sold, and shift toward a 1:1 weight (or one favouring the token the pool aims to accrue). Changing the weight moves the exchange price even when the pool's token balances do not. Note that a linear change in weight does **not** produce a linear change in price.
 

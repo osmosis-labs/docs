@@ -761,7 +761,7 @@ Checkout these related projects:
 
 ## Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://cosmology.tech/validator)
+🛠 Built by Cosmology — if you like our tools, please consider delegating to our validator ⚛️
 
 Thanks to these engineers, teams and projects for inspiring Telescope:
 
