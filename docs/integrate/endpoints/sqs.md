@@ -80,22 +80,33 @@ Specify the output amount; SQS returns the minimum input required.
 curl "https://sqs.osmosis.zone/router/quote?tokenOut=1000000uion&tokenInDenom=uosmo" | jq .
 ```
 
-The response has `amount_in` as a string (the required input) and `amount_out` as an `sdk.Coin` (the target output). Do not invert an exact-in quote to estimate exact-out: call `/router/quote` with the exact-out parameter pair instead. Exact-out is a separate routing search internally and the optimal route may differ.
+The response has `amount_in` as a string (the required input) and `amount_out` as an `sdk.Coin` (the target output). Do not invert an exact-in quote to estimate exact-out: call `/router/quote` with the exact-out parameter pair instead. Exact-out is a separate routing search that minimises the input, and the optimal route may differ from the exact-in one.
+
+`amount_in` already includes the spread factor and taker fee of every hop, so it is the input the chain needs: use it, plus your slippage allowance, as `token_in_max_amount` in `MsgSwapExactAmountOut`. Each pool in an exact-out route carries `token_in_denom` instead of `token_out_denom`, and the pools are listed from the output side; reverse them to build the message's `routes`.
 
 ### Parameters
 
-- `tokenIn` (exact-in): input amount as an `sdk.Coin` string, e.g. `1000000uosmo`. The amount must be a positive whole number of the denom's smallest unit: a registered display unit is converted (`1.5osmo` is quoted as `1500000uosmo`), but zero or a fraction of the smallest unit (`1.5uosmo`) is rejected with `tokenIn amount must be a positive integer`. The same rule applies to `tokenOut`.
+- `tokenIn` (exact-in): input amount as an `sdk.Coin` string, e.g. `1000000uosmo`. The amount is in the token's smallest unit and must be a positive whole number: zero or a fraction (`1.5uosmo`) is rejected with `tokenIn amount must be a positive integer`. Don't pass display amounts. Only OSMO is converted (`1.5osmo` is quoted as `1500000uosmo`); for every other token the number is read as smallest units, so `1atom` with `humanDenoms=true` quotes 1 uatom. The same rule applies to `tokenOut`.
 - `tokenOutDenom` (exact-in): chain denom of the desired output token.
 - `tokenOut` (exact-out): output amount as an `sdk.Coin` string, e.g. `1000000uion`.
 - `tokenInDenom` (exact-out): chain denom of the input token.
 - `singleRoute` (optional): set to `true` to disable split-route quoting. Defaults to `false`.
-- `humanDenoms` (optional): set to `true` to pass human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`).
+- `humanDenoms` (optional): set to `true` to pass human-readable denoms (`OSMO`, `USDC`) instead of chain denoms (`uosmo`, `ibc/...`). Only the denom is converted; amounts stay in smallest units.
+- `simulatorAddress` and `simulationSlippageTolerance` (optional, exact-in only): simulate the quoted swap as a `MsgSwapExactAmountIn` sent from `simulatorAddress` and return its gas and fee in `price_info` (see below). The tolerance is required with the address and is a multiplier on `amount_out`, so `0.99` sets the minimum output to 99% of the quote. Simulation only runs together with `singleRoute=true`; without it the quote is returned with no `price_info`. Passing an address on an exact-out request, or a tolerance without an address, is rejected.
+- `appendBaseFee` (optional): set to `true` to return the chain's current base fee (the gas price per unit of gas, in uosmo) in `price_info.base_fee` (`fee_coin` comes back empty). It replaces any simulation result, so don't combine it with `simulatorAddress`.
+- `applyExponents` (optional): accepted, but it has no effect on the response. Prices in the quote are always in minimal units.
 
 ### Fees
 
 `amount_out` is the post-fee amount you would receive (for exact-in) or `amount_in` is the post-fee amount you must pay (for exact-out). Per-pool `spread_factor` and `taker_fee` are returned for transparency; do not subtract them again client-side. The top-level `effective_fee` is the taker fee compounded across the whole route; it does not include the spread factor (in the example above, `0.008` is pool 2's taker fee alone, while its `0.005` spread factor is already reflected in `amount_out`), `price_impact` is the route's price impact, and `in_base_out_quote_spot_price` is the spot price in base/quote terms. Each pool's `taker_fee` is read from chain state for that specific pool and can differ from (and exceed) the chain-wide default.
 
 When SQS cannot compute a spot price along the route, the quote is still returned, with `price_impact` set to `"0"` and `price_impact_unknown: true`. Treat that as unknown rather than zero impact, for example by asking for confirmation before a large swap. The field is left out when the impact is known.
+
+### Liquidity and gas fields
+
+- `tokens` lists every denom on the route with its total liquidity cap across all pools (in USD), largest first.
+- `liquidity_cap` is the sum of the liquidity caps (in USD) of the pools on the route, a rough measure of how deep the route is. If the sum overflows, `liquidity_cap_overflow` is `true` and `liquidity_cap` is incomplete.
+- `price_info` appears only with `simulatorAddress` or `appendBaseFee`. A simulation fills `adjusted_gas_used` (simulated gas with the gas adjustment applied), `fee_coin` (that gas at the current base fee) and `base_fee`. If the simulation fails, for example because the address does not hold the input, `error` carries the reason and there is no fee estimate.
 
 ## Quote a specific route
 
@@ -104,6 +115,8 @@ If you already know which pool(s) you want to route through (for example, when q
 ```bash
 curl "https://sqs.osmosis.zone/router/custom-direct-quote?tokenIn=1000000uosmo&tokenOutDenom=uion&poolID=2" | jq .
 ```
+
+For a multi-hop route, pass the pool ids as a comma-separated `poolID` with one denom per hop, so both lists have the same length. For exact-in, list the pools in trading order with each hop's output in `tokenOutDenom`. For exact-out, list them from the output side with each hop's input in `tokenInDenom`: for A to B to C, pass the B/C pool, then the A/B pool, with `tokenOut=...C&tokenInDenom=B,A`. Split routes are not supported. `humanDenoms` and `applyExponents` work as on `/router/quote`.
 
 This endpoint bypasses the router's minimum-liquidity filter, so it returns a quote as long as the pool exists onchain and is not [excluded from routing](#pools-excluded-from-routing). A pool that is excluded is rejected with `validation failed: pool <id> is excluded from routing`.
 
@@ -150,17 +163,34 @@ Useful for previewing what the router will consider before committing to a quote
 
 ## Fetch pool state
 
-`GET /pools` returns hydrated pool data (chain model, balances, spread factor, pool type) for either a batch of pool IDs or all pools.
+`GET /pools` returns hydrated pool data (chain model, balances, spread factor, pool type, liquidity cap) for all pools, or for the pools matching a filter.
 
 ```bash
-# Specific pools (returns a bare array)
-curl "https://sqs.osmosis.zone/pools?IDs=1,2,1066" | jq '.[0]'
+# Specific pools
+curl -g "https://sqs.osmosis.zone/pools?filter[id]=1,2,1066" | jq '.data[0]'
 
-# All pools (returns a paginated { data, meta } wrapper)
-curl "https://sqs.osmosis.zone/pools" | jq '.data[0]'
+# The ten deepest concentrated liquidity pools holding OSMO
+curl -g "https://sqs.osmosis.zone/pools?filter[type]=2&filter[denom]=uosmo&sort=-totalFiatValueLocked&page[cursor]=0&page[size]=10" | jq '.meta'
 ```
 
-Two response shapes: `?IDs=…` returns a bare array of pool objects; the no-IDs path returns `{ "data": [...], "meta": {...} }` with pagination metadata. The all-pools response is large; cache it client-side rather than fetching it per request.
+The response is `{ "data": [...], "meta": { "total_items": N } }`, where `total_items` counts every pool matching the filter, not just the current page. Without a filter or page the response holds every pool and is large; cache it client-side rather than fetching it per request. (`curl -g` stops curl from reading the square brackets as a URL pattern.)
+
+Filters, which combine with AND:
+
+- `filter[id]`: comma-separated pool ids. Ids that don't exist are left out.
+- `filter[id][not_in]`: comma-separated pool ids to exclude.
+- `filter[type]`: comma-separated pool types: `0` weighted (GAMM), `1` stableswap, `2` concentrated liquidity, `3` CosmWasm.
+- `filter[denom]`: comma-separated denoms, up to 8. A pool matches if it holds any of them. Each can be a chain denom or a symbol (`OSMO`), case-insensitive.
+- `filter[min_liquidity_cap]`: minimum pool liquidity cap, in whole USD.
+- `filter[search]`: a pool id, or text matched against the pool's symbols (`OSMO/USDC`) and token names. An exact symbol or denom match wins; otherwise any partial match is returned.
+- `filter[with_market_incentives]`: set to `true` to refresh each pool's `apr_data` and `fees_data` (APR breakdown, 24h and 7d volume and fees). Without it these fields are not refreshed, so they can be empty or left over from an earlier request; pass it whenever you read them.
+- `filter[incentive]`: comma-separated incentive types: `0` superfluid, `1` OSMO incentives, `2` boost, `3` none. It reads `apr_data`, so pass `filter[with_market_incentives]=true` with it.
+
+To page through results, pass `page[size]` and `page[cursor]`, a zero-based offset starting at `0`. The response's `meta.next_cursor` gives the offset of the next page and is `-1` on the last one. `page[number]` is also accepted instead of `page[cursor]` and starts at offset `page[number] × page[size]`, so the first page is `page[number]=0`. A page without `page[size]` is empty.
+
+`sort` takes comma-separated fields, each ascending or, with a leading `-`, descending: `id`, `totalFiatValueLocked` (liquidity cap), `market.volume24hUsd`, `market.volume7dUsd`, `market.feesSpent24hUsd`, `market.feesSpent7dUsd` and `incentives.aprBreakdown.total.upper`. Unknown fields are ignored. The `market.*` and `incentives.*` fields need `filter[with_market_incentives]=true`; pools whose market data failed to load sort last, and ties fall back to liquidity cap.
+
+The older `IDs`, `min_liquidity_cap` and `with_market_incentives` parameters are deprecated but still accepted. A request that uses any of them gets a bare array of pools with no `meta` wrapper.
 
 This is the preferred way to populate a frontend's pool list. It is much faster than iterating `osmosis.gamm.v1beta1.Query.Pools` or its `osmosis.poolmanager.v1beta1` equivalent and it returns balances in the same payload, saving a separate `cosmos.bank.v1beta1.Query.AllBalances` per pool.
 
@@ -239,6 +269,9 @@ curl "https://sqs.osmosis.zone/tokens/prices?base=wbtc,dydx&humanDenoms=true" | 
 ```
 
 Each base maps to a quote-denom map whose value is the spot price, keyed by chain denoms. The quote is always USDC, under its full `factory/osmo147h5x9pcj7lm0cttlaefx6sqq5vdfnmwfcqxkmjd7exqm9gc7grqhr75m0/alloyed/allUSDC` denom. Set `humanDenoms=true` to pass `wbtc` instead of the chain denom.
+
+- `pricingSource` (optional): `0` (the default) prices from pools onchain, `1` from CoinGecko only. Both are keyed by the same USDC denom.
+- `debug` (optional): set to `true` to return, for each price, an object `{ "price": "...", "routes": [{ "pool_id": [...], "in_amount": "...", "out_amount": "..." }] }` instead of the bare price string, showing the pool routes the price was computed over.
 
 If a price cannot be determined onchain, SQS falls back to CoinGecko. A denom that still has no price is left out of the response rather than priced at zero: it is unknown or unlisted, it has no route through pools above the minimum liquidity, or CoinGecko has no price for it. Check that a key is present before reading it, and treat a missing one as unpriced. Because onchain prices only route through pools above a minimum liquidity, a token traded only in very thin pools has no price.
 
@@ -344,7 +377,7 @@ Beyond routing and pool state, SQS serves account-level **passthrough** queries 
 
 ### Active limit orders
 
-`GET /passthrough/active-orders?userOsmoAddress=<address>` returns a user's open limit orders across the canonical orderbooks.
+`GET /passthrough/active-orders?userOsmoAddress=<address>` returns a user's open limit orders across every orderbook SQS tracks, canonical or not.
 
 ```bash
 curl "https://sqs.osmosis.zone/passthrough/active-orders?userOsmoAddress=osmo1..." | jq .
@@ -355,6 +388,8 @@ curl "https://sqs.osmosis.zone/passthrough/active-orders?userOsmoAddress=osmo1..
 ```
 
 An address with no open orders returns an empty `orders` array. `is_best_effort` is `true` when SQS could not reach every orderbook and the list may be incomplete.
+
+Add `sse=true` to keep the connection open as a [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream instead. SQS checks every orderbook straight away and then every 10 seconds, and sends one event per orderbook that holds orders for the address, each carrying that orderbook's orders in the same `{ "orders": [...], "is_best_effort": ... }` shape. Group orders by their `orderbookAddress` and replace that orderbook's orders with each new event rather than appending to them. An orderbook with no orders for the address sends nothing, so an address with no open orders gets no events, and when the address's last order on an orderbook is filled or cancelled no event says so. Re-fetch without `sse` to clear orders that are no longer open.
 
 ### Portfolio assets
 
