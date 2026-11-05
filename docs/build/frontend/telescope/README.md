@@ -302,7 +302,7 @@ See [RPC Clients](#rpc-clients) for more info.
 | -------------------------------------------- | ----------------------------------------------------------------  | ---------|
 | `eslintDisable.disableAll`                   | if true, will include `/* eslint-disable */` on every output file | `false`  |
 | `eslintDisable.patterns`                     | if set, will include `/* eslint-disable */` on matched patterns   | `[]`     |
-| `eslintDisable.files`                        | if set, will include `/* eslint-disable */` on matched files      | `[]`     |
+| `eslintDisable.files`                         | if set, will include `/* eslint-disable */` on matched files      | `[]`     |
 
 ### Bundle
 
@@ -418,7 +418,7 @@ const client = await getSigningOsmosisClient({
 
 ## Creating Signers
 
-To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/api/cosmjs.html) or an `OfflineSigner` from `cosmjs` using mnemonics.
+To broadcast messages, you'll want to use either [keplr](https://docs.keplr.app/api/use-with/cosmjs) or an `OfflineSigner` from `cosmjs` using mnemonics.
 ### Getting an offline signer
 
 `osmojs` does not export a signer helper. Get an `OfflineSigner` from the user's
@@ -761,7 +761,7 @@ Checkout these related projects:
 
 ## Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to our validator ⚛️
+🛠 Built by Cosmology — if you like our tools, please consider delegating to our validator ⚛️
 
 Thanks to these engineers, teams and projects for inspiring Telescope:
 
