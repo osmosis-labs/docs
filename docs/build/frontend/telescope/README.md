@@ -302,7 +302,7 @@ See [RPC Clients](#rpc-clients) for more info.
 | -------------------------------------------- | ----------------------------------------------------------------  | ---------|
 | `eslintDisable.disableAll`                   | if true, will include `/* eslint-disable */` on every output file | `false`  |
 | `eslintDisable.patterns`                     | if set, will include `/* eslint-disable */` on matched patterns   | `[]`     |
-| `eslintDisable.files`                         | if set, will include `/* eslint-disable */` on matched files      | `[]`     |
+| `eslintDisable.files`                        | if set, will include `/* eslint-disable */` on matched files      | `[]`     |
 
 ### Bundle
 
@@ -761,7 +761,7 @@ Checkout these related projects:
 
 ## Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to our validator ⚛️
+🛠 Built by Cosmology — if you like our tools, please consider delegating to our validator ⚛️
 
 Thanks to these engineers, teams and projects for inspiring Telescope:
 
