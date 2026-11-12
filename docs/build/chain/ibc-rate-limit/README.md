@@ -117,8 +117,8 @@ carries the logic. On mainnet:
 | | |
 |---|---|
 | Contract | [`osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg`](https://celatone.osmosis.zone/osmosis-1/contracts/osmo17r7qdw2zk6jyw62cvwm6flmhtj9q7zd26r8zc6sqyf0pnaq46cfss8hgxg) |
-| Code ID | `1383` |
-| cw2 name and version | `crates.io:rate-limiter` `0.1.1` |
+| Code ID | `1905` |
+| cw2 name and version | `crates.io:rate-limiter` `0.2.0` |
 | Creator and admin | `osmo10d07y265gmmuvt4z0w9aw880jnsr700jjeq4qp` (gov module account) |
 | Source | [`x/ibc-rate-limit/contracts/rate-limiter`](https://github.com/osmosis-labs/osmosis/tree/main/x/ibc-rate-limit/contracts/rate-limiter) |
 
