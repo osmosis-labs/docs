@@ -13,7 +13,7 @@ The minimum recommended specs for running osmosisd is as follows:
 - 32 GB RAM (or equivalent swap file set up)
 - 1 TB of storage space
 
-You can check if you have enough storage to run osmosisd [here](https://quicksync.io/networks/osmosis.html).
+You can check if you have enough storage to run osmosisd here.
 
 ## Command Help
 Go to [commands](#commands) to learn more.
