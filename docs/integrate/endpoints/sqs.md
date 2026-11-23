@@ -542,6 +542,7 @@ A few settings matter for the endpoints above:
 
 - **Trades** are off unless `trades.enabled` is `true`, which also needs `grpc-ingester.enabled`. SQS reads each block's swap events from the node's `/block_results`, so the node must keep block results (`discard_abci_responses = false` under `[storage]` in `config.toml`); otherwise the trade endpoints never leave the not-ingested state. `trades.retention-hours` (default 192) must cover the 7 day window.
 - **Excluded pools:** `router.excluded-pool-ids` lists pool ids to leave out of routing and pricing.
+- **CoinGecko fallback prices** come from `pricing.coingecko-url`. Osmosis' own CoinGecko proxy, `prices.osmosis.zone`, is not served publicly, so set this to your own endpoint, for example the public `https://api.coingecko.com/api/v3/simple/price`. Query parameters in the URL are kept, so a CoinGecko key can go there (`?x_cg_demo_api_key=<key>`, or `x_cg_pro_api_key` on `https://pro-api.coingecko.com/api/v3/simple/price`). Without a working endpoint, tokens with no route through pools above the minimum liquidity have no price.
 - **Debug endpoints** are off by default: `pprof-enabled` turns on `/debug/pprof`, and `debug-endpoints-enabled` the router and token state dump endpoints.
 
 ## Reference
