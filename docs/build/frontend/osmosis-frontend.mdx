@@ -15,8 +15,8 @@ Our [frontend](https://app.osmosis.zone) is built with the following tools:
 - [React](https://reactjs.org/): ui
 - [Tailwind CSS](https://tailwindcss.com/): styling, theming
 - [Next.js](https://nextjs.org/): scaffolding/SSR/CDN/SEO
-  - We deploy on [Vercel](https://vercel.com/solutions/nextjs?utm_source=next-site&utm_medium=banner&utm_campaign=next-website) for optimizations out of the box, behind [CloudFlare](https://www.cloudflare.com/)
-- [Turbo Repo](https://turbo.build/repo): mono repo management with package script execution, with heavy emphasis on build caching (including shared remote caching in Vercel)
+  - We deploy on [Cloudflare Workers](https://workers.cloudflare.com/) using the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare)
+- [Turbo Repo](https://turbo.build/repo): mono repo management with package script execution, with heavy emphasis on build caching
 - [Lerna](https://lerna.js.org/): libs release
 
 ## Deployment 🚀
@@ -43,15 +43,6 @@ Make sure [node](https://nodejs.org/en/) 24.x (see the `"engines"` field in [osm
 
 ```bash
 yarn
-```
-
-**First time setup** If you're on the Osmosis foundation team and have a Vercel account set up, optionally sign into turbo repo using your Vercel account, and link the repo. This could give you instant builds by sharing the remote cache on our Vercel project:
-
-```bash
-npx turbo login
-...login via browser...
-npx turbo link
-...press y (yes) and choose "OsmoLabs" as the Vercel build scope...
 ```
 
 2.  Run local server at [`localhost:3000`](http://localhost:3000)
